@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
-        "db:update-mobile": "tsx scripts/update-platform-mobile-fields.ts"
+        "db:update-mobile": "tsx scripts/update-platform-mobile-fields.ts",
+        "postinstall": "prisma generate"
     },
     "dependencies": {
         "@clerk/nextjs": "^7.0.8",
