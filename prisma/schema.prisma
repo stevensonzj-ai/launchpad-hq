@@ -1,0 +1,280 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── AI Platforms ─────────────────────────────────────────────
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  icon        String?
+  sortOrder   Int        @default(0)
+  platforms   Platform[]
+  createdAt   DateTime   @default(now())
+
+  @@map("categories")
+}
+
+model Platform {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  company     String?
+  website     String?
+  logoUrl     String?
+  description String?
+
+  // Classification
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+  primaryUse      String?
+  costTier        CostTier @default(FREEMIUM)
+  difficultyLevel Difficulty @default(BEGINNER)
+  platformType    String[]   // ["web", "mobile", "desktop"]
+
+  // Pricing
+  currentPricing String?
+  freeTierFeatures   String?
+  usageLimits        String?
+  qualityRestrictions String?
+  upgradeTriggers    String?
+
+  // Technical
+  installationType String?
+  offlineCapable   Boolean @default(false)
+  apiAvailable     Boolean @default(false)
+  keyIntegrations  String?
+  privacyLevel     PrivacyLevel @default(MEDIUM)
+
+  // User matching
+  idealUserTypes    String[]
+  primaryUseCases   String?
+  timeToProductivity String?
+  learningCurve     String?
+
+  // Recommendations
+  directAlternatives  String[]
+  complementaryTools  String[]
+  budgetAlternativeTo String[]
+  privacyAlternativeTo String[]
+
+  // Content
+  contentTypes   String[]
+  outputFormats  String[]
+  languageSupport String?
+
+  // Metadata
+  featured  Boolean  @default(false)
+  verified  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hasMobileApp        Boolean @default(false)
+  iosAppUrl           String?
+  androidAppUrl       String?
+  mobileWebFriendly   Boolean @default(true)
+
+  // Relations
+  reviews       Review[]
+  tutorials     Tutorial[]
+  userFavorites UserFavorite[]
+  userProgress  UserProgress[]
+
+  @@index([categoryId])
+  @@index([costTier])
+  @@index([difficultyLevel])
+  @@index([featured])
+  @@map("platforms")
+}
+
+enum CostTier {
+  FREE
+  FREEMIUM
+  PAID
+  ENTERPRISE
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum PrivacyLevel {
+  LOW
+  MEDIUM
+  HIGH
+  MAXIMUM
+}
+
+// ── Users & Profiles ────────────────────────────────────────
+
+model User {
+  id            String   @id @default(cuid())
+  clerkId       String   @unique
+  email         String   @unique
+  name          String?
+  avatarUrl     String?
+
+  // Subscription
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  plan                 Plan      @default(FREE)
+  planExpiresAt        DateTime?
+
+  // Onboarding preferences
+  onboardingComplete Boolean @default(false)
+  preferences        UserPreferences?
+
+  // Relations
+  favorites  UserFavorite[]
+  progress   UserProgress[]
+  reviews    Review[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Plan {
+  FREE
+  PRO
+  TEAM
+}
+
+model UserPreferences {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Onboarding survey answers
+  goals          String[]   // ["content_creation", "coding", "research"]
+  budget         String?    // "free", "under_20", "under_50", "enterprise"
+  experienceLevel String?   // "beginner", "intermediate", "advanced"
+  industries     String[]   // ["marketing", "education", "engineering"]
+  teamSize       String?    // "solo", "small", "medium", "enterprise"
+  priorities     String[]   // ["ease_of_use", "privacy", "integrations"]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_preferences")
+}
+
+// ── Favorites & Progress ────────────────────────────────────
+
+model UserFavorite {
+  id         String   @id @default(cuid())
+  userId     String
+  platformId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platform   Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, platformId])
+  @@map("user_favorites")
+}
+
+model UserProgress {
+  id         String   @id @default(cuid())
+  userId     String
+  platformId String
+  tutorialId String?
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platform   Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  tutorial   Tutorial? @relation(fields: [tutorialId], references: [id])
+
+  status     ProgressStatus @default(NOT_STARTED)
+  stepsCompleted Int        @default(0)
+  totalSteps     Int        @default(0)
+  startedAt  DateTime?
+  completedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([userId, platformId, tutorialId])
+  @@map("user_progress")
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+// ── Tutorials ───────────────────────────────────────────────
+
+model Tutorial {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String?
+  platformId  String
+  platform    Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  difficulty  Difficulty @default(BEGINNER)
+  durationMin Int        @default(15)
+  steps       Json       // Array of step objects
+  published   Boolean    @default(false)
+
+  disclaimer String?
+  usageLink  String?
+
+  progress    UserProgress[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([platformId])
+  @@map("tutorials")
+}
+
+// ── Reviews ─────────────────────────────────────────────────
+
+model Review {
+  id         String   @id @default(cuid())
+  userId     String
+  platformId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  platform   Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  rating     Int      // 1-5
+  title      String?
+  body       String?
+  helpful    Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, platformId])
+  @@index([platformId])
+  @@map("reviews")
+}
+
+model Discussion {
+  id         String   @id @default(cuid())
+  platformId String
+  userId     String?
+  title      String
+  body       String
+  solution   String?
+  upvotes    Int      @default(0)
+  createdAt  DateTime @default(now())
+}
+
+model Prompt {
+  id         String   @id @default(cuid())
+  platformId String
+  userId     String?
+  title      String
+  prompt     String
+  output     String?
+  tags       String[]
+  createdAt  DateTime @default(now())
+}
