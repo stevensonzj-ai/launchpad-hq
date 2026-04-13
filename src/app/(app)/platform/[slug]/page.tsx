@@ -111,7 +111,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         </div>
       </div>
 
-      <PlatformDetailTabs platformName={platform.name}>
+      <PlatformDetailTabs platformName={platform.name} platformSlug={platform.slug}>
         {/* Content sections */}
         <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">

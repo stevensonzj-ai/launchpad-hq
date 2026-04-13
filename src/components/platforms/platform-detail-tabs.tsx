@@ -17,10 +17,11 @@ const TABS: { id: PlatformDetailTab; label: string }[] = [
 
 type PlatformDetailTabsProps = {
   platformName: string;
+  platformSlug: string;
   children: ReactNode;
 };
 
-export function PlatformDetailTabs({ platformName, children }: PlatformDetailTabsProps) {
+export function PlatformDetailTabs({ platformName, platformSlug, children }: PlatformDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<PlatformDetailTab>("overview");
 
   return (
@@ -43,7 +44,9 @@ export function PlatformDetailTabs({ platformName, children }: PlatformDetailTab
       </div>
 
       {activeTab === "overview" && children}
-      {activeTab === "tutorials" && <PlatformTutorials platformName={platformName} />}
+      {activeTab === "tutorials" && (
+        <PlatformTutorials platformName={platformName} platformSlug={platformSlug} />
+      )}
       {activeTab === "discussions" && <PlatformDiscussions platformName={platformName} />}
       {activeTab === "prompts" && <PlatformPrompts platformName={platformName} />}
     </>
