@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { CostTier, Difficulty } from "@/generated/prisma/client";
+import { CostTier, Difficulty } from "@prisma/client";
 
 /**
  * Recommendation engine — returns personalized platform suggestions

@@ -11,7 +11,7 @@ import * as path from "path";
 import "dotenv/config";
 
 const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("../src/generated/prisma/client");
+const { PrismaClient } = require("@prisma/client");
 
 type CostTier = "FREE" | "FREEMIUM" | "PAID" | "ENTERPRISE";
 type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";

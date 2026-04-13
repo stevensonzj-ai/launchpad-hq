@@ -14,7 +14,7 @@
 import "dotenv/config";
 
 const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("../src/generated/prisma/client");
+const { PrismaClient } = require("@prisma/client");
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";

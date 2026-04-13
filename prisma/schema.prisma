@@ -1,6 +1,6 @@
+// `prisma-client` (Prisma 7) requires `output`; `prisma-client-js` emits to node_modules for `import "@prisma/client"` (e.g. Vercel postinstall generate).
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
