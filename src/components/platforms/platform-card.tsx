@@ -97,7 +97,7 @@ export function PlatformCard({
             className="inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-xs font-medium text-sky-400"
             title="Works in mobile browsers"
           >
-            <Glob className="h-3 w-3" />
+            <Globe className="h-3 w-3" />
             Web
           </span>
         )}

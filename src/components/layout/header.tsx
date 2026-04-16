@@ -102,7 +102,6 @@ export function Header() {
                 Account
               </Link>
               <UserButton
-                afterSignOutUrl="/"
                 appearance={{
                   elements: {
                     avatarBox: "h-9 w-9",
@@ -157,7 +156,7 @@ export function Header() {
               </Link>
               <div className="flex items-center gap-2 py-2">
                 <span className="text-sm text-gray-500">Signed in</span>
-                <UserButton afterSignOutUrl="/" />
+                <UserButton />
               </div>
             </>
           )}

@@ -72,7 +72,7 @@ export function PlatformMobileSection({
       <ul className="space-y-2 text-sm text-gray-300">
         {mobileWebFriendly && (
           <li className="flex gap-2">
-            <Glob className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
+            <Globe className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
             <span>
               <span className="font-medium text-white">Mobile web:</span> Works in a mobile browser (responsive or
               dedicated mobile site).
@@ -81,7 +81,7 @@ export function PlatformMobileSection({
         )}
         {pwa && (
           <li className="flex gap-2">
-            <Glob className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
+            <Globe className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
             <span>
               <span className="font-medium text-white">PWA:</span> Can often be installed to your home screen like an
               app (browser-dependent).
