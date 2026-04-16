@@ -6,10 +6,24 @@ import { getStripe } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
 
+/** Stripe API returns unix timestamps; SDK typings occasionally omit fields on `Subscription`. */
+function subscriptionPeriodDates(sub: Stripe.Subscription): {
+  periodEnd: Date | null;
+  trialEnd: Date | null;
+} {
+  const o = sub as unknown as Record<string, unknown>;
+  const cpe = o["current_period_end"];
+  const te = o["trial_end"];
+  const periodEnd =
+    typeof cpe === "number" && cpe > 0 ? new Date(cpe * 1000) : null;
+  const trialEnd =
+    typeof te === "number" && te > 0 ? new Date(te * 1000) : null;
+  return { periodEnd, trialEnd };
+}
+
 async function applySubscriptionState(userId: string, sub: Stripe.Subscription) {
   const status = sub.status;
-  const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000) : null;
-  const trialEnd = sub.trial_end ? new Date(sub.trial_end * 1000) : null;
+  const { periodEnd, trialEnd } = subscriptionPeriodDates(sub);
 
   const isPro = status === "active" || status === "trialing";
 
