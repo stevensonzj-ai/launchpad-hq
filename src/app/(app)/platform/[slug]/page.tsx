@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ExternalLink, Shield, Zap, Clock, Star } from "lucide-react";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
+import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -115,6 +116,15 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         {/* Content sections */}
         <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
+          <PlatformMobileSection
+            name={platform.name}
+            hasMobileApp={platform.hasMobileApp}
+            iosAppUrl={platform.iosAppUrl}
+            androidAppUrl={platform.androidAppUrl}
+            mobileWebFriendly={platform.mobileWebFriendly}
+            platformType={platform.platformType}
+          />
+
           {/* Free Tier */}
           {platform.freeTierFeatures && (
             <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
@@ -202,7 +212,19 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
           <h2 className="mb-4 text-xl font-semibold text-white">Alternatives</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {alternatives.map((p) => (
-              <PlatformCard key={p.id} slug={p.slug} name={p.name} company={p.company} primaryUse={p.primaryUse} costTier={p.costTier} difficultyLevel={p.difficultyLevel} category={p.category} freeTierFeatures={p.freeTierFeatures} />
+              <PlatformCard
+                key={p.id}
+                slug={p.slug}
+                name={p.name}
+                company={p.company}
+                primaryUse={p.primaryUse}
+                costTier={p.costTier}
+                difficultyLevel={p.difficultyLevel}
+                category={p.category}
+                freeTierFeatures={p.freeTierFeatures}
+                hasMobileApp={p.hasMobileApp}
+                mobileWebFriendly={p.mobileWebFriendly}
+              />
             ))}
           </div>
         </section>
@@ -214,7 +236,19 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
           <h2 className="mb-4 text-xl font-semibold text-white">Works Well With</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {complementary.map((p) => (
-              <PlatformCard key={p.id} slug={p.slug} name={p.name} company={p.company} primaryUse={p.primaryUse} costTier={p.costTier} difficultyLevel={p.difficultyLevel} category={p.category} freeTierFeatures={p.freeTierFeatures} />
+              <PlatformCard
+                key={p.id}
+                slug={p.slug}
+                name={p.name}
+                company={p.company}
+                primaryUse={p.primaryUse}
+                costTier={p.costTier}
+                difficultyLevel={p.difficultyLevel}
+                category={p.category}
+                freeTierFeatures={p.freeTierFeatures}
+                hasMobileApp={p.hasMobileApp}
+                mobileWebFriendly={p.mobileWebFriendly}
+              />
             ))}
           </div>
         </section>

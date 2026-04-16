@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { Globe, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PlatformCardProps {
@@ -12,6 +12,8 @@ interface PlatformCardProps {
   category: { name: string; slug: string };
   freeTierFeatures: string | null;
   matchScore?: number;
+  hasMobileApp?: boolean;
+  mobileWebFriendly?: boolean;
 }
 
 const tierColors: Record<string, string> = {
@@ -38,6 +40,8 @@ export function PlatformCard({
   category,
   freeTierFeatures,
   matchScore,
+  hasMobileApp,
+  mobileWebFriendly,
 }: PlatformCardProps) {
   return (
     <Link
@@ -79,6 +83,24 @@ export function PlatformCard({
           {difficultyLevel.toLowerCase()}
         </span>
         <span className="text-xs text-gray-600">{category.name}</span>
+        {hasMobileApp && (
+          <span
+            className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs font-medium text-emerald-400"
+            title="Native iOS and/or Android app"
+          >
+            <Smartphone className="h-3 w-3" />
+            App
+          </span>
+        )}
+        {!hasMobileApp && mobileWebFriendly && (
+          <span
+            className="inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-xs font-medium text-sky-400"
+            title="Works in mobile browsers"
+          >
+            <Glob className="h-3 w-3" />
+            Web
+          </span>
+        )}
       </div>
 
       {freeTierFeatures && (

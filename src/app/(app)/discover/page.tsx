@@ -67,9 +67,17 @@ export default async function DiscoverPage({
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <h1 className="mb-2 text-3xl font-bold text-white">Discover AI Tools</h1>
-      <p className="mb-8 text-gray-400">
+      <p className="mb-4 text-gray-400">
         Browse {platforms.length} vetted tools across {categories.length} categories
       </p>
+      <div className="mb-8 rounded-xl border border-orange-500/20 bg-orange-500/5 px-4 py-3 text-sm text-gray-300">
+        <span className="font-medium text-orange-200">Workflow templates</span>
+        {" — "}
+        Compare optimal, hybrid, and budget stacks for blogging, video, code, and more.{" "}
+        <Link href="/workflows" className="font-medium text-orange-400 hover:underline">
+          Browse workflows
+        </Link>
+      </div>
 
       {/* Filters */}
       <div className="mb-8 flex flex-wrap gap-2">
@@ -161,7 +169,7 @@ export default async function DiscoverPage({
           }
           className={`rounded-md px-2 py-1 text-xs ${params.mobile === "app" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
         >
-          📱 Has App
+          Has app
         </Link>
         <Link
           href={
@@ -175,7 +183,7 @@ export default async function DiscoverPage({
           }
           className={`rounded-md px-2 py-1 text-xs ${params.mobile === "web" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
         >
-          🌐 Mobile Web
+          Mobile web
         </Link>
       </div>
 
@@ -192,6 +200,8 @@ export default async function DiscoverPage({
             difficultyLevel={p.difficultyLevel}
             category={p.category}
             freeTierFeatures={p.freeTierFeatures}
+            hasMobileApp={p.hasMobileApp}
+            mobileWebFriendly={p.mobileWebFriendly}
           />
         ))}
       </div>

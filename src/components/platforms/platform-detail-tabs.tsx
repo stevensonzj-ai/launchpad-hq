@@ -47,8 +47,12 @@ export function PlatformDetailTabs({ platformName, platformSlug, children }: Pla
       {activeTab === "tutorials" && (
         <PlatformTutorials platformName={platformName} platformSlug={platformSlug} />
       )}
-      {activeTab === "discussions" && <PlatformDiscussions platformName={platformName} />}
-      {activeTab === "prompts" && <PlatformPrompts platformName={platformName} />}
+      {activeTab === "discussions" && (
+        <PlatformDiscussions platformName={platformName} platformSlug={platformSlug} />
+      )}
+      {activeTab === "prompts" && (
+        <PlatformPrompts platformName={platformName} platformSlug={platformSlug} />
+      )}
     </>
   );
 }

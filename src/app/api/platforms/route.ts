@@ -11,6 +11,8 @@ export async function GET(request: NextRequest) {
   const privacy = params.get("privacy");
   const search = params.get("search");
   const featured = params.get("featured");
+  const hasMobileApp = params.get("hasMobileApp");
+  const mobile = params.get("mobile");
   const page = Math.max(1, parseInt(params.get("page") || "1"));
   const limit = Math.min(50, parseInt(params.get("limit") || "20"));
 
@@ -30,6 +32,15 @@ export async function GET(request: NextRequest) {
   }
   if (featured === "true") {
     where.featured = true;
+  }
+  if (hasMobileApp === "true") {
+    where.hasMobileApp = true;
+  }
+  if (mobile === "app") {
+    where.hasMobileApp = true;
+  }
+  if (mobile === "web") {
+    where.mobileWebFriendly = true;
   }
   if (search) {
     where.OR = [

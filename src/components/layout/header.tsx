@@ -1,28 +1,29 @@
-"use client";
+﻿"use client"
 
-import Link from "next/link";
-import { useState } from "react";
-import { Search, Menu, X, Rocket } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import Link from "next/link"
+import { useState } from "react"
+import { Search, Menu, X, Rocket } from "lucide-react"
 
 export function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<
     { id: string; slug: string; name: string; company: string | null }[]
-  >([]);
+  >([])
 
   async function handleSearch(q: string) {
-    setSearchQuery(q);
+    setSearchQuery(q)
     if (q.length < 2) {
-      setSearchResults([]);
-      return;
+      setSearchResults([])
+      return
     }
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-      const data = await res.json();
-      setSearchResults(data.results || []);
+      const res = await fetch("/api/search?q=" + encodeURIComponent(q))
+      const data = await res.json()
+      setSearchResults(data.results || [])
     } catch {
-      setSearchResults([]);
+      setSearchResults([])
     }
   }
 
@@ -34,7 +35,6 @@ export function Header() {
           Launchpad<span className="text-orange-400">HQ</span>
         </Link>
 
-        {/* Search */}
         <div className="relative mx-4 hidden flex-1 max-w-md md:block">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
           <input
@@ -49,11 +49,11 @@ export function Header() {
               {searchResults.map((r) => (
                 <Link
                   key={r.id}
-                  href={`/platform/${r.slug}`}
+                  href={"/platform/" + r.slug}
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800"
                   onClick={() => {
-                    setSearchQuery("");
-                    setSearchResults([]);
+                    setSearchQuery("")
+                    setSearchResults([])
                   }}
                 >
                   <span className="font-medium text-white">{r.name}</span>
@@ -66,39 +66,53 @@ export function Header() {
           )}
         </div>
 
-        {/* Nav */}
-        <nav className="hidden items-center gap-6 md:flex">
-          <Link
-            href="/discover"
-            className="text-sm text-gray-400 hover:text-white"
-          >
+        <nav className="hidden items-center gap-4 md:flex">
+          <Link href="/discover" className="text-sm text-gray-400 hover:text-white">
             Discover
           </Link>
-          <Link
-            href="/for-you"
-            className="text-sm text-gray-400 hover:text-white"
-          >
-            For You
+          <Link href="/workflows" className="text-sm text-gray-400 hover:text-white">
+            Workflows
           </Link>
-          <Link
-            href="/tutorials"
-            className="text-sm text-gray-400 hover:text-white"
-          >
-            Tutorials
+          <Link href="/quiz" className="text-sm text-gray-400 hover:text-white">
+            Quiz
           </Link>
-          <Link
-            href="/account"
-            className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600"
-          >
-            Sign In
+          <Link href="/for-you" className="text-sm text-gray-400 hover:text-white">
+            For you
           </Link>
+          <Link href="/pricing" className="text-sm text-gray-400 hover:text-white">
+            Pricing
+          </Link>
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/sign-up"
+              className="text-sm text-gray-400 hover:text-white"
+            >
+              Sign Up
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/account" className="text-sm text-gray-400 hover:text-white">
+              Account
+            </Link>
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "h-9 w-9",
+                  userButtonPopoverCard: "bg-gray-900 border border-gray-800",
+                },
+              }}
+            />
+          </SignedIn>
         </nav>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
+        <button className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
           {mobileOpen ? (
             <X className="h-6 w-6 text-white" />
           ) : (
@@ -107,32 +121,42 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="border-t border-gray-800 px-4 pb-4 pt-2 md:hidden">
-          <Link
-            href="/discover"
-            className="block py-2 text-gray-300"
-            onClick={() => setMobileOpen(false)}
-          >
+          <Link href="/discover" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
             Discover
           </Link>
-          <Link
-            href="/for-you"
-            className="block py-2 text-gray-300"
-            onClick={() => setMobileOpen(false)}
-          >
-            For You
+          <Link href="/workflows" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+            Workflows
           </Link>
-          <Link
-            href="/tutorials"
-            className="block py-2 text-gray-300"
-            onClick={() => setMobileOpen(false)}
-          >
-            Tutorials
+          <Link href="/quiz" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+            Quiz
           </Link>
+          <Link href="/for-you" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+            For you
+          </Link>
+          <Link href="/pricing" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+            Pricing
+          </Link>
+          <SignedOut>
+            <Link href="/sign-in" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+              Sign In
+            </Link>
+            <Link href="/sign-up" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+              Sign Up
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/account" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+              Account
+            </Link>
+            <div className="flex items-center gap-2 py-2">
+              <span className="text-sm text-gray-500">Signed in</span>
+              <UserButton afterSignOutUrl="/" />
+            </div>
+          </SignedIn>
         </div>
       )}
     </header>
-  );
+  )
 }

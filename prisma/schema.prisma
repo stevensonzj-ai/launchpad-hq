@@ -86,6 +86,8 @@ model Platform {
   tutorials     Tutorial[]
   userFavorites UserFavorite[]
   userProgress  UserProgress[]
+  prompts       Prompt[]
+  discussions   Discussion[]
 
   @@index([categoryId])
   @@index([costTier])
@@ -125,21 +127,31 @@ model User {
   avatarUrl     String?
 
   // Subscription
-  stripeCustomerId     String?   @unique
-  stripeSubscriptionId String?   @unique
-  plan                 Plan      @default(FREE)
-  planExpiresAt        DateTime?
+  stripeCustomerId       String?   @unique
+  stripeSubscriptionId     String?   @unique
+  stripeSubscriptionStatus String? // active, trialing, past_due, canceled, unpaid
+  plan                   Plan      @default(FREE)
+  planExpiresAt          DateTime?
+  trialEndsAt            DateTime?
 
   // Onboarding preferences
   onboardingComplete Boolean @default(false)
   preferences        UserPreferences?
 
   // Relations
-  favorites  UserFavorite[]
-  progress   UserProgress[]
-  reviews    Review[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  favorites          UserFavorite[]
+  progress           UserProgress[]
+  reviews            Review[]
+  prompts            Prompt[]
+  promptRatings      PromptRating[]
+  discussions        Discussion[]
+  discussionReplies  DiscussionReply[]
+  discussionVotes    DiscussionVote[]
+  replyVotes         DiscussionReplyVote[]
+  discussionReports  DiscussionReport[]
+  promptReports      PromptReport[]
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@map("users")
 }
@@ -162,6 +174,9 @@ model UserPreferences {
   industries     String[]   // ["marketing", "education", "engineering"]
   teamSize       String?    // "solo", "small", "medium", "enterprise"
   priorities     String[]   // ["ease_of_use", "privacy", "integrations"]
+
+  quizAnswers     Json?
+  quizCompletedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -257,24 +272,139 @@ model Review {
   @@map("reviews")
 }
 
-model Discussion {
-  id         String   @id @default(cuid())
-  platformId String
-  userId     String?
-  title      String
-  body       String
-  solution   String?
-  upvotes    Int      @default(0)
-  createdAt  DateTime @default(now())
-}
+// ── Prompt library (logged-in submit) ─────────────────────────
 
 model Prompt {
   id         String   @id @default(cuid())
   platformId String
+  platform   Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
   userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
   title      String
-  prompt     String
-  output     String?
-  tags       String[]
-  createdAt  DateTime @default(now())
+  promptText String   @map("prompt")
+  outputUrl  String?
+  author     String?
+  ratingSum  Int      @default(0)
+  ratingCount Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ratings PromptRating[]
+  reports PromptReport[]
+
+  @@index([platformId])
+  @@index([createdAt])
+  @@map("prompts")
+}
+
+model PromptRating {
+  id       String @id @default(cuid())
+  promptId String
+  userId   String
+  stars    Int
+  prompt   Prompt @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, promptId])
+  @@index([promptId])
+  @@map("prompt_ratings")
+}
+
+model PromptReport {
+  id       String @id @default(cuid())
+  promptId String
+  userId   String
+  reason   String
+  prompt   Prompt @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([promptId])
+  @@map("prompt_reports")
+}
+
+// ── Discussions ───────────────────────────────────────────────
+
+model Discussion {
+  id         String   @id @default(cuid())
+  platformId String
+  platform   Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  title    String
+  body     String
+  solution String?
+  upvotes  Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  replies DiscussionReply[]
+  votes   DiscussionVote[]
+  reports DiscussionReport[]
+
+  @@index([platformId])
+  @@index([createdAt])
+  @@map("discussions")
+}
+
+model DiscussionReply {
+  id           String     @id @default(cuid())
+  discussionId String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  userId       String?
+  user         User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  body    String
+  upvotes Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  votes DiscussionReplyVote[]
+
+  @@index([discussionId])
+  @@map("discussion_replies")
+}
+
+model DiscussionVote {
+  id           String     @id @default(cuid())
+  discussionId String
+  userId       String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, discussionId])
+  @@map("discussion_votes")
+}
+
+model DiscussionReplyVote {
+  id      String          @id @default(cuid())
+  replyId String
+  userId  String
+  reply   DiscussionReply @relation(fields: [replyId], references: [id], onDelete: Cascade)
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, replyId])
+  @@map("discussion_reply_votes")
+}
+
+model DiscussionReport {
+  id           String     @id @default(cuid())
+  discussionId String
+  userId       String
+  reason       String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([discussionId])
+  @@map("discussion_reports")
 }

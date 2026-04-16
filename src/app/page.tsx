@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles, BookOpen, Rocket, Star, Zap, Shield } from "lucide-react";
+import { ArrowRight, Search, Sparkles, Rocket, Star, Zap, Shield, Layers } from "lucide-react";
+import { getAllWorkflows } from "@/data/workflows";
+import { WorkflowCard } from "@/components/workflows/workflow-card";
 
 export default function HomePage() {
+  const featuredWorkflows = getAllWorkflows().slice(0, 3);
   return (
     <div className="min-h-screen bg-gray-950">
       {/* Hero */}
@@ -43,7 +46,7 @@ export default function HomePage() {
               <Rocket className="h-5 w-5" /> Explore All Tools <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
-              href="/onboarding"
+              href="/quiz"
               className="flex items-center gap-2 rounded-xl border border-gray-700 px-8 py-3.5 text-lg font-semibold text-white hover:border-orange-500/50 hover:bg-gray-900"
             >
               <Sparkles className="h-5 w-5 text-orange-400" /> Get Matched
@@ -94,6 +97,33 @@ export default function HomePage() {
               powerful multi-tool workflows with confidence.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Workflow templates */}
+      <section className="mx-auto max-w-5xl px-4 pb-20">
+        <div className="mb-8 flex flex-col items-center text-center sm:flex-row sm:justify-between sm:text-left">
+          <div>
+            <h2 className="mb-2 flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-orange-400 sm:justify-start">
+              <Layers className="h-4 w-4" />
+              Workflow templates
+            </h2>
+            <p className="text-2xl font-bold text-white">Optimal, hybrid &amp; budget stacks</p>
+            <p className="mt-2 max-w-xl text-sm text-gray-400">
+              Same job, three price points. Compare suggested tools side by side, then dive into each platform profile.
+            </p>
+          </div>
+          <Link
+            href="/workflows"
+            className="mt-6 inline-flex items-center gap-2 rounded-xl border border-gray-700 px-5 py-2.5 text-sm font-semibold text-white hover:border-orange-500/50 hover:bg-gray-900 sm:mt-0"
+          >
+            View all <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {featuredWorkflows.map((w) => (
+            <WorkflowCard key={w.slug} workflow={w} compact />
+          ))}
         </div>
       </section>
 
