@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { Check, Loader2 } from "lucide-react";
 
 export default function PricingPage() {
+  const { isSignedIn, isLoaded } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,17 +56,16 @@ export default function PricingPage() {
             <p className="mt-1 text-sm text-green-400">7-day free trial · cancel anytime</p>
             {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
           </div>
-          <SignedOut>
-            <SignInButton mode="modal">
-              <button
-                type="button"
-                className="rounded-xl bg-orange-500 px-8 py-3 font-semibold text-white hover:bg-orange-600"
-              >
-                Sign in to subscribe
-              </button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
+          {!isLoaded ? (
+            <div className="h-12 w-32 animate-pulse rounded-xl bg-gray-800" />
+          ) : !isSignedIn ? (
+            <Link
+              href="/sign-in"
+              className="rounded-xl bg-orange-500 px-8 py-3 font-semibold text-white hover:bg-orange-600"
+            >
+              Sign in to subscribe
+            </Link>
+          ) : (
             <div className="flex flex-col gap-2">
               <button
                 type="button"
@@ -85,7 +85,7 @@ export default function PricingPage() {
                 Manage billing
               </button>
             </div>
-          </SignedIn>
+          )}
         </div>
 
         <ul className="mt-8 space-y-3 border-t border-gray-800 pt-8 text-sm text-gray-300">

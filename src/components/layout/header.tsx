@@ -1,11 +1,12 @@
 ﻿"use client"
 
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
+import { UserButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link"
 import { useState } from "react"
 import { Search, Menu, X, Rocket } from "lucide-react"
 
 export function Header() {
+  const { isSignedIn, isLoaded } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<
@@ -82,34 +83,35 @@ export function Header() {
           <Link href="/pricing" className="text-sm text-gray-400 hover:text-white">
             Pricing
           </Link>
-          <SignedOut>
-            <Link
-              href="/sign-in"
-              className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/sign-up"
-              className="text-sm text-gray-400 hover:text-white"
-            >
-              Sign Up
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link href="/account" className="text-sm text-gray-400 hover:text-white">
-              Account
-            </Link>
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  avatarBox: "h-9 w-9",
-                  userButtonPopoverCard: "bg-gray-900 border border-gray-800",
-                },
-              }}
-            />
-          </SignedIn>
+          {isLoaded && !isSignedIn && (
+            <>
+              <Link
+                href="/sign-in"
+                className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600"
+              >
+                Sign In
+              </Link>
+              <Link href="/sign-up" className="text-sm text-gray-400 hover:text-white">
+                Sign Up
+              </Link>
+            </>
+          )}
+          {isLoaded && isSignedIn && (
+            <>
+              <Link href="/account" className="text-sm text-gray-400 hover:text-white">
+                Account
+              </Link>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: "h-9 w-9",
+                    userButtonPopoverCard: "bg-gray-900 border border-gray-800",
+                  },
+                }}
+              />
+            </>
+          )}
         </nav>
 
         <button className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
@@ -138,23 +140,27 @@ export function Header() {
           <Link href="/pricing" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
             Pricing
           </Link>
-          <SignedOut>
-            <Link href="/sign-in" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-              Sign In
-            </Link>
-            <Link href="/sign-up" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-              Sign Up
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link href="/account" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-              Account
-            </Link>
-            <div className="flex items-center gap-2 py-2">
-              <span className="text-sm text-gray-500">Signed in</span>
-              <UserButton afterSignOutUrl="/" />
-            </div>
-          </SignedIn>
+          {isLoaded && !isSignedIn && (
+            <>
+              <Link href="/sign-in" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+                Sign In
+              </Link>
+              <Link href="/sign-up" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+                Sign Up
+              </Link>
+            </>
+          )}
+          {isLoaded && isSignedIn && (
+            <>
+              <Link href="/account" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+                Account
+              </Link>
+              <div className="flex items-center gap-2 py-2">
+                <span className="text-sm text-gray-500">Signed in</span>
+                <UserButton afterSignOutUrl="/" />
+              </div>
+            </>
+          )}
         </div>
       )}
     </header>

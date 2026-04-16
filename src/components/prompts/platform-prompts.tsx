@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
 import { Loader2, Star, Flag } from "lucide-react";
 
 type PromptRow = {
@@ -24,6 +25,7 @@ export function PlatformPrompts({
   platformSlug: string;
   showFullLink?: boolean;
 }) {
+  const { isSignedIn, isLoaded } = useAuth();
   const [items, setItems] = useState<PromptRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
@@ -106,18 +108,16 @@ export function PlatformPrompts({
         they violate guidelines.
       </div>
 
-      <SignedOut>
+      {isLoaded && !isSignedIn && (
         <p className="mt-6 text-center text-sm text-gray-500">
-          <SignInButton mode="modal">
-            <button type="button" className="font-medium text-orange-400 hover:underline">
-              Sign in
-            </button>
-          </SignInButton>{" "}
+          <Link href="/sign-in" className="font-medium text-orange-400 hover:underline">
+            Sign in
+          </Link>{" "}
           to submit prompts and rate others.
         </p>
-      </SignedOut>
+      )}
 
-      <SignedIn>
+      {isLoaded && isSignedIn && (
         <form onSubmit={submit} className="mt-6 space-y-3 border-t border-gray-800 pt-6">
           <p className="text-sm font-medium text-white">Add a prompt</p>
           <input
@@ -150,7 +150,7 @@ export function PlatformPrompts({
             {submitting ? "Submitting…" : "Submit prompt"}
           </button>
         </form>
-      </SignedIn>
+      )}
 
       <div className="mt-8 border-t border-gray-800 pt-6">
         <p className="mb-4 text-sm font-medium text-gray-400">Community prompts</p>
@@ -185,7 +185,7 @@ export function PlatformPrompts({
                     Output link
                   </a>
                 )}
-                <SignedIn>
+                {isLoaded && isSignedIn && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {[1, 2, 3, 4, 5].map((s) => (
                       <button
@@ -205,7 +205,7 @@ export function PlatformPrompts({
                       <Flag className="h-3 w-3" /> Report
                     </button>
                   </div>
-                </SignedIn>
+                )}
               </li>
             ))}
           </ul>

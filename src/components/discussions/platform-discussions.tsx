@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
 import { ChevronUp, Flag, Loader2, MessageCircle } from "lucide-react";
 
 type Reply = {
@@ -32,6 +33,7 @@ export function PlatformDiscussions({
   platformSlug: string;
   showFullLink?: boolean;
 }) {
+  const { isSignedIn, isLoaded } = useAuth();
   const [items, setItems] = useState<DiscussionRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
@@ -121,18 +123,16 @@ export function PlatformDiscussions({
         guidelines.
       </div>
 
-      <SignedOut>
+      {isLoaded && !isSignedIn && (
         <p className="mt-6 text-center text-sm text-gray-500">
-          <SignInButton mode="modal">
-            <button type="button" className="font-medium text-orange-400 hover:underline">
-              Sign in
-            </button>
-          </SignInButton>{" "}
+          <Link href="/sign-in" className="font-medium text-orange-400 hover:underline">
+            Sign in
+          </Link>{" "}
           to start threads and reply.
         </p>
-      </SignedOut>
+      )}
 
-      <SignedIn>
+      {isLoaded && isSignedIn && (
         <form onSubmit={submitThread} className="mt-6 space-y-3 border-t border-gray-800 pt-6">
           <p className="text-sm font-medium text-white">New thread</p>
           <input
@@ -158,7 +158,7 @@ export function PlatformDiscussions({
             Post thread
           </button>
         </form>
-      </SignedIn>
+      )}
 
       <div className="mt-8 border-t border-gray-800 pt-6">
         <p className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-400">
@@ -188,7 +188,7 @@ export function PlatformDiscussions({
                       <ChevronUp className="h-3.5 w-3.5" />
                       {d.upvotes}
                     </button>
-                    <SignedIn>
+                    {isLoaded && isSignedIn && (
                       <button
                         type="button"
                         onClick={() => reportDiscussion(d.id)}
@@ -196,7 +196,7 @@ export function PlatformDiscussions({
                       >
                         <Flag className="h-3.5 w-3.5" />
                       </button>
-                    </SignedIn>
+                    )}
                   </div>
                 </div>
                 <p className="mt-2 text-sm text-gray-300">{d.body}</p>
@@ -213,7 +213,7 @@ export function PlatformDiscussions({
                         <p className="text-gray-300">{r.body}</p>
                         <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
                           <span>{r.author}</span>
-                          <SignedIn>
+                          {isLoaded && isSignedIn && (
                             <button
                               type="button"
                               onClick={() => voteReply(r.id)}
@@ -222,50 +222,52 @@ export function PlatformDiscussions({
                               <ChevronUp className="h-3 w-3" />
                               {r.upvotes}
                             </button>
-                          </SignedIn>
+                          )}
                         </div>
                       </li>
                     ))}
                   </ul>
                 )}
 
-                <SignedIn>
-                  {replyTo === d.id ? (
-                    <div className="mt-3 flex flex-col gap-2">
-                      <textarea
-                        value={replyBody}
-                        onChange={(e) => setReplyBody(e.target.value)}
-                        placeholder="Your reply"
-                        rows={2}
-                        className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white"
-                      />
-                      <div className="flex gap-2">
-                        <button
-                          type="button"
-                          onClick={() => submitReply(d.id)}
-                          className="rounded bg-orange-500 px-3 py-1 text-xs text-white"
-                        >
-                          Reply
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setReplyTo(null)}
-                          className="text-xs text-gray-500"
-                        >
-                          Cancel
-                        </button>
+                {isLoaded && isSignedIn && (
+                  <>
+                    {replyTo === d.id ? (
+                      <div className="mt-3 flex flex-col gap-2">
+                        <textarea
+                          value={replyBody}
+                          onChange={(e) => setReplyBody(e.target.value)}
+                          placeholder="Your reply"
+                          rows={2}
+                          className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white"
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => submitReply(d.id)}
+                            className="rounded bg-orange-500 px-3 py-1 text-xs text-white"
+                          >
+                            Reply
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setReplyTo(null)}
+                            className="text-xs text-gray-500"
+                          >
+                            Cancel
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setReplyTo(d.id)}
-                      className="mt-3 text-xs text-orange-400 hover:underline"
-                    >
-                      Reply
-                    </button>
-                  )}
-                </SignedIn>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setReplyTo(d.id)}
+                        className="mt-3 text-xs text-orange-400 hover:underline"
+                      >
+                        Reply
+                      </button>
+                    )}
+                  </>
+                )}
               </li>
             ))}
           </ul>
