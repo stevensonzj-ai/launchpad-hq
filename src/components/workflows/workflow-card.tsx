@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
 import type { WorkflowTemplate } from "@/data/workflows";
+import { WorkflowToolName } from "@/components/workflows/workflow-tool-name";
 
 const tierStyle = {
   optimal: "border-amber-500/40 bg-amber-500/5 text-amber-200",
@@ -8,7 +9,15 @@ const tierStyle = {
   budget: "border-emerald-500/40 bg-emerald-500/5 text-emerald-200",
 } as const;
 
-export function WorkflowCard({ workflow, compact }: { workflow: WorkflowTemplate; compact?: boolean }) {
+export function WorkflowCard({
+  workflow,
+  compact,
+  validSlugs,
+}: {
+  workflow: WorkflowTemplate;
+  compact?: boolean;
+  validSlugs: ReadonlySet<string>;
+}) {
   return (
     <Link
       href={`/workflows/${workflow.slug}`}
@@ -29,7 +38,19 @@ export function WorkflowCard({ workflow, compact }: { workflow: WorkflowTemplate
             return (
               <div key={key} className={`rounded-lg border px-2 py-2 text-xs ${tierStyle[key]}`}>
                 <p className="font-semibold">{t.name}</p>
-                <p className="mt-0.5 truncate text-[11px] opacity-90">{t.tools.map((x) => x.name).join(" · ")}</p>
+                <p className="mt-0.5 truncate text-[11px] opacity-90">
+                  {t.tools.map((x, i) => (
+                    <span key={`${key}-${i}`}>
+                      {i > 0 ? " · " : null}
+                      <WorkflowToolName
+                        name={x.name}
+                        slug={x.slug}
+                        validSlugs={validSlugs}
+                        disableLink
+                      />
+                    </span>
+                  ))}
+                </p>
               </div>
             );
           })}

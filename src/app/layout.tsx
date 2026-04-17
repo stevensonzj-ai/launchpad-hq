@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/nextjs"
+﻿import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
@@ -18,13 +18,15 @@ export const metadata: Metadata = {
   description: "Your AI mission control center. 168+ vetted tools across 15 categories.",
 }
 
+const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? ""
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider publishableKey={" pk_test_ZGV2b3RlZC1rb2ktOTUuY2xlcmsuYWNjb3VudHMuZGV2JA\}>
+    <ClerkProvider publishableKey={clerkPublishableKey}>
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <body className="min-h-full flex flex-col bg-gray-950 text-white">
           {children}

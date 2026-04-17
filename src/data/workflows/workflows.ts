@@ -67,7 +67,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         tagline: "Balanced",
         tools: [
           { name: "Adobe Firefly", slug: "adobe-firefly" },
-          { name: "Canva AI", slug: "canva-ai" },
+          { name: "Canva AI", slug: "canva-magic-studio" },
         ],
         note: "Firefly for generation, Canva for layouts and brand kits.",
       },
@@ -152,7 +152,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         name: "Budget",
         tagline: "Free-first",
         tools: [
-          { name: "Luma Dream Machine", slug: "luma-dream-machine" },
+          { name: "Luma Dream Machine", slug: "luma-dream-machine-ray3" },
           { name: "DaVinci Resolve" },
         ],
         note: "Generative clips where free; Resolve for assembly and color.",
@@ -208,7 +208,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         name: "Optimal",
         tagline: "Accuracy + workflow",
         tools: [
-          { name: "Otter.ai" },
+          { name: "Otter.ai", slug: "otter-ai" },
           { name: "Notion AI", slug: "notion-ai" },
         ],
         note: "Live notes with speaker ID; push to your knowledge base.",
@@ -284,7 +284,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         name: "Optimal",
         tagline: "Brand-safe scale",
         tools: [
-          { name: "Jasper AI" },
+          { name: "Jasper AI", slug: "jasper" },
           { name: "Buffer" },
         ],
         note: "Campaign workflows plus scheduling; train on your tone.",
@@ -295,7 +295,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         tagline: "Balanced",
         tools: [
           { name: "ChatGPT", slug: "chatgpt" },
-          { name: "Canva AI", slug: "canva-ai" },
+          { name: "Canva AI", slug: "canva-magic-studio" },
         ],
         note: "Copy plus visual templates in one loop.",
       },
@@ -322,7 +322,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         name: "Optimal",
         tagline: "Enterprise-ready",
         tools: [
-          { name: "Otter.ai" },
+          { name: "Otter.ai", slug: "otter-ai" },
           { name: "Zapier", slug: "zapier" },
         ],
         note: "Transcripts into CRM or PM tools with automations.",

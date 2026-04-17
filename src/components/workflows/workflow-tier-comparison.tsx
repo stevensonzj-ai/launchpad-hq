@@ -22,7 +22,13 @@ const tierHeader = {
   },
 } as const;
 
-export function WorkflowTierComparison({ workflow }: { workflow: WorkflowTemplate }) {
+export function WorkflowTierComparison({
+  workflow,
+  validSlugs,
+}: {
+  workflow: WorkflowTemplate;
+  validSlugs: ReadonlySet<string>;
+}) {
   const keys = ["optimal", "hybrid", "budget"] as const;
 
   return (
@@ -47,7 +53,7 @@ export function WorkflowTierComparison({ workflow }: { workflow: WorkflowTemplat
                 {t.tools.map((tool, i) => (
                   <li key={i} className="flex items-baseline gap-2 text-sm text-gray-300">
                     <span className="text-gray-600">•</span>
-                    <WorkflowToolName name={tool.name} slug={tool.slug} />
+                    <WorkflowToolName name={tool.name} slug={tool.slug} validSlugs={validSlugs} />
                   </li>
                 ))}
               </ul>
