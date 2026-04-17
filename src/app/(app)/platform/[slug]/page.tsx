@@ -7,17 +7,19 @@ import { ExternalLink, Shield, Zap, Clock, Star } from "lucide-react";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
+import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const platform = await prisma.platform.findUnique({
     where: { slug },
-    select: { name: true, primaryUse: true },
+    select: { name: true, primaryUse: true, description: true },
   });
   if (!platform) return { title: "Not Found" };
+  const metaDesc = platform.description?.trim() || platform.primaryUse || undefined;
   return {
     title: `${platform.name} | Launchpad HQ`,
-    description: platform.primaryUse,
+    description: metaDesc,
   };
 }
 
@@ -65,23 +67,24 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* Header */}
-      <div className="mb-8 flex items-start justify-between">
+      <div className="mb-8 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white">{platform.name}</h1>
           {platform.company && <p className="mt-1 text-gray-400">by {platform.company}</p>}
-          <p className="mt-3 text-lg text-gray-300">{platform.primaryUse}</p>
         </div>
         {platform.website && (
           <a
             href={platform.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-orange-600"
+            className="flex shrink-0 items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-orange-600"
           >
             Visit <ExternalLink className="h-4 w-4" />
           </a>
         )}
       </div>
+
+      <PlatformOverviewSections platform={platform} />
 
       {/* Quick stats */}
       <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -140,14 +143,6 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
                   <p className="text-xs text-gray-500">When to upgrade: {platform.upgradeTriggers}</p>
                 </div>
               )}
-            </section>
-          )}
-
-          {/* Use Cases */}
-          {platform.primaryUseCases && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
-              <h2 className="mb-3 text-lg font-semibold text-white">Use Cases</h2>
-              <p className="text-sm text-gray-300">{platform.primaryUseCases}</p>
             </section>
           )}
 

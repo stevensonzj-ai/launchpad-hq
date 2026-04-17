@@ -49,11 +49,16 @@ export function WorkflowTierComparison({
             </div>
             <div className="flex flex-1 flex-col px-4 py-4">
               <p className="mb-3 text-xs font-medium uppercase tracking-wide text-gray-500">Suggested tools</p>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {t.tools.map((tool, i) => (
-                  <li key={i} className="flex items-baseline gap-2 text-sm text-gray-300">
+                  <li key={i} className="flex gap-2 text-sm text-gray-300">
                     <span className="text-gray-600">•</span>
-                    <WorkflowToolName name={tool.name} slug={tool.slug} validSlugs={validSlugs} />
+                    <WorkflowToolName
+                      name={tool.name}
+                      slug={tool.slug}
+                      validSlugs={validSlugs}
+                      rationale={tool.rationale}
+                    />
                   </li>
                 ))}
               </ul>

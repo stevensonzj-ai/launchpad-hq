@@ -1,11 +1,18 @@
 export type WorkflowTierId = "optimal" | "hybrid" | "budget";
 
 /** One stack option: best tools / balanced / free-first */
+export type WorkflowTool = {
+  name: string;
+  slug?: string;
+  /** Why this tool fits this tier in this workflow (1–2 beginner-friendly sentences). */
+  rationale: string;
+};
+
 export type WorkflowTier = {
   id: WorkflowTierId;
   name: string;
   tagline: string;
-  tools: { name: string; slug?: string }[];
+  tools: WorkflowTool[];
   note?: string;
 };
 

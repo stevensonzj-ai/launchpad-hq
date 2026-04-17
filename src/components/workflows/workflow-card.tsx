@@ -38,19 +38,19 @@ export function WorkflowCard({
             return (
               <div key={key} className={`rounded-lg border px-2 py-2 text-xs ${tierStyle[key]}`}>
                 <p className="font-semibold">{t.name}</p>
-                <p className="mt-0.5 truncate text-[11px] opacity-90">
+                <ul className="mt-1.5 space-y-2">
                   {t.tools.map((x, i) => (
-                    <span key={`${key}-${i}`}>
-                      {i > 0 ? " · " : null}
+                    <li key={`${key}-${i}`}>
                       <WorkflowToolName
                         name={x.name}
                         slug={x.slug}
                         validSlugs={validSlugs}
+                        rationale={x.rationale}
                         disableLink
                       />
-                    </span>
+                    </li>
                   ))}
-                </p>
+                </ul>
               </div>
             );
           })}
