@@ -8,6 +8,7 @@
         "start": "next start",
         "lint": "eslint",
         "db:update-mobile": "tsx scripts/update-platform-mobile-fields.ts",
+        "db:seed-platforms": "tsx scripts/seed-missing-platforms.ts",
         "postinstall": "prisma generate"
     },
     "dependencies": {

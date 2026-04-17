@@ -97,12 +97,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Top-tier aesthetic quality for this workflow. Best when you want standout visuals and accept a paid stack.",
           },
           {
-            name: "Adobe Photoshop",
+            name: "Leonardo AI",
+            slug: "leonardo-ai",
             rationale:
-              "Industry-standard finishing and compositing after generation. Use when pixel-level control matters.",
+              "Fast iteration and strong models in-app—ideal second step after Midjourney for more variants or a different aesthetic.",
           },
         ],
-        note: "High-end generation plus pro retouching when needed.",
+        note: "Premium generation plus a second AI image tool for iteration and alternatives.",
       },
       hybrid: {
         id: "hybrid",
@@ -165,6 +166,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
           },
           {
             name: "Descript",
+            slug: "descript",
             rationale:
               "Edit audio like a doc and clean up takes fast. Pairs with premium TTS for a full studio-style pipeline.",
           },
@@ -183,12 +185,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Invest in voice quality while saving on other tools. Balanced if narration is the main spend.",
           },
           {
-            name: "Audacity",
+            name: "Murf AI",
+            slug: "murf-ai",
             rationale:
-              "Free desktop cleanup and noise reduction. Keeps hybrid stacks affordable after paid TTS.",
+              "Compare a second premium TTS without Audacity—useful for A/B voices before you lock a take.",
           },
         ],
-        note: "Premium TTS with free desktop cleanup.",
+        note: "Two Launchpad voice tools: flagship ElevenLabs plus Murf for alternatives.",
       },
       budget: {
         id: "budget",
@@ -197,13 +200,15 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         tools: [
           {
             name: "Murf AI",
+            slug: "murf-ai",
             rationale:
               "Try free tiers for voiceovers before upgrading. Fits narrated explainers on a tight budget.",
           },
           {
             name: "PlayHT",
+            slug: "play-ht",
             rationale:
-              "Alternative free-first TTS to compare voices. Good for experiments before committing to a paid voice stack.",
+              "Second free-first TTS to compare voices side by side—good before you commit to a paid voice stack.",
           },
         ],
         note: "Use free tiers until you need commercial licensing.",
@@ -228,12 +233,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Generative video and effects at pro level. Optimal when AI shots are central to your edits.",
           },
           {
-            name: "Adobe Premiere Pro",
+            name: "InVideo AI",
+            slug: "invideo-ai",
             rationale:
-              "Finish and color in a pro NLE. Best when you already live in Premiere or need maximum control.",
+              "Templates and AI-assisted assembly in one product—pairs with Runway for gen-to-edit without a legacy NLE.",
           },
         ],
-        note: "Generative video plus a pro NLE you already know.",
+        note: "AI generation plus template-based editing in tools we list on Launchpad.",
       },
       hybrid: {
         id: "hybrid",
@@ -247,12 +253,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Template-heavy edits with AI assists—faster than building from scratch. Balanced cost for social content.",
           },
           {
-            name: "CapCut",
+            name: "Google Veo",
+            slug: "google-veo-3-1",
             rationale:
-              "Free or low-cost mobile and desktop finishing. Great for vertical shorts after AI-generated clips.",
+              "Google’s generative video model for clips and ideas—pairs with InVideo for a full AI-first hybrid stack.",
           },
         ],
-        note: "AI assembly and templates; mobile finishing with CapCut.",
+        note: "Two Launchpad-listed AI video tools: templates plus generative clips.",
       },
       budget: {
         id: "budget",
@@ -263,15 +270,16 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             name: "Luma Dream Machine",
             slug: "luma-dream-machine-ray3",
             rationale:
-              "Generate clips on a generous free path when available. Budget-friendly B-roll before heavy editing.",
+              "Generate clips on a generous free path when available. Budget-friendly B-roll before heavier editing.",
           },
           {
-            name: "DaVinci Resolve",
+            name: "Google Veo",
+            slug: "google-veo-3-1",
             rationale:
-              "Professional editing and color for $0. Stretch budget furthest by pairing free gen with free NLE.",
+              "Extra generative shots on Google’s stack—stays $0-friendly when your quota allows; good variety next to Luma.",
           },
         ],
-        note: "Generative clips where free; Resolve for assembly and color.",
+        note: "Two AI video generators you can open from Launchpad—no non-AI NLE required.",
       },
     },
   },
@@ -313,12 +321,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Long-context reasoning for design and refactors. Hybrid when you want one strong model without full IDE lock-in.",
           },
           {
-            name: "VS Code",
+            name: "Gemini",
+            slug: "gemini",
             rationale:
-              "Free editor with rich extensions. Balance cost by using Claude in browser or API alongside a free IDE.",
+              "Second assistant for quick tries and multimodal snippets—pairs with Claude without listing a non-AI editor.",
           },
         ],
-        note: "Chat for architecture; editor for implementation.",
+        note: "Two AI assistants for architecture and fast iteration—no generic IDE required.",
       },
       budget: {
         id: "budget",
@@ -375,6 +384,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         tools: [
           {
             name: "Descript",
+            slug: "descript",
             rationale:
               "Edit audio via transcript—great accuracy for podcasts. Hybrid when you need pro cleanup without full enterprise stack.",
           },
@@ -487,7 +497,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         tools: [
           {
             name: "Jasper AI",
-            slug: "jasper",
+            slug: "jasper-ai",
             rationale:
               "Campaign-focused copy with brand controls. Optimal when marketing needs repeatable, on‑voice output at scale.",
           },
@@ -531,12 +541,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Free drafting for captions and ideas. Best budget option when every dollar counts.",
           },
           {
-            name: "CapCut",
+            name: "InVideo AI",
+            slug: "invideo-ai",
             rationale:
-              "Free editing for vertical video that pairs with your AI-written scripts. Stretch organic reach without paid suites.",
+              "Template-based short video on a Launchpad profile—avoids non-listed editors while still fitting budget workflows.",
           },
         ],
-        note: "Draft in chat; short-form video in a mobile editor.",
+        note: "Draft in chat; assemble short video with a listed AI video tool.",
       },
     },
   },
