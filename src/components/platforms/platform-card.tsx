@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Globe, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { displayCategoryName } from "@/lib/categories";
 
 interface PlatformCardProps {
   slug: string;
@@ -82,7 +83,7 @@ export function PlatformCard({
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
           {difficultyLevel.toLowerCase()}
         </span>
-        <span className="text-xs text-gray-600">{category.name}</span>
+        <span className="text-xs text-gray-600">{displayCategoryName(category.name)}</span>
         {hasMobileApp && (
           <span
             className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs font-medium text-emerald-400"
@@ -105,7 +106,7 @@ export function PlatformCard({
 
       {freeTierFeatures && (
         <p className="line-clamp-1 text-xs text-gray-500">
-          Free: {freeTierFeatures}
+          Free: {freeTierFeatures.replace(/^\s*free\s*:\s*/i, "")}
         </p>
       )}
     </Link>

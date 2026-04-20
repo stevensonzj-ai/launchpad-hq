@@ -2,6 +2,7 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import { getPlatformCount, roundDownToTen } from "@/lib/platforms"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,9 +14,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: "Launchpad HQ - Your AI Mission Control",
-  description: "Your AI mission control center. 168+ vetted tools across 15 categories.",
+export async function generateMetadata(): Promise<Metadata> {
+  const count = roundDownToTen(await getPlatformCount())
+  return {
+    title: "Launchpad HQ - Your AI Mission Control",
+    description: `Your AI mission control center. ${count}+ vetted tools across 15 categories.`,
+  }
 }
 
 const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? ""

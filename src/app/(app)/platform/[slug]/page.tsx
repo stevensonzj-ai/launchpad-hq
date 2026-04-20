@@ -3,11 +3,12 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ExternalLink, Shield, Zap, Clock, Star } from "lucide-react";
+import { ExternalLink, Shield, Zap, Clock } from "lucide-react";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
+import { displayCategoryName } from "@/lib/categories";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -60,7 +61,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
         <Link href={`/discover?category=${platform.category.slug}`} className="hover:text-white">
-          {platform.category.name}
+          {displayCategoryName(platform.category.name)}
         </Link>
         <span>/</span>
         <span className="text-gray-300">{platform.name}</span>

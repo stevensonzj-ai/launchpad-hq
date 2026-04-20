@@ -12,10 +12,12 @@ import {
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
+import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
 
 export default async function HomePage() {
   const featuredWorkflows = getAllWorkflows().slice(0, 3);
-  const validSlugs = await getPlatformSlugSet();
+  const [validSlugs, rawCount] = await Promise.all([getPlatformSlugSet(), getPlatformCount()]);
+  const platformCount = roundDownToTen(rawCount);
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -58,7 +60,7 @@ export default async function HomePage() {
             with confidence
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-400">
-            168+ vetted AI tools across 15 categories. Find the perfect platforms for your goals, budget, and skill
+            {platformCount}+ vetted AI tools across 15 categories. Find the perfect platforms for your goals, budget, and skill
             level &mdash; in minutes, not months.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
@@ -85,7 +87,7 @@ export default async function HomePage() {
           {/* Trust badges */}
           <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
             <span className="flex items-center gap-1.5">
-              <Star className="h-4 w-4 text-yellow-500" /> 168 vetted platforms
+              <Star className="h-4 w-4 text-yellow-500" /> {platformCount}+ vetted platforms
             </span>
             <span className="flex items-center gap-1.5">
               <Shield className="h-4 w-4 text-blue-400" /> Free tier analysis
