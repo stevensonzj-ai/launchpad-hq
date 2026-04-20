@@ -1,13 +1,18 @@
 export const dynamic = "force-dynamic";
 
+import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
+import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
 
-export const metadata = {
-  title: "Discover AI Tools | Launchpad HQ",
-  description: "Browse 168+ vetted AI platforms across 15 categories on LaunchpadHQ.io",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const count = roundDownToTen(await getPlatformCount());
+  return {
+    title: "Discover AI Tools | Launchpad HQ",
+    description: `Browse ${count}+ vetted AI platforms across 15 categories on LaunchpadHQ.io`,
+  };
+}
 
 function buildDiscoverQuery(parts: {
   category?: string;
