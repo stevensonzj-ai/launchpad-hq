@@ -105,7 +105,7 @@ export function PlatformCard({
 
       {freeTierFeatures && (
         <p className="line-clamp-1 text-xs text-gray-500">
-          Free: {freeTierFeatures}
+          Free: {freeTierFeatures.replace(/^\s*free\s*:\s*/i, "")}
         </p>
       )}
     </Link>
