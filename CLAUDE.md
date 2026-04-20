@@ -29,7 +29,7 @@ The project is further along than earlier specs suggest. Auth and payments are a
 - **Payments: Stripe** is fully integrated. `stripe ^21.0.1` is installed, routes exist at `src/app/api/stripe/{checkout,portal,webhook}/route.ts`, and `src/lib/stripe.ts` provides the shared client. Environment variables `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, and `STRIPE_PRICE_ID` are configured in `.env.local`.
 
 - **Tech stack confirmed:**
-  - Next.js 16.2.2 with App Router, route groups `(app)/` and `(marketing)/`
+  - Next.js 16.2.2 with App Router, using an `(app)/` route group for the authenticated app surface
   - React 19.2.4
   - Prisma 7.6.0 with the `@prisma/adapter-pg` adapter (modern setup, different from Prisma 5 defaults — generic Prisma tutorials may not apply directly)
   - PostgreSQL on Neon
@@ -40,12 +40,12 @@ The project is further along than earlier specs suggest. Auth and payments are a
 - **Feature scaffolds that exist (quality varies — audit before polishing):**
   - Platform discovery (`/discover`, `/platform/[slug]`)
   - Workflows (`/workflows` + `[slug]`)
-  - Tutorials (`/tutorials`) — only `chatgpt-getting-started` exists, tutorial library is effectively empty
+  - Tutorials (`/tutorials`) — placeholder "coming soon" page only; per-platform tutorial tabs render via `src/components/tutorials/platform-tutorials.tsx` and only `chatgpt-getting-started` exists as content. A full tutorial library is a P3 concern.
   - Quiz & For‑You (`/quiz`, `/for-you`)
   - Per-platform prompts (`/platform/[slug]/prompts`)
   - Per-platform discussions (`/platform/[slug]/discussions`)
   - Account & Pricing (`/account`, `/pricing`, `/pricing/success`)
-  - Onboarding (`/onboarding`) — single file, likely thin
+  - Onboarding (`/onboarding`) — placeholder page: minimal welcome with a CTA to the quiz. The full onboarding flow (preferences capture, welcome tour) still needs to be built.
   - API routes for categories, platforms, search, recommendations, user/quiz, prompts (rate/report), discussions (replies/vote/report), and Stripe
 
 ### Known gotchas
@@ -268,7 +268,7 @@ Before any polish or bug-fix work, Claude Code will walk through every feature s
 
 The audit will show what's actually broken vs. working vs. stub. Likely includes:
 
-1. Onboarding flow buildout (currently single file, likely thin)
+1. Build full onboarding flow (preferences capture, welcome tour) — currently a placeholder page
 2. Account page completion (subscription management UI)
 3. Prompt library submit/browse/vote flow polish
 4. Discussion thread UI polish
