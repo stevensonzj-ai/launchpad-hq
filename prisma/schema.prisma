@@ -274,6 +274,12 @@ model Review {
 
 // ── Prompt library (logged-in submit) ─────────────────────────
 
+enum ModerationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model Prompt {
   id         String   @id @default(cuid())
   platformId String
@@ -287,6 +293,7 @@ model Prompt {
   author     String?
   ratingSum  Int      @default(0)
   ratingCount Int     @default(0)
+  status     ModerationStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -324,6 +331,7 @@ model PromptReport {
 
   createdAt DateTime @default(now())
 
+  @@unique([userId, promptId])
   @@index([promptId])
   @@map("prompt_reports")
 }
@@ -341,6 +349,7 @@ model Discussion {
   body     String
   solution String?
   upvotes  Int      @default(0)
+  status   ModerationStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -363,6 +372,7 @@ model DiscussionReply {
 
   body    String
   upvotes Int    @default(0)
+  status  ModerationStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -405,6 +415,7 @@ model DiscussionReport {
 
   createdAt DateTime @default(now())
 
+  @@unique([userId, discussionId])
   @@index([discussionId])
   @@map("discussion_reports")
 }
