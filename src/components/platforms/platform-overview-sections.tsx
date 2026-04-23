@@ -1,12 +1,4 @@
-import {
-  BookOpen,
-  Clock,
-  GraduationCap,
-  Layers,
-  Sparkles,
-  Target,
-  Zap,
-} from "lucide-react";
+import { BookOpen, Gauge, Layers, Sparkles, Target, Zap } from "lucide-react";
 
 const DIFFICULTY_LABEL: Record<string, string> = {
   BEGINNER: "Beginner-friendly",
@@ -26,6 +18,8 @@ type OverviewPlatform = {
   contentTypes: string[];
   outputFormats: string[];
   costTier: string;
+  currentPricing: string | null;
+  privacyLevel: string;
 };
 
 export function PlatformOverviewSections({ platform }: { platform: OverviewPlatform }) {
@@ -39,6 +33,20 @@ export function PlatformOverviewSections({ platform }: { platform: OverviewPlatf
   const leadLine = desc && primary && primary !== desc ? primary : null;
   const bodyText = desc || primary || fallback;
 
+  const rawPricing = platform.currentPricing?.trim() || platform.costTier;
+  const pricingTiers = rawPricing.split(";").map((t) => t.trim()).filter(Boolean);
+  const multiTierPricing = pricingTiers.length > 1;
+  const privacy = platform.privacyLevel.toLowerCase();
+  const timeToProductivity = platform.timeToProductivity?.trim();
+  const learningCurve = platform.learningCurve?.trim();
+
+  const metaItems: { label: string; value: string }[] = [
+    { label: "Difficulty", value: difficultyLabel },
+    ...(timeToProductivity ? [{ label: "Time to productivity", value: timeToProductivity }] : []),
+    { label: "Privacy", value: privacy },
+    ...(learningCurve ? [{ label: "Learning curve", value: learningCurve }] : []),
+  ];
+
   return (
     <div className="space-y-8">
       {/* Overview */}
@@ -50,38 +58,47 @@ export function PlatformOverviewSections({ platform }: { platform: OverviewPlatf
         {leadLine && <p className="mb-3 text-base font-medium text-gray-200">{leadLine}</p>}
         <p className="text-sm leading-relaxed text-gray-300">{bodyText}</p>
         {platform.primaryUseCases?.trim() && (
-          <p className="mt-4 border-t border-gray-800 pt-4 text-sm leading-relaxed text-gray-400">
-            <span className="font-medium text-gray-300">Typical use cases: </span>
+          <p className="mt-3 text-sm leading-relaxed text-gray-400">
+            <span className="font-medium text-gray-300">Best for: </span>
             {platform.primaryUseCases}
           </p>
         )}
       </section>
 
-      {/* What it's best for */}
-      <section className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-6">
-        <div className="mb-4 flex items-center gap-2 text-orange-300">
-          <Target className="h-5 w-5" />
-          <h2 className="text-lg font-semibold text-white">What it&apos;s best for</h2>
+      {/* At a glance */}
+      <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <div className="mb-5 flex items-center gap-2 text-orange-300">
+          <Gauge className="h-5 w-5" />
+          <h2 className="text-lg font-semibold text-white">At a glance</h2>
         </div>
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-800 px-3 py-1 text-xs font-medium text-white">
-            <GraduationCap className="h-3.5 w-3.5 text-orange-400" />
-            {difficultyLabel}
-          </span>
-          {platform.costTier === "FREE" || platform.costTier === "FREEMIUM" ? (
-            <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-medium text-emerald-300">
-              Generous free / freemium options
-            </span>
-          ) : null}
-          {platform.costTier === "PAID" || platform.costTier === "ENTERPRISE" ? (
-            <span className="rounded-full bg-amber-500/15 px-3 py-1 text-xs font-medium text-amber-200">
-              Pro-focused pricing
-            </span>
-          ) : null}
+        <div className="mb-5">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500">Pricing</p>
+          {multiTierPricing ? (
+            <div className="flex flex-wrap gap-2">
+              {pricingTiers.map((tier) => (
+                <span key={tier} className="rounded-md bg-gray-800 px-2.5 py-1 text-xs text-gray-200">
+                  {tier}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm font-medium text-white">{rawPricing}</p>
+          )}
         </div>
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+          {metaItems.map(({ label, value }) => (
+            <div key={label}>
+              <dt className="text-xs font-medium uppercase tracking-wide text-gray-500">{label}</dt>
+              <dd className="mt-1 text-sm font-medium text-white">{value}</dd>
+            </div>
+          ))}
+        </dl>
         {platform.idealUserTypes.length > 0 && (
-          <div className="mb-3">
-            <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500">Ideal users</p>
+          <div className="mt-5 border-t border-orange-500/20 pt-4">
+            <p className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-orange-300">
+              <Target className="h-3.5 w-3.5" />
+              Ideal for
+            </p>
             <div className="flex flex-wrap gap-2">
               {platform.idealUserTypes.map((t) => (
                 <span key={t} className="rounded-md bg-gray-800 px-2.5 py-1 text-xs text-gray-200">
@@ -90,11 +107,6 @@ export function PlatformOverviewSections({ platform }: { platform: OverviewPlatf
               ))}
             </div>
           </div>
-        )}
-        {!platform.primaryUseCases?.trim() && (
-          <p className="text-sm leading-relaxed text-gray-300">
-            Matches the {difficultyLabel} crowd—use Discover or the quiz to compare alternatives for your exact goals.
-          </p>
         )}
       </section>
 
@@ -131,30 +143,6 @@ export function PlatformOverviewSections({ platform }: { platform: OverviewPlatf
                   ))}
                 </ul>
               </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Getting started */}
-      {(platform.timeToProductivity?.trim() || platform.learningCurve?.trim()) && (
-        <section className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-6">
-          <div className="mb-3 flex items-center gap-2 text-emerald-300">
-            <Clock className="h-5 w-5" />
-            <h2 className="text-lg font-semibold text-white">Getting started</h2>
-          </div>
-          <div className="space-y-3 text-sm text-gray-300">
-            {platform.timeToProductivity?.trim() && (
-              <p>
-                <span className="font-medium text-white">Time to productivity: </span>
-                {platform.timeToProductivity}
-              </p>
-            )}
-            {platform.learningCurve?.trim() && (
-              <p>
-                <span className="font-medium text-white">Learning curve: </span>
-                {platform.learningCurve}
-              </p>
             )}
           </div>
         </section>
