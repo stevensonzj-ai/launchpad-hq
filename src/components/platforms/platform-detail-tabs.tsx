@@ -26,16 +26,16 @@ export function PlatformDetailTabs({ platformName, platformSlug, children }: Pla
 
   return (
     <>
-      <div className="mb-8 flex flex-wrap gap-2">
+      <div className="mb-8 flex flex-wrap gap-1">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`rounded-lg px-3 py-1.5 text-sm transition-colors ${
+            className={`border-b-2 px-4 py-3 text-[15px] font-medium transition-colors ${
               activeTab === tab.id
-                ? "bg-orange-500 text-white"
-                : "bg-gray-800 text-gray-400 hover:text-white"
+                ? "border-orange-500 text-white"
+                : "border-transparent text-gray-400 hover:text-white"
             }`}
           >
             {tab.label}
