@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { ModerationStatus } from "@prisma/client";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
@@ -32,6 +33,13 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
     include: {
       category: true,
       tutorials: { where: { published: true }, take: 5 },
+      _count: {
+        select: {
+          prompts: { where: { status: ModerationStatus.APPROVED } },
+          discussions: { where: { status: ModerationStatus.APPROVED } },
+          tutorials: { where: { published: true } },
+        },
+      },
     },
   });
 
@@ -85,7 +93,11 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         )}
       </div>
 
-      <PlatformDetailTabs platformName={platform.name} platformSlug={platform.slug}>
+      <PlatformDetailTabs
+        platformName={platform.name}
+        platformSlug={platform.slug}
+        counts={platform._count}
+      >
         <PlatformOverviewSections platform={platform} />
 
         {/* Content sections */}
