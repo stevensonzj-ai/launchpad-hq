@@ -118,8 +118,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
 
       <PlatformDetailTabs platformName={platform.name} platformSlug={platform.slug}>
         {/* Content sections */}
-        <div className="grid gap-8 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
+        <div className="space-y-6">
           <PlatformMobileSection
             name={platform.name}
             hasMobileApp={platform.hasMobileApp}
@@ -161,46 +160,6 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
             </div>
           </section>
         </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Ideal for */}
-          {platform.idealUserTypes.length > 0 && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-5">
-              <h3 className="mb-3 text-sm font-semibold text-white">Ideal For</h3>
-              <div className="flex flex-wrap gap-2">
-                {platform.idealUserTypes.map((t) => (
-                  <span key={t} className="rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-300">{t.trim()}</span>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Content types */}
-          {platform.contentTypes.length > 0 && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-5">
-              <h3 className="mb-3 text-sm font-semibold text-white">Supported Content</h3>
-              <div className="flex flex-wrap gap-2">
-                {platform.contentTypes.map((t) => (
-                  <span key={t} className="rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-300">{t.trim()}</span>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Output formats */}
-          {platform.outputFormats.length > 0 && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-5">
-              <h3 className="mb-3 text-sm font-semibold text-white">Output Formats</h3>
-              <div className="flex flex-wrap gap-2">
-                {platform.outputFormats.map((t) => (
-                  <span key={t} className="rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-300">{t.trim()}</span>
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
-      </div>
 
       {/* Alternatives */}
       {alternatives.length > 0 && (
