@@ -85,40 +85,40 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         )}
       </div>
 
-      <PlatformOverviewSections platform={platform} />
-
-      {/* Quick stats */}
-      <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <p className="text-xs text-gray-500">Pricing</p>
-          <p className="mt-1 text-sm font-medium text-white">{platform.currentPricing || platform.costTier}</p>
-        </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <div className="flex items-center gap-1.5">
-            <Zap className="h-3.5 w-3.5 text-blue-400" />
-            <p className="text-xs text-gray-500">Difficulty</p>
-          </div>
-          <p className="mt-1 text-sm font-medium text-white">{platform.difficultyLevel.toLowerCase()}</p>
-        </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <div className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5 text-green-400" />
-            <p className="text-xs text-gray-500">Time to Start</p>
-          </div>
-          <p className="mt-1 text-sm font-medium text-white">{platform.timeToProductivity || "Varies"}</p>
-        </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <div className="flex items-center gap-1.5">
-            <Shield className="h-3.5 w-3.5 text-purple-400" />
-            <p className="text-xs text-gray-500">Privacy</p>
-          </div>
-          <p className="mt-1 text-sm font-medium text-white">{platform.privacyLevel.toLowerCase()}</p>
-        </div>
-      </div>
-
       <PlatformDetailTabs platformName={platform.name} platformSlug={platform.slug}>
+        {/* Quick stats */}
+        <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+            <p className="text-xs text-gray-500">Pricing</p>
+            <p className="mt-1 text-sm font-medium text-white">{platform.currentPricing || platform.costTier}</p>
+          </div>
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+            <div className="flex items-center gap-1.5">
+              <Zap className="h-3.5 w-3.5 text-blue-400" />
+              <p className="text-xs text-gray-500">Difficulty</p>
+            </div>
+            <p className="mt-1 text-sm font-medium text-white">{platform.difficultyLevel.toLowerCase()}</p>
+          </div>
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-3.5 w-3.5 text-green-400" />
+              <p className="text-xs text-gray-500">Time to Start</p>
+            </div>
+            <p className="mt-1 text-sm font-medium text-white">{platform.timeToProductivity || "Varies"}</p>
+          </div>
+          <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+            <div className="flex items-center gap-1.5">
+              <Shield className="h-3.5 w-3.5 text-purple-400" />
+              <p className="text-xs text-gray-500">Privacy</p>
+            </div>
+            <p className="mt-1 text-sm font-medium text-white">{platform.privacyLevel.toLowerCase()}</p>
+          </div>
+        </div>
+
+        <PlatformOverviewSections platform={platform} />
+
         {/* Content sections */}
-        <div className="space-y-6">
+        <div className="mt-8 space-y-6">
           <PlatformMobileSection
             name={platform.name}
             hasMobileApp={platform.hasMobileApp}
