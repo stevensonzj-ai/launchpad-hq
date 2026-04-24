@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { ModerationStatus } from "@prisma/client";
 
 export async function POST(
   request: NextRequest,
@@ -12,7 +13,9 @@ export async function POST(
   }
 
   const { id } = await params;
-  const discussion = await prisma.discussion.findUnique({ where: { id } });
+  const discussion = await prisma.discussion.findFirst({
+    where: { id, status: ModerationStatus.APPROVED },
+  });
   if (!discussion) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
@@ -21,6 +24,12 @@ export async function POST(
   const text = String(body.body || "").trim();
   if (!text) {
     return NextResponse.json({ error: "Body required" }, { status: 400 });
+  }
+  if (text.length > 2000) {
+    return NextResponse.json(
+      { error: "body must be 2000 characters or fewer", field: "body" },
+      { status: 400 },
+    );
   }
 
   const reply = await prisma.discussionReply.create({

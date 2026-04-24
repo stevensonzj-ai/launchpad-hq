@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { ModerationStatus } from "@prisma/client";
 
 export async function POST(
   request: NextRequest,
@@ -18,7 +19,9 @@ export async function POST(
     return NextResponse.json({ error: "Stars 1-5 required" }, { status: 400 });
   }
 
-  const prompt = await prisma.prompt.findUnique({ where: { id } });
+  const prompt = await prisma.prompt.findFirst({
+    where: { id, status: ModerationStatus.APPROVED },
+  });
   if (!prompt) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }

@@ -3,7 +3,8 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ExternalLink, Shield, Zap, Clock } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { ModerationStatus } from "@prisma/client";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
@@ -32,6 +33,13 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
     include: {
       category: true,
       tutorials: { where: { published: true }, take: 5 },
+      _count: {
+        select: {
+          prompts: { where: { status: ModerationStatus.APPROVED } },
+          discussions: { where: { status: ModerationStatus.APPROVED } },
+          tutorials: { where: { published: true } },
+        },
+      },
     },
   });
 
@@ -85,41 +93,15 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         )}
       </div>
 
-      <PlatformOverviewSections platform={platform} />
+      <PlatformDetailTabs
+        platformName={platform.name}
+        platformSlug={platform.slug}
+        counts={platform._count}
+      >
+        <PlatformOverviewSections platform={platform} />
 
-      {/* Quick stats */}
-      <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <p className="text-xs text-gray-500">Pricing</p>
-          <p className="mt-1 text-sm font-medium text-white">{platform.currentPricing || platform.costTier}</p>
-        </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <div className="flex items-center gap-1.5">
-            <Zap className="h-3.5 w-3.5 text-blue-400" />
-            <p className="text-xs text-gray-500">Difficulty</p>
-          </div>
-          <p className="mt-1 text-sm font-medium text-white">{platform.difficultyLevel.toLowerCase()}</p>
-        </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <div className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5 text-green-400" />
-            <p className="text-xs text-gray-500">Time to Start</p>
-          </div>
-          <p className="mt-1 text-sm font-medium text-white">{platform.timeToProductivity || "Varies"}</p>
-        </div>
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
-          <div className="flex items-center gap-1.5">
-            <Shield className="h-3.5 w-3.5 text-purple-400" />
-            <p className="text-xs text-gray-500">Privacy</p>
-          </div>
-          <p className="mt-1 text-sm font-medium text-white">{platform.privacyLevel.toLowerCase()}</p>
-        </div>
-      </div>
-
-      <PlatformDetailTabs platformName={platform.name} platformSlug={platform.slug}>
         {/* Content sections */}
-        <div className="grid gap-8 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
+        <div className="mt-8 space-y-6">
           <PlatformMobileSection
             name={platform.name}
             hasMobileApp={platform.hasMobileApp}
@@ -129,78 +111,40 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
             platformType={platform.platformType}
           />
 
-          {/* Free Tier */}
-          {platform.freeTierFeatures && (
+          <div className={`grid gap-6${platform.freeTierFeatures ? " lg:grid-cols-2 lg:items-start" : ""}`}>
+            {/* Free Tier */}
+            {platform.freeTierFeatures && (
+              <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
+                <h2 className="mb-3 text-lg font-semibold text-white">Free Tier</h2>
+                <p className="text-sm text-gray-300">{platform.freeTierFeatures}</p>
+                {platform.usageLimits && (
+                  <div className="mt-3 border-t border-gray-800 pt-3">
+                    <p className="text-xs text-gray-500">Limits: {platform.usageLimits}</p>
+                  </div>
+                )}
+                {platform.upgradeTriggers && (
+                  <div className="mt-2">
+                    <p className="text-xs text-gray-500">When to upgrade: {platform.upgradeTriggers}</p>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Technical Details */}
             <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
-              <h2 className="mb-3 text-lg font-semibold text-white">Free Tier</h2>
-              <p className="text-sm text-gray-300">{platform.freeTierFeatures}</p>
-              {platform.usageLimits && (
-                <div className="mt-3 border-t border-gray-800 pt-3">
-                  <p className="text-xs text-gray-500">Limits: {platform.usageLimits}</p>
-                </div>
-              )}
-              {platform.upgradeTriggers && (
-                <div className="mt-2">
-                  <p className="text-xs text-gray-500">When to upgrade: {platform.upgradeTriggers}</p>
-                </div>
-              )}
+              <h2 className="mb-4 text-lg font-semibold text-white">Technical Details</h2>
+              <div className="grid gap-3 text-sm sm:grid-cols-2">
+                <div><span className="text-gray-500">Type:</span> <span className="text-gray-300">{platform.platformType.join(", ")}</span></div>
+                <div><span className="text-gray-500">Offline:</span> <span className="text-gray-300">{platform.offlineCapable ? "Yes" : "No"}</span></div>
+                <div><span className="text-gray-500">API:</span> <span className="text-gray-300">{platform.apiAvailable ? "Yes" : "No"}</span></div>
+                <div><span className="text-gray-500">Languages:</span> <span className="text-gray-300">{platform.languageSupport || "English"}</span></div>
+                {platform.keyIntegrations && (
+                  <div className="sm:col-span-2"><span className="text-gray-500">Integrations:</span> <span className="text-gray-300">{platform.keyIntegrations}</span></div>
+                )}
+              </div>
             </section>
-          )}
-
-          {/* Technical Details */}
-          <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
-            <h2 className="mb-4 text-lg font-semibold text-white">Technical Details</h2>
-            <div className="grid gap-3 text-sm sm:grid-cols-2">
-              <div><span className="text-gray-500">Type:</span> <span className="text-gray-300">{platform.platformType.join(", ")}</span></div>
-              <div><span className="text-gray-500">Offline:</span> <span className="text-gray-300">{platform.offlineCapable ? "Yes" : "No"}</span></div>
-              <div><span className="text-gray-500">API:</span> <span className="text-gray-300">{platform.apiAvailable ? "Yes" : "No"}</span></div>
-              <div><span className="text-gray-500">Languages:</span> <span className="text-gray-300">{platform.languageSupport || "English"}</span></div>
-              {platform.keyIntegrations && (
-                <div className="sm:col-span-2"><span className="text-gray-500">Integrations:</span> <span className="text-gray-300">{platform.keyIntegrations}</span></div>
-              )}
-            </div>
-          </section>
+          </div>
         </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Ideal for */}
-          {platform.idealUserTypes.length > 0 && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-5">
-              <h3 className="mb-3 text-sm font-semibold text-white">Ideal For</h3>
-              <div className="flex flex-wrap gap-2">
-                {platform.idealUserTypes.map((t) => (
-                  <span key={t} className="rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-300">{t.trim()}</span>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Content types */}
-          {platform.contentTypes.length > 0 && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-5">
-              <h3 className="mb-3 text-sm font-semibold text-white">Supported Content</h3>
-              <div className="flex flex-wrap gap-2">
-                {platform.contentTypes.map((t) => (
-                  <span key={t} className="rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-300">{t.trim()}</span>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Output formats */}
-          {platform.outputFormats.length > 0 && (
-            <section className="rounded-lg border border-gray-800 bg-gray-900 p-5">
-              <h3 className="mb-3 text-sm font-semibold text-white">Output Formats</h3>
-              <div className="flex flex-wrap gap-2">
-                {platform.outputFormats.map((t) => (
-                  <span key={t} className="rounded-md bg-gray-800 px-2 py-1 text-xs text-gray-300">{t.trim()}</span>
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
-      </div>
 
       {/* Alternatives */}
       {alternatives.length > 0 && (

@@ -1,6 +1,6 @@
 # LaunchpadHQ — Project Briefing for Claude Code
 
-> Last updated: April 2026
+> Last updated: 2026-04-24
 > Owner: Zach
 > Audience: Any Claude Code session working on this repo
 
@@ -184,7 +184,14 @@ Content work is done by Zach using Claude Cowork as a desktop assistant. Cowork 
 
 ### Moderation
 
-No AI moderation for v1. User submissions for the prompt library and discussions should land in a "pending" state in the database; Zach approves or rejects manually via an admin view. Email notification when items are pending. Add automated flagging only after volume justifies it. Even then: auto-flag for human review, never auto-publish or auto-remove.
+No AI moderation for v1. Humans only. The pipeline is implemented (as of Session 4):
+
+- **Default status is `PENDING`.** The `Prompt`, `Discussion`, and `DiscussionReply` models use a `ModerationStatus` enum (`PENDING` | `APPROVED` | `REJECTED`) that defaults to `PENDING`. Submission routes rely on the schema default — don't set status explicitly.
+- **Public list endpoints filter to `APPROVED`.** `GET /api/platforms/[slug]/prompts` and `.../discussions` only return approved rows. Replies inside a returned discussion are also filtered to approved.
+- **Action-route policy — apply this split to any new action endpoint:**
+  - **Rate and vote routes filter target lookups to `APPROVED`.** Engagement signals shouldn't accumulate on non-approved content. Implement via `findFirst({ where: { id, status: ModerationStatus.APPROVED } })` and return a generic 404 (don't distinguish "not found" from "not approved" — information disclosure). This covers `/api/prompts/[id]/rate`, `/api/discussions/[id]/vote`, `/api/discussion-replies/[id]/vote`, and the parent-discussion lookup inside `/api/discussions/[id]/replies`.
+  - **Report routes do NOT filter.** Reports on `PENDING` content are valid moderation signals — a user flagging something they encountered in a moderator view is a feature, not a bug. Leaves `/api/prompts/[id]/report` and `/api/discussions/[id]/report` unfiltered by design.
+- **Approval UI is not yet built.** Zach flips `status` manually in Prisma Studio for now. Email-on-pending notifications and an admin approval queue are follow-up work. Add automated flagging only after volume justifies it — even then, auto-flag for human review, never auto-publish or auto-remove.
 
 ---
 
@@ -225,6 +232,7 @@ No AI moderation for v1. User submissions for the prompt library and discussions
 - Every page that can error needs an error boundary (`error.tsx`)
 - Empty states matter — "No platforms match your filters" with a helpful reset action, not a blank div
 - API route handlers should return proper HTTP status codes with structured error bodies
+- **Success / pending-review feedback** on form submits uses an inline green panel (`border-green-500/20 bg-green-500/5`) with a 6-second auto-dismiss via `useEffect`. No toast library in use. For submissions that land at `status=PENDING`, skip the optimistic list update — the row won't appear on the next `GET`, so an immediate refetch is misleading. See `src/components/prompts/platform-prompts.tsx` and `src/components/discussions/platform-discussions.tsx` for the current pattern.
 
 ### Testing
 
@@ -236,6 +244,14 @@ No AI moderation for v1. User submissions for the prompt library and discussions
 - Commit after every meaningful change; don't stack 10 features into one commit
 - Clear, specific commit messages ("Fix double-prefix on free tier text" not "fixes")
 - Branch naming: `feature/`, `fix/`, `chore/` prefixes
+
+### Known technical gaps
+
+Follow-ups surfaced by recent work. Not urgent, but worth knowing about — pick them up opportunistically when you're already touching nearby code.
+
+- **No `typecheck` script in `package.json`.** Only `build` and `lint` exist today. Candidate: add `"typecheck": "tsc --noEmit"` so pre-commit and CI flows can catch type errors without running a full `next build`. No new dep required.
+- **Legacy `Prompt.author` (String?) column coexists with the `user` relation.** Some older rows have `author` populated and no `userId`. The current projection in `GET /api/platforms/[slug]/prompts` falls back `user.name → author → "Anonymous"` to keep them readable. Candidate follow-up: backfill the `user` relation for legacy rows, then drop the column in a migration.
+- **No admin UI for moderating PENDING submissions.** Zach currently flips `status` manually in Prisma Studio. Building an admin queue is a P2 item under "Complete the feature scaffolds."
 
 ---
 
@@ -313,7 +329,9 @@ The audit will show what's actually broken vs. working vs. stub. Likely includes
 ## How to work with Zach
 
 - **Explain the why.** When making non-obvious technical choices, briefly explain the reasoning. This is a learning project as much as a business project.
-- **Flag uncertainty honestly.** If you don't know whether a library behaves a certain way, say so and check rather than guessing. If something in this file contradicts what you see in the actual codebase, trust the codebase and flag the discrepancy so this file can be updated.
+- **Read before proposing changes.** Read the target files — both what you're editing and what consumes it — before proposing an edit. Don't rely on memory of earlier reads; re-read if significant time has passed or other edits have landed. Cheap up-front reads beat expensive post-hoc unwinds.
+- **Flag uncertainty and contradictions honestly.** If you don't know whether a library behaves a certain way, say so and check rather than guessing. If something in this file, in the actual code, or in a request I've made contradicts what you see elsewhere, trust the code and flag the discrepancy — don't silently pick one side.
+- **Push back when the plan looks wrong.** If a proposed approach (mine or yours) would produce a worse outcome than an alternative you can see, say so before executing. Don't silently follow a spec you can see is wrong — flag it, propose the alternative, and wait for my call. "Your spec said 0 but 0 renders as '0 (0)' while null renders as 'No ratings'" is exactly the kind of catch I want. I'd rather re-plan than unwind a commit.
 - **Don't over-engineer.** If a simple solution works, use the simple solution. The bar for added complexity is "does this pay for itself in the next six months."
 - **Prefer incremental over aggressive refactors.** Small, verifiable changes committed often beats large restructurings that might break things.
 - **Test after every meaningful change.** Run the dev server, click through the affected flows, fix anything broken before moving on.

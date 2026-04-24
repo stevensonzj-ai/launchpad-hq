@@ -3,14 +3,15 @@ import { prisma } from "@/lib/db";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ slug: string }> },
 ) {
-  const { id } = await params;
+  const { slug } = await params;
 
-  // Support both slug and id lookup
+  // The dynamic segment is named slug, but the lookup also matches on id
+  // for backward compatibility with callers that pass a raw id.
   const platform = await prisma.platform.findFirst({
     where: {
-      OR: [{ slug: id }, { id }],
+      OR: [{ slug }, { id: slug }],
     },
     include: {
       category: true,

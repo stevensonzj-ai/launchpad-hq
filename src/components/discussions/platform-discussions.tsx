@@ -41,13 +41,20 @@ export function PlatformDiscussions({
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [replyBody, setReplyBody] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!success) return;
+    const t = setTimeout(() => setSuccess(null), 6000);
+    return () => clearTimeout(t);
+  }, [success]);
 
   async function load() {
     setLoading(true);
     try {
       const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/discussions`);
       const data = await res.json();
-      setItems(data.discussions || []);
+      setItems(data.items || []);
     } catch {
       setItems([]);
     } finally {
@@ -62,6 +69,7 @@ export function PlatformDiscussions({
   async function submitThread(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/discussions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -74,7 +82,7 @@ export function PlatformDiscussions({
     }
     setTitle("");
     setBody("");
-    await load();
+    setSuccess("Thanks! Your thread is awaiting review and will appear once approved.");
   }
 
   async function submitReply(discussionId: string) {
@@ -87,7 +95,7 @@ export function PlatformDiscussions({
     if (!res.ok) return;
     setReplyBody("");
     setReplyTo(null);
-    await load();
+    setSuccess("Thanks! Your reply is awaiting review and will appear once approved.");
   }
 
   async function voteDiscussion(id: string) {
@@ -122,6 +130,15 @@ export function PlatformDiscussions({
         Keep it respectful. No harassment, spam, or illegal content. Threads may be removed if they violate
         guidelines.
       </div>
+
+      {success && (
+        <p
+          role="status"
+          className="mt-3 rounded-lg border border-green-500/20 bg-green-500/5 px-3 py-2 text-xs text-green-200"
+        >
+          {success}
+        </p>
+      )}
 
       {isLoaded && !isSignedIn && (
         <p className="mt-6 text-center text-sm text-gray-500">

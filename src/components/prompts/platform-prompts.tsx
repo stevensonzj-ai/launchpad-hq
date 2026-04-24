@@ -33,13 +33,20 @@ export function PlatformPrompts({
   const [outputUrl, setOutputUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!success) return;
+    const t = setTimeout(() => setSuccess(null), 6000);
+    return () => clearTimeout(t);
+  }, [success]);
 
   async function load() {
     setLoading(true);
     try {
       const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/prompts`);
       const data = await res.json();
-      setItems(data.prompts || []);
+      setItems(data.items || []);
     } catch {
       setItems([]);
     } finally {
@@ -54,12 +61,13 @@ export function PlatformPrompts({
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setSubmitting(true);
     try {
       const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/prompts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, prompt, outputUrl: outputUrl || undefined }),
+        body: JSON.stringify({ title, promptText: prompt, outputUrl: outputUrl || undefined }),
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
@@ -68,7 +76,7 @@ export function PlatformPrompts({
       setTitle("");
       setPrompt("");
       setOutputUrl("");
-      await load();
+      setSuccess("Thanks! Your submission is awaiting review and will appear once approved.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error");
     } finally {
@@ -142,6 +150,14 @@ export function PlatformPrompts({
             className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white"
           />
           {error && <p className="text-sm text-red-400">{error}</p>}
+          {success && (
+            <p
+              role="status"
+              className="rounded-lg border border-green-500/20 bg-green-500/5 px-3 py-2 text-xs text-green-200"
+            >
+              {success}
+            </p>
+          )}
           <button
             type="submit"
             disabled={submitting}
