@@ -15,17 +15,29 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+type SortMode = "popular" | "alpha" | "recent";
+
+function normalizeSort(value: string | undefined): SortMode {
+  if (value === "alpha" || value === "recent") return value;
+  return "popular";
+}
+
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
 function buildDiscoverQuery(parts: {
   category?: string;
   cost?: string;
   difficulty?: string;
   mobile?: string;
+  sort?: string;
 }) {
   const sp = new URLSearchParams();
   if (parts.category) sp.set("category", parts.category);
   if (parts.cost) sp.set("cost", parts.cost);
   if (parts.difficulty) sp.set("difficulty", parts.difficulty);
   if (parts.mobile) sp.set("mobile", parts.mobile);
+  // "popular" is the default — omit from URL so default URLs stay clean.
+  if (parts.sort && parts.sort !== "popular") sp.set("sort", parts.sort);
   const s = sp.toString();
   return s ? `?${s}` : "";
 }
@@ -33,9 +45,16 @@ function buildDiscoverQuery(parts: {
 export default async function DiscoverPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; cost?: string; difficulty?: string; mobile?: string }>;
+  searchParams: Promise<{
+    category?: string;
+    cost?: string;
+    difficulty?: string;
+    mobile?: string;
+    sort?: string;
+  }>;
 }) {
   const params = await searchParams;
+  const sort = normalizeSort(params.sort);
 
   const where: Record<string, unknown> = {};
   if (params.category) {
@@ -54,6 +73,17 @@ export default async function DiscoverPage({
     where.mobileWebFriendly = true;
   }
 
+  // TODO: "popular" currently uses [featured desc, name asc] as a placeholder
+  // until a real engagement score exists (e.g., aggregated from prompts/
+  // discussions/favorites counts, or a view/click tracker). Revisit when
+  // that signal lands.
+  const orderBy =
+    sort === "alpha"
+      ? [{ name: "asc" as const }]
+      : sort === "recent"
+        ? [{ createdAt: "desc" as const }]
+        : [{ featured: "desc" as const }, { name: "asc" as const }];
+
   const costQs = params.cost?.toLowerCase();
   const difficultyQs = params.difficulty?.toLowerCase();
 
@@ -61,7 +91,7 @@ export default async function DiscoverPage({
     prisma.platform.findMany({
       where,
       include: { category: true },
-      orderBy: [{ featured: "desc" }, { name: "asc" }],
+      orderBy,
       take: 200,
     }),
     prisma.category.findMany({
@@ -69,6 +99,26 @@ export default async function DiscoverPage({
       include: { _count: { select: { platforms: true } } },
     }),
   ]);
+
+  // Group into A–Z + "#" bucket when alphabetical. Empty letter buckets still
+  // render in the strip (disabled); the "#" bucket is hidden entirely if empty.
+  const groups = new Map<string, typeof platforms>();
+  if (sort === "alpha") {
+    for (const p of platforms) {
+      const firstChar = p.name[0]?.toUpperCase() ?? "#";
+      const key = /^[A-Z]$/.test(firstChar) ? firstChar : "#";
+      const bucket = groups.get(key);
+      if (bucket) {
+        bucket.push(p);
+      } else {
+        groups.set(key, [p]);
+      }
+    }
+  }
+  const hasHashBucket = groups.has("#");
+  const orderedGroupKeys: string[] = [];
+  if (hasHashBucket) orderedGroupKeys.push("#");
+  for (const L of ALPHABET) if (groups.has(L)) orderedGroupKeys.push(L);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -85,10 +135,18 @@ export default async function DiscoverPage({
         </Link>
       </div>
 
-      {/* Filters */}
+      {/* Category filters */}
       <div className="mb-8 flex flex-wrap gap-2">
         <Link
-          href={"/discover" + buildDiscoverQuery({ cost: costQs, difficulty: difficultyQs, mobile: params.mobile })}
+          href={
+            "/discover" +
+            buildDiscoverQuery({
+              cost: costQs,
+              difficulty: difficultyQs,
+              mobile: params.mobile,
+              sort: params.sort,
+            })
+          }
           className={`rounded-lg px-3 py-1.5 text-sm ${!params.category ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
         >
           All
@@ -103,6 +161,7 @@ export default async function DiscoverPage({
                 cost: costQs,
                 difficulty: difficultyQs,
                 mobile: params.mobile,
+                sort: params.sort,
               })
             }
             className={`rounded-lg px-3 py-1.5 text-sm ${params.category === cat.slug ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
@@ -124,6 +183,7 @@ export default async function DiscoverPage({
                 cost: tier.toLowerCase(),
                 difficulty: difficultyQs,
                 mobile: params.mobile,
+                sort: params.sort,
               })
             }
             className={`rounded-md px-2 py-1 text-xs ${params.cost?.toUpperCase() === tier ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
@@ -139,6 +199,7 @@ export default async function DiscoverPage({
                 category: params.category,
                 difficulty: difficultyQs,
                 mobile: params.mobile,
+                sort: params.sort,
               })
             }
             className="text-xs text-gray-500 hover:text-white"
@@ -157,6 +218,7 @@ export default async function DiscoverPage({
               category: params.category,
               cost: costQs,
               difficulty: difficultyQs,
+              sort: params.sort,
             })
           }
           className={`rounded-md px-2 py-1 text-xs ${!params.mobile ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
@@ -171,6 +233,7 @@ export default async function DiscoverPage({
               cost: costQs,
               difficulty: difficultyQs,
               mobile: "app",
+              sort: params.sort,
             })
           }
           className={`rounded-md px-2 py-1 text-xs ${params.mobile === "app" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
@@ -185,6 +248,7 @@ export default async function DiscoverPage({
               cost: costQs,
               difficulty: difficultyQs,
               mobile: "web",
+              sort: params.sort,
             })
           }
           className={`rounded-md px-2 py-1 text-xs ${params.mobile === "web" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
@@ -193,24 +257,112 @@ export default async function DiscoverPage({
         </Link>
       </div>
 
-      {/* Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {platforms.map((p) => (
-          <PlatformCard
-            key={p.id}
-            slug={p.slug}
-            name={p.name}
-            company={p.company}
-            primaryUse={p.primaryUse}
-            costTier={p.costTier}
-            difficultyLevel={p.difficultyLevel}
-            category={p.category}
-            freeTierFeatures={p.freeTierFeatures}
-            hasMobileApp={p.hasMobileApp}
-            mobileWebFriendly={p.mobileWebFriendly}
-          />
+      {/* Sort toggle */}
+      <div className="mb-6 flex flex-wrap items-center gap-2">
+        <span className="text-xs uppercase tracking-wide text-gray-500">Sort</span>
+        {(["popular", "alpha", "recent"] as const).map((s) => (
+          <Link
+            key={s}
+            href={
+              "/discover" +
+              buildDiscoverQuery({
+                category: params.category,
+                cost: costQs,
+                difficulty: difficultyQs,
+                mobile: params.mobile,
+                sort: s,
+              })
+            }
+            className={`rounded-md px-2 py-1 text-xs ${sort === s ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
+          >
+            {s === "popular" ? "Popular" : s === "alpha" ? "A–Z" : "Recent"}
+          </Link>
         ))}
       </div>
+
+      {/* A–Z jump strip — only in alphabetical mode, sticky below the global header */}
+      {sort === "alpha" && platforms.length > 0 && (
+        <div className="sticky top-16 z-20 mb-4 border-b border-gray-800 bg-gray-950/90 py-2 backdrop-blur-sm">
+          <div className="flex flex-wrap gap-x-0.5 gap-y-1">
+            {hasHashBucket && (
+              <a
+                href="#letter-hash"
+                className="rounded px-1.5 py-0.5 text-sm text-gray-300 hover:text-orange-400"
+              >
+                #
+              </a>
+            )}
+            {ALPHABET.map((letter) => {
+              const available = groups.has(letter);
+              return available ? (
+                <a
+                  key={letter}
+                  href={`#letter-${letter}`}
+                  className="rounded px-1.5 py-0.5 text-sm text-gray-300 hover:text-orange-400"
+                >
+                  {letter}
+                </a>
+              ) : (
+                <span
+                  key={letter}
+                  aria-disabled="true"
+                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-600 opacity-40"
+                >
+                  {letter}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Grid */}
+      {sort === "alpha" ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {orderedGroupKeys.flatMap((letter) => [
+            <h2
+              key={`header-${letter}`}
+              id={letter === "#" ? "letter-hash" : `letter-${letter}`}
+              className="col-span-full mt-8 scroll-mt-32 border-b border-gray-800 pb-2 text-2xl font-semibold text-white first:mt-0"
+            >
+              {letter}
+            </h2>,
+            ...groups.get(letter)!.map((p) => (
+              <PlatformCard
+                key={p.id}
+                slug={p.slug}
+                name={p.name}
+                company={p.company}
+                primaryUse={p.primaryUse}
+                costTier={p.costTier}
+                difficultyLevel={p.difficultyLevel}
+                category={p.category}
+                freeTierFeatures={p.freeTierFeatures}
+                hasMobileApp={p.hasMobileApp}
+                mobileWebFriendly={p.mobileWebFriendly}
+              />
+            )),
+          ])}
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {platforms.map((p) => (
+            <PlatformCard
+              key={p.id}
+              slug={p.slug}
+              name={p.name}
+              company={p.company}
+              primaryUse={p.primaryUse}
+              costTier={p.costTier}
+              difficultyLevel={p.difficultyLevel}
+              category={p.category}
+              freeTierFeatures={p.freeTierFeatures}
+              hasMobileApp={p.hasMobileApp}
+              mobileWebFriendly={p.mobileWebFriendly}
+            />
+          ))}
+        </div>
+      )}
 
       {platforms.length === 0 && (
         <p className="py-12 text-center text-gray-500">
