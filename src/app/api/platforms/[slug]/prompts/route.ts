@@ -26,15 +26,30 @@ export async function GET(
   }
 
   const where = { platformId: platform.id, status: ModerationStatus.APPROVED };
-  const [items, totalCount] = await Promise.all([
+  const [rows, totalCount] = await Promise.all([
     prisma.prompt.findMany({
       where,
+      include: { user: { select: { name: true } } },
       orderBy: { createdAt: "desc" },
       skip: (page - 1) * pageSize,
       take: pageSize,
     }),
     prisma.prompt.count({ where }),
   ]);
+
+  const items = rows.map((p) => ({
+    id: p.id,
+    title: p.title,
+    prompt: p.promptText,
+    outputUrl: p.outputUrl,
+    author: p.user?.name ?? p.author ?? "Anonymous",
+    ratingAvg:
+      p.ratingCount > 0
+        ? Math.round((p.ratingSum / p.ratingCount) * 10) / 10
+        : null,
+    ratingCount: p.ratingCount,
+    createdAt: p.createdAt,
+  }));
 
   return NextResponse.json({ items, totalCount, page, pageSize });
 }
