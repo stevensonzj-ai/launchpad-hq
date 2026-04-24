@@ -117,7 +117,7 @@ export function PlatformCard({
         )}
         {!hasMobileApp && mobileWebFriendly && (
           <span
-            className="inline-flex items-center gap-1 rounded-md border border-gray-700 bg-gray-800/50 px-2 py-0.5 text-xs font-medium text-gray-400"
+            className="inline-flex items-center gap-1 rounded-md border border-gray-600 bg-gray-800/60 px-2 py-0.5 text-xs font-medium text-gray-300"
             title="Works in mobile browsers"
           >
             <Globe className="h-3 w-3" />
