@@ -1,11 +1,9 @@
 import { BookOpen, Gauge, Layers, Sparkles, Target, Zap } from "lucide-react";
-
-const DIFFICULTY_LABEL: Record<string, string> = {
-  BEGINNER: "Beginner-friendly",
-  INTERMEDIATE: "Intermediate",
-  ADVANCED: "Advanced",
-  EXPERT: "Expert / power users",
-};
+import {
+  COST_TIER_LABEL,
+  DIFFICULTY_LABEL,
+  PRIVACY_LEVEL_LABEL,
+} from "@/lib/labels";
 
 type OverviewPlatform = {
   description: string | null;
@@ -24,7 +22,7 @@ type OverviewPlatform = {
 
 export function PlatformOverviewSections({ platform }: { platform: OverviewPlatform }) {
   const difficultyLabel =
-    DIFFICULTY_LABEL[platform.difficultyLevel] ?? platform.difficultyLevel.toLowerCase();
+    DIFFICULTY_LABEL[platform.difficultyLevel] ?? platform.difficultyLevel;
 
   const desc = platform.description?.trim() ?? "";
   const primary = platform.primaryUse?.trim() ?? "";
@@ -33,10 +31,13 @@ export function PlatformOverviewSections({ platform }: { platform: OverviewPlatf
   const leadLine = desc && primary && primary !== desc ? primary : null;
   const bodyText = desc || primary || fallback;
 
-  const rawPricing = platform.currentPricing?.trim() || platform.costTier;
+  const rawPricing =
+    platform.currentPricing?.trim() ||
+    (COST_TIER_LABEL[platform.costTier] ?? platform.costTier);
   const pricingTiers = rawPricing.split(";").map((t) => t.trim()).filter(Boolean);
   const multiTierPricing = pricingTiers.length > 1;
-  const privacy = platform.privacyLevel.toLowerCase();
+  const privacy =
+    PRIVACY_LEVEL_LABEL[platform.privacyLevel] ?? platform.privacyLevel;
   const timeToProductivity = platform.timeToProductivity?.trim();
   const learningCurve = platform.learningCurve?.trim();
 

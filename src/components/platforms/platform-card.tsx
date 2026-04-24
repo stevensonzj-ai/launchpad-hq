@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Globe, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { displayCategoryName } from "@/lib/categories";
+import { COST_TIER_LABEL, COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
+import { Tooltip } from "@/components/ui/tooltip";
 
 interface PlatformCardProps {
   slug: string;
@@ -90,16 +92,18 @@ export function PlatformCard({
       )}
 
       <div className="mb-3 flex flex-wrap gap-2">
-        <span
-          className={cn(
-            "rounded-md border px-2 py-0.5 text-xs font-medium",
-            tierColors[costTier] || tierColors.FREEMIUM,
-          )}
-        >
-          {costTier.toLowerCase()}
-        </span>
+        <Tooltip content={COST_TIER_TOOLTIP[costTier] ?? ""}>
+          <span
+            className={cn(
+              "rounded-md border px-2 py-0.5 text-xs font-medium",
+              tierColors[costTier] || tierColors.FREEMIUM,
+            )}
+          >
+            {COST_TIER_LABEL[costTier] ?? costTier}
+          </span>
+        </Tooltip>
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
-          {difficultyLevel.toLowerCase()}
+          {DIFFICULTY_LABEL[difficultyLevel] ?? difficultyLevel}
         </span>
         <span className="text-xs text-gray-600">{displayCategoryName(category.name)}</span>
         {hasMobileApp && (
@@ -113,7 +117,7 @@ export function PlatformCard({
         )}
         {!hasMobileApp && mobileWebFriendly && (
           <span
-            className="inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-xs font-medium text-sky-400"
+            className="inline-flex items-center gap-1 rounded-md border border-gray-600 bg-gray-800/60 px-2 py-0.5 text-xs font-medium text-gray-300"
             title="Works in mobile browsers"
           >
             <Globe className="h-3 w-3" />
