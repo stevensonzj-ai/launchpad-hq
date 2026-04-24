@@ -6,6 +6,7 @@ import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
 import { displayCategoryName } from "@/lib/categories";
+import { getOrCreateDbUser } from "@/lib/auth-db";
 
 export async function generateMetadata(): Promise<Metadata> {
   const count = roundDownToTen(await getPlatformCount());
@@ -87,7 +88,9 @@ export default async function DiscoverPage({
   const costQs = params.cost?.toLowerCase();
   const difficultyQs = params.difficulty?.toLowerCase();
 
-  const [platforms, categories] = await Promise.all([
+  const user = await getOrCreateDbUser();
+
+  const [platforms, categories, favorites] = await Promise.all([
     prisma.platform.findMany({
       where,
       include: { category: true },
@@ -98,7 +101,18 @@ export default async function DiscoverPage({
       orderBy: { sortOrder: "asc" },
       include: { _count: { select: { platforms: true } } },
     }),
+    // TODO: bound this query if favorites-per-user grows significantly.
+    // Today we pull every row and build a Set for O(1) lookup per card —
+    // trivial at ~170 platforms, worth revisiting if favorites counts get large.
+    user
+      ? prisma.userFavorite.findMany({
+          where: { userId: user.id },
+          select: { platformId: true },
+        })
+      : Promise.resolve([]),
   ]);
+  const favoriteIds = new Set(favorites.map((f) => f.platformId));
+  const isSignedIn = user !== null;
 
   // Group into A–Z + "#" bucket when alphabetical. Empty letter buckets still
   // render in the strip (disabled); the "#" bucket is hidden entirely if empty.
@@ -340,6 +354,8 @@ export default async function DiscoverPage({
                 freeTierFeatures={p.freeTierFeatures}
                 hasMobileApp={p.hasMobileApp}
                 mobileWebFriendly={p.mobileWebFriendly}
+                isFavorited={favoriteIds.has(p.id)}
+                isSignedIn={isSignedIn}
               />
             )),
           ])}
@@ -359,6 +375,8 @@ export default async function DiscoverPage({
               freeTierFeatures={p.freeTierFeatures}
               hasMobileApp={p.hasMobileApp}
               mobileWebFriendly={p.mobileWebFriendly}
+              isFavorited={favoriteIds.has(p.id)}
+              isSignedIn={isSignedIn}
             />
           ))}
         </div>
