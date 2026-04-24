@@ -47,7 +47,7 @@ export function PlatformDiscussions({
     try {
       const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/discussions`);
       const data = await res.json();
-      setItems(data.discussions || []);
+      setItems(data.items || []);
     } catch {
       setItems([]);
     } finally {

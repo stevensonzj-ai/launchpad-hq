@@ -39,7 +39,7 @@ export function PlatformPrompts({
     try {
       const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/prompts`);
       const data = await res.json();
-      setItems(data.prompts || []);
+      setItems(data.items || []);
     } catch {
       setItems([]);
     } finally {
@@ -59,7 +59,7 @@ export function PlatformPrompts({
       const res = await fetch(`/api/platforms/${encodeURIComponent(platformSlug)}/prompts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, prompt, outputUrl: outputUrl || undefined }),
+        body: JSON.stringify({ title, promptText: prompt, outputUrl: outputUrl || undefined }),
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
