@@ -5,6 +5,12 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { PlatformCard } from "@/components/platforms/platform-card";
+import { computeRecommendations } from "@/lib/recommendations-core";
+import { quizToRecommendationInput, type QuizAnswers } from "@/lib/quiz-map";
+
+type Rec = Awaited<
+  ReturnType<typeof computeRecommendations>
+>["recommendations"][number];
 
 export const metadata: Metadata = {
   title: "For you | Launchpad HQ",
@@ -18,15 +24,34 @@ export default async function ForYouPage() {
     return <LoggedOutLanding />;
   }
 
-  const favoriteRows = await prisma.userFavorite.findMany({
-    where: { userId: user.id },
-    include: {
-      platform: { include: { category: true } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const [favoriteRows, prefs] = await Promise.all([
+    prisma.userFavorite.findMany({
+      where: { userId: user.id },
+      include: {
+        platform: { include: { category: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.userPreferences.findUnique({
+      where: { userId: user.id },
+      select: { quizCompletedAt: true, quizAnswers: true },
+    }),
+  ]);
   const favorites = favoriteRows.map((f) => f.platform);
   const favoriteIds = new Set(favoriteRows.map((f) => f.platformId));
+
+  // recs is a deliberate tri-state so each branch below is unambiguous:
+  //   null        — quiz not completed            -> render QuizCta
+  //   []          — quiz completed, zero matches  -> render zero-recs state
+  //   non-empty   — render "Based on your quiz" grid
+  const hasQuiz = prefs?.quizCompletedAt != null && prefs?.quizAnswers != null;
+  const recs: Rec[] | null = hasQuiz
+    ? (
+        await computeRecommendations(
+          quizToRecommendationInput(prefs!.quizAnswers as unknown as QuizAnswers),
+        )
+      ).recommendations
+    : null;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -62,13 +87,80 @@ export default async function ForYouPage() {
         )}
       </section>
 
-      {/* The quiz section currently renders the CTA for every signed-in user.
-       * Commit 2 will branch this into a recommendations grid for users who
-       * have completed the quiz (UserPreferences.quizCompletedAt != null).
-       * Kept as a single-state section here so this commit reviews cleanly. */}
       <section className="mt-12">
-        <QuizCta />
+        {recs === null ? (
+          <QuizCta />
+        ) : recs.length === 0 ? (
+          <QuizZeroRecsState />
+        ) : (
+          <QuizRecommendations recs={recs} favoriteIds={favoriteIds} />
+        )}
       </section>
+    </div>
+  );
+}
+
+function QuizZeroRecsState() {
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white">Based on your quiz</h2>
+      <div className="mt-4 rounded-xl border border-gray-800 bg-gray-900/50 p-8 text-center">
+        <p className="text-sm text-gray-400">
+          We couldn&apos;t find platforms that match all your criteria. Try retaking the quiz with broader answers or browse the full catalog.
+        </p>
+        <p className="mt-6 text-sm">
+          <Link href="/quiz" className="text-orange-400 hover:underline">
+            Retake quiz
+          </Link>
+          <span className="mx-2 text-gray-600">·</span>
+          <Link href="/discover" className="text-gray-400 hover:text-white">
+            Browse all tools
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function QuizRecommendations({
+  recs,
+  favoriteIds,
+}: {
+  recs: Rec[];
+  favoriteIds: Set<string>;
+}) {
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white">Based on your quiz</h2>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {recs.map((p) => (
+          <PlatformCard
+            key={p.id}
+            slug={p.slug}
+            name={p.name}
+            company={p.company}
+            primaryUse={p.primaryUse}
+            costTier={p.costTier}
+            difficultyLevel={p.difficultyLevel}
+            category={p.category}
+            freeTierFeatures={p.freeTierFeatures}
+            hasMobileApp={p.hasMobileApp}
+            mobileWebFriendly={p.mobileWebFriendly}
+            matchScore={p.matchScore}
+            isFavorited={favoriteIds.has(p.id)}
+            isSignedIn={true}
+          />
+        ))}
+      </div>
+      <p className="mt-8 text-center text-sm">
+        <Link href="/quiz" className="text-orange-400 hover:underline">
+          Retake quiz
+        </Link>
+        <span className="mx-2 text-gray-600">·</span>
+        <Link href="/discover" className="text-gray-400 hover:text-white">
+          Browse all tools
+        </Link>
+      </p>
     </div>
   );
 }
