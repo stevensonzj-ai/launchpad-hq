@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Globe, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { displayCategoryName } from "@/lib/categories";
+import { FavoriteButton } from "@/components/platforms/favorite-button";
 
 interface PlatformCardProps {
   slug: string;
@@ -15,6 +16,8 @@ interface PlatformCardProps {
   matchScore?: number;
   hasMobileApp?: boolean;
   mobileWebFriendly?: boolean;
+  isFavorited?: boolean;
+  isSignedIn?: boolean;
 }
 
 const tierColors: Record<string, string> = {
@@ -43,14 +46,18 @@ export function PlatformCard({
   matchScore,
   hasMobileApp,
   mobileWebFriendly,
+  isFavorited,
+  isSignedIn,
 }: PlatformCardProps) {
+  const showFavorite = isSignedIn !== undefined;
+
   return (
     <Link
       href={`/platform/${slug}`}
       className="group block rounded-xl border border-gray-800 bg-gray-900/50 p-5 transition-all hover:border-gray-700 hover:bg-gray-900"
     >
-      <div className="mb-3 flex items-start justify-between">
-        <div>
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <h3 className="text-lg font-semibold text-white group-hover:text-orange-400">
             {name}
           </h3>
@@ -58,11 +65,22 @@ export function PlatformCard({
             <p className="text-sm text-gray-500">by {company}</p>
           )}
         </div>
-        {matchScore !== undefined && matchScore > 0 && (
-          <span className="rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-400">
-            {matchScore}% match
-          </span>
-        )}
+        <div className="flex shrink-0 items-start gap-2">
+          {matchScore !== undefined && matchScore > 0 && (
+            <span className="rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-400">
+              {matchScore}% match
+            </span>
+          )}
+          {showFavorite && (
+            <FavoriteButton
+              slug={slug}
+              initialFavorited={isFavorited ?? false}
+              isSignedIn={isSignedIn ?? false}
+              variant="icon"
+              className="-mr-1 -mt-1"
+            />
+          )}
+        </div>
       </div>
 
       {primaryUse && (
