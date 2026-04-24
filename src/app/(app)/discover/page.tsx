@@ -187,7 +187,21 @@ export default async function DiscoverPage({
       </div>
 
       {/* Cost filter */}
-      <div className="mb-6 flex gap-2">
+      <div className="mb-6 flex flex-wrap gap-2">
+        <Link
+          href={
+            "/discover" +
+            buildDiscoverQuery({
+              category: params.category,
+              difficulty: difficultyQs,
+              mobile: params.mobile,
+              sort: params.sort,
+            })
+          }
+          className={`rounded-md px-2 py-1 text-xs ${!params.cost ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
+        >
+          All
+        </Link>
         {["FREE", "FREEMIUM", "PAID", "ENTERPRISE"].map((tier) => (
           <Link
             key={tier}
@@ -206,22 +220,6 @@ export default async function DiscoverPage({
             {COST_TIER_LABEL[tier] ?? tier}
           </Link>
         ))}
-        {params.cost && (
-          <Link
-            href={
-              "/discover" +
-              buildDiscoverQuery({
-                category: params.category,
-                difficulty: difficultyQs,
-                mobile: params.mobile,
-                sort: params.sort,
-              })
-            }
-            className="text-xs text-gray-500 hover:text-white"
-          >
-            clear
-          </Link>
-        )}
       </div>
 
       {/* Mobile filters */}
