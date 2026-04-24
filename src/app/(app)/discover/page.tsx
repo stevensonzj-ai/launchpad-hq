@@ -6,6 +6,7 @@ import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
 import { displayCategoryName } from "@/lib/categories";
+import { COST_TIER_LABEL } from "@/lib/labels";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -202,7 +203,7 @@ export default async function DiscoverPage({
             }
             className={`rounded-md px-2 py-1 text-xs ${params.cost?.toUpperCase() === tier ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
           >
-            {tier.toLowerCase()}
+            {COST_TIER_LABEL[tier] ?? tier}
           </Link>
         ))}
         {params.cost && (
