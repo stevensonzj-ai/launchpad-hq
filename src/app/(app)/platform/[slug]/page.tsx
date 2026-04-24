@@ -9,7 +9,9 @@ import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
+import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { displayCategoryName } from "@/lib/categories";
+import { getOrCreateDbUser } from "@/lib/auth-db";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -45,22 +47,34 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
 
   if (!platform) notFound();
 
-  // Fetch alternatives
-  const alternatives = platform.directAlternatives.length
-    ? await prisma.platform.findMany({
-        where: { name: { in: platform.directAlternatives, mode: "insensitive" } },
-        include: { category: true },
-        take: 4,
-      })
-    : [];
+  const user = await getOrCreateDbUser();
+  const isSignedIn = user !== null;
 
-  const complementary = platform.complementaryTools.length
-    ? await prisma.platform.findMany({
-        where: { name: { in: platform.complementaryTools, mode: "insensitive" } },
-        include: { category: true },
-        take: 4,
-      })
-    : [];
+  const [alternatives, complementary, favoriteRow] = await Promise.all([
+    platform.directAlternatives.length
+      ? prisma.platform.findMany({
+          where: { name: { in: platform.directAlternatives, mode: "insensitive" } },
+          include: { category: true },
+          take: 4,
+        })
+      : Promise.resolve([]),
+    platform.complementaryTools.length
+      ? prisma.platform.findMany({
+          where: { name: { in: platform.complementaryTools, mode: "insensitive" } },
+          include: { category: true },
+          take: 4,
+        })
+      : Promise.resolve([]),
+    user
+      ? prisma.userFavorite.findUnique({
+          where: {
+            userId_platformId: { userId: user.id, platformId: platform.id },
+          },
+          select: { id: true },
+        })
+      : Promise.resolve(null),
+  ]);
+  const isFavorited = favoriteRow !== null;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -81,16 +95,24 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
           <h1 className="text-3xl font-bold text-white">{platform.name}</h1>
           {platform.company && <p className="mt-1 text-gray-400">by {platform.company}</p>}
         </div>
-        {platform.website && (
-          <a
-            href={platform.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex shrink-0 items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-orange-600"
-          >
-            Visit <ExternalLink className="h-4 w-4" />
-          </a>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          <FavoriteButton
+            slug={platform.slug}
+            initialFavorited={isFavorited}
+            isSignedIn={isSignedIn}
+            variant="labeled"
+          />
+          {platform.website && (
+            <a
+              href={platform.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-orange-600"
+            >
+              Visit <ExternalLink className="h-4 w-4" />
+            </a>
+          )}
+        </div>
       </div>
 
       <PlatformDetailTabs
