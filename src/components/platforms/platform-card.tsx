@@ -2,8 +2,9 @@ import Link from "next/link";
 import { Globe, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { displayCategoryName } from "@/lib/categories";
-import { COST_TIER_LABEL, DIFFICULTY_LABEL } from "@/lib/labels";
+import { COST_TIER_LABEL, COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
+import { Tooltip } from "@/components/ui/tooltip";
 
 interface PlatformCardProps {
   slug: string;
@@ -91,14 +92,16 @@ export function PlatformCard({
       )}
 
       <div className="mb-3 flex flex-wrap gap-2">
-        <span
-          className={cn(
-            "rounded-md border px-2 py-0.5 text-xs font-medium",
-            tierColors[costTier] || tierColors.FREEMIUM,
-          )}
-        >
-          {COST_TIER_LABEL[costTier] ?? costTier}
-        </span>
+        <Tooltip content={COST_TIER_TOOLTIP[costTier] ?? ""}>
+          <span
+            className={cn(
+              "rounded-md border px-2 py-0.5 text-xs font-medium",
+              tierColors[costTier] || tierColors.FREEMIUM,
+            )}
+          >
+            {COST_TIER_LABEL[costTier] ?? costTier}
+          </span>
+        </Tooltip>
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
           {DIFFICULTY_LABEL[difficultyLevel] ?? difficultyLevel}
         </span>

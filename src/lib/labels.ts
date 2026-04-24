@@ -31,3 +31,11 @@ export const PRIVACY_LEVEL_LABEL: Record<string, string> = {
   HIGH: "High",
   MAXIMUM: "Maximum",
 };
+
+/** Tooltip copy for the CostTier Prisma enum — explains what each tier means. */
+export const COST_TIER_TOOLTIP: Record<string, string> = {
+  FREE: "Completely free to use with no credit card required.",
+  FREEMIUM: "Free tier available with limits; paid plans unlock more.",
+  PAID: "Requires a paid subscription or one-time purchase.",
+  ENTERPRISE: "Custom pricing, typically for teams or companies.",
+};
