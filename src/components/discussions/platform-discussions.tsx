@@ -194,7 +194,7 @@ export function PlatformDiscussions({
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="font-medium text-white">{d.title}</p>
-                    <p className="text-xs text-gray-500">{d.author}</p>
+                    <p className="text-xs text-gray-500">by {d.author}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
@@ -229,7 +229,7 @@ export function PlatformDiscussions({
                       <li key={r.id} className="text-sm">
                         <p className="text-gray-300">{r.body}</p>
                         <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
-                          <span>{r.author}</span>
+                          <span>by {r.author}</span>
                           {isLoaded && isSignedIn && (
                             <button
                               type="button"
