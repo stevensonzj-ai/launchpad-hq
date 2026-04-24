@@ -306,7 +306,7 @@ export default async function DiscoverPage({
                 <span
                   key={letter}
                   aria-disabled="true"
-                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-600 opacity-40"
+                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-600"
                 >
                   {letter}
                 </span>
