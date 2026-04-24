@@ -50,7 +50,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
   const user = await getOrCreateDbUser();
   const isSignedIn = user !== null;
 
-  const [alternatives, complementary, favoriteRow] = await Promise.all([
+  const [alternatives, complementary, favoriteRows] = await Promise.all([
     platform.directAlternatives.length
       ? prisma.platform.findMany({
           where: { name: { in: platform.directAlternatives, mode: "insensitive" } },
@@ -65,16 +65,19 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
           take: 4,
         })
       : Promise.resolve([]),
+    // Fetch all user favorites as a Set so we can populate bookmark state
+    // on both the header Save button and every PlatformCard in the
+    // Alternatives / Works Well With grids. Mirrors Discover's pattern.
+    // TODO: bound this query if favorites-per-user grows significantly.
     user
-      ? prisma.userFavorite.findUnique({
-          where: {
-            userId_platformId: { userId: user.id, platformId: platform.id },
-          },
-          select: { id: true },
+      ? prisma.userFavorite.findMany({
+          where: { userId: user.id },
+          select: { platformId: true },
         })
-      : Promise.resolve(null),
+      : Promise.resolve([]),
   ]);
-  const isFavorited = favoriteRow !== null;
+  const favoriteIds = new Set(favoriteRows.map((f) => f.platformId));
+  const isFavorited = favoriteIds.has(platform.id);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -186,6 +189,8 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
                 freeTierFeatures={p.freeTierFeatures}
                 hasMobileApp={p.hasMobileApp}
                 mobileWebFriendly={p.mobileWebFriendly}
+                isFavorited={favoriteIds.has(p.id)}
+                isSignedIn={isSignedIn}
               />
             ))}
           </div>
@@ -210,6 +215,8 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
                 freeTierFeatures={p.freeTierFeatures}
                 hasMobileApp={p.hasMobileApp}
                 mobileWebFriendly={p.mobileWebFriendly}
+                isFavorited={favoriteIds.has(p.id)}
+                isSignedIn={isSignedIn}
               />
             ))}
           </div>
