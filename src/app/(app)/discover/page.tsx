@@ -4,16 +4,16 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
-import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
-import { displayCategoryName } from "@/lib/categories";
+import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 import { COST_TIER_LABEL } from "@/lib/labels";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const count = roundDownToTen(await getPlatformCount());
+  const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
+  const count = roundDownToTen(platformCount);
   return {
     title: "Discover AI Tools | Launchpad HQ",
-    description: `Browse ${count}+ vetted AI platforms across 15 categories on LaunchpadHQ.io`,
+    description: `Browse ${count}+ vetted AI platforms across ${categoryCount} categories on LaunchpadHQ.io`,
   };
 }
 
@@ -181,7 +181,7 @@ export default async function DiscoverPage({
             }
             className={`rounded-lg px-3 py-1.5 text-sm ${params.category === cat.slug ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
           >
-            {displayCategoryName(cat.name)} ({cat._count.platforms})
+            {cat.name} ({cat._count.platforms})
           </Link>
         ))}
       </div>

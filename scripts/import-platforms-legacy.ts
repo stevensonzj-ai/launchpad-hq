@@ -1,10 +1,25 @@
 /**
- * Import AI platforms from Excel file into PostgreSQL via Prisma.
+ * LEGACY — DO NOT RUN.
  *
- * Usage: npx tsx scripts/import-platforms.ts
+ * This is the original Excel-driven category-and-platform import script
+ * used during initial project setup (April 2026). Kept in-tree as a
+ * historical record of the import shape; it is NOT compatible with the
+ * post-2026-05 category taxonomy.
  *
- * Reads ai_platforms_enhanced_metadata.xlsx, maps each sheet to a category,
- * and creates Platform records with all 28 metadata fields.
+ * The script's CATEGORY_META map below declares the three superseded
+ * categories (Industry-Specific AI, Audio Music & Voice AI, Browser
+ * Extensions & Productivi) that the May 2026 restructure split apart
+ * and deleted. Re-running this script would:
+ *   - Re-create those three categories
+ *   - Upsert ~170 platforms back to their old categoryIds, undoing the
+ *     reassignments performed by scripts/restructure-categories-2026-05.ts
+ *
+ * A runtime guard below prevents accidental execution. If you genuinely
+ * need to run this against a fresh empty database (e.g., a one-off
+ * historical recreation), pass --force-legacy-import.
+ *
+ * Usage (legacy):
+ *   npx tsx scripts/import-platforms-legacy.ts --force-legacy-import
  */
 import * as XLSX from "xlsx";
 import * as path from "path";
@@ -12,6 +27,19 @@ import "dotenv/config";
 
 const { PrismaPg } = require("@prisma/adapter-pg");
 const { PrismaClient } = require("@prisma/client");
+
+if (!process.argv.includes("--force-legacy-import")) {
+  console.error(
+    "scripts/import-platforms-legacy.ts: refusing to run without --force-legacy-import.\n" +
+      "This script reflects the pre-2026-05 category taxonomy and will re-create the\n" +
+      "three superseded categories (Industry-Specific AI, Audio Music & Voice AI,\n" +
+      "Browser Extensions & Productivi), undoing Migration B and scrambling the\n" +
+      "platform reassignments from scripts/restructure-categories-2026-05.ts.\n" +
+      "\n" +
+      "If you really know what you're doing, pass --force-legacy-import.",
+  );
+  process.exit(1);
+}
 
 type CostTier = "FREE" | "FREEMIUM" | "PAID" | "ENTERPRISE";
 type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";

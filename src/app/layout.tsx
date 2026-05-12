@@ -2,7 +2,7 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import { getPlatformCount, roundDownToTen } from "@/lib/platforms"
+import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms"
 import { BackToTop } from "@/components/layout/back-to-top"
 
 const geistSans = Geist({
@@ -16,10 +16,11 @@ const geistMono = Geist_Mono({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const count = roundDownToTen(await getPlatformCount())
+  const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()])
+  const count = roundDownToTen(platformCount)
   return {
     title: "Launchpad HQ - Your AI Mission Control",
-    description: `Your AI mission control center. ${count}+ vetted tools across 15 categories.`,
+    description: `Your AI mission control center. ${count}+ vetted tools across ${categoryCount} categories.`,
   }
 }
 

@@ -12,11 +12,15 @@ import {
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
-import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
+import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 
 export default async function HomePage() {
   const featuredWorkflows = getAllWorkflows().slice(0, 3);
-  const [validSlugs, rawCount] = await Promise.all([getPlatformSlugSet(), getPlatformCount()]);
+  const [validSlugs, rawCount, categoryCount] = await Promise.all([
+    getPlatformSlugSet(),
+    getPlatformCount(),
+    getCategoryCount(),
+  ]);
   const platformCount = roundDownToTen(rawCount);
 
   return (
@@ -60,7 +64,7 @@ export default async function HomePage() {
             with confidence
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-400">
-            {platformCount}+ vetted AI tools across 15 categories. Find the perfect platforms for your goals, budget, and skill
+            {platformCount}+ vetted AI tools across {categoryCount}{" "}categories. Find the perfect platforms for your goals, budget, and skill
             level &mdash; in minutes, not months.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
@@ -167,28 +171,28 @@ export default async function HomePage() {
 
       {/* Categories */}
       <section className="mx-auto max-w-5xl px-4 pb-20">
-        <h2 className="mb-8 text-center text-2xl font-bold text-white">15 Categories of AI Tools</h2>
+        <h2 className="mb-8 text-center text-2xl font-bold text-white">{categoryCount}{" "}Categories of AI Tools</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {[
-            { name: "Text & Chat AI", icon: "💬" },
-            { name: "Image Generation", icon: "🎨" },
-            { name: "Video Creation", icon: "🎬" },
-            { name: "Audio & Music", icon: "🎵" },
-            { name: "Coding & Dev", icon: "💻" },
-            { name: "Automation", icon: "⚡" },
-            { name: "Research", icon: "📚" },
-            { name: "Documents", icon: "📄" },
-            { name: "Industry AI", icon: "🏢" },
-            { name: "Open Source", icon: "🔓" },
-            { name: "Business Plugins", icon: "🔌" },
-            { name: "Browser Extensions", icon: "🌐" },
-            { name: "Gaming & Creative", icon: "🎮" },
-            { name: "Developer APIs", icon: "🔧" },
-            { name: "International AI", icon: "🌍" },
+            { name: "Text & Chat AI", icon: "💬", slug: "text-conversational-ai" },
+            { name: "Image Generation", icon: "🎨", slug: "image-generation-editing" },
+            { name: "Video Creation", icon: "🎬", slug: "video-creation-editing" },
+            { name: "Music Generation", icon: "🎵", slug: "music-generation" },
+            { name: "Voice & Speech", icon: "🎙️", slug: "voice-speech" },
+            { name: "Meetings & Notes", icon: "📝", slug: "meetings-notes" },
+            { name: "Coding & Dev", icon: "💻", slug: "ai-coding-development" },
+            { name: "Automation", icon: "⚡", slug: "workflow-automation" },
+            { name: "Research", icon: "📚", slug: "research-academic-tools" },
+            { name: "Documents", icon: "📄", slug: "document-pdf-processing" },
+            { name: "Sales & Marketing", icon: "📈", slug: "sales-marketing-seo-ai" },
+            { name: "Education", icon: "🎓", slug: "education-learning-ai" },
+            { name: "Healthcare AI", icon: "🏥", slug: "healthcare-ai" },
+            { name: "Legal AI", icon: "⚖️", slug: "legal-ai" },
+            { name: "Open Source", icon: "🔓", slug: "local-open-source-ai" },
           ].map((cat) => (
             <Link
-              key={cat.name}
-              href="/discover"
+              key={cat.slug}
+              href={`/discover?category=${cat.slug}`}
               className="group rounded-lg border border-gray-800 bg-gray-900/50 px-3 py-3 text-center transition-all hover:border-orange-500/40 hover:bg-gray-900"
             >
               <span className="text-xl">{cat.icon}</span>
