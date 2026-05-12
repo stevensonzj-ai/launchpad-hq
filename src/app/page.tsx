@@ -64,7 +64,7 @@ export default async function HomePage() {
             with confidence
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-400">
-            {platformCount}+ vetted AI tools across {categoryCount} categories. Find the perfect platforms for your goals, budget, and skill
+            {platformCount}+ vetted AI tools across {categoryCount}{" "}categories. Find the perfect platforms for your goals, budget, and skill
             level &mdash; in minutes, not months.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
@@ -171,7 +171,7 @@ export default async function HomePage() {
 
       {/* Categories */}
       <section className="mx-auto max-w-5xl px-4 pb-20">
-        <h2 className="mb-8 text-center text-2xl font-bold text-white">{categoryCount} Categories of AI Tools</h2>
+        <h2 className="mb-8 text-center text-2xl font-bold text-white">{categoryCount}{" "}Categories of AI Tools</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {[
             { name: "Text & Chat AI", icon: "💬", slug: "text-conversational-ai" },
