@@ -31,7 +31,7 @@ function slugify(text: string): string {
 
 const CATEGORY_NAMES = {
   text: "Text & Conversational AI",
-  audio: "Audio, Music & Voice AI",
+  voiceSpeech: "Voice & Speech",
 } as const;
 
 async function main() {
@@ -41,12 +41,12 @@ async function main() {
   const textCat = await prisma.category.findFirst({
     where: { slug: slugify(CATEGORY_NAMES.text) },
   });
-  const audioCat = await prisma.category.findFirst({
-    where: { slug: slugify(CATEGORY_NAMES.audio) },
+  const voiceSpeechCat = await prisma.category.findFirst({
+    where: { slug: slugify(CATEGORY_NAMES.voiceSpeech) },
   });
 
   if (!textCat) throw new Error(`Category not found: ${CATEGORY_NAMES.text}`);
-  if (!audioCat) throw new Error(`Category not found: ${CATEGORY_NAMES.audio}`);
+  if (!voiceSpeechCat) throw new Error(`Category not found: ${CATEGORY_NAMES.voiceSpeech}`);
 
   const base = {
     platformType: ["web"],
@@ -84,7 +84,7 @@ async function main() {
     {
       slug: "descript",
       name: "Descript",
-      categoryId: audioCat.id,
+      categoryId: voiceSpeechCat.id,
       primaryUse: "Audio/video editing with AI transcription",
       currentPricing: "Free; $12/mo creator",
       freeTierFeatures: "Free tier with limited transcription and editing",
@@ -95,7 +95,7 @@ async function main() {
     {
       slug: "murf-ai",
       name: "Murf AI",
-      categoryId: audioCat.id,
+      categoryId: voiceSpeechCat.id,
       primaryUse: "Text-to-speech, voice overs",
       currentPricing: "Free tier; $29/mo",
       freeTierFeatures: "Limited free voice generation minutes",
@@ -105,7 +105,7 @@ async function main() {
     {
       slug: "play-ht",
       name: "PlayHT",
-      categoryId: audioCat.id,
+      categoryId: voiceSpeechCat.id,
       primaryUse: "AI voice generation, TTS",
       currentPricing: "Free tier; $29/mo",
       freeTierFeatures: "Free tier with limited characters per month",
