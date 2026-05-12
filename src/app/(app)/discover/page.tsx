@@ -4,16 +4,17 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
-import { getPlatformCount, roundDownToTen } from "@/lib/platforms";
+import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 import { displayCategoryName } from "@/lib/categories";
 import { COST_TIER_LABEL } from "@/lib/labels";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const count = roundDownToTen(await getPlatformCount());
+  const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
+  const count = roundDownToTen(platformCount);
   return {
     title: "Discover AI Tools | Launchpad HQ",
-    description: `Browse ${count}+ vetted AI platforms across 15 categories on LaunchpadHQ.io`,
+    description: `Browse ${count}+ vetted AI platforms across ${categoryCount} categories on LaunchpadHQ.io`,
   };
 }
 
