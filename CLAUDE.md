@@ -194,6 +194,121 @@ No AI moderation for v1. Humans only. The pipeline is implemented (as of Session
 - **Approval UI is not yet built.** Zach flips `status` manually in Prisma Studio for now. Email-on-pending notifications and an admin approval queue are follow-up work. Add automated flagging only after volume justifies it — even then, auto-flag for human review, never auto-publish or auto-remove.
 
 ---
+## Editorial principles for the platform catalog
+
+These principles govern how platforms are evaluated for inclusion in or exclusion from the LaunchpadHQ catalog, and how exclusions are eventually surfaced to users. The principles are the editorial work that distinguishes LaunchpadHQ from a generic AI tool aggregator — they're a strategic moat against AI-generated competitor sites, since editorial reasoning is hard to fake at scale.
+
+### Inclusion bar
+
+A platform is a candidate for inclusion when it meets at least one of these tests:
+
+- **Genuine beginner relevance**: a non-technical user could plausibly sign up and get value from it
+- **High mindshare**: the platform has enough public discussion, news coverage, or social-media presence that beginners are likely to hear about it elsewhere and search for it on LaunchpadHQ — even if the platform itself is intermediate-to-advanced in practice
+- **Category completeness**: the platform fills a meaningful gap in an existing category (a free alternative to paid options, a notable open-source option, a strong international entrant, etc.)
+
+A platform that meets none of these is not a candidate, regardless of how active or popular it is. "Real platform" alone isn't enough — there are 15,000+ AI tools listed across the aggregator sites; curation is the differentiator.
+
+### Inclusion-with-disclosure: the default treatment for higher-concern platforms
+
+For platforms with privacy, data-handling, geopolitical, or transparency concerns, the default is **include with honest disclosure**, not exclude.
+
+Reasoning:
+
+- Silent exclusion of high-mindshare platforms (e.g. DeepSeek, MiniMax, Kling) creates a "where is X?" search pattern that hurts catalog credibility
+- "We excluded Platform Y because it's from country Z" is a categorical judgment that's hard to apply consistently and raises legal exposure
+- "We included Platform Y with a factual note about its data handling" is editorially honest and lets users decide for themselves
+- The schema already supports this via the `privacyLevel` enum (LOW/MEDIUM/HIGH) — use it honestly. LOW is informative, not a brand of disapproval. Don't inflate to HIGH to be polite
+
+What honest disclosure looks like in practice:
+
+- Set `privacyLevel` to reflect the platform's actual data-handling practices, even if that's LOW
+- Use the description field (or a dedicated notes field if added later) to state observable facts plainly: country of operation, data retention policy, training-on-user-inputs status, any clauses a user should review
+- Frame these as facts ("Operated from China. Per the platform's privacy policy as of YYYY-MM-DD, user inputs may be stored on servers in China and used to improve services."), never as judgments ("This platform is risky for privacy.")
+- Date-stamp anything that could change. Policies change; the disclosure should be a snapshot, not a permanent claim
+
+### Exclusion bar — per-platform observable facts only
+
+A platform belongs in the Excluded Platforms holding doc (and eventually on the Excluded Platforms page, once that's published) only when there is a **specific, documented observation about that platform** that warrants exclusion. The exclusion is anchored to facts, not categorical judgments.
+
+Acceptable exclusion grounds (each with a specific, date-stamped, primary-source-linked observation):
+
+- **Privacy**: no privacy policy at all; policy fails to address user input handling at all; specific clauses that warrant flagging (must be the actual clause, not a general impression)
+- **Safety**: documented child-safety failures, documented security incidents with no remediation, content moderation failures with documented evidence
+- **Regulatory**: documented sanctions, regulatory action, or legal findings against the platform
+- **Abandoned / inactive**: domain dead, last update >18 months ago, social channels dormant, support unreachable
+- **Scam signals**: specific scam patterns documented (fake reviews, payment without delivery, deceptive marketing) — must point to evidence
+- **Not actually AI**: marketed as AI but is in fact a non-AI product (rule-based, manually operated, etc.)
+
+Unacceptable exclusion grounds:
+
+- "Based in country X"
+- "Has had privacy concerns" (too vague)
+- "Owned by company we don't like"
+- "Could be used badly"
+- "Doesn't feel beginner-friendly"
+- Any reasoning that wouldn't survive a "would I want to defend this in writing?" test
+
+### Honest privacyLevel usage
+
+The `privacyLevel` enum is editorial signal, not a brand. Use it honestly across the catalog:
+
+- **HIGH**: clear privacy commitments, enterprise-grade data handling, or open-source/self-hosted platforms where the user controls data
+- **MEDIUM**: standard SaaS data handling with reasonable policies, may use inputs for improvement with opt-out or anonymization
+- **LOW**: significant data-handling concerns — inputs used for training by default, data stored in jurisdictions a privacy-sensitive user might want to know about, weak or vague policies
+
+LOW is not a death sentence and it's not a way of expressing disapproval. It's a factual signal that helps the user decide. A platform with LOW privacy and high utility is a perfectly valid catalog entry — the disclosure is the point.
+
+### Research format for new candidates
+
+When researching candidate platforms for inclusion, each candidate should be evaluated with:
+
+- One-line rationale for inclusion (why this platform fits the bar)
+- Recommended `privacyLevel` based on observable evidence
+- 1-2 sentence factual disclosure note (lives in description field), written as observable facts not judgments
+- Primary source URL (the platform itself, plus the privacy policy or TOS if the disclosure note cites it)
+
+When a platform doesn't pass the inclusion bar, it gets captured in the holding doc with:
+
+- Exclusion category (from the acceptable list above)
+- Date-stamped observable fact
+- Primary source URL
+
+The holding doc lives in the project (not published) until the legal boilerplate for the Excluded Platforms page is finalized.
+
+## Excluded Platforms page (planned feature, not yet built)
+
+A future page documenting AI platforms that were investigated during catalog research but excluded from the catalog. Documents the editorial reasoning behind each exclusion. Source data is the holding doc that accumulates from catalog research sessions.
+
+**Why this exists in the roadmap:**
+
+- Surfaces the editorial work that distinguishes LaunchpadHQ from a generic AI tool aggregator
+- Solves a real user search pattern (user hears about a platform elsewhere, doesn't find it on the site, currently walks away — with this page they'd walk away informed instead)
+- Strategic moat against AI-generated competitor sites; editorial reasoning is hard to fake at scale
+
+### Legal framing — required before publication
+
+Slander and defamation risk is real if exclusion entries are written as evaluative judgments. All exclusion content on the published page must follow these rules — they extend the per-platform observable-facts standard from the Exclusion bar section above:
+
+- **State observable facts, not evaluative judgments.** Bad: "ExampleAI has a misleading privacy policy." Good: "ExampleAI's privacy policy as of [date] does not state how user inputs are stored or whether they're used for training."
+- **Date-stamp every observation.** "As of YYYY-MM-DD" — makes clear the entry is a snapshot, not a permanent claim. If the platform fixes the issue, the entry can be updated without retracting anything false.
+- **Link to primary sources.** Privacy policies, ToS, etc. — verifiable evidence behind every observation.
+- **Use exclusion categories rather than free-form blame.** "Excluded for: insufficient privacy disclosure" is a category sort. "We think they're shady" is an accusation.
+- **Distinguish observations from editorial conclusions and label them differently.** "Observed: no SOC 2 certification listed" is fact. "Conclusion: we recommend caution for enterprise users" is editorial. Both are fine; mixing them is where trouble starts.
+- **Provide a corrections / appeals contact path on the page itself.** Documented good-faith process — "did you contact us through our correction process?" becomes the immediate response to any legal threat.
+
+### What needs to happen before this page goes live
+
+- Draft a 200-300 word "how we describe exclusions" boilerplate that lives at the top of the page. Sets expectation for users, demonstrates good-faith editorial process, defines the framing for everything below
+- Ideally have the boilerplate reviewed by a small-business attorney before publication
+- The page itself should be a Server Component, similar architecture to Discover. Likely a simple grid or list of excluded platforms with name, company, exclusion category, and the date-stamped observation(s) that drove the decision
+- Consider an `excluded_platforms` table in the schema with columns roughly: `name, company, exclusion_category, observation_text, primary_source_url, date_evaluated, last_updated`. Or a JSON file if the data is small and static enough
+- Filterable by exclusion category (privacy, safety, regulatory, abandoned/inactive, scam signals, not-actually-AI)
+
+### Out of scope until the boilerplate is finalized
+
+- Don't preemptively add the database table or page until the legal framing is ready
+- Don't publish any entries until the boilerplate is finalized and reviewed
+- The holding doc accumulates in the project as a private file in the meantime, capturing exclusions in the legally defensible format (per the Research format section above) so no rework is needed when the page is eventually built
 
 ## Coding conventions
 
