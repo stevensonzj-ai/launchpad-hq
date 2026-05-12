@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Globe, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { displayCategoryName } from "@/lib/categories";
 import { COST_TIER_LABEL, COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -105,7 +104,7 @@ export function PlatformCard({
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
           {DIFFICULTY_LABEL[difficultyLevel] ?? difficultyLevel}
         </span>
-        <span className="text-xs text-gray-600">{displayCategoryName(category.name)}</span>
+        <span className="text-xs text-gray-600">{category.name}</span>
         {hasMobileApp && (
           <span
             className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs font-medium text-emerald-400"

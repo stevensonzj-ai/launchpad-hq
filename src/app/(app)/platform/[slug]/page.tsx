@@ -10,7 +10,6 @@ import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs"
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
-import { displayCategoryName } from "@/lib/categories";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -86,7 +85,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
         <Link href={`/discover?category=${platform.category.slug}`} className="hover:text-white">
-          {displayCategoryName(platform.category.name)}
+          {platform.category.name}
         </Link>
         <span>/</span>
         <span className="text-gray-300">{platform.name}</span>
