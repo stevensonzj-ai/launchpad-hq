@@ -18,6 +18,8 @@
         "@prisma/pg-worker": "^6.9.0",
         "@prisma/ppg": "^1.0.1",
         "@tanstack/react-query": "^5.96.1",
+        "@vercel/analytics": "^2.0.1",
+        "@vercel/speed-insights": "^2.0.0",
         "clsx": "^2.1.1",
         "lucide-react": "^1.7.0",
         "next": "16.2.2",
