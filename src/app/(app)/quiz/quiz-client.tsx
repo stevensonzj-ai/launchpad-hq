@@ -56,10 +56,13 @@ export function QuizClient() {
           body: JSON.stringify({ answers: full }),
         });
         if (!res.ok) throw new Error("Could not save quiz");
+        router.push("/for-you");
       } else {
+        // Stash for the post-auth save handoff on /quiz/results; if the user
+        // never signs in, sessionStorage dies with the tab.
         sessionStorage.setItem("launchpad_quiz_pending", JSON.stringify(full));
+        router.push("/quiz/results");
       }
-      router.push("/for-you");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error");
     } finally {
