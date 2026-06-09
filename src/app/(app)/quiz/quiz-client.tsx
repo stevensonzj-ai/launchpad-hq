@@ -44,10 +44,12 @@ export function QuizClient() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function finish() {
+  async function finish(latest?: Partial<QuizAnswers>) {
     setSaving(true);
     setError(null);
-    const full = answers as QuizAnswers;
+    // `setAnswers` from the click handler hasn't flushed yet, so accept the
+    // updated answers as an argument to avoid a stale-closure read.
+    const full = (latest ?? answers) as QuizAnswers;
     try {
       if (isSignedIn) {
         const res = await fetch("/api/user/quiz", {
@@ -78,9 +80,9 @@ export function QuizClient() {
   return (
     <div className="mx-auto max-w-lg px-4 py-12">
       <p className="text-center text-sm font-medium text-orange-400">Get matched</p>
-      <h1 className="mt-2 text-center text-3xl font-bold text-white">5 quick questions</h1>
+      <h1 className="mt-2 text-center text-3xl font-bold text-white">4 quick questions</h1>
       <p className="mt-2 text-center text-sm text-gray-500">
-        Question {step + 1} of 5
+        Question {step + 1} of 4
         {!isSignedIn && " — sign in later to save results to your profile, or continue as guest."}
       </p>
 
@@ -163,46 +165,28 @@ export function QuizClient() {
                 <button
                   key={g.id}
                   type="button"
+                  disabled={saving}
                   onClick={() => {
-                    setAnswers((a) => ({ ...a, runtime: g.id }));
-                    setStep(4);
+                    const updated = { ...answers, runtime: g.id };
+                    setAnswers(updated);
+                    finish(updated);
                   }}
-                  className="rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-left text-sm text-white hover:border-orange-500/50"
+                  className="rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-left text-sm text-white hover:border-orange-500/50 disabled:opacity-40"
                 >
                   {g.label}
                 </button>
               ))}
             </div>
-            <button type="button" onClick={() => setStep(2)} className="text-xs text-gray-500 hover:text-white">
+            {saving && <p className="text-xs text-gray-500">Saving…</p>}
+            {error && <p className="text-sm text-red-400">{error}</p>}
+            <button
+              type="button"
+              disabled={saving}
+              onClick={() => setStep(2)}
+              className="text-xs text-gray-500 hover:text-white"
+            >
               Back
             </button>
-          </>
-        )}
-
-        {step === 4 && (
-          <>
-            <p className="text-sm font-medium text-gray-300">What tasks do you need? (short phrase)</p>
-            <textarea
-              value={answers.tasks || ""}
-              onChange={(e) => setAnswers((a) => ({ ...a, tasks: e.target.value }))}
-              placeholder="e.g. blog posts, code review, meeting notes"
-              rows={3}
-              className="w-full rounded-lg border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-white"
-            />
-            {error && <p className="text-sm text-red-400">{error}</p>}
-            <div className="flex gap-2">
-              <button
-                type="button"
-                disabled={saving || !(answers.tasks || "").trim()}
-                onClick={() => finish()}
-                className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 disabled:opacity-40"
-              >
-                {saving ? "Saving…" : "See recommendations"}
-              </button>
-              <button type="button" onClick={() => setStep(3)} className="text-xs text-gray-500 hover:text-white">
-                Back
-              </button>
-            </div>
           </>
         )}
       </div>
