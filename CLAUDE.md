@@ -367,6 +367,7 @@ Follow-ups surfaced by recent work. Not urgent, but worth knowing about — pick
 - **No `typecheck` script in `package.json`.** Only `build` and `lint` exist today. Candidate: add `"typecheck": "tsc --noEmit"` so pre-commit and CI flows can catch type errors without running a full `next build`. No new dep required.
 - **Legacy `Prompt.author` (String?) column coexists with the `user` relation.** Some older rows have `author` populated and no `userId`. The current projection in `GET /api/platforms/[slug]/prompts` falls back `user.name → author → "Anonymous"` to keep them readable. Candidate follow-up: backfill the `user` relation for legacy rows, then drop the column in a migration.
 - **No admin UI for moderating PENDING submissions.** Zach currently flips `status` manually in Prisma Studio. Building an admin queue is a P2 item under "Complete the feature scaffolds."
+- **`LoggedOutLanding` in `src/app/(app)/for-you/page.tsx` is dead code.** Middleware (`src/proxy.ts`) auth-gates `/for-you`, so the signed-out branch is unreachable in practice. Now that anon users land on `/quiz/results` instead, this fallback can be deleted in a future cleanup pass.
 
 ---
 
