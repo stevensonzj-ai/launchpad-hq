@@ -46,6 +46,57 @@ export const goalKeywords: Record<string, string[]> = {
     "visualization",
     "dashboard",
   ],
+  // Vertical buckets. Keywords verified to fire against actual
+  // primaryUse/primaryUseCases text of platforms in the matching DB category.
+  // Substring match (.includes) — kept narrow to avoid cross-bucket bleed.
+  legal: [
+    "legal",
+    "lawyer",
+    "attorney",
+    "contract",
+    "compliance",
+    "deposition",
+    "clause",
+    "redlining",
+    "case law",
+  ],
+  healthcare: [
+    "medical",
+    "clinical",
+    "healthcare",
+    "diagnostic",
+    "diagnosis",
+    "pathology",
+    "radiology",
+    "insurance",
+    "wellness",
+    "stroke",
+    "cancer",
+  ],
+  finance: [
+    "finance",
+    "financial",
+    "investment",
+    "mortgage",
+    "valuation",
+    "earnings",
+    "expense",
+    "real estate",
+    "property",
+    "accounting",
+    "rental",
+    "irs",
+  ],
+  sales_marketing: [
+    "sales",
+    "marketing",
+    "seo",
+    "keyword",
+    "pipeline",
+    "ecommerce",
+    "e-commerce",
+    "crm",
+  ],
 };
 
 export type RecommendationInput = {
