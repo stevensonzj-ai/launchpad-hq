@@ -14,6 +14,9 @@ const GOALS = [
   { id: "video", label: "Video" },
   { id: "audio", label: "Audio & voice" },
   { id: "business", label: "Business & productivity" },
+  { id: "automation", label: "Automation & workflows" },
+  { id: "education", label: "Education & learning" },
+  { id: "data_analysis", label: "Data & analytics" },
 ] as const;
 
 const EXP = [
@@ -90,7 +93,7 @@ export function QuizClient() {
         {step === 0 && (
           <>
             <p className="text-sm font-medium text-gray-300">What do you want to accomplish?</p>
-            <div className="grid gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {GOALS.map((g) => (
                 <button
                   key={g.id}
