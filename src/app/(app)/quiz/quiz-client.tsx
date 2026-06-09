@@ -14,6 +14,13 @@ const GOALS = [
   { id: "video", label: "Video" },
   { id: "audio", label: "Audio & voice" },
   { id: "business", label: "Business & productivity" },
+  { id: "automation", label: "Automation & workflows" },
+  { id: "education", label: "Education & learning" },
+  { id: "data_analysis", label: "Data & analytics" },
+  { id: "legal", label: "Legal" },
+  { id: "healthcare", label: "Healthcare & medical" },
+  { id: "finance", label: "Finance & real estate" },
+  { id: "sales_marketing", label: "Sales, marketing & SEO" },
 ] as const;
 
 const EXP = [
