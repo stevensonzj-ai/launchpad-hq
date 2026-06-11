@@ -75,14 +75,6 @@ const MAX_COMFORTABLE_RANK: Record<string, number> = {
 /** Multiplier applied to a tool's score when it's above the user's level. */
 const ABOVE_DIFFICULTY_PENALTY = 0.65;
 
-/**
- * Minimum score the top result must reach for results to ship at all.
- * Scores render directly as "{score}% match" on cards, so this is the
- * 15%-confidence floor: below it we return an empty set and let the UI
- * show an honest empty state instead of low-confidence filler.
- */
-const MIN_MATCH_SCORE = 15;
-
 export async function computeRecommendations(body: RecommendationInput) {
   const { goals, budget, experienceLevel, priorities } = body;
 
@@ -108,6 +100,7 @@ export async function computeRecommendations(body: RecommendationInput) {
 
   const scored = candidates.map((platform) => {
     let score = 0;
+    let goalScore = 0;
     const aboveDifficulty =
       DIFFICULTY_RANK[platform.difficultyLevel] > maxComfortableRank;
 
@@ -118,6 +111,7 @@ export async function computeRecommendations(body: RecommendationInput) {
       for (const kw of keywords) {
         if (useCases.includes(kw) || useDesc.includes(kw)) {
           score += 10;
+          goalScore += 10;
         }
       }
     }
@@ -143,19 +137,23 @@ export async function computeRecommendations(body: RecommendationInput) {
 
     if (aboveDifficulty) score = Math.round(score * ABOVE_DIFFICULTY_PENALTY);
 
-    return { platform, score, aboveDifficulty };
+    return { platform, score, goalScore, aboveDifficulty };
   });
 
   scored.sort((a, b) => b.score - a.score);
-  const hasStrongMatch =
-    scored.length > 0 && scored[0].score >= MIN_MATCH_SCORE;
-  const recommendations = hasStrongMatch
-    ? scored.slice(0, 12).map((s) => ({
-        ...s.platform,
-        matchScore: s.score,
-        aboveDifficulty: s.aboveDifficulty,
-      }))
-    : [];
+
+  // Goal-relevance floor: only surface tools that matched at least one of the
+  // selected goal's keywords. Goal-independent rewards (beginner +8, free +10,
+  // free-tier +5) otherwise let an irrelevant FREE BEGINNER tool score ~23 and
+  // ride along behind a single real match. Filtering on goalScore (the
+  // keyword-only subtotal) before the slice keeps the list honest; the
+  // difficulty penalty and "Advanced" badge still order/flag what remains.
+  const relevant = scored.filter((s) => s.goalScore > 0);
+  const recommendations = relevant.slice(0, 12).map((s) => ({
+    ...s.platform,
+    matchScore: s.score,
+    aboveDifficulty: s.aboveDifficulty,
+  }));
 
   const byCategory: Record<string, typeof recommendations> = {};
   for (const rec of recommendations) {
