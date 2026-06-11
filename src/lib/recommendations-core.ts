@@ -55,6 +55,34 @@ export type RecommendationInput = {
   priorities?: string[];
 };
 
+const DIFFICULTY_RANK: Record<Difficulty, number> = {
+  BEGINNER: 0,
+  INTERMEDIATE: 1,
+  ADVANCED: 2,
+  EXPERT: 3,
+};
+
+// Highest difficulty rank that scores without a penalty for each experience
+// level. Tools above this rank are still included — ranked lower and badged
+// "Advanced" — instead of being excluded outright, so a narrow goal with only
+// advanced tooling still returns results.
+const MAX_COMFORTABLE_RANK: Record<string, number> = {
+  beginner: DIFFICULTY_RANK.BEGINNER,
+  intermediate: DIFFICULTY_RANK.INTERMEDIATE,
+  advanced: DIFFICULTY_RANK.EXPERT,
+};
+
+/** Multiplier applied to a tool's score when it's above the user's level. */
+const ABOVE_DIFFICULTY_PENALTY = 0.65;
+
+/**
+ * Minimum score the top result must reach for results to ship at all.
+ * Scores render directly as "{score}% match" on cards, so this is the
+ * 15%-confidence floor: below it we return an empty set and let the UI
+ * show an honest empty state instead of low-confidence filler.
+ */
+const MIN_MATCH_SCORE = 15;
+
 export async function computeRecommendations(body: RecommendationInput) {
   const { goals, budget, experienceLevel, priorities } = body;
 
@@ -65,26 +93,23 @@ export async function computeRecommendations(body: RecommendationInput) {
     costFilter.push("PAID", "ENTERPRISE");
   if (!costFilter.length) costFilter.push("FREE", "FREEMIUM", "PAID");
 
-  const diffMap: Record<string, Difficulty[]> = {
-    beginner: ["BEGINNER"],
-    intermediate: ["BEGINNER", "INTERMEDIATE"],
-    advanced: ["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT"],
-  };
-  const diffFilter = diffMap[experienceLevel || "beginner"] || [
-    "BEGINNER",
-    "INTERMEDIATE",
-  ];
+  // Unknown experience levels get the historical default (intermediate cap),
+  // matching the old diffFilter fallback of ["BEGINNER", "INTERMEDIATE"].
+  const maxComfortableRank =
+    MAX_COMFORTABLE_RANK[experienceLevel || "beginner"] ??
+    DIFFICULTY_RANK.INTERMEDIATE;
 
   const candidates = await prisma.platform.findMany({
     where: {
       costTier: { in: costFilter },
-      difficultyLevel: { in: diffFilter },
     },
     include: { category: true },
   });
 
   const scored = candidates.map((platform) => {
     let score = 0;
+    const aboveDifficulty =
+      DIFFICULTY_RANK[platform.difficultyLevel] > maxComfortableRank;
 
     const useCases = (platform.primaryUseCases || "").toLowerCase();
     const useDesc = (platform.primaryUse || "").toLowerCase();
@@ -116,14 +141,21 @@ export async function computeRecommendations(body: RecommendationInput) {
       score += 5;
     }
 
-    return { platform, score };
+    if (aboveDifficulty) score = Math.round(score * ABOVE_DIFFICULTY_PENALTY);
+
+    return { platform, score, aboveDifficulty };
   });
 
   scored.sort((a, b) => b.score - a.score);
-  const recommendations = scored.slice(0, 12).map((s) => ({
-    ...s.platform,
-    matchScore: s.score,
-  }));
+  const hasStrongMatch =
+    scored.length > 0 && scored[0].score >= MIN_MATCH_SCORE;
+  const recommendations = hasStrongMatch
+    ? scored.slice(0, 12).map((s) => ({
+        ...s.platform,
+        matchScore: s.score,
+        aboveDifficulty: s.aboveDifficulty,
+      }))
+    : [];
 
   const byCategory: Record<string, typeof recommendations> = {};
   for (const rec of recommendations) {

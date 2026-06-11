@@ -106,15 +106,16 @@ function QuizZeroRecsState() {
       <h2 className="text-xl font-semibold text-white">Based on your quiz</h2>
       <div className="mt-4 rounded-xl border border-gray-800 bg-gray-900/50 p-8 text-center">
         <p className="text-sm text-gray-400">
-          We couldn&apos;t find platforms that match all your criteria. Try retaking the quiz with broader answers or browse the full catalog.
+          We don&apos;t have strong matches for this combination yet. Try
+          browsing by category in{" "}
+          <Link href="/discover" className="text-orange-400 hover:underline">
+            Discover
+          </Link>
+          .
         </p>
         <p className="mt-6 text-sm">
           <Link href="/quiz" className="text-orange-400 hover:underline">
             Retake quiz
-          </Link>
-          <span className="mx-2 text-gray-600">·</span>
-          <Link href="/discover" className="text-gray-400 hover:text-white">
-            Browse all tools
           </Link>
         </p>
       </div>
@@ -147,6 +148,7 @@ function QuizRecommendations({
             hasMobileApp={p.hasMobileApp}
             mobileWebFriendly={p.mobileWebFriendly}
             matchScore={p.matchScore}
+            aboveDifficulty={p.aboveDifficulty}
             isFavorited={favoriteIds.has(p.id)}
             isSignedIn={true}
           />
