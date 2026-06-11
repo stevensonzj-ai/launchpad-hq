@@ -56,10 +56,13 @@ export function QuizClient() {
           body: JSON.stringify({ answers: full }),
         });
         if (!res.ok) throw new Error("Could not save quiz");
+        router.push("/for-you");
       } else {
+        // Stash for the post-auth save handoff on /quiz/results; if the user
+        // never signs in, sessionStorage dies with the tab.
         sessionStorage.setItem("launchpad_quiz_pending", JSON.stringify(full));
+        router.push("/quiz/results");
       }
-      router.push("/for-you");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error");
     } finally {
@@ -81,7 +84,7 @@ export function QuizClient() {
       <h1 className="mt-2 text-center text-3xl font-bold text-white">5 quick questions</h1>
       <p className="mt-2 text-center text-sm text-gray-500">
         Question {step + 1} of 5
-        {!isSignedIn && " — sign in later to save results to your profile, or continue as guest."}
+        {!isSignedIn && " — no sign-in required"}
       </p>
 
       <div className="mt-10 space-y-4">
