@@ -24,6 +24,7 @@ type Rec = {
   hasMobileApp?: boolean;
   mobileWebFriendly?: boolean;
   matchScore: number;
+  aboveDifficulty?: boolean;
 };
 
 type SaveState = "idle" | "saving" | "saved" | "error";
@@ -213,6 +214,7 @@ export function ResultsClient() {
                 hasMobileApp={p.hasMobileApp}
                 mobileWebFriendly={p.mobileWebFriendly}
                 matchScore={p.matchScore}
+                aboveDifficulty={p.aboveDifficulty}
               />
             ))}
           </div>
