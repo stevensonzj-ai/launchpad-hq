@@ -83,6 +83,9 @@ export async function computeRecommendations(body: RecommendationInput) {
   if (budget === "free" || budget === "under_20") costFilter.push("FREEMIUM");
   if (budget === "under_50" || budget === "enterprise")
     costFilter.push("PAID", "ENTERPRISE");
+  // Enterprise budget still benefits from seeing strong free/freemium tools —
+  // a big budget doesn't mean ignoring free options.
+  if (budget === "enterprise") costFilter.push("FREE", "FREEMIUM");
   if (!costFilter.length) costFilter.push("FREE", "FREEMIUM", "PAID");
 
   // Unknown experience levels get the historical default (intermediate cap),
