@@ -15,6 +15,8 @@ interface PlatformCardProps {
   category: { name: string; slug: string };
   freeTierFeatures: string | null;
   matchScore?: number;
+  /** True when the platform sits above the user's selected difficulty. */
+  aboveDifficulty?: boolean;
   hasMobileApp?: boolean;
   mobileWebFriendly?: boolean;
   isFavorited?: boolean;
@@ -45,6 +47,7 @@ export function PlatformCard({
   category,
   freeTierFeatures,
   matchScore,
+  aboveDifficulty,
   hasMobileApp,
   mobileWebFriendly,
   isFavorited,
@@ -104,6 +107,14 @@ export function PlatformCard({
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
           {DIFFICULTY_LABEL[difficultyLevel] ?? difficultyLevel}
         </span>
+        {aboveDifficulty && (
+          <span
+            className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-400"
+            title="Above the difficulty level you selected in the quiz"
+          >
+            Advanced
+          </span>
+        )}
         <span className="text-xs text-gray-600">{category.name}</span>
         {hasMobileApp && (
           <span
