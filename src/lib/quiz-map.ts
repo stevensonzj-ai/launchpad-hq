@@ -1,12 +1,17 @@
 import type { RecommendationInput } from "./recommendations-core";
 
-/** Quiz answers stored as JSON in `UserPreferences.quizAnswers` */
+/**
+ * Quiz answers stored as JSON in `UserPreferences.quizAnswers`.
+ *
+ * Legacy rows may still contain a `tasks` string from the pre-2026-06 quiz —
+ * it was never read by `quizToRecommendationInput` so the unknown field is
+ * silently ignored when those rows are deserialized.
+ */
 export type QuizAnswers = {
   goal: string;
   experience: string;
   budget: string;
   runtime: string;
-  tasks: string;
 };
 
 export function quizToRecommendationInput(answers: QuizAnswers): RecommendationInput {
