@@ -41,9 +41,10 @@ export default async function ForYouPage() {
   const favoriteIds = new Set(favoriteRows.map((f) => f.platformId));
 
   // recs is a deliberate tri-state so each branch below is unambiguous:
-  //   null        — quiz not completed            -> render QuizCta
-  //   []          — quiz completed, zero matches  -> render zero-recs state
-  //   non-empty   — render "Based on your quiz" grid
+  //   null        — quiz not completed                 -> render QuizCta
+  //   []          — quiz completed, zero relevant hits -> render zero-recs state
+  //   non-empty   — render "Based on your quiz" grid; a 1-2 item list also
+  //                 shows a "that's all we found" note via isShortList
   const hasQuiz = prefs?.quizCompletedAt != null && prefs?.quizAnswers != null;
   const recs: Rec[] | null = hasQuiz
     ? (
@@ -93,7 +94,11 @@ export default async function ForYouPage() {
         ) : recs.length === 0 ? (
           <QuizZeroRecsState />
         ) : (
-          <QuizRecommendations recs={recs} favoriteIds={favoriteIds} />
+          <QuizRecommendations
+            recs={recs}
+            favoriteIds={favoriteIds}
+            isShortList={recs.length <= 2}
+          />
         )}
       </section>
     </div>
@@ -106,15 +111,16 @@ function QuizZeroRecsState() {
       <h2 className="text-xl font-semibold text-white">Based on your quiz</h2>
       <div className="mt-4 rounded-xl border border-gray-800 bg-gray-900/50 p-8 text-center">
         <p className="text-sm text-gray-400">
-          We couldn&apos;t find platforms that match all your criteria. Try retaking the quiz with broader answers or browse the full catalog.
+          We don&apos;t have strong matches for this combination yet. Try
+          browsing by category in{" "}
+          <Link href="/discover" className="text-orange-400 hover:underline">
+            Discover
+          </Link>
+          .
         </p>
         <p className="mt-6 text-sm">
           <Link href="/quiz" className="text-orange-400 hover:underline">
             Retake quiz
-          </Link>
-          <span className="mx-2 text-gray-600">·</span>
-          <Link href="/discover" className="text-gray-400 hover:text-white">
-            Browse all tools
           </Link>
         </p>
       </div>
@@ -125,13 +131,24 @@ function QuizZeroRecsState() {
 function QuizRecommendations({
   recs,
   favoriteIds,
+  isShortList,
 }: {
   recs: Rec[];
   favoriteIds: Set<string>;
+  isShortList?: boolean;
 }) {
   return (
     <div>
       <h2 className="text-xl font-semibold text-white">Based on your quiz</h2>
+      {isShortList && (
+        <p className="mt-2 text-sm text-gray-400">
+          That&apos;s all we found a strong match for — try{" "}
+          <Link href="/discover" className="text-orange-400 hover:underline">
+            Discover
+          </Link>{" "}
+          for more.
+        </p>
+      )}
       <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {recs.map((p) => (
           <PlatformCard
@@ -147,6 +164,7 @@ function QuizRecommendations({
             hasMobileApp={p.hasMobileApp}
             mobileWebFriendly={p.mobileWebFriendly}
             matchScore={p.matchScore}
+            aboveDifficulty={p.aboveDifficulty}
             isFavorited={favoriteIds.has(p.id)}
             isSignedIn={true}
           />

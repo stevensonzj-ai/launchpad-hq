@@ -55,6 +55,26 @@ export type RecommendationInput = {
   priorities?: string[];
 };
 
+const DIFFICULTY_RANK: Record<Difficulty, number> = {
+  BEGINNER: 0,
+  INTERMEDIATE: 1,
+  ADVANCED: 2,
+  EXPERT: 3,
+};
+
+// Highest difficulty rank that scores without a penalty for each experience
+// level. Tools above this rank are still included — ranked lower and badged
+// "Advanced" — instead of being excluded outright, so a narrow goal with only
+// advanced tooling still returns results.
+const MAX_COMFORTABLE_RANK: Record<string, number> = {
+  beginner: DIFFICULTY_RANK.BEGINNER,
+  intermediate: DIFFICULTY_RANK.INTERMEDIATE,
+  advanced: DIFFICULTY_RANK.EXPERT,
+};
+
+/** Multiplier applied to a tool's score when it's above the user's level. */
+const ABOVE_DIFFICULTY_PENALTY = 0.65;
+
 export async function computeRecommendations(body: RecommendationInput) {
   const { goals, budget, experienceLevel, priorities } = body;
 
@@ -63,28 +83,29 @@ export async function computeRecommendations(body: RecommendationInput) {
   if (budget === "free" || budget === "under_20") costFilter.push("FREEMIUM");
   if (budget === "under_50" || budget === "enterprise")
     costFilter.push("PAID", "ENTERPRISE");
+  // Enterprise budget still benefits from seeing strong free/freemium tools —
+  // a big budget doesn't mean ignoring free options.
+  if (budget === "enterprise") costFilter.push("FREE", "FREEMIUM");
   if (!costFilter.length) costFilter.push("FREE", "FREEMIUM", "PAID");
 
-  const diffMap: Record<string, Difficulty[]> = {
-    beginner: ["BEGINNER"],
-    intermediate: ["BEGINNER", "INTERMEDIATE"],
-    advanced: ["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT"],
-  };
-  const diffFilter = diffMap[experienceLevel || "beginner"] || [
-    "BEGINNER",
-    "INTERMEDIATE",
-  ];
+  // Unknown experience levels get the historical default (intermediate cap),
+  // matching the old diffFilter fallback of ["BEGINNER", "INTERMEDIATE"].
+  const maxComfortableRank =
+    MAX_COMFORTABLE_RANK[experienceLevel || "beginner"] ??
+    DIFFICULTY_RANK.INTERMEDIATE;
 
   const candidates = await prisma.platform.findMany({
     where: {
       costTier: { in: costFilter },
-      difficultyLevel: { in: diffFilter },
     },
     include: { category: true },
   });
 
   const scored = candidates.map((platform) => {
     let score = 0;
+    let goalScore = 0;
+    const aboveDifficulty =
+      DIFFICULTY_RANK[platform.difficultyLevel] > maxComfortableRank;
 
     const useCases = (platform.primaryUseCases || "").toLowerCase();
     const useDesc = (platform.primaryUse || "").toLowerCase();
@@ -93,6 +114,7 @@ export async function computeRecommendations(body: RecommendationInput) {
       for (const kw of keywords) {
         if (useCases.includes(kw) || useDesc.includes(kw)) {
           score += 10;
+          goalScore += 10;
         }
       }
     }
@@ -116,13 +138,24 @@ export async function computeRecommendations(body: RecommendationInput) {
       score += 5;
     }
 
-    return { platform, score };
+    if (aboveDifficulty) score = Math.round(score * ABOVE_DIFFICULTY_PENALTY);
+
+    return { platform, score, goalScore, aboveDifficulty };
   });
 
   scored.sort((a, b) => b.score - a.score);
-  const recommendations = scored.slice(0, 12).map((s) => ({
+
+  // Goal-relevance floor: only surface tools that matched at least one of the
+  // selected goal's keywords. Goal-independent rewards (beginner +8, free +10,
+  // free-tier +5) otherwise let an irrelevant FREE BEGINNER tool score ~23 and
+  // ride along behind a single real match. Filtering on goalScore (the
+  // keyword-only subtotal) before the slice keeps the list honest; the
+  // difficulty penalty and "Advanced" badge still order/flag what remains.
+  const relevant = scored.filter((s) => s.goalScore > 0);
+  const recommendations = relevant.slice(0, 12).map((s) => ({
     ...s.platform,
     matchScore: s.score,
+    aboveDifficulty: s.aboveDifficulty,
   }));
 
   const byCategory: Record<string, typeof recommendations> = {};
