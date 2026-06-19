@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
+import { sendModerationNotification } from "@/lib/email";
 
 export async function POST(
   request: NextRequest,
@@ -39,6 +41,27 @@ export async function POST(
       body: text,
     },
   });
+
+  // Notify the moderator; a failed email must never fail the submission.
+  try {
+    const origin =
+      request.headers.get("origin") ||
+      process.env.NEXT_PUBLIC_APP_URL ||
+      "http://localhost:3000";
+    await sendModerationNotification(
+      {
+        kind: "reply",
+        id: reply.id,
+        title: `Re: ${discussion.title}`,
+        content: reply.body,
+        author: user.name ?? "Anonymous",
+      },
+      origin,
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    await Sentry.flush(2000);
+  }
 
   return NextResponse.json({ id: reply.id });
 }

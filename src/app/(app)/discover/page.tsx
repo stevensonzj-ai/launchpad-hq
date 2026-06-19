@@ -26,6 +26,20 @@ function normalizeSort(value: string | undefined): SortMode {
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+// Whitelists keep arbitrary query values out of the Prisma enum filters —
+// an unknown value (e.g. ?cost=banana) would otherwise throw at query time.
+const COST_TIERS = ["FREE", "FREEMIUM", "PAID", "ENTERPRISE"] as const;
+const DIFFICULTIES = ["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT"] as const;
+
+// The difficulty filter exposes three levels; "advanced" includes EXPERT so
+// the handful of expert-rated platforms stay reachable (the quiz groups the
+// two the same way).
+const DIFFICULTY_FILTERS = [
+  { value: "beginner", label: "Beginner" },
+  { value: "intermediate", label: "Intermediate" },
+  { value: "advanced", label: "Advanced" },
+] as const;
+
 function buildDiscoverQuery(parts: {
   category?: string;
   cost?: string;
@@ -57,16 +71,29 @@ export default async function DiscoverPage({
 }) {
   const params = await searchParams;
   const sort = normalizeSort(params.sort);
+  const costQs = params.cost?.toLowerCase();
+  const difficultyQs = params.difficulty?.toLowerCase();
 
   const where: Record<string, unknown> = {};
   if (params.category) {
     where.category = { slug: params.category };
   }
-  if (params.cost) {
-    where.costTier = params.cost.toUpperCase();
+  if (costQs === "free-tier") {
+    // "Has free tier" = anything usable without paying.
+    where.costTier = { in: ["FREE", "FREEMIUM"] };
+  } else if (
+    costQs &&
+    (COST_TIERS as readonly string[]).includes(costQs.toUpperCase())
+  ) {
+    where.costTier = costQs.toUpperCase();
   }
-  if (params.difficulty) {
-    where.difficultyLevel = params.difficulty.toUpperCase();
+  if (difficultyQs === "advanced") {
+    where.difficultyLevel = { in: ["ADVANCED", "EXPERT"] };
+  } else if (
+    difficultyQs &&
+    (DIFFICULTIES as readonly string[]).includes(difficultyQs.toUpperCase())
+  ) {
+    where.difficultyLevel = difficultyQs.toUpperCase();
   }
   if (params.mobile === "app") {
     where.hasMobileApp = true;
@@ -85,9 +112,6 @@ export default async function DiscoverPage({
       : sort === "recent"
         ? [{ createdAt: "desc" as const }]
         : [{ featured: "desc" as const }, { name: "asc" as const }];
-
-  const costQs = params.cost?.toLowerCase();
-  const difficultyQs = params.difficulty?.toLowerCase();
 
   const user = await getOrCreateDbUser();
 
@@ -202,7 +226,22 @@ export default async function DiscoverPage({
         >
           All
         </Link>
-        {["FREE", "FREEMIUM", "PAID", "ENTERPRISE"].map((tier) => (
+        <Link
+          href={
+            "/discover" +
+            buildDiscoverQuery({
+              category: params.category,
+              cost: "free-tier",
+              difficulty: difficultyQs,
+              mobile: params.mobile,
+              sort: params.sort,
+            })
+          }
+          className={`rounded-md px-2 py-1 text-xs ${costQs === "free-tier" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
+        >
+          Has free tier
+        </Link>
+        {COST_TIERS.map((tier) => (
           <Link
             key={tier}
             href={
@@ -218,6 +257,42 @@ export default async function DiscoverPage({
             className={`rounded-md px-2 py-1 text-xs ${params.cost?.toUpperCase() === tier ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
           >
             {COST_TIER_LABEL[tier] ?? tier}
+          </Link>
+        ))}
+      </div>
+
+      {/* Difficulty filter */}
+      <div className="mb-6 flex flex-wrap gap-2">
+        <Link
+          href={
+            "/discover" +
+            buildDiscoverQuery({
+              category: params.category,
+              cost: costQs,
+              mobile: params.mobile,
+              sort: params.sort,
+            })
+          }
+          className={`rounded-md px-2 py-1 text-xs ${!params.difficulty ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
+        >
+          All
+        </Link>
+        {DIFFICULTY_FILTERS.map((d) => (
+          <Link
+            key={d.value}
+            href={
+              "/discover" +
+              buildDiscoverQuery({
+                category: params.category,
+                cost: costQs,
+                difficulty: d.value,
+                mobile: params.mobile,
+                sort: params.sort,
+              })
+            }
+            className={`rounded-md px-2 py-1 text-xs ${difficultyQs === d.value ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
+          >
+            {d.label}
           </Link>
         ))}
       </div>
