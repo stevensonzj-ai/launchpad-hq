@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
+import { sendModerationNotification } from "@/lib/email";
 
 // TODO: reconsider default sort once rating data exists
 export async function GET(
@@ -119,7 +121,7 @@ export async function POST(
   const { slug } = await params;
   const platform = await prisma.platform.findUnique({
     where: { slug },
-    select: { id: true },
+    select: { id: true, name: true },
   });
   if (!platform) {
     return NextResponse.json({ error: "Platform not found" }, { status: 404 });
@@ -135,6 +137,28 @@ export async function POST(
       outputUrl,
     },
   });
+
+  // Notify the moderator; a failed email must never fail the submission.
+  try {
+    const origin =
+      request.headers.get("origin") ||
+      process.env.NEXT_PUBLIC_APP_URL ||
+      "http://localhost:3000";
+    await sendModerationNotification(
+      {
+        kind: "prompt",
+        id: created.id,
+        title: created.title,
+        content: created.promptText,
+        platformName: platform.name,
+        author: user.name ?? "Anonymous",
+      },
+      origin,
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    await Sentry.flush(2000);
+  }
 
   return NextResponse.json(created);
 }
