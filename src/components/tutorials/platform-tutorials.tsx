@@ -1,16 +1,16 @@
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
+import type { TutorialArchetype } from "@/data/tutorials";
 
-function sectionEmoji(heading: string): string {
-  const h = heading.toLowerCase();
-  if (h.includes("disclaimer")) return "⚠️";
-  if (h.includes("account")) return "👤";
-  if (h.includes("what can")) return "✨";
-  if (h.includes("prompt")) return "💬";
-  if (h.includes("strength") || h.includes("weakness")) return "⚖️";
-  if (h.includes("free tier") || h.includes("limit")) return "📊";
-  if (h.includes("next")) return "🚀";
-  return "📌";
-}
+// Section-G heading depends on the tutorial archetype.
+const STARTER_HEADING: Record<TutorialArchetype, string> = {
+  prompts: "Starter prompts to try",
+  recipes: "Starter automations to try",
+  "pick-and-setup": "First things to try & getting set up",
+};
+
+const CARD = "rounded-xl border border-gray-800 bg-gray-900/90 p-6 sm:p-7";
+const H2 = "text-lg font-semibold text-white";
+const BODY = "text-sm leading-relaxed text-gray-300";
 
 type PlatformTutorialsProps = {
   platformName: string;
@@ -36,40 +36,149 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
   return (
     <div className="space-y-8">
-      <div className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-gray-900 to-gray-900 p-6 sm:p-8">
+      {/* Title + tagline + last reviewed */}
+      <header className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-gray-900 to-gray-900 p-6 sm:p-8">
         <p className="text-xs font-medium uppercase tracking-wider text-orange-400/90">Tutorial</p>
         <h2 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">{tutorial.title}</h2>
-        <p className="mt-2 text-sm text-gray-400">
-          Curated walkthrough for <span className="text-gray-300">{platformName}</span>
+        <p className="mt-2 text-sm leading-relaxed text-gray-300">{tutorial.tagline}</p>
+        <p className="mt-3 text-xs text-gray-500">
+          Last reviewed {tutorial.lastReviewedAt} · for {platformName}
         </p>
-      </div>
+      </header>
 
-      <div className="space-y-5">
-        {tutorial.sections.map((section) => (
-          <article
-            key={section.heading}
-            className="rounded-xl border border-gray-800 bg-gray-900/90 p-6 shadow-sm transition-colors hover:border-gray-700 sm:p-7"
-          >
-            <h3 className="flex items-start gap-3 text-lg font-semibold text-white">
-              <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-800 text-xl"
-                aria-hidden
-              >
-                {sectionEmoji(section.heading)}
-              </span>
-              <span className="pt-1.5 leading-snug">{section.heading}</span>
-            </h3>
-            <div className="mt-4 border-t border-gray-800/80 pt-4">
-              <div className="whitespace-pre-wrap text-sm leading-relaxed text-gray-300">{section.content}</div>
-              {section.note && (
-                <div className="mt-4 rounded-lg border border-orange-500/25 bg-orange-500/10 px-4 py-3 text-sm text-orange-100/95">
-                  <span className="font-medium text-orange-300">Note:</span> {section.note}
-                </div>
+      {/* How it works */}
+      <section className={CARD}>
+        <h2 className={H2}>How it works</h2>
+        <p className={`mt-4 ${BODY}`}>{tutorial.howItWorks}</p>
+      </section>
+
+      {/* What it is */}
+      <section className={CARD}>
+        <h2 className={H2}>What it is</h2>
+        <div className="mt-4 space-y-2">
+          {tutorial.whatItIs.map((item) => (
+            <p key={item} className={BODY}>{item}</p>
+          ))}
+        </div>
+      </section>
+
+      {/* Before you start */}
+      <section className={CARD}>
+        <h2 className={H2}>Before you start</h2>
+        <div className="mt-4 space-y-2">
+          {tutorial.beforeYouStart.map((item) => (
+            <p key={item} className={BODY}>{item}</p>
+          ))}
+        </div>
+      </section>
+
+      {/* Getting set up safely — only when present */}
+      {tutorial.gettingSetUpSafely && (
+        <section className={CARD}>
+          <h2 className={H2}>Getting set up safely</h2>
+          <p className={`mt-4 ${BODY}`}>
+            <span className="font-medium text-orange-300">Official source:</span>{" "}
+            {tutorial.gettingSetUpSafely.officialSource}
+          </p>
+          <div className="mt-3 space-y-2">
+            {tutorial.gettingSetUpSafely.body.map((paragraph) => (
+              <p key={paragraph} className={BODY}>{paragraph}</p>
+            ))}
+          </div>
+          {tutorial.gettingSetUpSafely.vendorDocsUrl && (
+            <a
+              href={tutorial.gettingSetUpSafely.vendorDocsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-sm font-medium text-orange-400 hover:text-orange-300"
+            >
+              Official docs ↗
+            </a>
+          )}
+        </section>
+      )}
+
+      {/* Security & privacy */}
+      <section className={CARD}>
+        <h2 className={H2}>Security &amp; privacy</h2>
+        <div className="mt-4 space-y-2">
+          {tutorial.security.map((item) => (
+            <p key={item} className={BODY}>{item}</p>
+          ))}
+        </div>
+      </section>
+
+      {/* Capability triad */}
+      <section className={CARD}>
+        <h2 className={H2}>What it&apos;s good (and not good) at</h2>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <div>
+            <h3 className="text-sm font-semibold text-green-400">Best at</h3>
+            <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
+              {tutorial.triad.bestAt.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-300">Okay at</h3>
+            <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
+              {tutorial.triad.okayAt.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-3">
+            <h3 className="text-sm font-semibold text-red-400">Avoid</h3>
+            <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
+              {tutorial.triad.avoid.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Starter actions — heading switches on archetype */}
+      <section>
+        <h2 className={H2}>{STARTER_HEADING[tutorial.archetype]}</h2>
+        <div className="mt-4 space-y-4">
+          {tutorial.starterActions.map((action) => (
+            <article key={action.title} className="rounded-xl border border-gray-800 bg-gray-900/90 p-5 sm:p-6">
+              <h3 className="text-base font-semibold text-white">{action.title}</h3>
+              <p className={`mt-2 ${BODY}`}>{action.whatItDoes}</p>
+              <p className="mt-3 text-sm leading-relaxed text-orange-100/95">
+                <span className="font-medium text-orange-300">Why this one:</span> {action.whyHere}
+              </p>
+              {action.tweak && (
+                <p className="mt-2 text-sm leading-relaxed text-gray-400">
+                  <span className="font-medium text-gray-300">Tweak:</span> {action.tweak}
+                </p>
               )}
-            </div>
-          </article>
-        ))}
-      </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Pitfalls */}
+      <section className={CARD}>
+        <h2 className={H2}>Common pitfalls</h2>
+        <ul className={`mt-4 space-y-1.5 list-disc pl-5 ${BODY}`}>
+          {tutorial.pitfalls.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Where to next */}
+      <section className={CARD}>
+        <h2 className={H2}>Where to next</h2>
+        <div className="mt-4 space-y-2">
+          {tutorial.whereToNext.map((item) => (
+            <p key={item} className={BODY}>{item}</p>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

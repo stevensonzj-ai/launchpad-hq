@@ -1,4 +1,4 @@
-import type { PlatformTutorialData } from "./chatgpt-getting-started";
+import type { PlatformTutorialData } from "./types";
 import { chatgptTutorial } from "./chatgpt-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
@@ -9,4 +9,11 @@ export function getStaticTutorialForPlatform(platformSlug: string): PlatformTuto
   return byPlatformSlug[platformSlug];
 }
 
-export type { PlatformTutorialData, TutorialSection } from "./chatgpt-getting-started";
+export type {
+  AccessTier,
+  TutorialArchetype,
+  CapabilityTriad,
+  StarterAction,
+  SetupGuidance,
+  PlatformTutorialData,
+} from "./types";
