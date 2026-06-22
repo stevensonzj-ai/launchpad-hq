@@ -14,19 +14,30 @@ export const chatgptTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "ChatGPT is OpenAI's general-purpose AI assistant — the one most people mean when they say \"AI.\"",
-    "It's the best default starting point for a beginner because it does a little of everything competently, before you graduate to specialized tools.",
+    "It's the best default starting point for a beginner because it does a little of everything competently — answering questions, writing and editing, making images from a description, and helping with code — before you graduate to specialized tools.",
+    "For coding specifically, OpenAI also offers a separate, more advanced tool called Codex that can take on a programming task and work through it for you. It's built for developers, not first-timers — but it's there if you grow into building software.",
   ],
 
   beforeYouStart: [
     "Free to use with a sign-up (email, Google, or Apple) — no card required. First step: go to chat.openai.com, sign up free, and you're in.",
     "Will you need to pay? The free tier is plenty for casual use — learning, drafting, brainstorming. You'd only pay (Plus, currently around $20/month) if you want the best models reliably or hit the limits often. Paying buys better models, not more privacy.",
     "The free tier has usage limits that reset on a rolling few-hour window. When you hit them, ChatGPT quietly swaps you to a smaller, faster model (the AI \"brain\" doing the work — there are smarter-but-slower and faster-but-simpler ones). Answers get noticeably shallower with no big warning; if a reply suddenly feels worse, that's usually why. Limits also tighten when OpenAI is busy.",
+    "Image generation has its own separate, tighter limit than text — often just a couple a day on the free tier, on a rolling window. You can run out of images while text still works fine, which catches people off guard.",
   ],
 
   security: [
-    "ChatGPT is mainstream and reasonably well-run, but it's a cloud service — and on the free tier, your conversations are used to train OpenAI's models by default. Good rule for any AI chatbot: treat everything you type as if a stranger might eventually read it.",
-    "Never paste in: passwords, bank or card numbers, Social Security numbers; medical records tied to your name; other people's private info; or confidential work material (several companies have banned employees from doing exactly this).",
-    "Two settings worth knowing day one: turn off training under Settings → Data Controls → \"Improve the model for everyone\" (paying for Plus does not do this for you); and use Temporary Chat for one-off sensitive questions. Note that \"temporary\" and \"deleted\" still aren't instant — OpenAI holds data for around 30 days either way. None of this makes normal use unsafe; the box just isn't a vault.",
+    { kind: 'text', text: "ChatGPT is mainstream and reasonably well-run, but it's a cloud service — and on the free tier, your conversations are used to train OpenAI's models by default. Good rule for any AI chatbot: treat everything you type as if a stranger might eventually read it." },
+    { kind: 'list', label: 'Never paste in', items: [
+      'Passwords, bank or card numbers, Social Security numbers',
+      'Medical records tied to your name',
+      "Other people's private information",
+      'Confidential or proprietary work material — several companies have banned employees from doing exactly this',
+    ] },
+    { kind: 'list', label: 'Two settings worth knowing day one', items: [
+      'Turn off training under Settings → Data Controls → "Improve the model for everyone" — paying for Plus does not do this for you',
+      'Use Temporary Chat for one-off sensitive questions — though "temporary" and "deleted" still aren\'t instant; OpenAI holds data around 30 days either way',
+    ] },
+    { kind: 'text', text: "None of this makes normal use unsafe — the box just isn't a vault." },
   ],
 
   triad: {
@@ -35,6 +46,7 @@ export const chatgptTutorial: PlatformTutorialData = {
       "Rewriting and reshaping text",
       "Explaining things at your level (\"explain X like I'm new to it\")",
       "Drafting first versions you then refine",
+      "Making images just by describing them — easy and conversational",
     ],
     okayAt: [
       "Math and precise logic — check the numbers",
@@ -93,8 +105,8 @@ export const chatgptTutorial: PlatformTutorialData = {
   ],
 
   whereToNext: [
-    "Browse image generators",
-    "Browse AI coding tools",
-    "Browse research tools",
+    { label: 'Image generators', categorySlug: 'image-generation-editing' },
+    { label: 'AI coding tools', categorySlug: 'ai-coding-development' },
+    { label: 'Research tools', categorySlug: 'research-academic-tools' },
   ],
 };

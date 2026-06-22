@@ -5,6 +5,12 @@ export type CapabilityTriad = { bestAt: string[]; okayAt: string[]; avoid: strin
 export type StarterAction = { title: string; whatItDoes?: string; whyHere: string; tweak?: string; prompt?: string };
 export type SetupGuidance = { officialSource: string; body: string[]; vendorDocsUrl?: string };
 
+export type SecurityBlock =
+  | { kind: 'text'; text: string }
+  | { kind: 'list'; label: string; items: string[] };
+
+export type WhereNext = { label: string; categorySlug?: string; href?: string };
+
 export type PlatformTutorialData = {
   slug: string;
   platformSlug: string;
@@ -18,9 +24,9 @@ export type PlatformTutorialData = {
   whatItIs: string[];
   beforeYouStart: string[];
   gettingSetUpSafely?: SetupGuidance;
-  security: string[];
+  security: SecurityBlock[];
   triad: CapabilityTriad;
   starterActions: StarterAction[];
   pitfalls: string[];
-  whereToNext: string[];
+  whereToNext: WhereNext[];
 };

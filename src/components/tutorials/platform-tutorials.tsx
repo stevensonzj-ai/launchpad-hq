@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import {
   AlertTriangle,
   ArrowRight,
@@ -163,13 +164,25 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </section>
       )}
 
-      {/* Security & privacy — accent left-border callout, calibrated caution */}
+      {/* Security & privacy — accent left-border callout, calibrated caution.
+          Renders as labeled lists (structured like the triad), not a wall of text. */}
       <section className="border-l-2 border-orange-500/50 bg-orange-500/5 p-5 sm:p-6">
         <SectionHeading icon={Shield}>Security &amp; privacy</SectionHeading>
-        <div className="mt-4 space-y-2">
-          {tutorial.security.map((item) => (
-            <p key={item} className={BODY}>{item}</p>
-          ))}
+        <div className="mt-4 space-y-4">
+          {tutorial.security.map((block) =>
+            block.kind === "text" ? (
+              <p key={block.text} className={BODY}>{block.text}</p>
+            ) : (
+              <div key={block.label}>
+                <h4 className="text-sm font-semibold text-white">{block.label}</h4>
+                <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
+                  {block.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ),
+          )}
         </div>
       </section>
 
@@ -257,19 +270,35 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </ul>
       </section>
 
-      {/* Where to next — non-functional styled pills (route wiring is a follow-up) */}
+      {/* Where to next — real catalog links (category filter on /discover) */}
       <section className={CARD}>
         <SectionHeading icon={ArrowRight}>Where to next</SectionHeading>
         <div className="mt-4 flex flex-wrap gap-2">
-          {tutorial.whereToNext.map((item) => (
-            <span
-              key={item}
-              className="inline-flex items-center gap-1.5 rounded-full border border-gray-700 bg-gray-800/60 px-3 py-1.5 text-sm text-gray-300"
-            >
+          {tutorial.whereToNext.map((item) => {
+            const href = item.categorySlug
+              ? `/discover?category=${item.categorySlug}`
+              : item.href;
+            const pill =
+              "inline-flex items-center gap-1.5 rounded-full border border-gray-700 bg-gray-800/60 px-3 py-1.5 text-sm text-gray-300";
+            const icon = (
               <ArrowRight className="h-3.5 w-3.5 shrink-0 text-orange-400" aria-hidden />
-              {item}
-            </span>
-          ))}
+            );
+            return href ? (
+              <Link
+                key={item.label}
+                href={href}
+                className={`${pill} transition-colors hover:border-orange-500/50 hover:text-orange-300`}
+              >
+                {icon}
+                {item.label}
+              </Link>
+            ) : (
+              <span key={item.label} className={pill}>
+                {icon}
+                {item.label}
+              </span>
+            );
+          })}
         </div>
       </section>
     </div>
