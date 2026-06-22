@@ -9,7 +9,9 @@ const STARTER_HEADING: Record<TutorialArchetype, string> = {
 };
 
 const CARD = "rounded-xl border border-gray-800 bg-gray-900/90 p-6 sm:p-7";
-const H2 = "text-lg font-semibold text-white";
+// Style for section headings. Rendered as <h3> (the tutorial title is the
+// <h2>, which itself sits under the platform-detail page's <h1>).
+const SECTION_HEADING = "text-lg font-semibold text-white";
 const BODY = "text-sm leading-relaxed text-gray-300";
 
 type PlatformTutorialsProps = {
@@ -48,13 +50,13 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* How it works */}
       <section className={CARD}>
-        <h2 className={H2}>How it works</h2>
+        <h3 className={SECTION_HEADING}>How it works</h3>
         <p className={`mt-4 ${BODY}`}>{tutorial.howItWorks}</p>
       </section>
 
       {/* What it is */}
       <section className={CARD}>
-        <h2 className={H2}>What it is</h2>
+        <h3 className={SECTION_HEADING}>What it is</h3>
         <div className="mt-4 space-y-2">
           {tutorial.whatItIs.map((item) => (
             <p key={item} className={BODY}>{item}</p>
@@ -64,7 +66,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Before you start */}
       <section className={CARD}>
-        <h2 className={H2}>Before you start</h2>
+        <h3 className={SECTION_HEADING}>Before you start</h3>
         <div className="mt-4 space-y-2">
           {tutorial.beforeYouStart.map((item) => (
             <p key={item} className={BODY}>{item}</p>
@@ -75,7 +77,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
       {/* Getting set up safely — only when present */}
       {tutorial.gettingSetUpSafely && (
         <section className={CARD}>
-          <h2 className={H2}>Getting set up safely</h2>
+          <h3 className={SECTION_HEADING}>Getting set up safely</h3>
           <p className={`mt-4 ${BODY}`}>
             <span className="font-medium text-orange-300">Official source:</span>{" "}
             {tutorial.gettingSetUpSafely.officialSource}
@@ -100,7 +102,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Security & privacy */}
       <section className={CARD}>
-        <h2 className={H2}>Security &amp; privacy</h2>
+        <h3 className={SECTION_HEADING}>Security &amp; privacy</h3>
         <div className="mt-4 space-y-2">
           {tutorial.security.map((item) => (
             <p key={item} className={BODY}>{item}</p>
@@ -110,10 +112,10 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Capability triad */}
       <section className={CARD}>
-        <h2 className={H2}>What it&apos;s good (and not good) at</h2>
+        <h3 className={SECTION_HEADING}>What it&apos;s good (and not good) at</h3>
         <div className="mt-4 grid gap-4 sm:grid-cols-3">
           <div>
-            <h3 className="text-sm font-semibold text-green-400">Best at</h3>
+            <h4 className="text-sm font-semibold text-green-400">Best at</h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.bestAt.map((item) => (
                 <li key={item}>{item}</li>
@@ -121,7 +123,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-300">Okay at</h3>
+            <h4 className="text-sm font-semibold text-gray-300">Okay at</h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.okayAt.map((item) => (
                 <li key={item}>{item}</li>
@@ -129,7 +131,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
             </ul>
           </div>
           <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-3">
-            <h3 className="text-sm font-semibold text-red-400">Avoid</h3>
+            <h4 className="text-sm font-semibold text-red-400">Avoid</h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.avoid.map((item) => (
                 <li key={item}>{item}</li>
@@ -141,11 +143,11 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Starter actions — heading switches on archetype */}
       <section>
-        <h2 className={H2}>{STARTER_HEADING[tutorial.archetype]}</h2>
+        <h3 className={SECTION_HEADING}>{STARTER_HEADING[tutorial.archetype]}</h3>
         <div className="mt-4 space-y-4">
           {tutorial.starterActions.map((action) => (
             <article key={action.title} className="rounded-xl border border-gray-800 bg-gray-900/90 p-5 sm:p-6">
-              <h3 className="text-base font-semibold text-white">{action.title}</h3>
+              <h4 className="text-base font-semibold text-white">{action.title}</h4>
               <p className={`mt-2 ${BODY}`}>{action.whatItDoes}</p>
               <p className="mt-3 text-sm leading-relaxed text-orange-100/95">
                 <span className="font-medium text-orange-300">Why this one:</span> {action.whyHere}
@@ -162,7 +164,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Pitfalls */}
       <section className={CARD}>
-        <h2 className={H2}>Common pitfalls</h2>
+        <h3 className={SECTION_HEADING}>Common pitfalls</h3>
         <ul className={`mt-4 space-y-1.5 list-disc pl-5 ${BODY}`}>
           {tutorial.pitfalls.map((item) => (
             <li key={item}>{item}</li>
@@ -172,7 +174,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Where to next */}
       <section className={CARD}>
-        <h2 className={H2}>Where to next</h2>
+        <h3 className={SECTION_HEADING}>Where to next</h3>
         <div className="mt-4 space-y-2">
           {tutorial.whereToNext.map((item) => (
             <p key={item} className={BODY}>{item}</p>
