@@ -1,57 +1,112 @@
-export type TutorialSection = {
-  heading: string;
-  content: string;
-  note?: string;
-};
-
-export type PlatformTutorialData = {
-  slug: string;
-  platformSlug: string;
-  title: string;
-  sections: TutorialSection[];
-};
+import type { PlatformTutorialData } from "./types";
 
 export const chatgptTutorial: PlatformTutorialData = {
   slug: "chatgpt-getting-started",
   platformSlug: "chatgpt",
   title: "Getting Started with ChatGPT",
-  sections: [
+  tagline: "A beginner's first 20 minutes with the most popular AI chatbot.",
+  archetype: "prompts",
+  lastReviewedAt: "2026-06-22",
+  accessTier: "FREE",
+
+  howItWorks:
+    "You type a message (this is called a prompt — the instruction you give the AI), it types back in plain language, and you can keep the conversation going, including telling it to redo or improve an answer.",
+
+  whatItIs: [
+    "ChatGPT is OpenAI's general-purpose AI assistant — the one most people mean when they say \"AI.\"",
+    "It's the best default starting point for a beginner because it does a little of everything competently — answering questions, writing and editing, making images from a description, and helping with code — before you graduate to specialized tools.",
+    "For coding specifically, OpenAI also offers a separate, more advanced tool called Codex that can take on a programming task and work through it for you. It's built for developers, not first-timers — but it's there if you grow into building software.",
+  ],
+
+  beforeYouStart: [
+    "Free to use with a sign-up (email, Google, or Apple) — no card required. First step: go to chat.openai.com, sign up free, and you're in.",
+    "Will you need to pay? The free tier is plenty for casual use — learning, drafting, brainstorming. You'd only pay (Plus, currently around $20/month) if you want the best models reliably or hit the limits often. Paying buys better models, not more privacy.",
+    "The free tier has usage limits that reset on a rolling few-hour window. When you hit them, ChatGPT quietly swaps you to a smaller, faster model (the AI \"brain\" doing the work — there are smarter-but-slower and faster-but-simpler ones). Answers get noticeably shallower with no big warning; if a reply suddenly feels worse, that's usually why. Limits also tighten when OpenAI is busy.",
+    "Image generation has its own separate, tighter limit than text — often just a couple a day on the free tier, on a rolling window. You can run out of images while text still works fine, which catches people off guard.",
+  ],
+
+  security: [
+    { kind: 'text', text: "ChatGPT is mainstream and reasonably well-run, but it's a cloud service — and on the free tier, your conversations are used to train OpenAI's models by default. Good rule for any AI chatbot: treat everything you type as if a stranger might eventually read it." },
+    { kind: 'list', label: 'Never paste in', items: [
+      'Passwords, bank or card numbers, Social Security numbers',
+      'Medical records tied to your name',
+      "Other people's private information",
+      'Confidential or proprietary work material — several companies have banned employees from doing exactly this',
+    ] },
+    { kind: 'list', label: 'Two settings worth knowing day one', items: [
+      'Turn off training under Settings → Data Controls → "Improve the model for everyone" — paying for Plus does not do this for you',
+      'Use Temporary Chat for one-off sensitive questions — though "temporary" and "deleted" still aren\'t instant; OpenAI holds data around 30 days either way',
+    ] },
+    { kind: 'text', text: "None of this makes normal use unsafe — the box just isn't a vault." },
+  ],
+
+  triad: {
+    bestAt: [
+      "Brainstorming and getting unstuck",
+      "Rewriting and reshaping text",
+      "Explaining things at your level (\"explain X like I'm new to it\")",
+      "Drafting first versions you then refine",
+      "Making images just by describing them — easy and conversational",
+    ],
+    okayAt: [
+      "Math and precise logic — check the numbers",
+      "Current events — it can search the web, but it's limited on free, so don't assume it knows this week's news",
+      "Coding — competent for small tasks and learning, but dedicated tools do better",
+    ],
+    avoid: [
+      "Anything where being wrong has real consequences — legal, medical, financial; it sounds equally confident when wrong",
+      "Facts you can't verify, especially sources and citations — it invents plausible ones",
+      "Truly current or niche information on the free tier",
+    ],
+  },
+
+  starterActions: [
     {
-      heading: "Disclaimer",
-      content:
-        "This guide was created to help you get started with ChatGPT. Prices and features may change. Check openai.com for the latest information.",
+      title: "The explainer (its best trick)",
+      prompt:
+        "Explain how compound interest works to someone who's never heard of it. Use a simple real-life example, keep it under 150 words, and end with one thing people most often get wrong about it.",
+      whyHere:
+        "ChatGPT is strongest when you give it topic + audience + length + focus all at once — this prompt does all four.",
+      tweak: "Swap in any topic you want to learn.",
     },
     {
-      heading: "Create Your Account",
-      content:
-        "1. Go to chat.openai.com\n2. Click 'Sign Up'\n3. You can use email, Google, or Microsoft account\n4. Verify your email\n5. Start chatting!",
-      note: "You don't need a phone number for the free tier",
+      title: "The rewriter (format control)",
+      prompt:
+        "Here's a rough message to my landlord about a broken heater: '[paste].' Rewrite it three ways — polite, firm, urgent — each under four sentences.",
+      whyHere:
+        "\"Give me options\" works for almost any writing task and lets you pick the tone instead of settling for the first draft.",
     },
     {
-      heading: "What Can ChatGPT Do?",
-      content:
-        "- Answer questions and explain concepts\n- Write, edit, and debug code\n- Summarize long texts\n- Brainstorm ideas\n- Translate languages\n- Create written content (emails, essays, stories)\n- Analyze data and documents\n- Generate images with DALL-E",
+      title: "The thinking partner (back-and-forth)",
+      prompt:
+        "I'm deciding between [two options]. Ask me five questions one at a time to help me think it through — don't give your opinion yet. Wait for each answer.",
+      whyHere: "Turning it into a back-and-forth is where a chatbot beats a search engine.",
     },
     {
-      heading: "Try These Prompts",
-      content:
-        "Here are some prompts to get started:\n\n• 'Explain quantum computing to a 10-year-old'\n• 'Write a professional email asking for a meeting'\n• 'Help me debug this code: [paste your code]'\n• 'Give me 5 recipe ideas using chicken and rice'\n• 'Summarize this article: [paste text]'",
+      title: "The role-player (practice)",
+      prompt:
+        "Act as a friendly interviewer for a [retail job]. Ask one common question, wait for my answer, give brief feedback, then continue until I say stop.",
+      whyHere: "The same pattern works for language practice or rehearsing any tricky conversation.",
     },
     {
-      heading: "Strengths & Weaknesses",
-      content:
-        "Strengths:\n✓ Fast and responsive\n✓ Great for coding help\n✓ Good at explaining complex topics\n✓ Continuously improving\n\nWeaknesses:\n✗ Can hallucinate facts\n✗ Limited knowledge after cutoff date\n✗ May not understand context in long conversations\n✗ Can't browse live web (free tier)",
+      title: "The organizer (structure from mess)",
+      prompt:
+        "Turn this brain-dump into a clean weekly plan as a table, grouped by day, with a 'must-do' and 'nice-to-have' each: '[dump].'",
+      whyHere: "It's good at imposing structure on chaos — turning a messy list into something usable.",
     },
-    {
-      heading: "Free Tier Limits",
-      content:
-        "ChatGPT Free includes:\n- GPT-4o mini (unlimited)\n- Limited GPT-4o access\n- 3 image generations per day\n- File uploads (PDFs, docs)\n- Web browsing\n- Canvas editor",
-      note: "Limits may vary based on demand",
-    },
-    {
-      heading: "What's Next?",
-      content:
-        "Once you're comfortable with ChatGPT, try:\n- Exploring GPT-4 (requires Plus: $20/month)\n- Using Custom Instructions for personalized responses\n- Trying the mobile app for on-the-go access",
-    },
+  ],
+
+  pitfalls: [
+    "It sounds confident even when wrong — a made-up answer reads as smoothly as a correct one. Verify anything factual.",
+    "It invents sources, quotes, and citations — search for the real thing yourself.",
+    "The free tier downgrades you mid-session — quality quietly drops when you hit the cap; that's the cause, not you.",
+    "It doesn't truly remember — within one chat it follows along, but a new chat is a blank slate, and very long threads \"forget\" the top. One task, one conversation.",
+    "Taking the first answer — the whole point is the follow-up: \"shorter,\" \"more casual,\" \"you missed X.\" Tries two and three are where it gets good.",
+  ],
+
+  whereToNext: [
+    { label: 'Image generators', categorySlug: 'image-generation-editing' },
+    { label: 'AI coding tools', categorySlug: 'ai-coding-development' },
+    { label: 'Research tools', categorySlug: 'research-academic-tools' },
   ],
 };
