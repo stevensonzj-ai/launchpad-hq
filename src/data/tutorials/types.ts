@@ -2,7 +2,7 @@ export type AccessTier = 'FREE' | 'PREMIUM';
 export type TutorialArchetype = 'prompts' | 'recipes' | 'pick-and-setup';
 
 export type CapabilityTriad = { bestAt: string[]; okayAt: string[]; avoid: string[] };
-export type StarterAction = { title: string; whatItDoes: string; whyHere: string; tweak?: string };
+export type StarterAction = { title: string; whatItDoes?: string; whyHere: string; tweak?: string; prompt?: string };
 export type SetupGuidance = { officialSource: string; body: string[]; vendorDocsUrl?: string };
 
 export type PlatformTutorialData = {

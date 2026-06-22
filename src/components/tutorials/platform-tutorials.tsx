@@ -1,3 +1,22 @@
+"use client";
+
+import { useState } from "react";
+import type { ReactNode } from "react";
+import {
+  AlertTriangle,
+  ArrowRight,
+  BookOpen,
+  Check,
+  Copy,
+  Info,
+  Lightbulb,
+  ListChecks,
+  Minus,
+  Scale,
+  Shield,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import type { TutorialArchetype } from "@/data/tutorials";
 
@@ -8,11 +27,52 @@ const STARTER_HEADING: Record<TutorialArchetype, string> = {
   "pick-and-setup": "First things to try & getting set up",
 };
 
+// Shared style tokens — match the app's existing card language.
 const CARD = "rounded-xl border border-gray-800 bg-gray-900/90 p-6 sm:p-7";
-// Style for section headings. Rendered as <h3> (the tutorial title is the
-// <h2>, which itself sits under the platform-detail page's <h1>).
-const SECTION_HEADING = "text-lg font-semibold text-white";
 const BODY = "text-sm leading-relaxed text-gray-300";
+
+// Section heading: a hardcoded (semantic, never string-matched) accent icon
+// + the <h3>. Sub-items inside sections use <h4> to preserve the outline.
+function SectionHeading({ icon: Icon, children }: { icon: LucideIcon; children: ReactNode }) {
+  return (
+    <h3 className="flex items-center gap-2.5 text-lg font-semibold text-white">
+      <Icon className="h-5 w-5 shrink-0 text-orange-400" aria-hidden />
+      {children}
+    </h3>
+  );
+}
+
+// Per-prompt copy button (the only reason this file is a Client Component):
+// copies the raw prompt and briefly swaps to a check.
+function CopyPromptButton({ prompt }: { prompt: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(prompt);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      // Clipboard unavailable (e.g. insecure context) — fail quietly.
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label={copied ? "Prompt copied" : "Copy prompt"}
+      className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-gray-700 bg-gray-800/80 px-2.5 py-1 text-xs font-semibold text-gray-300 transition-colors hover:border-orange-500/50 hover:text-orange-300"
+    >
+      {copied ? (
+        <Check className="h-3.5 w-3.5 text-green-400" aria-hidden />
+      ) : (
+        <Copy className="h-3.5 w-3.5" aria-hidden />
+      )}
+      {copied ? "Copied" : "Copy"}
+    </button>
+  );
+}
 
 type PlatformTutorialsProps = {
   platformName: string;
@@ -38,10 +98,13 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
   return (
     <div className="space-y-8">
-      {/* Title + tagline + last reviewed */}
-      <header className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-gray-900 to-gray-900 p-6 sm:p-8">
-        <p className="text-xs font-medium uppercase tracking-wider text-orange-400/90">Tutorial</p>
-        <h2 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">{tutorial.title}</h2>
+      {/* Hero — flat orange-tinted panel (no gradient), eyebrow + title + tagline */}
+      <header className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-6 sm:p-8">
+        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-orange-400">
+          <BookOpen className="h-3.5 w-3.5" aria-hidden />
+          Tutorial · {tutorial.accessTier}
+        </p>
+        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</h2>
         <p className="mt-2 text-sm leading-relaxed text-gray-300">{tutorial.tagline}</p>
         <p className="mt-3 text-xs text-gray-500">
           Last reviewed {tutorial.lastReviewedAt} · for {platformName}
@@ -50,13 +113,13 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* How it works */}
       <section className={CARD}>
-        <h3 className={SECTION_HEADING}>How it works</h3>
+        <SectionHeading icon={Sparkles}>How it works</SectionHeading>
         <p className={`mt-4 ${BODY}`}>{tutorial.howItWorks}</p>
       </section>
 
       {/* What it is */}
       <section className={CARD}>
-        <h3 className={SECTION_HEADING}>What it is</h3>
+        <SectionHeading icon={Info}>What it is</SectionHeading>
         <div className="mt-4 space-y-2">
           {tutorial.whatItIs.map((item) => (
             <p key={item} className={BODY}>{item}</p>
@@ -66,7 +129,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Before you start */}
       <section className={CARD}>
-        <h3 className={SECTION_HEADING}>Before you start</h3>
+        <SectionHeading icon={ListChecks}>Before you start</SectionHeading>
         <div className="mt-4 space-y-2">
           {tutorial.beforeYouStart.map((item) => (
             <p key={item} className={BODY}>{item}</p>
@@ -77,9 +140,9 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
       {/* Getting set up safely — only when present */}
       {tutorial.gettingSetUpSafely && (
         <section className={CARD}>
-          <h3 className={SECTION_HEADING}>Getting set up safely</h3>
+          <SectionHeading icon={ListChecks}>Getting set up safely</SectionHeading>
           <p className={`mt-4 ${BODY}`}>
-            <span className="font-medium text-orange-300">Official source:</span>{" "}
+            <span className="font-semibold text-orange-300">Official source:</span>{" "}
             {tutorial.gettingSetUpSafely.officialSource}
           </p>
           <div className="mt-3 space-y-2">
@@ -92,7 +155,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
               href={tutorial.gettingSetUpSafely.vendorDocsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-block text-sm font-medium text-orange-400 hover:text-orange-300"
+              className="mt-4 inline-block text-sm font-semibold text-orange-400 transition-colors hover:text-orange-300"
             >
               Official docs ↗
             </a>
@@ -100,9 +163,9 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </section>
       )}
 
-      {/* Security & privacy */}
-      <section className={CARD}>
-        <h3 className={SECTION_HEADING}>Security &amp; privacy</h3>
+      {/* Security & privacy — accent left-border callout, calibrated caution */}
+      <section className="border-l-2 border-orange-500/50 bg-orange-500/5 p-5 sm:p-6">
+        <SectionHeading icon={Shield}>Security &amp; privacy</SectionHeading>
         <div className="mt-4 space-y-2">
           {tutorial.security.map((item) => (
             <p key={item} className={BODY}>{item}</p>
@@ -110,28 +173,37 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </div>
       </section>
 
-      {/* Capability triad */}
-      <section className={CARD}>
-        <h3 className={SECTION_HEADING}>What it&apos;s good (and not good) at</h3>
+      {/* Capability triad — three columns tinted by meaning */}
+      <section>
+        <SectionHeading icon={Scale}>What it&apos;s good (and not good) at</SectionHeading>
         <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          <div>
-            <h4 className="text-sm font-semibold text-green-400">Best at</h4>
+          <div className="rounded-lg border border-green-500/25 bg-green-500/5 p-4">
+            <h4 className="flex items-center gap-2 text-sm font-semibold text-green-400">
+              <Check className="h-4 w-4 shrink-0" aria-hidden />
+              Best at
+            </h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.bestAt.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
-          <div>
-            <h4 className="text-sm font-semibold text-gray-300">Okay at</h4>
+          <div className="rounded-lg border border-gray-700 bg-gray-800/40 p-4">
+            <h4 className="flex items-center gap-2 text-sm font-semibold text-gray-300">
+              <Minus className="h-4 w-4 shrink-0" aria-hidden />
+              Okay at
+            </h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.okayAt.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
-          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-3">
-            <h4 className="text-sm font-semibold text-red-400">Avoid</h4>
+          <div className="rounded-lg border border-red-500/25 bg-red-500/5 p-4">
+            <h4 className="flex items-center gap-2 text-sm font-semibold text-red-400">
+              <AlertTriangle className="h-4 w-4 shrink-0" aria-hidden />
+              Avoid
+            </h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.avoid.map((item) => (
                 <li key={item}>{item}</li>
@@ -141,20 +213,33 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </div>
       </section>
 
-      {/* Starter actions — heading switches on archetype */}
+      {/* Starter actions — heading switches on archetype; copyable prompt per card */}
       <section>
-        <h3 className={SECTION_HEADING}>{STARTER_HEADING[tutorial.archetype]}</h3>
+        <SectionHeading icon={Lightbulb}>{STARTER_HEADING[tutorial.archetype]}</SectionHeading>
         <div className="mt-4 space-y-4">
           {tutorial.starterActions.map((action) => (
             <article key={action.title} className="rounded-xl border border-gray-800 bg-gray-900/90 p-5 sm:p-6">
               <h4 className="text-base font-semibold text-white">{action.title}</h4>
-              <p className={`mt-2 ${BODY}`}>{action.whatItDoes}</p>
+
+              {action.prompt ? (
+                <div className="mt-3 rounded-lg border border-gray-700/70 bg-gray-950/60 p-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-gray-300">
+                      {action.prompt}
+                    </p>
+                    <CopyPromptButton prompt={action.prompt} />
+                  </div>
+                </div>
+              ) : (
+                action.whatItDoes && <p className={`mt-3 ${BODY}`}>{action.whatItDoes}</p>
+              )}
+
               <p className="mt-3 text-sm leading-relaxed text-orange-100/95">
-                <span className="font-medium text-orange-300">Why this one:</span> {action.whyHere}
+                <span className="font-semibold text-orange-300">Why this one:</span> {action.whyHere}
               </p>
               {action.tweak && (
                 <p className="mt-2 text-sm leading-relaxed text-gray-400">
-                  <span className="font-medium text-gray-300">Tweak:</span> {action.tweak}
+                  <span className="font-semibold text-gray-300">Tweak:</span> {action.tweak}
                 </p>
               )}
             </article>
@@ -162,9 +247,9 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </div>
       </section>
 
-      {/* Pitfalls */}
+      {/* Pitfalls — restrained: one section icon, plain list */}
       <section className={CARD}>
-        <h3 className={SECTION_HEADING}>Common pitfalls</h3>
+        <SectionHeading icon={AlertTriangle}>Common pitfalls</SectionHeading>
         <ul className={`mt-4 space-y-1.5 list-disc pl-5 ${BODY}`}>
           {tutorial.pitfalls.map((item) => (
             <li key={item}>{item}</li>
@@ -172,12 +257,18 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         </ul>
       </section>
 
-      {/* Where to next */}
+      {/* Where to next — non-functional styled pills (route wiring is a follow-up) */}
       <section className={CARD}>
-        <h3 className={SECTION_HEADING}>Where to next</h3>
-        <div className="mt-4 space-y-2">
+        <SectionHeading icon={ArrowRight}>Where to next</SectionHeading>
+        <div className="mt-4 flex flex-wrap gap-2">
           {tutorial.whereToNext.map((item) => (
-            <p key={item} className={BODY}>{item}</p>
+            <span
+              key={item}
+              className="inline-flex items-center gap-1.5 rounded-full border border-gray-700 bg-gray-800/60 px-3 py-1.5 text-sm text-gray-300"
+            >
+              <ArrowRight className="h-3.5 w-3.5 shrink-0 text-orange-400" aria-hidden />
+              {item}
+            </span>
           ))}
         </div>
       </section>

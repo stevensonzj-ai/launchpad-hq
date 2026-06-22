@@ -51,35 +51,35 @@ export const chatgptTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "The explainer (its best trick)",
-      whatItDoes:
-        "Prompt: \"Explain how compound interest works to someone who's never heard of it. Use a simple real-life example, keep it under 150 words, and end with one thing people most often get wrong about it.\"",
+      prompt:
+        "Explain how compound interest works to someone who's never heard of it. Use a simple real-life example, keep it under 150 words, and end with one thing people most often get wrong about it.",
       whyHere:
         "ChatGPT is strongest when you give it topic + audience + length + focus all at once — this prompt does all four.",
       tweak: "Swap in any topic you want to learn.",
     },
     {
       title: "The rewriter (format control)",
-      whatItDoes:
-        "Prompt: \"Here's a rough message to my landlord about a broken heater: '[paste].' Rewrite it three ways — polite, firm, urgent — each under four sentences.\"",
+      prompt:
+        "Here's a rough message to my landlord about a broken heater: '[paste].' Rewrite it three ways — polite, firm, urgent — each under four sentences.",
       whyHere:
         "\"Give me options\" works for almost any writing task and lets you pick the tone instead of settling for the first draft.",
     },
     {
       title: "The thinking partner (back-and-forth)",
-      whatItDoes:
-        "Prompt: \"I'm deciding between [two options]. Ask me five questions one at a time to help me think it through — don't give your opinion yet. Wait for each answer.\"",
+      prompt:
+        "I'm deciding between [two options]. Ask me five questions one at a time to help me think it through — don't give your opinion yet. Wait for each answer.",
       whyHere: "Turning it into a back-and-forth is where a chatbot beats a search engine.",
     },
     {
       title: "The role-player (practice)",
-      whatItDoes:
-        "Prompt: \"Act as a friendly interviewer for a [retail job]. Ask one common question, wait for my answer, give brief feedback, then continue until I say stop.\"",
+      prompt:
+        "Act as a friendly interviewer for a [retail job]. Ask one common question, wait for my answer, give brief feedback, then continue until I say stop.",
       whyHere: "The same pattern works for language practice or rehearsing any tricky conversation.",
     },
     {
       title: "The organizer (structure from mess)",
-      whatItDoes:
-        "Prompt: \"Turn this brain-dump into a clean weekly plan as a table, grouped by day, with a 'must-do' and 'nice-to-have' each: '[dump].'\"",
+      prompt:
+        "Turn this brain-dump into a clean weekly plan as a table, grouped by day, with a 'must-do' and 'nice-to-have' each: '[dump].'",
       whyHere: "It's good at imposing structure on chaos — turning a messy list into something usable.",
     },
   ],
