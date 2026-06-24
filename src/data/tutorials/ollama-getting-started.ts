@@ -3,7 +3,7 @@ import type { PlatformTutorialData } from "./types";
 export const ollamaTutorial: PlatformTutorialData = {
   slug: "ollama-getting-started",
   platformSlug: "ollama",
-  title: "Ollama — Starter Guide",
+  title: "Getting Started with Ollama",
   tagline:
     "Run AI models privately on your own computer — free, offline, and nothing you type leaves your machine.",
   archetype: "pick-and-setup",
@@ -33,6 +33,7 @@ export const ollamaTutorial: PlatformTutorialData = {
       "Know where the models live. Leave the install location at its default. The thing to watch: downloaded models are several gigabytes each and pile up on your hard drive (a model's size is often shown in 'parameters' — a rough proxy for how big and capable it is; more is smarter but heavier).",
       "Confirm it works. Running one small model and getting a reply back is your 'set up correctly' checkpoint.",
     ],
+    vendorDocsUrl: "https://ollama.com/download",
   },
 
   security: [
@@ -53,13 +54,19 @@ export const ollamaTutorial: PlatformTutorialData = {
 
   triad: {
     bestAt: [
-      "Privacy — prompts and files never leave your machine, which is right for genuinely sensitive material; free, unlimited use; working offline; and learning how AI actually works by tinkering.",
+      "Privacy — prompts and files never leave your machine, which is right for genuinely sensitive material",
+      "Free, unlimited use",
+      "Working offline",
+      "Learning how AI actually works by tinkering",
     ],
     okayAt: [
-      "Raw quality — local models are smaller than the giant cloud ones, so they're useful, not magic; and speed, which is entirely down to your hardware.",
+      "Raw quality — local models are smaller than the giant cloud ones, so they're useful, not magic",
+      "Speed, which is entirely down to your hardware",
     ],
     avoid: [
-      "Expecting frontier-level answers (if you want the best and don't care about privacy, cloud chatbots win); running big models on weak hardware (the fastest route to a bad first impression); and reaching for it when you just want to chat and aren't curious about the local angle (start with ChatGPT, come back when privacy or cost is a real reason).",
+      "Expecting frontier-level answers — if you want the best and don't care about privacy, cloud chatbots win",
+      "Running big models on weak hardware — the fastest route to a bad first impression",
+      "Reaching for it when you just want to chat and aren't curious about the local angle — start with ChatGPT, come back when privacy or cost is a real reason",
     ],
   },
 
@@ -97,7 +104,7 @@ export const ollamaTutorial: PlatformTutorialData = {
   ],
 
   whereToNext: [
-    { label: "Browse Local & Open-Source AI", categorySlug: "local-open-source-ai" },
-    { label: "Browse Text & Conversational AI", categorySlug: "text-conversational-ai" },
+    { label: "Local & Open-Source AI", categorySlug: "local-open-source-ai" },
+    { label: "Text & Conversational AI", categorySlug: "text-conversational-ai" },
   ],
 };
