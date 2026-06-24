@@ -10,7 +10,7 @@ export const chatgptTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You type a message (this is called a prompt — the instruction you give the AI), it types back in plain language, and you can keep the conversation going, including telling it to redo or improve an answer.",
+    "You type a message (this is called a **prompt** — the instruction you give the AI), it types back in plain language, and you can keep the conversation going, including telling it to redo or improve an answer.",
 
   whatItIs: [
     "ChatGPT is OpenAI's general-purpose AI assistant — the one most people mean when they say \"AI.\"",
@@ -21,7 +21,7 @@ export const chatgptTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "Free to use with a sign-up (email, Google, or Apple) — no card required. First step: go to chat.openai.com, sign up free, and you're in.",
     "Will you need to pay? The free tier is plenty for casual use — learning, drafting, brainstorming. You'd only pay (Plus, currently around $20/month) if you want the best models reliably or hit the limits often. Paying buys better models, not more privacy.",
-    "The free tier has usage limits that reset on a rolling few-hour window. When you hit them, ChatGPT quietly swaps you to a smaller, faster model (the AI \"brain\" doing the work — there are smarter-but-slower and faster-but-simpler ones). Answers get noticeably shallower with no big warning; if a reply suddenly feels worse, that's usually why. Limits also tighten when OpenAI is busy.",
+    "The free tier has usage limits that reset on a rolling few-hour window. When you hit them, ChatGPT quietly swaps you to a smaller, faster **model** (the AI \"brain\" doing the work — there are smarter-but-slower and faster-but-simpler ones). Answers get noticeably shallower with no big warning; if a reply suddenly feels worse, that's usually why. Limits also tighten when OpenAI is busy.",
     "Image generation has its own separate, tighter limit than text — often just a couple a day on the free tier, on a rolling window. You can run out of images while text still works fine, which catches people off guard.",
   ],
 
