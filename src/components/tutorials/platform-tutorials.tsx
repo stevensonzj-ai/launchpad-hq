@@ -75,6 +75,50 @@ function CopyPromptButton({ prompt }: { prompt: string }) {
   );
 }
 
+// Inline-code chip styling — reuses surface/border tokens already in this file
+// (the where-to-next pill uses border-gray-700 + bg-gray-800/60; body is
+// gray-300). No new color introduced.
+const CODE_CLASS =
+  "rounded border border-gray-700 bg-gray-800/60 px-1 py-0.5 font-mono text-gray-300";
+
+// Minimal inline formatter: only **bold** and `code`. Code spans resolve first
+// and are not re-scanned (so `ollama **x**` keeps its asterisks literal); bold
+// is parsed only in the gaps; unmatched delimiters render literally. Emits
+// React elements (never dangerouslySetInnerHTML), so it is XSS-safe.
+function pushBold(out: ReactNode[], text: string): void {
+  const boldRe = /\*\*([^*]+)\*\*/g;
+  let last = 0;
+  let match: RegExpExecArray | null;
+  while ((match = boldRe.exec(text)) !== null) {
+    if (match.index > last) out.push(text.slice(last, match.index));
+    out.push(
+      <strong key={out.length} className="font-semibold">
+        {match[1]}
+      </strong>,
+    );
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+}
+
+function richText(s: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  const codeRe = /`([^`]+)`/g;
+  let last = 0;
+  let match: RegExpExecArray | null;
+  while ((match = codeRe.exec(s)) !== null) {
+    if (match.index > last) pushBold(out, s.slice(last, match.index));
+    out.push(
+      <code key={out.length} className={CODE_CLASS}>
+        {match[1]}
+      </code>,
+    );
+    last = match.index + match[0].length;
+  }
+  if (last < s.length) pushBold(out, s.slice(last));
+  return out;
+}
+
 type PlatformTutorialsProps = {
   platformName: string;
   platformSlug: string;
@@ -115,7 +159,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
       {/* How it works */}
       <section className={CARD}>
         <SectionHeading icon={Sparkles}>How it works</SectionHeading>
-        <p className={`mt-4 ${BODY}`}>{tutorial.howItWorks}</p>
+        <p className={`mt-4 ${BODY}`}>{richText(tutorial.howItWorks)}</p>
       </section>
 
       {/* What it is */}
@@ -123,7 +167,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <SectionHeading icon={Info}>What it is</SectionHeading>
         <div className="mt-4 space-y-2">
           {tutorial.whatItIs.map((item) => (
-            <p key={item} className={BODY}>{item}</p>
+            <p key={item} className={BODY}>{richText(item)}</p>
           ))}
         </div>
       </section>
@@ -133,7 +177,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <SectionHeading icon={ListChecks}>Before you start</SectionHeading>
         <div className="mt-4 space-y-2">
           {tutorial.beforeYouStart.map((item) => (
-            <p key={item} className={BODY}>{item}</p>
+            <p key={item} className={BODY}>{richText(item)}</p>
           ))}
         </div>
       </section>
@@ -144,11 +188,11 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
           <SectionHeading icon={ListChecks}>Getting set up safely</SectionHeading>
           <p className={`mt-4 ${BODY}`}>
             <span className="font-semibold text-orange-300">Official source:</span>{" "}
-            {tutorial.gettingSetUpSafely.officialSource}
+            {richText(tutorial.gettingSetUpSafely.officialSource)}
           </p>
           <div className="mt-3 space-y-2">
             {tutorial.gettingSetUpSafely.body.map((paragraph) => (
-              <p key={paragraph} className={BODY}>{paragraph}</p>
+              <p key={paragraph} className={BODY}>{richText(paragraph)}</p>
             ))}
           </div>
           {tutorial.gettingSetUpSafely.vendorDocsUrl && (
@@ -171,13 +215,13 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <div className="mt-4 space-y-4">
           {tutorial.security.map((block) =>
             block.kind === "text" ? (
-              <p key={block.text} className={BODY}>{block.text}</p>
+              <p key={block.text} className={BODY}>{richText(block.text)}</p>
             ) : (
               <div key={block.label}>
                 <h4 className="text-sm font-semibold text-white">{block.label}</h4>
                 <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
                   {block.items.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item}>{richText(item)}</li>
                   ))}
                 </ul>
               </div>
@@ -197,7 +241,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
             </h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.bestAt.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}>{richText(item)}</li>
               ))}
             </ul>
           </div>
@@ -208,7 +252,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
             </h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.okayAt.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}>{richText(item)}</li>
               ))}
             </ul>
           </div>
@@ -219,7 +263,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
             </h4>
             <ul className={`mt-2 space-y-1.5 list-disc pl-5 ${BODY}`}>
               {tutorial.triad.avoid.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}>{richText(item)}</li>
               ))}
             </ul>
           </div>
@@ -244,15 +288,15 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
                   </div>
                 </div>
               ) : (
-                action.whatItDoes && <p className={`mt-3 ${BODY}`}>{action.whatItDoes}</p>
+                action.whatItDoes && <p className={`mt-3 ${BODY}`}>{richText(action.whatItDoes)}</p>
               )}
 
               <p className="mt-3 text-sm leading-relaxed text-orange-100/95">
-                <span className="font-semibold text-orange-300">Why this one:</span> {action.whyHere}
+                <span className="font-semibold text-orange-300">Why this one:</span> {richText(action.whyHere)}
               </p>
               {action.tweak && (
                 <p className="mt-2 text-sm leading-relaxed text-gray-400">
-                  <span className="font-semibold text-gray-300">Tweak:</span> {action.tweak}
+                  <span className="font-semibold text-gray-300">Tweak:</span> {richText(action.tweak)}
                 </p>
               )}
             </article>
@@ -265,7 +309,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <SectionHeading icon={AlertTriangle}>Common pitfalls</SectionHeading>
         <ul className={`mt-4 space-y-1.5 list-disc pl-5 ${BODY}`}>
           {tutorial.pitfalls.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item}>{richText(item)}</li>
           ))}
         </ul>
       </section>
