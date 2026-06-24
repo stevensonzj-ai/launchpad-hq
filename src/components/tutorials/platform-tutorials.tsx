@@ -92,7 +92,7 @@ function pushBold(out: ReactNode[], text: string): void {
   while ((match = boldRe.exec(text)) !== null) {
     if (match.index > last) out.push(text.slice(last, match.index));
     out.push(
-      <strong key={out.length} className="font-semibold">
+      <strong key={out.length} className="font-semibold text-white">
         {match[1]}
       </strong>,
     );
