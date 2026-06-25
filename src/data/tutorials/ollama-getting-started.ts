@@ -7,7 +7,7 @@ export const ollamaTutorial: PlatformTutorialData = {
   tagline:
     "Run AI models privately on your own computer — free, offline, and nothing you type leaves your machine.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-06-24",
+  lastReviewedAt: "2026-06-25",
   changelogUrl: "https://ollama.com/blog",
   accessTier: "FREE",
 
@@ -27,7 +27,7 @@ export const ollamaTutorial: PlatformTutorialData = {
 
   gettingSetUpSafely: {
     officialSource:
-      "Download only from the official site — ollama.com. This is the one that matters most: don't grab it from a random search result, a bundle site, or a link someone sent you — lookalike sites can bundle malware, and you're installing software on your own machine. (Use Ollama's official install guide for your exact Mac/Windows/Linux steps.)",
+      "Download only from the official site — ollama.com. This is the one that matters most: don't grab it from a random search result, a bundle site, or a link someone sent you — lookalike sites can bundle malware, and you're installing software on your own machine.",
     body: [
       "Check your hardware before you install, not after. Confirm roughly 8 GB of RAM free before committing.",
       "Know where the models live. Leave the install location at its default. The thing to watch: downloaded models are several gigabytes each and pile up on your hard drive (a model's size is often shown in '**parameters**' — a rough proxy for how big and capable it is; more is smarter but heavier).",
@@ -93,6 +93,28 @@ export const ollamaTutorial: PlatformTutorialData = {
         "Pulls a model tuned for programming — a free, private coding helper running entirely on your machine with no per-token cost.",
       whyHere:
         "A private coding assistant with no metered API bill is one of the most common reasons people install Ollama at all. Worth trying once your hardware can handle a mid-size model.",
+    },
+    {
+      title: "Use it for things you'd never paste into the cloud",
+      prompt: "Help me rewrite this so it sounds calm and clear instead of angry: [paste your message]",
+      whyHere:
+        "A venting draft, a touchy work email, anything personal — that's the text most people hesitate to put into a cloud chatbot. Running locally, none of it leaves your computer, so the privacy you traded some quality for finally earns its keep.",
+      tweak:
+        "Swap in any sensitive editing job — a difficult message, a rough complaint, a journal entry you'd rather keep private.",
+    },
+    {
+      title: "Learn something with no internet",
+      prompt: "Explain [a topic I'm learning] in plain language, then ask me three questions to check I understood.",
+      whyHere:
+        "It works on a plane, off-grid, anywhere — and you can run it as much as you want for free. Learning by tinkering is one of the real reasons to keep a small local model around, even when a cloud model would answer a little better.",
+      tweak:
+        "Tell it your level — 'explain like I'm completely new to this' — and it'll calibrate.",
+    },
+    {
+      title: "Build a tiny thing — if your hardware can handle it",
+      prompt: "Write a single self-contained HTML file for a simple kitchen timer — all the HTML, CSS, and JavaScript in one file, with no external libraries.",
+      whyHere:
+        "Honestly gated: this needs a code-specific model and ideally 16 GB+. Within that limit, self-contained jobs — one file, a short script, 'find the bug in this snippet' — are where a small local code model genuinely delivers; what it can't do is build a whole app across many files. Expecting that is the fastest way to wrongly conclude local AI is useless.",
     },
   ],
 
