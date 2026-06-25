@@ -48,7 +48,7 @@ The project is further along than earlier specs suggest. Auth and payments are a
 - **Feature scaffolds that exist (quality varies — audit before polishing):**
   - Platform discovery (`/discover`, `/platform/[slug]`)
   - Workflows (`/workflows` + `[slug]`)
-  - Tutorials (`/tutorials`) — placeholder "coming soon" page only; per-platform tutorial tabs render via `src/components/tutorials/platform-tutorials.tsx` and only `chatgpt-getting-started` exists as content. A full tutorial library is a P3 concern.
+  - Tutorials — the /tutorials index route is still a placeholder "coming soon" page (no registry listing). The live tutorial content renders as a **Tutorials tab on each platform detail page** (/platform/{slug}) via src/components/tutorials/platform-tutorials.tsx, mounted in platform-detail-tabs.tsx; multiple pages have shipped. See the ## Tutorials section for architecture and authoring rules.
   - Quiz & For‑You (`/quiz`, `/for-you`)
   - Per-platform prompts (`/platform/[slug]/prompts`)
   - Per-platform discussions (`/platform/[slug]/discussions`)
@@ -395,7 +395,6 @@ Before any polish or bug-fix work, Claude Code will walk through every feature s
 2. Quiz redesign — progress bar, iconed option cards, transitions, celebratory completion
 3. Platform detail page — consolidate boxes, add platform logo/preview imagery, strengthen Overview/Tutorials/Discussions/Prompts tab bar
 4. Homepage — replace generic rocket icon with distinctive visual, add one ambient motion element
-5. Tutorial page — replace current bare-bones format with structured template (see tutorial strategy)
 
 ### P2 — Complete the feature scaffolds
 
@@ -414,7 +413,7 @@ The audit will show what's actually broken vs. working vs. stub. Likely includes
 1. Reddit-style discussion features completion (if not already in place)
 2. Weekly personalized digest email
 3. Saved favorites and notes
-4. Invest in Tier 2 screencast tutorials for top 30 platforms
+4. Screencast tutorials for the highest-traffic platforms (future enhancement; the written-guide format is the current standard — see ## Tutorials)
 
 ### Pre-launch workflow (when Zach is ready to charge publicly)
 
