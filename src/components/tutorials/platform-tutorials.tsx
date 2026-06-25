@@ -25,7 +25,7 @@ import type { TutorialArchetype } from "@/data/tutorials";
 const STARTER_HEADING: Record<TutorialArchetype, string> = {
   prompts: "Starter prompts to try",
   recipes: "Starter automations to try",
-  "pick-and-setup": "First things to try & getting set up",
+  "pick-and-setup": "First things to try",
 };
 
 // Shared style tokens — match the app's existing card language.
