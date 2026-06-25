@@ -28,6 +28,14 @@ The project is further along than earlier specs suggest. Auth and payments are a
 
 - **Payments: Stripe** is fully integrated. `stripe ^21.0.1` is installed, routes exist at `src/app/api/stripe/{checkout,portal,webhook}/route.ts`, and `src/lib/stripe.ts` provides the shared client. Environment variables `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, and `STRIPE_PRICE_ID` are configured in `.env.local`.
 
+- **Clerk is on a Development instance.** Migrating to a Production instance is a pre-paywall prerequisite (not yet done). Clerk is auth-only — billing is raw Stripe, not Clerk Billing.
+
+- **Also in the stack, previously unlisted:** Cloudflare (DNS/CDN), Resend (transactional email; human email is Google Workspace `zach@launchpadhq.io`), Sentry (error monitoring), Vercel Analytics + Speed Insights, Google Search Console (domain property, Cloudflare-DNS verified).
+
+- **Sentry gotcha:** serverless functions must `await Sentry.flush(2000)` before returning, or events are lost.
+
+- **Site-wide `noindex` is currently set** (intentional friends-and-family protection). GSC shows all pages excluded until launch lifts it.
+
 - **Tech stack confirmed:**
   - Next.js 16.2.2 with App Router, using an `(app)/` route group for the authenticated app surface
   - React 19.2.4
@@ -50,7 +58,7 @@ The project is further along than earlier specs suggest. Auth and payments are a
 
 ### Known gotchas
 
-- **`.env.local` is UTF-16 LE encoded.** Most text editors and tools expect UTF-8. If you edit this file, preserve the encoding or you'll break environment variable loading. Better: don't edit `.env.local` directly. Ask Zach to make changes himself.
+- **`.env.local` is UTF-8 encoded** (re-encoded from UTF-16 LE after an earlier incident). Don't edit `.env.local` directly — ask Zach to make changes himself.
 
 - **Middleware is at `src/proxy.ts`, not `middleware.ts`.** Next.js 16 renamed it. Don't create a `middleware.ts` file — it will conflict.
 
@@ -89,9 +97,7 @@ Theme: mission-control / space launch, but **restrained and professional** — n
 1. Quiz page feels like a generic survey form — needs visual interest, progress indicator, iconed options
 2. Discover page cards are visually uniform — needs featured treatment, consistent tag system, better truncation
 3. Platform detail pages use too many nested card borders — consolidate
-4. Tutorial pages are the weakest content surface — needs a structured template (see tutorial strategy below)
-5. Homepage hero rocket icon is generic — replace with something more distinctive
-6. Category filter chips truncate labels ("Browser Extensions & Productivi") — let them wrap or shorten names
+4. Homepage hero rocket icon is generic — replace with something more distinctive
 
 ---
 
@@ -128,27 +134,27 @@ Theme: mission-control / space launch, but **restrained and professional** — n
 
 ---
 
-## Tutorial strategy
+## Tutorials
 
-Tutorials are the site's current weakest surface and a major driver of paid conversion. The strategy is tiered so we're not trying to do 170 platforms at the same depth.
+Tutorials are a **live, active workstream — not a P3 placeholder.** The pilot is validated: pages ship across all three archetypes, the shared renderer holds with no structural cracks, and the format produces real per-platform substance.
 
-### Tier 1 — Copy-prompt-to-platform (all platforms)
+### Architecture — file-based static TS, NOT the database
 
-Every platform gets at least this treatment. The tutorial page displays a curated set of starter prompts with a "Copy prompt and open [platform]" button. One click copies the prompt to the user's clipboard and opens the platform in a new tab. No API integration. No ongoing costs. Universal coverage.
+- Tutorials are **static TypeScript** in `src/data/tutorials/*.ts`, one file per platform: `{platformSlug}-getting-started.ts`, exporting a named const.
+- **`src/data/tutorials/types.ts` is the compile-time contract** (`PlatformTutorialData`). Author new pages straight against it; tsc enforces required fields.
+- **`chatgpt.ts` is the canonical reference page.** Worked references across archetypes: `chatgpt` (prompts), `midjourney` (prompts/image), `zapier` (recipes), `ollama` (pick-and-setup, includes the optional setup section).
+- **The dormant Prisma `Tutorial` / `UserProgress` models are intentionally UNWIRED. Do NOT route tutorials through them.** The instinct to "wire tutorials through the DB" is the wrong path — the live system is file-based by design.
+- **`accessTier` is a TypeScript union in `types.ts`, not a Prisma enum.**
+- **`archetype` = `'prompts' | 'recipes' | 'pick-and-setup'`**, which drives the starter-section heading via an exhaustive `Record` in `platform-tutorials.tsx`.
+- **Registration is manual + two-step:** create the file AND add the import + `[x.platformSlug]: x` to `src/data/tutorials/index.ts`. Lookup is by **`platformSlug`** — must match the real Platform DB row's slug (verify, don't assume).
 
-### Tier 2 — Screencast tutorials (top ~30 platforms)
+### Authoring rules
 
-For the most-searched platforms (ChatGPT, Claude, Gemini, Midjourney, Runway, Suno, Cursor, Perplexity, etc.), produce narrated screencasts showing signup, first prompt, key features, common pitfalls. Use tools like Scribe or Arcade to keep production time to 15–30 minutes per platform.
-
-### Tier 3 — Structured written guides (long tail)
-
-For remaining platforms, follow a standardized template:
-- What it's best for (1 sentence)
-- Who should consider it (audience)
-- Free tier exact limits
-- Three starter prompts or use cases
-- Common pitfalls / things to know
-- Pro tip (1–2 sentences)
+- **Web-research pass at authoring time, every page** — not just "are old facts still true" but "what's new the page doesn't mention." Capability drift is mandatory to check.
+- **`lastReviewedAt` means "volatile facts web-verified on this date."** Stamp the build day; it's an honesty contract.
+- **No volatile model-version numbers in prose.** Write facts to mechanism, hedged — version numbers rot between passes.
+- **Security posture varies completely by platform — no boilerplate.** Calibrate sharpness to the platform's `privacyLevel`.
+- **Build on the shared renderer; flag, don't custom-build.** One renderer change benefiting all pages is justified; per-page aesthetic divergence is the trap.
 
 ### What NOT to build
 
@@ -330,9 +336,9 @@ Slander and defamation risk is real if exclusion entries are written as evaluati
 
 ### Data conventions
 
-- **Single source of truth for platform count.** Never hardcode "168" or "170" or "171" anywhere. Read from the database and render dynamically. Current inconsistency (homepage says 168+, discover page says 171, spec says 168) is a known bug.
-- **Free tier descriptions** should not have "Free: Free:" double-prefix (existing bug on Discover cards).
-- **Deduplicate platforms** before adding new ones — "Jasper" and "Jasper AI" currently both exist.
+- **Single source of truth for platform count.** Never hardcode "168/170/171" anywhere. Read from the DB — `src/lib/platforms.ts` `getPlatformCount()`, which rounds down to the nearest 10 so the displayed count never overstates.
+- **Free-tier descriptions: don't reintroduce a "Free: Free:" double-prefix.** `platform-card.tsx` strips a leading case-insensitive "free:" before prepending its own label — keep that guard.
+- **Deduplicate platforms before adding new ones.** "Jasper" / "Jasper AI" duplicate rows persist until `scripts/dedupe-jasper-platforms.ts` is run.
 
 ### Styling
 
@@ -364,7 +370,6 @@ Slander and defamation risk is real if exclusion entries are written as evaluati
 
 Follow-ups surfaced by recent work. Not urgent, but worth knowing about — pick them up opportunistically when you're already touching nearby code.
 
-- **No `typecheck` script in `package.json`.** Only `build` and `lint` exist today. Candidate: add `"typecheck": "tsc --noEmit"` so pre-commit and CI flows can catch type errors without running a full `next build`. No new dep required.
 - **Legacy `Prompt.author` (String?) column coexists with the `user` relation.** Some older rows have `author` populated and no `userId`. The current projection in `GET /api/platforms/[slug]/prompts` falls back `user.name → author → "Anonymous"` to keep them readable. Candidate follow-up: backfill the `user` relation for legacy rows, then drop the column in a migration.
 - **No admin UI for moderating PENDING submissions.** Zach currently flips `status` manually in Prisma Studio. Building an admin queue is a P2 item under "Complete the feature scaffolds."
 - **`LoggedOutLanding` in `src/app/(app)/for-you/page.tsx` is dead code.** Middleware (`src/proxy.ts`) auth-gates `/for-you`, so the signed-out branch is unreachable in practice. Now that anon users land on `/quiz/results` instead, this fallback can be deleted in a future cleanup pass.
@@ -379,14 +384,10 @@ Current priority order. The original "build auth then payments then features" pl
 
 Before any polish or bug-fix work, Claude Code will walk through every feature surface in the app and report which are functional, which are broken, and which are scaffolded-but-stub. Output is a status map that drives everything after.
 
-### P0 — Bugs and inconsistencies (hours, not days)
+### P0 — Bugs and inconsistencies
 
-1. Platform count inconsistency — make it dynamic from database
-2. "Free: Free:" double-prefix on Discover cards
-3. Deduplicate Jasper entries
-4. Fix truncated category chip labels
-5. Remove duplicated content between platform detail sidebar and main column
-6. Any additional bugs surfaced by the feature audit
+1. Deduplicate Jasper entries — `scripts/dedupe-jasper-platforms.ts` is merged but NOT executed. Running it (operator step, Neon branch first) closes this.
+2. Remove duplicated content between platform detail sidebar and main column — unverified; check before acting.
 
 ### P1 — Design polish (1–2 weeks)
 
@@ -452,7 +453,7 @@ The audit will show what's actually broken vs. working vs. stub. Likely includes
 - **Prefer incremental over aggressive refactors.** Small, verifiable changes committed often beats large restructurings that might break things.
 - **Test after every meaningful change.** Run the dev server, click through the affected flows, fix anything broken before moving on.
 - **Never add a new dependency without flagging it.** The stack is deliberately constrained.
-- **Never touch `.env`, `.env.local`, or any file with secrets.** Ask Zach to set values himself. Especially important because `.env.local` is UTF-16 LE encoded and editing it can break it.
+- **Never touch `.env`, `.env.local`, or any file with secrets.** Ask Zach to set values himself. (`.env.local` is UTF-8, re-encoded from a prior UTF-16 LE state; mis-encoding it can still break env loading.)
 - **Don't create a `middleware.ts` file.** Middleware lives at `src/proxy.ts` (Next.js 16 convention). Creating `middleware.ts` will conflict.
 
 ---
