@@ -1,10 +1,12 @@
 import type { PlatformTutorialData } from "./types";
 import { chatgptTutorial } from "./chatgpt-getting-started";
 import { ollamaTutorial } from "./ollama-getting-started";
+import { zapierTutorial } from "./zapier-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [chatgptTutorial.platformSlug]: chatgptTutorial,
   [ollamaTutorial.platformSlug]: ollamaTutorial,
+  [zapierTutorial.platformSlug]: zapierTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
