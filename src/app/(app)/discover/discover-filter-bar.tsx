@@ -40,8 +40,18 @@ type DiscoverFilterBarProps = {
 // Closed-trigger styling mirrors the dark-theme chips it replaces
 // (bg-gray-800, subtle border). appearance-none hides the native chevron so we
 // can draw our own; the OS-rendered open list is deliberately left alone.
+//
+// [color-scheme:dark] pins the native popup, scrollbar, and focus ring to a
+// dark rendering deterministically — without it the browser infers the scheme
+// from the OS, so a light-mode OS paints a light dropdown against our dark UI.
+// Scoped to these selects rather than :root so it stays within the control bar.
+//
+// truncate (overflow-hidden text-ellipsis whitespace-nowrap) lets a long
+// category name render "AI Coding & Devel…" instead of a hard mid-word clip.
+// It's inert on the short-label selects, and degrades to a plain clip (today's
+// behavior) on any engine that doesn't honor text-overflow on a native select.
 const triggerClass = cn(
-  "w-full appearance-none cursor-pointer rounded-md border border-gray-700",
+  "w-full appearance-none cursor-pointer truncate rounded-md border border-gray-700 [color-scheme:dark]",
   "bg-gray-800 py-2 pl-3 pr-9 text-sm text-gray-200",
   "transition-colors hover:border-gray-600 hover:text-white",
   "focus:border-orange-500/60 focus:outline-none focus:ring-1 focus:ring-orange-500/40",
@@ -142,7 +152,7 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
         value={current.mobile}
         onChange={(v) => update("mobile", v)}
       >
-        <option value="">All devices</option>
+        <option value="">Any access</option>
         {MOBILE_FILTERS.map((o) => (
           <option key={o.value} value={o.value}>
             {o.label}
@@ -150,7 +160,9 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
         ))}
       </FilterSelect>
 
-      <div className="ml-auto flex items-center gap-2">
+      {/* sm:ml-auto — right-aligned on the filter row at desktop, but flush-left
+          on mobile where it wraps to its own row (ml-auto would strand it right). */}
+      <div className="flex items-center gap-2 sm:ml-auto">
         <span className="text-xs uppercase tracking-wide text-gray-500">Sort</span>
         <FilterSelect
           label="Sort platforms"
