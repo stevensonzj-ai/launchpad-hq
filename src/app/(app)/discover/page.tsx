@@ -5,8 +5,18 @@ import { prisma } from "@/lib/db";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
-import { COST_TIER_LABEL } from "@/lib/labels";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { X } from "lucide-react";
+import { DiscoverFilterBar } from "./discover-filter-bar";
+import {
+  buildDiscoverQuery,
+  normalizeSort,
+  COST_TIERS,
+  DIFFICULTIES,
+  COST_FILTERS,
+  DIFFICULTY_FILTERS,
+  MOBILE_FILTERS,
+} from "@/lib/discover-filters";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
@@ -17,46 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-type SortMode = "popular" | "alpha" | "recent";
-
-function normalizeSort(value: string | undefined): SortMode {
-  if (value === "alpha" || value === "recent") return value;
-  return "popular";
-}
-
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
-// Whitelists keep arbitrary query values out of the Prisma enum filters —
-// an unknown value (e.g. ?cost=banana) would otherwise throw at query time.
-const COST_TIERS = ["FREE", "FREEMIUM", "PAID", "ENTERPRISE"] as const;
-const DIFFICULTIES = ["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT"] as const;
-
-// The difficulty filter exposes three levels; "advanced" includes EXPERT so
-// the handful of expert-rated platforms stay reachable (the quiz groups the
-// two the same way).
-const DIFFICULTY_FILTERS = [
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "advanced", label: "Advanced" },
-] as const;
-
-function buildDiscoverQuery(parts: {
-  category?: string;
-  cost?: string;
-  difficulty?: string;
-  mobile?: string;
-  sort?: string;
-}) {
-  const sp = new URLSearchParams();
-  if (parts.category) sp.set("category", parts.category);
-  if (parts.cost) sp.set("cost", parts.cost);
-  if (parts.difficulty) sp.set("difficulty", parts.difficulty);
-  if (parts.mobile) sp.set("mobile", parts.mobile);
-  // "popular" is the default — omit from URL so default URLs stay clean.
-  if (parts.sort && parts.sort !== "popular") sp.set("sort", parts.sort);
-  const s = sp.toString();
-  return s ? `?${s}` : "";
-}
 
 export default async function DiscoverPage({
   searchParams,
@@ -159,11 +130,68 @@ export default async function DiscoverPage({
   if (hasHashBucket) orderedGroupKeys.push("#");
   for (const L of ALPHABET) if (groups.has(L)) orderedGroupKeys.push(L);
 
+  // Active-filter pills. Sort is a mode, not a filter, so it's excluded here.
+  // Each pill's href drops just its own param (via buildDiscoverQuery, which
+  // preserves the rest). Labels come from the same option lists the bar uses,
+  // so an unknown/hand-typed value that the server ignores also yields no pill.
+  const activeFilters: { key: string; label: string; href: string }[] = [];
+  if (params.category) {
+    const name = categories.find((c) => c.slug === params.category)?.name;
+    if (name) {
+      activeFilters.push({
+        key: "category",
+        label: name,
+        href:
+          "/discover" +
+          buildDiscoverQuery({ cost: costQs, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
+      });
+    }
+  }
+  if (costQs) {
+    const label = COST_FILTERS.find((o) => o.value === costQs)?.label;
+    if (label) {
+      activeFilters.push({
+        key: "cost",
+        label,
+        href:
+          "/discover" +
+          buildDiscoverQuery({ category: params.category, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
+      });
+    }
+  }
+  if (difficultyQs) {
+    const label = DIFFICULTY_FILTERS.find((o) => o.value === difficultyQs)?.label;
+    if (label) {
+      activeFilters.push({
+        key: "difficulty",
+        label,
+        href:
+          "/discover" +
+          buildDiscoverQuery({ category: params.category, cost: costQs, mobile: params.mobile, sort: params.sort }),
+      });
+    }
+  }
+  if (params.mobile) {
+    const label = MOBILE_FILTERS.find((o) => o.value === params.mobile)?.label;
+    if (label) {
+      activeFilters.push({
+        key: "mobile",
+        label,
+        href:
+          "/discover" +
+          buildDiscoverQuery({ category: params.category, cost: costQs, difficulty: difficultyQs, sort: params.sort }),
+      });
+    }
+  }
+  const hasActiveFilter = activeFilters.length > 0;
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <h1 className="mb-2 text-3xl font-bold text-white">Discover AI Tools</h1>
       <p className="mb-4 text-gray-400">
-        Browse {platforms.length} vetted tools across {categories.length} categories
+        {hasActiveFilter
+          ? `Showing ${platforms.length} ${platforms.length === 1 ? "tool" : "tools"}`
+          : `Browse ${platforms.length} vetted tools across ${categories.length} categories`}
       </p>
       <div className="mb-8 rounded-xl border border-orange-500/20 bg-orange-500/5 px-4 py-3 text-sm text-gray-300">
         <span className="font-medium text-orange-200">Workflow templates</span>
@@ -174,199 +202,48 @@ export default async function DiscoverPage({
         </Link>
       </div>
 
-      {/* Category filters */}
-      <div className="mb-8 flex flex-wrap gap-2">
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              cost: costQs,
-              difficulty: difficultyQs,
-              mobile: params.mobile,
-              sort: params.sort,
-            })
-          }
-          className={`rounded-lg px-3 py-1.5 text-sm ${!params.category ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
-        >
-          All
-        </Link>
-        {categories.map((cat) => (
-          <Link
-            key={cat.slug}
-            href={
-              "/discover" +
-              buildDiscoverQuery({
-                category: cat.slug,
-                cost: costQs,
-                difficulty: difficultyQs,
-                mobile: params.mobile,
-                sort: params.sort,
-              })
-            }
-            className={`rounded-lg px-3 py-1.5 text-sm ${params.category === cat.slug ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
-          >
-            {cat.name} ({cat._count.platforms})
-          </Link>
-        ))}
-      </div>
+      {/* Filter bar — the five facet rows collapsed into one control row.
+          Client component; it only emits URLs via the shared buildDiscoverQuery.
+          The server still parses and guards the params it produces. */}
+      <DiscoverFilterBar
+        categories={categories.map((cat) => ({
+          slug: cat.slug,
+          name: cat.name,
+          count: cat._count.platforms,
+        }))}
+        current={{
+          category: params.category ?? "",
+          cost: costQs ?? "",
+          difficulty: difficultyQs ?? "",
+          mobile: params.mobile ?? "",
+          sort,
+        }}
+      />
 
-      {/* Cost filter */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              category: params.category,
-              difficulty: difficultyQs,
-              mobile: params.mobile,
-              sort: params.sort,
-            })
-          }
-          className={`rounded-md px-2 py-1 text-xs ${!params.cost ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-        >
-          All
-        </Link>
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              category: params.category,
-              cost: "free-tier",
-              difficulty: difficultyQs,
-              mobile: params.mobile,
-              sort: params.sort,
-            })
-          }
-          className={`rounded-md px-2 py-1 text-xs ${costQs === "free-tier" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-        >
-          Has free tier
-        </Link>
-        {COST_TIERS.map((tier) => (
+      {/* Active-filter pills — server-rendered; each removes just its own param */}
+      {hasActiveFilter && (
+        <div className="mb-8 flex flex-wrap items-center gap-2">
+          {activeFilters.map((f) => (
+            <Link
+              key={f.key}
+              href={f.href}
+              scroll={false}
+              className="inline-flex items-center gap-1 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs text-orange-200 transition-colors hover:bg-orange-500/20 hover:text-white"
+            >
+              {f.label}
+              <X className="h-3 w-3" aria-hidden />
+              <span className="sr-only">Remove {f.label} filter</span>
+            </Link>
+          ))}
           <Link
-            key={tier}
-            href={
-              "/discover" +
-              buildDiscoverQuery({
-                category: params.category,
-                cost: tier.toLowerCase(),
-                difficulty: difficultyQs,
-                mobile: params.mobile,
-                sort: params.sort,
-              })
-            }
-            className={`rounded-md px-2 py-1 text-xs ${params.cost?.toUpperCase() === tier ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
+            href="/discover"
+            scroll={false}
+            className="rounded-full px-3 py-1 text-xs text-gray-400 underline-offset-2 transition-colors hover:text-white hover:underline"
           >
-            {COST_TIER_LABEL[tier] ?? tier}
+            Clear all
           </Link>
-        ))}
-      </div>
-
-      {/* Difficulty filter */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              category: params.category,
-              cost: costQs,
-              mobile: params.mobile,
-              sort: params.sort,
-            })
-          }
-          className={`rounded-md px-2 py-1 text-xs ${!params.difficulty ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-        >
-          All
-        </Link>
-        {DIFFICULTY_FILTERS.map((d) => (
-          <Link
-            key={d.value}
-            href={
-              "/discover" +
-              buildDiscoverQuery({
-                category: params.category,
-                cost: costQs,
-                difficulty: d.value,
-                mobile: params.mobile,
-                sort: params.sort,
-              })
-            }
-            className={`rounded-md px-2 py-1 text-xs ${difficultyQs === d.value ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-          >
-            {d.label}
-          </Link>
-        ))}
-      </div>
-
-      {/* Mobile filters */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              category: params.category,
-              cost: costQs,
-              difficulty: difficultyQs,
-              sort: params.sort,
-            })
-          }
-          className={`rounded-md px-2 py-1 text-xs ${!params.mobile ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-        >
-          All
-        </Link>
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              category: params.category,
-              cost: costQs,
-              difficulty: difficultyQs,
-              mobile: "app",
-              sort: params.sort,
-            })
-          }
-          className={`rounded-md px-2 py-1 text-xs ${params.mobile === "app" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-        >
-          Has app
-        </Link>
-        <Link
-          href={
-            "/discover" +
-            buildDiscoverQuery({
-              category: params.category,
-              cost: costQs,
-              difficulty: difficultyQs,
-              mobile: "web",
-              sort: params.sort,
-            })
-          }
-          className={`rounded-md px-2 py-1 text-xs ${params.mobile === "web" ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-500 hover:text-white"}`}
-        >
-          Mobile web
-        </Link>
-      </div>
-
-      {/* Sort toggle */}
-      <div className="mb-6 flex flex-wrap items-center gap-2">
-        <span className="text-xs uppercase tracking-wide text-gray-500">Sort</span>
-        {(["popular", "alpha", "recent"] as const).map((s) => (
-          <Link
-            key={s}
-            href={
-              "/discover" +
-              buildDiscoverQuery({
-                category: params.category,
-                cost: costQs,
-                difficulty: difficultyQs,
-                mobile: params.mobile,
-                sort: s,
-              })
-            }
-            className={`rounded-md px-2 py-1 text-xs ${sort === s ? "bg-orange-500 text-white" : "bg-gray-800 text-gray-400 hover:text-white"}`}
-          >
-            {s === "popular" ? "Popular" : s === "alpha" ? "A–Z" : "Recent"}
-          </Link>
-        ))}
-      </div>
+        </div>
+      )}
 
       {/* A–Z jump strip — only in alphabetical mode, sticky below the global header */}
       {sort === "alpha" && platforms.length > 0 && (
