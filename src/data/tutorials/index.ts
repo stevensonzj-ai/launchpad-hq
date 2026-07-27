@@ -18,6 +18,16 @@ import { canvaAiTutorial } from "./canva-ai-getting-started";
 import { heygenTutorial } from "./heygen-getting-started";
 import { copyAiTutorial } from "./copy-ai-getting-started";
 import { notionAiTutorial } from "./notion-ai-getting-started";
+import { claudeTutorial } from "./claude-getting-started";
+import { geminiTutorial } from "./gemini-getting-started";
+import { anthropicApiTutorial } from "./anthropic-api-getting-started";
+import { huggingFaceTutorial } from "./hugging-face-getting-started";
+import { lmStudioTutorial } from "./lm-studio-getting-started";
+import { makeTutorial } from "./make-getting-started";
+import { grammarlyTutorial } from "./grammarly-getting-started";
+import { descriptTutorial } from "./descript-getting-started";
+import { elicitTutorial } from "./elicit-getting-started";
+import { acrobatAiTutorial } from "./acrobat-ai-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [chatgptTutorial.platformSlug]: chatgptTutorial,
@@ -39,6 +49,16 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [heygenTutorial.platformSlug]: heygenTutorial,
   [copyAiTutorial.platformSlug]: copyAiTutorial,
   [notionAiTutorial.platformSlug]: notionAiTutorial,
+  [claudeTutorial.platformSlug]: claudeTutorial,
+  [geminiTutorial.platformSlug]: geminiTutorial,
+  [anthropicApiTutorial.platformSlug]: anthropicApiTutorial,
+  [huggingFaceTutorial.platformSlug]: huggingFaceTutorial,
+  [lmStudioTutorial.platformSlug]: lmStudioTutorial,
+  [makeTutorial.platformSlug]: makeTutorial,
+  [grammarlyTutorial.platformSlug]: grammarlyTutorial,
+  [descriptTutorial.platformSlug]: descriptTutorial,
+  [elicitTutorial.platformSlug]: elicitTutorial,
+  [acrobatAiTutorial.platformSlug]: acrobatAiTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
