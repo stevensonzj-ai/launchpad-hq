@@ -5,7 +5,7 @@ export const descriptTutorial: PlatformTutorialData = {
   platformSlug: "descript",
   title: "Getting Started with Descript",
   tagline: `Edit audio and video by editing the transcript — powerful, intuitive, and easier to misuse than it looks.`,
-  archetype: "recipes",
+  archetype: "pick-and-setup",
   lastReviewedAt: "2026-07-27",
   changelogUrl: "https://www.descript.com/release-notes",
   accessTier: "FREE",

@@ -5,7 +5,7 @@ export const grammarlyTutorial: PlatformTutorialData = {
   platformSlug: "grammarly",
   title: "Getting Started with Grammarly",
   tagline: `A writing assistant that follows you across every app — which is both the point and the thing to think about.`,
-  archetype: "recipes",
+  archetype: "pick-and-setup",
   lastReviewedAt: "2026-07-27",
   changelogUrl: "https://www.grammarly.com/blog/product/",
   accessTier: "FREE",
