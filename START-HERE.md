@@ -253,6 +253,10 @@ The pass covers model lineup, current capabilities, free-tier shape, pricing ban
 **G17 — Do not fabricate content when a source is unavailable. Stop and report the blocker.**
 *Because* in Session 22 an agent handed an unresolvable file path correctly recognised that the only way to produce the requested files was to author them from its own knowledge — and stopped, ran the recon it could complete, and reported cleanly. Fabricated content presented as sourced transcription is the worst available outcome on a site whose entire value proposition is accuracy. The constraint held under pressure rather than degrading into helpfulness. Hold it.
 
+**G18 — An observation made from a different environment than the one that owns the repository can be locally correct and globally wrong. Establish your position before you report a state finding.**
+Check where you are standing — `git config --show-origin --get core.autocrlf`, `uname -a` — and prefer a differential test against a known-good control file over trusting a single absolute result.
+*Because* twice in one session an agent inspecting this repository through a Linux mount reported problems that do not exist on the owner's Windows machine. First: `core.autocrlf` reads as unset from the mount but is `true` on Windows — set in the **system** config shipped by the Git for Windows installer, not in anyone's personal global config, so it applies to every default Windows checkout — and the same commit showed 110 modified files with 23,654 phantom lines from one side and a clean tree from the other. Second: `grep -c $'\r'` behaves correctly under Linux but returns a false positive on every line of a pure-LF file under Git Bash on Windows, which would have condemned 29 correct files. Both readings were accurate where they were taken; neither described the repository. The habit that catches this is cheap: before trusting a tool's absolute output, run it against a control whose answer you already know.
+
 ---
 
 ## 6. Invariants and non-negotiables
@@ -311,13 +315,19 @@ Do not trust a commit sha written in any document in this repository, including 
 
 Roughly thirty local branches exist. Most are merged feature branches awaiting a hygiene sweep, including `tutorials/session-22-batch`, whose commits are patch-equivalent to a squash already on `main`. Per gate G6, `git branch --merged` gives false negatives on squash-merges here — verify with `git cherry` against the merge base before deleting anything, and use `git branch -D` only after independent confirmation. Six `backup/*` refs are deliberate safety nets; leave them alone.
 
-### The working tree looks broken. It isn't.
+### Line endings
 
-`git status` reports **110 modified files** and `git diff --stat` reports **23,654 insertions and 23,654 deletions**. Every single line of every file appears changed.
+The repository stores LF. `.gitattributes` declares `* text=auto eol=lf`, so every checkout — Windows, Linux, CI, container — gets LF. Line endings are a property of this repository, not of whoever's machine is looking at it.
 
-**It is entirely line-ending churn and contains zero content changes.** The repository is committed with **LF** endings; the working copies are **CRLF**. There is no `.gitattributes` and `core.autocrlf` is unset, so nothing normalises them.
+That was not always true, and the failure mode is worth recognising. Before 2026-09-07 there was no `.gitattributes`, so behaviour depended entirely on each contributor's local `core.autocrlf`. On a Windows machine with `core.autocrlf=true` — which is the **system-level default shipped by the Git for Windows installer**, at `C:/Program Files/Git/etc/gitconfig`, not something anyone opted into — git normalised transparently and `git status` was clean. On a Linux checkout of the same commit — a container, a CI runner, WSL, or an agent working through a mounted volume — git compared raw bytes and reported 110 files modified with 23,654 insertions and 23,654 deletions and zero content change. Same repository, same commit, two completely different pictures, and the one you saw depended on where you were standing. The mechanism is visible in this repository's own history: the 26 files added by the handoff commit were authored as LF and committed as LF, and the very next checkout wrote all 26 back to disk as CRLF.
 
-**Do not commit this.** Do not "fix" it by force-adding. Verify for yourself with `git diff --ignore-cr-at-eol --stat`, which returns nothing. The durable fix is to add a `.gitattributes` with `* text=auto eol=lf` and renormalise deliberately, as its own reviewed change — not as a side effect of other work. Until someone does that, **every file you write into this repository must use LF endings**, and you should check with `grep -c $'\r' <file>` (expect `0`) before committing.
+If you ever see a large diff that `git diff --ignore-cr-at-eol --stat` reports as empty, that is what you are looking at. It is not a change. Committing it would bury real changes in noise. `.gitattributes` is what prevents it — do not remove it.
+
+Binary files are exempt and must stay that way. `text=auto` means *detect*, so git's own binary detection already spares them, and `.gitattributes` additionally declares `*.xlsx`, `*.ico` and `docs/archive/IMPLEMENTATION_TASKS.md` as `binary` so the exemption survives anyone later simplifying the first line. That last one is a `.md` file that is **UTF-16 LE with a BOM** — the same encoding fault as the `.env.local` incident behind G10 — so it reads as binary to git. Note that `.svg` is text and is correctly not listed.
+
+Every file written to this repository uses LF.
+
+Do not verify that with `grep -c $'\r' <file>`. Under Git Bash on Windows that command reports a false positive on every line of a pure-LF file; it works correctly under Linux, which is exactly the kind of environment-dependent result that produced the confusion this section documents. Use `tr -dc '\r' < <file> | wc -c` (expect `0`), or `file(1)`, or simply rely on `.gitattributes` to normalise at commit time.
 
 The working tree carries no untracked items beyond the handoff documents themselves. `.claude/`, which holds local editor settings, is invisible here only because of a **machine-local** rule: git falls back to `~/.config/git/ignore` when `core.excludesFile` is unset, and on the owner's machine that file contains the single pattern `**/.claude/settings.local.json`. That rule is not in this repository. On a fresh checkout elsewhere — a container, a CI runner, another contributor — `.claude/settings.local.json` will show up as untracked. Note also that `.claude/` itself is not ignored; it disappears from `git status` only because that one file is currently its only member.
 
@@ -343,10 +353,9 @@ Production was confirmed live against `7615a1f3` on 2026-07-27 — deployment `R
 3. **The Jasper deduplication run.** Script merged and reviewed; only the operator run is owed. (G2)
 4. **Clerk development→production migration.** A pre-paywall prerequisite. The DNS and OAuth reconfiguration has sharp edges; recon it before touching it.
 5. **Local `main` is behind origin.** Trivial, but it is the first trap.
-6. **`.gitattributes`.** See above.
-7. **Two dated re-check triggers that have now passed** without anyone checking: a promotional API rate that expired 2026-08-31 and is stated explicitly on a live page, and a branding change on another platform expected within roughly two months of late July.
-8. **A `CLAUDE.md` Tier 3 lean-down** — convert duplicated strategy prose into pointers. Gates nothing.
-9. **Branch hygiene.** Roughly 30 local branches, including six deliberate `backup/*` safety refs (leave those alone) and many merged feature branches. (G6)
+6. **Two dated re-check triggers that have now passed** without anyone checking: a promotional API rate that expired 2026-08-31 and is stated explicitly on a live page, and a branding change on another platform expected within roughly two months of late July.
+7. **A `CLAUDE.md` Tier 3 lean-down** — convert duplicated strategy prose into pointers. Gates nothing.
+8. **Branch hygiene.** Roughly 30 local branches, including six deliberate `backup/*` safety refs (leave those alone) and many merged feature branches. (G6)
 
 ### Known and accepted defects
 
@@ -374,6 +383,7 @@ START-HERE.md              ← this file
 CLAUDE.md                  ← the standing engineering briefing (authoritative on conventions)
 AGENTS.md                  ← one rule: this is Next.js 16, read its docs before writing framework code
 README.md                  ← stock create-next-app boilerplate; carries no project information
+.gitattributes             ← `* text=auto eol=lf`, plus explicit binary exemptions (§ 8)
 package.json               ← scripts: dev, build, start, lint, typecheck, db:*
 next.config.ts             ← Sentry wrapper + category redirects (many-to-one only)
 prisma.config.ts
@@ -506,7 +516,6 @@ Everything here is drawn from the archived documents. Where they establish nothi
 
 ### Standing technical debt
 
-- **No `.gitattributes`**, hence the permanent CRLF/LF churn. (§ 8)
 - **No test suite.**
 - **Legacy `Prompt.author` column** coexisting with the `user` relation; needs a backfill then a drop migration.
 - **`LoggedOutLanding`** dead code.
@@ -578,11 +587,11 @@ Each level is earned by evidence, not elapsed time. The gate for each is stated 
 
 **Level 3 — merge code changes to `main` and verify the deployment.** *Gate:* Level 2, plus **a real test suite covering at least the quiz scoring, the Discover filter URL contract with its enum whitelists, and the moderation token and route policy.** Human preview review is currently the only thing catching bugs that typecheck and build both pass (G11). Removing the human without replacing that gate leaves nothing. **A test suite is the hard prerequisite for this level and it does not exist.**
 
-**Level 4 — operate against the database.** *Gate:* Level 3, plus a documented and enforced Neon-branch-first workflow, plus `.gitattributes` landed so a destructive change is never buried in 23,000 lines of line-ending noise, plus a verified rollback path. Even then: production writes stay operator-gated. The failure history in § 5 is disproportionately database incidents.
+**Level 4 — operate against the database.** *Gate:* Level 3, plus a documented and enforced Neon-branch-first workflow, plus a verified rollback path (the `.gitattributes` requirement — so a destructive change is never buried in 23,000 lines of line-ending noise — is now satisfied). Even then: production writes stay operator-gated. The failure history in § 5 is disproportionately database incidents.
 
 **Level 5 — full autonomy including releases.** *Gate:* everything above, running clean for a sustained period, plus monitoring that would actually catch a bad release — which today means Sentry alerting, since there is no synthetic checking and no uptime monitor.
 
-**The honest assessment:** this repository is not currently safe for autonomous operation above Level 1, and the reason is not the agent — it is that the human review step is the *only* correctness gate that exists. Build the tests, land `.gitattributes`, and fix the Jasper script's default before raising the ceiling. Those three changes are worth more toward autonomy than any amount of agent capability.
+**The honest assessment:** this repository is not currently safe for autonomous operation above Level 1, and the reason is not the agent — it is that the human review step is the *only* correctness gate that exists. Build the tests and fix the Jasper script's default before raising the ceiling. Those two changes are worth more toward autonomy than any amount of agent capability.
 
 ---
 

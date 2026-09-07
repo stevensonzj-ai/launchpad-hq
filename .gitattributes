@@ -1,0 +1,13 @@
+* text=auto eol=lf
+
+# Binaries — never line-ending-converted. Auto-detection already exempts
+# these, but declaring them makes the exemption explicit and survives
+# anyone later "simplifying" the first line.
+*.xlsx binary
+*.ico  binary
+
+# UTF-16 LE with a BOM, so git's auto-detection reads its NUL bytes as
+# binary and leaves it alone. Declared for the same reason as above: a
+# future `*.md text` rule would otherwise corrupt it. Same encoding fault
+# as the .env.local incident behind gate G18's predecessor G10.
+docs/archive/IMPLEMENTATION_TASKS.md binary
