@@ -33,8 +33,38 @@ import { ideogramTutorial } from "./ideogram-getting-started";
 import { n8nTutorial } from "./n8n-getting-started";
 import { tldvTutorial } from "./tldv-getting-started";
 import { janTutorial } from "./jan-getting-started";
+import { microsoftCopilotTutorial } from "./microsoft-copilot-getting-started";
+import { mistralAiLeChatTutorial } from "./mistral-ai-le-chat-getting-started";
+import { leonardoAiTutorial } from "./leonardo-ai-getting-started";
+import { fluxTutorial } from "./flux-getting-started";
+import { recraftTutorial } from "./recraft-getting-started";
+import { googleVeo31Tutorial } from "./google-veo-3-1-getting-started";
+import { synthesiaTutorial } from "./synthesia-getting-started";
+import { pikaTutorial } from "./pika-getting-started";
+import { udioTutorial } from "./udio-getting-started";
+import { claudeCodeTutorial } from "./claude-code-getting-started";
+import { openWebuiTutorial } from "./open-webui-getting-started";
+import { groqTutorial } from "./groq-getting-started";
+import { gumloopTutorial } from "./gumloop-getting-started";
+import { slackAiTutorial } from "./slack-ai-getting-started";
+import { windsurfTutorial } from "./windsurf-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
+  [microsoftCopilotTutorial.platformSlug]: microsoftCopilotTutorial,
+  [mistralAiLeChatTutorial.platformSlug]: mistralAiLeChatTutorial,
+  [leonardoAiTutorial.platformSlug]: leonardoAiTutorial,
+  [fluxTutorial.platformSlug]: fluxTutorial,
+  [recraftTutorial.platformSlug]: recraftTutorial,
+  [googleVeo31Tutorial.platformSlug]: googleVeo31Tutorial,
+  [synthesiaTutorial.platformSlug]: synthesiaTutorial,
+  [pikaTutorial.platformSlug]: pikaTutorial,
+  [udioTutorial.platformSlug]: udioTutorial,
+  [claudeCodeTutorial.platformSlug]: claudeCodeTutorial,
+  [openWebuiTutorial.platformSlug]: openWebuiTutorial,
+  [groqTutorial.platformSlug]: groqTutorial,
+  [gumloopTutorial.platformSlug]: gumloopTutorial,
+  [slackAiTutorial.platformSlug]: slackAiTutorial,
+  [windsurfTutorial.platformSlug]: windsurfTutorial,
   [grokTutorial.platformSlug]: grokTutorial,
   [ideogramTutorial.platformSlug]: ideogramTutorial,
   [n8nTutorial.platformSlug]: n8nTutorial,
