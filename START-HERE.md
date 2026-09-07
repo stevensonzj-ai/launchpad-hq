@@ -51,13 +51,13 @@ You will hit these within minutes. Nothing here is a bug; all of it is history.
 
 Read in this order. Stop at each and take it at the weight given.
 
-1. **This file (`START-HERE.md`)** — governs everything below it. Where it contradicts another document, this file wins, because it was written last and written specifically to reconcile them.
+1. **This file (`START-HERE.md`)** — governs everything below it. Where it contradicts another document, this file wins, because it was written last and written specifically to reconcile them. Written on 2026-09-07, partly by an agent working through a Linux mount of a Windows machine. Four of its claims about the local environment were wrong on first writing and were corrected the same day — see gate G18. Treat its environment-specific statements as verifiable rather than authoritative, and check them where they matter.
 2. **`CLAUDE.md`** (repo root, ~480 lines) — the standing engineering briefing. **The primary authority on conventions, coding rules, architecture and the moderation policy.** It is substantially accurate and genuinely good. Its header claims `Last updated: 2026-04-24`; that is wrong — it was materially rewritten in June 2026. It has five known errors, all listed in § 4. Trust everything in it *except* those five.
 3. **`AGENTS.md`** (repo root, 5 lines) — one rule, still current: this is Next.js **16**, whose APIs and file conventions differ from what a model trained earlier will assume. Read the relevant guide in `node_modules/next/dist/docs/` before writing framework code.
 4. **The code itself** — `prisma/schema.prisma` is the canonical data model. `src/data/tutorials/types.ts` is the compile-time contract for tutorial content. **Where any document disagrees with the code, the code wins and the document should be corrected.** This is a standing instruction from the owner, not a suggestion.
 5. **`docs/history/README.md`** — the index to the archived project record, with a warning about how to read it.
 6. **`docs/history/*`** — 24 archived documents. **Historical record, not instructions.** Read § 4 of this file before you act on anything in there.
-7. **`docs/archive/*`** — four pre-2026 planning documents that predate the authentication and payments integration entirely. `CLAUDE.md` correctly warns that following their instructions would revert real progress. Read only to understand how the project got here.
+7. **`docs/archive/*`** — four pre-2026 planning documents that predate the authentication and payments integration entirely. `CLAUDE.md` correctly warns that following their instructions would revert real progress. Read only to understand how the project got here. All four are readable UTF-8 as of 2026-09-07 — `IMPLEMENTATION_TASKS.md` was UTF-16 LE until then and was converted — so if you encounter one that is unreadable, that is a new problem rather than a longstanding one. One pre-existing oddity remains in `IMPLEMENTATION_TASKS.md`: a stray U+0008 control character at line 72 has mangled a code fence, which is why `file(1)` reports "with overstriking" on that file. It is original to the document — present in the pre-conversion blob — and was left in place deliberately so the UTF-8 conversion could assert that content was unchanged. It is harmless; the file is history, not instructions.
 
 ### What is authoritative on what has actually been *tested*
 
@@ -165,7 +165,7 @@ Discovered by accident in Session 22. OpenAI ended the web and app experiences o
 
 Two findings, neither actionable:
 
-- `docs/archive/CURSOR_IMPLEMENTATION_PROMPT.md` contains the literal placeholder `CLERK_SECRET_KEY=sk_test_...` in an example block. Not a key.
+- `docs/archive/CURSOR_IMPLEMENTATION_PROMPT.md` contains two inert literal placeholders in an example block: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...` on line 33 and `CLERK_SECRET_KEY=sk_test_...` on line 34. Both end in a literal ellipsis and carry no key material, so a secret scan keyed on `sk_test_[A-Za-z0-9]{8,}` will not match either — do not read a clean scan as evidence they were removed.
 - The Sentry DSN is hardcoded in `sentry.server.config.ts`, `sentry.edge.config.ts` and `src/instrumentation-client.ts`. This is **correct and intentional** — a DSN is a public client identifier that ships in the browser bundle regardless. It is not a secret and was a deliberate decision.
 
 ### The rule
@@ -277,6 +277,7 @@ The full text of most of these is in `CLAUDE.md`; this is the summary you should
 - **Prefer incremental over aggressive refactors.** Small verifiable changes committed often.
 - **Read before proposing changes** — both what you are editing and what consumes it. Re-read rather than relying on memory of an earlier read.
 - **Flag contradictions rather than silently picking a side.** If this file, `CLAUDE.md`, the code, or a request disagree with each other, trust the code and say so.
+- **Never create a file in this repository with a PowerShell `>` redirect.** It writes UTF-16 LE, which Next.js, git and most tooling read as binary or garbage. It has silently broken two files here: `.env.local`, which cost most of a session to diagnose because it presented as two unrelated bugs (gate G10), and `docs/archive/IMPLEMENTATION_TASKS.md`, which sat unreadable in the repository until 2026-09-07. Use `Set-Content -Encoding utf8`, or write the file from an editor.
 - **Push freely, merge deliberately.** Pushing a branch is backup. Merging to main is the live gate and the only consequential action.
 
 ---
