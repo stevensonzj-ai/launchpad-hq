@@ -1,3 +1,23 @@
+# LaunchpadHQ
+
+A curated AI-platform discovery site for beginners. Live at
+[launchpadhq.io](https://launchpadhq.io).
+
+> [!IMPORTANT]
+> **New here? Read [`START-HERE.md`](START-HERE.md) before anything else — including
+> this file and including the source.**
+>
+> Everything below this box is the unmodified `create-next-app` boilerplate. It carries
+> no information about this project. `START-HERE.md` carries the onboarding: what the
+> project is, which of its own documents are now false, the reasoning behind every hard
+> rule, the current repository state, and how work gets done here.
+>
+> Then: [`CLAUDE.md`](CLAUDE.md) for conventions and coding rules,
+> [`AGENTS.md`](AGENTS.md) for the Next.js 16 warning, and
+> [`docs/history/`](docs/history/README.md) for the archived project record.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
