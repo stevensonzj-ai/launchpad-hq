@@ -4,6 +4,13 @@
 > Owner: Zach
 > Audience: Any Claude Code session working on this repo
 
+> [!IMPORTANT]
+> **Read [`START-HERE.md`](START-HERE.md) at the repo root before this file.**
+> It is newer, and it names five specific claims in this document that are now false,
+> along with the project's failure history, its naming history, and the current
+> (untidy) state of the working tree. This file remains the authority on conventions,
+> coding rules and the moderation policy — read the corrections first, then trust it.
+
 This file is the briefing Claude Code should read first on every session. It captures the project's mission, constraints, conventions, and decisions made to date so you don't have to re-derive them from the codebase.
 
 ---
@@ -467,6 +474,8 @@ The audit will show what's actually broken vs. working vs. stub. Likely includes
 
 ## Files that supplement this one
 
+- `START-HERE.md` — **read this first.** Onboarding, superseded-claims ledger, failure history as hard gates, current state, and the rules for autonomous work.
+- `docs/history/` — 24 archived planning and session documents exported from the Claude project on 2026-09-07. Historical record, not current truth; see `docs/history/README.md`.
 - `prisma/schema.prisma` — canonical data model
 - `AGENTS.md` — Next.js 16 breaking-change warning (still current)
 - `README.md` — developer onboarding (if present)
