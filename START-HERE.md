@@ -93,6 +93,7 @@ This is the most valuable section of this document. Every entry is a claim that 
 *Why this one is dangerous:* "wire the tutorials through the database" is exactly the instinct a competent engineer will have on seeing an unused `Tutorial` model. It is the wrong path, and both `CLAUDE.md` and Session 15 say so explicitly. **Do not route tutorials through the database.**
 
 **4.4 — "`scripts/dedupe-jasper-platforms.ts` should be run to clean up duplicate Jasper rows."**
+**[Corrected in CLAUDE.md on 2026-09-07.]** 
 *Where:* `CLAUDE.md`, § "Data conventions" and § "Priority roadmap → P0", stated without qualification.
 *Truth:* The instruction is correct but **materially incomplete in a way that can destroy production data.** The script **defaults to LIVE writes**, not dry-run, cushioned only by a five-second countdown. It must be run with `--dry-run` explicitly, against a Neon branch, first. See gate **G2**. Every handoff from Session 13 onward flags this; `CLAUDE.md` does not.
 
@@ -119,14 +120,17 @@ This is the most valuable section of this document. Every entry is a claim that 
 *Truth:* **Explicitly rejected** in Session 21 on published usability-research grounds (hiding critical filters behind a single button is an anti-pattern for a small facet count) and because building it would have meant hand-rolling the project's first popover primitive. Shipped as four visible native dropdowns instead. If a dropdown ever needs to become a custom control, the sanctioned upgrade path is Radix — **not** a hand-rolled popover.
 
 **4.10 — "Remove duplicated content between the platform detail sidebar and main column (P0 bug)."**
+**[Corrected in CLAUDE.md on 2026-09-07.]** 
 *Where:* `CLAUDE.md`, § "Priority roadmap → P0", item 2.
 *Truth:* **The bug does not exist.** A field-by-field audit in June 2026 confirmed the platform detail page is single-column and an earlier redesign had already fixed it. `CLAUDE.md` still lists it, hedged as "unverified."
 
 **4.11 — "Tutorial files are named `{platformSlug}-getting-started.ts`."**
+**[Corrected in CLAUDE.md on 2026-09-07.]** 
 *Where:* `CLAUDE.md`, § "Tutorials".
 *Truth:* The filename stem is the tutorial's own **`slug`**, which is shorter than `platformSlug` on five of the 29 files: `acrobat-ai-`, `canva-ai-`, `make-`, `otter-`, `perplexity-`. Registration and lookup are by `platformSlug`, which must exactly match a real `Platform` row — **verify it against the database, never assume it.**
 
 **4.12 — "`getPlatformCount()` rounds down to the nearest ten."**
+**[Corrected in CLAUDE.md on 2026-09-07.]** 
 *Where:* `CLAUDE.md`, § "Data conventions".
 *Truth:* `getPlatformCount()` in `src/lib/platforms.ts` returns the **exact** count. The rounding is a separate exported helper, `roundDownToTen()`, in the same file. The underlying rule — never hardcode a platform count anywhere — is correct and still binding.
 
@@ -144,9 +148,9 @@ This is the most valuable section of this document. Every entry is a claim that 
 
 **4.16 — "main is at `<sha>`."** Every handoff opens with one. All are superseded; several are *below* the current HEAD. See § 8 for the real state — which is itself untidy.
 
-**4.17 — "Zach is starting paternity leave soon."** Appears in `CLAUDE.md` § "Current context (as of April 2026)" and in Sessions 8 and 9. **Stale.** The child was born in late April 2026 and Session 10 explicitly retires the framing. There is no absence cliff and no deadline pressure. The real constraint is fragmented time, which makes small well-reviewed increments *more* important, not less.
+**4.17 — "Zach is starting paternity leave soon."** **[Corrected in CLAUDE.md on 2026-09-07; still present in the archived Session 8 and 9 handoffs, correctly, as historical record.]** Appears in `CLAUDE.md` § "Current context (as of April 2026)" and in Sessions 8 and 9. **Stale.** The child was born in late April 2026 and Session 10 explicitly retires the framing. There is no absence cliff and no deadline pressure. The real constraint is fragmented time, which makes small well-reviewed increments *more* important, not less.
 
-**4.18 — `CLAUDE.md`'s header date, `2026-04-24`.** Understates the file's currency by two months and invites you to distrust the whole document. Trust it except for 4.4, 4.10, 4.11, 4.12 and 4.17.
+**4.18 — `CLAUDE.md`'s header date, `2026-04-24`.** **[Corrected in CLAUDE.md on 2026-09-07.]** Understates the file's currency by two months and invites you to distrust the whole document. Those five claims were corrected on 2026-09-07; their entries above are retained as record.
 
 **4.19 — `CLAUDE.md`'s "Step 0 — Full feature audit (the next task)" and the P0/P1/P2/P3 roadmap beneath it.** That audit never happened and the P-band sequence does not describe what has actually been worked on since April, which was the tutorial content pipeline almost exclusively. Treat the roadmap as a menu of unstarted ideas, not as a plan in progress.
 
@@ -156,6 +160,13 @@ This is the most valuable section of this document. Every entry is a claim that 
 
 **4.21 — Sora 2 is in the live catalog and the product is discontinued.**
 Discovered by accident in Session 22. OpenAI ended the web and app experiences on 2026-04-26. A user can currently find, filter to, and click through to a platform that no longer exists. The same row also carries an incorrect `costTier` of `ENTERPRISE`. **This has not been fixed.** It reframes a larger question nobody has answered: nothing in the system detects whether a catalogued platform still exists, and with ~170 rows Sora is unlikely to be the only one. See § 8.
+
+### Added after the initial handoff
+
+**4.22 — The free/paid split is stated two incompatible ways.**
+*Where:* `CLAUDE.md` § "Free vs. paid feature split" listed the prompt library and community discussions as **Paid**, while `docs/history/business-strategy-reference.md` lists both as free to view with a free account to post — and notes that opening them shifted them "from 'paid pillar' toward 'free funnel'," which is why the paid tier's weight moved onto news, deep tutorials and personalization.
+*Truth:* The strategy doc is correct and **the code agrees with it** — a Session 10 recon confirmed both surfaces already implement public `GET` with `401` on `POST`, and that was re-verified by direct code inspection on 2026-09-07. `CLAUDE.md`'s table was the older decision and was corrected on 2026-09-07. The archived strategy doc is right on this point; treat `CLAUDE.md`'s current access-model section as authoritative.
+*Found by:* an external reviewer reading the repo cold — which is what this ledger is for.
 
 ---
 
@@ -218,6 +229,7 @@ Verify patch-equivalence with `git cherry` against the merge base, then delete w
 
 **G7 — "Merged" does not mean "deployed." Verify against the Vercel API.**
 After any merge, poll for a deployment with `target: "production"` whose `githubCommitSha` matches main's HEAD, at state `READY` with `aliasError: null` and the apex and www aliases bound. Only then is it live.
+**Until an agent has Vercel access, the operator performs this check and reports the result. An agent must not claim a deployment is live on the basis of a successful merge.**
 *Because* in June 2026 a merge to main produced **no deployment at all** — the commit was clean on GitHub, GitHub reported "successfully deployed" (pointing at an old preview), and launchpadhq.io kept serving the previous build. The GitHub→Vercel webhook silently dropped. The recovery is an empty commit (`git commit --allow-empty`) to re-trigger. This happened more than once and is why deployment verification is a permanent part of the merge ritual rather than an optional check.
 
 **G8 — Every serverless handler that reports to Sentry must `await Sentry.flush(2000)` before returning.**
@@ -312,7 +324,7 @@ Verified on the owner's machine on **2026-09-07**.
 
 Work happens on `main`. Before anything else, establish where you are and whether you are current: `git log --oneline -1`, `git status`, `git fetch origin --prune`, and confirm `main` matches `origin/main`.
 
-Do not trust a commit sha written in any document in this repository, including this one. They are snapshots taken on a particular day and they rot. The repository is the only authority on its own state.
+Do not trust a commit sha written in any document in this repository, including this one. They are snapshots taken on a particular day and they rot. The same applies to any sentence describing sync status, branch position, or what is "behind" or "current" — re-run the git commands rather than believing the prose, because those claims rot exactly as fast as shas do. The repository is the only authority on its own state.
 
 Roughly thirty local branches exist. Most are merged feature branches awaiting a hygiene sweep, including `tutorials/session-22-batch`, whose commits are patch-equivalent to a squash already on `main`. Per gate G6, `git branch --merged` gives false negatives on squash-merges here — verify with `git cherry` against the merge base before deleting anything, and use `git branch -D` only after independent confirmation. Six `backup/*` refs are deliberate safety nets; leave them alone.
 
@@ -334,7 +346,7 @@ The working tree carries no untracked items beyond the handoff documents themsel
 
 ### What is shipped and live
 
-- 170-platform catalog across a 20-category taxonomy, with a Discover page whose filters are a compact native-`<select>` bar with removable pills and a reactive count.
+- 170-platform catalog (operator-confirmed; not verifiable from this repository — the database is not here and `data/ai_platforms_enhanced_metadata.xlsx` is import history, not a current export) across a 20-category taxonomy, with a Discover page whose filters are a compact native-`<select>` bar with removable pills and a reactive count.
 - Platform detail pages with Overview, Tutorials, Prompts and Discussions tabs.
 - **29 tutorial pages**, static TypeScript in `src/data/tutorials/`, across three archetypes and eight categories.
 - A four-question matching quiz with a public results page for signed-out users, a soft difficulty penalty with an "Advanced" badge, and a goal-relevance floor.
@@ -353,10 +365,11 @@ Production was confirmed live against `7615a1f3` on 2026-07-27 — deployment `R
 2. **The maintenance cadence layer.** Specified in the batch playbook and gated on "20+ deep pages exist." There are 29. Overdue.
 3. **The Jasper deduplication run.** Script merged and reviewed; only the operator run is owed. (G2)
 4. **Clerk development→production migration.** A pre-paywall prerequisite. The DNS and OAuth reconfiguration has sharp edges; recon it before touching it.
-5. **Local `main` is behind origin.** Trivial, but it is the first trap.
-6. **Two dated re-check triggers that have now passed** without anyone checking: a promotional API rate that expired 2026-08-31 and is stated explicitly on a live page, and a branding change on another platform expected within roughly two months of late July.
-7. **A `CLAUDE.md` Tier 3 lean-down** — convert duplicated strategy prose into pointers. Gates nothing.
-8. **Branch hygiene.** Roughly 30 local branches, including six deliberate `backup/*` safety refs (leave those alone) and many merged feature branches. (G6)
+5. **Two dated re-check triggers that have now passed** without anyone checking: a promotional API rate that expired 2026-08-31 and is stated explicitly on a live page, and a branding change on another platform expected within roughly two months of late July.
+6. **A `CLAUDE.md` Tier 3 lean-down** — convert duplicated strategy prose into pointers. Gates nothing.
+7. **Branch hygiene.** Roughly 30 local branches, including six deliberate `backup/*` safety refs (leave those alone) and many merged feature branches. (G6)
+8. **Stripe webhook product-scoping.** The production Stripe account will serve both LaunchpadHQ and a second product. `src/app/api/stripe/webhook/route.ts` was written when one account meant one product, and will receive the other product's events once the account is shared. Confirm the handler filters by product or price ID before acting, and returns cleanly on events it doesn't own. Cheap to design for now; expensive to retrofit once real money is moving. **Not yet investigated.**
+9. **Switch `DATABASE_URL` to `sslmode=verify-full`** in local `.env`, then Vercel Preview, then Production — operator step; verify a database-backed page loads at each stage. See the SSL entry under Known and accepted defects.
 
 ### Known and accepted defects
 
@@ -442,7 +455,7 @@ src/
 
 - **Every credential.** (§ 4b)
 - **Vercel environment variable values.** The names are documented in § 4b; the values exist only in Vercel and on the owner's machine.
-- **Any database content.** 170 platform rows, 20 categories, users, prompts, discussions — none of it is in git. `data/ai_platforms_enhanced_metadata.xlsx` is the original import source, not a current export. `scripts/export-platforms.ts` exists if you need a snapshot, and running it is an operator step.
+- **Any database content.** ~170 platform rows (operator-confirmed; not verifiable from here), 20 categories, users, prompts, discussions — none of it is in git. `data/ai_platforms_enhanced_metadata.xlsx` is the original import source, not a current export. `scripts/export-platforms.ts` exists if you need a snapshot, and running it is an operator step.
 - **DNS configuration.** Cloudflare only.
 - **Any test suite, CI test job, or coverage report.** None exist.
 - **Deployment configuration beyond `next.config.ts`.** Build settings, environment scoping and domain bindings live in Vercel.
@@ -462,7 +475,7 @@ Everything here is drawn from the archived documents. Where they establish nothi
 - **Gating philosophy, locked:** gate interaction, personalization and depth — **never** the catalog's existence or browsability. A full-site gate was explicitly considered and rejected because it would destroy the organic search funnel, present maximum friction to the lowest-confidence users, and delete top-of-funnel rather than convert it.
 - **Three access levels:** read freely with no account (catalog, filters, quiz, platform pages, lighter tutorials) → free account to contribute (save results, favourite, post) → paid (deep tutorials, the For You news feed, favourites-driven personalization).
 - **The monetization-ready bar** — the definition of "ready to charge," and all three must be true: the For You **news feed** works; tutorials have a real first batch live; personalization is solid. Two of the three now arguably hold. **The news feed is the entire retention mechanism** — it is the only feature giving anyone a reason to return next week, and it has zero work done.
-- **Launch prerequisites, in dependency order:** form the LLC (Texas, ~$300) → EIN → business bank account → production Stripe account → Clerk production migration → run the Jasper dedup → lift `noindex` → enforce the paywall. Almost all coding work sits *off* this critical path.
+- **Launch prerequisites, in dependency order:** the **LLC has been applied for and is pending as of 2026-09-06** (Texas, ~$300); from here the chain is EIN → business bank account → production Stripe account → Clerk production migration → run the Jasper dedup → lift `noindex` → enforce the paywall. Almost all coding work sits *off* this critical path. **The production Stripe account will be shared with a second product, Camerata** — see the webhook product-scoping item in § 8.
 
 ### Market and competition
 
@@ -480,7 +493,12 @@ Everything here is drawn from the archived documents. Where they establish nothi
 - `TODO(Zach)`: **Cost to run.** Every service is on a free tier except Google Workspace (~$8.40/month) and the domain. Total monthly cost is not written down anywhere.
 - `TODO(Zach)`: **Competitive position.** Competitors are named but never analysed — no feature comparison, no assessment of their traffic, monetization or vulnerability.
 - `TODO(Zach)`: **What success looks like.** Explicitly a hobby project not depended on for income, with no revenue target, no user target, and no stated point at which it would be judged a failure or wound down.
-- `TODO(Zach)`: **Legal.** A small-business attorney review is planned for the excluded-platforms page and single-member LLC treatment. Not done. No terms of service or privacy policy is mentioned anywhere in the archives — **for a site that collects accounts, payments and user submissions, verify whether these exist.**
+- `TODO(Zach)`: **Legal.** A small-business attorney review is planned for the excluded-platforms page and single-member LLC treatment. Not done.
+
+> [!IMPORTANT]
+> **Terms of service and privacy policy — no document in the archive mentions either existing.**
+> This site takes accounts, payments and user-generated content. Verify whether both exist before
+> public launch. This is a launch-path item, not archival trivia.
 
 ---
 
@@ -526,7 +544,7 @@ Everything here is drawn from the archived documents. Where they establish nothi
 - **Unbounded `favoriteIds` queries** and a hardcoded `take: 200` on Discover.
 - **Cross-tab favourites desync.**
 - **Misplaced Sentry build options** in `next.config.ts` — `automaticVercelMonitors` and `treeshake` are nested under a `webpack:` key where they are silently ignored. No runtime impact.
-- **A `pg` SSL deprecation warning** on any database-touching build. Cosmetic; address when `pg` is next bumped.
+- **`sslmode=require` in `DATABASE_URL` should be `verify-full`.** On `pg` 8 the two behave identically — `require` is currently an alias for full certificate and hostname verification — so changing it today is a functional no-op. On `pg` 9 (and `pg-connection-string` 3) `require` reverts to libpq semantics: encryption with **no certificate or hostname verification**, which is a man-in-the-middle exposure on the production database connection. The change is silent: no error, no test failure, and the deprecation warning *stops firing*, because the behaviour finally matches the name it was warning about. **Fix this before the next `pg` major bump, not during it.** Operator step — `DATABASE_URL` lives in `.env` and in Vercel; see gates G9 and G10. Neon recommends `verify-full` for production. The warning currently fires roughly 40 times a day in production, which is just serverless cold starts re-parsing the connection string, not a symptom.
 - **Build time trend.** Roughly 50–70 seconds historically, ~146 seconds on the last large batch deploy. Logged as a baseline, not chased. If it climbs toward a timeout, that trend started here.
 - **Two string styles across the 29 tutorial files** — earlier files use double-quoted strings with escapes, later ones use template literals. The template-literal style is better (apostrophes and quotes transcribe with zero escaping) and should be the convention. Do not introduce a third.
 
@@ -538,7 +556,7 @@ The owner's stated intent is **eventual full autonomy, reached by starting small
 
 ### Level 1 — where you are now
 
-**You may:** read anything except secrets files; run `git status`, `git log`, `git diff`, `git branch`; create branches; write and edit code and documentation on a branch; run `npm run typecheck`, `npm run build`, `npm run lint`, `npm run dev`; run read-only recon; open a pull request; write handoffs.
+**You may:** read anything except secrets files; run `git status`, `git log`, `git diff`, `git branch`; create branches; write and edit code and documentation on a branch; run `npm run typecheck`, `npm run build`, `npm run lint`, `npm run dev`; run read-only recon; open a pull request; write handoffs. **Those npm commands require dependencies installed, and a fresh clone has none.** `npm install` is an operator step — ask rather than assuming the commands will run.
 
 **You may not:** merge to `main`; push to `main`; run any database command, migration, seed or data script; read, write or print any `.env*` file or anything under `.clerk/`; add a dependency without explicit approval; run `git clean -f`, `git push --force`, or any history rewrite; execute `scripts/dedupe-jasper-platforms.ts` under any circumstances; change environment variables anywhere; publish content.
 

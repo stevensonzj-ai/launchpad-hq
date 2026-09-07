@@ -1,15 +1,18 @@
 # LaunchpadHQ — Project Briefing for Claude Code
 
-> Last updated: 2026-04-24
+> Last updated: 2026-09-07
+> Correction ledger: see `START-HERE.md` § 4
 > Owner: Zach
 > Audience: Any Claude Code session working on this repo
 
 > [!IMPORTANT]
 > **Read [`START-HERE.md`](START-HERE.md) at the repo root before this file.**
-> It is newer, and it names five specific claims in this document that are now false,
-> along with the project's failure history, its naming history, and the current
-> (untidy) state of the working tree. This file remains the authority on conventions,
-> coding rules and the moderation policy — read the corrections first, then trust it.
+> It is newer, and it carries a correction ledger for this file (§ 4), the project's
+> failure history written as hard gates with their originating incidents, the naming
+> history, and the current state of the repository. Corrections to this file are logged
+> there rather than applied silently — check § 4 before treating anything here as
+> settled. This file remains the authority on conventions, coding rules and the
+> moderation policy — read the corrections first, then trust it.
 
 This file is the briefing Claude Code should read first on every session. It captures the project's mission, constraints, conventions, and decisions made to date so you don't have to re-derive them from the codebase.
 
@@ -118,26 +121,34 @@ Theme: mission-control / space launch, but **restrained and professional** — n
 
 **Friends-and-family mode:** The site is currently functional without payment enforcement while Zach collects feedback. The paywall will activate before public launch.
 
-### Free vs. paid feature split (target for launch)
+### Access model (target for launch)
 
-**Free (no account required):**
+**Three levels of access, not three price tiers.** This is the Session 10 model and it supersedes the earlier two-tier free/paid table; the prompt library and discussions already implement it in code (public `GET`, `401` on `POST`).
+
+**Free, no account required:**
 - Full directory browsing across all 170+ platforms
-- All category/cost/mobile filters
-- Quiz ("Get Matched")
-- Platform overview pages (name, overview, official links, basic free-tier summary)
-- 1–2 sample workflow templates visible as teasers
+- All category / cost / difficulty / app-availability filters
+- Quiz ("Get Matched") and its public results page
+- Platform overview pages
+- Viewing the prompt library and community discussions
+- Lighter tutorial tiers
+- 1–2 sample workflow templates as teasers
+
+**Free account, to contribute and save:**
+- Saving quiz results
+- Favouriting platforms
+- Posting to the prompt library and discussions
 
 **Paid ($9/mo):**
-- All workflow templates (currently the strongest feature)
-- Full tutorials including copy-prompt-to-platform flows
-- Prompt library (submit and browse)
-- Community discussions
+- The For You news feed — the retention engine, and the only unbuilt item on the monetization-ready bar
+- Deep platform-specific tutorials
+- Favourites-driven personalization
+- All workflow templates
 - Subscription tracker with cost alerts
-- Side-by-side platform comparison tool
+- Side-by-side platform comparison
 - Personalized weekly digest email
-- Saved favorites, notes, and quiz history
 
-**Rule of thumb:** discovery is free; the value-add features that help users *act* on that discovery are paid.
+**Rule of thumb:** browsing and discovery are free; contributing needs a free account; the features that help a user *act* on discovery — and the ones that give a reason to come back — are paid. **Never gate the catalog's existence or browsability.** A full-site gate was explicitly considered and rejected: it destroys the organic-search funnel and deletes top-of-funnel rather than converting it.
 
 ---
 
@@ -147,7 +158,7 @@ Tutorials are a **live, active workstream — not a P3 placeholder.** The pilot 
 
 ### Architecture — file-based static TS, NOT the database
 
-- Tutorials are **static TypeScript** in `src/data/tutorials/*.ts`, one file per platform: `{platformSlug}-getting-started.ts`, exporting a named const.
+- Tutorials are **static TypeScript** in `src/data/tutorials/*.ts`, one file per platform, exporting a named const. The filename stem is the tutorial's own **`slug`**, which is shorter than `platformSlug` on five of the 29 files — `acrobat-ai-`, `canva-ai-`, `make-`, `otter-`, `perplexity-`. Registration and lookup are by **`platformSlug`**, which must exactly match a real `Platform` row — **verify it against the database, never assume it.**
 - **`src/data/tutorials/types.ts` is the compile-time contract** (`PlatformTutorialData`). Author new pages straight against it; tsc enforces required fields.
 - **`chatgpt.ts` is the canonical reference page.** Worked references across archetypes: `chatgpt` (prompts), `midjourney` (prompts/image), `zapier` (recipes), `ollama` (pick-and-setup, includes the optional setup section).
 - **The dormant Prisma `Tutorial` / `UserProgress` models are intentionally UNWIRED. Do NOT route tutorials through them.** The instinct to "wire tutorials through the DB" is the wrong path — the live system is file-based by design.
@@ -343,9 +354,9 @@ Slander and defamation risk is real if exclusion entries are written as evaluati
 
 ### Data conventions
 
-- **Single source of truth for platform count.** Never hardcode "168/170/171" anywhere. Read from the DB — `src/lib/platforms.ts` `getPlatformCount()`, which rounds down to the nearest 10 so the displayed count never overstates.
+- **Single source of truth for platform count.** Never hardcode "168/170/171" anywhere. Read from the DB — `src/lib/platforms.ts` `getPlatformCount()`, which returns the **exact** count. Rounding is a separate exported helper in the same file, `roundDownToTen()`, used where a displayed count should never overstate.
 - **Free-tier descriptions: don't reintroduce a "Free: Free:" double-prefix.** `platform-card.tsx` strips a leading case-insensitive "free:" before prepending its own label — keep that guard.
-- **Deduplicate platforms before adding new ones.** "Jasper" / "Jasper AI" duplicate rows persist until `scripts/dedupe-jasper-platforms.ts` is run.
+- **Deduplicate platforms before adding new ones.** "Jasper" / "Jasper AI" duplicate rows persist until `scripts/dedupe-jasper-platforms.ts` is run. **Footgun: the script defaults to LIVE writes**, cushioned only by a five-second countdown. Pass `--dry-run` explicitly, against a Neon branch, first. See `START-HERE.md` gate G2.
 
 ### Styling
 
@@ -393,8 +404,7 @@ Before any polish or bug-fix work, Claude Code will walk through every feature s
 
 ### P0 — Bugs and inconsistencies
 
-1. Deduplicate Jasper entries — `scripts/dedupe-jasper-platforms.ts` is merged but NOT executed. Running it (operator step, Neon branch first) closes this.
-2. Remove duplicated content between platform detail sidebar and main column — unverified; check before acting.
+1. Deduplicate Jasper entries — `scripts/dedupe-jasper-platforms.ts` is merged but NOT executed. Running it (operator step, Neon branch first) closes this. **Footgun: the script defaults to LIVE writes**, cushioned only by a five-second countdown. Pass `--dry-run` explicitly, against a Neon branch, first. See `START-HERE.md` gate G2.
 
 ### P1 — Design polish (1–2 weeks)
 
@@ -442,7 +452,7 @@ The audit will show what's actually broken vs. working vs. stub. Likely includes
 
 ## Current context (as of April 2026)
 
-- Zach is starting paternity leave soon. Velocity will be lower than a full-time project. Planning assumption: half the output he'd estimate.
+- There is **no absence cliff and no deadline pressure.** The real constraint is fragmented time, which makes small, well-reviewed increments *more* important rather than less.
 - Site is deployed at launchpadhq.io and functional. Not yet publicly launched or monetized (friends-and-family mode).
 - This is Zach's first major web project. He's learning as he goes and appreciates when Claude Code explains the "why" behind suggestions, especially for concepts like auth, payments, and database design that are new to him.
 - Zach uses Cursor Pro alongside Claude Code in Cursor (OAuth via Max plan). Don't assume features specific to one tool or the other without checking.
