@@ -1,0 +1,25 @@
+{
+  "_note": "Seed ordering for tutorial batches. Editorial, per batch-production-maintenance-playbook Decision 0 (GSC demand is unavailable while the site is noindex). Edit freely; queue-status.mjs reads `order` and puts anything unlisted after it.",
+  "order": [
+    "grok",
+    "microsoft-copilot",
+    "mistral-ai-le-chat",
+    "ideogram",
+    "leonardo-ai",
+    "flux",
+    "recraft",
+    "google-veo-3-1",
+    "synthesia",
+    "pika",
+    "udio",
+    "claude-code",
+    "windsurf",
+    "jan",
+    "open-webui",
+    "groq",
+    "n8n",
+    "gumloop",
+    "slack-ai",
+    "tl-dv"
+  ]
+}
