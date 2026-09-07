@@ -28,8 +28,18 @@ import { grammarlyTutorial } from "./grammarly-getting-started";
 import { descriptTutorial } from "./descript-getting-started";
 import { elicitTutorial } from "./elicit-getting-started";
 import { acrobatAiTutorial } from "./acrobat-ai-getting-started";
+import { grokTutorial } from "./grok-getting-started";
+import { ideogramTutorial } from "./ideogram-getting-started";
+import { n8nTutorial } from "./n8n-getting-started";
+import { tldvTutorial } from "./tldv-getting-started";
+import { janTutorial } from "./jan-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
+  [grokTutorial.platformSlug]: grokTutorial,
+  [ideogramTutorial.platformSlug]: ideogramTutorial,
+  [n8nTutorial.platformSlug]: n8nTutorial,
+  [tldvTutorial.platformSlug]: tldvTutorial,
+  [janTutorial.platformSlug]: janTutorial,
   [chatgptTutorial.platformSlug]: chatgptTutorial,
   [ollamaTutorial.platformSlug]: ollamaTutorial,
   [zapierTutorial.platformSlug]: zapierTutorial,
