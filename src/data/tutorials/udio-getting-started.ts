@@ -12,21 +12,18 @@ export const udioTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You type a description of a song — genre, mood, instruments, the feel you're chasing — and Udio generates it as audio you can play in your browser. You can add your own lyrics or let Udio write them. It builds in short pieces first, then you extend them into a full track and patch up sections you don't like. Everything lives in your Udio library and plays from Udio's site. Generating costs \"credits,\" which refill on a schedule.",
+    "You describe a song — genre, mood, instruments, the feeling you're after — and Udio plays back audio it made from that. You can supply your own words or let it write them. It builds short pieces first; you extend the ones you like and redo the parts you don't.",
 
   whatItIs: [
-    "A text-to-music generator: describe a song in plain English, get a finished-sounding recording with vocals, instruments, and structure. No instrument, no studio, no music theory required.",
-    "Built around editing, not just rolling the dice. Once you have something close, you can extend it, regenerate a weak section, or restyle it — rather than starting over and hoping.",
-    "**The reason to pick Udio over Suno is the sound and the editing, not the output.** Udio has a reputation for detailed, textured production and gives you finer control over reworking a track. But Suno is already on this site, and there is one decision that should come first: Udio's current terms say you may not download your songs and may only use them personally and non-commercially. If you want a file you can keep, post, or release, Udio is not currently the tool — check Suno's own current terms before assuming it is either.",
-    "Best understood today as a place to make and listen to music, and to learn what prompting music actually feels like — not a place to produce assets you'll take somewhere else.",
+    "A text-to-music generator: describe a song in plain English, get a finished-sounding recording with vocals, instruments and structure. No instrument, no studio, no music theory.",
+    "It's built around editing rather than rolling dice: once something is close, you extend it, regenerate a weak section, or restyle it, rather than starting over.",
+    "**Before you compare it with Suno, settle one thing.** Udio's draw is a detailed, textured production sound and finer control over reworking a track — but its current terms bar downloads and limit you to personal, non-commercial use. If you want a file you can keep, post or release, that isn't Udio right now, and check Suno's own terms before assuming it is either.",
   ],
 
   beforeYouStart: [
-    "**It's free to start, and the free tier is real.** No credit card. You currently get around 10 credits per day plus a separate monthly pool of around 100, and free accounts are capped at 3 full-length (about 2 minutes 10 seconds) song generations per day.",
-    "**How credits work:** Udio generates in pairs. A set of two 32-second clips currently costs 2 credits (1 per song); a set of two 130-second songs costs 4 credits (2 per song). Credits do not roll over month to month. Separately purchased credit packs don't expire.",
-    "**Will you realistically need to pay?** For trying it out, writing a birthday song, or seeing whether you enjoy it — no. You'll hit the free ceiling if you want longer songs, more of them per day, or the upload and voice-editing features, which are paid-only. Paid plans currently run around $10/month for the entry tier (roughly $8/month if you prepay a year) and around $30/month for the top tier, with a free trial on the entry plan. Prices and credit amounts change; check the pricing page.",
-    "**First step:** go to udio.com, sign up free, and type one sentence describing a song into the prompt box. Play it. That whole loop takes about two minutes and tells you more than any review.",
-    "**The rights position, plainly:** under Udio's Terms of Service (last revised November 2025, after Udio settled a major-label copyright lawsuit and partnered with Universal Music Group), Udio and its licensors own the output, downloading is disabled, and you may use what you generate only for personal, non-commercial purposes. Do not build a release, a client project, or a YouTube channel on this.",
+    "Free to start, and the free tier is real: no card, around 10 credits a day plus a separate monthly pool of around 100, and free accounts capped at 3 full-length (about 2 minutes 10 seconds) generations a day. Sign up at udio.com and put one sentence in the **prompt** box — the message you type.",
+    "**How credits work.** Credits are the platform's unit of spend, and Udio generates in pairs: two 32-second clips currently cost 2 credits, two 130-second songs cost 4. Monthly credits don't roll over; separately purchased packs don't expire.",
+    "You won't need to pay to try it. You'll hit the ceiling wanting longer songs, more per day, or the upload and voice-editing features, which are paid-only. Entry plans currently run around $10/month (roughly $8 prepaid annually) and the top tier around $30, with a free trial on the entry plan — prices and credit amounts change, so check the pricing page.",
   ],
 
   security: [
@@ -34,104 +31,70 @@ export const udioTutorial: PlatformTutorialData = {
       kind: "list",
       label: "Rights and ownership — read this before you make anything you care about",
       items: [
-        "Udio's Terms of Service (last revised 12 November 2025) state that Udio and its licensors own all right, title and interest in the output, and that to the extent any ownership would vest in you, you assign it to Udio.",
+        "Udio's Terms of Service (last revised 12 November 2025) say Udio and its licensors own all right, title and interest in the output, and that any ownership that would vest in you is assigned to Udio.",
         "The same terms say you may use output \"solely for your personal and non-commercial purposes\" and that you may not download copies of your output \"for any purpose.\"",
-        "Downloading of audio, video, and stems is currently disabled in the product. Udio confirmed this in its own help article about the Universal Music Group partnership.",
-        "The terms also ask you not to republish or distribute generated songs on streaming or user-generated-content platforms — YouTube, TikTok, Spotify, Instagram and SoundCloud are named.",
-        "Warning: parts of Udio's own help centre still date from before the settlement and say the opposite — that you own your songs and can use them commercially. Those pages are stale. The Terms of Service are the binding document, and they say otherwise.",
+        "Downloading of audio, video and stems is currently disabled in the product — Udio confirmed this in its own help article about the Universal Music Group partnership.",
+        "They also ask you not to republish or distribute generated songs on streaming or user-generated-content platforms; YouTube, TikTok, Spotify, Instagram and SoundCloud are named.",
+        "Warning: parts of Udio's own help centre predate the settlement and say the opposite — that you own your songs and can use them commercially. Those pages are stale; the Terms of Service are the binding document.",
       ],
     },
     {
       kind: "text",
-      text: "Udio is a social site as much as a tool — there's a public feed, and other people can find, play, and build on tracks. By default, songs you make can be remixed, extended, and restyled by other users. You can change that per song under \"Edit permissions,\" but you have to do it one song at a time, and there's currently no way to change it for your whole library at once. Treat anything you generate as potentially visible unless you've deliberately set it otherwise.",
+      text: "Udio is a social site as much as a tool: by default other people can remix, extend and restyle songs you make. You can change that per song under \"Edit permissions,\" but only one at a time — there's no way to set it library-wide. Treat what you generate as potentially visible.",
     },
     {
       kind: "text",
-      text: "If you upload your own audio — a guitar part, a vocal take, a field recording — Udio requires that you actually own the rights to it, and uploading is a paid-only feature. Under the terms, uploading grants Udio a broad, worldwide, perpetual and irrevocable licence to use, store and modify what you upload, including to train and improve its models. Your prompts and the resulting output can be used for training too. Don't upload anything you'd be unhappy to see feeding a model, and don't upload other people's recordings.",
+      text: "Uploading your own audio is paid-only, and Udio requires that you own what you upload. Under the terms, uploading grants Udio a broad, worldwide, perpetual and irrevocable licence to use, store and modify it, including to train its AI — and what you type and what comes back can be used for training too.",
     },
   ],
 
   triad: {
     bestAt: [
-      "Turning a plain-English description into a listenable, structured song in under a minute",
-      "Exploring genres and production styles you couldn't play or record yourself",
-      "Learning how music prompting works — hearing immediately how a wording change alters the result",
-      "Sketching a mood or idea to play for someone, inside Udio",
-      "Reworking a track you almost like: extending it, regenerating a weak section, restyling it",
+      "A plain-English description turned into a structured, listenable song in under a minute",
+      "Genres and production styles you couldn't play or record yourself",
+      "Reworking a track you almost like: extending, regenerating a section, restyling",
+      "Auditioning different musical treatments of the same words — the style prompt and the lyric field are separate",
     ],
     okayAt: [
-      "Songs built around specific lyrics you wrote — it handles them, but phrasing and pronunciation can wander",
-      "Precise structural control (exact bar counts, exact key, exact tempo) — you steer, you don't dictate",
+      "Songs built around lyrics you wrote — phrasing and pronunciation wander",
+      "Precise structure: exact bar counts, key, tempo. You steer, you don't dictate",
       "Long-form pieces, which take repeated extends and burn credits fast",
-      "Consistency across takes — you'll get variation you didn't ask for",
     ],
     avoid: [
-      "**Any commercial release or paid client work.** Udio's current terms grant ownership to Udio, permit personal non-commercial use only, and disable downloads. Until that changes and you can confirm it from Udio's own terms, don't build anything commercial here.",
-      "**Prompting in the name of a living artist** to get their voice or style. Udio's terms prohibit using it to impersonate someone, it's the fastest route to a legal problem, and it's unfair to the artist.",
-      "Anything where you need a file — a podcast intro, a game soundtrack, background music for a video — because you currently can't take the audio off the platform",
-      "Work you'd be upset to lose. It lives on Udio's servers under Udio's terms, and those terms have changed sharply once already.",
+      "**Any commercial release or paid client work.** The current terms grant ownership to Udio, permit personal non-commercial use only, and disable downloads. Don't build anything commercial here until you can confirm otherwise from Udio's own terms.",
+      "**Prompting in the name of a living artist** for their voice or style — the terms prohibit impersonation, it's the fastest route to a legal problem, and it's unfair to the artist",
+      "Anything needing a file — a podcast intro, a game soundtrack, video background music — because you can't currently take the audio off the platform",
+      "Work you'd be upset to lose — it lives on Udio's servers under terms that have already changed sharply once",
     ],
   },
 
   starterActions: [
     {
       title: "Make your first song from one sentence",
-      whatItDoes:
-        "Generates a pair of short tracks from a plain description, so you hear what Udio does before you learn anything else.",
       prompt:
         "dreamy indie folk, female vocal, fingerpicked acoustic guitar, soft brushed drums, warm and a little melancholy, late autumn evening",
       whyHere:
-        "Udio responds strongly to descriptive production language — instruments, texture, room, mood — rather than to commands. Stacking short descriptive phrases like this is the native way to steer it, and it costs only a couple of credits, so it's the cheapest way to calibrate your expectations.",
-      tweak:
-        "Change one word only — swap `warm` for `sparse`, or `melancholy` for `hopeful` — and regenerate. Hearing what a single adjective does is the fastest prompting lesson available.",
+        "Udio responds to descriptive production language — instruments, texture, room, mood — rather than commands, so stacking short phrases is the native way to steer it, at a couple of credits a go.",
+      tweak: "Change one word — `warm` to `sparse` — and regenerate.",
     },
     {
       title: "Extend a clip into a full song",
-      whatItDoes:
-        "Takes a short generation you like and continues it, section by section, into a complete track.",
       whyHere:
-        "Udio is built to compose in pieces rather than in one shot — this is the core of how it differs from tools that hand you one fixed track. Getting comfortable with extend is what separates a 30-second novelty from something that sounds finished. Note that longer generations cost more credits, and free accounts are capped at 3 full-length generations a day, so extend deliberately rather than reflexively.",
-      tweak:
-        "When extending, describe what should happen next — an instrumental break, a key change, a stripped-back final chorus — instead of leaving it blank.",
-    },
-    {
-      title: "Bring your own lyrics",
-      whatItDoes:
-        "Sets the words yourself instead of letting Udio write them, with the style prompt handling the music.",
-      prompt:
-        "slow soul ballad, male vocal, Rhodes piano, upright bass, gentle string pad, intimate and unhurried",
-      whyHere:
-        "Udio separates the style description from the lyric field, so you can hold the words steady and audition completely different musical treatments of the same lyric. That's a genuinely useful exercise, and it's much harder to do in tools that take one blended prompt.",
-      tweak:
-        "Keep the lyrics identical and change the style prompt to something contradictory — a driving punk arrangement, say. The same words in the wrong genre is one of the more instructive things you can do here.",
+        "Udio composes in pieces rather than one shot — the core of how it differs from tools that hand you a fixed track. Longer generations cost more credits and free accounts get 3 full-length ones a day, so extend deliberately.",
+      tweak: "Describe what happens next — a break, a key change, a stripped-back final chorus.",
     },
     {
       title: "Fix one section instead of rerolling the whole song",
       whatItDoes: "Regenerates or restyles just the part you don't like, leaving the rest intact.",
       whyHere:
-        "This is Udio's real advantage over one-shot generators, and it's where the credit system rewards you — patching a section costs far less than regenerating a whole track repeatedly. Beginners tend to hit regenerate until something clicks; on Udio, learning to edit instead is the single biggest upgrade to your results.",
-      tweak:
-        "If a vocal line is muddy in one spot, target just that span and describe the fix — clearer diction, fewer layers — rather than re-rolling the verse.",
-    },
-    {
-      title: "Describe a sound, never a name",
-      whatItDoes:
-        "Practises getting a specific artist's feel without naming anyone — the skill that keeps you out of trouble.",
-      prompt:
-        "1970s soft rock, close-harmony vocals, layered acoustic guitars, mellow Wurlitzer, sunlit California production, analogue tape warmth",
-      whyHere:
-        "Udio filters and prohibits prompts aimed at impersonating real people, so artist names either fail or produce something worse than a good description would. Building the habit of naming era, instrumentation, and production qualities gets you closer to the sound anyway — and it's the habit that transfers to every other music tool you'll use.",
-      tweak:
-        "Add a decade and a recording detail (`recorded to tape`, `room mic`, `close-miked`) — production language moves Udio more reliably than genre labels alone.",
+        "This is where the credit system rewards you: patching a section costs far less than re-rolling a whole track. Beginners hit regenerate until something clicks; editing instead is what changes your results.",
     },
   ],
 
   pitfalls: [
-    "**Naming a real, living artist in your prompt.** Asking for a specific singer's voice or a named artist's style is prohibited under Udio's terms, which forbid using the service to impersonate someone. It also tends not to work, and it's the behaviour that put AI music companies in court in the first place. Describe the era, instruments, vocal character and production instead — you'll get a better result and no ethical hangover.",
-    "**Assuming you own what you generate.** You don't. Udio's current terms assign ownership of output to Udio and its licensors, limit you to personal non-commercial use, and disable downloads. This reversed after Udio settled with Universal Music Group in late 2025, so almost every guide, review and video you'll find online describes the old rules. Confusingly, some of Udio's own help pages haven't been updated either. The Terms of Service are what govern.",
-    "**Planning around getting a file out.** People still arrive expecting an MP3. There was a brief window after the settlement when Udio reopened downloads so users could save existing work, and it closed. If your goal is audio you can put in a video, a podcast, or a distributor, start by confirming a platform's export and licence terms before you spend a week making something on it.",
-    "**Burning your daily allowance on long songs.** Full-length generations cost roughly double a short one per track, and free accounts are limited to about three full-length generations a day. Prototype at 32 seconds until the style prompt is right, then commit credits to length. Credits don't roll over, so unused ones are simply gone at the reset.",
-    "**Uploading audio you don't have the rights to.** Udio requires that you own anything you upload, and prohibits commercial or copyrighted tracks. Beyond breaking the rules, you're granting a broad, irrevocable licence over whatever you upload — including for model training. Upload your own playing, or nothing.",
+    "**Almost every guide online is out of date.** The rules reversed after Udio settled with Universal Music Group in late 2025, but reviews and videos still describe output you own and can use commercially — and some of Udio's own help pages haven't been updated either. The Terms of Service govern.",
+    "**People still arrive expecting an MP3.** There was a brief window after the settlement when downloads reopened so users could save existing work, and it closed. Confirm any platform's export terms before spending a week on it.",
+    "**Burning your allowance on long songs.** Full-length generations cost roughly double a short one per track, and free accounts get about three a day. Prototype at 32 seconds until the style prompt is right, then commit credits to length — unused ones are gone at the reset.",
   ],
 
   whereToNext: [

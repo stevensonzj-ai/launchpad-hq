@@ -12,111 +12,81 @@ export const fluxTutorial: PlatformTutorialData = {
   accessTier: "PREMIUM",
 
   howItWorks:
-    "FLUX is a **model** — the trained maths that turns a description into a picture — not an app with a signup button. The motion depends on which route you take to it.\n\nThe shape never changes: write a description, get an image, adjust the words, go again. What changes is where you're sitting. On Black Forest Labs' own playground you log into a developer dashboard, load a few dollars of credit, pick a variant like `flux-2-pro`, and type. On a third-party site that licenses FLUX — Krea, Freepik, Poe, Photoshop's generative tools — you use their interface and never touch BFL. On your own computer you download the **open-weight** files (the model's parameters, published for anyone to run) and drive them through software like ComfyUI. Same model, three prices, three sets of rules about what you may do with the results.",
+    "FLUX is a **model** — the AI \"brain\" that does the actual work — not a website you log into. Whichever route you reach it through, the motion is the same: describe the picture you want, look at what comes back, change the wording, go again.",
 
   whatItIs: [
-    "An image generation and editing family from Black Forest Labs, the German lab founded by researchers who previously built Stable Diffusion. The current line is FLUX.2: `[max]`, `[pro]`, `[flex]`, `[dev]` and `[klein]`.",
-    "Two variants are open-weight — free to download and run on your own hardware, which no closed rival allows. The rest sit behind a paid **API**, a connection point other software talks to rather than a site you visit.",
-    "Why bother over Midjourney or Ideogram: FLUX.2 is built for legible text inside images and tight instruction-following. BFL points at typography, infographics and UI mockups as things that \"now work reliably\", and at referencing up to ten images at once to hold a character consistent.",
+    "An image and editing model family from Black Forest Labs, the German lab founded by the researchers behind Stable Diffusion. The current line is FLUX.2: `[max]`, `[pro]`, `[flex]`, `[dev]` and `[klein]`. Two are **open-weight** — the model file itself is published, so you can run it yourself, which no closed rival allows. The rest sit behind a paid **API**, a way for programs to talk to each other without a person clicking.",
+    "Its pitch against Midjourney: legible text inside images, and tight instruction-following. BFL says typography, infographics and UI mockups \"now work reliably\", and that it holds a character consistent across up to ten reference images.",
   ],
 
   beforeYouStart: [
-    "**Three routes, priced differently.** BFL directly at bfl.ai; a third-party app with FLUX inside; or the weights on your own machine.",
-    "**Going direct costs from the first image.** One bfl.ai account covers playground and API, billed from prepaid credit — currently 1 credit = $0.01, with the docs suggesting $10–$20 to experiment. Prices currently run from around $0.014 per image on the small `[klein]` models to about $0.03 for `[pro]` and $0.07 for `[max]`. A band, not a quote.",
-    "**Most beginners should start on a third-party front-end.** Krea or Freepik gives you a normal creative interface, a free tier, and no API keys. You pay them, not BFL, and play by their rules.",
-    "**Local is free but not easy.** `FLUX.2 [klein]` 4B is the small, freely licensed one, needing roughly 13GB of graphics memory. If that meant nothing to you, it isn't your starting point yet.",
-    "**First step:** read bfl.ai's pricing and licensing pages before signing up anywhere.",
+    "Going direct to Black Forest Labs' dashboard at bfl.ai costs money from the first image: prepaid credit, currently 1 credit = $0.01, with the docs suggesting $10–$20 to experiment. Per image, prices currently run from about $0.014 on the small `[klein]` models to $0.03 for `[pro]` and $0.07 for `[max]`. Those are starting prices, and they vary by resolution.",
+    "**Most beginners should come in through someone else's app.** Krea and Freepik are ordinary image-making websites — sign up, type, get pictures — that license FLUX and run it for you. Both have a free tier, you pay them rather than BFL, and their terms set your rights.",
+    "Running the files yourself is free, and the barrier is hardware, not skill: the freely licensed `FLUX.2 [klein]` 4B wants a graphics card with roughly 13GB of memory on it — most laptops don't have that — plus software like ComfyUI to drive it. Below that bar, a third-party app is the same model for cents an image.",
   ],
 
   security: [
     {
       kind: "text",
-      text: "Privacy differs sharply by route. FLUX.2 [klein] on your own machine is genuinely private — no server is involved. Everything else leaves your computer: BFL's API and playground receive what you send, and a third-party front-end receives it too, then may pass it on. \"It's open source, so it's private\" is true only of the route where you host it yourself.",
+      text: "Privacy differs sharply by route. `[klein]` on your own machine is genuinely private — no server is involved. Every other route sends what you type to someone's computer, BFL's or a third-party app's, which may pass it on. Open source is not the same as private.",
     },
     {
       kind: "list",
-      label: "The licence question, before you sell anything",
+      label: "Free to download is not free to sell from",
       items: [
-        "Images made through BFL's paid API are yours — their Developer Terms say you own the Output and may use it commercially.",
-        "FLUX.2 [klein] 4B is Apache 2.0: free, and free to sell from.",
-        "FLUX.2 [klein] 9B is under the FLUX Non-Commercial License — free to download, not for commercial use.",
-        "FLUX.2 [dev], the large open-weight model, is non-commercial by default; selling needs a paid self-hosted licence.",
-        "Through someone else's app, that company's terms govern your rights, not BFL's.",
-        "Free to download is not free to sell from. For FLUX those permissions genuinely come apart — check your variant before anything reaches a client invoice.",
+        "Images made through BFL's paid API are yours: their Developer Terms say you own the Output and may use it commercially.",
+        "`FLUX.2 [klein]` 4B is Apache 2.0 — free, and free to sell from. The 9B is under the FLUX Non-Commercial License: free to download, not for commercial use.",
+        "`FLUX.2 [dev]`, the large open-weight model, is non-commercial by default; selling needs a paid self-hosted licence.",
+        "For FLUX these permissions genuinely come apart — check your variant before anything reaches a client invoice.",
       ],
     },
   ],
 
   triad: {
     bestAt: [
-      "Readable text inside an image — signage, packaging labels, poster headlines, UI mockups. The clearest reason to pick FLUX over Midjourney.",
-      "Following long, multi-part instructions without quietly dropping half of them.",
-      "Holding a character, product or style consistent from up to ten reference images.",
-      "Instruction-based editing at up to 4MP: change the jacket to red, leave everything else alone.",
+      "Readable text inside an image — signage, packaging, poster headlines",
+      "Long, multi-part instructions, without quietly dropping half",
+      "Editing by instruction: change the jacket, leave the rest alone",
     ],
     okayAt: [
-      "Painterly, expressive art — competent, but Midjourney is more opinionated and often prettier unasked.",
-      "Photorealistic faces and skin: good, occasionally uncanny.",
-      "Fast iteration on the small variants, trading fidelity for speed.",
+      "Painterly art — Midjourney is prettier unasked",
+      "Photorealistic faces: good, occasionally uncanny",
+      "Fast iteration on the small variants, trading fidelity for speed",
     ],
     avoid: [
-      "Expecting a polished consumer app with galleries and a phone app. BFL doesn't make one.",
-      "Long passages of body text — headlines hold up, paragraphs degrade into plausible nonsense.",
-      "Anything commercial on a non-commercially-licensed variant. A legal limit, not a quality one.",
-      "Precise diagrams: convincing charts, wrong numbers.",
+      "Expecting a polished consumer app with a gallery — BFL doesn't make one",
+      "Body text: headlines hold, paragraphs degrade into plausible nonsense",
+      "Anything commercial on a non-commercially-licensed variant — a legal limit, not a quality one",
     ],
   },
 
   starterActions: [
     {
-      title: "Test the text rendering claim",
-      whatItDoes:
-        "Puts specific words in an image and shows whether FLUX actually spells them.",
+      title: "Test the text-rendering claim first",
       prompt:
-        "A weathered enamel shop sign on a brick wall, cream lettering on deep green, reading exactly: HARBOUR ROAD BAKERY - est. 1974. Soft overcast daylight, slight rust at the bolt holes, shot straight on.",
+        "A weathered enamel shop sign on a brick wall, cream lettering on deep green, reading exactly: HARBOUR ROAD BAKERY - est. 1974. Soft overcast daylight.",
       whyHere:
-        "Text is the capability BFL leads with for FLUX.2. Do it first — if it fails on your route, you have learned something important immediately.",
-      tweak:
-        "Swap in your own business name, then try two lines and watch where legibility breaks.",
+        "Legible text is the capability BFL leads with for FLUX.2, so a failure here tells you about your route immediately.",
     },
     {
-      title: "Stack six requirements and count what survives",
-      whatItDoes:
-        "Tests prompt adherence by giving the model more instructions than it can casually ignore.",
+      title: "Stack five requirements and count what survives",
       prompt:
-        "A cluttered ceramicist's workbench seen from directly above. Exactly three unfired bowls in the upper left. A blue cloth over the right edge. Wooden calipers pointing toward the top of the frame. Warm light from the left. No hands or people. Muted earth palette.",
+        "A ceramicist's workbench seen from directly above. Exactly three unfired bowls in the upper left. A blue cloth over the right edge. Warm light from the left. No hands.",
       whyHere:
-        "FLUX.2 is specifically tuned for adherence to complex structured instructions, so this is a fair test rather than a gotcha. Count how many of the six hold.",
-      tweak: "Add conditions until it breaks. Knowing your ceiling saves hours later.",
+        "FLUX.2 is tuned for adherence to complex structured instructions, so counting how many hold is a fair test, not a gotcha.",
     },
     {
-      title: "Edit an image with words instead of tools",
-      whatItDoes:
-        "Changes one element of a picture you already have, leaving the rest intact.",
+      title: "Edit a picture with words instead of tools",
       prompt:
-        "Keep this photograph exactly as it is, but change the parked car from silver to matte dark green. Do not alter the background, the lighting, the reflections in the windows, or anything else in the frame.",
+        "Keep this photograph as it is, but change the parked car from silver to matte dark green. Change nothing else — not the background, the lighting, the reflections.",
       whyHere:
-        "FLUX.2 does editing and generation in one model, at up to 4MP. Change this, touch nothing else is precisely what it is built for.",
-      tweak:
-        "Try removing an object rather than recolouring one — subtraction is harder.",
-    },
-    {
-      title: "Hold one character across three images",
-      whatItDoes:
-        "Uses reference images so the same subject appears consistently in new scenes.",
-      prompt:
-        "Using the attached references of the same woman, place her in a new scene: standing on a train platform at dusk, holding a paper coffee cup, three-quarter view, same face and same red coat. Cinematic, shallow depth of field.",
-      whyHere:
-        "Multi-reference conditioning is a headline FLUX.2 feature, and consistency is what turns a novelty into usable work.",
-      tweak: "Push to a five-scene storyboard with one lighting brief.",
+        "FLUX.2 generates and edits in one model at up to 4MP, and change one thing, touch nothing else is the job it was built for.",
     },
   ],
 
   pitfalls: [
-    "**Assuming it's a website you log into.** There is no consumer FLUX app the way there's a Midjourney. BFL runs a developer dashboard with a playground attached, billed against prepaid credit. If you wanted a free browser tool with a gallery, you want a third-party product with FLUX inside — a fine answer, just a different one.",
-    "**Assuming free to download means free to sell from.** `[klein]` 4B is Apache 2.0 and commercially fine; `[klein]` 9B and `[dev]` are non-commercial without a paid licence. Same download page, completely different rights.",
-    "**Confusing the generations.** FLUX.1, FLUX.2 and FLUX 3 are different things, and FLUX 3 is a multimodal image, video and audio model rather than a straight successor to the image line. Check the release notes when what you read doesn't match what you see.",
-    "**Expecting local to be plug-and-play.** Open weights mean graphics card requirements, multi-gigabyte files, and ComfyUI's own learning curve. A good destination, a bad first day.",
+    "**It is not a website you log into.** There is no consumer FLUX app the way there is a Midjourney — BFL runs a developer dashboard with a playground, billed against prepaid credit. A free browser tool with a gallery means a third-party product with FLUX inside.",
+    "**Confusing the generations.** FLUX.1, FLUX.2 and FLUX 3 are different things; FLUX 3 is a combined image, video and audio model, not a successor to the image line. Check the release notes when what you read doesn't match what you see.",
   ],
 
   whereToNext: [
