@@ -29,6 +29,7 @@ export const windsurfTutorial: PlatformTutorialData = {
     vendorDocsUrl: "https://docs.devin.ai/desktop/getting-started",
     body: [
       "Download from `devin.ai/download` and nowhere else. The rename left stale \"download Windsurf\" links across blogs and aggregator sites, and a code editor runs with your permissions, on your files.",
+      "Pick the download that matches your computer. On a Mac, click the Apple menu then **About This Mac** — it will say either Apple silicon or Intel. On Windows, open Settings then **System** then **About** and read the system type, which will say 64-bit or ARM. Downloading the wrong one is the most common reason the app will not open.",
       "Onboarding imports your settings and keyboard shortcuts from VS Code or Cursor. Check before switching for good: you cannot install extensions from a marketplace here, and other AI-completion extensions are incompatible by design.",
     ],
   },

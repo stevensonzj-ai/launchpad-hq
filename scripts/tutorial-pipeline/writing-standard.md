@@ -12,46 +12,50 @@ the code wins.
 
 ---
 
-## 1. Length: a banded ceiling, measured
+## 1. Length follows substance — no hard ceiling
 
-Measure with `node scripts/tutorial-pipeline/wordcount.mjs <file>`. **That counter is the
-only authority** — three separate hand-counts of the same batch disagreed by up to 40%, and
-one reported a 1,196-word page as 676.
+**There is no word limit, and no page should ever lose a fact to hit a number.** A platform
+with a complicated free tier, a licensing split and a setup process earns more words than a
+chatbot you sign into. Ollama, one of the three validated reference pages, runs 1,401 words
+and is right to.
 
-| Page kind | Target | Hard ceiling |
-|---|---|---|
-| Cloud tool, no install, no heavy licensing | **830-900** | 950 |
-| Carries `gettingSetUpSafely`, or irreducible rights/licensing content | **900-1,000** | 1,100 |
-| Anything | — | **over 1,200 is a rewrite** |
+The rule is **no fluff**, not *fewer words*. Apply these four tests to every sentence:
 
-**Why the band, and not the spec's flat 700-900.** `tutorial-template-spec.md` § 3 sets
-700-900 words. **Its own canonical exemplar breaks it:** the Ollama reference page is 1,401
-words. That is not sloppiness — Ollama is the local/setup-heavy archetype, and a page
-carrying a dedicated setup section plus hardware guidance cannot say what it needs to in
-900. ChatGPT is 952 and Zapier 830, both cloud tools with nothing to install. The spec's
-number was written from the cloud cases and never revised.
+1. **Does cutting it lose a fact?** If yes, keep it, however long the page gets.
+2. **Is it true of AI tools generally rather than this platform?** Then it is filler wearing
+   the costume of advice. Cut it, or replace it with the platform-specific version.
+3. **Does it restate something another field already said?** Say it once, in the field where
+   the reader needs it.
+4. **Is it teaching a skill this page is not about?** A tutorial page orients a beginner to
+   *this tool*. It does not teach the terminal, git, environment variables, colour theory or
+   film grammar. Name the prerequisite and link out.
 
-So the flat rule was unachievable for a third of the catalog, and an unachievable rule gets
-quietly ignored — which is how the 2026-09-07 batch shipped at a median of ~1,450 words with
-one page at 2,373. **A band people can hit beats a number everyone breaks.**
+Test 4 is the one that matters most, and it is what a word count was standing in for. The
+2,373-word Groq page was not wrong because of its length — it was wrong because its back
+half taught `.env`, `.gitignore`, `curl` and API parameters to someone who may never have
+used an AI tool. Cutting that is not compression; it is removing content that was never this
+page's job.
 
-**Facts outrank the ceiling, and the overrun must be declared.** If cutting to the ceiling
-would delete a sourced price, hedge, rights claim or licensing term, keep the fact and go
-over — then say so: report `WORD_COUNT: n (over ceiling — kept: <the specific content>)`.
-A silent overrun is a defect. A declared one is a judgement the reviewer can check.
+### The counter is a flag, not a gate
 
-Do **not** pad a page to reach a target. Gumloop earns fewer words than Ollama because it
-has less to say, and that is correct.
+`node scripts/tutorial-pipeline/wordcount.mjs <file>` is the only trustworthy count — three
+hand-counts of the same batch disagreed by up to 40%, one reporting a 1,196-word page as 676.
 
-**When you are over, cut in this order:**
+Use it as a **prompt to look**, not as a limit to enforce:
 
-1. The third and fourth clause of every triad bullet. A triad item is a phrase, not a sentence.
-2. `whatItDoes` wherever `whyHere` already says it.
-3. Any pitfall that is generic AI advice rather than a trap specific to this platform.
-4. The fifth `starterAction` and the fifth `pitfall`. Counts flex 3-5; five is not the default.
+| Count | What it means |
+|---|---|
+| under ~600 | Probably thin. Check nothing was skipped. |
+| 800-1,000 | The range most pages land in. Nothing to do. |
+| over ~1,200 | **Go read it.** Usually one of the four tests above is being failed. Sometimes the platform genuinely warrants it — Udio's rights position alone is ~280 irreducible words. |
 
-**Never cut a gloss to make room.** Glosses are the last thing to go — cutting them to fit
-a word budget defeats the reason the budget exists.
+When a page is long and every sentence passes the four tests, **it stays long and you say so**:
+report `WORD_COUNT: n — long because <the specific content that earns it>`. That sentence is
+the whole mechanism. It makes length a judgement someone can check, rather than either a
+silent overrun or a fact quietly deleted to satisfy a number.
+
+**Never cut a gloss for length.** Glosses are the last thing to go — cutting them to shorten
+a page defeats the reason the page exists.
 
 ## 2. Glosses are a checked output, not an instruction
 
