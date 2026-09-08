@@ -76,6 +76,15 @@ model Platform {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Availability — can a beginner actually obtain this today?
+  // Precedence: lifecycle beats obtainability. A discontinued row that was
+  // also enterprise-only is DISCONTINUED.
+  availability     Availability @default(SELF_SERVE)
+  // May accompany any non-SELF_SERVE value; not FK-constrained because a
+  // successor may not be catalogued. Validate during backfill.
+  successorSlug    String?
+  availabilityNote String?
+
   hasMobileApp        Boolean @default(false)
   iosAppUrl           String?
   androidAppUrl       String?
@@ -93,6 +102,7 @@ model Platform {
   @@index([costTier])
   @@index([difficultyLevel])
   @@index([featured])
+  @@index([availability])
   @@map("platforms")
 }
 
@@ -115,6 +125,15 @@ enum PrivacyLevel {
   MEDIUM
   HIGH
   MAXIMUM
+}
+
+enum Availability {
+  SELF_SERVE      // sign up and use it — the default
+  SALES_LED       // demo or contact required
+  ENTERPRISE_ONLY // no individual plan
+  CLOSED_TO_NEW   // existing users only
+  DISCONTINUED    // product is gone
+  SUPERSEDED      // a different product replaces this one — not a rename. A rename keeps the slug and changes the display name, and stays SELF_SERVE.
 }
 
 // ── Users & Profiles ────────────────────────────────────────
