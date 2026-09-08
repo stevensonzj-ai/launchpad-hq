@@ -48,8 +48,48 @@ import { groqTutorial } from "./groq-getting-started";
 import { gumloopTutorial } from "./gumloop-getting-started";
 import { slackAiTutorial } from "./slack-ai-getting-started";
 import { windsurfTutorial } from "./windsurf-getting-started";
+import { amazonBedrockTutorial } from "./amazon-bedrock-getting-started";
+import { assemblyaiTutorial } from "./assemblyai-getting-started";
+import { azureOpenaiServiceTutorial } from "./azure-openai-service-getting-started";
+import { clarifaiTutorial } from "./clarifai-getting-started";
+import { deepgramTutorial } from "./deepgram-getting-started";
+import { fireworksAiTutorial } from "./fireworks-ai-getting-started";
+import { googleVertexAiTutorial } from "./google-vertex-ai-getting-started";
+import { pineconeTutorial } from "./pinecone-getting-started";
+import { replicateTutorial } from "./replicate-getting-started";
+import { scaleAiTutorial } from "./scale-ai-getting-started";
+import { togetherAiTutorial } from "./together-ai-getting-started";
+import { aiderTutorial } from "./aider-getting-started";
+import { amazonQDeveloperTutorial } from "./amazon-q-developer-getting-started";
+import { boltNewTutorial } from "./bolt-new-getting-started";
+import { geminiCliTutorial } from "./gemini-cli-getting-started";
+import { googleAntigravityTutorial } from "./google-antigravity-getting-started";
+import { kiroTutorial } from "./kiro-getting-started";
+import { openaiCodexCliTutorial } from "./openai-codex-cli-getting-started";
+import { replitAgentTutorial } from "./replit-agent-getting-started";
+import { tabnineTutorial } from "./tabnine-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
+  [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
+  [assemblyaiTutorial.platformSlug]: assemblyaiTutorial,
+  [azureOpenaiServiceTutorial.platformSlug]: azureOpenaiServiceTutorial,
+  [clarifaiTutorial.platformSlug]: clarifaiTutorial,
+  [deepgramTutorial.platformSlug]: deepgramTutorial,
+  [fireworksAiTutorial.platformSlug]: fireworksAiTutorial,
+  [googleVertexAiTutorial.platformSlug]: googleVertexAiTutorial,
+  [pineconeTutorial.platformSlug]: pineconeTutorial,
+  [replicateTutorial.platformSlug]: replicateTutorial,
+  [scaleAiTutorial.platformSlug]: scaleAiTutorial,
+  [togetherAiTutorial.platformSlug]: togetherAiTutorial,
+  [aiderTutorial.platformSlug]: aiderTutorial,
+  [amazonQDeveloperTutorial.platformSlug]: amazonQDeveloperTutorial,
+  [boltNewTutorial.platformSlug]: boltNewTutorial,
+  [geminiCliTutorial.platformSlug]: geminiCliTutorial,
+  [googleAntigravityTutorial.platformSlug]: googleAntigravityTutorial,
+  [kiroTutorial.platformSlug]: kiroTutorial,
+  [openaiCodexCliTutorial.platformSlug]: openaiCodexCliTutorial,
+  [replitAgentTutorial.platformSlug]: replitAgentTutorial,
+  [tabnineTutorial.platformSlug]: tabnineTutorial,
   [microsoftCopilotTutorial.platformSlug]: microsoftCopilotTutorial,
   [mistralAiLeChatTutorial.platformSlug]: mistralAiLeChatTutorial,
   [leonardoAiTutorial.platformSlug]: leonardoAiTutorial,
