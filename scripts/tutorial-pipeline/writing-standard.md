@@ -146,12 +146,42 @@ Groq, Claude Code, FLUX, Open WebUI, n8n and their kind cannot pass a first-ever
 test, and straining to make them do it is where the jargon and the ejection sentences came
 from.
 
-For these, **the budget tightens rather than loosens**: 700 words, and the same 2-3 gloss
-ceiling. The page's job is to let a non-technical reader understand *what the tool is and
-whether it is for them*, then hand off cleanly — not to teach them the terminal.
+**This section previously set a 700-word ceiling. It is withdrawn.** A batch of 20
+developer platforms met it zero times, lowest 827 — the same failure as the flat 700-900 rule
+in § 1 that it replaced. These platforms carry billing models, identity changes and privacy
+positions that cannot be told once each inside 700 words, so the number produced silent
+overruns rather than shorter pages. **§ 1 governs: there is no ceiling, and no page loses a
+fact to hit a number.**
+
+What actually applies here is § 1's fourth test, harder than elsewhere. The page's job is to
+let a non-technical reader understand **what the tool is and whether it is for them**, then
+hand off cleanly. It is not to teach the terminal, package managers, environment variables,
+API parameters or version control. When a page starts explaining those, that content is not
+long — it is misplaced, and it comes out.
+
+Keep the 2-3 gloss ceiling. A developer page needing six glosses is written at the wrong
+altitude; cut the jargon rather than defining it.
 
 If the honest answer is "you need some background for this," that belongs in
 `beforeYouStart` as a fact, followed by a link to a gentler tool in the same category.
+
+## 8b. Say each fact once, in the field that owns it
+
+Diagnosed on the 2026-09-08 batch: seven pages carried the same fact in three or four fields
+at once — one platform's warning appeared four times on a single page. A deletion-only pass
+removed 1,072 words without losing a single fact.
+
+**This is why pages come out long. It is restatement, not padding, and it is a generator
+defect rather than a writing one:** an agent handed a list of fields fills every field a fact
+could plausibly occupy.
+
+The rule: **each fact appears once, in the field whose job it is.** A credit limit belongs in
+`beforeYouStart`, not also in a pitfall and a triad item. A privacy caveat belongs in
+`security`, not also in `avoid`. If a fact seems to belong in two fields, it belongs in the
+earlier one, and the later field either references it in a clause or says nothing.
+
+Before finishing a page, list any fact stated in more than one field and delete every
+instance but the best-placed one. Report the count as `DEDUP: n restatements removed`.
 
 ## 9. Run a reuse check across the batch
 
