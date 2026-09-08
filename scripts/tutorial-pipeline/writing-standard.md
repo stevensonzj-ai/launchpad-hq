@@ -183,6 +183,44 @@ earlier one, and the later field either references it in a clause or says nothin
 Before finishing a page, list any fact stated in more than one field and delete every
 instance but the best-placed one. Report the count as `DEDUP: n restatements removed`.
 
+## 8c. When the source needs a login, or blocks you
+
+**Never create an account to verify a fact.** At 170 platforms that does not scale, and it
+is not the owner's job. Nothing on a page is worth a signup.
+
+Work down this hierarchy and stop at the first level that answers the question:
+
+1. **The vendor's own public pages** — terms of service, pricing, docs, changelog, status,
+   newsroom. These answer most volatile facts: price, limits, rights, free-tier shape.
+2. **The vendor's own blog or newsroom**, when the page you want is robots-blocked. Same
+   publisher, so still primary. Say which one you used.
+3. **Trade press of record, for events only** — acquisitions, settlements, shutdowns,
+   renames. These are *reported* events with dates, and a trade publication is a legitimate
+   source for them. Never use trade press for prices or limits: those go stale and blogs
+   copy each other.
+4. **Archived snapshots**, to establish when something changed.
+
+**A binding document outranks a friendly one.** Where a vendor's terms of service and its
+help centre disagree — as Udio's did on download and ownership rights — the terms govern,
+and the page says what the terms say. Note the contradiction rather than resolving it
+silently; a reader acting on the help centre could be acting outside the licence.
+
+### When a fact genuinely sits behind a login
+
+Two moves, in this order:
+
+- **Write around it.** Usually the login-only detail is not the fact that matters. Whether a
+  download *button* renders is behind a login; whether you may *use* what it produces is in
+  the public terms. Describe the durable mechanism, which is public, rather than the
+  interface state, which is not.
+- **State the uncertainty on the page** if it cannot be written around, hedged plainly:
+  "you may need to check this once you are signed in." A hedged sentence is worth more to a
+  beginner than a confident wrong one.
+
+**Never infer an interface from documentation.** If the docs describe a capability but never
+demonstrate it, that is not verification — it is the docs' claim, and the page must attribute
+it as such rather than assert it happens.
+
 ## 9. Run a reuse check across the batch
 
 Before submitting a batch, list every sentence frame used in more than one page's
