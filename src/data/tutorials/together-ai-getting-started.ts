@@ -65,7 +65,7 @@ export const togetherAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Picks a mid-sized chat model in the browser playground and asks it something you already know the answer to.",
       whyHere:
-        "Together takes the $5 before it shows you anything, so the number going down in the corner is your own prepaid balance, not a promotional grant burning off. Watching one real request cost real money is the fastest way to build accurate cost instincts.",
+        "Together takes the $5 before it shows you anything, so the number going down is your own prepaid balance, not a promotional grant burning off. Watching one real request cost real money is the fastest way to build accurate cost instincts.",
     },
     {
       title: "Ask one question of three models from three different labs",

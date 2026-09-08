@@ -221,6 +221,30 @@ Two moves, in this order:
 demonstrate it, that is not verification — it is the docs' claim, and the page must attribute
 it as such rather than assert it happens.
 
+## 8d. Uncertainties must survive transcription
+
+Diagnosed 2026-09-08. Twelve claims across nine pages asserted as fact something the
+research brief had explicitly listed under UNCERTAINTIES. **The research was honest every
+time; transcription dropped the hedge.**
+
+That is the worst place to lose it, because every check downstream passes: the fact is
+genuinely sourced, so a reviewer comparing page to brief sees a match. What changed is the
+*confidence*, and nothing in the pipeline was looking at confidence.
+
+**Rule for anyone transcribing a brief into a page:** read the brief's UNCERTAINTIES section
+*before* writing, not after. Every item there that reaches the page must reach it hedged.
+An uncertainty that survives as a flat assertion is a defect in the page even though every
+individual fact in it is true.
+
+Report `HEDGES_CARRIED: n of m` — how many of the brief's uncertainties appear on the page,
+and how many of those are hedged. Those two numbers should be equal.
+
+**Where this bites hardest:** a login-gated console or playground carrying a page's whole
+non-technical on-ramp. "You can do this in the browser without code" is the single most
+consequential sentence on a developer-platform page — it decides whether a non-technical
+reader starts at all — and it is exactly the sentence nobody can verify without an account.
+Attribute it (§ 8c) rather than asserting it.
+
 ## 9. Run a reuse check across the batch
 
 Before submitting a batch, list every sentence frame used in more than one page's

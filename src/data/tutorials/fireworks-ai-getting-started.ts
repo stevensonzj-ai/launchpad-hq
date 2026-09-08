@@ -16,14 +16,14 @@ export const fireworksAiTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Fireworks is a hosting company, not a model maker. Labs like DeepSeek, Alibaba, Meta and Mistral publish their AI models as files anyone may download and run; Fireworks runs them on its own machines and rents you access. That is why one login reaches a hundred-plus models rather than one company's.",
-    "It is built for people putting AI inside something they are making. The browser chat box is genuinely usable and the right place to start, but there is no phone app, no saved conversations, no sidebar of documents; the paid layers rent dedicated hardware or tune a model on your own examples. If you want an assistant to talk to daily, a consumer chatbot is the better door.",
+    "It is built for people putting AI inside something they are making. The browser chat box is the right place to start, but there is no phone app, no saved conversations, no sidebar of documents; the paid layers rent dedicated hardware or tune a model on your own examples. If you want an assistant to talk to daily, a consumer chatbot is the better door.",
   ],
 
   beforeYouStart: [
     "**Understand the money before anything else.** Fireworks runs on prepaid **credits** (the platform's unit of spend — each thing you make costs some), not a subscription. A new account currently gets about $1 in free credits — a one-off welcome grant, not an allowance that refills. The documentation is explicit: when it runs out with no card on file, the account is suspended until you add one.",
     "It goes further than it sounds. The cheapest text models currently list at cents per million chunks of text handled (a chunk is roughly a short word); only the flagships cost dollars. An afternoon in the browser spends a fraction of the grant.",
     "Until a card is on file the account is capped at roughly ten requests a minute — ample for typing questions by hand, far too little to run anything real.",
-    "Nothing to install. Sign in with Google, GitHub, LinkedIn or an email address and the model list and chat box are immediately there.",
+    "Nothing to install. Sign in with Google, GitHub, LinkedIn or an email address; Fireworks' own onboarding puts experimenting in the model playground before anything else, so the model list and chat box are where to head first.",
   ],
 
   security: [
@@ -47,7 +47,7 @@ export const fireworksAiTutorial: PlatformTutorialData = {
       "Growing past the trial without moving house: the same account rents dedicated hardware and tunes models on examples you supply.",
     ],
     okayAt: [
-      "Being explored by someone who does not write code. The chat box works and needs no key, but everything around it is written for developers.",
+      "Being explored by someone who does not write code. The chat box is the way in, though the quickstart makes a key before anything else, so you may find you need one; everything around it is written for developers.",
     ],
     avoid: [
       "Assuming Fireworks' terms are the only ones that apply. Its agreement requires you to obey each model's own licence, written by the lab that published it — so whether you may use a model commercially is a question about that model, not about Fireworks.",

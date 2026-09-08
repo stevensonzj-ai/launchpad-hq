@@ -72,7 +72,7 @@ export const ideogramTutorial: PlatformTutorialData = {
       prompt:
         "A simple flat logo for a coffee shop called \"Third Hour\", rounded sans-serif wordmark with a coffee bean above the text, black on white, generous empty space",
       whyHere:
-        "A wordmark is pure spelling, exactly what Ideogram is built for. Its prompting guide says to put the words you want in quotation marks and place them early, and to describe a font's properties — soft and rounded here — rather than name a typeface. Two short words sits in its sweet spot, where spelling holds up.",
+        "A wordmark is pure spelling, exactly what Ideogram is built for. Its prompting guide says to put the words you want in quotation marks and place them early, and to describe a font's properties — soft and rounded here — rather than name a typeface. Two short words is the least you can ask it to spell, so a wrong letter there tells you something a paragraph of prompt never would.",
       tweak:
         "Ask instead for narrow, upright capitals with small strokes on the ends. Same name, different feel.",
     },

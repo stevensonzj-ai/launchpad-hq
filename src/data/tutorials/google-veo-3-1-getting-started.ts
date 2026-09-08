@@ -17,12 +17,12 @@ export const googleVeo31Tutorial: PlatformTutorialData = {
   whatItIs: [
     "A text-to-video tool from Google DeepMind, reached through Google's own apps — a Google account is the only login you need.",
     "It makes picture and sound in one pass — Google's docs list native audio as always on, where most rivals in this class hand you silent video you score yourself.",
-    "That, a free daily allowance, and no new account or card is why you'd pick it over Runway, Pika or the Sora-class tools. It lives in Google Flow, a studio with projects and a timeline rather than a bare text box.",
+    "That, a daily allowance Google's own pages describe as free, and no new account or card is why you'd pick it over Runway, Pika or the Sora-class tools. It lives in Google Flow, a studio with projects and a timeline rather than a bare text box.",
   ],
 
   beforeYouStart: [
     "**Start in Google Flow** (`labs.google/fx/tools/flow`), not the Gemini chat app — video there currently needs a paid Google AI plan.",
-    "The free allowance is real but small, and spent per attempt. A signed-in Google account currently gets around 50 Flow **credits** a day — the unit of spend, each thing you make costing some. The cheapest Veo setting costs about 10 and the top-quality one around 100: five short clips a day, or one. Credits don't roll over, and mush costs the same as your hero shot.",
+    "The free allowance is small and spent per attempt — and Google is inconsistent about whether you get one. Flow's own page and its credits help article say a signed-in Google account currently gets around 50 Flow **credits** a day, the unit of spend; Flow's \"Get started\" article lists a paid Google AI plan as a requirement. Check which one your account lands on before planning around it. On the 50-a-day reading, the cheapest Veo setting costs about 10 and the top-quality one around 100: five short clips a day, or one. Credits don't roll over, and mush costs the same as your hero shot.",
     "You'll pay past the experimenting stage, because ten attempts at one shot is a normal session. Paid Google AI plans currently start around 5 US dollars a month, the mainstream tier around 20, top tiers 100 and up; check the plan page, these move.",
     "**First step:** sign in, pick the cheapest model, and run one description several times. How much a single wording varies is day one's real lesson. You must be 18 or over and in a supported country.",
   ],

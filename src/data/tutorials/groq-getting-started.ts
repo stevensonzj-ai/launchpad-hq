@@ -21,7 +21,7 @@ export const groqTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Free and genuinely free — an email or Google account, no card, nothing to install. Start in the playground, not with a key.",
+    "Free and genuinely free — an email or Google account, no card, nothing to install. Start in the playground rather than with a key — though Groq's docs never quite say the playground runs without one, so you may need to make a key once you are signed in.",
     "**The free plan gives you nothing to spend. It caps how often you can ask.** It counts requests and **tokens** (chunks of text, roughly three-quarters of a word) per minute and per day; hit a cap and requests fail until it resets. Caps cover your whole organisation, not each key, and only the limits page in your console settings is current — published numbers change.",
     "You probably won't pay. Usage beyond that is currently priced per million tokens, cents rather than dollars for the smaller models — check the pricing page. You'd upgrade for real users hitting the caps, for batch or flex processing, or for the spend cap under Settings, Billing, Limits, which is paid-plan only.",
   ],
@@ -76,7 +76,8 @@ export const groqTutorial: PlatformTutorialData = {
         "List every number between 40 and 80 that divides by 3 and whose digits add up to more than 10, and show your reasoning.",
       whyHere:
         "The catalogue runs from very small and fast to larger and slower, and switching is a dropdown, not a new account. The small ones sometimes get this wrong; the larger ones take longer and usually don't.",
-      tweak: "Watch the tokens-per-second readout beside each reply. That number is the product.",
+      tweak:
+        "Groq sells speed, so look for a tokens-per-second readout beside each reply — that number, not the answer, is what you came to compare.",
     },
   ],
 

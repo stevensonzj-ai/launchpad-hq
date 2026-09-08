@@ -5,18 +5,18 @@ export const pineconeTutorial: PlatformTutorialData = {
   platformSlug: "pinecone",
   title: "Getting Started with Pinecone",
   tagline:
-    "The searchable memory behind \"chat with your own documents\" apps — free to start, with one part that works in a browser without code.",
+    "The searchable memory behind \"chat with your own documents\" apps — free to start, with one part the docs say you can use in a browser without code.",
   archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-08",
   changelogUrl: "https://docs.pinecone.io/release-notes",
   accessTier: "FREE",
 
   howItWorks:
-    "You sign in to Pinecone's console in a browser, create a store for your material, and upload documents into it. Then you ask a question in a chat box and get back an answer with citations pointing at the files it came from. Programs do the same thing without the browser, sending questions in and getting matches back.",
+    "Pinecone's docs describe a console in a browser: you create a store for your material and upload documents into it, then ask a question in a chat box and get an answer with citations pointing at the files it came from. Programs do the same thing without the browser, sending questions in and getting matches back.",
 
   whatItIs: [
     "Pinecone is a **vector database** — a store that finds things by meaning rather than by matching exact words. Ask it about \"refund policy\" and it surfaces a paragraph on money-back guarantees though not one word lines up. It is the part you never see: when an app answers questions about files you uploaded, something has to hold that material in a searchable form.",
-    "It is built for people making things — with one exception. Pinecone's assistant feature lets you upload documents in the console and ask questions about them in a chat box, citations included, with no code. Everything past that assumes you write software.",
+    "It is built for people making things — with one documented exception. Pinecone's docs present its assistant as usable from the console: upload documents, ask questions about them in a chat box, citations included, no code. They describe that route rather than walk through it, so treat the browser-only path as the vendor's claim and expect to confirm it once you are signed in. Everything past it assumes you write software.",
     "Ignore the homepage headline: the company currently leads with Nexus, an enterprise product that installs into a large company's own cloud, and it is not what the free plan gives you.",
   ],
 
@@ -46,10 +46,10 @@ export const pineconeTutorial: PlatformTutorialData = {
     bestAt: [
       "Finding relevant passages across a large pile of material by meaning, which keyword search cannot do",
       "Being the memory behind an app other people use — fully managed, so there is no server to keep alive",
-      "Getting to a working \"ask questions about my documents\" setup in a single browser session",
+      "Turning uploaded documents into something searchable for you, rather than handing you an empty store and the job of filling it",
     ],
     okayAt: [
-      "Being explored without code — the console and assistant playground are real, but everything past them assumes a developer",
+      "Being explored without code — Pinecone documents a console and an assistant playground, but everything past them assumes a developer",
       "Small projects: machinery built for billions of items, pointed at a few hundred documents",
     ],
     avoid: [
@@ -63,7 +63,7 @@ export const pineconeTutorial: PlatformTutorialData = {
     {
       title: "Start in the console: make an assistant and upload a few documents",
       whyHere:
-        "Most vector databases hand you an empty store and leave you to turn documents into something searchable. Pinecone's assistant does that step and returns answers with citations naming the file behind each claim — which is why this is the one action here a non-developer can finish.",
+        "Most vector databases hand you an empty store and leave you to turn documents into something searchable. Pinecone's assistant does that step and returns answers with citations naming the file behind each claim — which is why the docs point a non-developer here first. If some part of the console turns out to want code, that is where this page's no-code route ends.",
       tweak:
         "Starter caps files at 10 MB each and 1 GB across your whole account, so start with a handful, not an archive.",
     },
@@ -72,7 +72,7 @@ export const pineconeTutorial: PlatformTutorialData = {
       prompt:
         "Using only the documents I uploaded, answer this: [ask about a topic using different words than the documents themselves use]. Say which file each part of the answer came from.",
       whyHere:
-        "A plain vector store returns matching fragments and leaves the answering to you; Pinecone's assistant returns an answer with its source attached. Clicking that citation is how you check whether the match was really about meaning or just lucky word overlap.",
+        "A plain vector store returns matching fragments and leaves the answering to you; Pinecone's assistant returns an answer with its source attached. Following that citation back to the file is how you check whether the match was really about meaning or just lucky word overlap.",
     },
     {
       title: "Open the usage page before you build anything on it",

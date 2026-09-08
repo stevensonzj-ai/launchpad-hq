@@ -85,7 +85,7 @@ export const leonardoAiTutorial: PlatformTutorialData = {
       prompt:
         "Character concept sheet for a swamp ranger, front view and side view, muted green leather armour, oversized canvas satchel, weathered boots, flat neutral grey background, painted concept art style",
       whyHere:
-        "This is the work Leonardo was shaped around, and its models hold the concept-sheet convention — several views, neutral background, painted finish — better than generators tuned for photography.",
+        "This is the work Leonardo was shaped around: its models are built and sold for game and concept art rather than photography, which is why the concept-sheet convention — several views, neutral background, painted finish — is the thing to ask it for.",
     },
     {
       title: "Hold one character steady across several images",

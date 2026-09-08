@@ -12,7 +12,7 @@ export const deepgramTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You open Deepgram's playground in a browser, point it at a piece of audio, and a transcript comes back within a few seconds with the words laid out on screen. Change a setting, run the same clip again, and compare. When you want it inside your own software, that same request comes from a code file instead.",
+    "You open Deepgram's playground in a browser, point it at a piece of audio, and a transcript comes back within a few seconds with the words laid out on screen. Change a setting, run it again, and compare. When you want it inside your own software, that same request comes from a code file instead.",
 
   whatItIs: [
     "Deepgram does one narrow thing at industrial scale: it listens to audio and writes down the words, usually faster than the audio took to play. It runs the trick backwards too, reading text aloud in a synthetic voice. What it does not do is keep anything — no library of your recordings, no notes app, no Friday summary.",
@@ -20,7 +20,7 @@ export const deepgramTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "You can look before committing anything. Deepgram runs a playground page in the browser, and its own getting-started documentation sends beginners there to try the service without writing code or signing up. Twenty minutes answers the question that matters first: is it accurate enough on your kind of audio.",
+    "You can look before committing anything. Deepgram runs a playground page in the browser, and its own getting-started documentation sends beginners there to try the service without writing code or signing up. What that documentation does not say is whether the playground takes audio of your own or only runs Deepgram's sample — check that first, because the question that matters is whether it is accurate enough on your kind of audio.",
     "Everything past the playground assumes code: using Deepgram properly means putting an **API key** (a password that identifies your app, and that spends your money) into a program. If you do not write code and have no plans to, that is not a shortcoming on your side — it is the shape of this product, and the meeting-notes tools under Where to next are the finished-article version of the same idea.",
     "Signing up is free, Deepgram's documentation says it includes $200 of credit, and the pricing page currently says no credit card is required. Its main **model** (the AI \"brain\" that does the actual thinking), Nova-3, currently lists at $0.0043 a minute for pre-recorded English — putting that $200 in the region of several hundred hours of audio. It is a fixed pot that drains as you use it, and at those rates most people evaluating Deepgram never reach the bottom.",
   ],
@@ -62,7 +62,7 @@ export const deepgramTutorial: PlatformTutorialData = {
       whyHere:
         "`smart_format` is documented as defaulting to `false`, so Deepgram's untouched output arrives as a single unpunctuated block. Meeting that once, deliberately, is what stops you from concluding the recognition is poor when what you are looking at is a setting nobody switched on.",
       tweak:
-        "Use audio containing numbers, dates or a phone number — the parts the formatter visibly rewrites, and only for English.",
+        "If the playground lets you supply your own file, use audio containing numbers, dates or a phone number — the parts the formatter visibly rewrites, and only for English.",
     },
     {
       title: "Do the arithmetic before you write a line of code",

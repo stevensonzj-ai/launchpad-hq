@@ -78,7 +78,7 @@ export const pikaTutorial: PlatformTutorialData = {
       prompt:
         "Slow dolly push in toward the mug on the table, steam rising, warm morning light, everything else still",
       whyHere:
-        "Pika's own FAQ names the camera words it responds to — bullet time, vertigo, timelapse, dolly down. Unusually direct guidance from a vendor, and it works better than vague cinematic adjectives.",
+        "Pika's own FAQ names the camera words it responds to — bullet time, vertigo, timelapse, dolly down. Unusually direct guidance from a vendor, and a move named on that list is a safer bet than a cinematic adjective the FAQ never mentions.",
       tweak: "Swap `dolly push in` for `vertigo` and run it again. Same photo, completely different feeling.",
     },
     {

@@ -16,7 +16,7 @@ export const grokTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Grok is a general-purpose AI assistant from the company that also owns X (formerly Twitter). You can chat, have it write and edit text, explain code, make images in the same box, or talk to it out loud in voice mode, which is included free.",
-    "The reason to pick it over other chatbots is its wiring into X: most assistants search the open web, while Grok also reads live X posts, so it is unusually good at \"what are people actually saying about this.\"",
+    "The reason to pick it over other chatbots is its wiring into X: most assistants search the open web, while Grok also reads live X posts — which is the mechanism behind \"what are people actually saying about this\" and the one source a web-search assistant cannot reach.",
     "The reason to be careful is the same reason: when Grok says \"people are saying,\" it is summarising an argumentative social network, not verified reporting. Its edge is speed and pulse, not accuracy — loud does not mean true.",
   ],
 

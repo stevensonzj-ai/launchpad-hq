@@ -22,7 +22,7 @@ export const amazonQDeveloperTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**This is for people using AWS, not a general assistant.** It answers AWS questions well and most other things poorly.",
+    "**This is for people using AWS, not a general assistant.** AWS builds and sells it to answer questions about AWS and about your own account; nothing about it is offered as a general chatbot, so don't judge it as one.",
     "You need a free AWS account, and creating one means giving AWS a payment method it can validate and passing an automated phone verification call. The assistant itself costs nothing at the Free Tier level.",
     "There is nothing to install — the assistant is the hexagonal Q icon on the AWS console and on AWS documentation pages. The paid tier (Pro, currently around $19 per user per month) is shut to newcomers, so the free level is all you get.",
     "Skip the code-editor add-ons: new accounts can no longer sign in to them. If an AI coding tool is what you actually want, try kiro.dev or one of the coding tools linked at the bottom of this page.",
