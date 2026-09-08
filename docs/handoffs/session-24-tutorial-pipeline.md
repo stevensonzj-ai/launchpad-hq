@@ -262,3 +262,90 @@ SSL warning count verification; Stripe webhook hardening; ToS, privacy policy an
 (blocks Stripe activation); Jasper dedup run; Clerk Development → Production migration;
 production `DATABASE_URL` to the pooled Neon endpoint; two passed dated re-check triggers;
 `.env.vercel.production` deletion; and the `sora-2` and `murf-ai` one-off data fixes.
+
+---
+
+# Addendum — revision pass and the nightly task (2026-09-08)
+
+Written after the owner reviewed the 20 pages. **Where this addendum and the body above
+disagree, this is newer.**
+
+## The owner's review found the pages readable; two audits found them not beginner-ready
+
+His verdict was "tone and information look fine," with the honest caveat that he doesn't use
+these platforms and so couldn't judge accuracy. That is the structural limit of reviewing
+content about unfamiliar tools, and it is why the sourced briefs exist as a separate layer.
+
+Two audits against `tutorial-template-spec.md` §§ 2, 3, 5 and 7 found defects his read could
+not have caught:
+
+- **Length. Median 1,450 words against a 700-900 spec; worst page 2,373.** Zero of 20 in
+  band. (An earlier count reporting gumloop at 676 was wrong — it was 1,196. Three
+  hand-counts of the same batch disagreed by up to 40%, which is why
+  `scripts/tutorial-pipeline/wordcount.mjs` now exists and is the only authority.)
+- **Define-on-first-use was barely happening.** `prompt` glossed on 1 of 20 pages, including
+  pages whose entire method is prompting. `model` bare on 7, `API key` on 6, `NDA` on 6 and
+  glossed on none. Leonardo called its spending unit "tokens" while three other pages used
+  "tokens" to mean units of text.
+- **Two templating signals**, which matter most because the format exists to survive the
+  March 2026 scaled-content update: `beforeYouStart` ran **exactly five items on all 20
+  pages**, thirteen with the same labelled beats in the same order and the literal phrase
+  "Will you realistically need to pay?" in 13 files; and the frame "tells you more than any
+  review/tutorial/explainer" reached five pages.
+- **Two pages ejected the reader** before orienting them — FLUX's "if that meant nothing to
+  you, it isn't your starting point yet," addressed to precisely the audience the spec is
+  written for, and Claude Code's second bullet.
+
+## The length rule was wrong, not just unenforced
+
+`tutorial-template-spec.md` § 3 sets a flat 700-900 words. **Its own canonical exemplar
+breaks it: the Ollama reference page is 1,401 words.** ChatGPT is 952 and Zapier 830 — both
+cloud tools with nothing to install. The number was written from the cloud cases and never
+revised for pages carrying a setup section or irreducible licensing content.
+
+An unachievable rule gets quietly ignored, which is how a 2,373-word page shipped.
+`writing-standard.md` § 1 replaces it with a band — 830-900 for cloud tools, 900-1,000 where
+a setup section or rights content exists, 1,200 as the rewrite line — and requires overruns
+to be **declared** with what was kept, rather than left silent.
+
+## Result
+
+All 20 revised. **Median 935, max 1,137, min 706**, down from median ~1,450 / max 2,373.
+Typecheck clean, preview `READY` at `7b25c129`. No sourced fact was dropped: where a cut
+would have cost a price, hedge or rights claim, length gave way and the overrun was declared.
+
+Udio's rights position is untouched and still leads its security section. tl;dv's consent
+block and Synthesia's avatar-consent content were protected through compression.
+
+## Three new governing files, which the nightly job reads
+
+- `scripts/tutorial-pipeline/writing-standard.md` — binding rules: length bands, glossing as
+  a checked output, the `whyHere` swap test, the `avoid` vendor test, a 60-word
+  `howItWorks` cap, a ban on ejecting the reader, and a batch-wide reuse check.
+- `scripts/tutorial-pipeline/gloss-bank.md` — one agreed plain-words definition per term,
+  plus the standing credits-versus-tokens correction.
+- `scripts/tutorial-pipeline/wordcount.mjs` — the authoritative counter.
+
+## The nightly task exists
+
+**`LaunchpadHQ nightly tutorial batch`** — `trig_017V4xaAFCW1wqncBvMriqpG`, `0 3 * * *` UTC
+(10pm CT), 20 platforms a night, push-only to `tutorials/batch-2026-09`.
+
+It carries a **backlog cap**: if unmerged pages on the branch exceed 40, the run skips the
+night and reports rather than producing pages nobody has reviewed.
+
+**It was created unbound** — "no_signed_approval, this task will run in the cloud only,"
+with no folders attached. **Until the owner approves it on the machine itself, its runs
+cannot reach the repo and will fail.** That approval is the last open step.
+
+## Still open
+
+1. **Bind the nightly task to the computer** by approving it there. Nothing else works until
+   this is done.
+2. **Verify Udio's download and ownership position while logged in**, before merging that page.
+3. **Merge the branch** after review. 118 platforms remain; at 20 a night that is ~6 nights.
+4. **Branch protection on `main`** requiring a PR — makes push-only structural rather than
+   instructed.
+5. **Apply the catalog corrections** — separate, human-gated Neon pass. None applied.
+6. Consider correcting `tutorial-template-spec.md` § 3's word count and § 6's
+   `pick-and-set-up` spelling at source, rather than leaving both contradicted by newer files.
