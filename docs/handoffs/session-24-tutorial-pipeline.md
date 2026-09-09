@@ -349,3 +349,98 @@ cannot reach the repo and will fail.** That approval is the last open step.
 5. **Apply the catalog corrections** — separate, human-gated Neon pass. None applied.
 6. Consider correcting `tutorial-template-spec.md` § 3's word count and § 6's
    `pick-and-set-up` spelling at source, rather than leaving both contradicted by newer files.
+
+---
+
+# Addendum 2 — the merge, and a hard limit on the mounted folder (2026-09-09)
+
+## 69 pages live
+
+`main` at `e7b02ec6`. Production verified through the Vercel API per G7: `state: READY`,
+`target: production`, sha matching `main`, `aliasError: null`, aliases include
+`launchpadhq.io`. **Tutorials went 29 → 69 of 170 in two days.** 98 remain.
+
+The first unattended run (2026-09-08) produced 20 pages and hit the backlog cap; the
+2026-09-09 run correctly **skipped** rather than producing pages nobody had reviewed. The cap
+worked exactly as designed, unprompted.
+
+## The important finding: multi-step git operations cannot run on this mount
+
+`unlink` is blocked, and **git locks and unlocks the index more than once within a single
+command.** The first lock cannot be removed, so the second attempt collides:
+
+```
+warning: unable to unlink '.git/ORIG_HEAD.lock': Operation not permitted
+warning: unable to unlink '.git/index.lock': Operation not permitted
+fatal: Unable to create '.git/index.lock': File exists.
+```
+
+**No wrapper can fix this.** The `gitx` helper clears locks before and after a command; the
+failure happens *mid-command*. Three rounds of extending the lock list (index.lock, then
+HEAD.lock, then ORIG_HEAD.lock) each failed for the same underlying reason.
+
+| operation | works? | why |
+|---|---|---|
+| `add`, `commit`, `push`, `fetch` | yes | lock the index once |
+| `merge`, `rebase`, `pull` (non-fast-forward) | **no** | lock more than once |
+| `checkout` to a branch needing **deletions** | **no** | cannot unlink the files |
+
+The checkout case is the nastiest, because it **fails quietly**. `git checkout main` from the
+batch branch left the working tree holding 40 files that belong to the branch while `HEAD`
+said `main` — `queue-status` reported 69 pages while `main` genuinely had 29. Nothing errored.
+Always verify `git status` after a branch switch here; do not trust that it did what it said.
+
+### What actually unblocks it
+
+`device_request_delete_permission` on the folder. Once granted, `unlink` works and plain
+`git merge` succeeds with no wrapper at all.
+
+**But the grant is session-scoped and does not survive a VM restart.** It was granted at the
+start of 2026-09-07, and was gone by 2026-09-09 — the same restart that emptied `/tmp` and
+deleted the `gitx` helper. A scheduled run cannot obtain it, because the prompt requires a
+human.
+
+### Consequence for the nightly job
+
+Its Step 0 runs `gitx pull`. That is a merge. It works **only** while the local working tree
+is the sole writer to `tutorials/batch-2026-09`, which makes the pull a no-op fast-forward.
+
+**Do not merge that branch through the GitHub web UI while the nightly job is in use.** A
+server-side merge makes the next `pull` a real merge, which will fail mid-command and stop
+the run at Step 0. Merge the way this session did instead: merge `main` *into* the branch
+locally (additive, no deletions), then `git push origin HEAD:main` to fast-forward `main`
+server-side, never checking out `main` at all.
+
+## Also this session
+
+- **Credential exposure closed.** `.pipeline-credentials*` was ignored only on the batch
+  branch, so every branch cut from `main` carried it as a plain untracked file. Fixed in
+  `.git/info/exclude` (per-clone, survives branch switches — the correct place) and in
+  `main`'s `.gitignore`. Never committed to any ref; no rotation indicated. Note the file
+  also accumulates a `git-credential-store` entry per push for the sandbox proxy, whose
+  username field base64-encodes the command that ran.
+- **§ 8 word ceiling withdrawn**; § 1's substance tests govern. Zero of twenty developer
+  pages met the 700-word rule, which made it the same unachievable number § 1 already
+  replaced.
+- **§ 8b (say each fact once)** — restatement, not padding, is why pages run long. Seven
+  pages carried one fact in three or four fields; a deletion-only pass removed 1,072 words
+  losing nothing.
+- **§ 8c (source hierarchy)** — never create an account to verify a fact. Vendor public
+  pages, then the vendor's own blog when robots-blocked, then trade press for reported
+  events only. A binding document outranks a friendly one: Udio's terms govern over its help
+  centre, which resolved that page without an account.
+- **§ 8d (uncertainties survive transcription)** — twelve claims across nine pages asserted
+  as fact what the brief had flagged as uncertain. Research was honest every time;
+  transcription dropped the hedge. Worst on login-gated consoles, where "you can do this in
+  your browser without code" decides whether a non-technical reader starts at all.
+
+## Open
+
+1. **`feat/platform-availability`** — schema written, migration unapplied. Operator step:
+   Neon branch first. Then the query-filter PR, where the `_count` mismatch at
+   `discover/page.tsx:98` produces silently wrong output rather than an error.
+2. **Sample the pages now in production.** Nobody has read the 2026-09-08 batch. Suggested:
+   clarifai, tabnine, azure-openai-service, amazon-bedrock, pinecone.
+3. **Apply the catalog corrections** — two documents in this directory, none applied to the
+   database.
+4. **Branch protection on `main`.**
