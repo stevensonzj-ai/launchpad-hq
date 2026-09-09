@@ -68,6 +68,25 @@ import { kiroTutorial } from "./kiro-getting-started";
 import { openaiCodexCliTutorial } from "./openai-codex-cli-getting-started";
 import { replitAgentTutorial } from "./replit-agent-getting-started";
 import { tabnineTutorial } from "./tabnine-getting-started";
+import { v0Tutorial } from "./v0-getting-started";
+import { figmaAiTutorial } from "./figma-ai-getting-started";
+import { hubspotAiTutorial } from "./hubspot-ai-getting-started";
+import { mailchimpAiTutorial } from "./mailchimp-ai-getting-started";
+import { salesforceEinsteinTutorial } from "./salesforce-einstein-getting-started";
+import { shopifyMagicSidekickTutorial } from "./shopify-magic-sidekick-getting-started";
+import { squarespaceAiTutorial } from "./squarespace-ai-getting-started";
+import { wixAiTutorial } from "./wix-ai-getting-started";
+import { wordpressAiJetpackAiTutorial } from "./wordpress-ai-jetpack-ai-getting-started";
+import { zoomAiCompanionTutorial } from "./zoom-ai-companion-getting-started";
+import { chatpdfTutorial } from "./chatpdf-getting-started";
+import { docsumoTutorial } from "./docsumo-getting-started";
+import { nanonetsTutorial } from "./nanonets-getting-started";
+import { reductoTutorial } from "./reducto-getting-started";
+import { unriddleTutorial } from "./unriddle-getting-started";
+import { upstageSolarTutorial } from "./upstage-solar-getting-started";
+import { wondersharePdfelementAiTutorial } from "./wondershare-pdfelement-ai-getting-started";
+import { duolingoMaxTutorial } from "./duolingo-max-getting-started";
+import { khanAcademyKhanmigoTutorial } from "./khan-academy-khanmigo-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
@@ -139,6 +158,25 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [descriptTutorial.platformSlug]: descriptTutorial,
   [elicitTutorial.platformSlug]: elicitTutorial,
   [acrobatAiTutorial.platformSlug]: acrobatAiTutorial,
+  [v0Tutorial.platformSlug]: v0Tutorial,
+  [figmaAiTutorial.platformSlug]: figmaAiTutorial,
+  [hubspotAiTutorial.platformSlug]: hubspotAiTutorial,
+  [mailchimpAiTutorial.platformSlug]: mailchimpAiTutorial,
+  [salesforceEinsteinTutorial.platformSlug]: salesforceEinsteinTutorial,
+  [shopifyMagicSidekickTutorial.platformSlug]: shopifyMagicSidekickTutorial,
+  [squarespaceAiTutorial.platformSlug]: squarespaceAiTutorial,
+  [wixAiTutorial.platformSlug]: wixAiTutorial,
+  [wordpressAiJetpackAiTutorial.platformSlug]: wordpressAiJetpackAiTutorial,
+  [zoomAiCompanionTutorial.platformSlug]: zoomAiCompanionTutorial,
+  [chatpdfTutorial.platformSlug]: chatpdfTutorial,
+  [docsumoTutorial.platformSlug]: docsumoTutorial,
+  [nanonetsTutorial.platformSlug]: nanonetsTutorial,
+  [reductoTutorial.platformSlug]: reductoTutorial,
+  [unriddleTutorial.platformSlug]: unriddleTutorial,
+  [upstageSolarTutorial.platformSlug]: upstageSolarTutorial,
+  [wondersharePdfelementAiTutorial.platformSlug]: wondersharePdfelementAiTutorial,
+  [duolingoMaxTutorial.platformSlug]: duolingoMaxTutorial,
+  [khanAcademyKhanmigoTutorial.platformSlug]: khanAcademyKhanmigoTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
