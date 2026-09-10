@@ -28,6 +28,21 @@ that produced it, and it is written for whoever picks the work up next — human
 
 ## Files
 
+### `session-26-clerk-production-migration.md`
+2026-09-10. **Newest — read first.** Moves launchpadhq.io off Clerk's *development* instance
+onto a real production instance: DNS, SSL, keys, Google OAuth, and the one database change that
+re-points the owner's row. Also records the **two-foot rule** and the plain-language expectation
+as standing working agreements. **Google sign-in currently works only for test users** — the app
+cannot be published until `/privacy` and `/terms` exist, which are the same two documents
+blocking Stripe.
+
+### `session-25-batch-merge-and-cap-fix.md`
+2026-09-10. Reviews and merges the 2026-09-09 tutorial batch — 69 to 88 pages live — after
+finding six blocking issues in 19 pages. Explains why the nightly job halted on a backlog that
+did not exist (the cap compared against a frozen local `main`), and documents the
+`prompt`/`whatItDoes` render defect that typecheck cannot catch. Nightly trigger prompt updated
+accordingly.
+
 ### `session-24-tutorial-pipeline.md`
 2026-09-07. Stands up the automated tutorial batch pipeline and takes the tutorials section
 from 29 to 49 pages. Covers the three-stage research/transcription/registration
