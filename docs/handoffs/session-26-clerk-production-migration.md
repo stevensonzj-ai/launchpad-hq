@@ -98,11 +98,7 @@ activation. They now also block public Google sign-in. Same two documents, two b
 ## Open, in rough priority order
 
 1. **`/privacy` and `/terms` plus a footer.** Blocks public Google sign-in AND Stripe.
-2. **Sign-in routing.** `NEXT_PUBLIC_CLERK_SIGN_IN_URL` and `NEXT_PUBLIC_CLERK_SIGN_UP_URL` were
-   never in Vercel — only in `.env.local`, where they point at `/account/sign-in`, a route that
-   does not exist and is itself auth-gated. Gated routes therefore land on Clerk's hosted portal
-   rather than the site's own `/sign-in`. Fix: add both to Vercel (all environments) as
-   `/sign-in` and `/sign-up`, redeploy, and correct `.env.local`.
+2. ~~Sign-in routing.~~ **RESOLVED** — see the addendum at the end of this file.
 3. **Catalog `privacyLevel` is a live scoring defect** — see Session 25 § 5.5.
 4. **Onboarding completion is probably broken.** Both accounts show `onboardingComplete = false`
    despite the owner signing in repeatedly and completing the quiz. `AFTER_SIGN_IN_URL` is
@@ -138,3 +134,82 @@ activation. They now also block public Google sign-in. Same two documents, two b
    reports the redirect chain as a 404.
 4. **Both of this day's handoffs were initially written only to the Claude project**, against the
    standing instruction in this directory's README. Corrected by committing them here.
+
+
+---
+
+# Addendum, same day — sign-in routing and the welcome page
+
+## Sign-in routing: fixed
+
+`NEXT_PUBLIC_CLERK_SIGN_IN_URL` and `NEXT_PUBLIC_CLERK_SIGN_UP_URL` added to Vercel (all three
+environments) as `/sign-in` and `/sign-up`. Gated routes now land on the site's own dark sign-in
+page with `redirect_url` preserved, instead of Clerk's hosted portal. Verified live.
+
+## The welcome page now shows once per user
+
+`/onboarding` was orphaned: nothing sent anyone there, and `onboardingComplete` was referenced
+nowhere in `src/`. It now reads the flag, redirects returning visitors to `/discover`, and sets
+the flag on first view. Commit `c46d7805`.
+
+**It gates nothing.** No other route redirects on the flag, the page keeps its "browse all
+platforms" alternative, and signing in still gives full run of the site. The quiz is optional
+and must stay that way — this was an explicit product decision by the owner.
+
+Every database step degrades to "render the welcome page". `redirect()` sits deliberately
+**outside** that try/catch: it signals by throwing `NEXT_REDIRECT`, and a catch would silently
+cancel it, which would look like "the flag isn't saving."
+
+Also fixed a pre-existing bug in `getOrCreateDbUser`: the fallback query inside the catch block
+returned its promise un-awaited, so a rejection escaped the catch and rejected out of the
+function. Callers are written to handle a null user, not a throw. The lookup on line 11 is
+deliberately left unwrapped — making it null on failure would turn a database outage into "not
+signed in" for every caller including the POST routes, which is a worse failure mode.
+
+## Clerk redirect environment variables — the legacy names are silently ignored
+
+**`NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL` and `..._AFTER_SIGN_UP_URL` are deprecated** and do
+nothing on `@clerk/nextjs` ^7.2.1. They do not error; Clerk simply falls back to its own default
+of `/`, so users land on the home page and it looks like the setting was ignored — which it was.
+
+Current names:
+
+| Purpose | Variable |
+|---|---|
+| Where the sign-in page lives | `NEXT_PUBLIC_CLERK_SIGN_IN_URL` |
+| Where the sign-up page lives | `NEXT_PUBLIC_CLERK_SIGN_UP_URL` |
+| After sign-in, when no `redirect_url` is present | `NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL` |
+| After sign-up, when no `redirect_url` is present | `NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL` |
+
+**Fallback, not force.** The force variants override `redirect_url`, which would send someone
+following a deep link to `/onboarding` instead of where they were going. Fallback only applies
+when there is no destination already.
+
+`.env.local` still carries the deprecated names and should be corrected so local development
+does not diverge.
+
+Source: https://clerk.com/docs/guides/development/customize-redirect-urls
+
+## The welcome page's layout was undercutting the product decision
+
+Worth recording because of how it was found. After the page went live the owner — who knew the
+quiz was optional, having just specified it that way — described landing there as being taken
+"straight to the quiz." He hadn't been; he was on the welcome page, which offered both. But the
+quiz was a large filled orange button and the alternative was a small grey sentence beneath it.
+
+The code did exactly what was asked. The layout said something else.
+
+Fixed in `c6e152a6`: browse is now a real outlined button beside the quiz, same size, both full
+width when stacked on a phone. The quiz stays the recommendation through position, fill and
+shadow rather than by shrinking the alternative. Styling copied from the homepage hero
+(`src/app/page.tsx:73`, `:79`) — there is no shared Button component, so that hero is the
+convention, and `Rocket` means browse while `Sparkles` means quiz site-wide.
+
+**The generalisable point:** an unprompted reaction from a real person beats any review. It is
+also single-use — once someone has been told how a page is meant to read, they can never see it
+cold again.
+
+**Known inconsistency, accepted deliberately:** the homepage hero makes `/discover` the filled
+primary and `/quiz` the outline secondary. The welcome page inverts that. The owner's reasoning
+is that the quiz feeds a planned news-and-updates feature, so a signed-in user is at the one
+moment where recommending it helps.
