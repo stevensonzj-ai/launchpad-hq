@@ -6,7 +6,7 @@ export const reductoTutorial: PlatformTutorialData = {
   title: "Getting Started with Reducto",
   tagline:
     "Turns a messy PDF or scan into tidy, labelled text and tables for other software to use — a building block, not an app you chat to.",
-  archetype: "prompts",
+  archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-09",
   accessTier: "FREE",
 
@@ -29,7 +29,7 @@ export const reductoTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: "Every tool in this category uploads your document; Reducto's particular wrinkle is **which** route keeps it. Its data policy page says data submitted through the **API** (a way for programs to talk to each other without a person clicking) is set to expire within 24 hours — and then names Studio-run jobs as the exception. The no-code path a beginner would naturally take is the one where files are retained, which is the opposite of what most people would assume.",
+      text: "Every tool in this category uploads your document; Reducto's particular wrinkle is **which** route keeps it. Its data policy page says data submitted through the **API** (a way for programs to talk to each other without a person clicking) is set to expire within 24 hours — and then names Studio-run jobs as the exception to that window, without saying what window replaces it. So the no-code path a beginner would naturally take is the one route whose retention the policy does not state.",
     },
     {
       kind: "list",
@@ -69,8 +69,8 @@ export const reductoTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Feed it your worst table",
-      prompt:
-        "Upload a financial statement or invoice whose largest table spans a page break, then check whether the rows after the break stayed in the right columns.",
+      whatItDoes:
+        "You upload a financial statement or invoice whose largest table spans a page break, then check whether the rows after the break stayed in the right columns.",
       whyHere:
         "Tables are the reason this category exists, and when a number lands in the wrong column the marked cell positions let you see where it came from rather than guessing. A parser that returns only text gives you no way to tell a misread character from a broken layout.",
       tweak:
@@ -78,8 +78,8 @@ export const reductoTutorial: PlatformTutorialData = {
     },
     {
       title: "Photograph a page and parse the photo",
-      prompt:
-        "Photograph one page of a printed form with your phone, upload it, and compare the result against the same page exported as a PDF.",
+      whatItDoes:
+        "You photograph one page of a printed form with your phone, upload it, and compare the result against the same page exported as a PDF.",
       whyHere:
         "Reducto takes JPEG, PNG, HEIC and TIFF alongside PDFs, so one pipeline handles a phone snap and a born-digital file. That is the case that separates a parser from a text extractor: a clean PDF already contains its text and almost anything can read it.",
       tweak:
@@ -87,8 +87,8 @@ export const reductoTutorial: PlatformTutorialData = {
     },
     {
       title: "Ask for four fields instead of the whole document",
-      prompt:
-        "List the five values you would type into a spreadsheet from this document, then ask for exactly those five and nothing else.",
+      whatItDoes:
+        "You list the four values you would otherwise type into a spreadsheet from the document, then ask for exactly those four and nothing else.",
       whyHere:
         "Parse and extract are separate products here with separate prices, because they are separate jobs: parse hands you the whole document, extract hands you the four values you were going to copy out of it anyway. Choosing the wrong one is the commonest way to overpay in this category.",
       tweak:
@@ -96,8 +96,8 @@ export const reductoTutorial: PlatformTutorialData = {
     },
     {
       title: "Price your real workload before you decide you like it",
-      prompt:
-        "Multiply your monthly page count by the published rate for the endpoint you need, then check that total against the free balance you start with.",
+      whatItDoes:
+        "You multiply your monthly page count by the published rate for the endpoint you need, then check that total against the free balance you start with.",
       whyHere:
         "Reducto publishes a per-endpoint rate card — parse, extract, deep extract, split, deep split, classify and edit each priced separately — so you can cost a project off the pricing page without a sales call. Most vendors in this category quote by conversation, which makes the arithmetic somebody else's.",
       tweak:

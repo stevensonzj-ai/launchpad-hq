@@ -55,7 +55,7 @@ export const squarespaceAiTutorial: PlatformTutorialData = {
     okayAt: [
       "Images. Image Studio generates pictures and strips backgrounds, but it draws on the same credit pool as the AI-search checker, so it is not where you would do volume work",
       "Blog drafting. It produces posts, outlines and ideas, but a piece with an actual argument in it still needs you to write the argument",
-      "Checking whether ChatGPT and Gemini mention your business — the tool works, but every run spends credits",
+      "Checking whether ChatGPT and Gemini mention your business — the tool works, but every run spends credits, and Squarespace limits it to English-language, version 7.1 sites, so on a 7.0 site it is not an option at all",
     ],
     avoid: [
       "Treating the trial as a free tier — nothing you build is publicly reachable until you subscribe",
@@ -106,7 +106,7 @@ export const squarespaceAiTutorial: PlatformTutorialData = {
       title:
         "When you want to know whether AI search mentions you → then run the visibility checker, sparingly",
       whatItDoes:
-        "AI Visibility runs prompts through ChatGPT and Gemini and shows whether your site appears, which prompts surface it, and which competitors get cited instead of you.",
+        "AI Visibility runs prompts through ChatGPT and Gemini and shows whether your site appears, which prompts surface it, and which competitors get cited instead of you. Check first that it can run for you at all: Squarespace's help centre says the tool is \"currently only available in English, on version 7.1 sites\". It is on every website plan, but only the credit allowance changes by plan — a 7.0 site cannot use it whatever you pay.",
       whyHere:
         "It is the only AI feature here that spends your credits on questions rather than on making something — Squarespace's pricing page counts them as \"prompt runs\". That budget makes this a periodic check, not a dashboard you leave running.",
     },

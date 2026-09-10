@@ -3,5 +3,5 @@
   "sora-2": "Product discontinued (S23 audit). Do not write a tutorial; catalog row needs fixing/hiding separately.",
   "canva-magic-studio": "Dual-row trap: canva-ai-magic-studio already has a tutorial. This is the redundant business-plugin row.",
   "runway-for-education": "Discount programme on the same product as `runway`, which is already covered (S23 audit).",
-  "adobe-sensei-firefly-cc": "Near-duplicate of adobe-firefly, already covered. Verify slug before relying on this key."
+  "adobe-sensei-firefly-in-cc": "Near-duplicate of adobe-firefly, already covered."
 }

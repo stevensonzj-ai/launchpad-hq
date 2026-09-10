@@ -6,7 +6,7 @@ export const docsumoTutorial: PlatformTutorialData = {
   title: "Getting Started with Docsumo",
   tagline:
     "Pull the numbers out of stacks of business paperwork — and see exactly where each one came from.",
-  archetype: "prompts",
+  archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-09",
   accessTier: "FREE",
 
@@ -73,8 +73,8 @@ export const docsumoTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Run your worst document first",
-      prompt:
-        "Upload the worst-quality document you genuinely receive, not a clean sample, and check every extracted field against the page before approving anything.",
+      whatItDoes:
+        "You upload the worst-quality document you genuinely receive rather than a clean sample, then check every extracted field against the page before approving anything.",
       whyHere:
         "The trial's pages are capped, so what you spend them on decides what you learn — and because extraction quality tracks scan quality here, a clean sample answers a question you never had.",
       tweak:
@@ -82,8 +82,8 @@ export const docsumoTutorial: PlatformTutorialData = {
     },
     {
       title: "Click a field and watch the page light up",
-      prompt:
-        "Open a processed document, click through every extracted field in turn, and confirm the highlighted region on the page really is the number you wanted.",
+      whatItDoes:
+        "Opening a processed document and clicking each extracted field in turn highlights the region of the page it was read from, so you can confirm that region really holds the number you wanted.",
       whyHere:
         "Docsumo's product pages are where the click-to-highlight behaviour is documented, and verification being one click rather than a hunt through the original is the specific thing a trial exists to test.",
       tweak:
@@ -91,8 +91,8 @@ export const docsumoTutorial: PlatformTutorialData = {
     },
     {
       title: "Teach it one document type it does not know",
-      prompt:
-        "Pick one form Docsumo has no pre-trained type for, gather twenty real examples of it, and train a custom type before deciding whether the tool fits.",
+      whatItDoes:
+        "You pick one form Docsumo has no pre-trained type for, gather twenty real examples of it, and train a custom type on them before deciding whether the tool fits.",
       whyHere:
         "Twenty examples is the cheapest test of whether your non-standard paperwork is reachable at all — and if you cannot find twenty, you have learned something about whether it is worth automating.",
       tweak:
@@ -100,8 +100,8 @@ export const docsumoTutorial: PlatformTutorialData = {
     },
     {
       title: "Send the output somewhere real",
-      prompt:
-        "Process ten documents, approve them, export the results in the format your team would really use, and check the columns line up with what the receiving system expects.",
+      whatItDoes:
+        "You process ten documents and approve them, then export the results in the format your team would really use and check that the columns line up with what the receiving system expects.",
       whyHere:
         "Extraction accuracy is the half everyone tests; the export shape is the half that breaks integrations later, and both export routes are on the trial plan, so this is checkable before any sales conversation happens.",
       tweak:
@@ -109,8 +109,8 @@ export const docsumoTutorial: PlatformTutorialData = {
     },
     {
       title: "Get the quote inside the trial window",
-      prompt:
-        "In the first few days, send Docsumo your monthly page volume and document types and ask for a written quote plus a written answer on document retention and training.",
+      whatItDoes:
+        "In the first few days you send Docsumo your monthly page volume and document types, asking for a written quote alongside written answers on document retention and training.",
       whyHere:
         "Because the price only exists as a quote (see Before you start), the 14-day window is also your negotiating window — and asking in week two means deciding with the trial already expiring.",
     },

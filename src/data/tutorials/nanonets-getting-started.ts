@@ -6,7 +6,7 @@ export const nanonetsTutorial: PlatformTutorialData = {
   title: "Getting Started with Nanonets",
   tagline:
     "Feed it the same document a hundred times and it learns your fields — the first twenty are the work.",
-  archetype: "prompts",
+  archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-09",
   accessTier: "FREE",
 
@@ -84,16 +84,16 @@ export const nanonetsTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Run twenty of the same document, not one",
-      prompt:
-        "Collect the last twenty invoices from one supplier, upload them together, and correct every wrong field before you approve any of them.",
+      whatItDoes:
+        "You collect the last twenty invoices from a single supplier, upload them together, and correct every wrong field before approving any of them.",
       whyHere:
         "A one-file test measures nothing, because the mechanism the tool is built on — confidence rising only as you correct and approve — has not run yet.",
       tweak: "Pick the supplier whose invoices are ugliest. Clean ones flatter it.",
     },
     {
       title: "Time yourself correcting",
-      prompt:
-        "Time how long it takes you to check and fix the extracted fields on ten documents, then divide by ten.",
+      whatItDoes:
+        "You time how long checking and fixing the extracted fields takes across ten documents, then divide by ten for a per-document figure.",
       whyHere:
         "Nanonets is unusual in publishing what each run costs up front, so the machine side of the bill is knowable on day one. The minutes a person spends fixing fields before approval are the half nobody publishes, and early on they are the larger number.",
       tweak:
@@ -101,16 +101,16 @@ export const nanonetsTutorial: PlatformTutorialData = {
     },
     {
       title: "Feed it the same receipt twice",
-      prompt:
-        "Upload a phone photograph of a crumpled receipt and a clean scan of the exact same receipt, then compare the two results field by field.",
+      whatItDoes:
+        "You upload a phone photograph of a crumpled receipt alongside a clean scan of that same receipt, then compare the two results field by field.",
       whyHere:
         "Nanonets reports a confidence score for the extraction, not for the image it started from, so a bad photograph and a hard document look identical in the output. A controlled pair is the only way to see which one you actually have.",
       tweak: "Then try a layout you have never sent it.",
     },
     {
       title: "Send it in the way it will really arrive",
-      prompt:
-        "Forward a real invoice email, attachment and all, to the address Nanonets gives your workflow, instead of uploading the file by hand.",
+      whatItDoes:
+        "Instead of uploading a file by hand, you forward a real invoice email — attachment and all — to the address Nanonets assigns your workflow.",
       whyHere:
         "Email and cloud-folder intake are both on the free plan, and they are the only test that matches how documents actually reach a back office — as attachments nobody downloaded.",
       tweak:
@@ -118,8 +118,8 @@ export const nanonetsTutorial: PlatformTutorialData = {
     },
     {
       title: "Find out who gets interrupted",
-      prompt:
-        "Raise a field's confidence requirement until documents start failing review, and follow where the review request goes.",
+      whatItDoes:
+        "You raise a field's confidence requirement until documents start failing review, then follow where the review request goes.",
       whyHere:
         "Nanonets raises what it is unsure about in Slack, Teams or email rather than inside its own screen, so the person doing the checking may never open the tool. Deciding who that person is before rollout costs less than discovering it after.",
     },
