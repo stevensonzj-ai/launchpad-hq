@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Rocket, Sparkles } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { getOrCreateDbUser } from "@/lib/auth-db";
+import { prisma } from "@/lib/db";
 
 export const metadata = {
   title: "Welcome | Launchpad HQ",
@@ -10,6 +13,45 @@ export default async function OnboardingPage() {
   const user = await currentUser();
   const firstName = user?.firstName?.trim() || null;
   const greetingName = firstName || "explorer";
+
+  // Show this welcome page once, on the first visit after signing in, then
+  // send returning visitors to /discover. This is the only place
+  // `onboardingComplete` is read or written, and it gates nothing else —
+  // no other route redirects on it, and this page stays skippable.
+  //
+  // Every database step below degrades to "render the welcome page". A
+  // database problem must never turn someone's first sign-in into an error
+  // page, so a failed lookup, a null user and a failed update all fall
+  // through to the same harmless outcome: they see the welcome again.
+  let alreadyOnboarded = false;
+  try {
+    const dbUser = await getOrCreateDbUser();
+    if (dbUser?.onboardingComplete) {
+      alreadyOnboarded = true;
+    } else if (dbUser) {
+      try {
+        // Idempotent: writing `true` over an already-true flag is a no-op,
+        // so this is safe if the page renders more than once per request.
+        await prisma.user.update({
+          where: { id: dbUser.id },
+          data: { onboardingComplete: true },
+        });
+      } catch {
+        // Best-effort. If the flag does not stick, the cost is that the
+        // welcome page shows again next time — not an error for the user.
+      }
+    }
+  } catch {
+    // Lookup failed outright (database unreachable, Clerk error). Fall
+    // through and render the welcome page.
+  }
+
+  // Deliberately outside the try/catch above: redirect() signals by throwing
+  // a NEXT_REDIRECT error, and catching it here would silently cancel the
+  // redirect and render the page instead.
+  if (alreadyOnboarded) {
+    redirect("/discover");
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 text-center">
