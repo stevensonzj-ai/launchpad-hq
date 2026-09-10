@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Rocket, Sparkles } from "lucide-react";
+import { Rocket, Sparkles } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getOrCreateDbUser } from "@/lib/auth-db";
@@ -76,21 +76,25 @@ export default async function OnboardingPage() {
         time building.
       </p>
 
+      {/* Two real choices, not a call to action with a disclaimer. The quiz
+          stays first and stays filled, which is what marks it as the
+          recommendation; the outline treatment and size are the same pair the
+          homepage hero uses, so browsing reads as a button rather than a
+          fallback. Both go full width when the row stacks on a phone. */}
       <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <Link
           href="/quiz"
-          className="flex items-center gap-2 rounded-xl bg-orange-500 px-8 py-3.5 text-lg font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-600 hover:shadow-orange-500/40"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-8 py-3.5 text-lg font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-600 hover:shadow-orange-500/40 sm:w-auto"
         >
-          <Sparkles className="h-5 w-5" /> Take the 2-minute quiz to get matched <ArrowRight className="h-5 w-5" />
+          <Sparkles className="h-5 w-5" /> Take the 2-minute quiz
+        </Link>
+        <Link
+          href="/discover"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-700 px-8 py-3.5 text-lg font-semibold text-white transition-all hover:border-orange-500/50 hover:bg-gray-900 sm:w-auto"
+        >
+          <Rocket className="h-5 w-5 text-orange-400" /> Browse all platforms
         </Link>
       </div>
-      <p className="mt-6 text-sm text-gray-500">
-        Or{" "}
-        <Link href="/discover" className="text-orange-400 hover:underline">
-          browse all platforms
-        </Link>{" "}
-        first if you&rsquo;d rather explore.
-      </p>
     </div>
   );
 }
