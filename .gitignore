@@ -54,3 +54,6 @@ next-env.d.ts
 # tutorial pipeline (local only - never commit)
 .pipeline-credentials*
 tmp/tutorial-pipeline/
+
+# FUSE artifacts left behind when a file is overwritten on the mounted folder
+.fuse_hidden*

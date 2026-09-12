@@ -87,6 +87,26 @@ import { upstageSolarTutorial } from "./upstage-solar-getting-started";
 import { wondersharePdfelementAiTutorial } from "./wondershare-pdfelement-ai-getting-started";
 import { duolingoMaxTutorial } from "./duolingo-max-getting-started";
 import { khanAcademyKhanmigoTutorial } from "./khan-academy-khanmigo-getting-started";
+import { quizletQChatTutorial } from "./quizlet-q-chat-getting-started";
+import { speakLanguageAiTutorial } from "./speak-language-ai-getting-started";
+import { alphasenseTutorial } from "./alphasense-getting-started";
+import { bloombergGptTerminalAiTutorial } from "./bloomberg-gpt-terminal-ai-getting-started";
+import { canopyTaxTutorial } from "./canopy-tax-getting-started";
+import { rampIntelligenceTutorial } from "./ramp-intelligence-getting-started";
+import { restbAiTutorial } from "./restb-ai-getting-started";
+import { zillowAiZestimateTutorial } from "./zillow-ai-zestimate-getting-started";
+import { inworldAiTutorial } from "./inworld-ai-getting-started";
+import { ludoAiTutorial } from "./ludo-ai-getting-started";
+import { meshyTutorial } from "./meshy-getting-started";
+import { opusClipTutorial } from "./opus-clip-getting-started";
+import { scenarioTutorial } from "./scenario-getting-started";
+import { topazLabsTutorial } from "./topaz-labs-getting-started";
+import { wonderDynamicsWonderStudioTutorial } from "./wonder-dynamics-wonder-studio-getting-started";
+import { dragonMedicalOneTutorial } from "./dragon-medical-one-getting-started";
+import { healtheeTutorial } from "./healthee-getting-started";
+import { pathaiTutorial } from "./pathai-getting-started";
+import { vizAiTutorial } from "./viz-ai-getting-started";
+import { googleImagen3Tutorial } from "./google-imagen-3-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
@@ -177,6 +197,26 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [wondersharePdfelementAiTutorial.platformSlug]: wondersharePdfelementAiTutorial,
   [duolingoMaxTutorial.platformSlug]: duolingoMaxTutorial,
   [khanAcademyKhanmigoTutorial.platformSlug]: khanAcademyKhanmigoTutorial,
+  [quizletQChatTutorial.platformSlug]: quizletQChatTutorial,
+  [speakLanguageAiTutorial.platformSlug]: speakLanguageAiTutorial,
+  [alphasenseTutorial.platformSlug]: alphasenseTutorial,
+  [bloombergGptTerminalAiTutorial.platformSlug]: bloombergGptTerminalAiTutorial,
+  [canopyTaxTutorial.platformSlug]: canopyTaxTutorial,
+  [rampIntelligenceTutorial.platformSlug]: rampIntelligenceTutorial,
+  [restbAiTutorial.platformSlug]: restbAiTutorial,
+  [zillowAiZestimateTutorial.platformSlug]: zillowAiZestimateTutorial,
+  [inworldAiTutorial.platformSlug]: inworldAiTutorial,
+  [ludoAiTutorial.platformSlug]: ludoAiTutorial,
+  [meshyTutorial.platformSlug]: meshyTutorial,
+  [opusClipTutorial.platformSlug]: opusClipTutorial,
+  [scenarioTutorial.platformSlug]: scenarioTutorial,
+  [topazLabsTutorial.platformSlug]: topazLabsTutorial,
+  [wonderDynamicsWonderStudioTutorial.platformSlug]: wonderDynamicsWonderStudioTutorial,
+  [dragonMedicalOneTutorial.platformSlug]: dragonMedicalOneTutorial,
+  [healtheeTutorial.platformSlug]: healtheeTutorial,
+  [pathaiTutorial.platformSlug]: pathaiTutorial,
+  [vizAiTutorial.platformSlug]: vizAiTutorial,
+  [googleImagen3Tutorial.platformSlug]: googleImagen3Tutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
