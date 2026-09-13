@@ -107,6 +107,26 @@ import { healtheeTutorial } from "./healthee-getting-started";
 import { pathaiTutorial } from "./pathai-getting-started";
 import { vizAiTutorial } from "./viz-ai-getting-started";
 import { googleImagen3Tutorial } from "./google-imagen-3-getting-started";
+import { gptImage15DallESuccessorTutorial } from "./gpt-image-1-5-dall-e-successor-getting-started";
+import { microsoftDesignerTutorial } from "./microsoft-designer-getting-started";
+import { ai21LabsJambaTutorial } from "./ai21-labs-jamba-getting-started";
+import { alephAlphaLuminousTutorial } from "./aleph-alpha-luminous-getting-started";
+import { cohereTutorial } from "./cohere-getting-started";
+import { kakaoBrainKarloTutorial } from "./kakao-brain-karlo-getting-started";
+import { naverHyperclovaXCueTutorial } from "./naver-hyperclova-x-cue-getting-started";
+import { sakanaAiTutorial } from "./sakana-ai-getting-started";
+import { casetextCocounselTutorial } from "./casetext-cocounsel-getting-started";
+import { clioManageTutorial } from "./clio-manage-getting-started";
+import { harveyAiTutorial } from "./harvey-ai-getting-started";
+import { kiraSystemsTutorial } from "./kira-systems-getting-started";
+import { luminanceTutorial } from "./luminance-getting-started";
+import { spellbookTutorial } from "./spellbook-getting-started";
+import { gpt4allTutorial } from "./gpt4all-getting-started";
+import { llamaCppTutorial } from "./llama-cpp-getting-started";
+import { localaiTutorial } from "./localai-getting-started";
+import { textGenerationWebuiOobaboogaTutorial } from "./text-generation-webui-oobabooga-getting-started";
+import { vllmTutorial } from "./vllm-getting-started";
+import { memTutorial } from "./mem-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
@@ -217,6 +237,26 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [pathaiTutorial.platformSlug]: pathaiTutorial,
   [vizAiTutorial.platformSlug]: vizAiTutorial,
   [googleImagen3Tutorial.platformSlug]: googleImagen3Tutorial,
+  [gptImage15DallESuccessorTutorial.platformSlug]: gptImage15DallESuccessorTutorial,
+  [microsoftDesignerTutorial.platformSlug]: microsoftDesignerTutorial,
+  [ai21LabsJambaTutorial.platformSlug]: ai21LabsJambaTutorial,
+  [alephAlphaLuminousTutorial.platformSlug]: alephAlphaLuminousTutorial,
+  [cohereTutorial.platformSlug]: cohereTutorial,
+  [kakaoBrainKarloTutorial.platformSlug]: kakaoBrainKarloTutorial,
+  [naverHyperclovaXCueTutorial.platformSlug]: naverHyperclovaXCueTutorial,
+  [sakanaAiTutorial.platformSlug]: sakanaAiTutorial,
+  [casetextCocounselTutorial.platformSlug]: casetextCocounselTutorial,
+  [clioManageTutorial.platformSlug]: clioManageTutorial,
+  [harveyAiTutorial.platformSlug]: harveyAiTutorial,
+  [kiraSystemsTutorial.platformSlug]: kiraSystemsTutorial,
+  [luminanceTutorial.platformSlug]: luminanceTutorial,
+  [spellbookTutorial.platformSlug]: spellbookTutorial,
+  [gpt4allTutorial.platformSlug]: gpt4allTutorial,
+  [llamaCppTutorial.platformSlug]: llamaCppTutorial,
+  [localaiTutorial.platformSlug]: localaiTutorial,
+  [textGenerationWebuiOobaboogaTutorial.platformSlug]: textGenerationWebuiOobaboogaTutorial,
+  [vllmTutorial.platformSlug]: vllmTutorial,
+  [memTutorial.platformSlug]: memTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
