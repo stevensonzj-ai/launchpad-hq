@@ -127,6 +127,25 @@ import { localaiTutorial } from "./localai-getting-started";
 import { textGenerationWebuiOobaboogaTutorial } from "./text-generation-webui-oobabooga-getting-started";
 import { vllmTutorial } from "./vllm-getting-started";
 import { memTutorial } from "./mem-getting-started";
+import { tactiqTutorial } from "./tactiq-getting-started";
+import { aivaTutorial } from "./aiva-getting-started";
+import { googleLyria3Tutorial } from "./google-lyria-3-getting-started";
+import { mubertTutorial } from "./mubert-getting-started";
+import { soundrawTutorial } from "./soundraw-getting-started";
+import { connectedPapersTutorial } from "./connected-papers-getting-started";
+import { consensusTutorial } from "./consensus-getting-started";
+import { glaspTutorial } from "./glasp-getting-started";
+import { juliusAiTutorial } from "./julius-ai-getting-started";
+import { litmapsTutorial } from "./litmaps-getting-started";
+import { paperpalTutorial } from "./paperpal-getting-started";
+import { researchRabbitTutorial } from "./research-rabbit-getting-started";
+import { scholarcyTutorial } from "./scholarcy-getting-started";
+import { scispaceTutorial } from "./scispace-getting-started";
+import { sciteTutorial } from "./scite-getting-started";
+import { semanticScholarTutorial } from "./semantic-scholar-getting-started";
+import { trinkaAiTutorial } from "./trinka-ai-getting-started";
+import { gongTutorial } from "./gong-getting-started";
+import { outreachTutorial } from "./outreach-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
@@ -257,6 +276,25 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [textGenerationWebuiOobaboogaTutorial.platformSlug]: textGenerationWebuiOobaboogaTutorial,
   [vllmTutorial.platformSlug]: vllmTutorial,
   [memTutorial.platformSlug]: memTutorial,
+  [tactiqTutorial.platformSlug]: tactiqTutorial,
+  [aivaTutorial.platformSlug]: aivaTutorial,
+  [googleLyria3Tutorial.platformSlug]: googleLyria3Tutorial,
+  [mubertTutorial.platformSlug]: mubertTutorial,
+  [soundrawTutorial.platformSlug]: soundrawTutorial,
+  [connectedPapersTutorial.platformSlug]: connectedPapersTutorial,
+  [consensusTutorial.platformSlug]: consensusTutorial,
+  [glaspTutorial.platformSlug]: glaspTutorial,
+  [juliusAiTutorial.platformSlug]: juliusAiTutorial,
+  [litmapsTutorial.platformSlug]: litmapsTutorial,
+  [paperpalTutorial.platformSlug]: paperpalTutorial,
+  [researchRabbitTutorial.platformSlug]: researchRabbitTutorial,
+  [scholarcyTutorial.platformSlug]: scholarcyTutorial,
+  [scispaceTutorial.platformSlug]: scispaceTutorial,
+  [sciteTutorial.platformSlug]: sciteTutorial,
+  [semanticScholarTutorial.platformSlug]: semanticScholarTutorial,
+  [trinkaAiTutorial.platformSlug]: trinkaAiTutorial,
+  [gongTutorial.platformSlug]: gongTutorial,
+  [outreachTutorial.platformSlug]: outreachTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
