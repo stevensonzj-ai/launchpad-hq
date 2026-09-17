@@ -146,6 +146,23 @@ import { semanticScholarTutorial } from "./semantic-scholar-getting-started";
 import { trinkaAiTutorial } from "./trinka-ai-getting-started";
 import { gongTutorial } from "./gong-getting-started";
 import { outreachTutorial } from "./outreach-getting-started";
+import { photoroomTutorial } from "./photoroom-getting-started";
+import { semrushAiTutorial } from "./semrush-ai-getting-started";
+import { surferSeoTutorial } from "./surfer-seo-getting-started";
+import { jasperTutorial } from "./jasper-getting-started";
+import { writesonicChatsonicTutorial } from "./writesonic-chatsonic-getting-started";
+import { invideoAiTutorial } from "./invideo-ai-getting-started";
+import { lumaDreamMachineRay3Tutorial } from "./luma-dream-machine-ray3-getting-started";
+import { pictoryAiTutorial } from "./pictory-ai-getting-started";
+import { beatovenAiTutorial } from "./beatoven-ai-getting-started";
+import { murfAiTutorial } from "./murf-ai-getting-started";
+import { activepiecesTutorial } from "./activepieces-getting-started";
+import { lindyAiTutorial } from "./lindy-ai-getting-started";
+import { microsoftPowerAutomateTutorial } from "./microsoft-power-automate-getting-started";
+import { pabblyConnectTutorial } from "./pabbly-connect-getting-started";
+import { relevanceAiTutorial } from "./relevance-ai-getting-started";
+import { trayAiTutorial } from "./tray-ai-getting-started";
+import { workatoTutorial } from "./workato-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
@@ -295,6 +312,23 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [trinkaAiTutorial.platformSlug]: trinkaAiTutorial,
   [gongTutorial.platformSlug]: gongTutorial,
   [outreachTutorial.platformSlug]: outreachTutorial,
+  [photoroomTutorial.platformSlug]: photoroomTutorial,
+  [semrushAiTutorial.platformSlug]: semrushAiTutorial,
+  [surferSeoTutorial.platformSlug]: surferSeoTutorial,
+  [jasperTutorial.platformSlug]: jasperTutorial,
+  [writesonicChatsonicTutorial.platformSlug]: writesonicChatsonicTutorial,
+  [invideoAiTutorial.platformSlug]: invideoAiTutorial,
+  [lumaDreamMachineRay3Tutorial.platformSlug]: lumaDreamMachineRay3Tutorial,
+  [pictoryAiTutorial.platformSlug]: pictoryAiTutorial,
+  [beatovenAiTutorial.platformSlug]: beatovenAiTutorial,
+  [murfAiTutorial.platformSlug]: murfAiTutorial,
+  [activepiecesTutorial.platformSlug]: activepiecesTutorial,
+  [lindyAiTutorial.platformSlug]: lindyAiTutorial,
+  [microsoftPowerAutomateTutorial.platformSlug]: microsoftPowerAutomateTutorial,
+  [pabblyConnectTutorial.platformSlug]: pabblyConnectTutorial,
+  [relevanceAiTutorial.platformSlug]: relevanceAiTutorial,
+  [trayAiTutorial.platformSlug]: trayAiTutorial,
+  [workatoTutorial.platformSlug]: workatoTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
