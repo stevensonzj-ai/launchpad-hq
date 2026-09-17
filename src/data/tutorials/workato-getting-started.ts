@@ -12,7 +12,7 @@ export const workatoTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    'Workato calls each automation a **recipe**. You build one in a browser builder: pick a **trigger** (the "when" — the event that starts an automation), then add **actions** (the "then" — what happens once the trigger fires), choosing each from a list of apps rather than writing code. Each finished recipe then runs on its own, without you watching.',
+    'Workato calls each automation a **recipe**. You build one in a browser builder: pick a **trigger** (the "when" — the event that starts an automation), then add **actions** (the "then" — what happens once the trigger fires), choosing each from a list of apps rather than writing code. Each finished recipe then runs on its own.',
 
   whatItIs: [
     "Workato is an integration platform built for companies. It connects the large systems a business runs on — Salesforce, NetSuite, Workday, SAP, Slack, databases — so records, files and messages move between them without anyone copying and pasting. Its own connector directory currently lists more than 1,200 pre-built connections, and you can browse that directory publicly, before you sign up for anything.",
@@ -25,7 +25,7 @@ export const workatoTutorial: PlatformTutorialData = {
     "Signing up is genuinely self-serve now. Workato's docs list email and password, Google, GitHub or Office 365 as ways in, with no sales contact; its free-signup page mentions signing in with a work email, so whether a personal address is accepted is something you will find out at the form rather than in advance. The free plan comes with a one-time grant of 50,000 **credits** (the platform's unit of spend — each thing that runs costs some). One-time, not monthly: nothing refills it, and Workato does not publish what happens once it is gone.",
     '**The free plan is licensed for practice, not for real work.** Workato\'s Self-Service Addendum, dated 18 June 2026, limits the non-paid edition to "internal trial, experimental and evaluation purposes" and has you agree not to use it "for any production purposes." Learn on it as much as you like. Anything your job depends on belongs on a paid plan.',
     "Paying for yourself starts at around $75 a month for 2,500 credits and runs to about $1,275 for 50,000, card on file, per Workato's self-service pricing docs. That is steep beside Zapier or Make, which both have free tiers you are allowed to run real work on. If what you want is to learn automation rather than to connect a company's systems, start with Zapier or Make on this site and come back here when a NetSuite or a Workday is the thing standing in your way.",
-    "You cannot work out in advance how far 50,000 credits goes. Workato's docs say credits are consumed by tasks, by requests other programs make to your automations, by rows of data processed and by AI actions — but the conversion rate is not published, and the docs point you to your contract for it. You find out by running things and watching the meter.",
+    "You cannot work out in advance how far that grant goes. Workato's docs say credits are consumed by tasks, by requests other programs make to your automations, by rows of data processed and by AI actions — but the conversion rate is not published, and the docs point you to your contract for it. You find out by running things and watching the meter.",
     'Free accounts get no promised help. The same addendum says Workato "is not obligated to provide any technical support" on the non-paid edition, though it may offer some. The documentation site and the community forum are the realistic places to get unstuck.',
   ],
 
@@ -47,8 +47,8 @@ export const workatoTutorial: PlatformTutorialData = {
 
   triad: {
     bestAt: [
-      "Connecting the big business systems that lighter automation tools cover thinly or not at all — NetSuite, Workday, Salesforce, SAP, databases — where the depth of the pre-built connector is the entire point.",
-      "Automations a team owns rather than a person: one workspace, up to 100 collaborators, separate test and live environments, and an audit log, all present from the first recipe.",
+      "Connecting the big business systems that lighter automation tools cover thinly or not at all, where the depth of the pre-built connector is the entire point.",
+      "Automations a team owns rather than a person — the shared workspace, the separate test and live environments and the audit log are all there from the first recipe.",
       `Long processes with branching, loops and error handling, rather than a two-step "when this, then that."`,
       "Putting guardrails around AI agents — deciding centrally which systems an agent may touch and logging what it did.",
     ],
@@ -69,39 +69,39 @@ export const workatoTutorial: PlatformTutorialData = {
       whatItDoes:
         "When a new row is added to a Google Sheet → then post a message into Slack.",
       whyHere:
-        "The Slack message is not the point. The point is watching a one-time 50,000-credit grant tick down for the first time, on a platform that publishes no conversion rate between credits and runs. Zapier tells you a task is a task and gives you about a hundred a month; here the only way to calibrate is to spend a little deliberately and look at the meter.",
+        "The Slack message is not the point; watching the grant tick down for the first time is, on a platform that publishes no conversion rate between credits and runs. Zapier tells you a task is a task and gives you about a hundred a month, so the only way to calibrate here is to spend a little deliberately and look at the meter.",
       tweak:
-        "Fire the trigger by hand the first few times. A schedule that runs every five minutes is the fastest way to find out what your grant was worth.",
+        "Fire the trigger by hand the first few times — a schedule that runs every five minutes is the fastest way to find out what your grant was worth.",
     },
     {
       title: "Start from somebody else's recipe",
       whatItDoes:
         "When you need a common connection → then clone a published recipe from Workato's community library and change it, instead of building from an empty canvas.",
       whyHere:
-        "Workato's docs describe cloning community recipes straight into your own workspace. On a plan whose credits never refill, starting from a recipe that already works means fewer failed runs spent learning what a working one looks like — which is a different calculation from Zapier's templates, where a botched attempt costs you a task out of a monthly allowance that resets.",
+        "Workato's docs describe cloning community recipes straight into your own workspace. On a plan whose credits never refill, that means fewer failed runs spent learning what a working one looks like — a different calculation from Zapier's templates, where a botched attempt costs a task out of an allowance that resets.",
     },
     {
       title: "Connect one big system, not a small one",
       whatItDoes:
         "When a record changes in Salesforce, NetSuite or Workday → then update a sheet or notify a channel.",
       whyHere:
-        "Workato's connector directory is public, so you can check whether your particular NetSuite or Workday is covered before you make an account — which is the one piece of homework worth doing before signing up for any enterprise automation platform. Point Workato at Gmail instead and you have learned nothing it does better than Zapier.",
+        "Because the connector directory is public, you can check whether your particular NetSuite or Workday is covered before you make an account. Point Workato at Gmail instead and you have learned nothing it does better than Zapier.",
       tweak:
-        "Workato says AIRO, released in July 2026, can draft an automation from a plain-English description of the goal. Whether that is switched on for a free self-serve account is not stated publicly, so treat it as something to look for in the builder rather than something to count on.",
+        "Workato says AIRO can draft an automation from a plain-English description of the goal, but whether that is switched on for a free self-serve account is not stated publicly, so treat it as something to look for in the builder rather than something to count on.",
     },
     {
       title: "Break a recipe on purpose, then read the run record",
       whatItDoes:
         "When a recipe fails → then open its job history to see which step stopped and exactly what data it was holding.",
       whyHere:
-        "This record has a shelf life. Workato publishes job-history retention of 30 days on its Standard and Business editions and 90 on Enterprise, and states no figure for self-serve accounts — so assume what you can look back at is limited, and build the habit of reading a run while it is fresh rather than reconstructing it later.",
+        "This record has a shelf life. Workato publishes job-history retention of 30 days on its Standard and Business editions and 90 on Enterprise, and states no figure for self-serve accounts — so assume what you can look back at is limited, and read a run while it is fresh rather than reconstructing it later.",
     },
   ],
 
   pitfalls: [
     "**Build with a trigger you fire by hand before you build one that fires on a schedule.** Every tutorial run, every failed test and every accidental loop comes out of the same one-time grant, and a recipe left on a five-minute schedule overnight is the classic way to wake up to nothing left.",
     `**"Recipe" here means one automation, not a set of instructions for an AI.** Workato has used the word since long before AI tools borrowed it, and the docs, the community library and the support forum all assume that meaning. Searching for "Workato recipes" gets you automations.`,
-    "**The pricing page and the documentation tell you different things.** The marketing pricing page shows no numbers and offers a demo; the self-service pricing page on the docs site lists monthly figures. If you look on the marketing site and conclude there is no published price, you have found the sales funnel rather than the answer.",
+    "**If you look at the marketing site and conclude there is no published price, you have found the sales funnel rather than the answer.** The figures are on the docs site.",
     "**Features you read about in the docs may not exist in your account.** Choosing a data region, extended concurrency, longer job retention and raised quotas are all attached to paid editions. Workato's documentation describes the whole platform, not your plan, and it does not always say which is which.",
     "**A paid self-serve subscription renews itself.** Workato's addendum says subscriptions renew automatically at its then-current pricing and that fees are non-refundable; you can cancel at any time, but it takes effect at the end of the billing period rather than immediately.",
   ],

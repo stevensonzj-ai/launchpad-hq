@@ -29,7 +29,7 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: "A one-time purchase changes the security question. A subscription gets a second look every time the renewal invoice lands; something you bought outright has no invoice, and a workflow you set up today can still be running in five years, still holding a live connection into your email and your files, long after you've stopped thinking about it. Buying once means you have to schedule the review yourself.",
+      text: "A one-time purchase changes the security question. A subscription gets a second look every time the renewal invoice lands; something you bought outright has no invoice, so a workflow you set up today can still be running in five years, still holding a live connection into your email and your files. Buying once means you have to schedule the review yourself.",
     },
     {
       kind: "list",
@@ -53,7 +53,7 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Elaborate branching logic. Routers and filters exist, but the drag-and-wire visual canvas that Make and n8n are built around is not the model here.",
-      "Newer or niche apps. Around 2,000 connections is a lot, and fewer than Zapier offers.",
+      "Newer or niche apps. The catalogue is large, and smaller than Zapier's.",
     ],
     avoid: [
       "Buying a one-time plan expecting to stack it, resell it or move it. Pabbly's terms state you can't buy multiple one-time plans or transfer one between accounts — it is tied to the account that bought it.",
@@ -68,27 +68,27 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
       whatItDoes:
         "When a new row is added to a Google Sheet → then send yourself an email.",
       whyHere:
-        "The free plan gives you unlimited workflows but only two steps each, so the useful first experiment is counting how many separate little automations your week really contains — which is the exact number the cheapest one-time plan caps at ten. Zapier and Make both bill you by volume rather than by how many automations you keep, so neither makes you ask that question.",
+        "Free workflows are unlimited but two steps each, so the useful first experiment is counting how many separate little automations your week really contains — the exact number the cheapest one-time plan caps. Zapier and Make both bill by volume rather than by how many automations you keep, so neither makes you ask that question.",
       tweak:
-        "Build a second one for a different sheet rather than making the first one longer. On this plan that costs you nothing.",
+        "Build a second one for a different sheet rather than making the first one longer — on this plan that costs you nothing.",
     },
     {
       title: "Run something on a schedule, then go and read its history",
       whatItDoes:
         "When a set time arrives each morning → then email yourself a line pulled from a spreadsheet or a form.",
       whyHere:
-        "Pabbly's privacy policy has it deleting workflow history older than 15 days automatically, so a daily job is the cheapest way to build the habit of reading a run log while the log still exists — by the time a monthly automation misbehaves, the evidence may already have been cleared.",
+        "With run history cleared after 15 days, a daily job is the cheapest way to build the habit of reading a run log while the log still exists — by the time a monthly automation misbehaves, the evidence may already have been cleared.",
       tweak:
-        "Deliberately break it — point it at an empty sheet — and look at what the failed run records. Knowing what a failure looks like is worth more than a run of clean ones.",
+        "Deliberately break it — point it at an empty sheet — and look at what the failed run records.",
     },
     {
       title: "Put one real lead somewhere it won't get lost",
       whatItDoes:
         "When someone submits your form → then create the record in your spreadsheet or CRM.",
       whyHere:
-        "Only the write at the end is billed here; the trigger costs nothing. So this shape runs at one task per lead, which makes it the cleanest way to measure your true monthly volume against the 3,000 tasks the smallest one-time plan carries — a sum worth doing before spending around $349, and one that neither Zapier nor Make asks you to do, because neither sells you a plan upfront.",
+        "Because only the write at the end bills, this shape runs at one task per lead, which makes it the cleanest way to measure your true monthly volume against the smallest one-time plan's allowance before you commit the money. Neither Zapier nor Make asks you to do that sum, because neither sells you a plan upfront.",
       tweak:
-        "Leave it running a full month before you decide. A single busy week is exactly the sample that makes people buy a bigger plan than they need.",
+        "Leave it running a full month before you decide — a single busy week is exactly the sample that makes people buy a bigger plan than they need.",
     },
   ],
 
@@ -96,7 +96,7 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
     '**The countdown doesn\'t mean what it looks like.** The one-time offer is sold behind a "limited time only" timer that has been a fixture of that page. If the price is right for your volume it will still be right tomorrow; don\'t let a clock make a four-figure decision.',
     "**Your allowance appears to reset each month rather than accumulate.** Pabbly's materials describe tasks as an amount you get every month, which would mean a plan sized for your busiest month is money you also spend in every quiet one. Size it from a measured week, and if carry-over matters to you, confirm it with support first.",
     "**A three-step idea can't be tested on the free plan at all.** The free version you evaluate is an approximation of the thing you would be buying — a real limitation when the decision is a single large payment.",
-    '**Check your specific apps, not the headline number.** "Around 2,000 integrations" is a marketing figure; whether the two apps *you* need are both properly supported is a five-minute check in the integrations directory, and it matters more here than on a monthly tool, because a one-time purchase can\'t be transferred if it turns out not to fit.',
+    "**Check your specific apps, not the headline number.** The integration count is a marketing figure; whether the two apps *you* need are both properly supported is a five-minute check in the integrations directory, and it matters more here than on a monthly tool, because the purchase can't be moved if it turns out not to fit.",
   ],
 
   whereToNext: [

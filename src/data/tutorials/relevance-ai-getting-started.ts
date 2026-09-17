@@ -23,14 +23,14 @@ export const relevanceAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     '**There is no free plan any more, and this is very recent.** Relevance\'s pricing documentation now reads "The Free plan is retired and closed to new signups" — a change merged into the vendor\'s own documentation on 11 September 2026. The cheapest way in is the Pro plan at roughly US$19 a month paid annually, or about US$29 month to month. You pay by card and sign up yourself; no demo call is required, despite "Book a demo" being the loudest button on the homepage. Note that Relevance\'s own marketplace site still advertises "Start for free." The pricing docs are the binding source; the marketing has not caught up.',
     'Two separate meters run while you work, and Relevance\'s word for one of them is confusing. **Actions** are counted each time one of your agent\'s tools runs — so "action" here means a unit of spend, not the "then" half of an automation the way most tools use it. **Vendor Credits** are the AI model bill itself, passed through with no markup. Pro currently includes about 2,500 Actions and US$20 of Vendor Credits a month; run out of either and you buy top-ups rather than being cut off, currently around US$80 per 1,000 Actions and US$20 per 10,000 Vendor Credits. Unused Actions from a top-up carry forward; the ones included with your plan reset when it renews.',
-    "You choose where your data physically lives when you sign up — US (N. Virginia), EU (London) or AU (Sydney) — and the docs say that choice cannot be changed afterwards without contacting support. Thirty seconds of thought at signup saves a support ticket later, and if you have any obligation to keep data in a particular region, decide before you click.",
+    "You choose where your data physically lives when you sign up — US (N. Virginia), EU (London) or AU (Sydney) — and the docs say that choice cannot be changed afterwards without contacting support. If you have any obligation to keep data in a particular region, decide before you click.",
     "If you already pay for an AI service of your own, you can plug your own key in and skip the Vendor Credits meter entirely. The docs list this as available on every tier. It does not help with Actions, which are charged either way.",
   ],
 
   security: [
     {
       kind: "text",
-      text: "A flowchart tool does what you drew. A Relevance agent is handed a set of tools and decides for itself which to reach for on any given run, so the same agent can take two different routes on two different days. That is the bill the workforce metaphor quietly presents: what you approve is a capability, not a sequence. The strongest steering you have is what you write in the agent's instructions — including the things you forbid.",
+      text: "A flowchart tool does what you drew. A Relevance agent is handed a set of tools and decides for itself which to reach for on any given run, so the same agent can take two different routes on two different days. What you approve is a capability, not a sequence, and the strongest steering you have is what you write in the agent's instructions — including the things you forbid.",
     },
     {
       kind: "list",
@@ -70,16 +70,16 @@ export const relevanceAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "When you open the marketplace → then clone an agent that is near what you want into your project, and read its instructions before changing a word.",
       whyHere:
-        "What you inherit here is prose, not wiring. A Zapier template hands you a configured chain with nothing written down to read, because on Zapier there is nothing to write — the logic is the diagram. Reading someone else's finished instructions is the fastest way to learn how specific yours need to be.",
+        "What you inherit here is prose, not wiring. A Zapier template hands you a configured chain with nothing written down to read, because there the logic is the diagram — so reading someone else's finished instructions is the fastest way to learn how specific yours need to be.",
       tweak:
-        "Change one sentence, run it, and see what moved. That loop teaches more than building from empty.",
+        "Change one sentence, run it, and see what moved.",
     },
     {
       title: "An inbox triage agent that is not allowed to reply",
       prompt:
         "You are my inbox triage assistant. Each morning, read the unread email in my inbox and sort it into three lists: needs a reply from me today, can wait until later this week, and needs no reply. For each item in the first list, write one sentence saying what the sender wants. Do not send, reply to, archive or delete anything. Post the three lists back to me as a message.",
       whyHere:
-        "The refusal line is the load-bearing part. On Zapier you keep an agent from sending mail by simply not adding a send step; here the agent picks its own tools, so a prohibition written into the instructions is the control you actually have. It is also the cheap shape — Actions are counted per tool run, so a read-and-report agent costs a fraction of one that writes.",
+        "The refusal line is the load-bearing part. On Zapier you keep an agent from sending mail by simply not adding a send step; here the agent picks its own tools, so a prohibition written into the instructions is the control you actually have. It is also the cheap shape: a read-and-report agent costs a fraction of one that writes.",
       tweak:
         "Once you trust it, change the last line to have it draft replies without sending them.",
     },
@@ -88,23 +88,23 @@ export const relevanceAiTutorial: PlatformTutorialData = {
       whatItDoes:
         'When a schedule fires each weekday morning — your **trigger**, the "when" that starts an automation → then the agent searches the web for mentions of a name you give it, and writes one row per find into a spreadsheet.',
       whyHere:
-        "This is the card that makes Relevance's bill visible before it surprises you. One scheduled run that searches, reads two pages and writes a row is four Actions, not one — so a daily agent is roughly eighty Actions a month against the 2,500 Pro currently includes. Zapier's per-task counter and Lindy's per-task credits meter the job; this one meters every tool the agent chose to pick up.",
+        "This is the card that makes Relevance's bill visible before it surprises you: one scheduled run that searches, reads two pages and writes a row is four Actions, not one, so a daily agent is roughly eighty Actions a month against Pro's included allowance. Zapier's per-task counter and Lindy's per-task credits meter the job; this one meters every tool the agent chose to pick up.",
       tweak:
-        "Start it weekly. You can always shorten the interval once you have seen a month of real consumption.",
+        "Start it weekly — you can always shorten the interval once you have seen a month of real consumption.",
     },
     {
       title: "A second specialist, so you can see what a Workforce is for",
       prompt:
         "You are a research summariser. You will be given a web page or a block of text. Write three bullets covering what it says, who it is aimed at, and anything that looks time-sensitive or out of date. Then write one line saying what you could not determine from the text. Do not search for anything else and do not guess.",
       whyHere:
-        "Relevance's unit is a named worker you can hand to other jobs, so this one summariser gets reused by the agent above and by whatever you build next. Lindy's assistants and Zapier's Zaps are both built around one flow doing one job end to end; the reason to accept this platform's unpredictability is that the pieces are people-shaped and reusable, not path-shaped and single-use.",
+        "Relevance's unit is a named worker you can hand to other jobs, so this one summariser gets reused by the agent above and by whatever you build next. Lindy's assistants and Zapier's Zaps are both built around one flow doing one job end to end; the reason to accept this platform's unpredictability is that the pieces are reusable rather than single-use.",
       tweak:
-        "Give it a deliberately bad page and see whether it uses that last line honestly. An agent that never admits a gap is one you cannot delegate to.",
+        "Give it a deliberately bad page and see whether it uses that last line honestly.",
     },
   ],
 
   pitfalls: [
-    '**"It worked when I tested it" means less here.** Two runs of the same agent can take different routes, so run anything consequential several times on harmless data before pointing it at the real thing.',
+    '**"It worked when I tested it" means less here.** Run anything consequential several times on harmless data before pointing it at the real thing.',
     "**The meter counts tools, not runs.** A loop over twenty items multiplies every Action inside it, and that is where a month's allowance disappears without anyone noticing.",
     "**Almost every guide and review you find is now out of date on price.** Anything written before September 2026 describes a free tier that no longer accepts signups. Check the pricing page yourself before planning around a number you read elsewhere.",
   ],

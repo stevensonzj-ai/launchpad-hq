@@ -31,14 +31,14 @@ export const lindyAiTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: "Lindy draws its safety line at the edge of your account, not at the edge of your inbox. Its pricing FAQ answers the question \"Will Lindy do anything without my approval?\" with \"No. Anything with outside impact waits for approval such as sending an email, updating a ticket, posting to another channel, publishing a doc.\" That promise is real and worth having. But read what it covers. Work inside your own mailbox is not outside impact: the built-in email labelling routine, in Lindy's own description, \"reads every incoming email and labels it, archiving what you don't need to see and keeping what matters visible,\" and it does that on its own once switched on. Nothing you did not approve leaves your account; a fair amount happens inside it.",
+      text: "Lindy draws its safety line at the edge of your account, not at the edge of your inbox. Its pricing FAQ answers the question \"Will Lindy do anything without my approval?\" with \"No. Anything with outside impact waits for approval such as sending an email, updating a ticket, posting to another channel, publishing a doc.\" But read what it covers. Work inside your own mailbox is not outside impact: the built-in email labelling routine, in Lindy's own description, \"reads every incoming email and labels it, archiving what you don't need to see and keeping what matters visible,\" and it does that on its own once switched on. Nothing you did not approve leaves your account; a fair amount happens inside it.",
     },
     {
       kind: "list",
       label: "Four things worth settling before you connect a mailbox:",
       items: [
-        "**Decide whose mail this really is.** Lindy reads the whole incoming stream to do its job, not only the messages a rule matched. If your inbox carries other people's confidential correspondence, that is the fact to weigh, and it is a different question from whether you trust the drafts it writes.",
-        "**Treat archiving as the setting to watch.** A label is visible and reversible; archiving moves mail out of your inbox before you have seen it. Configure labels that only tag at first, and add archiving to one once a week of its choices has looked right.",
+        "**Decide whose mail this really is.** If your inbox carries other people's confidential correspondence, that is the fact to weigh, and it is a different question from whether you trust the drafts it writes.",
+        "**Treat archiving as the setting to watch.** A label is visible and reversible; archiving moves mail out of your inbox before you have seen it.",
         "**Check the age of the binding document.** Lindy's security page says your data is \"never sold, never shared, never used to train models\" and lists an independent **SOC 2** Type II audit (an audit of how a company handles customer data) alongside GDPR and HIPAA. Its privacy policy — the document that actually binds — is dated 13 February 2024, before the product that reads your mail existed. It does commit that Google-sourced data will not be used \"for any artificial intelligence model training or evaluation purposes.\"",
         "**Know both ways to revoke.** Lindy stores connection secrets write-only — its docs say \"You cannot read the value back: not in the app, not through the API, not by asking Lindy\" — and offers a Revoke action. Access granted through a Google or Microsoft sign-in can also be withdrawn from that account's own security settings, which is the end that still works if you lose access to Lindy.",
       ],
@@ -47,18 +47,17 @@ export const lindyAiTutorial: PlatformTutorialData = {
 
   triad: {
     bestAt: [
-      "The recurring admin around email and meetings — sorting a morning's mail, drafting replies in your own phrasing, recording a Zoom or Teams call and writing up what was decided.",
-      "Turning a standing instruction into a scheduled job: you describe it once in ordinary English and it runs every weekday without you rebuilding it.",
-      "Work you want done on your own accounts rather than passed between two other services. It starts from your inbox and calendar, not from a form submission.",
+      "The recurring admin around email and meetings, which is what the built-in routines cover.",
+      "Turning a standing instruction into a scheduled job you describe once in ordinary English.",
+      "Work you want done on your own accounts rather than passed between two other services.",
     ],
     okayAt: [
       "Precise, branching logic. Routines are described rather than drawn, so when the outcome is wrong you rewrite a sentence rather than inspect a step. Make and n8n show you exactly what each step received and emitted.",
-      "Working alone. Everything is priced and documented around a shared Slack workspace with one pooled credit balance. One person on their own still works; nothing about the design is aimed at it.",
+      "Working alone. Everything is priced and documented around a shared Slack workspace. One person on their own still works; nothing about the design is aimed at it.",
     ],
     avoid: [
       "Signing up just to have a look. Lindy's terms, last updated 14 March 2025, make all purchases non-refundable, so the minimum cost of deciding it is not for you is a full month's seat.",
-      "Relying on the changelog to tell you what changed. Lindy's published changelog currently stops at 21 October 2025 and still describes the agent-builder product the documentation no longer covers, while the company's blog posts several times a week.",
-      "Treating today's shape as settled. The builder people learned Lindy on in 2025 is not what the docs describe now, and the walkthroughs still circulating for it lead somewhere the product no longer goes.",
+      "Relying on the changelog to tell you what changed. Lindy's published changelog currently stops at 21 October 2025, while the company's blog posts several times a week.",
     ],
   },
 
@@ -68,7 +67,7 @@ export const lindyAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "When a new email arrives → then Lindy labels it, and archives anything you have told it you do not need to see.",
       whyHere:
-        "This is the built-in routine that makes the product's boundary concrete — it works from the whole incoming stream rather than from the messages a rule matched, which is the thing a Zapier or n8n flow structurally cannot do. Lindy's docs also note it does nothing at all until you have created at least one label.",
+        "This is the built-in routine that makes the product's boundary concrete: a Zapier or n8n flow fires only on the messages a rule matched, and structurally cannot work from the whole stream. Lindy's docs also note it does nothing at all until you have created at least one label.",
       tweak:
         "Start with tagging only. Add archiving to a label once a week of its choices has looked right.",
     },
@@ -77,7 +76,7 @@ export const lindyAiTutorial: PlatformTutorialData = {
       prompt:
         "Every weekday at 8am, summarise the emails I haven't replied to in three days and the meetings on my calendar today, and send me the list.",
       whyHere:
-        "Lindy's Routines page carries a \"Describe your routine\" box that takes a sentence like this one and derives the schedule, the accounts and the output from it. On Zapier or n8n the same brief is a flow you assemble and a set of fields you map before it will run once — here the sentence is the whole build.",
+        "Lindy's Routines page carries a \"Describe your routine\" box that takes a sentence like this one and derives the schedule, the accounts and the output from it. On Zapier or n8n the same brief is a flow you assemble and a set of fields you map before it will run once.",
       tweak:
         "Change the three days to one and see how much noise that adds before you settle on a number.",
     },
@@ -88,7 +87,7 @@ export const lindyAiTutorial: PlatformTutorialData = {
       whyHere:
         "Lindy is present in the call itself. Zapier and n8n have no seat in a meeting; the most either can do is move a transcript some other product already made, which means paying for that product too.",
       tweak:
-        "Tell the people on the call before the first one. A recorder arriving unannounced is its own problem.",
+        "Tell the people on the call before the first one — a recorder arriving unannounced is its own problem.",
     },
     {
       title: "Chase the emails that went quiet",
@@ -112,8 +111,8 @@ export const lindyAiTutorial: PlatformTutorialData = {
 
   pitfalls: [
     "**The seat is the unit, and mentioning Lindy creates one.** Per Lindy's own FAQ, anyone who uses it takes a seat, including someone who @mentions it in Slack. In a shared channel, a curious colleague adds to the bill.",
-    "**One person's big job is everyone's.** Because credits pool across the workspace, the ceiling you are working against is not yours alone. Agree who runs the expensive things before anyone runs one.",
-    "**Switching a routine on is not the same as configuring it.** Email labelling does nothing until you create a label; the follow-up routine needs a window. A routine that is on and idle looks identical to one that is working.",
+    "**One person's big job is everyone's.** The ceiling you are working against is the whole workspace's, so agree who runs the expensive things before anyone runs one.",
+    "**Switching a routine on is not the same as configuring it.** Labelling needs a label; the follow-up routine needs a window. A routine that is on and idle looks identical to one that is working.",
     "**It learns from your edits, so early corrections stick.** Lindy's docs say it picks up on the changes you make to drafts over time. Fixing a draft carelessly teaches it the careless version.",
   ],
 

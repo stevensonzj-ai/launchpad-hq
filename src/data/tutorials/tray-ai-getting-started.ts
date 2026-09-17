@@ -22,7 +22,7 @@ export const trayAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**You cannot buy this by yourself, and that is the single fact to plan around.** There is no self-serve signup — the login page has no create-account link — and nothing on the pricing page names a price for any tier. Every route runs through a demo request or a sales conversation.",
+    "**You cannot buy this by yourself, and that is the single fact to plan around.** There is no self-serve signup — the login page has no create-account link — so every route in runs through a demo request or a sales conversation.",
     'The free trial runs about 14 days, according to Tray\'s own Academy page. You request it by filling in your name, work email, job title, company and employee count, and describing what you want to accomplish. The page calls it a "managed trial" and says someone from the team will reach out to get it set up — so the clock starts when they provision it, not when you decide you are ready.',
     "Tray's Master Subscription Agreement, last updated 28 January 2025 and in force today, is built around a negotiated Order Form and subscription terms that renew automatically for successive one-year periods unless either side gives 30 days' notice. This is an annual commitment with a contract behind it, not a monthly charge you cancel in a settings screen.",
     "If you are reading this to learn automation rather than to buy it for an employer, the concepts transfer completely. Triggers, steps, testing a run before switching it on — build those on a platform you can open right now, and come back to Tray when a company hands you a login. Our Workflow & Automation category has the self-serve options.",
@@ -49,14 +49,14 @@ export const trayAiTutorial: PlatformTutorialData = {
     bestAt: [
       "Connecting the systems a company actually runs on — the CRM, the finance system, the HR system, the data warehouse — where the integration has to survive staff turnover and an audit.",
       "Letting several teams build their own automations inside boundaries one central team sets, rather than everyone wiring up their own accounts.",
-      "Reshaping messy data mid-flow. Tray's steps take expression queries directly in an input field, so a transform does not always need its own step.",
+      "Reshaping messy data mid-flow, without a separate step to do it in.",
     ],
     okayAt: [
       "A single person automating their own work. It will do it, but you are paying for governance machinery you have no use for.",
       "Getting started quickly. Between the trial request, the sales call and the provisioning, the gap between deciding and building is measured in days.",
     ],
     avoid: [
-      "Learning automation from scratch on your own schedule. The trial is provisioned by a salesperson around the use case you wrote on the form, and the days tick down whether or not you have time that week.",
+      "Learning automation from scratch on your own schedule. You do not choose when the trial starts, and its days tick down whether or not you have time that week.",
       "Assuming the compliance features come with the plan. Tray's pricing page lists HIPAA, single sign-on, regional hosting, 30-day log retention and 180-day insights as **add-ons**. Hosting defaults to the US (AWS-West); EU (Ireland) and APAC (Sydney) are available, but as something you buy rather than something you select.",
       "Anything you need to keep running after the trial. There is no free tier underneath to fall back to, so whatever you build stops when the trial does unless a purchase is already in motion.",
     ],
@@ -71,7 +71,7 @@ export const trayAiTutorial: PlatformTutorialData = {
       whyHere:
         "The account IDs and field mappings this needs live in a **project config** — one place every workflow in the project reads from — instead of being retyped into each step. That is what keeps the build standing the day someone renames a Salesforce field.",
       tweak:
-        "Ask what happens on failure before you ask what happens on success. Tray's own first-workflow walkthrough adds error handling as a step of its own.",
+        "Ask what happens on failure before you ask what happens on success — Tray's own first-workflow walkthrough adds error handling as a step of its own.",
     },
     {
       title:
@@ -79,7 +79,7 @@ export const trayAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "The workflow pulls the message, fetches that customer's contract terms from the system of record, has an AI step summarise and classify it, and sends it to the right queue.",
       whyHere:
-        "This is where Tray's masking earns its keep: personal and health data can be stripped before it reaches the AI step, and an admin can switch the AI steps off across the whole workspace. Those are controls set above the person building the flow, not inside it.",
+        "This is where Tray's masking earns its keep: personal and health data can be stripped before it ever reaches the AI step — a control set above the person building the flow rather than inside it.",
     },
     {
       title:
@@ -97,13 +97,13 @@ export const trayAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Instead of handing an agent direct credentials, the agent calls a tool Tray exposes on its behalf, with a rule about which tool, which credential and which data it may reach.",
       whyHere:
-        "Access here is controlled per individual tool, and every call an agent makes is logged — who triggered it, what ran, what came back. Note this sits in the Agent Development add-on rather than the base plans, so it is a purchase decision, not a switch you flip.",
+        "The agent never holds the credential, and each tool it may call is permissioned separately. Note this sits in the Agent Development add-on rather than the base plans, so it is a purchase decision, not a switch you flip.",
     },
   ],
 
   pitfalls: [
     "**The trial is scoped to the sentence you wrote on the form.** You describe what you want to accomplish, and the workspace is set up around that. Write that field as the thing you genuinely most want to test, not a vague summary.",
-    "**Nothing on the pricing page tells you what it costs, and that is by design.** Go into the sales conversation with the shape of your usage already written down — which systems, how many people building, how often things run — or the quote will be built from someone else's assumptions.",
+    "**The absence of a published price is by design.** Go into the sales conversation with the shape of your usage already written down — which systems, how many people building, how often things run — or the quote will be built from someone else's assumptions.",
     '**You will probably not be the person who owns the connections.** In most Tray installations an admin creates and holds the credentials, so "connect my Gmail" is a request you file rather than a button you press. Find out who that person is on day one.',
     "**Log retention is shorter than you would guess.** The Pro tier's insights window is 7 days and Team's is 30. If your automation fails quietly and nobody looks for three weeks, on the lower tiers the evidence may already be gone.",
     "**Don't judge it against Zapier on first impressions.** Tray asks more of you up front — expression queries, environments, approvals — and pays it back on the kind of integration that has to survive an audit. On a two-app automation that trade is simply a bad deal.",
