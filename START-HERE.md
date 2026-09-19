@@ -304,7 +304,7 @@ There is one person. He is both the developer and the sole operator, and his rev
 1. **Plan in conversation.** Decisions, architecture, pushback and prompt-drafting happen in discussion with an assistant, not at the keyboard. The owner explicitly values *pushback before execution over efficiency*: if a plan is flawed, say so and wait rather than silently executing it.
 2. **Recon read-only, first, always.** Before any edit: read the target files and their consumers, state what you found, and only then propose. This has repeatedly overturned the premise of a task — the tutorial architecture reversal, a "bug" that didn't exist, a config "fix" whose premise was inverted. Recon that changes the plan is the system working.
 3. **Implement on a branch.** One branch per unit of work. `feature/`, `fix/`, `chore/`, `docs/` or `tutorials/` prefix. Commit after every meaningful change with a specific message.
-4. **Gate locally:** `npm run typecheck` then `npm run build`. Both must pass.
+4. **Gate locally:** `npm run typecheck` then `npm run build`. Both must pass. Tutorial-page changes also run `npm run audit:tutorials` (structural checks tsc cannot make — see `CLAUDE.md` ## Tutorials).
 5. **Open a pull request and stop.** `gh pr create --fill`. (G13)
 6. **The owner reviews the Vercel preview by hand.** This is the real quality gate, not the automated one. (G11) He reviews screenshots and clicks through the affected flows, including signed-out.
 7. **On his approval, squash-merge:** `gh pr merge <n> --squash --delete-branch=false`. Branches are retired deliberately in later sweeps, not at merge time.
@@ -399,7 +399,7 @@ CLAUDE.md                  ← the standing engineering briefing (authoritative 
 AGENTS.md                  ← one rule: this is Next.js 16, read its docs before writing framework code
 README.md                  ← stock create-next-app boilerplate; carries no project information
 .gitattributes             ← `* text=auto eol=lf`, plus explicit binary exemptions (§ 8)
-package.json               ← scripts: dev, build, start, lint, typecheck, db:*
+package.json               ← scripts: dev, build, start, lint, typecheck, audit:tutorials, db:*
 next.config.ts             ← Sentry wrapper + category redirects (many-to-one only)
 prisma.config.ts
 eslint.config.mjs, postcss.config.mjs, tsconfig.json

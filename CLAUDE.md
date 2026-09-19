@@ -165,6 +165,7 @@ Tutorials are a **live, active workstream — not a P3 placeholder.** The pilot 
 - **`accessTier` is a TypeScript union in `types.ts`, not a Prisma enum.**
 - **`archetype` = `'prompts' | 'recipes' | 'pick-and-setup'`**, which drives the starter-section heading via an exhaustive `Record` in `platform-tutorials.tsx`.
 - **Registration is manual + two-step:** create the file AND add the import + `[x.platformSlug]: x` to `src/data/tutorials/index.ts`. Lookup is by **`platformSlug`** — must match the real Platform DB row's slug (verify, don't assume).
+- **Run `npm run audit:tutorials` alongside `npm run typecheck` before committing any tutorial change.** It is `scripts/tutorial-pipeline/audit-pages.mjs` (plain `.mjs` — no tsx, so it runs in the nightly Linux shell) and catches what tsc cannot: a card carrying both `prompt` and `whatItDoes` (the renderer drops the second), a card carrying neither, a `whereToNext.categorySlug` outside the live 20-category list (a plain string in `types.ts`, so an invented slug typechecks clean and 404s), an unregistered page file, and `howItWorks` over the 60-word cap. Non-zero exit on any finding.
 
 ### Authoring rules
 
@@ -375,7 +376,7 @@ Slander and defamation risk is real if exclusion entries are written as evaluati
 
 ### Testing
 
-- No formal test suite yet. Not a priority for the current phase.
+- No formal test suite yet. Not a priority for the current phase. The automated gates are `npm run typecheck`, `npm run build`, and — for tutorial pages — `npm run audit:tutorials` (see ## Tutorials).
 - When modifying auth, payments, or anything handling money/credentials, test manually end-to-end before committing.
 
 ### Git and commits
