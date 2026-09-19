@@ -5,9 +5,9 @@ export const clarifaiTutorial: PlatformTutorialData = {
   platformSlug: "clarifai",
   title: "Getting Started with Clarifai",
   tagline:
-    "Browse and test AI models in one browser tab, then call the same one from your own code — free to start, no credit card, and it can put a cloud address in front of a model running on your own machine.",
+    "Browse and test AI models in one browser tab, then call the same one from your own code — a platform whose hosts stopped resolving in 2026 with no shutdown notice, so none of it can currently be reached.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-09-19",
   accessTier: "FREE",
 
   howItWorks:
@@ -16,12 +16,12 @@ export const clarifaiTutorial: PlatformTutorialData = {
   whatItIs: [
     "Clarifai is a catalogue of AI models with a control panel wrapped around it. You search the library, test a model in the browser, and — if you want — call that same model from your own software through an **API** (a way for programs to talk to each other without a person clicking).",
     "It started in 2013 doing image recognition, and that is still the part it does best. The newer work is about *where* a model runs — Clarifai's servers, a cloud you rent, or your own hardware — rather than about building the models themselves.",
-    "**One thing to know before you invest time in it.** In May 2026 Nebius announced it had hired Clarifai's founder and core engineering team and licensed Clarifai's inference technology. Clarifai's older image models and its government work were explicitly excluded from that deal and stayed with the company; the site, the docs and signup all work normally today. But the newest dated release note in Clarifai's own changelog is 12.4, from 7 May 2026. Check that date yourself before you build anything on it — the changelog link is at the top of this page.",
+    "**One thing to know before you invest time in it.** In May 2026 Nebius announced it had hired Clarifai's founder and core engineering team and licensed Clarifai's inference technology. Clarifai's older image models and its government work were explicitly excluded from that deal and stayed with the company. No shutdown notice was ever published, but as of 19 September 2026 the platform is not reachable: api.clarifai.com, docs.clarifai.com and status.clarifai.com have no DNS records, clarifai.com resolves to a registrar parking server with dead HTTPS, and www.clarifai.com points at an ISP address that also fails HTTPS. The company's email still routes through Google Workspace. The newest dated release note before the docs went dark was 12.4, from 7 May 2026.",
   ],
 
   beforeYouStart: [
-    "**Open the changelog before you open the signup page.** If it still says May 2026 when you read this, treat Clarifai as a good place to learn what a model platform is and to evaluate models — and think hard before making it something your work depends on.",
-    "Free genuinely means free here. Signup asks for no credit card and the Community plan currently includes around 1,000 operations a month. It is a monthly allowance that refills, not a trial credit that runs out — but it is one shared meter, and predictions, training and stored files all draw on it.",
+    "**As of 19 September 2026 the API host does not resolve.** api.clarifai.com has no DNS record, so nothing on this page — the browser Playground, the code snippet, a Local Runner's cloud address — can currently be reached. Treat what follows as a record of how the platform worked, and check whether the host answers again before you plan around it.",
+    "Before the hosts went dark, signup asked for no credit card and the Community plan included around 1,000 operations a month — a monthly allowance that refilled, not a trial credit, but one shared meter that predictions, training and stored files all drew on. None of that can currently be reached, and whether it returns is unknown.",
     "There is nothing to install to begin. Your first hour is a browser tab. A command-line tool only enters the picture if you decide to try Local Runners, which is the last step on this page and entirely optional.",
     "Clarifai is a developer platform, not a chatbot. There is no assistant that remembers you, no conversation history, no mobile app worth having. If what you want is something to ask questions of, start in Text & Conversational AI and come back here when you want to see how models actually get served.",
   ],
@@ -50,7 +50,7 @@ export const clarifaiTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Being someone's first AI tool. The browser Playground genuinely works without code, but everything surrounding it is built for engineers and reads that way.",
-      "Free-tier headroom. Around 1,000 operations a month at one request per second is enough to evaluate the platform properly and not enough to run anything on.",
+      "Free-tier headroom. The Community plan's roughly 1,000 operations a month at one request per second was enough to evaluate the platform and not enough to run anything on — and, as of September 2026, cannot be reached at all.",
     ],
     avoid: [
       "Publishing anything to the Community before reading the licence you grant by doing it. Public content is licensed to every other user and, perpetually, to Clarifai.",

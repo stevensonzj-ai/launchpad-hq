@@ -561,3 +561,31 @@ the same day: `beatoven.ai` **200**, `www.beatoven.ai` **200**, `sync.beatoven.a
 — **NO DNS RECORD**. A marketing-domain sweep gives that page a clean bill of health. Any liveness
 check worth running must test **the host a reader actually signs in to**, which means recording that
 host per page rather than relying on the catalog's `website`.
+
+## Addendum 2026-09-19 — clarifai page truth fix (applied)
+
+After the Tier 1 pass removed clarifai's dead `changelogUrl` (`6f45e15a`), the page still asserted
+that "the site, the docs and signup all work normally today" and twice told the reader to open a
+changelog link that no longer existed. Fixed on `tutorials/batch-2026-09`, claims only — the page's
+fate (keep as an honest record, or exclude) is a pending decision and was not made here.
+
+Facts used (verified 2026-09-19 from two networks against 8.8.8.8 and 1.1.1.1; not re-researched):
+`api.clarifai.com`, `docs.clarifai.com`, `status.clarifai.com` have no DNS record; `clarifai.com`
+resolves to 192.64.119.122 serving `namecheap-nginx` with dead HTTPS, nameservers
+`dns1/dns2.registrar-servers.com` (Namecheap parking); `www.clarifai.com` resolves to an RCN ISP
+address with dead HTTPS; MX still points to Google Workspace. Nebius announced hiring the team and
+licensing the inference technology on 2026-05-12, excluding the legacy computer vision models; no
+shutdown notice was ever published.
+
+Changes made:
+1. `whatItIs[2]` — "the site, the docs and signup all work normally today" replaced with the
+   verified DNS/HTTPS state; the dangling "the changelog link is at the top of this page" deleted.
+2. `beforeYouStart[0]` — the unfollowable "open the changelog" instruction replaced with the fact
+   that `api.clarifai.com` no longer resolves, so nothing on the page can currently be reached.
+3. `tagline`, `beforeYouStart[1]`, `triad.okayAt[1]` — free signup / no credit card / ~1,000
+   operations restated in the past tense as what the Community plan offered before the hosts went
+   dark, with "cannot currently be reached" stated rather than promised.
+4. `lastReviewedAt` → `2026-09-19`.
+
+Kept unchanged, both still accurate: the Nebius / Token Factory pitfall and the image-recognition
+`whyHere` (the CV models were excluded from the Nebius deal). No `changelogUrl` added.
