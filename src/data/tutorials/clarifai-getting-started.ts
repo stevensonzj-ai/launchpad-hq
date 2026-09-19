@@ -8,7 +8,6 @@ export const clarifaiTutorial: PlatformTutorialData = {
     "Browse and test AI models in one browser tab, then call the same one from your own code — free to start, no credit card, and it can put a cloud address in front of a model running on your own machine.",
   archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-08",
-  changelogUrl: "https://docs.clarifai.com/product-updates/changelog/",
   accessTier: "FREE",
 
   howItWorks:

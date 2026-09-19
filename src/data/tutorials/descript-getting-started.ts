@@ -7,7 +7,7 @@ export const descriptTutorial: PlatformTutorialData = {
   tagline: `Edit audio and video by editing the transcript — powerful, intuitive, and easier to misuse than it looks.`,
   archetype: "pick-and-setup",
   lastReviewedAt: "2026-07-27",
-  changelogUrl: "https://www.descript.com/release-notes",
+  changelogUrl: "https://feedback.descript.com/changelog",
   accessTier: "FREE",
 
   howItWorks: `Descript transcribes your recording and then lets you edit the media by editing the text. Delete a sentence from the transcript and it disappears from the audio and video. Rearrange a paragraph and the footage follows. For anything dialogue-driven — interviews, podcasts, talking-head video — this collapses a timeline-editing skill into a word-processing one. An AI assistant sits alongside it, capable of removing filler words, finding clips, and generating captions on request.`,
