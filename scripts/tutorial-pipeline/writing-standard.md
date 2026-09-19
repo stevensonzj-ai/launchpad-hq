@@ -49,6 +49,35 @@ Use it as a **prompt to look**, not as a limit to enforce:
 | 800-1,000 | The range most pages land in. Nothing to do. |
 | over ~1,200 | **Go read it.** Usually one of the four tests above is being failed. Sometimes the platform genuinely warrants it — Udio's rights position alone is ~280 irreducible words. |
 
+### Owner's ruling, 2026-09-19 — clarity is the bar, not length
+
+Zach settled the standing length question directly:
+
+> "It's fine to have pages be longer if necessary. I don't want to make the pages shorter for the
+> sake of being shorter. I just want the information to be clear and easy to follow for the average
+> beginner."
+
+**So length is not a defect and never was the target.** Do not open a compression pass, do not cut a
+sourced fact, and do not rewrite a sentence to move a number. A page that is long because the
+product is complicated is a correct page.
+
+What this ruling does **not** license is verbosity. Measured across all 164 shipped pages on
+2026-09-19, field counts sit inside the three reference pages' own range — but **every prose field
+averages about 1.5x the reference length** (`security` 82 words vs 56, `triad` items 21 vs 13,
+`whyHere` 41 vs 26, `pitfalls` 37 vs 25). That gap is not extra facts. It is the same facts told
+at greater length, and on a page written for someone who has never used an AI tool, that *is* a
+clarity cost. Tightening a sentence that says one thing in forty words instead of twenty-five
+serves the ruling; deleting the thing it says does not.
+
+**Therefore the checks that matter are the clarity checks, not the counter:** § 2's glosses and the
+`FIRST_150_CLEAN` read, § 1's fourth test (content teaching a skill the page is not about), § 3's
+swap test, and § 8b (each fact stated once, in the field that owns it). A page can be 1,900 words
+and pass all of them. A page can be 900 words and fail every one.
+
+**Open sub-question for Zach:** the counter's "over ~1,200" row below now fires on 104 of 164
+pages, so as a signal it carries no information. Either give it a higher number or retire the
+threshold and let the clarity checks above be the gate. Not decided; do not guess a number.
+
 When a page is long and every sentence passes the four tests, **it stays long and you say so**:
 report `WORD_COUNT: n — long because <the specific content that earns it>`. That sentence is
 the whole mechanism. It makes length a judgement someone can check, rather than either a
