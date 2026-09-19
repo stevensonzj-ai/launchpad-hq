@@ -6,7 +6,7 @@ export const harveyAiTutorial: PlatformTutorialData = {
   title: "Getting Started with Harvey",
   tagline:
     "The AI most large law firms are buying — sold by contract, not by credit card, and here is the one part you can get for free today.",
-  archetype: "prompts",
+  archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-13",
   changelogUrl: "https://www.harvey.ai/blog",
   accessTier: "PREMIUM",
