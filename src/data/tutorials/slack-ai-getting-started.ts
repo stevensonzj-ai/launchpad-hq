@@ -68,6 +68,8 @@ export const slackAiTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Catch up on one busy channel after time away",
+      whatItDoes:
+        "Opens the channel, clicks the three-dots icon at the top and chooses Summarize channel.",
       whyHere:
         "Its summaries link back to the messages they were built from, so one works as an index into two weeks of scrollback rather than a replacement for it.",
       tweak: "Start with your busiest channel, then open the threads it flagged.",
@@ -82,12 +84,16 @@ export const slackAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Turn on notes for your next huddle",
+      whatItDoes:
+        "Starts a huddle from the channel and turns on notes.",
       whyHere:
         "The notes are posted back into the channel that led to the call, so the decision and its context stay together rather than scattering into someone's notes app.",
       tweak: "Say at the start that notes are being taken — it changes what people say.",
     },
     {
       title: "Summarise a file someone dropped in a thread",
+      whatItDoes:
+        "Opens a file that has already been shared in a thread and asks Slack AI to summarise it from there.",
       whyHere:
         "It reads a file already in your workspace, so nothing is downloaded or uploaded to an outside tool — for internal documents that's often the difference between allowed and not.",
       tweak: "Use it to triage, never as your only read of anything you'll sign.",

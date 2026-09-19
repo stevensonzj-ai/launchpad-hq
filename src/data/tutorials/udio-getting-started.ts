@@ -79,6 +79,8 @@ export const udioTutorial: PlatformTutorialData = {
     },
     {
       title: "Extend a clip into a full song",
+      whatItDoes:
+        "Takes a 32-second clip you like and uses Extend to add the next section, repeating until it is a full-length track.",
       whyHere:
         "Udio composes in pieces rather than one shot — the core of how it differs from tools that hand you a fixed track. Longer generations cost more credits and free accounts get 3 full-length ones a day, so extend deliberately.",
       tweak: "Describe what happens next — a break, a key change, a stripped-back final chorus.",

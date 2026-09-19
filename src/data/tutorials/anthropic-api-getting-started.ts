@@ -82,6 +82,8 @@ export const anthropicApiTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Make one call from the console before writing any code",
+      whatItDoes:
+        "Uses the console's testing workbench to send one message to a model and read the reply, with no program involved.",
       whyHere: `Confirms your key, your account, and your billing work, without a debugging session in the way.`,
       tweak: `Send something deliberately trivial. You are testing the plumbing, not the model.`,
     },
@@ -93,11 +95,15 @@ export const anthropicApiTutorial: PlatformTutorialData = {
     },
     {
       title: "Move a bulk job to batch processing",
+      whatItDoes:
+        "Submits a set of requests together for processing later at half the per-token rate, instead of sending each one and waiting for its answer.",
       whyHere: `Half price in both directions is the biggest lever available, and it costs nothing but patience.`,
       tweak: `If you find yourself waiting on results interactively, the job was not a batch job.`,
     },
     {
       title: "Put the key in an environment variable on day one",
+      whatItDoes:
+        "Stores the key in your system's settings, where your program reads it at run time, so it never appears in the code itself.",
       whyHere: `Every leaked-key story starts with "I was going to fix that later".`,
       tweak: `Add the environment file to your ignore list in the same commit, not the next one.`,
     },

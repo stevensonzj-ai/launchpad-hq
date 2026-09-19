@@ -59,6 +59,8 @@ export const deepgramTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Look at what Deepgram returns before anything formats it",
+      whatItDoes:
+        "Runs audio through the playground — your own file if it accepts one, Deepgram's sample if not — with `smart_format` left at its default, and reads the raw transcript that comes back.",
       whyHere:
         "`smart_format` is documented as defaulting to `false`, so Deepgram's untouched output arrives as a single unpunctuated block. Meeting that once, deliberately, is what stops you from concluding the recognition is poor when what you are looking at is a setting nobody switched on.",
       tweak:
@@ -66,6 +68,8 @@ export const deepgramTutorial: PlatformTutorialData = {
     },
     {
       title: "Do the arithmetic before you write a line of code",
+      whatItDoes:
+        "Estimates your monthly bill from the hours of audio you expect to process and the per-minute rate on the pricing page.",
       whyHere:
         "Hours of audio per month × 60 × the per-minute rate. Billing is by the minute, and pre-recorded Nova-3 English currently lists at $0.0043 — which makes the $200 credit several hundred hours rather than a weekend trial. That multiplication tells you whether you are evaluating a purchase or something that stays effectively free for a year.",
       tweak:
@@ -73,6 +77,8 @@ export const deepgramTutorial: PlatformTutorialData = {
     },
     {
       title: "On a Mac and not writing code? Install Saga instead",
+      whatItDoes:
+        "Installs Deepgram's own Mac dictation app and dictates a paragraph into it, to hear how its recognition handles your voice with no code involved.",
       whyHere:
         "Saga is Deepgram's own dictation app and the only route to its speech recognition with no program in between — currently free for early access, no card. It doubles as an accuracy test: if it mishears your accent, the paid service will too.",
       tweak:

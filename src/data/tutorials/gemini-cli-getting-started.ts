@@ -70,6 +70,8 @@ export const geminiCliTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Work out which door is open to you, before you install",
+      whatItDoes:
+        "Checks whether you hold a Gemini Code Assist Standard or Enterprise licence, or a Gemini API key with billing switched on; if neither, installs Antigravity CLI instead.",
       whyHere:
         "Claude Code's entry check is one question — is your plan paid. Here the sign-in Google's own docs recommend is still there and still fails, so the only check that holds is what you own: a Code Assist licence, or a key with billing on. If it is neither, Antigravity CLI is where Google now sends you.",
     },

@@ -72,12 +72,16 @@ export const n8nTutorial: PlatformTutorialData = {
     },
     {
       title: "When an email arrives with attachments → save every file and log the sender",
+      whatItDoes:
+        "An email trigger fires on each new message, a step saves every attachment to a folder in your file storage, and another appends the sender and subject to a spreadsheet.",
       whyHere:
         "An email with five attachments is **one execution** in n8n. On a per-step tool, looping over each attachment is where your quota quietly evaporates — the pricing difference made visible.",
       tweak: "Filter to only invoices, by matching the subject line.",
     },
     {
       title: "Every weekday at 8am → gather headlines, summarise with AI, post to chat",
+      whatItDoes:
+        "A schedule trigger runs at 8am on weekdays, a step fetches headlines from a feed, an AI step summarises them, and a chat step posts the result.",
       whyHere:
         "AI steps are ordinary boxes here rather than a separate product you bolt on, and you can point one at your own model key instead of buying platform credits.",
     },

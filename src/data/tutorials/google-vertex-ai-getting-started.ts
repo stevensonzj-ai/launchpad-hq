@@ -61,6 +61,8 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Sign up in express mode before you set up a billing account",
+      whatItDoes:
+        "Signs in with an ordinary Google account and chooses express mode, which skips the billing setup for 90 days.",
       whyHere:
         "Google's FAQ states that no payment information is required to try express mode for 90 days. Amazon Bedrock, the closest equivalent, has no such door — an AWS account with a payment method comes first. It also leaves the $300 trial credit unspent until you need it.",
       tweak:
@@ -68,6 +70,8 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Ask about something that happened this week, with Search checking behind it",
+      whatItDoes:
+        "Turns on the setting that lets the model check Google Search, then asks it about an event from the past few days and reads the sources it returns.",
       whyHere:
         "Google is selling the one asset its rivals cannot license: the pricing page currently includes 5,000 such checks a month at no charge, then about $14 per 1,000. Azure AI Foundry can check Bing, not Google Search.",
       tweak:
@@ -75,6 +79,8 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Send one instruction to a Google model and to a non-Google one",
+      whatItDoes:
+        "Opens Model Garden, picks a Gemini model and an Anthropic or Meta one, and sends each the same instruction from the same project.",
       whyHere:
         "Model Garden puts Anthropic's and Meta's models under the same project, terms and invoice as Google's own, so the comparison costs no second signup and no second vendor relationship. Google AI Studio, the free door most beginners find first, serves Google's models only.",
       tweak:

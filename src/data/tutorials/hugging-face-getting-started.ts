@@ -87,16 +87,22 @@ export const huggingFaceTutorial: PlatformTutorialData = {
     },
     {
       title: "Read one model card end to end",
+      whatItDoes:
+        "Opens a model's page and reads its card — the description the publisher wrote — from top to bottom, including the licence section.",
       whyHere: `Model cards are where training data, limitations, and licence live. Learning to read one is the actual skill this platform teaches.`,
       tweak: `Compare a well-documented card against a sparse one. The difference tells you a lot about what you are about to run.`,
     },
     {
       title: "Find the model a tutorial told you to download",
+      whatItDoes:
+        "Types the exact model name from the tutorial into the site's search, opens the page under the matching publisher, and finds its files or download instructions.",
       whyHere: `This is how most people genuinely use the site, and doing it deliberately once removes the mystery.`,
       tweak: `Note the exact model name including the publisher prefix. Similarly-named models from different publishers are not interchangeable.`,
     },
     {
       title: "Check a licence before you rely on an output",
+      whatItDoes:
+        "Finds the licence named on the model's page and reads what it says about commercial use before using anything the model produced.",
       whyHere: `Open weights routinely carry conditions on commercial use, and discovering that after you have shipped is expensive.`,
       tweak: `If the licence is not plainly stated, treat that as a finding rather than an oversight.`,
     },

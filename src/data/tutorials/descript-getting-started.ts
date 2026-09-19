@@ -75,6 +75,8 @@ export const descriptTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Edit something by deleting words",
+      whatItDoes:
+        "Imports a short recording, waits for the transcript, then selects a few words in the text and deletes them — and plays the result back to hear them gone from the audio.",
       whyHere: `The core idea sounds abstract and becomes obvious the moment you do it once.`,
       tweak: `Use a recording of yourself. The first edits are always clumsy and you will not mind.`,
     },
@@ -86,11 +88,15 @@ export const descriptTutorial: PlatformTutorialData = {
     },
     {
       title: "Watch your two meters for one project",
+      whatItDoes:
+        "Checks the media-minutes and AI-credits balances in your account before and after one project, to see which one moved more.",
       whyHere: `Discovering which limit you hit first tells you which plan you actually need, and prevents the bill surprise this platform is known for.`,
       tweak: `Do one project mostly manually and one mostly with the AI assistant. The difference in credit use is stark.`,
     },
     {
       title: "Set your own editing line before you edit a guest",
+      whatItDoes:
+        "Decides, before opening a guest's transcript, which cuts you will make to their words — fillers, false starts — and which you will not.",
       whyHere: `Deciding what you will not change is much easier before you are staring at a cut that would make the episode better.`,
       tweak: `Write it down. "Filler and false starts yes, meaning no" is a rule you can actually apply under time pressure.`,
     },

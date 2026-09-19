@@ -68,6 +68,8 @@ export const assemblyaiTutorial: PlatformTutorialData = {
     },
     {
       title: "Re-run the same file with speaker labels and language detection on",
+      whatItDoes:
+        "Uploads the same recording again in the playground with the speaker-label and language-detection switches turned on, and compares the two transcripts.",
       whyHere:
         "Every capability here is a flag on one request rather than a second service to buy, so re-running one file with switches on and off is how you size the job — and the playground then writes the code for the exact combination you chose.",
     },

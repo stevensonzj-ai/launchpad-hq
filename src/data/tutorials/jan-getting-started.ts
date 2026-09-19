@@ -81,6 +81,8 @@ export const janTutorial: PlatformTutorialData = {
     },
     {
       title: "Read the Fits / May be slow / Won't fit labels first",
+      whatItDoes:
+        "Opens Jan's Hub — its model library — and reads the label beside each model before downloading anything.",
       whyHere:
         "Jan's Hub checks each model against your actual hardware and labels it, removing the guesswork that makes people give up. Treat \"May be slow\" as \"no\" for your first week; \"Won't fit\" everywhere is your hardware answering honestly.",
       tweak:

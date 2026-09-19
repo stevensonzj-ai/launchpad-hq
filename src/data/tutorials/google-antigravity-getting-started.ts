@@ -99,6 +99,8 @@ export const googleAntigravityTutorial: PlatformTutorialData = {
     },
     {
       title: "Find out where your free week actually ends",
+      whatItDoes:
+        "Opens your usage after a normal afternoon of tasks and notes how much of the weekly allowance is gone.",
       whyHere:
         "Work an ordinary afternoon, then check your usage. Running dry on Windsurf costs you until tomorrow; here the free allowance is weekly, and the five-hourly top-up that rescues a bad afternoon is a paid-plan feature.",
     },

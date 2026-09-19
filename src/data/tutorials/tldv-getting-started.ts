@@ -71,17 +71,23 @@ export const tldvTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Record one internal meeting first",
+      whatItDoes:
+        "Sets the auto-record preference to internal meetings only, then lets the bot join one call with your own team.",
       whyHere:
         "tl;dv's auto-record preference splits meetings by email domain, so \"internal\" means everyone on the invite shares your company domain — a safe sandbox where you learn what the bot looks like, how long processing takes and how good the notes are.",
     },
     {
       title: "Turn on consent collection before your first external call",
+      whatItDoes:
+        "Enables consent collection in tl;dv's settings and limits it to external meetings.",
       whyHere:
         "tl;dv builds this in: it can rewrite the meeting link in your calendar invite so consent is asked before anyone joins, and you can scope it to external meetings.",
       tweak: "Test it with a friend first. A declined consent can't be undone for that meeting.",
     },
     {
       title: "Build a meeting template",
+      whatItDoes:
+        "Creates a notes template for one meeting type and assigns it, so that type's write-ups follow your structure rather than the default.",
       whyHere:
         "tl;dv saves templates and applies them per meeting type, so your standup and your sales calls get written up differently — decisions, action items, objections rather than a generic summary. Most beginners skip it.",
     },

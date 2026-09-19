@@ -77,6 +77,8 @@ export const leonardoAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Run a Blueprint instead of writing a prompt",
+      whatItDoes:
+        "Opens a Blueprint, fills in the one or two fields it asks for, checks the credit cost it shows, and generates.",
       whyHere:
         "Blueprints are Leonardo's answer to the blank prompt box, and each shows its credit cost before you generate — which matters here, because some cost more than a free user's whole daily allowance.",
     },
@@ -89,6 +91,8 @@ export const leonardoAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Hold one character steady across several images",
+      whatItDoes:
+        "Uploads a picture of your character into the character-reference slot in the generation panel, then generates new scenes with the reference in place.",
       whyHere:
         "Character reference sits in the generation panel as a plain image upload, not behind prompt syntax you must memorise. That is what turns a pile of nice pictures into a set.",
     },

@@ -76,16 +76,22 @@ export const grammarlyTutorial: PlatformTutorialData = {
     },
     {
       title: "Run one important email through the tone check before sending",
+      whatItDoes:
+        "Drafts the email somewhere Grammarly is enabled and reads the tone reading it shows before you press send.",
       whyHere: `Tone detection is more useful than grammar checking for most adults, and almost nobody uses it deliberately.`,
       tweak: `If the tone reading surprises you, that is the point. Rewrite before you send, not after they reply.`,
     },
     {
       title: "Reject a suggestion on purpose",
+      whatItDoes:
+        "Dismisses a suggestion you disagree with instead of accepting it, and keeps your original wording.",
       whyHere: `Builds the habit of treating suggestions as opinions rather than corrections, which is what keeps your writing sounding like you.`,
       tweak: `Pay attention to how often it wants to remove a deliberate stylistic choice. Those are the ones to keep.`,
     },
     {
       title: "Watch your monthly AI allowance for one cycle",
+      whatItDoes:
+        "Keeps track of how many AI prompts you use in a month against the free allowance of roughly a hundred, without changing how you write.",
       whyHere: `Free and paid tiers differ mostly in this number, so knowing your real usage tells you whether upgrading would change anything.`,
       tweak: `If you never approach the free limit, the paid tier is buying you features rather than capacity — decide on that basis.`,
     },

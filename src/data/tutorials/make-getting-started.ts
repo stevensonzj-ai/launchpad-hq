@@ -77,6 +77,8 @@ export const makeTutorial: PlatformTutorialData = {
     },
     {
       title: "Automate a form-to-spreadsheet flow first",
+      whatItDoes:
+        "Builds a two-module scenario: a form-response trigger and a spreadsheet module that adds a row for each submission.",
       whyHere: `Few modules, obvious success criterion, and it exercises the trigger-and-action pattern everything else builds on.`,
       tweak: `Add a filter so only some submissions pass through. Filters are where Make starts to be worth its complexity.`,
     },
@@ -88,6 +90,8 @@ export const makeTutorial: PlatformTutorialData = {
     },
     {
       title: "Run a scenario once manually and read every step",
+      whatItDoes:
+        "Runs the scenario once by hand rather than on its schedule, then clicks through each module in the execution view.",
       whyHere: `The execution view shows exactly what data each module received and emitted. It is the debugging skill the platform rewards most.`,
       tweak: `Do this while it works, not only when it breaks. Knowing what correct looks like makes broken obvious.`,
     },

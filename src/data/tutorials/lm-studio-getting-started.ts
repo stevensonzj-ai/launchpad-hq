@@ -82,6 +82,8 @@ export const lmStudioTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Download a small model first and confirm it runs",
+      whatItDoes:
+        "Picks a small model from the built-in catalogue, checks its estimated memory figure against your RAM, downloads it, loads it, and sends one message.",
       whyHere: `The most common first experience is downloading something too large and concluding local models are useless. Establish a working baseline instead.`,
       tweak: `Note the estimated memory figure before downloading. If it is close to your total RAM, choose smaller.`,
     },
@@ -93,6 +95,8 @@ export const lmStudioTutorial: PlatformTutorialData = {
     },
     {
       title: "Compare two models on the same question",
+      whatItDoes:
+        "Loads a second model of a different size or family, asks it the same question, and puts the two answers side by side.",
       whyHere: `Teaches that "an AI model" is not one thing, and calibrates your expectations for what a machine your size can do.`,
       tweak: `Use a question you already know the answer to. You are evaluating the model, not learning the topic.`,
     },

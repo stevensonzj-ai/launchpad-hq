@@ -75,6 +75,8 @@ export const gumloopTutorial: PlatformTutorialData = {
     },
     {
       title: "When a file lands in a Drive folder, then summarise it and file the summary",
+      whatItDoes:
+        "A Drive trigger watches one folder, a document step reads each new file, an AI step summarises it, and the last step appends the summary to a running doc.",
       whyHere:
         "It writes a plain-language summary of each new document into a running doc. Looping over the batch costs nothing — only the summarising does — so forty documents is a reasonable trial-week test.",
       tweak: "Ask for three bullets and one open question instead of a paragraph.",

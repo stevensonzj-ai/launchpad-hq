@@ -70,6 +70,8 @@ export const pikaTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Melt one object with Pikaffects",
+      whatItDoes:
+        "Uploads a photo of one object on a plain background, opens Pikaffects, picks Melt, and generates.",
       whyHere:
         "Pikaffects is on the free plan for image-to-video at around 15 credits, your cheapest finished result and no writing at all. Use one clear subject on a plain background — clutter confuses the effect.",
     },

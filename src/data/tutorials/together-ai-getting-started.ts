@@ -78,6 +78,8 @@ export const togetherAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Try Together Chat before deciding you need the platform",
+      whatItDoes:
+        "Opens Together Chat — the plain chat window, separate from the developer platform — and asks it the questions you came with; Together's own pages suggest it works without the card, though the limits aren't published.",
       whyHere:
         "Same open models in an ordinary chat window, on machines in the US and Canada, and the one route here that does not begin with a card. If it does everything you came for, what you wanted was a chatbot rather than an AI cloud — and you have saved the $5.",
     },

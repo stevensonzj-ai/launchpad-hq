@@ -76,11 +76,15 @@ export const acrobatAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Ask a question you already know the answer to",
+      whatItDoes:
+        "Asks the assistant for one fact you can already see in the document, then compares its answer and citation against the page.",
       whyHere: `The fastest calibration available. You learn whether to trust it on this document in about thirty seconds.`,
       tweak: `Choose something specific and checkable — a date, a number, a named party.`,
     },
     {
       title: "Follow one citation to its source",
+      whatItDoes:
+        "Clicks the citation attached to an answer to jump to the passage it was drawn from, and reads that passage in full rather than the excerpt.",
       whyHere: `Citations are the feature that makes this checkable rather than merely convenient. Following one turns the habit on.`,
       tweak: `Follow the citation behind the claim you found most useful. Useful and wrong is the expensive combination.`,
     },

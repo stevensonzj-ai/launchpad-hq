@@ -86,6 +86,8 @@ export const claudeCodeTutorial: PlatformTutorialData = {
     },
     {
       title: "Write a `CLAUDE.md` file for the project",
+      whatItDoes:
+        `Creates a plain text file named CLAUDE.md in the project's top folder, holding the test command and the rules it should follow every session.`,
       whyHere:
         "Claude Code reads that file from the project root at the start of every session, so your test command and never-touch-this rules apply without retyping. Keep it short: a long one eats into every session, relevant or not.",
     },

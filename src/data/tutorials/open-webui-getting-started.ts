@@ -74,11 +74,15 @@ export const openWebuiTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Connect exactly one model source, then stop",
+      whatItDoes:
+        "Points Open WebUI at a single model source — a local Ollama it finds by itself, or one online provider's address and key in Settings — and sends one message to confirm the dropdown fills.",
       whyHere:
         "The settings surface is large, and the temptation is to configure everything before it works. Later problems are easier to diagnose from one known-good path.",
     },
     {
       title: "Lock the front door",
+      whatItDoes:
+        "Keeps the instance reachable only on your home network, makes the admin account yourself, and checks that sign-up closed behind it.",
       whyHere: `Unlike a desktop app, this is a server the moment it starts — the only tool in this category where "who else can reach this?" is a question you answer yourself.`,
     },
     {

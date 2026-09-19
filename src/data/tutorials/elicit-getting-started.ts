@@ -82,11 +82,15 @@ export const elicitTutorial: PlatformTutorialData = {
     },
     {
       title: "Verify five cells against their sources",
+      whatItDoes:
+        "Clicks the link behind five cells in your extraction table and reads the passage each was taken from, checking the value matches.",
       whyHere: `The single most important habit to build with this tool, and the reason the citation links exist.`,
       tweak: `Pick the five that matter most to your argument, not five at random.`,
     },
     {
       title: "Run the same question in a database search and compare",
+      whatItDoes:
+        "Puts the same question, as a keyword search, into a conventional academic database and compares the two result lists side by side.",
       whyHere: `Directly exposes the recall gap the independent research identified, on your own topic.`,
       tweak: `Count what the other search found that this one missed. That number is your calibration.`,
     },

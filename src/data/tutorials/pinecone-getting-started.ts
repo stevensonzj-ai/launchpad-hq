@@ -62,6 +62,8 @@ export const pineconeTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Start in the console: make an assistant and upload a few documents",
+      whatItDoes:
+        "In the console at app.pinecone.io, creates an assistant and uploads a few files to it — the no-code route Pinecone's docs describe.",
       whyHere:
         "Most vector databases hand you an empty store and leave you to turn documents into something searchable. Pinecone's assistant does that step and returns answers with citations naming the file behind each claim — which is why the docs point a non-developer here first. If some part of the console turns out to want code, that is where this page's no-code route ends.",
       tweak:
@@ -76,6 +78,8 @@ export const pineconeTutorial: PlatformTutorialData = {
     },
     {
       title: "Open the usage page before you build anything on it",
+      whatItDoes:
+        "Finds the usage view in the console and reads how many read and write units your test queries consumed.",
       whyHere:
         "Pinecone bills read and write units rather than queries, and the docs put a query at roughly one read unit per gigabyte of data it searches. The same query gets more expensive as your collection grows while your query count stays flat — that, not the number of questions you ask, is what decides affordability.",
     },

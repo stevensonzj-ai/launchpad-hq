@@ -68,11 +68,15 @@ export const fireworksAiTutorial: PlatformTutorialData = {
     },
     {
       title: "Try a model you cannot get in a consumer app",
+      whatItDoes:
+        "Picks DeepSeek, Kimi, GLM or MiniMax from the model list in the browser chat box and asks it the question you used in the first card.",
       whyHere:
         "DeepSeek, Kimi, GLM and MiniMax are among the strongest openly published models anywhere, and almost none reach Western consumer chatbots. Fireworks serves them from its own machines under the no-logging default above, rather than forwarding your request to whichever host is cheapest that minute — so trying them does not also mean choosing where your text lands.",
     },
     {
       title: "Only if you write code: make a key and change two lines",
+      whatItDoes:
+        "Creates an API key in your account, then points an existing script at Fireworks' address with that key in place of the one it had.",
       whyHere:
         "The quickstart lists three ways to call the service — Fireworks' own toolkit, OpenAI's and Anthropic's — so a script already written against either of those usually needs a changed address and key, not a rewrite. If you do not write code, stopping after step two is a legitimate ending.",
       tweak:
