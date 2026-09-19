@@ -12,7 +12,7 @@ export const boltNewTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You open bolt.new in a browser and type what you want built, in ordinary sentences. Bolt writes the app and a working version appears in a preview panel beside the chat a few minutes later. From there you keep talking to it — describe a change, or click the thing on screen you want different — and it rebuilds in place.",
+    "You open bolt.new in a browser and type what you want built. Bolt writes the app and a working version appears in a preview panel beside the chat a few minutes later. From there you keep talking to it — describe a change, or click the thing on screen you want different — and it rebuilds in place.",
 
   whatItIs: [
     "Bolt is an AI app builder from StackBlitz: you describe a website or web app in plain language and it writes the whole thing — the screens people see and the storage behind them — and puts it on a live web address.",

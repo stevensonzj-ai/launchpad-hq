@@ -12,7 +12,7 @@ export const cursorTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You install Cursor as a desktop app, open a project, and work as you would in VS Code — but you can chat with the codebase, accept AI suggestions, or hand the agent a task and let it make the edits. Paid plans run on a **credit pool**: routine work in \"Auto\" mode is effectively unlimited, but manually pointing it at the most powerful frontier models draws down your monthly credits. That distinction is the source of most surprise bills, so it's worth understanding before you lean on the heavy models.",
+    "You install Cursor as a desktop app, open a project, and work as you would in VS Code. Alongside the editor you can chat with the codebase, accept suggestions as you type, or describe a change and let the agent edit the files for you — then read what it changed and accept or reject it.",
 
   whatItIs: [
     "Cursor is a **code editor built around AI** — it's a fork of VS Code, so it looks and works like the editor many developers already know, with AI woven through it. Beyond autocomplete, you can describe a change in plain English and its agent edits across multiple files, and it can reason about your **whole codebase**, not just the file you're in. It's aimed at people who write code regularly; a total beginner can use it, but it assumes you're working in a real project.",

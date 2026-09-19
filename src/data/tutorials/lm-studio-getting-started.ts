@@ -10,7 +10,8 @@ export const lmStudioTutorial: PlatformTutorialData = {
   changelogUrl: "https://lmstudio.ai/blog",
   accessTier: "FREE",
 
-  howItWorks: `LM Studio is a desktop application that downloads AI models onto your machine and runs them there. Nothing you type leaves your computer. You browse a built-in catalogue, download a model file, load it, and chat with it in a window that looks much like any other assistant — except the processing happens on your own hardware. Speed and quality depend on your machine rather than on a subscription tier, which is the whole trade being made.`,
+  howItWorks:
+    `LM Studio is a desktop app that downloads AI models onto your machine and runs them there. You browse a built-in catalogue, download a model file, load it, and chat with it in a window that looks like any other assistant — except the processing happens on your own hardware.`,
 
   whatItIs: [
     `A desktop app for Windows, macOS, and Linux that runs open models locally with a graphical interface.`,

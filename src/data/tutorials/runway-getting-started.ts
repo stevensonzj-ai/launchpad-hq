@@ -12,7 +12,7 @@ export const runwayTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "Like other generators you prompt it in words (or feed it an image to animate), and it renders a clip. It runs on a **credit** system, but with a video-specific twist: **credits are spent by the second of generated video**, and higher-quality models cost more per second — so a few polished seconds can burn credits fast, especially since you'll usually generate several takes before one works. Building the muscle for clear, specific prompts is what makes the credits go further.",
+    "You describe a clip in words, or give it a still image to animate, and it renders a few seconds of video. You watch the result, then either adjust the prompt and generate again or describe a specific change to the clip you already have.",
 
   whatItIs: [
     "Runway is an **AI video generator** (with image and audio tools alongside). You give it a prompt, or a starting image, and it produces a short video clip; you can also direct edits by describing the change you want. It's used by hobbyists making social clips all the way up to professional studios, so the ceiling is high — but the on-ramp is simple enough for a first-timer.",

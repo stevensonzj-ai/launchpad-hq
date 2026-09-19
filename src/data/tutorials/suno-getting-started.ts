@@ -12,7 +12,7 @@ export const sunoTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You prompt it the way you'd prompt any chatbot, but the output is audio. Under the hood Suno runs on a **credit** system: each generation spends a few credits, and your plan sets how many you get. The prompt is where the craft is — the more specific you are about genre, instruments, vocal style, and structure, the closer the result. You can also paste your own lyrics instead of letting it write them.",
+    "You describe the song you want — a genre, a mood, a subject — the way you'd type a message to a chatbot, and what comes back is a complete track with vocals that you play in the browser. You listen, change the description, and generate again until one lands.",
 
   whatItIs: [
     "Suno is an **AI music generator**. You type a description (a style, a mood, a topic — and optionally your own lyrics) and it produces a complete song with vocals and instrumentation. It's aimed at anyone who wants original music without playing an instrument: content creators needing a soundtrack, hobbyists, people making a birthday song. No musical training required.",

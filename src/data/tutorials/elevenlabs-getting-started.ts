@@ -12,7 +12,7 @@ export const elevenlabsTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You paste text, choose a voice — a stock voice, a community one, or one you've cloned — and it generates the audio. Usage is metered in **credits** that roughly track characters of text, with a monthly allowance per plan. Voice cloning comes in two flavors: a quick \"instant\" clone from a short sample, and a higher-quality \"professional\" clone that needs much more audio and a verification step. The quality is high enough that the responsible-use questions below aren't optional reading.",
+    "You paste text, choose a voice — a stock one, a community one, or one you've cloned from a sample — and it generates the audio. You listen, adjust the text or pick a different voice, and generate again until it sounds right, then keep the take you like.",
 
   whatItIs: [
     "ElevenLabs is an **AI voice platform**. Its core is text-to-speech that sounds convincingly human; it also does voice **cloning** (making a synthetic version of a specific voice from a sample), dubbing, and sound effects. It's used for audiobooks, video narration, podcasts, and voice agents. You mostly drive it by typing the text you want spoken and picking a voice.",

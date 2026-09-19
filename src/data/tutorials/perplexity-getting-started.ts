@@ -12,7 +12,7 @@ export const perplexityTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You type a question and Perplexity retrieves relevant pages, reads them, and writes an answer with inline source links. The **citations are the whole point** — they're your way to verify the claim rather than trust the AI. A basic search is fast and unlimited on the free plan; a deeper \"Pro\" search mode does multi-step reasoning across more sources and is limited on free. It's a research specialist — it deliberately doesn't do image generation or coding.",
+    "You type a question and Perplexity searches the web, reads the pages it finds, and writes an answer with numbered source links inline. You click a link to check the claim it supports, then ask a follow-up in the same thread and it searches again with that context.",
 
   whatItIs: [
     "Perplexity is an **answer engine** — a cross between a search engine and a chatbot. You ask a question in plain language; it searches the web in real time, reads multiple sources, and gives you one written answer with **numbered citations** you can click to check. Unlike a general chatbot working from training data, it's grounded in current web results; unlike Google, it hands you a synthesized answer instead of a list of links. It's for anyone who does research or fact-finding — students, journalists, the curious.",

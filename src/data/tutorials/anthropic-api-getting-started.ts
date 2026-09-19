@@ -10,7 +10,8 @@ export const anthropicApiTutorial: PlatformTutorialData = {
   changelogUrl: "https://platform.claude.com/docs",
   accessTier: "PREMIUM",
 
-  howItWorks: `The API lets your own code send text to Anthropic's models and get responses back, instead of typing into a chat window. You create an account on the developer console, generate a key, and your program sends requests with that key attached. Billing is per token — roughly, per chunk of text in and out — so cost scales with how much you send and how much you get back, with no monthly subscription underneath it.`,
+  howItWorks:
+    `Your own code sends text to Anthropic's models and gets a response back, instead of you typing into a chat window. You create an account on the developer console, generate a key, and your program sends requests with that key attached. You read what comes back, change the request, and send it again.`,
 
   whatItIs: [
     `A pay-per-use interface to the same model family behind the Claude chat assistant.`,

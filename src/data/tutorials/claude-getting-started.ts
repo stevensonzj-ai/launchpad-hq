@@ -10,7 +10,8 @@ export const claudeTutorial: PlatformTutorialData = {
   changelogUrl: "https://claude.com/blog",
   accessTier: "FREE",
 
-  howItWorks: `Claude is a conversational assistant from Anthropic. You type in plain language and it responds, holding the thread of a long conversation rather than treating each message as a fresh start. It can search the web, read files you upload, write and run code, and carry memory across separate conversations. The practical skill is not learning commands — there are none — but learning to give it enough context up front that it does not have to guess what you want.`,
+  howItWorks:
+    `You type in plain language and Claude responds, holding the thread of a long conversation rather than treating each message as a fresh start. Attach a file, ask a follow-up, or push back on an answer and it carries on from there. There are no commands to learn; the skill is giving it enough context up front.`,
 
   whatItIs: [
     `A general-purpose chat assistant you use through a browser, a desktop app, or a phone app.`,

@@ -10,7 +10,8 @@ export const descriptTutorial: PlatformTutorialData = {
   changelogUrl: "https://feedback.descript.com/changelog",
   accessTier: "FREE",
 
-  howItWorks: `Descript transcribes your recording and then lets you edit the media by editing the text. Delete a sentence from the transcript and it disappears from the audio and video. Rearrange a paragraph and the footage follows. For anything dialogue-driven — interviews, podcasts, talking-head video — this collapses a timeline-editing skill into a word-processing one. An AI assistant sits alongside it, capable of removing filler words, finding clips, and generating captions on request.`,
+  howItWorks:
+    `Descript transcribes your recording and then lets you edit the media by editing the text. Delete a sentence from the transcript and it disappears from the audio and video; rearrange a paragraph and the footage follows. For anything dialogue-driven, that collapses a timeline-editing skill into a word-processing one. You play it back, cut more, play it again.`,
 
   whatItIs: [
     `An audio and video editor built around transcript editing rather than a timeline.`,

@@ -12,7 +12,7 @@ export const canvaAiTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You work in Canva as usual, and the AI tools sit inside the editor — type a prompt to generate an image, describe a layout and get a template, or select part of a photo and describe the change. On paid plans the AI runs on a shared monthly **credit** pool; the free plan gives a small number of AI uses. The strength isn't any single tool (Midjourney makes better images, a dedicated writer makes better copy) — it's the **workflow**: generate, edit, lay out, and export in one place.",
+    "You work in Canva as usual, and the AI tools sit inside the editor — type a description to get an image, describe a layout and get a template you can edit, or select part of a photo and describe the change. The result lands on your canvas, where you keep editing it by hand.",
 
   whatItIs: [
     "Canva AI is the AI layer inside **Canva**, the drag-and-drop design tool millions of non-designers already use. Branded **Magic Studio**, it's a bundle of tools woven into the editor: **Magic Design** (describe a design, get an editable layout), **Dream Lab / Magic Media** (text-to-image and video), **Magic Write** (copy), plus **Magic Eraser**, **Magic Expand**, background remover, and a newer conversational \"just tell it what you want\" mode. It's for anyone making social posts, presentations, or marketing graphics who wants AI help without learning a pro design tool.",

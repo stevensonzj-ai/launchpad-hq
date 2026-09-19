@@ -12,14 +12,14 @@ export const openaiApiTutorial: PlatformTutorialData = {
   accessTier: "PREMIUM",
 
   howItWorks:
-    "You create an account, generate an **API key** (a secret credential), and your code sends requests to OpenAI's servers, which return the model's response. Billing is **per token** — you pay for the text going in and the text coming out, at a per-model rate, with output usually costing more than input. There's no monthly subscription on the API; you pay for exactly what you use, which makes cost control (picking cheaper models, setting spend limits) part of the job.",
+    "You create an account, generate an **API key** (a secret credential that identifies your account), and your code sends a request to OpenAI's servers with that key attached. The model's response comes back to your program, which does whatever you wrote it to do with it. You adjust the request and send it again.",
 
   whatItIs: [
     "The OpenAI API is how **developers build their own software** on OpenAI's models (text, images, speech-to-text, text-to-speech, embeddings) — the same underlying models as ChatGPT, but called from your own code instead of a chat window. It's for people writing applications: a chatbot, a summarizer, a coding tool. It is **not** the ChatGPT app, and a ChatGPT subscription does **not** include API access — they're separate products with separate billing.",
   ],
 
   beforeYouStart: [
-    "**There's no real free tier for building.** New accounts may get a small one-time trial credit after identity verification; after that it's pay-as-you-go. (There's a fringe \"free daily tokens in exchange for sharing your traffic for training\" program — skip it for anything real; see security.)",
+    "**There's no real free tier for building.** New accounts may get a small one-time trial credit after identity verification; after that it's pay-as-you-go, billed **per token** — for the text going in and the text coming out, at a per-model rate, with output usually costing more than input. (There's a fringe \"free daily tokens in exchange for sharing your traffic for training\" program — skip it for anything real; see security.)",
     "**Set a hard spend limit in the billing dashboard before your first project.** Agent-style or high-volume usage can run up a bill fast; a monthly cap is your safety net.",
     "You'll write (or paste) a little code to make your first call — this page assumes you're comfortable with that. If you're not coding yet, start with the ChatGPT app instead.",
   ],

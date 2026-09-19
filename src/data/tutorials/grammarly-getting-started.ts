@@ -10,7 +10,8 @@ export const grammarlyTutorial: PlatformTutorialData = {
   changelogUrl: "https://www.grammarly.com/blog/product/",
   accessTier: "FREE",
 
-  howItWorks: `Grammarly installs as a browser extension or desktop app and watches what you type wherever you type it — email, documents, forms, chat. It flags spelling and grammar as you go, and on paid plans suggests rewrites and tone adjustments. Unlike an assistant you visit, this one comes to you, which is why it feels effortless and also why deciding where it should and should not be running is the most important setup step.`,
+  howItWorks:
+    `Grammarly installs as a browser extension or desktop app and watches what you type wherever you type it — email, documents, forms, chat. It underlines what it would change as you go; you click a suggestion to accept it, or dismiss it and keep writing.`,
 
   whatItIs: [
     `A writing assistant that works inside the applications you already use rather than in its own window.`,

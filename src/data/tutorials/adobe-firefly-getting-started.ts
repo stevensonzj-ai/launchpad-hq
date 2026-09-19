@@ -12,10 +12,10 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You prompt it like any image generator and get results in seconds, with the option to refine style, aspect ratio, and variations. It runs on **credits**: on paid plans, standard image generation is effectively unlimited, and credits are spent mainly on premium operations (video, higher-res, partner models). Every Firefly image also carries **Content Credentials** — invisible provenance metadata marking it as AI-generated, part of Adobe's transparency push.",
+    "You describe the image you want and it generates several options in seconds. You pick one and refine it — change the style, the shape of the frame, ask for more variations — until you have something worth keeping.",
 
   whatItIs: [
-    "Firefly is Adobe's **generative AI for images** (and increasingly video, audio, and vector art). You describe what you want and it generates it — as a standalone web app, and baked into Adobe tools like Photoshop (Generative Fill) and Illustrator. What sets it apart isn't image quality — Midjourney generally beats it there — it's **legal safety**: Firefly was trained only on content Adobe has the rights to, which is why Adobe can stand behind commercial use in a way most generators can't. It's aimed at marketers, designers, and businesses who need images they can actually use without a copyright headache.",
+    "Firefly is Adobe's **generative AI for images** (and increasingly video, audio, and vector art). You describe what you want and it generates it — as a standalone web app, and baked into Adobe tools like Photoshop (Generative Fill) and Illustrator. What sets it apart isn't image quality — Midjourney generally beats it there — it's **legal safety**: Firefly was trained only on content Adobe has the rights to, which is why Adobe can stand behind commercial use in a way most generators can't. It's aimed at marketers, designers, and businesses who need images they can actually use without a copyright headache. Every Firefly image also carries **Content Credentials** — invisible provenance metadata marking it as AI-generated, part of Adobe's transparency push.",
   ],
 
   beforeYouStart: [

@@ -10,7 +10,8 @@ export const huggingFaceTutorial: PlatformTutorialData = {
   changelogUrl: "https://huggingface.co/blog",
   accessTier: "FREE",
 
-  howItWorks: `Hugging Face is the shared repository the open-model world runs on. Models, datasets, and small hosted demos live there, uploaded by companies and individuals alike. Most people meet it sideways: a tutorial says "download the model from Hugging Face" and they arrive without knowing what the site is. Its core function is storage and distribution — the models are free to browse and download — while running anything at scale on their hardware is where charges begin.`,
+  howItWorks:
+    `You arrive at a model's page — usually because a tutorial or another tool sent you there — read its documentation, and either download the files to use in a different tool or try a small hosted demo in your browser. There is no chat box; you browse, read, and fetch.`,
 
   whatItIs: [
     `A public repository of openly available AI models and datasets, free to browse and download without an account.`,

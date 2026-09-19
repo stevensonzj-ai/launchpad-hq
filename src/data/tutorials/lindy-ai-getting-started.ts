@@ -12,7 +12,7 @@ export const lindyAiTutorial: PlatformTutorialData = {
   accessTier: "PREMIUM",
 
   howItWorks:
-    "You message Lindy the way you'd message a colleague — in Slack or in a chat box on its website — and it comes back with the work done. For jobs you want repeated, you describe one in a box in plain English, and Lindy runs it on a schedule or on a **trigger** (the \"when\" — the event that starts an automation).",
+    "You message Lindy the way you'd message a colleague and it comes back with the work done. For jobs you want repeated, you describe one in a box in plain English, and Lindy runs it on a schedule or on a **trigger** (the \"when\" — the event that starts an automation).",
 
   whatItIs: [
     "Lindy sells itself as an AI employee rather than an automation builder. Its own documentation opens: \"Lindy is an AI employee. It lives in your Slack, connects to your tools, and comes back with the work done.\" You give it standing access to your mailbox and calendar, and it works from those continuously rather than from one form submission at a time.",

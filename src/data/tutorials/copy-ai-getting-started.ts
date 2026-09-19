@@ -12,10 +12,10 @@ export const copyAiTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You either pick a template (fill in a product and audience, get several variations) or chat with it like a general assistant to draft and refine. Under the hood it routes to top models from a few AI labs, and you can switch depending on the task. The free plan caps you at a **monthly word count**; paid plans unlock unlimited words and the workflow features. The skill is treating it as a **first-draft engine** — it's fast at volume, but the output needs your editing to sound like a person and to be correct.",
+    "You either pick a template — fill in a product and an audience, get several variations back — or chat with it like a general assistant to draft and refine. Either way you read what comes back, ask for another pass or a different angle, and then edit the result yourself before it goes anywhere.",
 
   whatItIs: [
-    "Copy.ai is an **AI writing tool** built for marketing content. At its core is a chat interface plus a big library of **templates** — ad copy, email subject lines, social captions, product descriptions, blog outlines — and a **Brand Voice** feature that learns your style. (It's since grown into a broader \"go-to-market\" platform with multi-step workflows, but for getting started, it's the chat-and-templates writing assistant.) It runs on **multiple underlying AI models** and is aimed at marketers, small businesses, and creators who produce a lot of short-form copy.",
+    "Copy.ai is an **AI writing tool** built for marketing content. At its core is a chat interface plus a big library of **templates** — ad copy, email subject lines, social captions, product descriptions, blog outlines — and a **Brand Voice** feature that learns your style. (It's since grown into a broader \"go-to-market\" platform with multi-step workflows, but for getting started, it's the chat-and-templates writing assistant.) It runs on **multiple underlying AI models**, which you can switch between depending on the task, and is aimed at marketers, small businesses, and creators who produce a lot of short-form copy.",
   ],
 
   beforeYouStart: [

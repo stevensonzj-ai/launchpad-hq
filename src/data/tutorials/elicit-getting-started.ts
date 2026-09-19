@@ -10,7 +10,8 @@ export const elicitTutorial: PlatformTutorialData = {
   changelogUrl: "https://support.elicit.com/en/",
   accessTier: "FREE",
 
-  howItWorks: `Elicit searches across a very large index of academic papers using plain-language research questions rather than keyword strings, then pulls structured information out of the results into a table you define. Instead of reading forty abstracts to find sample sizes and methods, you ask for those columns and it fills them in, linking each cell back to the passage it came from. That citation trail is the feature that makes it checkable, and checking is not optional.`,
+  howItWorks:
+    `You type a research question in plain language rather than a keyword string, and Elicit searches the academic literature and returns papers. You then name the columns you want — sample size, method, outcome — and it fills a table with those values from each paper, each cell linked to the passage it came from.`,
 
   whatItIs: [
     `A research assistant for academic literature, searching well over a hundred million papers.`,

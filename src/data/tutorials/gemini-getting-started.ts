@@ -10,7 +10,8 @@ export const geminiTutorial: PlatformTutorialData = {
   changelogUrl: "https://gemini.google/release-notes/",
   accessTier: "FREE",
 
-  howItWorks: `Gemini is Google's conversational assistant, reachable from a browser or its own app and increasingly woven into Gmail, Docs, Chrome, and Search. You ask in plain language; it answers, generates images, researches topics across many sources, and works with files you upload. Because it sits inside Google's product family, the boundary between "using Gemini" and "using Google" is blurrier than with standalone assistants — which is both its main convenience and its main thing to understand.`,
+  howItWorks:
+    `You open Gemini in a browser or its app, signed in with your Google account, and ask in plain language. It answers, and you keep going — attach a file, ask a follow-up, ask it to try again — in one running conversation. The same assistant also appears inside Google's other products, working on whatever you have open there.`,
 
   whatItIs: [
     `A general-purpose assistant with an unusually capable free tier — chat, image generation and editing, deep research, and live voice conversation at no cost.`,

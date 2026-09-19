@@ -12,7 +12,7 @@ export const heygenTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You give it a script and a presenter, and it renders a talking-head video. It runs on **credits**, and the catch to understand: the photorealistic avatar engines cost meaningfully more credits per minute than basic ones, translation consumes credits too, and 4K doubles them — so a few minutes of premium video goes through a plan's allowance fast, and credits mostly don't roll over. Creating a custom avatar of your own likeness is a separate, paid setup step.",
+    "You paste a script, pick a presenter and a voice, and it renders a video of that avatar speaking your words with matched lips and gestures. You watch it back, fix the script or swap the presenter, and render again.",
 
   whatItIs: [
     "HeyGen makes **AI avatar videos**. You paste a script, pick a presenter — a stock avatar, one built from a single photo, or a **digital twin** of yourself trained from a short recording — choose a voice, and it generates a video where the avatar speaks your words with synced lips, gestures, and expressions. It also **translates videos into 175+ languages** (re-syncing the speaker's lips) and can build a whole video from a single prompt. It's used for training content, product explainers, marketing, and localization.",

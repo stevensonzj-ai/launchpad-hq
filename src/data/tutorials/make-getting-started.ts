@@ -10,7 +10,8 @@ export const makeTutorial: PlatformTutorialData = {
   changelogUrl: "https://www.make.com/en/help/release-notes",
   accessTier: "FREE",
 
-  howItWorks: `Make connects apps so that something happening in one causes something to happen in another. You build these connections on a visual canvas, dragging modules onto it and drawing the path between them. A scenario starts with a trigger — a new form response, an incoming email — and then runs each module in turn. Every module that runs consumes one credit, which is the detail that governs both what you can build and what it costs.`,
+  howItWorks:
+    `You build on a visual canvas, dragging modules onto it and drawing the path between them. A scenario starts with a trigger — a new form response, an incoming email — and then runs each module in turn. You run it once by hand, open the execution to see what each step received and sent, and adjust.`,
 
   whatItIs: [
     `A no-code automation platform connecting thousands of apps through a visual builder.`,

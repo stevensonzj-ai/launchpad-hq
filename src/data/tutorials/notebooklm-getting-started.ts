@@ -11,7 +11,7 @@ export const notebooklmTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You create a \"notebook,\" add your sources, and then chat with them — ask for a summary, a comparison, an explanation, and it responds grounded in those documents with citations you can click. The key difference from a normal chatbot is the **grounding**: it isn't drawing on the open internet or its training data, it's reading **your** files. That's what makes its answers verifiable and much less prone to invention. It's cloud-based and runs in your browser.",
+    "You create a notebook, add your sources — files, links, notes — and then chat with them: ask for a summary, a comparison, an explanation, and it answers from those documents only, with citations you click to see the passage. Add another source and ask again; the answers change with what's in the notebook.",
 
   whatItIs: [
     "NotebookLM is Google's **source-grounded research assistant.** You upload your own material — PDFs, Google Docs, web pages, YouTube videos, notes — and it answers questions using **only those sources**, citing exactly where each answer came from. Because it's anchored to what you gave it, it rarely makes things up. It also turns your sources into study aids: an **Audio Overview** (a podcast-style conversation about your material), video overviews, mind maps, flashcards, and summaries. It's for students, researchers, and anyone making sense of a stack of documents.",

@@ -12,10 +12,10 @@ export const notionAiTutorial: PlatformTutorialData = {
   accessTier: "PREMIUM",
 
   howItWorks:
-    "You trigger the AI inside a page (a keyboard shortcut or a menu) to write, edit, or summarize, or you open Ask Notion to query across your workspace. Because it's grounded in what you've actually written, its answers are anchored to your docs rather than the open web — and it's **permission-aware**, so it only reads content you already have access to. Under the hood it uses models from several AI labs (with an auto mode that picks per task).",
+    "You trigger the AI inside a page — a keyboard shortcut or a menu — and tell it to write, edit, or summarise what's there, then accept, redo, or discard what it produces. Or you ask a question of your whole workspace and get an answer with links back to the pages it drew on.",
 
   whatItIs: [
-    "Notion AI is the AI woven into **Notion**, the all-in-one workspace for notes, docs, wikis, and databases. Rather than a separate chatbot, it lives **inside your pages**: it drafts and rewrites text where you're working, summarizes and translates, autofills databases, and — the standout — **\"Ask Notion\"** answers questions using **your entire workspace** (and connected apps) as the source, with newer **agents** that carry out multi-step tasks. It's for people who already keep their work in Notion and want AI grounded in **their** content.",
+    "Notion AI is the AI woven into **Notion**, the all-in-one workspace for notes, docs, wikis, and databases. Rather than a separate chatbot, it lives **inside your pages**: it drafts and rewrites text where you're working, summarizes and translates, autofills databases, and — the standout — **\"Ask Notion\"** answers questions using **your entire workspace** (and connected apps) as the source, with newer **agents** that carry out multi-step tasks. It's for people who already keep their work in Notion and want AI grounded in **their** content. Under the hood it uses models from several AI labs, with an auto mode that picks one per task.",
   ],
 
   beforeYouStart: [

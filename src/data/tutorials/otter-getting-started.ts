@@ -12,7 +12,7 @@ export const otterTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "Otter works by **connecting once and then running automatically**. You link your calendar and grant access to your meeting tool; from then on, the Otter bot shows up as a participant in your scheduled calls, captures the audio, and turns it into a live transcript with speakers labeled. During the meeting you can ask its chat questions (\"what did we decide?\"); afterward you get a summary and a searchable record. Because it's cloud-based, everything it captures is uploaded to Otter's servers and needs an internet connection.",
+    "Otter works by **connecting once and then running on its own**. You link your calendar and grant access to your meeting tool; from then on its bot shows up as a participant in your scheduled calls, captures the audio, and turns it into a live transcript with speakers labelled. Afterwards you get a summary and a searchable record.",
 
   whatItIs: [
     "Otter is a **meeting assistant**. You connect it to your calendar, and its bot joins your Zoom, Microsoft Teams, or Google Meet calls, transcribes everyone in real time, and produces a summary with action items you can search later. It's aimed at people who sit in a lot of meetings — students in lectures, salespeople on calls, anyone who'd rather pay attention than scramble to take notes.",

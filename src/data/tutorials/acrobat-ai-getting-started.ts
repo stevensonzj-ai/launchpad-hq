@@ -10,7 +10,8 @@ export const acrobatAiTutorial: PlatformTutorialData = {
   changelogUrl: "https://helpx.adobe.com/acrobat/using/whats-new.html",
   accessTier: "PREMIUM",
 
-  howItWorks: `Acrobat AI Assistant is a paid feature inside Adobe Acrobat and the free Acrobat Reader. Open a document and you can ask questions about it in plain language, getting back answers with citations pointing to the passage they came from. It handles scanned documents by running text recognition first, and can work across a set of files rather than one at a time. The design is deliberately narrow: it answers about the documents in front of it rather than about the world.`,
+  howItWorks:
+    `Open a document in Acrobat or Reader and ask about it in plain language. It answers, with citations pointing to the passage each answer came from; you click a citation to check it, then ask the next question.`,
 
   whatItIs: [
     `A question-and-answer layer over PDFs and other documents, built into software most people already have installed.`,

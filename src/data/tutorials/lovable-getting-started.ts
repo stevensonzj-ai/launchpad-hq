@@ -12,7 +12,7 @@ export const lovableTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "You chat with Lovable the way you'd chat with any assistant, but each message builds or edits your app. It runs on **credits**, and the catch worth understanding up front: credits are spent by **how complex your request is**, not per message — a simple tweak costs a fraction of a credit, a big multi-file feature costs several. Separately, once your app is **live**, running it (hosting, plus any AI features inside it) is billed on usage on top of your subscription. So there are two cost layers: building, and running.",
+    "You chat with Lovable the way you'd chat with any assistant, but each message builds or edits your app rather than answering a question. You describe what you want, try what it made, describe the next change, and keep going until it does what you meant.",
 
   whatItIs: [
     "Lovable is an **AI app builder** — the style of tool people call \"vibe coding.\" You describe what you want in plain language and it generates a working web app: a clickable front end, a database behind it, a login flow, and the plumbing that connects them, then deploys it. It's aimed squarely at **non-developers** — founders, product people, hobbyists — who want a real, editable app without writing code. And because you can export the code, it doesn't lock you in.",

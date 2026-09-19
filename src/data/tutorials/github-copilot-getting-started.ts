@@ -12,7 +12,7 @@ export const githubCopilotTutorial: PlatformTutorialData = {
   accessTier: "FREE",
 
   howItWorks:
-    "Copilot watches the code and comments around your cursor and suggests what probably comes next — a line, a whole function, or a block — which you accept with a keystroke. Alongside that, a **chat** feature lets you ask things in plain English (\"what does this function do?\", \"write a test for this\") and get answers grounded in your open code. Two things are worth knowing about the plumbing: inline autocomplete is unlimited on the paid plans and doesn't draw down any usage budget, while the heavier features (chat, \"agent\" mode that edits multiple files, code review) run on a monthly **credit** allowance that heavier use can exhaust.",
+    "Copilot watches the code around your cursor and suggests what probably comes next — a line, a function, a block — which you accept with a keystroke or ignore by carrying on typing. Alongside that, you can ask it things in plain English in a chat panel and get answers grounded in the code you have open.",
 
   whatItIs: [
     "GitHub Copilot is an AI coding assistant that runs **inside your editor** — it autocompletes code as you type, and answers questions in a chat panel about the file or project you're in. It's built by GitHub with models from several AI labs, and it works in the popular editors (**VS Code, Visual Studio, the JetBrains IDEs, and Vim/Neovim**) rather than being its own separate app. It's aimed at anyone who writes code, from first-project beginners to professionals; you don't need to be an expert to get value from the autocomplete.",
