@@ -71,10 +71,8 @@ export const v0Tutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Get a link on day one",
-      whatItDoes:
-        "Builds a small single-page site and puts it at a live address you can send to someone.",
       whyHere:
-        "v0 is made by the company that runs the hosting, so putting the result online is a control in the chat header rather than an export-and-upload errand — and v0's pricing page lists deploying to Vercel on the free plan.",
+        "You end up with a live address you can send to someone, not a file: v0 is made by the company that runs the hosting, so putting the result online is a control in the chat header rather than an export-and-upload errand — and v0's pricing page lists deploying to Vercel on the free plan.",
       tweak:
         "Swap in your own business, but keep the last sentence — it is how you find the publish control without hunting for it.",
       prompt:
@@ -82,9 +80,8 @@ export const v0Tutorial: PlatformTutorialData = {
     },
     {
       title: "Fix it by pointing, not describing",
-      whatItDoes: "Makes a small visual change without rebuilding the whole page.",
       whyHere:
-        "v0's quickstart tells you to open Design mode and select elements in the preview to tweak their styles visually or in words — and v0's pricing page lists Design mode on the free plan, where spending one of the day's messages to nudge a margin is a bad trade.",
+        "v0's quickstart tells you to open Design mode and select elements in the preview to tweak their styles visually or in words, changing one thing without rebuilding the whole page — and v0's pricing page lists Design mode on the free plan, where spending one of the day's messages to nudge a margin is a bad trade.",
       tweak:
         "Name the section and the exact change. Vague instructions like \"make it nicer\" are what burns a message.",
       prompt:
@@ -92,20 +89,16 @@ export const v0Tutorial: PlatformTutorialData = {
     },
     {
       title: "Make it tell you the plan first",
-      whatItDoes:
-        "Gets a short written plan you can correct before a single line of code is generated.",
       whyHere:
-        "Every generation draws on the same daily message cap and monthly credit balance described above, so with v0 the cheapest fix is the build that never happens — and a wrong build on an expensive model costs several right ones on a cheap one.",
+        "You get a short written plan to correct before any code is generated. Every generation draws on the same daily message cap and monthly credit balance described above, so with v0 the cheapest fix is the build that never happens — and a wrong build on an expensive model costs several right ones on a cheap one.",
       tweak: "Ask for five bullets instead of three for anything with more than one screen.",
       prompt:
         "Before you build anything, tell me in three bullets what you are going to make and what you are assuming about it. Then stop and wait for me to say go.",
     },
     {
       title: "Hand it over without a rewrite",
-      whatItDoes:
-        "Moves the code out of the chat into the place developers work, and gets a plain-language map of it.",
       whyHere:
-        "v0's FAQ describes a bi-directional GitHub integration — changes made locally sync back into v0 — so the handoff is not a one-way export that strands the conversation that produced it.",
+        "This moves the code out of the chat into the place developers work, and v0's FAQ describes a bi-directional GitHub integration — changes made locally sync back into v0 — so the handoff is not a one-way export that strands the conversation that produced it.",
       tweak:
         "No GitHub account? Ask it to export the code instead, and to say where the download lands and what to do with it.",
       prompt:
@@ -113,8 +106,6 @@ export const v0Tutorial: PlatformTutorialData = {
     },
     {
       title: "Ask it to break its own work",
-      whatItDoes:
-        "Sends v0 through the site it just built, looking for what a real visitor would trip over.",
       whyHere:
         "Vercel's launch post says v0 can search the web, read files and inspect a live site, so \"go and look at the page you just made\" is a described capability rather than the model recalling what it intended to build.",
       tweak:

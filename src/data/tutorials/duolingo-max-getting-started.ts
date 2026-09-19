@@ -72,12 +72,10 @@ export const duolingoMaxTutorial: PlatformTutorialData = {
   starterActions: [
     {
       title: "Open with a real errand, not small talk",
-      whatItDoes:
-        "Say or type this as your opening **prompt** — the message you give the AI.",
       prompt:
         "I need to explain to a pharmacist that I have a headache and ask what I can take without a prescription. Let's practise that. You be the pharmacist, and start.",
       whyHere:
-        "Video Call is unscripted — Lily follows whatever you open with — so your first sentence is the only steering the feature gives you, and spending it on \"how are you\" spends the whole call.",
+        "Say or type this as your opening **prompt** — the message you give the AI. Video Call is unscripted — Lily follows whatever you open with — so your first sentence is the only steering the feature gives you, and spending it on \"how are you\" spends the whole call.",
       tweak:
         "Swap in the scene you're genuinely nervous about: a landlord, a doctor's receptionist, a border guard.",
     },
