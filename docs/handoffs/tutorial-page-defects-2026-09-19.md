@@ -85,10 +85,10 @@ pattern. For `duolingo-max` the gloss must survive somewhere on the page.
 
 Verify after fixing: **zero cards corpus-wide should carry both fields.**
 
-### 2.2 Cards carrying NEITHER `prompt` nor `whatItDoes` — no action body (57 cards, 26 pages)
+### 2.2 Cards carrying NEITHER `prompt` nor `whatItDoes` — no action body (51 cards, 26 pages)
 
 All three validated exemplars (`zapier`, `chatgpt`, `ollama`) give **every** card exactly one of
-the two. These 26 pages ship cards with `title` + `whyHere` + sometimes `tweak` and **no
+the two. **Count corrected 2026-09-19:** this heading originally read 57, which was an arithmetic error in compiling this document; the enumerated list below is authoritative and sums to **51**. These 26 pages ship cards with `title` + `whyHere` + sometimes `tweak` and **no
 instruction telling the reader what to actually do.** The card explains why something matters and
 never says how.
 
@@ -475,3 +475,89 @@ mechanical audit of all 164 pages plus a read-only query of the live Neon catalo
 Every Tier 1 finding was verified programmatically on 2026-09-19 against the pages as they exist on
 `main` at `fe55bec7`. Tier 2 findings were verified by reading the offending strings, and the false
 positives named in each section were ruled out the same way.
+
+---
+
+# ADDENDUM — 2026-09-19, after the Tier 1 fix pass
+
+Tier 1 was implemented in five commits on `tutorials/batch-2026-09` (`60243e26`, `193279fb`,
+`6f45e15a`, `8100f2a5`, `9549bbb2`), typecheck clean before each. **Re-audited corpus-wide after
+all five: § 2.1 both-fields = 0, § 2.2 neither-field = 0, § 2.5 prompts-with-no-prompts = 0,
+§ 2.3 `howItWorks` over cap = 0** (corpus range now 33–60 words, median 54). The § 6 do-not-touch
+items and all Tier 2 / Tier 3 items are confirmed unchanged.
+
+Two corrections to this document, and two new findings.
+
+## Corrections
+
+1. **§ 2.2's count was 57; the real figure is 51.** Arithmetic error in compiling this document.
+   The enumerated per-page list was correct all along. Fixed in place above.
+2. **`descript`'s changelog is `https://feedback.descript.com/changelog`** (200, latest entry
+   2026-09-17). `www.descript.com/changelog` also resolves, via a 301 to `descript.canny.io` —
+   the `feedback.` host is the canonical one and is what shipped.
+
+## NEW — `clarifai` is not merely a dead changelog link. The product is gone.
+
+The Tier 1 pass omitted `clarifai`'s `changelogUrl` because `docs.clarifai.com` would not resolve,
+and flagged the vendor's main site as a liveness lead. **That lead is stronger than it looked.**
+Verified from two independent networks and two public resolvers (8.8.8.8 and 1.1.1.1), agreeing
+exactly:
+
+| Host | Result |
+|---|---|
+| `clarifai.com` | resolves to `192.64.119.122`; HTTPS dead; HTTP 302 → www with `Server: namecheap-nginx` |
+| `www.clarifai.com` | resolves to `207.237.146.217` (reverse DNS `static.rcn.com` — an ISP, not a cloud host); HTTPS dead |
+| **`api.clarifai.com`** | **NO DNS RECORD** |
+| `docs.clarifai.com` | NO DNS RECORD |
+| `status.clarifai.com` | NO DNS RECORD |
+| `clarifai.com` NS | **`dns1.registrar-servers.com`, `dns2.registrar-servers.com`** — Namecheap registrar parking |
+| `clarifai.com` MX | still `smtp.google.com` (Google Workspace) |
+
+**Clarifai's product *is* an API platform. `api.clarifai.com` having no DNS record means there is
+nothing for a reader to use.** The apex is on registrar parking nameservers serving
+`namecheap-nginx`, which a company operating an inference platform does not do.
+
+Context: **Nebius acquired the Clarifai team and licensed its inference technology, announced
+2026-05-12.** The licence explicitly excluded "Clarifai's legacy computer vision models." No
+public shutdown notice, wind-down date or migration plan was ever published.
+
+**This is the `play-ht` pattern exactly** — acqui-hire, no shutdown notice, product surface quietly
+switched off, marketing domain lingering. So the standards decision in § 4.2 now governs **three**
+pages, not two: `beatoven-ai`, `play-ht` and `clarifai`.
+
+**Process point this exposes, which matters more than the page.** The 2026-09-08 run already had
+the Nebius signal and wrote "the sourced Nebius / stalled-changelog position" into the page. Nothing
+re-checked it in the four months since, and the page has been live throughout. This is class 3 with
+a measured cost, and it is the argument for a periodic liveness sweep — the one check no nightly run
+ever performed.
+
+## NEW — `heygen` carries an unresolved internal contradiction (class 2)
+
+The pre-fix `howItWorks` said a custom avatar is "a separate, paid setup step." `beforeYouStart`
+says the free plan includes one custom avatar. **Both cannot be true.**
+
+The Tier 1 pass cut the `howItWorks` claim — correct regardless, since § 5 excludes pricing from
+that field — and deliberately did not relocate it, because the surviving `beforeYouStart` already
+addresses the point. **So the page is now internally consistent but may be consistently wrong.**
+Which claim is right is a vendor check against HeyGen's current plan-comparison table. Do not
+resolve it by reasoning; check the table.
+
+## Corpus-wide liveness sweep — run 2026-09-19, and its limits
+
+Every tutorial page's primary catalog `website` was resolved and fetched (163 of 164 have one;
+**`murf-ai` has no `website` value in its Neon row** — a catalog correction). Result:
+
+- **139 → HTTP 200, 1 → 202.**
+- **21 → 403**, every one of them bot-blocking, not breakage (`claude.ai`, `chat.openai.com`,
+  `canva.com`, `midjourney.com`, `perplexity.ai`, `zillow.com` and similar). Not defects.
+- **2 → genuine failures: `clarifai` (above) and `kakao-brain-karlo`** (`kakaobrain.com` has no DNS
+  record — already flagged by the 2026-09-13 run as discontinued).
+
+So clarifai is not the tip of an iceberg; the corpus is otherwise clean on primary domains.
+
+**But this sweep is necessary and not sufficient, and the reason is important.** A product's usable
+surface is often a subdomain while the marketing domain stays healthy. Demonstrated on `beatoven-ai`
+the same day: `beatoven.ai` **200**, `www.beatoven.ai` **200**, `sync.beatoven.ai` — the actual app
+— **NO DNS RECORD**. A marketing-domain sweep gives that page a clean bill of health. Any liveness
+check worth running must test **the host a reader actually signs in to**, which means recording that
+host per page rather than relying on the catalog's `website`.
