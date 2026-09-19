@@ -497,7 +497,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
         tools: [
           {
             name: "Jasper AI",
-            slug: "jasper-ai",
+            slug: "jasper",
             rationale:
               "Campaign-focused copy with brand controls. Optimal when marketing needs repeatable, on‑voice output at scale.",
           },

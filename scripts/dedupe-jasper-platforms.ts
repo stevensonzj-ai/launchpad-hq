@@ -12,8 +12,9 @@
  *      name is "Jasper"/"Jasper AI" (case-insensitive).
  *   2. If 0 or 1 rows match, exits cleanly — nothing to do (idempotent).
  *   3. Picks the canonical row by metadata completeness (explicit field
- *      scoring, logged per row). Tiebreakers: slug "jasper-ai" (that slug
- *      is hard-referenced by src/data/workflows/workflows.ts), then oldest
+ *      scoring, logged per row). Tiebreakers: slug "jasper" (the slug the
+ *      live catalog, src/data/workflows/workflows.ts and the shipped tutorial
+ *      src/data/tutorials/jasper-getting-started.ts all use), then oldest
  *      createdAt.
  *   4. Logs the full JSON of every duplicate row before touching it, so
  *      nothing is lost even after deletion.
@@ -25,8 +26,8 @@
  *      references in other platforms' directAlternatives /
  *      complementaryTools / budgetAlternativeTo / privacyAlternativeTo
  *      arrays, deletes the duplicates, and finally renames the canonical
- *      slug to "jasper-ai" if a deleted duplicate held it (preserving the
- *      workflow link).
+ *      slug to "jasper" if a deleted duplicate held it (preserving the
+ *      tutorial and workflow links).
  *   6. Verifies exactly one Jasper row remains and logs final FK counts.
  *
  * Usage:
@@ -73,8 +74,13 @@ function maskedHost(url: string): string {
 const JASPER_SLUGS = ["jasper", "jasper-ai"];
 const JASPER_NAMES = ["jasper", "jasper ai"]; // compared lowercased
 
-/** Slug hard-referenced by src/data/workflows/workflows.ts. */
-const WORKFLOW_SLUG = "jasper-ai";
+/**
+ * The slug that must survive. The live Neon catalog uses "jasper", the shipped
+ * tutorial registers under platformSlug "jasper", and workflows.ts links to it.
+ * An earlier revision preferred "jasper-ai"; running that would have orphaned
+ * the live tutorial page.
+ */
+const CANONICAL_SLUG = "jasper";
 
 // Scalar fields that count toward metadata completeness (non-null,
 // non-empty string = 1 point each).
@@ -153,8 +159,8 @@ function pickCanonical(rows: PlatformRow[]): PlatformRow {
   }
   scored.sort((a, b) => {
     if (b.score !== a.score) return b.score - a.score; // most complete first
-    const aWf = a.row.slug === WORKFLOW_SLUG ? 1 : 0; // prefer workflow slug
-    const bWf = b.row.slug === WORKFLOW_SLUG ? 1 : 0;
+    const aWf = a.row.slug === CANONICAL_SLUG ? 1 : 0; // prefer the live slug
+    const bWf = b.row.slug === CANONICAL_SLUG ? 1 : 0;
     if (bWf !== aWf) return bWf - aWf;
     return a.row.createdAt.getTime() - b.row.createdAt.getTime(); // oldest
   });
@@ -248,8 +254,8 @@ async function main() {
         `  and rewrite name references [${dupNames.join(", ")}] -> "${canonical.name}" in other platforms' alternative/complementary arrays`,
       );
     }
-    if (canonical.slug !== WORKFLOW_SLUG && duplicates.some((d) => d.slug === WORKFLOW_SLUG)) {
-      console.log(`  and rename canonical slug ${canonical.slug} -> ${WORKFLOW_SLUG}`);
+    if (canonical.slug !== CANONICAL_SLUG && duplicates.some((d) => d.slug === CANONICAL_SLUG)) {
+      console.log(`  and rename canonical slug ${canonical.slug} -> ${CANONICAL_SLUG}`);
     }
     console.log("DRY RUN complete — no writes performed.");
     await prisma.$disconnect();
@@ -392,19 +398,19 @@ async function main() {
     });
     console.log(`platforms: deleted ${deleted.count} duplicate(s)`);
 
-    // -- Keep the workflow-referenced slug alive: workflows.ts links to
-    //    /platform/jasper-ai, so if that slug just got deleted, the
+    // -- Keep the live slug alive: the tutorial page and workflows.ts both
+    //    resolve /platform/jasper, so if that slug just got deleted, the
     //    canonical row takes it over.
     if (
-      canonical.slug !== WORKFLOW_SLUG &&
-      duplicates.some((d) => d.slug === WORKFLOW_SLUG)
+      canonical.slug !== CANONICAL_SLUG &&
+      duplicates.some((d) => d.slug === CANONICAL_SLUG)
     ) {
       await tx.platform.update({
         where: { id: canonical.id },
-        data: { slug: WORKFLOW_SLUG },
+        data: { slug: CANONICAL_SLUG },
       });
       console.log(
-        `canonical slug renamed ${canonical.slug} -> ${WORKFLOW_SLUG} (workflow link preserved)`,
+        `canonical slug renamed ${canonical.slug} -> ${CANONICAL_SLUG} (tutorial and workflow links preserved)`,
       );
     }
   });
