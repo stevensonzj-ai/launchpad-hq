@@ -5,7 +5,7 @@ export const clarifaiTutorial: PlatformTutorialData = {
   platformSlug: "clarifai",
   title: "Getting Started with Clarifai",
   tagline:
-    "Browse and test AI models in one browser tab, then call the same one from your own code — a platform whose hosts stopped resolving in 2026 with no shutdown notice, so none of it can currently be reached.",
+    "Unreachable since 2026 with no shutdown notice: a model catalogue that let you test AI models in a browser tab and then call the same one from your own code.",
   archetype: "pick-and-setup",
   lastReviewedAt: "2026-09-19",
   accessTier: "FREE",

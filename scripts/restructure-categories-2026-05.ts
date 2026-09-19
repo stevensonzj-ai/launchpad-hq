@@ -1,6 +1,12 @@
 /**
  * Category restructure (2026-05) — idempotent data shuffle.
  *
+ * NOTE: scripts/tutorial-pipeline/audit-pages.mjs parses the CATEGORIES array
+ * below as the canonical list of live category slugs (it validates every
+ * tutorial's whereToNext.categorySlug against it). When this migration is
+ * eventually cleaned up, keep that array — or move it and update the parser —
+ * otherwise the guard loses its source of truth.
+ *
  * Splits the three superseded categories (Industry-Specific AI,
  * Audio Music & Voice AI, Browser Extensions & Productivi) across
  * 8 new categories + 5 existing destinations, and resets sortOrder
