@@ -13,13 +13,13 @@
  * - one https CTA
  */
 
-export const SPONSOR_SLOTS = ["homepage", "discover", "ai-of-the-week"] as const;
+export const SPONSOR_SLOTS = ["discover", "ai-of-the-week"] as const;
 export type SponsorSlot = (typeof SPONSOR_SLOTS)[number];
 
 export type SponsorPlacement = {
   id: string;
   slot: SponsorSlot;
-  /** Required when slot is `discover`; must match a live category slug. */
+  /** Unused for Discover Spotlight (page-top banner). Kept optional for older rows. */
   categorySlug?: string;
   /** Inclusive window, calendar dates in America/Chicago (YYYY-MM-DD). */
   startDate: string;

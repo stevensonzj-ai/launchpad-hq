@@ -5,7 +5,7 @@ import type { SponsorPlacement } from "./types";
  */
 export const TEST_ONLY_EXAMPLE_PLACEMENT: SponsorPlacement = {
   id: "test-only-example-not-live",
-  slot: "homepage",
+  slot: "discover",
   startDate: "2020-01-01",
   endDate: "2099-12-31",
   sponsorName: "Example Sponsor (TEST FIXTURE — NOT LIVE)",

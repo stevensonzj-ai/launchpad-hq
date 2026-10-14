@@ -107,9 +107,7 @@ export default async function DiscoverPage({
   ]);
   const favoriteIds = new Set(favorites.map((f) => f.platformId));
   const isSignedIn = user !== null;
-  const categorySponsor = params.category
-    ? getActivePlacement("discover", new Date(), params.category)
-    : null;
+  const discoverSpotlight = getActivePlacement("discover");
 
   // Group into A–Z + "#" bucket when alphabetical. Empty letter buckets still
   // render in the strip (disabled); the "#" bucket is hidden entirely if empty.
@@ -194,6 +192,11 @@ export default async function DiscoverPage({
           ? `Showing ${platforms.length} ${platforms.length === 1 ? "tool" : "tools"}`
           : `Browse ${platforms.length} vetted tools across ${categories.length} categories`}
       </p>
+      {discoverSpotlight ? (
+        <div className="mb-8">
+          <SponsoredSpotlight placement={discoverSpotlight} />
+        </div>
+      ) : null}
       <div className="mb-8 rounded-xl border border-orange-500/20 bg-orange-500/5 px-4 py-3 text-sm text-gray-300">
         <span className="font-medium text-orange-200">Workflow templates</span>
         {" — "}
@@ -206,12 +209,6 @@ export default async function DiscoverPage({
       {/* Filter bar — the five facet rows collapsed into one control row.
           Client component; it only emits URLs via the shared buildDiscoverQuery.
           The server still parses and guards the params it produces. */}
-      {categorySponsor ? (
-        <div className="mb-8">
-          <SponsoredSpotlight placement={categorySponsor} />
-        </div>
-      ) : null}
-
       <DiscoverFilterBar
         categories={categories.map((cat) => ({
           slug: cat.slug,

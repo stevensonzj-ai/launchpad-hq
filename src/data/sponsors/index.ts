@@ -38,8 +38,8 @@ export function getActivePlacement(
   const match = source.find((placement) => {
     if (placement.slot !== slot) return false;
     if (!isActiveOn(placement, ymd)) return false;
-    if (slot === "discover") {
-      return Boolean(categorySlug) && placement.categorySlug === categorySlug;
+    if (slot === "discover" && categorySlug) {
+      return placement.categorySlug === categorySlug;
     }
     return true;
   });
