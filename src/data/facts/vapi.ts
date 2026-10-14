@@ -8,8 +8,9 @@ export default {
     sourceUrl: "https://vapi.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -19,8 +20,9 @@ export default {
     sourceUrl: "https://vapi.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -44,9 +46,9 @@ export default {
       },
       {
         name: "Pro",
-        price: "$999",
-        period: "month",
-        limits: "Minimum; 10% of hosting fee",
+        price: "$999/mo minimum; 10% of Vapi hosting fee",
+        period: "",
+        limits: "",
       },
       {
         name: "Premier",
@@ -59,8 +61,9 @@ export default {
     sourceUrl: "https://vapi.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Web dashboard", "API"],
@@ -68,23 +71,15 @@ export default {
     sourceUrl: "https://vapi.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
-  },
-  models: {
-    value: ["Deepgram", "OpenAI", "ElevenLabs"],
-    note: "Third-party models; no in-house model.",
-    sourceUrl: "https://vapi.ai/pricing",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
-      summary: "Recorded Free credits, usage, Core, Pro, Premier, and listed add-ons.",
+      summary: "Pro is $999/mo minimum; 10% of Vapi hosting fee. Dropped provider names from models.",
     },
   ],
 } satisfies ToolFacts;

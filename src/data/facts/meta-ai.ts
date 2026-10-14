@@ -5,11 +5,25 @@ export default {
   lifecycle: "active",
   company: {
     value: "Meta",
-    sourceUrl: "https://ai.meta.com/",
+    sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  freeTier: {
+    value: {
+      available: true,
+      summary:
+        "Meta AI is free to use for everyday use. Meta is testing usage limits, and a subscription is available for more.",
+    },
+    sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["iOS", "Android", "Web", "Desktop", "AI glasses", "Mac (Beta)"],
@@ -17,8 +31,9 @@ export default {
     sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apps: {
     value: {
@@ -28,24 +43,25 @@ export default {
     sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
-    value: ["Muse Wonder", "Muse Spark 1.3", "Muse Image"],
-    label: "Muse family",
-    note: "Muse Wonder is labelled LATEST MODEL, announced Oct 12, 2026.",
-    sourceUrl: "https://ai.meta.com/",
+    value: ["Muse Spark"],
+    sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "models",
-      summary: "Latest model is Muse Wonder. Store links are the main Meta AI app, not Muse from Meta.",
+      summary:
+        "Model row is Muse Spark only. Kept main Meta AI store links. Added FAQ free-tier wording from the assistant page.",
     },
   ],
 } satisfies ToolFacts;

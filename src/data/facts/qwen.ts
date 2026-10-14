@@ -4,13 +4,13 @@ export default {
   slug: "qwen",
   lifecycle: "active",
   company: {
-    value: "Alibaba Cloud",
-    note: 'Site footer: "Powered by Alibaba Cloud".',
+    value: "Powered by Alibaba Cloud",
     sourceUrl: "https://qwen.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -20,16 +20,9 @@ export default {
     sourceUrl: "https://qwen.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
-  },
-  apiPricing: {
-    value: "Sold separately through Qwen Cloud.",
-    sourceUrl: "https://qwen.ai/",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Web", "iOS", "Android", "macOS", "Windows"],
@@ -37,14 +30,15 @@ export default {
     sourceUrl: "https://qwen.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
-      field: "freeTier",
-      summary: "Consumer app is listed as free to use, open to all. API is sold separately through Qwen Cloud.",
+      field: "company",
+      summary: 'Quoted footer "Powered by Alibaba Cloud". Dropped inferred Qwen Cloud API pricing.',
     },
   ],
 } satisfies ToolFacts;

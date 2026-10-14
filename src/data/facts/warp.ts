@@ -8,8 +8,9 @@ export default {
     sourceUrl: "https://www.warp.dev/download",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -19,8 +20,9 @@ export default {
     sourceUrl: "https://www.warp.dev/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -45,23 +47,25 @@ export default {
       {
         name: "Business",
         price: "$50",
-        period: "user",
+        period: "user/month",
         limits: "Up to 25 seats",
       },
     ],
     sourceUrl: "https://www.warp.dev/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["macOS 10.14+", "Windows 10/11 (x64, ARM64)", "Linux (deb/rpm/Arch/AppImage)"],
     sourceUrl: "https://www.warp.dev/download",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {

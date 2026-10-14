@@ -4,20 +4,22 @@ export default {
   slug: "grok",
   lifecycle: "active",
   company: {
-    value: "xAI / SpaceXAI",
+    value: "SpaceXAI",
     sourceUrl: "https://x.ai/grok",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Web", "iOS", "Android", "Grok on X"],
     sourceUrl: "https://x.ai/grok",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apps: {
     value: {
@@ -27,8 +29,9 @@ export default {
     sourceUrl: "https://x.ai/grok",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: ["grok-4.7"],
@@ -37,8 +40,9 @@ export default {
     sourceUrl: "https://docs.x.ai/developers/models",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {

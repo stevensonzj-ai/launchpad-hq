@@ -11,8 +11,9 @@ export default {
     sourceUrl: "https://www.capcut.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -37,7 +38,7 @@ export default {
       {
         name: "Teams",
         price: "$12.49",
-        period: "seat",
+        period: "month per seat",
         limits: "Shown for 2 seats",
       },
     ],
@@ -45,16 +46,18 @@ export default {
     sourceUrl: "https://www.capcut.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Desktop", "Mobile", "Web"],
     sourceUrl: "https://www.capcut.com/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: ["Seedance 2.5", "Seedance 2.0 Mini"],
@@ -62,8 +65,9 @@ export default {
     sourceUrl: "https://www.capcut.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
