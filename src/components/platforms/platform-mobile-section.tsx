@@ -5,6 +5,7 @@ type PlatformMobileSectionProps = {
   hasMobileApp: boolean;
   iosAppUrl: string | null;
   androidAppUrl: string | null;
+  macosAppUrl?: string | null;
   mobileWebFriendly: boolean;
   platformType: string[];
 };
@@ -18,11 +19,13 @@ export function PlatformMobileSection({
   hasMobileApp,
   iosAppUrl,
   androidAppUrl,
+  macosAppUrl,
   mobileWebFriendly,
   platformType,
 }: PlatformMobileSectionProps) {
   const pwa = hasPwa(platformType);
   const showStoreLinks = hasMobileApp && (iosAppUrl || androidAppUrl);
+  const showMacos = Boolean(macosAppUrl);
 
   return (
     <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
@@ -31,11 +34,23 @@ export function PlatformMobileSection({
         <h2 className="text-lg font-semibold text-white">Mobile access</h2>
       </div>
       <p className="mb-4 text-sm text-gray-400">
-        How to use <span className="text-gray-300">{name}</span> on phones and tablets.
+        How to use <span className="text-gray-300">{name}</span>
+        {showMacos ? " on desktop and mobile." : " on phones and tablets."}
       </p>
 
-      {showStoreLinks && (
+      {(showStoreLinks || showMacos) && (
         <div className="mb-4 flex flex-wrap gap-3">
+          {macosAppUrl && (
+            <a
+              href={macosAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-gray-600 hover:bg-gray-900"
+            >
+              <span className="text-[13px] font-semibold">Download for macOS</span>
+              <ExternalLink className="h-3.5 w-3.5 text-gray-500" />
+            </a>
+          )}
           {iosAppUrl && (
             <a
               href={iosAppUrl}
