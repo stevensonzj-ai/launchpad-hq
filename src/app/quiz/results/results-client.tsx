@@ -6,26 +6,12 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import type { QuizAnswers } from "@/lib/quiz-map";
-import { quizToRecommendationInput } from "@/lib/quiz-map";
-import { PlatformCard } from "@/components/platforms/platform-card";
+import { normalizeQuizGoals, quizToRecommendationInput } from "@/lib/quiz-map";
+import { QuizMatchSections, type QuizMatchRec } from "@/components/quiz/quiz-match-sections";
 
 const STASH_KEY = "launchpad_quiz_pending";
 
-type Rec = {
-  id: string;
-  slug: string;
-  name: string;
-  company: string | null;
-  primaryUse: string | null;
-  costTier: string;
-  difficultyLevel: string;
-  category: { name: string; slug: string };
-  freeTierFeatures: string | null;
-  hasMobileApp?: boolean;
-  mobileWebFriendly?: boolean;
-  matchScore: number;
-  aboveDifficulty?: boolean;
-};
+type Rec = QuizMatchRec;
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
@@ -44,7 +30,6 @@ export function ResultsClient() {
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
 
-  // `undefined` while we read sessionStorage on mount; then QuizAnswers or `null`.
   const [stash, setStash] = useState<QuizAnswers | null | undefined>(undefined);
   const [recs, setRecs] = useState<Rec[] | null>(null);
   const [recsError, setRecsError] = useState<string | null>(null);
@@ -89,9 +74,6 @@ export function ResultsClient() {
     };
   }, [stash]);
 
-  // Post-auth save handoff: when an authenticated user lands here with a
-  // stash (returning from sign-in/up), persist the answers, clear the stash,
-  // and redirect. One-shot via ref so the effect can't fire twice.
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
     if (stash === undefined) return;
@@ -102,8 +84,6 @@ export function ResultsClient() {
     }
     saveAttempted.current = true;
     void runSave(stash);
-    // runSave is stable within this component's render scope; depending on it
-    // would re-fire the effect every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, isSignedIn, stash, router]);
 
@@ -117,7 +97,6 @@ export function ResultsClient() {
         body: JSON.stringify({ answers }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      // Only clear after a confirmed save — failure must keep the stash.
       sessionStorage.removeItem(STASH_KEY);
       setSaveState("saved");
       router.replace("/for-you");
@@ -199,25 +178,7 @@ export function ResultsClient() {
             with broader answers.
           </p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {recs.map((p) => (
-              <PlatformCard
-                key={p.id}
-                slug={p.slug}
-                name={p.name}
-                company={p.company}
-                primaryUse={p.primaryUse}
-                costTier={p.costTier}
-                difficultyLevel={p.difficultyLevel}
-                category={p.category}
-                freeTierFeatures={p.freeTierFeatures}
-                hasMobileApp={p.hasMobileApp}
-                mobileWebFriendly={p.mobileWebFriendly}
-                matchScore={p.matchScore}
-                aboveDifficulty={p.aboveDifficulty}
-              />
-            ))}
-          </div>
+          <QuizMatchSections recs={recs} goals={normalizeQuizGoals(stash)} />
         )}
       </section>
 

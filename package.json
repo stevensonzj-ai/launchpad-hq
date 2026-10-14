@@ -8,6 +8,7 @@
         "start": "next start",
         "lint": "eslint",
         "typecheck": "tsc --noEmit",
+        "test": "tsx --test src/lib/quiz-map.test.ts src/lib/recommendations-score.test.ts",
         "audit:tutorials": "node scripts/tutorial-pipeline/audit-pages.mjs",
         "db:update-mobile": "tsx scripts/update-platform-mobile-fields.ts",
         "db:seed-platforms": "tsx scripts/seed-missing-platforms.ts",
