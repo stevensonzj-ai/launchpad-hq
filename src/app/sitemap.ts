@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
 import { listRegisteredTutorials } from "@/data/tutorials";
 import { WORKFLOWS } from "@/data/workflows";
+import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
+
+export const dynamic = "force-dynamic";
 
 const STATIC_PUBLIC_PATHS = [
   "/",
@@ -12,7 +15,27 @@ const STATIC_PUBLIC_PATHS = [
   "/pricing",
 ] as const;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+function parseRealDate(value: string | Date | null | undefined): Date | undefined {
+  if (!value) return undefined;
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return undefined;
+  return date;
+}
+
+function laterDate(...candidates: Array<Date | undefined>): Date | undefined {
+  const valid = candidates.filter((d): d is Date => d instanceof Date);
+  if (!valid.length) return undefined;
+  return new Date(Math.max(...valid.map((d) => d.getTime())));
+}
+
+function withLastModified(
+  url: string,
+  lastModified?: Date,
+): MetadataRoute.Sitemap[number] {
+  return lastModified ? { url, lastModified } : { url };
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = STATIC_PUBLIC_PATHS.map((path) => ({
     url: `${SITE_URL}${path === "/" ? "" : path}`,
   }));
@@ -21,11 +44,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}/workflows/${workflow.slug}`,
   }));
 
-  // Live tutorials render on the platform detail page (Tutorials tab),
-  // not as standalone /tutorials/[slug] routes.
-  const tutorialEntries: MetadataRoute.Sitemap = listRegisteredTutorials().map((tutorial) => ({
-    url: `${SITE_URL}/platform/${tutorial.platformSlug}`,
-  }));
+  const tutorials = listRegisteredTutorials();
+  const lastReviewedBySlug = new Map(
+    tutorials.map((tutorial) => [tutorial.platformSlug, tutorial.lastReviewedAt]),
+  );
 
-  return [...staticEntries, ...workflowEntries, ...tutorialEntries];
+  let platformEntries: MetadataRoute.Sitemap;
+
+  try {
+    // Same source as /platform/[slug] and Discover: live Platform rows.
+    const platforms = await prisma.platform.findMany({
+      select: { slug: true, updatedAt: true },
+      orderBy: { slug: "asc" },
+    });
+
+    platformEntries = platforms.map((platform) => {
+      const lastModified = laterDate(
+        parseRealDate(platform.updatedAt),
+        parseRealDate(lastReviewedBySlug.get(platform.slug)),
+      );
+      return withLastModified(`${SITE_URL}/platform/${platform.slug}`, lastModified);
+    });
+  } catch {
+    // DB unavailable (local build without DATABASE_URL, Neon blip): keep
+    // the static catalog plus tutorial-backed platform URLs only. Do not
+    // invent lastmod for rows we could not read.
+    platformEntries = tutorials.map((tutorial) =>
+      withLastModified(
+        `${SITE_URL}/platform/${tutorial.platformSlug}`,
+        parseRealDate(tutorial.lastReviewedAt),
+      ),
+    );
+  }
+
+  return [...staticEntries, ...workflowEntries, ...platformEntries];
 }
