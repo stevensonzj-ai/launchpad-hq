@@ -8,6 +8,10 @@ export type Fact<T> = {
   verifiedBy?: string;
   verifiedAt?: string;
   status: FactStatus;
+  /** Display heading for this field (for example "GPT-6 family"). */
+  label?: string;
+  /** Source or scope note shown with the fact. */
+  note?: string;
 };
 
 export type ToolPlan = {

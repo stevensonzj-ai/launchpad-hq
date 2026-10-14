@@ -187,7 +187,13 @@ export default async function PlatformPage({
             <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
               <h2 className="mb-4 text-lg font-semibold text-white">Technical Details</h2>
               <div className="grid gap-3 text-sm sm:grid-cols-2">
-                <div><span className="text-gray-500">Type:</span> <span className="text-gray-300">{view.platformType.join(", ")}</span></div>
+                <div>
+                  <span className="text-gray-500">Type:</span>{" "}
+                  <span className="text-gray-300">{view.platformType.join(", ")}</span>
+                  {facts?.platforms?.note && (
+                    <p className="mt-1 text-xs text-gray-500">“{facts.platforms.note}”</p>
+                  )}
+                </div>
                 <div><span className="text-gray-500">Offline:</span> <span className="text-gray-300">{platform.offlineCapable ? "Yes" : "No"}</span></div>
                 <div><span className="text-gray-500">API:</span> <span className="text-gray-300">{platform.apiAvailable ? "Yes" : "No"}</span></div>
                 <div><span className="text-gray-500">Languages:</span> <span className="text-gray-300">{platform.languageSupport || "English"}</span></div>
@@ -195,7 +201,10 @@ export default async function PlatformPage({
                   <div className="sm:col-span-2"><span className="text-gray-500">Integrations:</span> <span className="text-gray-300">{platform.keyIntegrations}</span></div>
                 )}
                 {facts?.models && (
-                  <div className="sm:col-span-2"><span className="text-gray-500">Models:</span> <span className="text-gray-300">{facts.models.value.join(", ")}</span></div>
+                  <div className="sm:col-span-2">
+                    <span className="text-gray-500">{facts.models.label ?? "Models"}:</span>{" "}
+                    <span className="text-gray-300">{facts.models.value.join(", ")}</span>
+                  </div>
                 )}
               </div>
             </section>

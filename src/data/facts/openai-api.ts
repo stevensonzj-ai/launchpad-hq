@@ -12,7 +12,7 @@ export default {
     sourceUrl: "https://developers.openai.com/api/docs/models",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "cto",
+    verifiedBy: "ra",
     verifiedAt: "2026-10-14",
     status: "verified",
   },
