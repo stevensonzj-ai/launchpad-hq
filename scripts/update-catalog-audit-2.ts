@@ -51,12 +51,12 @@ type CatalogPatch = {
 const PATCHES: CatalogPatch[] = [
   {
     slug: "lindy-ai",
-    finding: "High: Lindy $50 credits/7 days; Team $49.99 (page disagrees with audit $29.99)",
+    finding: "High: Lindy $50 credits/7 days; Team $29.99/mo for 3,000 credits",
     sourceUrl: "https://www.lindy.ai/pricing",
     verified: true,
     fields: {
       currentPricing:
-        "Start with $50 in free credits lasting 7 days (no card). Team $49.99/user/mo for 5,000 credits (pooled); top-ups $10 per 1,000 credits; Enterprise custom (official FAQ, as of 2026-10-14). Audit #2’s $29.99 / 3,000-credit Team figure is not on the live page.",
+        "Start with $50 in free credits lasting 7 days (no card). Team $29.99/mo for 3,000 credits (pooled); top-ups $10 per 1,000 credits; Enterprise custom (official lindy.ai/pricing, as of 2026-10-14).",
       freeTierFeatures:
         "No ongoing free plan. $50 in free credits, last 7 days, no credit card (official, as of 2026-10-14)",
       costTier: "PAID",
@@ -131,9 +131,9 @@ const PATCHES: CatalogPatch[] = [
     verified: true,
     fields: {
       currentPricing:
-        "Free $0 forever, no card (1,000 credits/mo); Plus $20/mo flat (10,000 credits); Team $200/mo (50,000 credits, 25 users); Ultimate custom; Embed from $36k/year (official, as of 2026-10-14)",
+        "Free $0 forever, no card (1,000 credits; reset daily); Plus $20/mo flat (10,000 credits); Team $200/mo (50,000 credits, 25 users); Ultimate custom; Embed from $36k/year (official, as of 2026-10-14)",
       freeTierFeatures:
-        "Free forever, no card: 1,000 credits/month, unlimited flows, up to 5 users (official, as of 2026-10-14)",
+        "Free forever, no card: 1,000 credits with daily reset, unlimited flows, up to 5 users (official, as of 2026-10-14)",
       costTier: "FREEMIUM",
     },
   },
@@ -292,6 +292,7 @@ async function main() {
           primaryUse: true,
           primaryUseCases: true,
           costTier: true,
+          verified: true,
         },
       });
 
@@ -303,8 +304,9 @@ async function main() {
 
       const entries = fieldEntries(patch.fields);
       const diffs = entries.filter(([key, next]) => existing[key] !== next);
+      const verifiedDiff = existing.verified !== patch.verified;
 
-      if (diffs.length === 0) {
+      if (diffs.length === 0 && !verifiedDiff) {
         unchanged += 1;
         console.log(`= ${patch.slug} already matches; no field changes`);
         continue;
@@ -317,10 +319,17 @@ async function main() {
         console.log(`    old: ${JSON.stringify(existing[key])}`);
         console.log(`    new: ${JSON.stringify(next)}`);
       }
+      if (verifiedDiff) {
+        console.log(`  verified:`);
+        console.log(`    old: ${JSON.stringify(existing.verified)}`);
+        console.log(`    new: ${JSON.stringify(patch.verified)}`);
+      }
 
       if (dryRun) continue;
 
-      const data: Record<string, string | CostTier> = {};
+      const data: Record<string, string | CostTier | boolean> = {
+        verified: patch.verified,
+      };
       for (const [key, next] of diffs) {
         data[key] = next;
       }
