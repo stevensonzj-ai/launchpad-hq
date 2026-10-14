@@ -14,6 +14,7 @@ import { PlatformModelsSection } from "@/components/models/platform-models-secti
 import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { getModelFamilyForPlatform } from "@/data/models";
+import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -57,6 +58,8 @@ export default async function PlatformPage({
   if (!platform) notFound();
 
   const modelFamily = getModelFamilyForPlatform(platform.slug);
+  const facts = getToolFacts(platform.slug);
+  const view = overlayPlatformWithFacts(platform, facts);
 
   const user = await getOrCreateDbUser();
   const isSignedIn = user !== null;
@@ -136,25 +139,36 @@ export default async function PlatformPage({
         counts={platform._count}
         initialTab={tab}
       >
-        <PlatformOverviewSections platform={platform} />
+        {facts?.lifecycle === "discontinued" && (
+          <div className="mb-6 rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+            This tool is marked discontinued. Confirm current availability on the official site before signing up.
+          </div>
+        )}
+        {facts?.lifecycle === "beta" && (
+          <div className="mb-6 rounded-lg border border-sky-500/40 bg-sky-500/10 px-4 py-3 text-sm text-sky-100">
+            This tool is in beta. Features and pricing may change.
+          </div>
+        )}
+
+        <PlatformOverviewSections platform={view} />
 
         {/* Content sections */}
         <div className="mt-8 space-y-6">
           <PlatformMobileSection
             name={platform.name}
-            hasMobileApp={platform.hasMobileApp}
-            iosAppUrl={platform.iosAppUrl}
-            androidAppUrl={platform.androidAppUrl}
+            hasMobileApp={view.hasMobileApp}
+            iosAppUrl={view.iosAppUrl}
+            androidAppUrl={view.androidAppUrl}
             mobileWebFriendly={platform.mobileWebFriendly}
-            platformType={platform.platformType}
+            platformType={view.platformType}
           />
 
-          <div className={`grid gap-6${platform.freeTierFeatures ? " lg:grid-cols-2 lg:items-start" : ""}`}>
+          <div className={`grid gap-6${view.freeTierFeatures ? " lg:grid-cols-2 lg:items-start" : ""}`}>
             {/* Free Tier */}
-            {platform.freeTierFeatures && (
+            {view.freeTierFeatures && (
               <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
                 <h2 className="mb-3 text-lg font-semibold text-white">Free Tier</h2>
-                <p className="text-sm text-gray-300">{platform.freeTierFeatures}</p>
+                <p className="text-sm text-gray-300">{view.freeTierFeatures}</p>
                 {platform.usageLimits && (
                   <div className="mt-3 border-t border-gray-800 pt-3">
                     <p className="text-xs text-gray-500">Limits: {platform.usageLimits}</p>
@@ -172,7 +186,7 @@ export default async function PlatformPage({
             <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
               <h2 className="mb-4 text-lg font-semibold text-white">Technical Details</h2>
               <div className="grid gap-3 text-sm sm:grid-cols-2">
-                <div><span className="text-gray-500">Type:</span> <span className="text-gray-300">{platform.platformType.join(", ")}</span></div>
+                <div><span className="text-gray-500">Type:</span> <span className="text-gray-300">{view.platformType.join(", ")}</span></div>
                 <div><span className="text-gray-500">Offline:</span> <span className="text-gray-300">{platform.offlineCapable ? "Yes" : "No"}</span></div>
                 <div><span className="text-gray-500">API:</span> <span className="text-gray-300">{platform.apiAvailable ? "Yes" : "No"}</span></div>
                 <div><span className="text-gray-500">Languages:</span> <span className="text-gray-300">{platform.languageSupport || "English"}</span></div>
@@ -183,6 +197,23 @@ export default async function PlatformPage({
             </section>
           </div>
         </div>
+
+        {facts?.changelog && facts.changelog.length > 0 && (
+          <section className="mt-8 rounded-lg border border-gray-800 bg-gray-900 p-6">
+            <h2 className="mb-3 text-lg font-semibold text-white">What changed</h2>
+            <ul className="space-y-2 text-sm text-gray-300">
+              {facts.changelog.map((entry) => (
+                <li key={`${entry.date}-${entry.field}-${entry.summary}`}>
+                  <span className="text-gray-500">{entry.date}</span>
+                  {" · "}
+                  <span className="text-gray-400">{entry.field}</span>
+                  {" — "}
+                  {entry.summary}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {modelFamily && <PlatformModelsSection family={modelFamily} />}
 
@@ -201,7 +232,9 @@ export default async function PlatformPage({
                 costTier={p.costTier}
                 difficultyLevel={p.difficultyLevel}
                 category={p.category}
-                freeTierFeatures={p.freeTierFeatures}
+                freeTierFeatures={
+                  overlayPlatformWithFacts(p, getToolFacts(p.slug)).freeTierFeatures
+                }
                 hasMobileApp={p.hasMobileApp}
                 mobileWebFriendly={p.mobileWebFriendly}
                 isFavorited={favoriteIds.has(p.id)}
@@ -227,7 +260,9 @@ export default async function PlatformPage({
                 costTier={p.costTier}
                 difficultyLevel={p.difficultyLevel}
                 category={p.category}
-                freeTierFeatures={p.freeTierFeatures}
+                freeTierFeatures={
+                  overlayPlatformWithFacts(p, getToolFacts(p.slug)).freeTierFeatures
+                }
                 hasMobileApp={p.hasMobileApp}
                 mobileWebFriendly={p.mobileWebFriendly}
                 isFavorited={favoriteIds.has(p.id)}
