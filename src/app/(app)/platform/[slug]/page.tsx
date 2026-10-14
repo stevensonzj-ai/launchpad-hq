@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { Suspense } from "react";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -12,9 +11,23 @@ import { PlatformMobileSection } from "@/components/platforms/platform-mobile-se
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
+import { PlatformVerdictCard } from "@/components/platforms/platform-verdict-card";
+import { PlatformQuickFacts } from "@/components/platforms/platform-quick-facts";
+import { PlatformPricingTable } from "@/components/platforms/platform-pricing-table";
+import { PlatformSources } from "@/components/platforms/platform-sources";
+import { FactCite } from "@/components/platforms/fact-cite";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { getModelFamilyForPlatform } from "@/data/models";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
+import { getStaticTutorialForPlatform } from "@/data/tutorials";
+import {
+  collectDisplaySources,
+  freeTierSummary,
+  plansFromFactsOrProse,
+  startingPriceLabel,
+  staticTutorialCount,
+  stripInlineCitations,
+} from "@/lib/platform-display";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -23,7 +36,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     select: { name: true, primaryUse: true, description: true },
   });
   if (!platform) return { title: "Not Found" };
-  const metaDesc = platform.description?.trim() || platform.primaryUse || undefined;
+  const facts = getToolFacts(slug);
+  const metaDesc =
+    facts?.verdict?.value?.trim() ||
+    platform.description?.trim() ||
+    platform.primaryUse ||
+    undefined;
   return {
     title: `${platform.name} | Launchpad HQ`,
     description: metaDesc,
@@ -44,12 +62,10 @@ export default async function PlatformPage({
     where: { slug },
     include: {
       category: true,
-      tutorials: { where: { published: true }, take: 5 },
       _count: {
         select: {
           prompts: { where: { status: ModerationStatus.APPROVED } },
           discussions: { where: { status: ModerationStatus.APPROVED } },
-          tutorials: { where: { published: true } },
         },
       },
     },
@@ -60,6 +76,8 @@ export default async function PlatformPage({
   const modelFamily = getModelFamilyForPlatform(platform.slug);
   const facts = getToolFacts(platform.slug);
   const view = overlayPlatformWithFacts(platform, facts);
+  const hasTutorial = Boolean(getStaticTutorialForPlatform(platform.slug));
+  const tutorialCount = staticTutorialCount(hasTutorial);
 
   const user = await getOrCreateDbUser();
   const isSignedIn = user !== null;
@@ -79,10 +97,6 @@ export default async function PlatformPage({
           take: 4,
         })
       : Promise.resolve([]),
-    // Fetch all user favorites as a Set so we can populate bookmark state
-    // on both the header Save button and every PlatformCard in the
-    // Alternatives / Works Well With grids. Mirrors Discover's pattern.
-    // TODO: bound this query if favorites-per-user grows significantly.
     user
       ? prisma.userFavorite.findMany({
           where: { userId: user.id },
@@ -93,9 +107,21 @@ export default async function PlatformPage({
   const favoriteIds = new Set(favoriteRows.map((f) => f.platformId));
   const isFavorited = favoriteIds.has(platform.id);
 
+  const plans = plansFromFactsOrProse(facts, view.currentPricing, platform.costTier);
+  const freeSummary = freeTierSummary(facts, view.freeTierFeatures);
+  const { sources, notes } = collectDisplaySources(facts, [
+    platform.description,
+    platform.currentPricing,
+    platform.freeTierFeatures,
+    platform.usageLimits,
+    platform.primaryUse,
+  ]);
+  const platformsLabel = view.platformType.join(", ");
+  const fallbackVerdict =
+    platform.description?.trim() || platform.primaryUse?.trim() || null;
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2 text-sm text-gray-500">
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
@@ -106,7 +132,6 @@ export default async function PlatformPage({
         <span className="text-gray-300">{platform.name}</span>
       </div>
 
-      {/* Header */}
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white">{platform.name}</h1>
@@ -132,11 +157,14 @@ export default async function PlatformPage({
         </div>
       </div>
 
-      <Suspense>
       <PlatformDetailTabs
         platformName={platform.name}
         platformSlug={platform.slug}
-        counts={platform._count}
+        counts={{
+          tutorials: tutorialCount,
+          discussions: platform._count.discussions,
+          prompts: platform._count.prompts,
+        }}
         initialTab={tab}
       >
         {facts?.lifecycle === "discontinued" && (
@@ -150,46 +178,75 @@ export default async function PlatformPage({
           </div>
         )}
 
-        <PlatformOverviewSections platform={view} />
+        <div className="space-y-8">
+          <PlatformVerdictCard
+            name={platform.name}
+            verdictFact={facts?.verdict}
+            fallbackText={fallbackVerdict}
+            idealUserTypes={platform.idealUserTypes}
+          />
 
-        {/* Content sections */}
+          <PlatformQuickFacts
+            items={[
+              { label: "Free tier", value: freeSummary, fact: facts?.freeTier },
+              { label: "Starting price", value: startingPriceLabel(plans), fact: facts?.plans },
+              { label: "Platforms", value: platformsLabel, fact: facts?.platforms },
+              { label: "Company", value: platform.company ?? "" },
+            ]}
+          />
+
+          <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
+        </div>
+
+        <div className="mt-8">
+          <PlatformOverviewSections platform={view} />
+        </div>
+
         <div className="mt-8 space-y-6">
           <PlatformMobileSection
             name={platform.name}
-            hasMobileApp={view.hasMobileApp}
             iosAppUrl={view.iosAppUrl}
             androidAppUrl={view.androidAppUrl}
             macosAppUrl={view.macosAppUrl}
+            windowsAppUrl={view.windowsAppUrl}
+            linuxAppUrl={view.linuxAppUrl}
             mobileWebFriendly={platform.mobileWebFriendly}
             platformType={view.platformType}
+            appsFact={facts?.apps}
           />
 
           <div className={`grid gap-6${view.freeTierFeatures ? " lg:grid-cols-2 lg:items-start" : ""}`}>
-            {/* Free Tier */}
             {view.freeTierFeatures && (
               <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
-                <h2 className="mb-3 text-lg font-semibold text-white">Free Tier</h2>
-                <p className="text-sm text-gray-300">{view.freeTierFeatures}</p>
+                <h2 className="mb-3 text-lg font-semibold text-white">
+                  Free Tier
+                  <FactCite fact={facts?.freeTier} />
+                </h2>
+                <p className="text-sm text-gray-300">{stripInlineCitations(view.freeTierFeatures)}</p>
                 {view.usageLimits && (
                   <div className="mt-3 border-t border-gray-800 pt-3">
-                    <p className="text-xs text-gray-500">Limits: {view.usageLimits}</p>
+                    <p className="text-xs text-gray-500">
+                      Limits: {stripInlineCitations(view.usageLimits)}
+                    </p>
                   </div>
                 )}
                 {platform.upgradeTriggers && (
                   <div className="mt-2">
-                    <p className="text-xs text-gray-500">When to upgrade: {platform.upgradeTriggers}</p>
+                    <p className="text-xs text-gray-500">
+                      When to upgrade: {stripInlineCitations(platform.upgradeTriggers)}
+                    </p>
                   </div>
                 )}
               </section>
             )}
 
-            {/* Technical Details */}
             <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
               <h2 className="mb-4 text-lg font-semibold text-white">Technical Details</h2>
               <div className="grid gap-3 text-sm sm:grid-cols-2">
                 <div>
                   <span className="text-gray-500">Type:</span>{" "}
                   <span className="text-gray-300">{view.platformType.join(", ")}</span>
+                  <FactCite fact={facts?.platforms} />
                   {facts?.platforms?.note && (
                     <p className="mt-1 text-xs text-gray-500">“{facts.platforms.note}”</p>
                   )}
@@ -204,6 +261,7 @@ export default async function PlatformPage({
                   <div className="sm:col-span-2">
                     <span className="text-gray-500">{facts.models.label ?? "Models"}:</span>{" "}
                     <span className="text-gray-300">{facts.models.value.join(", ")}</span>
+                    <FactCite fact={facts.models} />
                   </div>
                 )}
               </div>
@@ -230,7 +288,6 @@ export default async function PlatformPage({
 
         {modelFamily && <PlatformModelsSection family={modelFamily} />}
 
-      {/* Alternatives */}
       {alternatives.length > 0 && (
         <section className="mt-10">
           <h2 className="mb-4 text-xl font-semibold text-white">Alternatives</h2>
@@ -258,7 +315,6 @@ export default async function PlatformPage({
         </section>
       )}
 
-      {/* Complementary */}
       {complementary.length > 0 && (
         <section className="mt-10">
           <h2 className="mb-4 text-xl font-semibold text-white">Works Well With</h2>
@@ -285,8 +341,9 @@ export default async function PlatformPage({
           </div>
         </section>
       )}
+
+        <PlatformSources sources={sources} notes={notes} />
       </PlatformDetailTabs>
-      </Suspense>
     </div>
   );
 }
