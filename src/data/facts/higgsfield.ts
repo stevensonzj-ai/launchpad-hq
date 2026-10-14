@@ -1,0 +1,95 @@
+import type { ToolFacts } from "./types";
+
+export default {
+  slug: "higgsfield",
+  lifecycle: "active",
+  company: {
+    value: "Higgsfield, Inc.",
+    note: "© 2026 Higgsfield, Inc.",
+    sourceUrl: "https://higgsfield.ai/",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  freeTier: {
+    value: {
+      available: true,
+      summary: "Limited use",
+    },
+    sourceUrl: "https://higgsfield.ai/pricing",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  plans: {
+    value: [
+      {
+        name: "Starter",
+        price: "$19",
+        period: "month",
+        limits: "Annual; page says no difference vs monthly",
+      },
+      {
+        name: "Plus",
+        price: "$47",
+        period: "month",
+        limits: "Annual; from $59 monthly",
+      },
+      {
+        name: "Ultra",
+        price: "$99",
+        period: "month",
+        limits: "Annual; from $129 monthly",
+      },
+      {
+        name: "Teams",
+        price: "From $65",
+        period: "seat/month",
+        limits: "",
+      },
+    ],
+    note: "/pricing is empty to WebFetch and curl, so all plan prices are browser-verified 2026-10-14: Starter $19, Plus $47/$59, Ultra $99/$129, Teams from $65.",
+    sourceUrl: "https://higgsfield.ai/pricing",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  models: {
+    value: [
+      "Higgsfield Soul family",
+      "Genjutsu",
+      "Katana",
+      "Popcorn",
+      "Canvas",
+      "Cinema Studio 4.0",
+      "Supercomputer agent (powered by GPT-6 Astra, third-party)",
+      "Seedance (third-party)",
+      "Kling (third-party)",
+      "Nano Banana (third-party)",
+      "Wan (third-party)",
+      "Sora 2 (third-party)",
+      "Veo 3.1 (third-party)",
+    ],
+    note: "Homepage fetch confirms Genjutsu, Katana, Cinema Studio 4.0, Supercomputer, GPT-6 Astra, Seedance, Nano Banana, Wan. Soul, Popcorn, Canvas, Kling, Sora 2 and Veo 3.1 weren't on the homepage: browser-verified 2026-10-14 (cited source is /pricing).",
+    sourceUrl: "https://higgsfield.ai/pricing",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  changelog: [
+    {
+      date: "2026-10-14",
+      field: "plans",
+      summary:
+        "RA: all plan prices browser-verified 2026-10-14 (/pricing empty to fetch). Third-party models labeled as such.",
+    },
+  ],
+} satisfies ToolFacts;
