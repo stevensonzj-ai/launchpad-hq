@@ -1,0 +1,97 @@
+import { FactCite } from "@/components/platforms/fact-cite";
+import { TruncatedValue } from "@/components/platforms/truncated-value";
+import { DIFFICULTY_LABEL, PRIVACY_LEVEL_LABEL } from "@/lib/labels";
+import { stripInlineCitations } from "@/lib/platform-display";
+import type { Fact } from "@/data/facts/types";
+
+export type TechnicalDetailRow = {
+  label: string;
+  value: string;
+  fact?: Pick<Fact<unknown>, "sourceUrl" | "checkedAt" | "status"> | null;
+  truncate?: boolean;
+};
+
+type PlatformTechnicalDetailsProps = {
+  difficultyLevel: string;
+  privacyLevel: string;
+  timeToProductivity: string | null;
+  learningCurve: string | null;
+  offlineCapable: boolean;
+  apiAvailable: boolean;
+  languageSupport: string | null;
+  keyIntegrations: string | null;
+  upgradeTriggers: string | null;
+  modelsRow?: { label: string; value: string; fact?: Fact<string[]> };
+};
+
+export function buildTechnicalDetailRows(
+  props: PlatformTechnicalDetailsProps,
+): TechnicalDetailRow[] {
+  const rows: TechnicalDetailRow[] = [
+    { label: "Offline", value: props.offlineCapable ? "Yes" : "No" },
+    { label: "API", value: props.apiAvailable ? "Yes" : "No" },
+    { label: "Languages", value: props.languageSupport?.trim() || "English" },
+    {
+      label: "Difficulty",
+      value: DIFFICULTY_LABEL[props.difficultyLevel] ?? props.difficultyLevel,
+    },
+    {
+      label: "Privacy",
+      value: PRIVACY_LEVEL_LABEL[props.privacyLevel] ?? props.privacyLevel,
+    },
+  ];
+
+  const timeToProductivity = props.timeToProductivity?.trim();
+  if (timeToProductivity) {
+    rows.push({ label: "Time to productivity", value: timeToProductivity });
+  }
+  const learningCurve = props.learningCurve?.trim();
+  if (learningCurve) {
+    rows.push({ label: "Learning curve", value: learningCurve });
+  }
+  if (props.upgradeTriggers?.trim()) {
+    rows.push({
+      label: "Upgrade when",
+      value: stripInlineCitations(props.upgradeTriggers),
+    });
+  }
+  if (props.keyIntegrations?.trim()) {
+    rows.push({
+      label: "Integrations",
+      value: stripInlineCitations(props.keyIntegrations),
+      truncate: true,
+    });
+  }
+  if (props.modelsRow) {
+    rows.push({
+      label: props.modelsRow.label,
+      value: props.modelsRow.value,
+      fact: props.modelsRow.fact,
+    });
+  }
+
+  return rows;
+}
+
+export function PlatformTechnicalDetails(props: PlatformTechnicalDetailsProps) {
+  const rows = buildTechnicalDetailRows(props);
+
+  return (
+    <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+      <h2 className="mb-4 text-lg font-semibold text-white">Technical details</h2>
+      <dl className="grid grid-cols-[minmax(7.5rem,9rem)_1fr] items-baseline gap-x-4 gap-y-2.5 text-sm">
+        {rows.map((row) => (
+          <div key={row.label} className="contents">
+            <dt className="text-gray-500">
+              {row.label}
+              <FactCite fact={row.fact} />
+            </dt>
+            <dd className="min-w-0 text-gray-200">
+              {row.truncate ? <TruncatedValue text={row.value} /> : row.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}

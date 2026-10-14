@@ -129,6 +129,8 @@ describe("overlayPlatformWithFacts", () => {
     assert.deepEqual(overlayPlatformWithFacts(platform, undefined), {
       ...platform,
       macosAppUrl: null,
+      windowsAppUrl: null,
+      linuxAppUrl: null,
       usageLimits: null,
     });
   });
@@ -184,6 +186,8 @@ describe("overlayPlatformWithFacts", () => {
     assert.equal(view.iosAppUrl, null);
     assert.equal(view.androidAppUrl, null);
     assert.equal(view.macosAppUrl, "https://x.ai/bot#download");
+    assert.equal(view.windowsAppUrl, null);
+    assert.equal(view.linuxAppUrl, null);
     assert.equal(view.hasMobileApp, false);
     assert.equal(view.usageLimits, null);
   });

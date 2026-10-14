@@ -10,6 +10,8 @@ export type PlatformFactFields = {
   iosAppUrl: string | null;
   androidAppUrl: string | null;
   macosAppUrl?: string | null;
+  windowsAppUrl?: string | null;
+  linuxAppUrl?: string | null;
 };
 
 export function formatPlans(plans: ToolPlan[]): string {
@@ -24,6 +26,8 @@ export function formatPlans(plans: ToolPlan[]): string {
 
 export type OverlayPlatform<T extends PlatformFactFields> = T & {
   macosAppUrl: string | null;
+  windowsAppUrl: string | null;
+  linuxAppUrl: string | null;
   usageLimits: string | null;
 };
 
@@ -34,6 +38,8 @@ export function overlayPlatformWithFacts<T extends PlatformFactFields>(
   const next: OverlayPlatform<T> = {
     ...platform,
     macosAppUrl: platform.macosAppUrl ?? null,
+    windowsAppUrl: platform.windowsAppUrl ?? null,
+    linuxAppUrl: platform.linuxAppUrl ?? null,
     usageLimits: platform.usageLimits ?? null,
   };
 
@@ -57,6 +63,8 @@ export function overlayPlatformWithFacts<T extends PlatformFactFields>(
     next.iosAppUrl = apps.ios ?? null;
     next.androidAppUrl = apps.android ?? null;
     next.macosAppUrl = apps.macos ?? null;
+    next.windowsAppUrl = apps.windows ?? null;
+    next.linuxAppUrl = apps.linux ?? null;
     next.hasMobileApp = Boolean(apps.ios || apps.android);
   }
 

@@ -1,11 +1,9 @@
-"use client";
-
-import { useState } from "react";
 import type { ReactNode } from "react";
-import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { PlatformTutorials } from "@/components/tutorials/platform-tutorials";
 import { PlatformDiscussions } from "@/components/discussions/platform-discussions";
 import { PlatformPrompts } from "@/components/prompts/platform-prompts";
+import { resolvePlatformTab } from "@/lib/platform-display";
 
 export type PlatformDetailTab = "overview" | "tutorials" | "discussions" | "prompts";
 
@@ -13,28 +11,13 @@ type TabCountKey = "tutorials" | "discussions" | "prompts";
 
 export type PlatformDetailTabCounts = Partial<Record<TabCountKey, number>>;
 
-const TABS: { id: PlatformDetailTab; label: string; countKey?: TabCountKey }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "tutorials", label: "Tutorials", countKey: "tutorials" },
-  { id: "discussions", label: "Discussions", countKey: "discussions" },
-  { id: "prompts", label: "Prompts", countKey: "prompts" },
-];
-
 type PlatformDetailTabsProps = {
   platformName: string;
   platformSlug: string;
   children: ReactNode;
   counts?: PlatformDetailTabCounts;
-  /** Server-passed ?tab= fallback; client also reads searchParams (PR #43). */
   initialTab?: string;
 };
-
-function tabFromParam(value: string | null | undefined): PlatformDetailTab {
-  if (value === "tutorials" || value === "discussions" || value === "prompts") {
-    return value;
-  }
-  return "overview";
-}
 
 export function PlatformDetailTabs({
   platformName,
@@ -43,22 +26,44 @@ export function PlatformDetailTabs({
   counts,
   initialTab,
 }: PlatformDetailTabsProps) {
-  const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<PlatformDetailTab>(() =>
-    tabFromParam(searchParams.get("tab") ?? initialTab),
+  const hasTutorial = (counts?.tutorials ?? 0) > 0;
+  const activeTab = resolvePlatformTab(initialTab, hasTutorial);
+
+  const tabs: { id: PlatformDetailTab; label: string; href: string; count?: number }[] = [
+    { id: "overview", label: "Overview", href: `/platform/${platformSlug}` },
+  ];
+  if (hasTutorial) {
+    tabs.push({
+      id: "tutorials",
+      label: "Tutorials",
+      href: `/platform/${platformSlug}?tab=tutorials`,
+      count: counts?.tutorials,
+    });
+  }
+  tabs.push(
+    {
+      id: "discussions",
+      label: "Discussions",
+      href: `/platform/${platformSlug}?tab=discussions`,
+      count: counts?.discussions,
+    },
+    {
+      id: "prompts",
+      label: "Prompts",
+      href: `/platform/${platformSlug}?tab=prompts`,
+      count: counts?.prompts,
+    },
   );
 
   return (
     <>
-      <div className="mb-8 flex flex-wrap gap-1">
-        {TABS.map((tab) => {
+      <nav className="mb-8 flex flex-wrap gap-1" aria-label="Platform sections">
+        {tabs.map((tab) => {
           const active = activeTab === tab.id;
-          const count = tab.countKey ? counts?.[tab.countKey] : undefined;
           return (
-            <button
+            <Link
               key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
+              href={tab.href}
               className={`border-b-2 px-4 py-3 text-[15px] font-medium transition-colors ${
                 active
                   ? "border-orange-500 text-white"
@@ -66,15 +71,15 @@ export function PlatformDetailTabs({
               }`}
             >
               {tab.label}
-              {count !== undefined && count > 0 && (
+              {tab.count !== undefined && tab.count > 0 && (
                 <span className={`ml-1.5 text-sm ${active ? "text-white/60" : "text-gray-500"}`}>
-                  ({count})
+                  ({tab.count})
                 </span>
               )}
-            </button>
+            </Link>
           );
         })}
-      </div>
+      </nav>
 
       {activeTab === "overview" && children}
       {activeTab === "tutorials" && (
