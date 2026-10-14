@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms"
+import { SITE_IS_PUBLIC } from "@/lib/site"
 import { BackToTop } from "@/components/layout/back-to-top"
 
 const geistSans = Geist({
@@ -23,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Launchpad HQ - Your AI Mission Control",
     description: `Your AI mission control center. ${count}+ vetted tools across ${categoryCount} categories.`,
+    ...(!SITE_IS_PUBLIC ? { robots: { index: false, follow: false } } : {}),
   }
 }
 

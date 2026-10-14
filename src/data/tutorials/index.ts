@@ -335,6 +335,10 @@ export function getStaticTutorialForPlatform(platformSlug: string): PlatformTuto
   return byPlatformSlug[platformSlug];
 }
 
+export function listRegisteredTutorials(): PlatformTutorialData[] {
+  return Object.values(byPlatformSlug);
+}
+
 export type {
   AccessTier,
   TutorialArchetype,
