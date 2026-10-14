@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // Flags workflow toolSlug / tool.slug values that are not in a known catalog
-// list compiled from seed/export scripts, tutorial platformSlug fields, and
-// exclusions.json. Does not query the database.
+// list compiled from seed/export scripts and tutorial platformSlug fields.
+// Slugs listed in exclusions.json are treated as invalid (exit 1 if used).
+// Does not query the database.
 //
 // Usage: npm run audit:workflows
-// Exit 1 on unknown slugs.
+// Exit 1 on unknown or excluded slugs.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -93,11 +94,9 @@ function workflowSlugs(workflows) {
 }
 
 function main() {
-  const known = new Set([
-    ...collectFromScripts(),
-    ...collectFromTutorials(),
-    ...collectFromExclusions(),
-  ]);
+  const excluded = collectFromExclusions();
+  const known = new Set([...collectFromScripts(), ...collectFromTutorials()]);
+  for (const slug of excluded) known.delete(slug);
   if (known.size < 50) {
     console.error(`known slug list too small (${known.size}); parser probably broke`);
     process.exit(1);
@@ -105,20 +104,34 @@ function main() {
 
   const workflows = loadWorkflows();
   const used = workflowSlugs(workflows);
-  const unknown = used.filter((u) => !known.has(u.slug));
+  const excludedHits = used.filter((u) => excluded.has(u.slug));
+  const unknown = used.filter((u) => !excluded.has(u.slug) && !known.has(u.slug));
+  const uniqueExcluded = [...new Set(excludedHits.map((u) => u.slug))].sort();
   const uniqueUnknown = [...new Set(unknown.map((u) => u.slug))].sort();
 
   console.log(`known catalog slugs (static): ${known.size}`);
+  console.log(`excluded slugs: ${excluded.size}`);
   console.log(`workflow slug references: ${used.length}`);
+
+  let failed = false;
+  if (uniqueExcluded.length) {
+    failed = true;
+    console.error("Workflow slugs listed in exclusions.json (must not be used):");
+    for (const slug of uniqueExcluded) {
+      const hits = excludedHits.filter((u) => u.slug === slug);
+      console.error(`  ${slug}  (${hits.map((h) => `${h.workflow}/${h.tier}/${h.where}`).join(", ")})`);
+    }
+  }
   if (uniqueUnknown.length) {
-    console.error("Unknown workflow slugs (not in seed/tutorial/exclusion lists):");
+    failed = true;
+    console.error("Unknown workflow slugs (not in seed/tutorial lists):");
     for (const slug of uniqueUnknown) {
       const hits = unknown.filter((u) => u.slug === slug);
       console.error(`  ${slug}  (${hits.map((h) => `${h.workflow}/${h.tier}/${h.where}`).join(", ")})`);
     }
-    process.exit(1);
   }
-  console.log("all workflow slugs are in the known static list");
+  if (failed) process.exit(1);
+  console.log("all workflow slugs are in the known static list and none are excluded");
 }
 
 main();

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 import Link from "next/link";
 import type { WorkflowTemplate, WorkflowTierId } from "@/data/workflows";
 import { WorkflowToolName } from "./workflow-tool-name";
@@ -35,6 +36,14 @@ const tierMeta = {
   },
 } as const;
 
+function tabId(key: WorkflowTierId) {
+  return `workflow-tier-tab-${key}`;
+}
+
+function panelId(key: WorkflowTierId) {
+  return `workflow-tier-panel-${key}`;
+}
+
 export function WorkflowTierComparison({
   workflow,
   validSlugs,
@@ -46,11 +55,34 @@ export function WorkflowTierComparison({
   tutorialSlugs: string[];
 }) {
   const [active, setActive] = useState<WorkflowTierId>("budget");
+  const tabRefs = useRef<Partial<Record<WorkflowTierId, HTMLButtonElement | null>>>({});
   const valid = new Set(validSlugs);
   const tutorials = new Set(tutorialSlugs);
   const t = workflow.tiers[active];
   const meta = tierMeta[active];
   const steps = t.steps?.slice().sort((a, b) => a.order - b.order) ?? [];
+
+  function selectTier(key: WorkflowTierId) {
+    setActive(key);
+    tabRefs.current[key]?.focus();
+  }
+
+  function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>, key: WorkflowTierId) {
+    const i = TIER_ORDER.indexOf(key);
+    let next: WorkflowTierId | undefined;
+    if (event.key === "ArrowRight") {
+      next = TIER_ORDER[(i + 1) % TIER_ORDER.length];
+    } else if (event.key === "ArrowLeft") {
+      next = TIER_ORDER[(i - 1 + TIER_ORDER.length) % TIER_ORDER.length];
+    } else if (event.key === "Home") {
+      next = TIER_ORDER[0];
+    } else if (event.key === "End") {
+      next = TIER_ORDER[TIER_ORDER.length - 1];
+    }
+    if (!next) return;
+    event.preventDefault();
+    selectTier(next);
+  }
 
   return (
     <div className="space-y-6">
@@ -67,8 +99,15 @@ export function WorkflowTierComparison({
               key={key}
               type="button"
               role="tab"
+              id={tabId(key)}
               aria-selected={selected}
-              onClick={() => setActive(key)}
+              aria-controls={panelId(key)}
+              tabIndex={selected ? 0 : -1}
+              ref={(el) => {
+                tabRefs.current[key] = el;
+              }}
+              onClick={() => selectTier(key)}
+              onKeyDown={(event) => onTabKeyDown(event, key)}
               className={`rounded-xl border px-3 py-3 text-left transition-colors ${
                 selected ? m.selected : m.idle
               }`}
@@ -80,7 +119,12 @@ export function WorkflowTierComparison({
         })}
       </div>
 
-      <div className={`overflow-hidden rounded-xl border bg-gray-900/80 ${meta.border}`}>
+      <div
+        role="tabpanel"
+        id={panelId(active)}
+        aria-labelledby={tabId(active)}
+        className={`overflow-hidden rounded-xl border bg-gray-900/80 ${meta.border}`}
+      >
         <div className={`h-1 bg-gradient-to-r ${meta.bar}`} />
         <div className="border-b border-gray-800 px-4 py-4 sm:px-5">
           <h2 className="text-lg font-bold text-white">{meta.label}</h2>
@@ -165,12 +209,12 @@ export function WorkflowTierComparison({
               {t.tools.map((tool, i) => (
                 <li key={i} className="flex gap-2 text-sm text-gray-300">
                   <span className="text-gray-600">•</span>
-                    <WorkflowToolName
-                      name={tool.name}
-                      slug={tool.slug}
-                      validSlugs={valid}
-                      rationale={tool.rationale}
-                    />
+                  <WorkflowToolName
+                    name={tool.name}
+                    slug={tool.slug}
+                    validSlugs={valid}
+                    rationale={tool.rationale}
+                  />
                 </li>
               ))}
             </ul>
