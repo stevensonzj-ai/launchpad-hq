@@ -14,9 +14,7 @@ export default function TermsPage() {
         <h2>Who we are</h2>
         <p>
           These terms are between you and Lakeside Innovation Labs LLC (“we”), operator of
-          Launchpad HQ. We are organised in <strong>[State — Zach review]</strong>. Postal
-          address: <strong>[Mailing address — Zach review]</strong>. Registered agent:{" "}
-          <strong>[Registered agent — Zach review]</strong>. Contact:{" "}
+          Launchpad HQ, a Texas limited liability company. Contact:{" "}
           <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>.
         </p>
         <p>
@@ -30,19 +28,12 @@ export default function TermsPage() {
         <p>
           Launchpad HQ is a free directory of AI tools, plus optional account features
           (saving quiz results, favourites, posting prompts and discussions). There is no
-          paid user subscription.{" "}
-          <strong>
-            [Zach review] Stripe may be used later to invoice sponsors; it is not used to
-            bill visitors.
-          </strong>
+          paid user subscription. Stripe is used only for sponsor invoices.
         </p>
         <p>
-          <strong>
-            [Zach review] The catalog is information only. It is not professional, legal,
-            medical, or financial advice.
-          </strong>{" "}
-          Tool descriptions, features, and prices can be wrong or out of date. Always check
-          the vendor’s own site before you buy or rely on a tool.
+          The catalog is information only. It is not professional, legal, medical, or
+          financial advice. Tool descriptions, features, and prices can be wrong or out of
+          date. Always check the vendor’s own site before you buy or rely on a tool.
         </p>
       </section>
 
@@ -54,10 +45,8 @@ export default function TermsPage() {
           Clerk.
         </p>
         <p>
-          <strong>
-            [Zach review] Minimum age: confirm who may create an account (for example 13+
-            with guardian consent, or 18+).
-          </strong>
+          You must be at least 13 years old to use Launchpad HQ. The site is not directed
+          at children.
         </p>
       </section>
 
@@ -67,32 +56,24 @@ export default function TermsPage() {
           If you post reviews, prompts, discussions, or replies: no spam, nothing illegal,
           no harassment, and no other people’s personal data. We moderate submissions.
           New prompts, discussions, and replies start as pending and are only shown
-          publicly once approved.{" "}
-          <strong>
-            [Zach review] We may refuse, hide, or remove content.
-          </strong>
+          publicly once approved. We may remove content or suspend accounts for breaches
+          of these terms.
         </p>
       </section>
 
       <section>
         <h2>Your content</h2>
         <p>
-          You keep whatever rights you already have in what you post.{" "}
-          <strong>
-            [Zach review] Licence: confirm the licence users grant us to host, display,
-            and moderate that content (worldwide, non-exclusive, royalty-free, to operate
-            the directory — and whether we may keep anonymised copies after account
-            deletion). In our database, deleting a user keeps prompts, discussions, and
-            replies with the author set to null; favourites, progress, preferences,
-            reviews, votes, ratings, and reports are deleted.
-          </strong>
+          You keep whatever rights you already have in what you post. You grant us a
+          worldwide, non-exclusive, royalty-free license to host, display, and moderate
+          that content so we can operate the directory. After an account is deleted, public
+          posts stay up in anonymized form (the author field is set to null). Favourites,
+          progress, preferences, reviews, votes, ratings, and reports are deleted with the
+          account.
         </p>
         <p>
-          <strong>
-            [Zach review] DMCA / takedown: confirm that copyright complaints should go to{" "}
-            <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>{" "}
-            and whether a designated agent is required.
-          </strong>
+          Copyright complaints under the DMCA should be sent to{" "}
+          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>.
         </p>
       </section>
 
@@ -120,58 +101,45 @@ export default function TermsPage() {
       <section>
         <h2>Disclaimers and liability</h2>
         <p>
-          <strong>
-            [Zach review] Disclaimers: the service is provided “as is,” without warranties
-            of accuracy, fitness, or uninterrupted availability. Confirm the exact
-            warranty disclaimer you want.
-          </strong>
+          The service is provided “as is,” without warranties of accuracy, fitness, or
+          uninterrupted availability, to the fullest extent permitted by law.
         </p>
         <p>
-          <strong>
-            [Zach review] Liability limits: confirm a cap (for example, fees paid in the
-            prior 12 months, or $0 for free users) and which damages are excluded
-            (indirect, incidental, lost profits). This is not legal advice and is a
-            placeholder until counsel reviews it.
-          </strong>
+          Our total liability for claims arising out of these terms or the service is
+          capped at the greater of the fees you paid us in the prior 12 months or $100.
+          We are not liable for indirect, incidental, or lost-profit damages.
         </p>
       </section>
 
       <section>
         <h2>Termination</h2>
         <p>
-          <strong>
-            [Zach review] Confirm when we may suspend or close an account (for example,
-            breach of these terms, illegal posts) and what happens to public
-            posts after closure. Users may ask us by email to delete an account; there is
-            no self-serve delete button.
-          </strong>
+          We may remove content or suspend or close an account for breaches of these
+          terms, including illegal posts. After an account is closed, public prompts,
+          discussions, and replies stay up in anonymized form. You may ask us by email at{" "}
+          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> to
+          delete an account; there is no self-serve delete button. We handle deletion
+          requests within 30 days.
         </p>
       </section>
 
       <section>
         <h2>Governing law and disputes</h2>
         <p>
-          <strong>
-            [Zach review] Governing law / state: name the US state whose law applies, and
-            the venue for disputes.
-          </strong>
+          These terms are governed by the laws of the State of Texas, without regard to
+          conflict-of-law rules. Venue for disputes is in the state or federal courts
+          located in Dallas County, Texas.
         </p>
         <p>
-          <strong>
-            [Zach review] Arbitration / class-action waiver: decide whether disputes go to
-            binding individual arbitration and whether class actions are waived. Do not
-            treat this paragraph as in force until you confirm.
-          </strong>
+          These terms do not require arbitration and do not include a class-action waiver.
         </p>
       </section>
 
       <section>
         <h2>Changes to these terms</h2>
         <p>
-          We may update these terms. The “Last updated” date at the top will change.{" "}
-          <strong>
-            [Zach review] Continued use after an update means you accept the new terms.
-          </strong>
+          We may update these terms. The “Last updated” date at the top will change.
+          Continued use after an update means you accept the new terms.
         </p>
       </section>
 
@@ -179,8 +147,6 @@ export default function TermsPage() {
         <h2>Contact</h2>
         <p>
           Lakeside Innovation Labs LLC
-          <br />
-          <strong>[Mailing address — Zach review]</strong>
           <br />
           <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>
         </p>

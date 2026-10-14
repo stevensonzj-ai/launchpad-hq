@@ -59,9 +59,8 @@ export default function HowWeMakeMoneyPage() {
         <li>
           <h2 className="text-xl font-semibold text-white">4. Payments for sponsorships</h2>
           <p className="mt-2 text-sm text-gray-400">
-            <strong className="font-semibold text-gray-200">[Zach review]</strong> Stripe is
-            intended as the processor for future sponsor invoices. It is not used to bill site
-            visitors. There is no user subscription.
+            Stripe is used only for sponsor invoices. It is not used to bill site visitors.
+            There is no user subscription.
           </p>
         </li>
         <li>

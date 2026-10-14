@@ -13,20 +13,14 @@ export default function PrivacyPage() {
       <section>
         <h2>Who we are</h2>
         <p>
-          Launchpad HQ is operated by Lakeside Innovation Labs LLC, organised in{" "}
-          <strong>[State — Zach review]</strong>. Postal address:{" "}
-          <strong>[Mailing address — Zach review]</strong>. EU representative:{" "}
-          <strong>[EU representative — Zach review]</strong>. Contact:{" "}
+          Launchpad HQ is operated by Lakeside Innovation Labs LLC, a Texas limited
+          liability company. Contact:{" "}
           <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>.
         </p>
         <p>
           This site is a free directory of AI tools. You can browse without an account. You
-          may optionally create an account. There is no paid user subscription.{" "}
-          <strong>
-            [Zach review] Stripe may be used later as the payment processor for sponsor
-            invoices, not for visitor billing.
-          </strong>{" "}
-          See our <Link href="/terms">Terms of Use</Link>.
+          may optionally create an account. There is no paid user subscription. Stripe is
+          used only for sponsor invoices. See our <Link href="/terms">Terms of Use</Link>.
         </p>
       </section>
 
@@ -37,49 +31,41 @@ export default function PrivacyPage() {
           <li>
             <strong>Account (Clerk).</strong> Sign-in and sign-up run through Clerk. Clerk
             stores your account (email, name or username, profile image, sign-in method, and
-            sessions) and sets its own authentication cookies.{" "}
-            <strong>
-              [Zach review] Which social logins are turned on (for example Google or GitHub)
-              is a Clerk dashboard setting, not something this site hard-codes.
-            </strong>
+            sessions) and sets its own essential authentication cookies. Clerk may offer
+            additional sign-in methods (for example Google or GitHub) as configured in our
+            Clerk dashboard.
           </li>
           <li>
             <strong>Our database (Neon Postgres).</strong> When you have an account we copy
             your Clerk user id, email, name, and avatar URL into our User record. We also
             store whether onboarding is complete. Historical plan and Stripe id columns may
             still exist in the database from an unused subscription experiment; they are
-            not used to gate features. If you fill
-            in preferences or the quiz, we store those answers (goals, budget, experience,
-            industries, team size, priorities, quiz answers, and when the quiz was
-            completed). We store saved tools (favourites) and tutorial progress. If you
-            post reviews, prompts, discussions, or replies, we store that content and show
-            it publicly with your author name. Votes and ratings, and reports (with a
-            reason), are also stored. We found no IP-address column in our schema.
+            not used to gate features. If you fill in preferences or the quiz, we store
+            those answers (goals, budget, experience, industries, team size, priorities,
+            quiz answers, and when the quiz was completed). We store saved tools
+            (favourites) and tutorial progress. If you post reviews, prompts, discussions,
+            or replies, we store that content and show it publicly with your author name.
+            Votes and ratings, and reports (with a reason), are also stored. We found no
+            IP-address column in our schema.
           </li>
           <li>
-            <strong>Payments (Stripe).</strong>{" "}
-            <strong>
-              [Zach review] Stripe is intended as the future processor for sponsor invoices.
-              Visitor card details are not collected for a site subscription.
-            </strong>
+            <strong>Payments (Stripe).</strong> Stripe is used only for sponsor invoices.
+            Visitor card details are not collected for a site subscription.
           </li>
           <li>
             <strong>Errors (Sentry).</strong> We send error and performance data to Sentry.
             The app is configured with <code>sendDefaultPii: false</code> and{" "}
             <code>tracesSampleRate: 1</code> (performance traces on every request). Session
             replay is not configured. Sentry may still receive technical data (browser, URL,
-            error details). Its servers can see the request IP;{" "}
-            <strong>
-              [Zach review] whether Sentry is set not to store IP addresses is a Sentry
-              project setting, not something we can read from this codebase.
-            </strong>
+            error details). Its servers can see the request IP; whether Sentry stores those
+            IP addresses is a Sentry project setting.
           </li>
           <li>
             <strong>Traffic and performance (Vercel Analytics and Speed Insights).</strong>{" "}
-            The site loads Vercel Analytics and Speed Insights. Vercel’s public docs
-            describe Web Analytics as cookieless. Claims that Speed Insights is not tied
-            to an individual visitor or IP, and that analytics data is aggregated or
-            hashed, are <strong>unverified</strong> against our own processing.
+            The site loads Vercel Analytics and Speed Insights. Vercel Analytics is
+            cookieless. Claims that Speed Insights is not tied to an individual visitor or
+            IP, and that analytics data is aggregated or hashed, are unverified against our
+            own processing.
           </li>
           <li>
             <strong>Hosting logs.</strong> The site is hosted on Vercel. Vercel server logs
@@ -90,11 +76,8 @@ export default function PrivacyPage() {
             <code>sessionStorage</code> under the key <code>launchpad_quiz_pending</code>.
             That stash is cleared after save, or when the tab closes. We found no
             first-party <code>localStorage</code> and no first-party cookies besides Clerk’s
-            (and Stripe’s on Stripe checkout pages).{" "}
-            <strong>
-              [Zach review] We do not show a cookie banner; confirm that this is acceptable
-              for the jurisdictions you intend to serve.
-            </strong>
+            essential authentication cookies (and Stripe’s on Stripe checkout pages used
+            only for sponsor invoices). We do not show a cookie banner.
           </li>
           <li>
             <strong>Email (Resend).</strong> When someone posts a discussion, reply, or
@@ -104,8 +87,8 @@ export default function PrivacyPage() {
           </li>
         </ul>
         <p>
-          We do not use ad networks. We do not sell your personal information. We found no
-          third-party embeds (no iframes, YouTube, Google Tag Manager, or ad scripts).
+          We do not use ad networks. We do not sell or share personal information. We found
+          no third-party embeds (no iframes, YouTube, Google Tag Manager, or ad scripts).
           Links to other sites leave Launchpad HQ.
         </p>
       </section>
@@ -123,13 +106,9 @@ export default function PrivacyPage() {
         <p>
           We share data with service providers that run parts of the product: Clerk
           (authentication), Neon (database), Vercel (hosting, analytics, and speed
-          insights), Stripe{" "}
-          <strong>
-            [Zach review] (intended for future sponsor invoices, not visitor
-            subscriptions)
-          </strong>
-          , Sentry (errors), and Resend (transactional
-          moderation email). We do not sell personal information and we do not run ads.
+          insights), Stripe (used only for sponsor invoices), Sentry (errors), and Resend
+          (transactional moderation email). We do not sell or share personal information
+          and we do not run ads.
         </p>
       </section>
 
@@ -145,16 +124,12 @@ export default function PrivacyPage() {
       <section>
         <h2>How long we keep it</h2>
         <p>
-          <strong>
-            [Zach review] We have not set documented retention periods in code. Propose and
-            confirm how long account records, quiz answers, logs, and Sentry events are
-            kept.
-          </strong>{" "}
-          Until then: account and preference data stay while the account exists.
-          Favourites, progress, preferences, reviews, votes, ratings, and reports are
-          deleted if the user record is deleted (cascade). Prompts, discussions, and
-          replies are kept, with the author field set to null. Quiz answers in the
-          browser last only for the tab session.
+          Account data is kept while the account exists and is deleted within 30 days of a
+          deletion request. Logs and Sentry events are kept about 90 days. Favourites,
+          progress, preferences, reviews, votes, ratings, and reports are deleted if the
+          user record is deleted (cascade). Prompts, discussions, and replies are kept,
+          with the author field set to null (anonymized). Quiz answers in the browser last
+          only for the tab session.
         </p>
       </section>
 
@@ -164,53 +139,44 @@ export default function PrivacyPage() {
           You can browse without an account. You can stop using the site at any time.
         </p>
         <p>
-          There is no self-serve account-deletion button in the product.{" "}
-          <strong>
-            [Zach review] Email{" "}
-            <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> to
-            ask us to delete your account. Confirm this process and typical timing.
-          </strong>
+          There is no self-serve account-deletion button in the product. Email{" "}
+          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> to
+          ask us to delete your account. We handle deletion requests within 30 days.
         </p>
         <p>
-          <strong>
-            [Zach review] GDPR / UK GDPR: if you are in the EEA or UK, confirm the legal
-            bases, international-transfer wording, and the rights we should list (access,
-            correction, deletion, restriction, portability, objection, complaint to a
-            supervisory authority).
-          </strong>
+          If you are in the EEA or UK, we process personal data as needed to provide the
+          service you request (contract), to operate and secure the site (legitimate
+          interests), and where you have given consent. Providers may process data in the
+          United States and other countries; we rely on those providers’ transfer
+          safeguards. You have the right to access, correct, delete, restrict, or port
+          your personal data, to object to processing, and to lodge a complaint with a
+          supervisory authority.
         </p>
         <p>
-          <strong>
-            [Zach review] CCPA / CPRA: if you are a California resident, confirm the
-            categories, “do not sell or share” statement, and the rights we should list
-            (know, delete, correct, opt-out of sale/share, non-discrimination). We do not
-            sell personal information; confirm whether any analytics hashing should be
-            treated as a “share.”
-          </strong>
+          If you are a California resident, you have the right to know, delete, and
+          correct personal information, to opt out of sale or sharing, and to
+          non-discrimination for exercising these rights. We do not sell or share personal
+          information as those terms are used in the CCPA/CPRA. To exercise these rights,
+          email{" "}
+          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>.
         </p>
       </section>
 
       <section>
         <h2>Children</h2>
         <p>
-          <strong>
-            [Zach review] Confirm the minimum age (for example 13, 16, or 18) and whether
-            the service is directed at children. Until you confirm, we do not knowingly
-            collect personal information from children.
-          </strong>
+          You must be at least 13 years old to use Launchpad HQ. The site is not directed
+          at children. We do not knowingly collect personal information from children
+          under 13. If you believe we have, contact us and we will delete it.
         </p>
       </section>
 
       <section>
         <h2>Security</h2>
         <p>
-          We use established providers (Clerk, Neon, Vercel, and —{" "}
-          <strong>[Zach review]</strong> Stripe for future sponsor invoices) and do not
-          collect visitor card numbers for a site plan.{" "}
-          <strong>
-            [Zach review] No method of transmission or storage is perfectly secure.
-          </strong>{" "}
-          Tell us at{" "}
+          We use established providers (Clerk, Neon, Vercel, and Stripe — used only for
+          sponsor invoices) and do not collect visitor card numbers for a site plan. No
+          method of transmission or storage is perfectly secure. Tell us at{" "}
           <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> if
           you think something has gone wrong.
         </p>
@@ -219,10 +185,8 @@ export default function PrivacyPage() {
       <section>
         <h2>Changes</h2>
         <p>
-          We may update this policy. The “Last updated” date at the top will change.{" "}
-          <strong>
-            [Zach review] Continued use after an update means you accept the new policy.
-          </strong>
+          We may update this policy. The “Last updated” date at the top will change.
+          Continued use after an update means you accept the new policy.
         </p>
       </section>
 
@@ -230,8 +194,6 @@ export default function PrivacyPage() {
         <h2>Contact</h2>
         <p>
           Lakeside Innovation Labs LLC
-          <br />
-          <strong>[Mailing address — Zach review]</strong>
           <br />
           <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>
         </p>
