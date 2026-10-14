@@ -62,12 +62,17 @@ export default function SponsorGuidelinesPage() {
       <section className="mt-10 space-y-3">
         <DraftNote />
         <h2 className="text-xl font-semibold text-white">What we won&apos;t accept</h2>
-        {/* BUSINESS-OPS: replace — list below is a draft; plan-sponsor-spaces.md was not in this repo (unverified). */}
-        <p className="text-sm text-gray-500">
-          Draft list. Source plan file was not available in the repository, so this is unverified
-          against plan-sponsor-spaces.md.
-        </p>
+        {/* BUSINESS-OPS: replace */}
         <ul className="list-disc space-y-1 pl-5 text-sm text-gray-300">
+          <li>deepfake/non-consent likeness tools</li>
+          <li>adult content</li>
+          <li>gambling</li>
+          <li>crypto/financial-return promises</li>
+          <li>unverifiable medical/legal claims</li>
+          <li>tools that scrape personal data without consent</li>
+          <li>malware/&quot;undetectable&quot; AI-detector bypass</li>
+          <li>competitor attack ads</li>
+          <li>fake urgency</li>
           <li>Buying or altering catalog rankings, quiz results, reviews, or the featured flag</li>
           <li>Undisclosed or unlabeled ads</li>
           <li>Platforms excluded for documented scam, safety, or &quot;not actually AI&quot; facts</li>
@@ -78,13 +83,14 @@ export default function SponsorGuidelinesPage() {
       </section>
 
       <section className="mt-10 space-y-3">
-        <DraftNote />
-        <h2 className="text-xl font-semibold text-white">Booking</h2>
+        <p className="text-xs font-medium uppercase tracking-wide text-amber-400/90">
+          [Draft: Business Ops]
+        </p>
+        <h2 className="text-xl font-semibold text-white">Booking, payment, cancellation, refunds</h2>
+        {/* BUSINESS-OPS: replace */}
         <p className="text-sm text-gray-400">
-          {/* BUSINESS-OPS: replace */}
-          Rates, availability, and a booking contact are unverified. Paid sponsor inventory should
-          not go live until Vercel Pro (or equivalent) is in place — reminder for operators, not a
-          price quote.
+          Payment, cancellation and refund terms: [Draft: Business Ops]. Prices: [Business Ops].
+          Lead time [N business days]. Contact: [email].
         </p>
       </section>
     </div>

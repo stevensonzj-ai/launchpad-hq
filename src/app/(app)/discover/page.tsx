@@ -11,6 +11,7 @@ import { DiscoverFilterBar } from "./discover-filter-bar";
 import {
   buildDiscoverQuery,
   normalizeSort,
+  discoverOrderBy,
   COST_TIERS,
   DIFFICULTIES,
   COST_FILTERS,
@@ -79,12 +80,7 @@ export default async function DiscoverPage({
   // until a real engagement score exists (e.g., aggregated from prompts/
   // discussions/favorites counts, or a view/click tracker). Revisit when
   // that signal lands.
-  const orderBy =
-    sort === "alpha"
-      ? [{ name: "asc" as const }]
-      : sort === "recent"
-        ? [{ createdAt: "desc" as const }]
-        : [{ featured: "desc" as const }, { name: "asc" as const }];
+  const orderBy = discoverOrderBy(sort);
 
   const user = await getOrCreateDbUser();
 

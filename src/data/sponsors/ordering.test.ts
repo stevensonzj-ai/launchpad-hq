@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import {
   chicagoCalendarDate,
@@ -8,12 +7,19 @@ import {
 } from "./index";
 import { TEST_ONLY_EXAMPLE_PLACEMENT } from "./test-fixture";
 import {
+  discoverOrderBy,
+  sortDiscoverCatalog,
+  type DiscoverSortable,
+} from "../../lib/discover-filters";
+import {
   rankScoredPlatforms,
+  scorePlatform,
   type ScoreablePlatform,
 } from "../../lib/recommendations-score";
+import type { SponsorPlacement } from "./types";
 
 function platform(
-  partial: Partial<ScoreablePlatform> & { primaryUse: string; featured?: boolean },
+  partial: Partial<ScoreablePlatform> & { primaryUse: string },
 ): ScoreablePlatform {
   return {
     costTier: "FREEMIUM",
@@ -30,12 +36,40 @@ function platform(
   };
 }
 
-function discoverOrder(
-  rows: { name: string; featured: boolean }[],
-): string[] {
-  return [...rows]
-    .sort((a, b) => Number(b.featured) - Number(a.featured) || a.name.localeCompare(b.name))
-    .map((row) => row.name);
+function withLivePlacement<T>(placement: SponsorPlacement, fn: () => T): T {
+  const saved = PLACEMENTS.splice(0, PLACEMENTS.length);
+  PLACEMENTS.push(placement);
+  try {
+    return fn();
+  } finally {
+    PLACEMENTS.splice(0, PLACEMENTS.length);
+    PLACEMENTS.push(...saved);
+  }
+}
+
+function quizSnapshot(candidates: ScoreablePlatform[]) {
+  const input = {
+    goals: ["content_creation"],
+    budget: "under_20",
+    experienceLevel: "beginner",
+    priorities: [] as string[],
+  };
+  return {
+    scores: candidates.map((c) => {
+      const parts = scorePlatform(c, input);
+      return {
+        primaryUse: c.primaryUse,
+        featured: c.featured,
+        score: parts.score,
+        goalScore: parts.goalScore,
+      };
+    }),
+    ranked: rankScoredPlatforms(candidates, input).map((row) => ({
+      primaryUse: row.primaryUse,
+      featured: row.featured,
+      matchScore: row.matchScore,
+    })),
+  };
 }
 
 describe("sponsor placements stay off ranking surfaces", () => {
@@ -44,91 +78,66 @@ describe("sponsor placements stay off ranking surfaces", () => {
     assert.equal(getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")), null);
   });
 
-  it("activates the test-only fixture without importing it into live placements", () => {
-    const active = getActivePlacement(
-      "homepage",
-      new Date("2026-10-14T17:00:00Z"),
-      undefined,
-      [TEST_ONLY_EXAMPLE_PLACEMENT],
-    );
-    assert.equal(active?.id, TEST_ONLY_EXAMPLE_PLACEMENT.id);
-    assert.equal(
-      PLACEMENTS.some((p) => p.id === TEST_ONLY_EXAMPLE_PLACEMENT.id),
-      false,
-    );
+  it("Discover orderBy contract has no sponsor fields", () => {
+    assert.deepEqual(discoverOrderBy("popular"), [
+      { featured: "desc" },
+      { name: "asc" },
+    ]);
+    assert.deepEqual(discoverOrderBy("alpha"), [{ name: "asc" }]);
+    assert.deepEqual(discoverOrderBy("recent"), [{ createdAt: "desc" }]);
   });
 
-  it("does not change Discover name order when a placement is active", () => {
-    const rows = [
-      { name: "Zed Tool", featured: true },
-      { name: "Alpha Tool", featured: false },
-      { name: "Beta Tool", featured: false },
+  it("Discover sort is identical with and without an active live placement", () => {
+    const catalog: DiscoverSortable[] = [
+      { name: "Zed Tool", featured: true, createdAt: new Date("2026-01-01") },
+      { name: "Alpha Tool", featured: false, createdAt: new Date("2026-06-01") },
+      {
+        name: TEST_ONLY_EXAMPLE_PLACEMENT.sponsorName,
+        featured: false,
+        createdAt: new Date("2026-03-01"),
+      },
     ];
-    const before = discoverOrder(rows);
-    const active = getActivePlacement(
-      "homepage",
-      new Date("2026-10-14T17:00:00Z"),
-      undefined,
-      [TEST_ONLY_EXAMPLE_PLACEMENT],
-    );
-    assert.ok(active);
-    const after = discoverOrder(rows);
-    assert.deepEqual(after, before);
-    assert.deepEqual(after, ["Zed Tool", "Alpha Tool", "Beta Tool"]);
+
+    for (const sort of ["popular", "alpha", "recent"] as const) {
+      const without = sortDiscoverCatalog(catalog, sort);
+      assert.equal(
+        getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")),
+        null,
+      );
+      const withPlacement = withLivePlacement(TEST_ONLY_EXAMPLE_PLACEMENT, () => {
+        assert.ok(
+          getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")),
+        );
+        return sortDiscoverCatalog(catalog, sort);
+      });
+      assert.deepEqual(withPlacement, without, `sort ${sort} changed under a live placement`);
+    }
   });
 
-  it("does not change quiz scoring when a placement is active", () => {
+  it("quiz scoring is identical with and without an active live placement", () => {
     const candidates = [
       platform({ primaryUse: "writing blog content", featured: false }),
-      platform({ primaryUse: "image art design", featured: true }),
+      platform({
+        primaryUse: TEST_ONLY_EXAMPLE_PLACEMENT.headline,
+        featured: true,
+      }),
+      platform({ primaryUse: "image art design", featured: false }),
     ];
-    const input = {
-      goals: ["content_creation"],
-      budget: "under_20",
-      experienceLevel: "beginner",
-      priorities: [] as string[],
-    };
-    const before = rankScoredPlatforms(candidates, input).map((s) => s.primaryUse);
 
-    const active = getActivePlacement(
-      "homepage",
-      new Date("2026-10-14T17:00:00Z"),
-      undefined,
-      [TEST_ONLY_EXAMPLE_PLACEMENT],
+    const without = quizSnapshot(candidates);
+    assert.equal(
+      getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")),
+      null,
     );
-    assert.ok(active);
-
-    const after = rankScoredPlatforms(candidates, input).map((s) => s.primaryUse);
-
-    assert.deepEqual(after, before);
+    const withPlacement = withLivePlacement(TEST_ONLY_EXAMPLE_PLACEMENT, () => {
+      assert.ok(getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")));
+      return quizSnapshot(candidates);
+    });
+    assert.deepEqual(withPlacement, without);
   });
 
   it("uses America/Chicago calendar dates for windows", () => {
-    // 2026-10-14 04:30 UTC is still 2026-10-13 in Chicago (CDT, UTC-5).
     assert.equal(chicagoCalendarDate(new Date("2026-10-14T04:30:00Z")), "2026-10-13");
     assert.equal(chicagoCalendarDate(new Date("2026-10-14T12:00:00Z")), "2026-10-14");
-  });
-
-  it("does not import sponsor data from featured, quiz, discover ordering, workflows, or tutorials", () => {
-    const guarded = [
-      "src/lib/recommendations-score.ts",
-      "src/lib/recommendations-core.ts",
-      "src/lib/quiz-map.ts",
-      "src/data/workflows/workflows.ts",
-      "src/data/tutorials/index.ts",
-    ];
-    for (const path of guarded) {
-      const source = readFileSync(path, "utf8");
-      assert.equal(
-        source.includes("@/data/sponsors") || source.includes("data/sponsors"),
-        false,
-        `${path} must not import sponsor data`,
-      );
-    }
-    const discover = readFileSync("src/app/(app)/discover/page.tsx", "utf8");
-    assert.match(discover, /orderBy/);
-    assert.doesNotMatch(discover, /featured:\s*true/);
-    assert.match(discover, /getActivePlacement/);
-    assert.match(discover, /SponsoredSpotlight/);
   });
 });

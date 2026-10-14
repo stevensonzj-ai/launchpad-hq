@@ -18,6 +18,49 @@ export function normalizeSort(value: string | undefined): SortMode {
   return "popular";
 }
 
+/** Prisma `orderBy` for Discover — keep this the only ranking contract. */
+export function discoverOrderBy(sort: SortMode) {
+  if (sort === "alpha") return [{ name: "asc" as const }];
+  if (sort === "recent") return [{ createdAt: "desc" as const }];
+  return [{ featured: "desc" as const }, { name: "asc" as const }];
+}
+
+export type DiscoverSortable = {
+  name: string;
+  featured: boolean;
+  createdAt: Date;
+};
+
+/** In-memory sort matching `discoverOrderBy` (used by tests and must stay aligned). */
+export function sortDiscoverCatalog<T extends DiscoverSortable>(
+  platforms: readonly T[],
+  sort: SortMode,
+): T[] {
+  const copy = [...platforms];
+  const clauses = discoverOrderBy(sort);
+  copy.sort((a, b) => {
+    for (const clause of clauses) {
+      const [key, direction] = Object.entries(clause)[0] as [
+        keyof DiscoverSortable,
+        "asc" | "desc",
+      ];
+      const av = a[key];
+      const bv = b[key];
+      let cmp = 0;
+      if (typeof av === "string" && typeof bv === "string") {
+        cmp = av.localeCompare(bv);
+      } else if (av instanceof Date && bv instanceof Date) {
+        cmp = av.getTime() - bv.getTime();
+      } else {
+        cmp = Number(av) - Number(bv);
+      }
+      if (cmp !== 0) return direction === "desc" ? -cmp : cmp;
+    }
+    return 0;
+  });
+  return copy;
+}
+
 // Whitelists keep arbitrary query values out of the Prisma enum filters —
 // an unknown value (e.g. ?cost=banana) would otherwise throw at query time.
 export const COST_TIERS = ["FREE", "FREEMIUM", "PAID", "ENTERPRISE"] as const;
