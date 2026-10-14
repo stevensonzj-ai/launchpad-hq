@@ -5,7 +5,7 @@ export default {
   lifecycle: "active",
   verdict: {
     value:
-      "xAI's Grok Bot, a separate product from the Grok chat app. macOS download at x.ai/bot.",
+      "xAI's Grok Bot, a separate product from the Grok chat app, with desktop and mobile apps.",
     sourceUrl: "https://x.ai/bot",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
@@ -14,8 +14,8 @@ export default {
     status: "verified",
   },
   platforms: {
-    value: ["macOS"],
-    sourceUrl: "https://x.ai/bot#download",
+    value: ["macOS", "Windows", "Linux", "iPhone", "iPad", "Android"],
+    sourceUrl: "https://docs.x.ai/grok-bot",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "cto",
