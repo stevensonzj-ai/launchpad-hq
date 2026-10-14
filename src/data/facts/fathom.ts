@@ -11,8 +11,9 @@ export default {
     sourceUrl: "https://www.fathom.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -39,24 +40,16 @@ export default {
     sourceUrl: "https://www.fathom.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
-  },
-  platforms: {
-    value: ["Zoom", "Google Meet", "Teams"],
-    note: "Meeting platforms named on the pricing page. Desktop and mobile apps unpublished. No app store links on the page (browser-verified 2026-10-14).",
-    sourceUrl: "https://www.fathom.ai/pricing",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
-      field: "plans",
+      field: "platforms",
       summary:
-        "Free forever. Team and Business 2-user minimum. Paid prices omitted (toggle mapping unclear). Company omitted.",
+        "RA: dropped platforms. Zoom/Meet/Teams on the pricing page are competitor-comparison or FOR TEAMS labels, not integrations.",
     },
   ],
 } satisfies ToolFacts;

@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://www.kimi.com/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apiPricing: {
     value:
@@ -19,8 +20,9 @@ export default {
     sourceUrl: "https://platform.kimi.ai/docs/pricing/chat",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: [
@@ -33,8 +35,9 @@ export default {
     sourceUrl: "https://platform.kimi.ai/docs/pricing/chat",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {

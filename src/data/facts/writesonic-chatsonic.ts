@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://writesonic.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -21,8 +22,9 @@ export default {
     sourceUrl: "https://writesonic.com/chat",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -39,19 +41,20 @@ export default {
         limits: "",
       },
     ],
-    note: "Browser-verified 2026-10-14 on writesonic.com/chat: Free $0; Individual $16/mo billed annually. Monthly-billed Chatsonic prices unpublished. Writesonic is now an SEO/AI-visibility tool with plans from $79/mo billed annually (writesonic.com/pricing: Starter $79, 1 user; Basic $199, 2 users; Growth $399; monthly-billed prices unpublished). Chatsonic is not mentioned on the pricing page.",
+    note: "Browser-verified 2026-10-14 on writesonic.com/chat: Free $0 per month billed annually; Individual $16 per month billed annually. Monthly-billed Chatsonic prices unpublished. Writesonic is now an SEO/AI-visibility tool with plans from $79/mo billed annually (writesonic.com/pricing: Starter $79, 1 user; Basic $199, 2 users; Growth $399; monthly-billed prices unpublished). Chatsonic is not mentioned on the pricing page. No models row: the /chat model list is stale.",
     sourceUrl: "https://writesonic.com/chat",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
       summary:
-        "Chatsonic Free and Individual $16/mo billed annually (browser-verified). Writesonic SEO/AI-visibility plans from $79/mo billed annually noted separately.",
+        "RA: Chatsonic Free and Individual $16/mo billed annually. No models row from /chat (stale). Writesonic SEO/AI-visibility from $79/mo billed annually noted.",
     },
   ],
 } satisfies ToolFacts;

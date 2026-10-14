@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://claude.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -20,8 +21,9 @@ export default {
     sourceUrl: "https://claude.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -54,18 +56,20 @@ export default {
     sourceUrl: "https://claude.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apiPricing: {
     value:
       "USD per million tokens, input / output, in-house. Claude Fable 5.1: $10 / $50 (demanding reasoning and long-horizon agentic work). Claude Opus 5.5: $4 / $20. Claude Sonnet 5.5: $2 / $10. Claude Haiku 5.5: $0.10 / $0.50 for prompts ≤100K tokens; $0.50 / $2.50 above 100K.",
-    note: "Source: platform.claude.com/docs/en/about-claude/pricing. Haiku 5.5 full rates are browser-verified 2026-10-14. Batch is half price. US-only inference is 1.1x. Legacy models (Opus 5/4.x, Sonnet 5/4.x) are still listed; their rates were not captured.",
+    note: "Batch API: 50% off. Source: platform.claude.com/docs/en/about-claude/pricing. Haiku 5.5 full rates are browser-verified 2026-10-14. Legacy models (Opus 5/4.x, Sonnet 5/4.x) are still listed; their rates were not captured.",
     sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["API", "Web", "Desktop", "Mobile"],
@@ -73,8 +77,9 @@ export default {
     sourceUrl: "https://claude.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: [
@@ -87,15 +92,16 @@ export default {
     sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "apiPricing",
       summary:
-        "API token prices including Haiku 5.5 (browser-verified). Consumer plans from claude.com/pricing.",
+        "RA: added Batch API: 50% off. No cache or multiplier details. Consumer plans from claude.com/pricing.",
     },
   ],
 } satisfies ToolFacts;

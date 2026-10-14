@@ -11,7 +11,6 @@ import comfyuiFacts from "./comfyui";
 import deepseekFacts from "./deepseek";
 import deeplFacts from "./deepl";
 import doximityGptFacts from "./doximity-gpt";
-import evenupFacts from "./evenup";
 import fathomFacts from "./fathom";
 import firecrawlFacts from "./firecrawl";
 import firefliesAiFacts from "./fireflies-ai";
@@ -57,7 +56,6 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [deepseekFacts.slug]: deepseekFacts,
   [deeplFacts.slug]: deeplFacts,
   [doximityGptFacts.slug]: doximityGptFacts,
-  [evenupFacts.slug]: evenupFacts,
   [fathomFacts.slug]: fathomFacts,
   [firecrawlFacts.slug]: firecrawlFacts,
   [firefliesAiFacts.slug]: firefliesAiFacts,
