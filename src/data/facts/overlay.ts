@@ -4,10 +4,12 @@ export type PlatformFactFields = {
   description: string | null;
   currentPricing: string | null;
   freeTierFeatures: string | null;
+  usageLimits?: string | null;
   platformType: string[];
   hasMobileApp: boolean;
   iosAppUrl: string | null;
   androidAppUrl: string | null;
+  macosAppUrl?: string | null;
 };
 
 export function formatPlans(plans: ToolPlan[]): string {
@@ -20,19 +22,29 @@ export function formatPlans(plans: ToolPlan[]): string {
     .join("; ");
 }
 
+export type OverlayPlatform<T extends PlatformFactFields> = T & {
+  macosAppUrl: string | null;
+  usageLimits: string | null;
+};
+
 export function overlayPlatformWithFacts<T extends PlatformFactFields>(
   platform: T,
   facts: ToolFacts | undefined,
-): T {
-  if (!facts) return platform;
+): OverlayPlatform<T> {
+  const next: OverlayPlatform<T> = {
+    ...platform,
+    macosAppUrl: platform.macosAppUrl ?? null,
+    usageLimits: platform.usageLimits ?? null,
+  };
 
-  const next = { ...platform };
+  if (!facts) return next;
 
   if (facts.verdict) {
     next.description = facts.verdict.value;
   }
   if (facts.freeTier) {
     next.freeTierFeatures = facts.freeTier.value.summary;
+    next.usageLimits = null;
   }
   if (facts.plans) {
     next.currentPricing = formatPlans(facts.plans.value);
@@ -42,9 +54,10 @@ export function overlayPlatformWithFacts<T extends PlatformFactFields>(
   }
   if (facts.apps) {
     const apps = facts.apps.value;
-    if (apps.ios) next.iosAppUrl = apps.ios;
-    if (apps.android) next.androidAppUrl = apps.android;
-    if (apps.ios || apps.android) next.hasMobileApp = true;
+    next.iosAppUrl = apps.ios ?? null;
+    next.androidAppUrl = apps.android ?? null;
+    next.macosAppUrl = apps.macos ?? null;
+    next.hasMobileApp = Boolean(apps.ios || apps.android);
   }
 
   return next;

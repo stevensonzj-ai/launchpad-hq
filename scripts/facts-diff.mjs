@@ -27,6 +27,7 @@ const SKIP = new Set([
   "diff.ts",
   "retired-terms.ts",
   "facts.test.ts",
+  "filenames.ts",
   "_template.ts",
 ]);
 const FACT_KEYS = [
@@ -122,7 +123,7 @@ function loadFromGit(ref, slug) {
     const source = execFileSync(
       "git",
       ["show", `${ref}:src/data/facts/${slug}.ts`],
-      { cwd: root, encoding: "utf8" },
+      { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
     );
     return parseToolFacts(source);
   } catch {

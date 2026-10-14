@@ -1,13 +1,17 @@
 import assert from "node:assert/strict";
+import { readdirSync } from "node:fs";
+import { dirname } from "node:path";
 import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 import { auditToolFacts, auditToolFactsList } from "./audit";
 import { diffToolFacts, renderFactsDiffMarkdown } from "./diff";
+import { FACT_PAGE_SKIP_FILES } from "./filenames";
 import { missingSourceFacts } from "./fixtures/missing-source";
 import { retiredTermFacts } from "./fixtures/retired-term";
 import { staleFacts } from "./fixtures/stale";
 import { validExampleFacts } from "./fixtures/valid-example";
 import { overlayPlatformWithFacts } from "./overlay";
-import { listRegisteredToolFacts } from "./registry";
+import { REGISTERED_TOOL_FACTS, listRegisteredToolFacts } from "./registry";
 
 const NOW = new Date("2026-10-14T12:00:00.000Z");
 
@@ -88,9 +92,26 @@ describe("fact-file audit", () => {
     assert.ok(issues.some((issue) => issue.kind === "contradiction"));
   });
 
-  it("keeps the registered catalog clean", () => {
-    const issues = auditToolFactsList(listRegisteredToolFacts(), NOW);
+  it("keeps the registered catalog clean against the real current date", () => {
+    const issues = auditToolFactsList(listRegisteredToolFacts(), new Date());
     assert.deepEqual(issues, []);
+  });
+
+  it("fails if a fact file is not registered", () => {
+    const dir = dirname(fileURLToPath(import.meta.url));
+    const skip = new Set<string>(FACT_PAGE_SKIP_FILES);
+    const slugs = readdirSync(dir)
+      .filter((name) => name.endsWith(".ts") && !skip.has(name))
+      .map((name) => name.replace(/\.ts$/, ""));
+    const missing = slugs.filter((slug) => !REGISTERED_TOOL_FACTS[slug]);
+    assert.deepEqual(
+      missing,
+      [],
+      `unregistered fact files: ${missing.join(", ")}`,
+    );
+    for (const slug of slugs) {
+      assert.equal(REGISTERED_TOOL_FACTS[slug]?.slug, slug);
+    }
   });
 });
 
@@ -105,7 +126,11 @@ describe("overlayPlatformWithFacts", () => {
       iosAppUrl: null,
       androidAppUrl: null,
     };
-    assert.deepEqual(overlayPlatformWithFacts(platform, undefined), platform);
+    assert.deepEqual(overlayPlatformWithFacts(platform, undefined), {
+      ...platform,
+      macosAppUrl: null,
+      usageLimits: null,
+    });
   });
 
   it("overlays priced and free-tier fields from a fact file", () => {
@@ -125,6 +150,42 @@ describe("overlayPlatformWithFacts", () => {
     assert.deepEqual(view.platformType, ["Web", "iOS", "Android"]);
     assert.equal(view.hasMobileApp, true);
     assert.equal(view.iosAppUrl, "https://apps.example.com/fixture-valid");
+  });
+
+  it("clears leftover store URLs when apps facts omit them", () => {
+    const platform = {
+      description: null,
+      currentPricing: null,
+      freeTierFeatures: null,
+      usageLimits: "higher limits with a leftover paid label",
+      platformType: ["Web"],
+      hasMobileApp: true,
+      iosAppUrl: "https://apps.apple.com/app/apple-store/id6670324846",
+      androidAppUrl: "https://play.google.com/store/apps/details?id=ai.x.grok",
+    };
+    const view = overlayPlatformWithFacts(platform, {
+      slug: "fixture-apps",
+      lifecycle: "active",
+      freeTier: {
+        value: { available: true, summary: "limited, exact limit not published" },
+        sourceUrl: "https://example.com/apps",
+        checkedAt: "2026-10-14",
+        gatheredBy: "research-analyst",
+        status: "unverified",
+      },
+      apps: {
+        value: { macos: "https://x.ai/bot#download" },
+        sourceUrl: "https://x.ai/bot#download",
+        checkedAt: "2026-10-14",
+        gatheredBy: "research-analyst",
+        status: "unverified",
+      },
+    });
+    assert.equal(view.iosAppUrl, null);
+    assert.equal(view.androidAppUrl, null);
+    assert.equal(view.macosAppUrl, "https://x.ai/bot#download");
+    assert.equal(view.hasMobileApp, false);
+    assert.equal(view.usageLimits, null);
   });
 });
 

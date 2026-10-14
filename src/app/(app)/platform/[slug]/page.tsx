@@ -159,6 +159,7 @@ export default async function PlatformPage({
             hasMobileApp={view.hasMobileApp}
             iosAppUrl={view.iosAppUrl}
             androidAppUrl={view.androidAppUrl}
+            macosAppUrl={view.macosAppUrl}
             mobileWebFriendly={platform.mobileWebFriendly}
             platformType={view.platformType}
           />
@@ -169,9 +170,9 @@ export default async function PlatformPage({
               <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
                 <h2 className="mb-3 text-lg font-semibold text-white">Free Tier</h2>
                 <p className="text-sm text-gray-300">{view.freeTierFeatures}</p>
-                {platform.usageLimits && (
+                {view.usageLimits && (
                   <div className="mt-3 border-t border-gray-800 pt-3">
-                    <p className="text-xs text-gray-500">Limits: {platform.usageLimits}</p>
+                    <p className="text-xs text-gray-500">Limits: {view.usageLimits}</p>
                   </div>
                 )}
                 {platform.upgradeTriggers && (
@@ -192,6 +193,9 @@ export default async function PlatformPage({
                 <div><span className="text-gray-500">Languages:</span> <span className="text-gray-300">{platform.languageSupport || "English"}</span></div>
                 {platform.keyIntegrations && (
                   <div className="sm:col-span-2"><span className="text-gray-500">Integrations:</span> <span className="text-gray-300">{platform.keyIntegrations}</span></div>
+                )}
+                {facts?.models && (
+                  <div className="sm:col-span-2"><span className="text-gray-500">Models:</span> <span className="text-gray-300">{facts.models.value.join(", ")}</span></div>
                 )}
               </div>
             </section>
