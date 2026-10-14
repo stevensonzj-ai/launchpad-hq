@@ -11,21 +11,31 @@ import comfyuiFacts from "./comfyui";
 import deepseekFacts from "./deepseek";
 import deeplFacts from "./deepl";
 import doximityGptFacts from "./doximity-gpt";
+import evenupFacts from "./evenup";
 import fathomFacts from "./fathom";
 import firecrawlFacts from "./firecrawl";
 import firefliesAiFacts from "./fireflies-ai";
 import freepikAiFacts from "./freepik-ai";
+import gammaFacts from "./gamma";
+import gensparkFacts from "./genspark";
+import granolaFacts from "./granola";
 import grokFacts from "./grok";
 import grokBotFacts from "./grok-bot";
 import hedraFacts from "./hedra";
 import higgsfieldFacts from "./higgsfield";
+import invideoAiFacts from "./invideo-ai";
+import jasperFacts from "./jasper";
 import jenniAiFacts from "./jenni-ai";
 import jetbrainsAiFacts from "./jetbrains-ai";
 import kimiFacts from "./kimi";
 import klingAiFacts from "./kling-ai";
 import kreaFacts from "./krea";
 import krispFacts from "./krisp";
+import legoraFacts from "./legora";
+import lindyAiFacts from "./lindy-ai";
+import magicschoolFacts from "./magicschool";
 import metaAiFacts from "./meta-ai";
+import napkinAiFacts from "./napkin-ai";
 import monarchFacts from "./monarch";
 import openaiApiFacts from "./openai-api";
 import openrouterFacts from "./openrouter";
@@ -56,21 +66,31 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [deepseekFacts.slug]: deepseekFacts,
   [deeplFacts.slug]: deeplFacts,
   [doximityGptFacts.slug]: doximityGptFacts,
+  [evenupFacts.slug]: evenupFacts,
   [fathomFacts.slug]: fathomFacts,
   [firecrawlFacts.slug]: firecrawlFacts,
   [firefliesAiFacts.slug]: firefliesAiFacts,
   [freepikAiFacts.slug]: freepikAiFacts,
+  [gammaFacts.slug]: gammaFacts,
+  [gensparkFacts.slug]: gensparkFacts,
+  [granolaFacts.slug]: granolaFacts,
   [grokFacts.slug]: grokFacts,
   [grokBotFacts.slug]: grokBotFacts,
   [hedraFacts.slug]: hedraFacts,
   [higgsfieldFacts.slug]: higgsfieldFacts,
+  [invideoAiFacts.slug]: invideoAiFacts,
+  [jasperFacts.slug]: jasperFacts,
   [jenniAiFacts.slug]: jenniAiFacts,
   [jetbrainsAiFacts.slug]: jetbrainsAiFacts,
   [kimiFacts.slug]: kimiFacts,
   [klingAiFacts.slug]: klingAiFacts,
   [kreaFacts.slug]: kreaFacts,
   [krispFacts.slug]: krispFacts,
+  [legoraFacts.slug]: legoraFacts,
+  [lindyAiFacts.slug]: lindyAiFacts,
+  [magicschoolFacts.slug]: magicschoolFacts,
   [metaAiFacts.slug]: metaAiFacts,
+  [napkinAiFacts.slug]: napkinAiFacts,
   [monarchFacts.slug]: monarchFacts,
   [openaiApiFacts.slug]: openaiApiFacts,
   [openrouterFacts.slug]: openrouterFacts,
