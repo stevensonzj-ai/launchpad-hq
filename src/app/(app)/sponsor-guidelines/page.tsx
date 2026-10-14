@@ -90,7 +90,14 @@ export default function SponsorGuidelinesPage() {
         {/* BUSINESS-OPS: replace */}
         <p className="text-sm text-gray-400">
           Payment, cancellation and refund terms: [Draft: Business Ops]. Prices: [Business Ops].
-          Lead time [N business days]. Contact: [email].
+          Lead time [N business days]. Contact:{" "}
+          <a
+            href="mailto:launchpadhq.admin@gmail.com"
+            className="text-orange-400 hover:underline"
+          >
+            launchpadhq.admin@gmail.com
+          </a>
+          .
         </p>
       </section>
     </div>

@@ -84,7 +84,12 @@ export default function HowWeMakeMoneyPage() {
           <h2 className="text-xl font-semibold text-white">7. Questions / report a problem</h2>
           <p className="mt-2 text-sm text-gray-400">
             Contact email:{" "}
-            <span className="font-medium text-amber-300">[TODO Zach: contact email]</span>
+            <a
+              href="mailto:launchpadhq.admin@gmail.com"
+              className="text-orange-400 hover:underline"
+            >
+              launchpadhq.admin@gmail.com
+            </a>
           </p>
         </li>
         <li>
