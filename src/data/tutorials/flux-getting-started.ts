@@ -7,7 +7,7 @@ export const fluxTutorial: PlatformTutorialData = {
   tagline:
     "The image model that finally gets text right — but you'll reach it through someone else's front door.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://docs.bfl.ai/release-notes",
   accessTier: "PREMIUM",
 
@@ -20,7 +20,7 @@ export const fluxTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Going direct to Black Forest Labs' dashboard at bfl.ai costs money from the first image: prepaid credit, currently 1 credit = $0.01, with the docs suggesting $10–$20 to experiment. Per image, prices currently run from about $0.014 on the small `[klein]` models to $0.03 for `[pro]` and $0.07 for `[max]`. Those are starting prices, and they vary by resolution.",
+    "Going direct to Black Forest Labs' dashboard at bfl.ai is pay-as-you-go, no subscription. The official calculator default (bfl.ai/pricing, as of 2026-10-14) is about **$0.048 per image** at 768×768. Per-model rates vary by resolution; treat $0.048 as a starting price, not a quote for every model.",
     "**Most beginners should come in through someone else's app.** Krea and Freepik are ordinary image-making websites — sign up, type, get pictures — that license FLUX and run it for you. Both have a free tier, you pay them rather than BFL, and their terms set your rights.",
     "Running the files yourself is free, and the barrier is hardware, not skill: the freely licensed `FLUX.2 [klein]` 4B wants a graphics card with roughly 13GB of memory on it — most laptops don't have that — plus software like ComfyUI to drive it. Below that bar, a third-party app is the same model for cents an image.",
   ],

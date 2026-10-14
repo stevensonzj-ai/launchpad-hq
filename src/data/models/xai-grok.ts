@@ -43,7 +43,8 @@ export const xaiGrok: PlatformModelFamily = {
         note: "Prompts under 200k tokens. At or above 200k, output is $12 / 1M for the whole request.",
       },
       consumerAccess: {
-        summary: "Consumer Grok app plan mapping (free vs SuperGrok) was not listed on the xAI models page checked.",
+        summary:
+          "Consumer Grok is sold as SuperGrok and through The X Subscription (Free $0, Plus $8, Premium $30, Super $100, Ultra $200 /mo as of 2026-10-14 on docs.x.ai/x-subscription/pricing), not only via X Premium+. Which API model sits on which consumer tier was not listed on the models page.",
         verified: false,
       },
       strengths: [

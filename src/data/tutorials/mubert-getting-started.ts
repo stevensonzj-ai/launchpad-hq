@@ -7,7 +7,7 @@ export const mubertTutorial: PlatformTutorialData = {
   tagline:
     "Royalty-free background music in a couple of minutes — and the licence rules that decide what you may do with it.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-15",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://mubert.com/render/whatsnew",
   accessTier: "FREE",
 

@@ -6,7 +6,7 @@ export const photoroomTutorial: PlatformTutorialData = {
   title: "Getting Started with Photoroom",
   tagline: "A beginner's first half-hour with the AI photo editor built for product listings.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-14",
   accessTier: "FREE",
 
   howItWorks:
@@ -24,7 +24,7 @@ export const photoroomTutorial: PlatformTutorialData = {
     "Free accounts currently get 25 exports a week and 100 a month, counted across anything that produces a file — downloads, camera-roll saves, shares. Editing is not what runs out; saving is.",
     "Free export resolution depends on which Photoroom you use: the vendor documents a 750 × 550 pixel ceiling on the iPhone, iPad and Android apps against 2000 × 2000 in the browser. Those figures were last revised in August 2025, so treat them as the published position rather than a guarantee about today.",
     "Generative tools run on **credits** (the platform's unit of spend — each thing you make costs some); background removal, retouch, preset shadows, expand, resize and the image enhancer do not, listed by the vendor as unmetered under fair use. Free accounts get some credits, but Photoroom does not publish how many — its help centre says only \"a low limit,\" and the pricing comparison table has no free column at all.",
-    "Paying starts at Pro, currently about $12.99 a month or $89.99 a year, lifting exports to 1,000 a month and unlocking whole-folder editing and high-resolution export. Max, currently around $34.99 a month, is the first tier with the Shopify connection and the video generator. You move up for volume and for the commercial licence, not for better background removal — that is the same tool the free plan already gives you.",
+    "Paying starts at Pro, **$7.50 per month billed yearly** on photoroom.com/pricing as of 2026-10-14 (8,000 AI credits and 1,000 exports). Max and Ultra are yearly billed tiers; their dollar amounts did not render on the official page this pass — unverified. You move up for volume and for the commercial licence, not for better background removal — that is the same tool the free plan already gives you.",
   ],
 
   security: [

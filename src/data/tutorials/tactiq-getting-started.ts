@@ -7,7 +7,7 @@ export const tactiqTutorial: PlatformTutorialData = {
   tagline:
     "Writes down what's said in your calls from inside your browser — nothing joins the meeting.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-15",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://tactiq.io/changelog",
   accessTier: "FREE",
 
