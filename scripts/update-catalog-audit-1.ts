@@ -54,11 +54,11 @@ const PATCHES: CatalogPatch[] = [
       primaryUseCases:
         "Tracking whether ChatGPT, Gemini, and Google AI Overviews mention a brand; AI articles and site audits to close visibility gaps",
       description:
-        "Writesonic is an SEO and GEO (AI-search visibility) tool: it tracks whether ChatGPT, Gemini, and Google AI Overviews mention your brand, then offers AI articles, site audits, and agent workflows to act on the gaps. Chatsonic, the old chatbot, is no longer what it sells. Official pricing (writesonic.com/pricing, as of 2026-10-14, billed annually at the listed monthly rates): Starter $79/mo, Basic $199/mo, Growth $399/mo, Enterprise custom. Annual billing saves 20%. No $16 plan and no permanent free plan on the pricing table; signup is a 7-day trial with no credit card.",
+        "Writesonic is an SEO and GEO (AI-search visibility) tool: it tracks whether ChatGPT, Gemini, and Google AI Overviews mention your brand, then offers AI articles, site audits, and agent workflows to act on the gaps. Chatsonic, the old chatbot, is no longer what it sells. Official pricing (writesonic.com/pricing, as of 2026-10-14, billed annually at the listed monthly rates): Starter $79/mo, Basic $199/mo, Growth $399/mo, Enterprise custom. Annual billing saves 20%. No $16 plan on the pricing table. Start free, no credit card required.",
       currentPricing:
         "Starter $79/mo billed annually; Basic $199; Growth $399; Enterprise custom; annual saves 20% (official, as of 2026-10-14)",
       freeTierFeatures:
-        "No permanent free plan on the pricing table; 7-day free trial, no credit card (official, as of 2026-10-14)",
+        "Start free, no credit card required (official, as of 2026-10-14)",
       costTier: "PAID",
     },
   },
@@ -351,11 +351,12 @@ function getDirectUrl(): string {
   return raw;
 }
 
-function hostnameOnly(url: string): string {
+function hostnameOnly(url: string): string | null {
   try {
-    return new URL(url).hostname;
+    const host = new URL(url).hostname;
+    return host ? host : null;
   } catch {
-    return "<unparseable URL>";
+    return null;
   }
 }
 
@@ -382,7 +383,13 @@ async function main() {
   }
 
   const directUrl = getDirectUrl();
-  const host = hostnameOnly(directUrl);
+  const host = hostnameOnly(directUrl) ?? hostnameOnly(process.env.DATABASE_URL);
+  if (!host) {
+    console.error(
+      "Could not parse a hostname from DATABASE_URL or the derived direct URL. Aborting before connect.",
+    );
+    process.exit(1);
+  }
   console.log(`Target database hostname: ${host}`);
   console.log(`Mode: ${dryRun ? "dry-run (no writes)" : "LIVE writes (--apply)"}`);
   console.log(`Patches: ${PATCHES.length}`);
