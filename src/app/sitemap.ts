@@ -52,8 +52,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let platformEntries: MetadataRoute.Sitemap;
 
   try {
-    // Same source as /platform/[slug] and Discover: live Platform rows.
+    // Same catalog visibility as Discover and /platform/[slug]: every
+    // Platform row is public. Neither page applies a published/active/
+    // verified where-clause (Discover starts with `where = {}`; the
+    // detail page is findUnique({ slug }) only). Do not invent a gate.
     const platforms = await prisma.platform.findMany({
+      where: {},
       select: { slug: true, updatedAt: true },
       orderBy: { slug: "asc" },
     });

@@ -6,14 +6,14 @@
  * OPERATOR ONLY. This script writes to whichever database DATABASE_URL
  * points at. Do not run it from an agent session. Neon branch first.
  *
- * Usage:
- *   npx tsx scripts/seed-phase1-batch1-platforms.ts --dry-run
+ * Usage (default is dry-run; writes require --apply):
  *   npx tsx scripts/seed-phase1-batch1-platforms.ts
- *   npx tsx scripts/seed-phase1-batch1-platforms.ts --yes
+ *   npx tsx scripts/seed-phase1-batch1-platforms.ts --dry-run
+ *   npx tsx scripts/seed-phase1-batch1-platforms.ts --apply
  *
- * Gate G1: confirm the hostname is the Neon branch, never production
- * (`ep-odd-mud-ajdk8f99`). The script prints hostname only (no credentials)
- * and refuses the production compute.
+ * Gate G1: parse DATABASE_URL's hostname and refuse if it starts with
+ * `ep-odd-mud-ajdk8f99` (covers the compute, `-pooler` variant, and full
+ * FQDN). Prints the full target host. Never prints credentials.
  *
  * Gate G3: this file is written for the operator to run. Agents must not
  * execute it.
@@ -22,7 +22,7 @@ import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type CostTier, type Difficulty, type PrivacyLevel } from "@prisma/client";
 
-const PRODUCTION_HOST = "ep-odd-mud-ajdk8f99";
+const PRODUCTION_ENDPOINT_ID = "ep-odd-mud-ajdk8f99";
 
 type SeedRow = {
   slug: string;
@@ -496,9 +496,13 @@ const ROWS: SeedRow[] = [
   },
 ];
 
-function toCreateData(row: SeedRow, categoryId: string) {
+function isFullyConfirmed(row: SeedRow): boolean {
+  const blob = [row.description, row.currentPricing, row.freeTierFeatures].join("\n");
+  return !/\bunverified\b/i.test(blob);
+}
+
+function batch1Content(row: SeedRow, categoryId: string) {
   return {
-    slug: row.slug,
     name: row.name,
     company: row.company,
     website: row.website,
@@ -517,7 +521,15 @@ function toCreateData(row: SeedRow, categoryId: string) {
     idealUserTypes: row.idealUserTypes,
     contentTypes: row.contentTypes,
     outputFormats: row.outputFormats,
-    verified: true,
+    verified: isFullyConfirmed(row),
+  };
+}
+
+function toCreateData(row: SeedRow, categoryId: string) {
+  return {
+    slug: row.slug,
+    ...batch1Content(row, categoryId),
+    // Curated fields: create defaults only. Updates must not overwrite them.
     featured: false,
     directAlternatives: [] as string[],
     complementaryTools: [] as string[],
@@ -527,13 +539,12 @@ function toCreateData(row: SeedRow, categoryId: string) {
 }
 
 function toUpdateData(row: SeedRow, categoryId: string) {
-  const { slug: _slug, ...rest } = toCreateData(row, categoryId);
-  return rest;
+  return batch1Content(row, categoryId);
 }
 
 async function main() {
-  const dryRun = process.argv.includes("--dry-run");
-  const skipCountdown = process.argv.includes("--yes");
+  const apply = process.argv.includes("--apply");
+  const dryRun = !apply || process.argv.includes("--dry-run");
 
   if (!process.env.DATABASE_URL) {
     console.error("DATABASE_URL is not set. Aborting.");
@@ -543,17 +554,18 @@ async function main() {
   const directUrl = getDirectUrl();
   const host = hostnameOnly(directUrl);
   console.log(`Target database hostname: ${host}`);
-  console.log(`Mode: ${dryRun ? "dry-run (no writes)" : "LIVE writes"}`);
+  console.log(`Mode: ${dryRun ? "dry-run (no writes)" : "LIVE writes (--apply)"}`);
   console.log(`Rows: ${ROWS.length} (Cerebras and Hailuo deferred)`);
 
-  if (host === PRODUCTION_HOST) {
+  if (host.startsWith(PRODUCTION_ENDPOINT_ID)) {
     console.error(
-      "Refusing to run: hostname is the production Neon compute. Point DATABASE_URL at a Neon branch first.",
+      `Refusing to run: hostname ${host} starts with ${PRODUCTION_ENDPOINT_ID} (production compute or pooler). Point DATABASE_URL at a Neon branch first.`,
     );
     process.exit(1);
   }
 
-  if (!dryRun && !skipCountdown) {
+  if (!dryRun) {
+    console.log(`About to write. Full target host: ${host}`);
     await countdown(5);
   }
 
@@ -582,8 +594,11 @@ async function main() {
         select: { id: true, slug: true, name: true },
       });
 
+      const verified = isFullyConfirmed(row);
       if (dryRun) {
-        console.log(`${existing ? "~ would update" : "+ would create"} ${row.slug}`);
+        console.log(
+          `${existing ? "~ would update" : "+ would create"} ${row.slug} verified=${verified}`,
+        );
         continue;
       }
 
@@ -595,10 +610,10 @@ async function main() {
 
       if (existing) {
         updated += 1;
-        console.log(`~ updated ${row.slug}`);
+        console.log(`~ updated ${row.slug} verified=${verified}`);
       } else {
         created += 1;
-        console.log(`+ created ${row.slug}`);
+        console.log(`+ created ${row.slug} verified=${verified}`);
       }
     }
 
