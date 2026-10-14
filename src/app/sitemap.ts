@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { listRegisteredTutorials } from "@/data/tutorials";
+import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
@@ -13,6 +14,8 @@ const STATIC_PUBLIC_PATHS = [
   "/workflows",
   "/tutorials",
   "/pricing",
+  "/models",
+  "/models/compare/claude-vs-gpt",
 ] as const;
 
 function parseRealDate(value: string | Date | null | undefined): Date | undefined {
@@ -43,6 +46,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const workflowEntries: MetadataRoute.Sitemap = WORKFLOWS.map((workflow) => ({
     url: `${SITE_URL}/workflows/${workflow.slug}`,
   }));
+
+  const modelFamilyEntries: MetadataRoute.Sitemap = listModelFamilies().map((family) =>
+    withLastModified(
+      `${SITE_URL}/models/${family.familySlug}`,
+      parseRealDate(family.lastVerifiedAt),
+    ),
+  );
 
   const tutorials = listRegisteredTutorials();
   const lastReviewedBySlug = new Map(
@@ -81,5 +91,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     );
   }
 
-  return [...staticEntries, ...workflowEntries, ...platformEntries];
+  return [...staticEntries, ...workflowEntries, ...modelFamilyEntries, ...platformEntries];
 }
