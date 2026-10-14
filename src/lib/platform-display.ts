@@ -112,6 +112,20 @@ export function plansFromFactsOrProse(
   return label ? [{ name: "Listed", price: label, period: "", limits: "" }] : [];
 }
 
+/** Fold leftover DB usageLimits into the Free plan row when that row has no limits. */
+export function applyUsageLimitsToFreePlan(
+  plans: DisplayPlan[],
+  usageLimits: string | null | undefined,
+): DisplayPlan[] {
+  if (!usageLimits?.trim()) return plans;
+  const cleaned = stripInlineCitations(usageLimits);
+  return plans.map((plan) => {
+    if (!/^free$/i.test(plan.name)) return plan;
+    if (plan.limits.trim()) return plan;
+    return { ...plan, limits: cleaned };
+  });
+}
+
 export function startingPriceLabel(plans: DisplayPlan[]): string {
   if (plans.length === 0) return "See site";
   const paid = plans.find((plan) => {

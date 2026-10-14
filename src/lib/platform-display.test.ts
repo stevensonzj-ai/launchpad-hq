@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  applyUsageLimitsToFreePlan,
   collectDisplaySources,
   extractUrls,
   freeTierSummary,
@@ -56,6 +57,18 @@ describe("platform display helpers", () => {
     assert.ok(sources.some((s) => s.url.includes("example.com")));
     assert.ok(sources.some((s) => s.url.includes("help.openai.com")));
     assert.ok(notes.some((n) => n.toLowerCase().includes("unverified")));
+  });
+
+  it("fills empty Free-plan limits from leftover usageLimits", () => {
+    const plans = applyUsageLimitsToFreePlan(
+      [
+        { name: "Free", price: "$0", period: "month", limits: "" },
+        { name: "Plus", price: "$8", period: "month", limits: "higher" },
+      ],
+      "20 prompts/day (as of 2026-01-01)",
+    );
+    assert.equal(plans[0]?.limits, "20 prompts/day");
+    assert.equal(plans[1]?.limits, "higher");
   });
 
   it("hides the tutorials tab when there is no static file", () => {

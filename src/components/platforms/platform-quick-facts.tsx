@@ -5,6 +5,7 @@ type QuickFact = {
   label: string;
   value: string;
   fact?: Pick<Fact<unknown>, "sourceUrl" | "checkedAt" | "status"> | null;
+  note?: string;
 };
 
 export function PlatformQuickFacts({ items }: { items: QuickFact[] }) {
@@ -21,7 +22,17 @@ export function PlatformQuickFacts({ items }: { items: QuickFact[] }) {
               {item.label}
               <FactCite fact={item.fact} />
             </dt>
-            <dd className="mt-1 text-sm font-medium text-white">{item.value}</dd>
+            <dd className="mt-1 text-sm font-medium text-white">
+              {item.value}
+              {item.note && (
+                <details className="mt-1 font-normal">
+                  <summary className="cursor-pointer text-xs font-medium text-orange-400 hover:text-orange-300">
+                    more
+                  </summary>
+                  <p className="mt-1 text-xs font-normal text-gray-400">{item.note}</p>
+                </details>
+              )}
+            </dd>
           </div>
         ))}
       </dl>

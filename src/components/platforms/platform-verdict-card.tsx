@@ -8,6 +8,7 @@ type PlatformVerdictCardProps = {
   verdictFact?: Fact<string>;
   fallbackText: string | null;
   idealUserTypes: string[];
+  useCases?: string | null;
 };
 
 export function PlatformVerdictCard({
@@ -15,11 +16,13 @@ export function PlatformVerdictCard({
   verdictFact,
   fallbackText,
   idealUserTypes,
+  useCases,
 }: PlatformVerdictCardProps) {
   const summary = stripInlineCitations(verdictFact?.value ?? fallbackText ?? "");
   const body =
     summary ||
     `We're still expanding this ${name} profile—check the official site for the latest capabilities.`;
+  const useCasesText = useCases?.trim() ? stripInlineCitations(useCases) : "";
 
   return (
     <section className="rounded-xl border border-orange-500/20 bg-gradient-to-b from-gray-900/90 to-gray-900/40 p-6">
@@ -29,6 +32,9 @@ export function PlatformVerdictCard({
         <FactCite fact={verdictFact} />
       </div>
       <p className="text-sm leading-relaxed text-gray-200">{body}</p>
+      {useCasesText && (
+        <p className="mt-3 text-sm leading-relaxed text-gray-400">{useCasesText}</p>
+      )}
       {idealUserTypes.length > 0 && (
         <div className="mt-4 border-t border-orange-500/15 pt-4">
           <p className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-orange-300">
