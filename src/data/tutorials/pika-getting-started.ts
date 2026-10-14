@@ -7,7 +7,7 @@ export const pikaTutorial: PlatformTutorialData = {
   tagline:
     "Turn one photo into a five-second video that squishes, melts or explodes — usually in a couple of taps, usually free.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://pika.art/blog",
   accessTier: "FREE",
 
@@ -21,10 +21,9 @@ export const pikaTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Pika's pricing page currently lists a free Basic plan at $0 with 80 video credits a month and — unusually — no **watermark**, the mark identifying output as AI-made, on downloads.",
-    "Monthly credits reset and do not roll over; Pika's FAQ is explicit that unused ones vanish and only purchased top-ups carry over, on paid plans. At 480p, the lowest quality setting — soft on a phone, worse on anything bigger — a five-second clip is around 12 credits, a Pikaffect 15, a Pikascene 20.",
-    "That makes 80 credits roughly six clips a month: enough to learn on, not to make things regularly. The cheapest paid tier is currently around $8 a month billed yearly, the tiers above roughly $28 and $76.",
-    "Bring an email or Google sign-in and a photo; image-to-video is where Pika is strongest. First step: sign up at pika.art, upload a clear photo of one object on a plain background, open Pikaffects, pick an effect. About 15 credits.",
+    "Pika's pricing compare table (pika.art/pricing, as of 2026-10-14) lists Free at $0 with **0 monthly credits** (credit packs only) and no watermark on downloads.",
+    "Paid monthly credits reset; unused ones vanish and only purchased top-ups carry over. Starter is currently $10/month ($8 billed annually) with 900 credits; Creator $35 ($28 annual); Fancy from $95.",
+    "Free is a look, not a workflow — you buy a pack or subscribe before you make anything regularly. Bring an email or Google sign-in and a photo; image-to-video is where Pika is strongest. First step: sign up at pika.art, upload a clear photo of one object on a plain background, open Pikaffects, pick an effect.",
   ],
 
   security: [

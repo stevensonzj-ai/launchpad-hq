@@ -7,7 +7,7 @@ export const mistralAiLeChatTutorial: PlatformTutorialData = {
   tagline:
     "The French-built assistant that also works through multi-step jobs — from a company that publishes its AI for anyone to run.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://docs.mistral.ai/resources/changelogs",
   accessTier: "FREE",
 
@@ -23,7 +23,7 @@ export const mistralAiLeChatTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "Free to start: an email address and two minutes, no card. Before you type anything, open Settings and deal with the privacy toggle below — the one setting that defaults against you.",
     "**The free tier limits you by mechanism, not by a published number.** Messages, web searches, coding sessions and images are capped; hit a cap and you wait for a reset. It is not a trial that expires but a permanent account that slows when you lean on it. Mistral publishes no message count, so treat any daily-limit figure as a guess.",
-    "You will feel the ceiling only running multi-step Work tasks daily. The paid tier is currently around fifteen US dollars a month, with a cheaper verified-student rate — check the pricing page, these numbers move.",
+    "You will feel the ceiling only running multi-step Work tasks daily. Paid: Pro **$14.99/month** (verified students **$5.99**); Team **$24.99/user/month** (mistral.ai/pricing, as of 2026-10-14).",
   ],
 
   security: [
