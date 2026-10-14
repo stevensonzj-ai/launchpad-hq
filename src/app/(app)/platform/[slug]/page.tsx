@@ -9,8 +9,10 @@ import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
+import { PlatformModelsSection } from "@/components/models/platform-models-section";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { getModelFamilyForPlatform } from "@/data/models";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -45,6 +47,8 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
   });
 
   if (!platform) notFound();
+
+  const modelFamily = getModelFamilyForPlatform(platform.slug);
 
   const user = await getOrCreateDbUser();
   const isSignedIn = user !== null;
@@ -169,6 +173,8 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
             </section>
           </div>
         </div>
+
+        {modelFamily && <PlatformModelsSection family={modelFamily} />}
 
       {/* Alternatives */}
       {alternatives.length > 0 && (
