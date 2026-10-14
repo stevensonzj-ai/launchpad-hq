@@ -20,7 +20,7 @@ import { SITE_IS_PUBLIC, SITE_URL } from "@/lib/site";
  *   Disallow: /account
  *   Disallow: /onboarding
  *   Disallow: /api/
- *   Sitemap: https://launchpadhq.io/sitemap.xml
+ *   Sitemap: https://www.launchpadhq.io/sitemap.xml
  */
 export default function robots(): MetadataRoute.Robots {
   if (!SITE_IS_PUBLIC) {

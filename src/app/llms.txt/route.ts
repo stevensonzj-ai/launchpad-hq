@@ -21,7 +21,10 @@ export function GET() {
 
 > LaunchpadHQ is a curated AI-platform discovery site for beginners and budget-conscious users. It helps people find real alternatives beyond ChatGPT and Claude — writing, image, video, audio, code, research, and automation tools, including free tiers and local/open-source options.
 
-The site is not publicly launched. Browsing the directory, quiz, platform overviews, prompt library, and discussions is intended to stay free. Auth, account, and admin routes are omitted here.
+${
+  // TODO(launch): remove this sentence when SITE_IS_PUBLIC is flipped.
+  "The site is not publicly launched. Browsing the directory, quiz, platform overviews, prompt library, and discussions is intended to stay free. Auth, account, and admin routes are omitted here."
+}
 
 ## Sections
 
@@ -44,7 +47,7 @@ ${tutorialLinks}
 
   return new Response(body, {
     headers: {
-      "Content-Type": "text/markdown; charset=utf-8",
+      "Content-Type": "text/plain; charset=utf-8",
     },
   });
 }

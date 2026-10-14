@@ -7,7 +7,6 @@ const STATIC_PUBLIC_PATHS = [
   "/",
   "/discover",
   "/quiz",
-  "/quiz/results",
   "/workflows",
   "/tutorials",
   "/pricing",
