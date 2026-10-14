@@ -11,6 +11,7 @@
         "audit:tutorials": "node scripts/tutorial-pipeline/audit-pages.mjs",
         "db:update-mobile": "tsx scripts/update-platform-mobile-fields.ts",
         "db:seed-platforms": "tsx scripts/seed-missing-platforms.ts",
+        "db:seed-phase1-batch1": "tsx scripts/seed-phase1-batch1-platforms.ts",
         "postinstall": "prisma generate"
     },
     "dependencies": {

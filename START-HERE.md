@@ -10,7 +10,7 @@
 
 **LaunchpadHQ** is a curated AI-platform discovery site for beginners and budget-conscious users, live at **launchpadhq.io**. Its thesis is that the AI world is bigger than ChatGPT and Claude — that there are ~170 real, catalogued options across writing, image, video, audio, code, research and automation, many with genuinely usable free tiers or local open-source alternatives. The product is a guided discovery experience: browse the directory, take a matching quiz, read honest per-platform getting-started guides, save favourites, and discuss. The differentiator is *editorial honesty* — the site tells users what a tool is bad at, what its free tier actually limits, and what its privacy posture really is. That editorial work is the moat; it is hard to fake at scale, which is the entire defence against AI-generated competitor directories.
 
-**Current status.** Live in production and functional, but **not publicly launched and not monetized**. The site serves a deliberate site-wide `noindex` — a "friends and family" guard that keeps Google from forming a thin-content impression of the domain while the catalog is still filling in. There is no paywall enforcement; payment plumbing exists but is not switched on. It is a solo side project executed with professional discipline: the owner does not depend on it for income, and the operating constraint that governs every architectural decision is that it must stay **low-cost and low-maintenance**. Features requiring constant human attention are disqualified unless they directly drive revenue.
+**Current status.** Live in production and functional, but **not publicly launched and not monetized**. Indexing is controlled by `SITE_IS_PUBLIC` in `src/lib/site.ts` (PR #37, `144cfea`) — that flag drives both the root metadata `robots` noindex/nofollow and `robots.txt` `Disallow: /`. It is **currently `false`** (friends-and-family). Flip that one constant to lift both together at launch. There is no paywall enforcement; payment plumbing exists but is not switched on. It is a solo side project executed with professional discipline: the owner does not depend on it for income, and the operating constraint that governs every architectural decision is that it must stay **low-cost and low-maintenance**. Features requiring constant human attention are disqualified unless they directly drive revenue.
 
 The last substantive work (July 2026) was the tutorial content pipeline, which has produced 29 live per-platform guides. The project has been dormant since.
 
@@ -141,7 +141,7 @@ This is the most valuable section of this document. Every entry is a claim that 
 
 **4.14 — "Pilot tutorial pages stay in documents and are not indexed until the quality bar is confirmed."**
 *Where:* `docs/history/tutorial-template-spec.md` § 10.
-*Truth:* All 29 pages are live in production. They are not indexed, but only because of the site-wide `noindex` — a different mechanism, applied for a different reason, that will be lifted at launch.
+*Truth:* All 29 pages are live in production. They are not indexed while `SITE_IS_PUBLIC` in `src/lib/site.ts` is `false` — that flag (PR #37, `144cfea`) applies metadata noindex and `robots.txt` `Disallow: /`. Different mechanism and reason from a per-page tutorial hold; flip the flag at launch.
 
 ### Time-rotted — harmless once you know, confusing until you do
 
@@ -449,7 +449,7 @@ src/
 | **Resend** | Transactional email. Root domain verified. Send-only API key. | Owner |
 | **Sentry** — org `launchpad-hq`, project `javascript-nextjs` | Error monitoring and tracing. DSN hardcoded (correctly). | Owner |
 | **Google Workspace** | `zach@launchpadhq.io`. Owned by a dedicated Google account, not the personal one, for reasons documented in the Session 9 archive. | Owner |
-| **Google Search Console** | Domain property, Cloudflare-DNS verified. **Shows zero query data and will continue to** until the site-wide `noindex` is lifted and pages index — weeks to months after that. Do not plan around GSC data; it structurally does not exist yet. | Owner |
+| **Google Search Console** | Domain property, Cloudflare-DNS verified. **Shows zero query data and will continue to** until `SITE_IS_PUBLIC` is flipped to `true` in `src/lib/site.ts` and pages index — weeks to months after that. Do not plan around GSC data; it structurally does not exist yet. | Owner |
 | **Claude project "LaunchPad HQ"** | Where all 24 archived documents came from. **You cannot see it.** It may still be receiving updates that never reach this repository. | Owner |
 
 ### What is explicitly NOT in this repository
@@ -476,19 +476,19 @@ Everything here is drawn from the archived documents. Where they establish nothi
 - **Gating philosophy, locked:** gate interaction, personalization and depth — **never** the catalog's existence or browsability. A full-site gate was explicitly considered and rejected because it would destroy the organic search funnel, present maximum friction to the lowest-confidence users, and delete top-of-funnel rather than convert it.
 - **Three access levels:** read freely with no account (catalog, filters, quiz, platform pages, lighter tutorials) → free account to contribute (save results, favourite, post) → paid (deep tutorials, the For You news feed, favourites-driven personalization).
 - **The monetization-ready bar** — the definition of "ready to charge," and all three must be true: the For You **news feed** works; tutorials have a real first batch live; personalization is solid. Two of the three now arguably hold. **The news feed is the entire retention mechanism** — it is the only feature giving anyone a reason to return next week, and it has zero work done.
-- **Launch prerequisites, in dependency order:** the **LLC has been applied for and is pending as of 2026-09-06** (Texas, ~$300); from here the chain is EIN → business bank account → production Stripe account → Clerk production migration → run the Jasper dedup → lift `noindex` → enforce the paywall. Almost all coding work sits *off* this critical path. **The production Stripe account will be shared with a second product, Camerata** — see the webhook product-scoping item in § 8.
+- **Launch prerequisites, in dependency order:** the **LLC has been applied for and is pending as of 2026-09-06** (Texas, ~$300); from here the chain is EIN → business bank account → production Stripe account → Clerk production migration → run the Jasper dedup → flip `SITE_IS_PUBLIC` to `true` in `src/lib/site.ts` (lifts noindex and robots together) → enforce the paywall. Almost all coding work sits *off* this critical path. **The production Stripe account will be shared with a second product, Camerata** — see the webhook product-scoping item in § 8.
 
 ### Market and competition
 
 - **Target user:** an AI-curious beginner, probably not technical, possibly paying for one AI tool already, price-sensitive, who wants help deciding what else is worth their time and money.
 - **Named competitors** (monitored via a planned monthly manual scan): Futurepedia, There's An AI For That, Toolify, AlternativeTo, Future Tools, Coda One.
 - **The stated differentiator:** curation and editorial reasoning. There are 15,000+ AI tools listed across the aggregators; being a "real platform" is not enough to be included here.
-- **The named strategic risk:** Google's March 2026 core update made scaled content abuse — many thin, templated pages — a top enforcement target, and a flag hits the *whole domain* including catalog rankings already earned. Every rule in the tutorial specification exists to make each page defensibly substantive. This is why the site is `noindex` while the catalog fills in, and why page production is deliberately staged rather than dumped.
+- **The named strategic risk:** Google's March 2026 core update made scaled content abuse — many thin, templated pages — a top enforcement target, and a flag hits the *whole domain* including catalog rankings already earned. Every rule in the tutorial specification exists to make each page defensibly substantive. This is why `SITE_IS_PUBLIC` stays `false` (noindex + robots disallow) while the catalog fills in, and why page production is deliberately staged rather than dumped.
 
 ### What is unknown
 
 - `TODO(Zach)`: **Traffic and audience.** Analytics have run since June 2026, but no archived document records actual numbers beyond a single early data point. Unknown: current monthly visitors, top entry pages, sources.
-- `TODO(Zach)`: **Demand evidence.** No search demand data exists and none will until `noindex` lifts. Page-production ordering has been driven by editorial judgement alone.
+- `TODO(Zach)`: **Demand evidence.** No search demand data exists and none will until `SITE_IS_PUBLIC` is true. Page-production ordering has been driven by editorial judgement alone.
 - `TODO(Zach)`: **Willingness to pay.** No pricing validation, no user interviews, no waitlist, no signal that anyone will pay $9/month. The price was reasoned to, not tested.
 - `TODO(Zach)`: **User count.** Clerk holds it; no document records it.
 - `TODO(Zach)`: **Cost to run.** Every service is on a free tier except Google Workspace (~$8.40/month) and the domain. Total monthly cost is not written down anywhere.
