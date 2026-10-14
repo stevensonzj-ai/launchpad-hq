@@ -19,15 +19,30 @@ const TABS: { id: PlatformDetailTab; label: string; countKey?: TabCountKey }[] =
   { id: "prompts", label: "Prompts", countKey: "prompts" },
 ];
 
+const TAB_IDS: PlatformDetailTab[] = ["overview", "tutorials", "discussions", "prompts"];
+
+function isTab(value: string | undefined): value is PlatformDetailTab {
+  return Boolean(value && TAB_IDS.includes(value as PlatformDetailTab));
+}
+
 type PlatformDetailTabsProps = {
   platformName: string;
   platformSlug: string;
   children: ReactNode;
   counts?: PlatformDetailTabCounts;
+  initialTab?: string;
 };
 
-export function PlatformDetailTabs({ platformName, platformSlug, children, counts }: PlatformDetailTabsProps) {
-  const [activeTab, setActiveTab] = useState<PlatformDetailTab>("overview");
+export function PlatformDetailTabs({
+  platformName,
+  platformSlug,
+  children,
+  counts,
+  initialTab,
+}: PlatformDetailTabsProps) {
+  const [activeTab, setActiveTab] = useState<PlatformDetailTab>(
+    isTab(initialTab) ? initialTab : "overview",
+  );
 
   return (
     <>

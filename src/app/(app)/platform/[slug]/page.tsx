@@ -28,8 +28,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function PlatformPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PlatformPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ tab?: string }>;
+}) {
   const { slug } = await params;
+  const { tab } = await searchParams;
 
   const platform = await prisma.platform.findUnique({
     where: { slug },
@@ -125,6 +132,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         platformName={platform.name}
         platformSlug={platform.slug}
         counts={platform._count}
+        initialTab={tab}
       >
         <PlatformOverviewSections platform={platform} />
 
