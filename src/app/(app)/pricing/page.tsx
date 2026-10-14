@@ -102,7 +102,18 @@ export default function PricingPage() {
         </ul>
       </div>
 
-      <p className="mt-10 text-center text-sm text-gray-600">
+      <p className="mt-10 text-center text-xs text-gray-600">
+        By starting a trial you agree to our{" "}
+        <Link href="/terms" className="hover:text-orange-400">
+          Terms
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="hover:text-orange-400">
+          Privacy Policy
+        </Link>
+        .
+      </p>
+      <p className="mt-4 text-center text-sm text-gray-600">
         <Link href="/discover" className="hover:text-orange-400">
           Continue browsing for free
         </Link>
