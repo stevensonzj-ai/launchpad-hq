@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://www.clay.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -20,8 +21,9 @@ export default {
     sourceUrl: "https://www.clay.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -34,31 +36,33 @@ export default {
       {
         name: "Growth",
         price: "$446/mo",
-        period: "",
-        limits: "Annual from $185/mo (480K actions/yr); monthly from $205/mo (40K/mo)",
+        period: "billed annually",
+        limits: "$495/mo billed monthly",
       },
     ],
-    note: "USD per month, per workspace; per-seat unpublished. Launch $167 annual vs $185 monthly browser-verified 2026-10-14 (FAQ “starting at $185/mo” is the monthly price). Enterprise unpublished.",
+    note: "USD per month, per workspace; per-seat unpublished. Launch $167/mo billed annually, $185/mo monthly. Growth $446/mo billed annually, $495/mo monthly (FAQ “starting at”). The page does not label each number as annual vs monthly; that mapping follows the Save 10% toggle. Dropped the Launch/Growth “Starts at $54/$60/$185/$205” action-tier figures from the headline rows. Enterprise unpublished.",
     sourceUrl: "https://www.clay.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Web"],
     sourceUrl: "https://www.clay.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
       summary:
-        "Launch $167/mo billed annually, $185/mo monthly (browser-verified). Growth headline $446/mo from the fetch. Free 100 data credits, 500 actions/mo, 200 rows per table.",
+        "RA: Growth is $446/mo billed annually and $495/mo billed monthly. Launch stays $167/$185. Dropped $185/$205 action-tier figures from the Growth row.",
     },
   ],
 } satisfies ToolFacts;

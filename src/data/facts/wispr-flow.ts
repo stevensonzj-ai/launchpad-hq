@@ -8,12 +8,13 @@ export default {
       available: true,
       summary: "2,000 words/week on desktop, 1,000/week on mobile.",
     },
-    note: "Browser-verified 2026-10-14 for the mobile 1,000/week limit (fetch truncated “1,000/w…”). Dollar prices omitted: fetch and browser toggles conflict.",
+    note: "Free word limits confirmed by fetch 2026-10-14. Dollar prices omitted: fetch and browser toggles conflict.",
     sourceUrl: "https://wisprflow.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: [
@@ -24,8 +25,9 @@ export default {
     sourceUrl: "https://wisprflow.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {

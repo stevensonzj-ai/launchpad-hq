@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://www.veed.io/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -36,22 +37,23 @@ export default {
         name: "Enterprise",
         price: "custom",
         period: "",
-        limits: "per user",
+        limits: "",
       },
     ],
-    note: "Browser-verified 2026-10-14 (pricing page is JS-rendered; fetch/curl had no plan data). Per user. No yearly-to-monthly conversion. Platforms unpublished.",
+    note: "Browser-verified 2026-10-14 (pricing page is JS-rendered; fetch/curl had no plan data). Per user applies to Creator, Pro, and Studio only, not Enterprise. No yearly-to-monthly conversion. Platforms unpublished.",
     sourceUrl: "https://www.veed.io/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
       summary:
-        "Browser-verified: Creator $25/mo monthly or $147/yr; Pro $45/mo or $265/yr; Studio $79/mo or $465/yr; Enterprise custom. Per user.",
+        "RA: per user applies to Creator, Pro, and Studio only. All four plan rows browser-verified 2026-10-14.",
     },
   ],
 } satisfies ToolFacts;

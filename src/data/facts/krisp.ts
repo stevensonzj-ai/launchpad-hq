@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://krisp.ai/pricing/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -21,8 +22,9 @@ export default {
     sourceUrl: "https://krisp.ai/pricing/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -49,20 +51,22 @@ export default {
     sourceUrl: "https://krisp.ai/pricing/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apps: {
     value: {
       ios: "https://apps.apple.com/us/app/krisp-ai-meeting-note-taker/id6740535865",
       android: "https://play.google.com/store/apps/details?id=ai.krisp.krispMobile",
     },
-    note: "Desktop OS list unpublished (krisp.ai/download/ returned 404). Chrome extension is linked from krisp.ai; store URL unpublished. iOS App Store id6740535865 browser-verified 2026-10-14.",
+    note: "Desktop OS list unpublished (krisp.ai/download/ returned 404). Chrome extension is linked from krisp.ai; store URL unpublished.",
     sourceUrl: "https://krisp.ai/pricing/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
