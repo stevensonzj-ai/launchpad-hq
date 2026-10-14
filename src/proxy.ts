@@ -20,6 +20,9 @@ const isPublicRoute = createRouteMatcher([
   "/sign-in(.*)",
   "/sign-up(.*)",
   "/api(.*)",
+  "/sitemap.xml",
+  "/robots.txt",
+  "/llms.txt",
 ]);
 
 /**
@@ -54,7 +57,7 @@ export default clerkMiddleware(async (auth, request) => {
 
 export const config = {
   matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|ttf|woff2?|csv|txt)).*)",
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|ttf|woff2?|csv|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };

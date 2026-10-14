@@ -37,47 +37,45 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Our database (Neon Postgres).</strong> When you have an account we copy
-            your Clerk user id, email, name, and avatar URL into our User record. We also
-            store whether onboarding is complete. Historical plan and Stripe id columns may
-            still exist in the database from an unused subscription experiment; they are
-            not used to gate features. If you fill in preferences or the quiz, we store
-            those answers (goals, budget, experience, industries, team size, priorities,
-            quiz answers, and when the quiz was completed). We store saved tools
-            (favourites) and tutorial progress. If you post reviews, prompts, discussions,
-            or replies, we store that content and show it publicly with your author name.
-            Votes and ratings, and reports (with a reason), are also stored. We found no
-            IP-address column in our schema.
+            your Clerk user id, email, name, and avatar URL into our records. We also
+            store whether onboarding is complete. Unused leftover fields from an earlier
+            subscription experiment may still exist; they are not used to gate features. If
+            you fill in preferences or the quiz, we store those answers (goals, budget,
+            experience, industries, team size, priorities, quiz answers, and when the quiz
+            was completed). We store saved tools (favourites) and tutorial progress. If you
+            post reviews, prompts, discussions, or replies, we store that content and show
+            it publicly with your author name. Votes and ratings, and reports (with a
+            reason), are also stored. We do not store your IP address in our own database.
           </li>
           <li>
             <strong>Payments (Stripe).</strong> Stripe is used only for sponsor invoices.
             Visitor card details are not collected for a site subscription.
           </li>
           <li>
-            <strong>Errors (Sentry).</strong> We send error and performance data to Sentry.
-            The app is configured with <code>sendDefaultPii: false</code> and{" "}
-            <code>tracesSampleRate: 1</code> (performance traces on every request). Session
-            replay is not configured. Sentry may still receive technical data (browser, URL,
-            error details). Its servers can see the request IP; whether Sentry stores those
-            IP addresses is a Sentry project setting.
+            <strong>Errors (Sentry).</strong> We send error and performance data to Sentry
+            so we can fix bugs. We tell Sentry not to attach extra personal details by
+            default. Performance traces may run on requests. We do not use session replay.
+            Sentry may still receive technical data (browser, URL, error details). Its
+            systems can see the request IP; whether those IPs are stored depends on how
+            Sentry is configured for this project.
           </li>
           <li>
             <strong>Traffic and performance (Vercel Analytics and Speed Insights).</strong>{" "}
             The site loads Vercel Analytics and Speed Insights. Vercel Analytics is
-            cookieless. Claims that Speed Insights is not tied to an individual visitor or
-            IP, and that analytics data is aggregated or hashed, are unverified against our
-            own processing.
+            cookieless. Speed Insights measures how quickly pages load. We rely on
+            Vercel’s published product behavior for how that data is handled.
           </li>
           <li>
             <strong>Hosting logs.</strong> The site is hosted on Vercel. Vercel server logs
             include IP addresses by default. The database is hosted on Neon.
           </li>
           <li>
-            <strong>Browser storage.</strong> For signed-out quiz takers we store answers in{" "}
-            <code>sessionStorage</code> under the key <code>launchpad_quiz_pending</code>.
-            That stash is cleared after save, or when the tab closes. We found no
-            first-party <code>localStorage</code> and no first-party cookies besides Clerk’s
-            essential authentication cookies (and Stripe’s on Stripe checkout pages used
-            only for sponsor invoices). We do not show a cookie banner.
+            <strong>Browser storage.</strong> For signed-out quiz takers we store answers in
+            the browser for that tab only, under a key we control. That stash is cleared
+            after save, or when the tab closes. We do not use first-party long-term browser
+            storage, and we do not set first-party cookies besides Clerk’s essential
+            authentication cookies (and Stripe’s on Stripe checkout pages used only for
+            sponsor invoices). We do not show a cookie banner.
           </li>
           <li>
             <strong>Email (Resend).</strong> When someone posts a discussion, reply, or
@@ -87,9 +85,8 @@ export default function PrivacyPage() {
           </li>
         </ul>
         <p>
-          We do not use ad networks. We do not sell or share personal information. We found
-          no third-party embeds (no iframes, YouTube, Google Tag Manager, or ad scripts).
-          Links to other sites leave Launchpad HQ.
+          We do not use ad networks. We found no third-party embeds (no iframes, YouTube,
+          Google Tag Manager, or ad scripts). Links to other sites leave Launchpad HQ.
         </p>
       </section>
 
@@ -104,11 +101,23 @@ export default function PrivacyPage() {
       <section>
         <h2>Who we share with</h2>
         <p>
+          We do not sell your personal information; we share it only with the service
+          providers below.
+        </p>
+        <p>
           We share data with service providers that run parts of the product: Clerk
           (authentication), Neon (database), Vercel (hosting, analytics, and speed
           insights), Stripe (used only for sponsor invoices), Sentry (errors), and Resend
-          (transactional moderation email). We do not sell or share personal information
-          and we do not run ads.
+          (transactional moderation email). We do not run ads.
+        </p>
+      </section>
+
+      <section>
+        <h2>Do Not Track</h2>
+        <p>
+          Some browsers send a Do Not Track signal. There is no consistent standard for how
+          sites should respond, so we do not change our practices based on that signal. We
+          do not use ad networks or tracking cookies of our own.
         </p>
       </section>
 
