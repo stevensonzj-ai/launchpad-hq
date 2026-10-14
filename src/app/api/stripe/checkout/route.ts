@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
+import { PRO_PLAN_ENABLED } from "@/lib/site";
 
 export async function POST(request: NextRequest) {
+  if (!PRO_PLAN_ENABLED) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const user = await getOrCreateDbUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

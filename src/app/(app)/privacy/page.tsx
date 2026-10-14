@@ -21,9 +21,12 @@ export default function PrivacyPage() {
         </p>
         <p>
           This site is a free directory of AI tools. You can browse without an account. You
-          may optionally create an account, and you may optionally subscribe to Launchpad HQ
-          Pro ($9/month, 7-day free trial) billed through Stripe. See our{" "}
-          <Link href="/terms">Terms of Use</Link>.
+          may optionally create an account. There is no paid user subscription.{" "}
+          <strong>
+            [Zach review] Stripe may be used later as the payment processor for sponsor
+            invoices, not for visitor billing.
+          </strong>{" "}
+          See our <Link href="/terms">Terms of Use</Link>.
         </p>
       </section>
 
@@ -43,8 +46,9 @@ export default function PrivacyPage() {
           <li>
             <strong>Our database (Neon Postgres).</strong> When you have an account we copy
             your Clerk user id, email, name, and avatar URL into our User record. We also
-            store your plan (FREE / PRO / TEAM), Stripe customer and subscription ids and
-            status, trial and plan dates, and whether onboarding is complete. If you fill
+            store whether onboarding is complete. Historical plan and Stripe id columns may
+            still exist in the database from an unused subscription experiment; they are
+            not used to gate features. If you fill
             in preferences or the quiz, we store those answers (goals, budget, experience,
             industries, team size, priorities, quiz answers, and when the quiz was
             completed). We store saved tools (favourites) and tutorial progress. If you
@@ -53,8 +57,11 @@ export default function PrivacyPage() {
             reason), are also stored. We found no IP-address column in our schema.
           </li>
           <li>
-            <strong>Payments (Stripe).</strong> Card details go to Stripe, not to us. We
-            store only Stripe ids and subscription status.
+            <strong>Payments (Stripe).</strong>{" "}
+            <strong>
+              [Zach review] Stripe is intended as the future processor for sponsor invoices.
+              Visitor card details are not collected for a site subscription.
+            </strong>
           </li>
           <li>
             <strong>Errors (Sentry).</strong> We send error and performance data to Sentry.
@@ -107,8 +114,7 @@ export default function PrivacyPage() {
         <h2>Why we use it</h2>
         <p>
           We use this information to run accounts, save your favourites and quiz answers,
-          take payment for Pro, fix bugs, understand traffic at an aggregate level, and
-          moderate public posts.
+          fix bugs, understand traffic at an aggregate level, and moderate public posts.
         </p>
       </section>
 
@@ -117,7 +123,12 @@ export default function PrivacyPage() {
         <p>
           We share data with service providers that run parts of the product: Clerk
           (authentication), Neon (database), Vercel (hosting, analytics, and speed
-          insights), Stripe (payments), Sentry (errors), and Resend (transactional
+          insights), Stripe{" "}
+          <strong>
+            [Zach review] (intended for future sponsor invoices, not visitor
+            subscriptions)
+          </strong>
+          , Sentry (errors), and Resend (transactional
           moderation email). We do not sell personal information and we do not run ads.
         </p>
       </section>
@@ -150,8 +161,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Your choices and rights</h2>
         <p>
-          You can browse without an account. You can cancel Pro through Stripe’s customer
-          portal on the pricing page. You can stop using the site at any time.
+          You can browse without an account. You can stop using the site at any time.
         </p>
         <p>
           There is no self-serve account-deletion button in the product.{" "}
@@ -194,8 +204,9 @@ export default function PrivacyPage() {
       <section>
         <h2>Security</h2>
         <p>
-          We use established providers (Clerk, Neon, Vercel, Stripe) and keep card numbers
-          off our servers.{" "}
+          We use established providers (Clerk, Neon, Vercel, and —{" "}
+          <strong>[Zach review]</strong> Stripe for future sponsor invoices) and do not
+          collect visitor card numbers for a site plan.{" "}
           <strong>
             [Zach review] No method of transmission or storage is perfectly secure.
           </strong>{" "}

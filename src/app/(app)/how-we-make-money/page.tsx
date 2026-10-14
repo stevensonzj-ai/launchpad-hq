@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "How we make money | Launchpad HQ",
   description:
-    "Launchpad is free to browse. We earn money in three ways, and none of them buy a better rating.",
+    "Launchpad is free to browse. We earn money from labeled sponsorships and, if used, affiliate links — none of them buy a better rating.",
 };
 
 export const revalidate = 3600;
@@ -22,13 +22,12 @@ export default function HowWeMakeMoneyPage() {
         <li>
           <h2 className="text-xl font-semibold text-white">1. The short version</h2>
           <p className="mt-2 text-sm text-gray-400">
-            Launchpad is free to browse. We earn money in three ways, and none of them buy a better
-            rating.
+            Launchpad is free to browse. There is no paid membership. We earn money in two ways,
+            and none of them buy a better rating.
           </p>
           <p className="mt-2 text-sm text-gray-400">
-            Those three ways are sponsored spots, affiliate links (if/when used), and premium
-            membership. Paid units are always marked <em>Sponsored</em> — never &quot;Partner&quot; or
-            &quot;Featured&quot; alone.
+            Those two ways are sponsored spots and affiliate links (if/when used). Paid units are
+            always marked <em>Sponsored</em> — never &quot;Partner&quot; or &quot;Featured&quot; alone.
           </p>
           <p className="mt-2 text-sm text-gray-400">
             {/* BUSINESS-OPS: replace */}
@@ -58,13 +57,11 @@ export default function HowWeMakeMoneyPage() {
           </p>
         </li>
         <li>
-          <h2 className="text-xl font-semibold text-white">4. Premium membership</h2>
+          <h2 className="text-xl font-semibold text-white">4. Payments for sponsorships</h2>
           <p className="mt-2 text-sm text-gray-400">
-            The paid plan (see{" "}
-            <Link href="/pricing" className="text-orange-400 hover:underline">
-              /pricing
-            </Link>
-            ) unlocks premium tutorials.
+            <strong className="font-semibold text-gray-200">[Zach review]</strong> Stripe is
+            intended as the processor for future sponsor invoices. It is not used to bill site
+            visitors. There is no user subscription.
           </p>
         </li>
         <li>
