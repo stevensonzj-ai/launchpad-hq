@@ -7,6 +7,7 @@ import "./globals.css"
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms"
 import { SITE_IS_PUBLIC } from "@/lib/site"
 import { BackToTop } from "@/components/layout/back-to-top"
+import { Footer } from "@/components/layout/footer"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <body className="min-h-full flex flex-col bg-gray-950 text-white">
           {children}
+          <Footer />
           <BackToTop />
           <Analytics />
           <SpeedInsights />

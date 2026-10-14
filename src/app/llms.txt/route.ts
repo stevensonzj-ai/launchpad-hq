@@ -35,6 +35,9 @@ ${
 - [Workflows](${SITE_URL}/workflows): Curated multi-tool workflow templates
 - [Tutorials](${SITE_URL}/tutorials): Tutorial library index (guides live on each platform page)
 - [Pricing](${SITE_URL}/pricing): Subscription pricing
+- [How we make money](${SITE_URL}/how-we-make-money): Funding, subscriptions, and labeled sponsor placements
+- [Sponsor guidelines](${SITE_URL}/sponsor-guidelines): Placement specs and what we will not accept
+- [AI of the Week](${SITE_URL}/ai-of-the-week): Sponsored feature with an honest-take box (empty when unbooked)
 
 ## Workflows
 

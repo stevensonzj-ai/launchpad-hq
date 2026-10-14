@@ -17,6 +17,8 @@ import {
   DIFFICULTY_FILTERS,
   MOBILE_FILTERS,
 } from "@/lib/discover-filters";
+import { getActivePlacement } from "@/data/sponsors";
+import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
@@ -109,6 +111,9 @@ export default async function DiscoverPage({
   ]);
   const favoriteIds = new Set(favorites.map((f) => f.platformId));
   const isSignedIn = user !== null;
+  const categorySponsor = params.category
+    ? getActivePlacement("discover", new Date(), params.category)
+    : null;
 
   // Group into A–Z + "#" bucket when alphabetical. Empty letter buckets still
   // render in the strip (disabled); the "#" bucket is hidden entirely if empty.
@@ -205,6 +210,12 @@ export default async function DiscoverPage({
       {/* Filter bar — the five facet rows collapsed into one control row.
           Client component; it only emits URLs via the shared buildDiscoverQuery.
           The server still parses and guards the params it produces. */}
+      {categorySponsor ? (
+        <div className="mb-8">
+          <SponsoredSpotlight placement={categorySponsor} />
+        </div>
+      ) : null}
+
       <DiscoverFilterBar
         categories={categories.map((cat) => ({
           slug: cat.slug,
