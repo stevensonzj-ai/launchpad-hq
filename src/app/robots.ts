@@ -20,6 +20,8 @@ import { SITE_IS_PUBLIC, SITE_URL } from "@/lib/site";
  *   Disallow: /account
  *   Disallow: /onboarding
  *   Disallow: /api/
+ *   Disallow: /for-you
+ *   Disallow: /quiz/results
  *   Sitemap: https://www.launchpadhq.io/sitemap.xml
  */
 export default function robots(): MetadataRoute.Robots {
@@ -36,7 +38,15 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/sign-in", "/sign-up", "/account", "/onboarding", "/api/"],
+      disallow: [
+        "/sign-in",
+        "/sign-up",
+        "/account",
+        "/onboarding",
+        "/api/",
+        "/for-you",
+        "/quiz/results",
+      ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

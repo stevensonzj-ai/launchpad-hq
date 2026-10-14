@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 import { PlatformTutorials } from "@/components/tutorials/platform-tutorials";
 import { PlatformDiscussions } from "@/components/discussions/platform-discussions";
 import { PlatformPrompts } from "@/components/prompts/platform-prompts";
@@ -24,10 +25,28 @@ type PlatformDetailTabsProps = {
   platformSlug: string;
   children: ReactNode;
   counts?: PlatformDetailTabCounts;
+  /** Server-passed ?tab= fallback; client also reads searchParams (PR #43). */
+  initialTab?: string;
 };
 
-export function PlatformDetailTabs({ platformName, platformSlug, children, counts }: PlatformDetailTabsProps) {
-  const [activeTab, setActiveTab] = useState<PlatformDetailTab>("overview");
+function tabFromParam(value: string | null | undefined): PlatformDetailTab {
+  if (value === "tutorials" || value === "discussions" || value === "prompts") {
+    return value;
+  }
+  return "overview";
+}
+
+export function PlatformDetailTabs({
+  platformName,
+  platformSlug,
+  children,
+  counts,
+  initialTab,
+}: PlatformDetailTabsProps) {
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState<PlatformDetailTab>(() =>
+    tabFromParam(searchParams.get("tab") ?? initialTab),
+  );
 
   return (
     <>

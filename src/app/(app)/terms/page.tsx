@@ -34,9 +34,12 @@ export default function TermsPage() {
           billed by Stripe.
         </p>
         <p>
-          The catalog is information only. It is not professional, legal, medical, or
-          financial advice. Tool descriptions, features, and prices can be wrong or out of
-          date. Always check the vendor’s own site before you buy or rely on a tool.
+          <strong>
+            [Zach review] The catalog is information only. It is not professional, legal,
+            medical, or financial advice.
+          </strong>{" "}
+          Tool descriptions, features, and prices can be wrong or out of date. Always check
+          the vendor’s own site before you buy or rely on a tool.
         </p>
       </section>
 
@@ -78,8 +81,11 @@ export default function TermsPage() {
         <p>
           If you post reviews, prompts, discussions, or replies: no spam, nothing illegal,
           no harassment, and no other people’s personal data. We moderate submissions.
-          New posts start as pending and are only shown publicly once approved. We may
-          refuse, hide, or remove content.
+          New prompts, discussions, and replies start as pending and are only shown
+          publicly once approved.{" "}
+          <strong>
+            [Zach review] We may refuse, hide, or remove content.
+          </strong>
         </p>
       </section>
 
@@ -110,8 +116,9 @@ export default function TermsPage() {
         <p>
           Platform pages link straight to the vendor’s website. We found no affiliate-link
           code in this product. Affiliate links may be used in future and will be
-          disclosed. Editorial independence: a listing is not an endorsement, and a
-          sponsored label (if we add one) will be shown as such.
+          disclosed. Paid placements are labelled “Sponsored” and use{" "}
+          <code>rel=&quot;sponsored&quot;</code>. They are kept separate from rankings, the quiz,
+          and workflows.
         </p>
       </section>
 
@@ -176,8 +183,10 @@ export default function TermsPage() {
       <section>
         <h2>Changes to these terms</h2>
         <p>
-          We may update these terms. The “Last updated” date at the top will change.
-          Continued use after an update means you accept the new terms.
+          We may update these terms. The “Last updated” date at the top will change.{" "}
+          <strong>
+            [Zach review] Continued use after an update means you accept the new terms.
+          </strong>
         </p>
       </section>
 

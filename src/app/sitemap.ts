@@ -4,6 +4,7 @@ import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
+import { getActivePlacement } from "@/data/sponsors";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,8 @@ const STATIC_PUBLIC_PATHS = [
   "/terms",
   "/models",
   "/models/compare/claude-vs-gpt",
+  "/how-we-make-money",
+  "/sponsor-guidelines",
 ] as const;
 
 function parseRealDate(value: string | Date | null | undefined): Date | undefined {
@@ -93,5 +96,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     );
   }
 
-  return [...staticEntries, ...workflowEntries, ...modelFamilyEntries, ...platformEntries];
+  const aiOfTheWeek =
+    getActivePlacement("ai-of-the-week") != null
+      ? [{ url: `${SITE_URL}/ai-of-the-week` }]
+      : [];
+
+  return [
+    ...staticEntries,
+    ...aiOfTheWeek,
+    ...workflowEntries,
+    ...modelFamilyEntries,
+    ...platformEntries,
+  ];
 }

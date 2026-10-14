@@ -7,7 +7,7 @@ export const grokTutorial: PlatformTutorialData = {
   tagline:
     "A chatbot with a live feed — it reads the web and X as you ask, so it can talk about what happened an hour ago.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://x.ai/news",
   accessTier: "FREE",
 
@@ -23,7 +23,7 @@ export const grokTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "It costs nothing to start — a real free tier, not a trial that dies in a week. Sign-in is by X account or email, so an X login is the fastest way in.",
     "**The free tier works on a usage pool:** you get an allowance, spend it, and it refills on its own schedule. The exact numbers change often, so treat the mechanism as the durable fact — you will hit a wall, and the wall lifts by itself.",
-    "A few questions and some writing a day costs nothing. You'll feel the limits if you run long research sessions, lean on it daily for work, or make a lot of images — image generation burns an allowance far faster than chatting. Paid plans currently start at around $30/month, with a higher tier at about $100/month.",
+    "A few questions and some writing a day costs nothing. You'll feel the limits if you run long research sessions, lean on it daily for work, or make a lot of images — image generation burns an allowance far faster than chatting. Grok is a standalone app (web/iOS/Android) and is sold as SuperGrok and through **The X Subscription** — not only as an X Premium+ perk. Official The X Subscription prices (docs.x.ai/x-subscription/pricing, as of 2026-10-14): Free $0; Plus $8/mo; Premium $30/mo ($300/yr) includes SuperGrok-equivalent benefits; Super $100/mo; Ultra $200/mo. Existing SuperGrok plans continue unless you switch. Grok Bot is a separate product and a separate catalog page.",
     "First step: go to grok.com, sign in, and ask it something that happened today.",
   ],
 

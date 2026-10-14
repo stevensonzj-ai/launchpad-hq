@@ -11,17 +11,21 @@ import {
 } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
-import { getPlatformSlugSet } from "@/lib/platform-slugs";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
+import { getActivePlacement } from "@/data/sponsors";
+import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
+
+/** Date windows are America/Chicago calendar days; refresh without a redeploy. */
+export const revalidate = 3600;
 
 export default async function HomePage() {
   const featuredWorkflows = getAllWorkflows().slice(0, 3);
-  const [validSlugs, rawCount, categoryCount] = await Promise.all([
-    getPlatformSlugSet(),
+  const [rawCount, categoryCount] = await Promise.all([
     getPlatformCount(),
     getCategoryCount(),
   ]);
   const platformCount = roundDownToTen(rawCount);
+  const homepageSponsor = getActivePlacement("homepage");
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -103,6 +107,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {homepageSponsor ? (
+        <section className="mx-auto max-w-5xl px-4 pb-12">
+          <SponsoredSpotlight placement={homepageSponsor} />
+        </section>
+      ) : null}
+
       {/* Workflow templates — prominent above the fold */}
       <section className="mx-auto max-w-5xl px-4 pb-20">
         <div className="mb-8 flex flex-col items-center text-center sm:flex-row sm:justify-between sm:text-left">
@@ -125,7 +135,7 @@ export default async function HomePage() {
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {featuredWorkflows.map((w) => (
-            <WorkflowCard key={w.slug} workflow={w} compact validSlugs={validSlugs} />
+            <WorkflowCard key={w.slug} workflow={w} compact />
           ))}
         </div>
       </section>

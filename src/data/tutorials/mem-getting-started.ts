@@ -6,7 +6,7 @@ export const memTutorial: PlatformTutorialData = {
   title: "Getting Started with Mem",
   tagline: "A notes app that files everything for you, then answers questions about what you saved.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://get.mem.ai/blog",
   accessTier: "FREE",
 

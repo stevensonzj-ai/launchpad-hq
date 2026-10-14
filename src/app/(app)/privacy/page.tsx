@@ -69,11 +69,10 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Traffic and performance (Vercel Analytics and Speed Insights).</strong>{" "}
-            The site loads Vercel Analytics and Speed Insights. Per Vercel’s official
-            privacy pages, Web Analytics is cookieless and uses aggregated / hashed data
-            rather than third-party cookies; Speed Insights is described as anonymous
-            performance data not tied to an individual visitor or IP. We have not
-            independently audited Vercel’s processing beyond those public docs.
+            The site loads Vercel Analytics and Speed Insights. Vercel’s public docs
+            describe Web Analytics as cookieless. Claims that Speed Insights is not tied
+            to an individual visitor or IP, and that analytics data is aggregated or
+            hashed, are <strong>unverified</strong> against our own processing.
           </li>
           <li>
             <strong>Hosting logs.</strong> The site is hosted on Vercel. Vercel server logs
@@ -196,8 +195,11 @@ export default function PrivacyPage() {
         <h2>Security</h2>
         <p>
           We use established providers (Clerk, Neon, Vercel, Stripe) and keep card numbers
-          off our servers. No method of transmission or storage is perfectly secure. Tell
-          us at{" "}
+          off our servers.{" "}
+          <strong>
+            [Zach review] No method of transmission or storage is perfectly secure.
+          </strong>{" "}
+          Tell us at{" "}
           <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> if
           you think something has gone wrong.
         </p>
@@ -206,8 +208,10 @@ export default function PrivacyPage() {
       <section>
         <h2>Changes</h2>
         <p>
-          We may update this policy. The “Last updated” date at the top will change. Keep
-          using the site after an update means you have seen the new version.
+          We may update this policy. The “Last updated” date at the top will change.{" "}
+          <strong>
+            [Zach review] Continued use after an update means you accept the new policy.
+          </strong>
         </p>
       </section>
 

@@ -7,7 +7,7 @@ export const elevenlabsTutorial: PlatformTutorialData = {
   tagline:
     "Turn text into remarkably natural speech — and, with permission, clone a specific voice — across dozens of languages.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://elevenlabs.io/changelog",
   accessTier: "FREE",
 
@@ -19,7 +19,7 @@ export const elevenlabsTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **free tier** gives about 10,000 credits a month (roughly 20 minutes of audio) and lets you try text-to-speech and cloning — but its output is **non-commercial and must credit ElevenLabs**. Commercial use starts on the paid plans (from around **$5–6/month**); the tier commonly recommended for audiobook-style work is higher (~$22/month).",
+    "The **free tier** gives 10,000 credits a month and lets you try text-to-speech and cloning — but its output is **non-commercial and must credit ElevenLabs**. Commercial use starts on Starter at **$6/month** (30k credits; official FAQ, 2026-10-14). Creator is $22/month; Pro $99; Scale $299.",
     "**If you're going to clone a voice, sort out consent first** — this is the single most important thing about the platform (below).",
     "Credits are metered by characters of text and reset monthly; unused credits generally don't carry over.",
   ],

@@ -7,7 +7,7 @@ export const n8nTutorial: PlatformTutorialData = {
   tagline:
     "Connect your apps and let them pass work to each other — with a version you can run yourself, free, forever.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://docs.n8n.io/changelog/release-notes",
   accessTier: "FREE",
 
@@ -23,7 +23,7 @@ export const n8nTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**There are two n8n's, and confusing them is the most common beginner mistake.** **n8n Cloud** is the version n8n runs for you: sign up, build, pay monthly. **Self-hosting** means running the free Community edition on a machine you control: almost the full feature set, no cap on how many times your workflows run (nobody else in this category offers that), and the maintenance is yours.",
     "Cloud needs only an email address, and the trial is currently around two weeks with no card. Self-hosting needs a machine that stays on, and comfort typing instructions into a text window instead of clicking — n8n's own docs list technical expertise as required, and point non-technical readers to Cloud.",
-    "So if you're not technical you'll pay after the trial; if you'll self-host, possibly never — you pay in time and responsibility instead. Cloud currently starts around €20 a month on annual billing, a bit more month-to-month, next tier around €50; treat those as a band, not a quote.",
+    "So if you're not technical you'll pay after the trial; if you'll self-host, possibly never — you pay in time and responsibility instead. Cloud Starter is **€20/mo billed annually** (2.5k executions) on n8n.io/pricing as of 2026-10-14; Pro €50/mo billed annually. That is euros, not dollars.",
     "**First step:** start a free Cloud trial and open the template library rather than a blank canvas. Find a template near what you want, run it once, change one thing.",
   ],
 

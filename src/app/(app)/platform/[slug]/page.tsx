@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { Suspense } from "react";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -28,8 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function PlatformPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PlatformPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ tab?: string }>;
+}) {
   const { slug } = await params;
+  const { tab } = await searchParams;
 
   const platform = await prisma.platform.findUnique({
     where: { slug },
@@ -121,10 +129,12 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         </div>
       </div>
 
+      <Suspense>
       <PlatformDetailTabs
         platformName={platform.name}
         platformSlug={platform.slug}
         counts={platform._count}
+        initialTab={tab}
       >
         <PlatformOverviewSections platform={platform} />
 
@@ -228,6 +238,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         </section>
       )}
       </PlatformDetailTabs>
+      </Suspense>
     </div>
   );
 }

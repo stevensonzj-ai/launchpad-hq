@@ -6,26 +6,12 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import type { QuizAnswers } from "@/lib/quiz-map";
-import { quizToRecommendationInput } from "@/lib/quiz-map";
-import { PlatformCard } from "@/components/platforms/platform-card";
+import { normalizeQuizGoals, quizToRecommendationInput } from "@/lib/quiz-map";
+import { QuizMatchSections, type QuizMatchRec } from "@/components/quiz/quiz-match-sections";
 
 const STASH_KEY = "launchpad_quiz_pending";
 
-type Rec = {
-  id: string;
-  slug: string;
-  name: string;
-  company: string | null;
-  primaryUse: string | null;
-  costTier: string;
-  difficultyLevel: string;
-  category: { name: string; slug: string };
-  freeTierFeatures: string | null;
-  hasMobileApp?: boolean;
-  mobileWebFriendly?: boolean;
-  matchScore: number;
-  aboveDifficulty?: boolean;
-};
+type Rec = QuizMatchRec;
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
@@ -199,25 +185,7 @@ export function ResultsClient() {
             with broader answers.
           </p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {recs.map((p) => (
-              <PlatformCard
-                key={p.id}
-                slug={p.slug}
-                name={p.name}
-                company={p.company}
-                primaryUse={p.primaryUse}
-                costTier={p.costTier}
-                difficultyLevel={p.difficultyLevel}
-                category={p.category}
-                freeTierFeatures={p.freeTierFeatures}
-                hasMobileApp={p.hasMobileApp}
-                mobileWebFriendly={p.mobileWebFriendly}
-                matchScore={p.matchScore}
-                aboveDifficulty={p.aboveDifficulty}
-              />
-            ))}
-          </div>
+          <QuizMatchSections recs={recs} goals={normalizeQuizGoals(stash)} />
         )}
       </section>
 

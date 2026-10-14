@@ -6,7 +6,7 @@ export const descriptTutorial: PlatformTutorialData = {
   title: "Getting Started with Descript",
   tagline: `Edit audio and video by editing the transcript — powerful, intuitive, and easier to misuse than it looks.`,
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-07-27",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://feedback.descript.com/changelog",
   accessTier: "FREE",
 
@@ -22,7 +22,7 @@ export const descriptTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `The free plan gives about an hour of media a month, a one-time grant of AI credits, watermarked exports at 720p, and a single seat. It is a real trial, not a demo.`,
-    `Paid plans start around $16 a month billed annually, with the tier above at about $24 adding higher-resolution export and fuller voice features. Monthly billing costs meaningfully more.`,
+    `Paid plans (descript.com/pricing, as of 2026-10-14): Hobbyist $24/person/mo monthly or $16 billed annually; Creator $35/$24; Business $65/$50 per person. Monthly billing costs more than annual.`,
     `**Media minutes and AI credits are different meters.** Manual transcript cuts barely touch credits; leaning on the AI assistant exhausts them first. Which limit you hit depends on how you work, not how much you work.`,
     `This is a desktop application. There is no meaningful mobile editing.`,
     `Cloning a voice requires a recorded consent statement and a substantial audio sample, by design.`,
