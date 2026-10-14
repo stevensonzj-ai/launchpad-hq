@@ -33,7 +33,7 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 - [Workflows](${SITE_URL}/workflows): Curated multi-tool workflow templates
 - [Tutorials](${SITE_URL}/tutorials): Tutorial library index (guides live on each platform page)
 - [How we make money](${SITE_URL}/how-we-make-money): How Launchpad stays free, labeled sponsor placements, and affiliates
-- [Advertise](${SITE_URL}/advertise): Sponsor rate card, weekly availability, and booking${
+- [Advertise](${SITE_URL}/advertise): Sponsor rate card, weekly availability, rates and how to book by email${
     getActivePlacement("ai-of-the-week")
       ? `
 - [AI of the Week](${SITE_URL}/ai-of-the-week): Sponsored feature with an honest-take box`
