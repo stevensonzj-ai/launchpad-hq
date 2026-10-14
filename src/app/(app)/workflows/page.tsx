@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowLeft, Layers } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
-import { getPlatformSlugSet } from "@/lib/platform-slugs";
 
 export const metadata = {
   title: "Workflow templates | Launchpad HQ",
@@ -11,7 +10,6 @@ export const metadata = {
 
 export default async function WorkflowsPage() {
   const workflows = getAllWorkflows();
-  const validSlugs = await getPlatformSlugSet();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -43,8 +41,8 @@ export default async function WorkflowsPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-        {workflows.map((w) => (
-          <WorkflowCard key={w.slug} workflow={w} validSlugs={validSlugs} />
+          {workflows.map((w) => (
+          <WorkflowCard key={w.slug} workflow={w} />
         ))}
       </div>
     </div>

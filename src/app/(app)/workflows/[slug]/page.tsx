@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { getAllWorkflows, getWorkflowBySlug } from "@/data/workflows";
 import { WorkflowTierComparison } from "@/components/workflows/workflow-tier-comparison";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
+import { listRegisteredTutorials } from "@/data/tutorials";
 
 export function generateStaticParams() {
   return getAllWorkflows().map((w) => ({ slug: w.slug }));
@@ -25,6 +26,7 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
   if (!workflow) notFound();
 
   const validSlugs = await getPlatformSlugSet();
+  const tutorialSlugs = listRegisteredTutorials().map((t) => t.platformSlug);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -52,7 +54,11 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
         </div>
       </header>
 
-      <WorkflowTierComparison workflow={workflow} validSlugs={validSlugs} />
+      <WorkflowTierComparison
+        workflow={workflow}
+        validSlugs={[...validSlugs]}
+        tutorialSlugs={tutorialSlugs}
+      />
 
       <p className="mt-10 text-center text-sm text-gray-600">
         Find more tools in{" "}

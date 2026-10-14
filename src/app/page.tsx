@@ -11,13 +11,11 @@ import {
 } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
-import { getPlatformSlugSet } from "@/lib/platform-slugs";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 
 export default async function HomePage() {
   const featuredWorkflows = getAllWorkflows().slice(0, 3);
-  const [validSlugs, rawCount, categoryCount] = await Promise.all([
-    getPlatformSlugSet(),
+  const [rawCount, categoryCount] = await Promise.all([
     getPlatformCount(),
     getCategoryCount(),
   ]);
@@ -125,7 +123,7 @@ export default async function HomePage() {
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {featuredWorkflows.map((w) => (
-            <WorkflowCard key={w.slug} workflow={w} compact validSlugs={validSlugs} />
+            <WorkflowCard key={w.slug} workflow={w} compact />
           ))}
         </div>
       </section>
