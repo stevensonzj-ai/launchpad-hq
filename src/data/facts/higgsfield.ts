@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://higgsfield.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -20,8 +21,9 @@ export default {
     sourceUrl: "https://higgsfield.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -50,11 +52,13 @@ export default {
         limits: "",
       },
     ],
+    note: "/pricing is empty to WebFetch and curl, so all plan prices are browser-verified 2026-10-14: Starter $19, Plus $47/$59, Ultra $99/$129, Teams from $65.",
     sourceUrl: "https://higgsfield.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: [
@@ -72,18 +76,20 @@ export default {
       "Sora 2 (third-party)",
       "Veo 3.1 (third-party)",
     ],
-    note: "In-house: Soul family, Genjutsu, Katana, Popcorn, Canvas, Cinema Studio 4.0. Supercomputer agent is powered by GPT-6 Astra.",
+    note: "Homepage fetch confirms Genjutsu, Katana, Cinema Studio 4.0, Supercomputer, GPT-6 Astra, Seedance, Nano Banana, Wan. Soul, Popcorn, Canvas, Kling, Sora 2 and Veo 3.1 weren't on the homepage: browser-verified 2026-10-14 (cited source is /pricing).",
     sourceUrl: "https://higgsfield.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
-      summary: "Recorded Starter/Plus/Ultra/Teams list prices. Third-party models labeled as such. App links unpublished.",
+      summary:
+        "RA: all plan prices browser-verified 2026-10-14 (/pricing empty to fetch). Third-party models labeled as such.",
     },
   ],
 } satisfies ToolFacts;

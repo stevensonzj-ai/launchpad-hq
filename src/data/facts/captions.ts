@@ -4,13 +4,14 @@ export default {
   slug: "captions",
   lifecycle: "active",
   company: {
-    value: "NOCAP, Inc",
-    note: "Footer: © 2026 NOCAP, Inc.",
+    value: "NOCAP, Inc. d/b/a Captions",
+    note: "Footer: © 2026 NOCAP, Inc. d/b/a Captions",
     sourceUrl: "https://www.captions.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -20,8 +21,9 @@ export default {
     sourceUrl: "https://www.captions.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -66,23 +68,38 @@ export default {
     sourceUrl: "https://www.captions.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
-    value: ["iOS"],
-    note: "Implied by the pricing-page note that features and prices reflect iOS plans only.",
-    sourceUrl: "https://www.captions.ai/pricing",
+    value: ["iOS", "Android", "Web"],
+    note: "Captions is available for iOS and Android. If you prefer to use Captions on web, sign up here. No native desktop app was found: computer means the web app. Captions is made for your phone.",
+    sourceUrl: "https://www.captions.ai/download",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  apps: {
+    value: {
+      ios: "https://apps.apple.com/us/app/id1541407007",
+    },
+    note: "Android is only a OneLink redirect (https://captions.onelink.me/ZYIj/xvr71573), not a direct Play URL.",
+    sourceUrl: "https://www.captions.ai/download",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
-      field: "plans",
-      summary: "Recorded iOS-only USD list prices. Store URLs were not on the pricing page.",
+      field: "platforms",
+      summary:
+        "RA: platforms iOS, Android, Web from /download. iOS App Store id1541407007. No Android Play URL. Company NOCAP, Inc. d/b/a Captions. Kept iOS plans only on plans.",
     },
   ],
 } satisfies ToolFacts;

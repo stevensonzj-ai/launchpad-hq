@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://fireflies.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -21,15 +22,16 @@ export default {
     sourceUrl: "https://fireflies.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
       {
         name: "Free",
         price: "$0",
-        period: "seat/month",
+        period: "",
         limits:
           "Unlimited transcription*, limited AI summaries, 400 mins of storage per team, 20 AI credits",
       },
@@ -56,8 +58,9 @@ export default {
     sourceUrl: "https://fireflies.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Desktop App", "iOS App", "Android App", "Chrome Extension"],
@@ -65,8 +68,9 @@ export default {
     sourceUrl: "https://fireflies.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apps: {
     value: {
@@ -76,8 +80,9 @@ export default {
     sourceUrl: "https://fireflies.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {

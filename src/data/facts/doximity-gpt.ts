@@ -4,12 +4,13 @@ export default {
   slug: "doximity-gpt",
   lifecycle: "active",
   displayName: {
-    value: "Doximity Ask (formerly Doximity GPT)",
+    value: "Doximity Ask",
     sourceUrl: "https://www.doximity.com/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   company: {
     value: "Doximity, Inc.",
@@ -17,8 +18,9 @@ export default {
     sourceUrl: "https://www.doximity.com/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -28,8 +30,9 @@ export default {
     sourceUrl: "https://www.doximity.com/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Mobile app", "Desktop app"],
@@ -37,14 +40,16 @@ export default {
     sourceUrl: "https://www.doximity.com/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "displayName",
-      summary: "Homepage promotes Doximity Ask; slug stays doximity-gpt. Store links unpublished.",
+      summary:
+        "RA: displayName is Doximity Ask only. Dropped formerly Doximity GPT (not on the page). Slug stays doximity-gpt.",
     },
   ],
 } satisfies ToolFacts;
