@@ -4,6 +4,7 @@ import { UserButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link"
 import { useState } from "react"
 import { Search, Menu, X, Rocket } from "lucide-react"
+import { PRO_PLAN_ENABLED } from "@/lib/site"
 
 export function Header() {
   const { isSignedIn, isLoaded } = useAuth()
@@ -83,9 +84,11 @@ export function Header() {
           <Link href="/for-you" className="text-sm text-gray-400 hover:text-white">
             For you
           </Link>
-          <Link href="/pricing" className="text-sm text-gray-400 hover:text-white">
-            Pricing
-          </Link>
+          {PRO_PLAN_ENABLED && (
+            <Link href="/pricing" className="text-sm text-gray-400 hover:text-white">
+              Pricing
+            </Link>
+          )}
           {isLoaded && !isSignedIn && (
             <>
               <Link
@@ -142,9 +145,11 @@ export function Header() {
           <Link href="/for-you" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
             For you
           </Link>
-          <Link href="/pricing" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            Pricing
-          </Link>
+          {PRO_PLAN_ENABLED && (
+            <Link href="/pricing" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+              Pricing
+            </Link>
+          )}
           {isLoaded && !isSignedIn && (
             <>
               <Link href="/sign-in" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>

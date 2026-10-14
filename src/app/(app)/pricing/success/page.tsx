@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { PRO_PLAN_ENABLED } from "@/lib/site";
 
 export const metadata = {
   title: "Subscription | Launchpad HQ",
@@ -9,6 +11,9 @@ export default async function PricingSuccessPage({
 }: {
   searchParams: Promise<{ session_id?: string }>;
 }) {
+  if (!PRO_PLAN_ENABLED) {
+    redirect("/how-we-make-money");
+  }
   await searchParams;
   return (
     <div className="mx-auto max-w-lg px-4 py-24 text-center">

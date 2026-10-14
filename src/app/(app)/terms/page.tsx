@@ -29,9 +29,12 @@ export default function TermsPage() {
         <h2>What the service is</h2>
         <p>
           Launchpad HQ is a free directory of AI tools, plus optional account features
-          (saving quiz results, favourites, posting prompts and discussions) and an
-          optional paid plan called Launchpad HQ Pro ($9/month with a 7-day free trial),
-          billed by Stripe.
+          (saving quiz results, favourites, posting prompts and discussions). There is no
+          paid user subscription.{" "}
+          <strong>
+            [Zach review] Stripe may be used later to invoice sponsors; it is not used to
+            bill visitors.
+          </strong>
         </p>
         <p>
           <strong>
@@ -54,24 +57,6 @@ export default function TermsPage() {
           <strong>
             [Zach review] Minimum age: confirm who may create an account (for example 13+
             with guardian consent, or 18+).
-          </strong>
-        </p>
-      </section>
-
-      <section>
-        <h2>Launchpad HQ Pro, trial, and billing</h2>
-        <p>
-          Pro is $9 per month. New subscribers get a 7-day free trial. Billing runs
-          through Stripe. Card details go to Stripe, not to us. The trial converts to a
-          paid subscription unless you cancel before it ends. Failed payments pause Pro
-          until the payment method is updated. You can cancel and manage billing through
-          Stripe’s customer portal (the “Manage billing” control on the pricing page).
-        </p>
-        <p>
-          <strong>
-            [Zach review] Refunds: confirm whether we offer refunds, for what period, and
-            how to request one. Nothing in the product currently describes a refund
-            policy.
           </strong>
         </p>
       </section>
@@ -156,7 +141,7 @@ export default function TermsPage() {
         <p>
           <strong>
             [Zach review] Confirm when we may suspend or close an account (for example,
-            breach of these terms, illegal posts, unpaid Pro) and what happens to public
+            breach of these terms, illegal posts) and what happens to public
             posts after closure. Users may ask us by email to delete an account; there is
             no self-serve delete button.
           </strong>
