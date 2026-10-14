@@ -1,10 +1,13 @@
 import type { ToolFacts, ToolPlan } from "./types";
 
 export type PlatformFactFields = {
+  name?: string;
+  company?: string | null;
   description: string | null;
   currentPricing: string | null;
   freeTierFeatures: string | null;
   usageLimits?: string | null;
+  apiPricing?: string | null;
   platformType: string[];
   hasMobileApp: boolean;
   iosAppUrl: string | null;
@@ -29,6 +32,8 @@ export type OverlayPlatform<T extends PlatformFactFields> = T & {
   windowsAppUrl: string | null;
   linuxAppUrl: string | null;
   usageLimits: string | null;
+  apiPricing: string | null;
+  company: string | null;
 };
 
 export function overlayPlatformWithFacts<T extends PlatformFactFields>(
@@ -41,10 +46,18 @@ export function overlayPlatformWithFacts<T extends PlatformFactFields>(
     windowsAppUrl: platform.windowsAppUrl ?? null,
     linuxAppUrl: platform.linuxAppUrl ?? null,
     usageLimits: platform.usageLimits ?? null,
+    apiPricing: platform.apiPricing ?? null,
+    company: platform.company ?? null,
   };
 
   if (!facts) return next;
 
+  if (facts.displayName) {
+    next.name = facts.displayName.value;
+  }
+  if (facts.company) {
+    next.company = facts.company.value;
+  }
   if (facts.verdict) {
     next.description = facts.verdict.value;
   }
@@ -54,6 +67,9 @@ export function overlayPlatformWithFacts<T extends PlatformFactFields>(
   }
   if (facts.plans) {
     next.currentPricing = formatPlans(facts.plans.value);
+  }
+  if (facts.apiPricing) {
+    next.apiPricing = facts.apiPricing.value;
   }
   if (facts.platforms) {
     next.platformType = facts.platforms.value;

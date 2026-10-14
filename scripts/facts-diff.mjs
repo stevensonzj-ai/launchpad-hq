@@ -33,8 +33,11 @@ const SKIP = new Set([
 const FACT_KEYS = [
   "lifecycle",
   "verdict",
+  "displayName",
+  "company",
   "freeTier",
   "plans",
+  "apiPricing",
   "platforms",
   "apps",
   "models",

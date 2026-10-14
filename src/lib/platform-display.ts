@@ -26,8 +26,11 @@ export type DisplayPlan = {
 
 const FACT_LABEL: Record<(typeof FACT_VALUE_KEYS)[number], string> = {
   verdict: "Verdict",
+  displayName: "Name",
+  company: "Company",
   freeTier: "Free tier",
   plans: "Pricing",
+  apiPricing: "API pricing",
   platforms: "Platforms",
   apps: "Apps",
   models: "Models",

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { FactCite } from "@/components/platforms/fact-cite";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
 import { PlatformPricingTable } from "@/components/platforms/platform-pricing-table";
@@ -99,11 +100,28 @@ export function PlatformToolOverview({
             fact: facts?.platforms,
             note: facts?.platforms?.note,
           },
-          { label: "Company", value: platform.company ?? "" },
+          {
+            label: "Company",
+            value: platform.company ?? "",
+            fact: facts?.company,
+          },
         ]}
       />
 
       <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
+
+      {facts?.apiPricing ? (
+        <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+          <div className="mb-2 flex items-center gap-1">
+            <h2 className="text-lg font-semibold text-white">API pricing</h2>
+            <FactCite fact={facts.apiPricing} />
+          </div>
+          <p className="text-sm leading-relaxed text-gray-200">{facts.apiPricing.value}</p>
+          {facts.apiPricing.note ? (
+            <p className="mt-2 text-sm text-gray-400">{facts.apiPricing.note}</p>
+          ) : null}
+        </section>
+      ) : null}
 
       <PlatformOverviewSections platform={platform} />
 

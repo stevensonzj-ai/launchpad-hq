@@ -47,8 +47,13 @@ export type ToolFacts = {
   slug: string;
   lifecycle: ToolLifecycle;
   verdict?: Fact<string>;
+  /** Overrides the catalog display name. Slug stays the Platform row slug. */
+  displayName?: Fact<string>;
+  company?: Fact<string>;
   freeTier?: Fact<{ available: boolean; summary: string }>;
   plans?: Fact<ToolPlan[]>;
+  /** Consumer-app plans stay in `plans`. Token/API list prices live here. */
+  apiPricing?: Fact<string>;
   platforms?: Fact<string[]>;
   apps?: Fact<ToolApps>;
   models?: Fact<string[]>;
@@ -60,8 +65,11 @@ export type ToolFacts = {
 
 export const FACT_VALUE_KEYS = [
   "verdict",
+  "displayName",
+  "company",
   "freeTier",
   "plans",
+  "apiPricing",
   "platforms",
   "apps",
   "models",
@@ -70,4 +78,4 @@ export const FACT_VALUE_KEYS = [
 
 export type FactValueKey = (typeof FACT_VALUE_KEYS)[number];
 
-export const PRICE_FACT_KEYS = ["plans", "freeTier"] as const satisfies readonly FactValueKey[];
+export const PRICE_FACT_KEYS = ["plans", "freeTier", "apiPricing"] as const satisfies readonly FactValueKey[];

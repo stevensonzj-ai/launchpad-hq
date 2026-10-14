@@ -109,4 +109,29 @@ describe("platform overview field uniqueness", () => {
     assert.equal(countOccurrences(visible, "Models"), 1);
     assert.ok(html.includes("flagship chat model"));
   });
+
+  it("renders API pricing as its own section, not inside the plans table", () => {
+    const facts = {
+      ...validExampleFacts,
+      apiPricing: {
+        value: "Flash $0.30 / 1M input",
+        sourceUrl: "https://example.com/fixture-valid/api",
+        checkedAt: "2026-10-14",
+        gatheredBy: "research-analyst",
+        verifiedBy: "pending",
+        status: "unverified" as const,
+      },
+    };
+    const view = overlayPlatformWithFacts(basePlatform, facts);
+    const html = renderToStaticMarkup(
+      h(PlatformToolOverview, {
+        platform: { ...view, name: "Fixture Tool" },
+        facts,
+        hasModelFamily: false,
+      }),
+    );
+    assert.ok(html.includes("API pricing"));
+    assert.ok(html.includes("Flash $0.30 / 1M input"));
+    assert.ok(html.includes("Plus"));
+  });
 });
