@@ -14,7 +14,9 @@
         "db:seed-platforms": "tsx scripts/seed-missing-platforms.ts",
         "db:seed-phase1-batch1": "tsx scripts/seed-phase1-batch1-platforms.ts",
         "db:seed-batch2": "tsx scripts/seed-batch2-platforms.ts",
+        "db:seed-batch3": "tsx scripts/seed-batch3-platforms.ts",
         "db:update-catalog-audit-1": "tsx scripts/update-catalog-audit-1.ts",
+        "db:update-catalog-audit-2": "tsx scripts/update-catalog-audit-2.ts",
         "postinstall": "prisma generate"
     },
     "dependencies": {

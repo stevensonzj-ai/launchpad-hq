@@ -7,7 +7,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
   tagline:
     "Automation built from public code — around 760 integrations anyone can read, and a free cloud allowance that resets every morning.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://github.com/activepieces/activepieces/releases",
   accessTier: "FREE",
 

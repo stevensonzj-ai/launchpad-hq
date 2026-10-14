@@ -6,7 +6,7 @@ export const surferSeoTutorial: PlatformTutorialData = {
   title: "Getting Started with Surfer",
   tagline: "The tool that tells you what the pages already ranking cover — and what your draft is missing.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-14",
   accessTier: "PREMIUM",
 
   howItWorks:
