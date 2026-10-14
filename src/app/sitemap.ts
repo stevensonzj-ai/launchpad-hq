@@ -20,7 +20,7 @@ const STATIC_PUBLIC_PATHS = [
   "/models",
   "/models/compare/claude-vs-gpt",
   "/how-we-make-money",
-  "/sponsor-guidelines",
+  "/advertise",
 ] as const;
 
 function parseRealDate(value: string | Date | null | undefined): Date | undefined {
