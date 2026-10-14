@@ -3,6 +3,43 @@ import type { ToolFacts } from "./types";
 export default {
   slug: "grok",
   lifecycle: "active",
+  company: {
+    value: "xAI / SpaceXAI",
+    sourceUrl: "https://x.ai/grok",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "pending",
+    status: "unverified",
+  },
+  platforms: {
+    value: ["Web", "iOS", "Android", "Grok on X"],
+    sourceUrl: "https://x.ai/grok",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "pending",
+    status: "unverified",
+  },
+  apps: {
+    value: {
+      ios: "https://apps.apple.com/app/grok/id6670324846",
+      android: "https://play.google.com/store/apps/details?id=ai.x.grok",
+    },
+    sourceUrl: "https://x.ai/grok",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "pending",
+    status: "unverified",
+  },
+  models: {
+    value: ["grok-4.7"],
+    label: "Flagship API model",
+    note: "Our flagship model for code and everything else; 500k context.",
+    sourceUrl: "https://docs.x.ai/developers/models",
+    checkedAt: "2026-10-14",
+    gatheredBy: "research-analyst",
+    verifiedBy: "pending",
+    status: "unverified",
+  },
   freeTier: {
     value: {
       available: true,
@@ -61,6 +98,11 @@ export default {
       field: "plans",
       summary:
         "Paid path is The X Subscription Plus, Premium, Super, and Ultra. Removed the retired paid-path label.",
+    },
+    {
+      date: "2026-10-14",
+      field: "models",
+      summary: "Added company, platforms, store links, and grok-4.7 as the flagship API model. Left subscription plans unchanged.",
     },
   ],
 } satisfies ToolFacts;

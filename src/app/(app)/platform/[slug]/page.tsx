@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     platform.primaryUse ||
     undefined;
   return {
-    title: `${platform.name} | Launchpad HQ`,
+    title: `${facts?.displayName?.value ?? platform.name} | Launchpad HQ`,
     description: metaDesc,
   };
 }
@@ -103,12 +103,12 @@ export default async function PlatformPage({
           {platform.category.name}
         </Link>
         <span>/</span>
-        <span className="text-gray-300">{platform.name}</span>
+        <span className="text-gray-300">{view.name ?? platform.name}</span>
       </div>
 
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">{platform.name}</h1>
+          <h1 className="text-3xl font-bold text-white">{view.name ?? platform.name}</h1>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <FavoriteButton
@@ -131,7 +131,7 @@ export default async function PlatformPage({
       </div>
 
       <PlatformDetailTabs
-        platformName={platform.name}
+        platformName={view.name ?? platform.name}
         platformSlug={platform.slug}
         counts={{
           tutorials: tutorialCount,
@@ -143,8 +143,8 @@ export default async function PlatformPage({
         <PlatformToolOverview
           platform={{
             ...view,
-            name: platform.name,
-            company: platform.company,
+            name: view.name ?? platform.name,
+            company: view.company ?? platform.company,
             primaryUse: platform.primaryUse,
             primaryUseCases: platform.primaryUseCases,
             idealUserTypes: platform.idealUserTypes,

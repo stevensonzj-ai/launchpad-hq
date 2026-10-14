@@ -16,6 +16,9 @@ export function PlatformPricingTable({ plans, plansFact }: PlatformPricingTableP
         <h2 className="text-lg font-semibold text-white">Pricing</h2>
         <FactCite fact={plansFact} />
       </div>
+      {plansFact?.note ? (
+        <p className="mb-4 text-sm text-gray-400">{plansFact.note}</p>
+      ) : null}
       <div className="overflow-x-auto">
         <table className="w-full min-w-[28rem] text-left text-sm">
           <thead>

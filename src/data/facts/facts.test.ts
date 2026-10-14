@@ -132,6 +132,8 @@ describe("overlayPlatformWithFacts", () => {
       windowsAppUrl: null,
       linuxAppUrl: null,
       usageLimits: null,
+      apiPricing: null,
+      company: null,
     });
   });
 
@@ -152,6 +154,51 @@ describe("overlayPlatformWithFacts", () => {
     assert.deepEqual(view.platformType, ["Web", "iOS", "Android"]);
     assert.equal(view.hasMobileApp, true);
     assert.equal(view.iosAppUrl, "https://apps.example.com/fixture-valid");
+  });
+
+  it("overlays display name, company, and API pricing when present", () => {
+    const platform = {
+      name: "Freepik AI",
+      company: "db company",
+      description: null,
+      currentPricing: null,
+      freeTierFeatures: null,
+      platformType: ["Web"],
+      hasMobileApp: false,
+      iosAppUrl: null,
+      androidAppUrl: null,
+    };
+    const view = overlayPlatformWithFacts(platform, {
+      slug: "freepik-ai",
+      lifecycle: "active",
+      displayName: {
+        value: "Magnific (formerly Freepik)",
+        sourceUrl: "https://www.magnific.com/pricing",
+        checkedAt: "2026-10-14",
+        gatheredBy: "research-analyst",
+        verifiedBy: "pending",
+        status: "unverified",
+      },
+      company: {
+        value: "Overlay Co",
+        sourceUrl: "https://example.com/company",
+        checkedAt: "2026-10-14",
+        gatheredBy: "research-analyst",
+        verifiedBy: "pending",
+        status: "unverified",
+      },
+      apiPricing: {
+        value: "Sold separately.",
+        sourceUrl: "https://example.com/api",
+        checkedAt: "2026-10-14",
+        gatheredBy: "research-analyst",
+        verifiedBy: "pending",
+        status: "unverified",
+      },
+    });
+    assert.equal(view.name, "Magnific (formerly Freepik)");
+    assert.equal(view.company, "Overlay Co");
+    assert.equal(view.apiPricing, "Sold separately.");
   });
 
   it("clears leftover store URLs when apps facts omit them", () => {
