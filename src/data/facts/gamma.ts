@@ -9,8 +9,9 @@ export default {
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -21,8 +22,9 @@ export default {
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   plans: {
     value: [
@@ -55,20 +57,22 @@ export default {
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apps: {
     value: {
-      ios: "https://apps.apple.com/us/app/id6768404578",
+      ios: "https://apps.apple.com/us/app/gamma-ai-slides-design/id6768404578",
       android: "https://play.google.com/store/apps/details?id=app.gamma.mobile",
     },
-    note: "Browser-verified 2026-10-14. iOS id6768404578; Play app.gamma.mobile.",
+    note: "Browser-verified 2026-10-14. iOS final URL gamma-ai-slides-design/id6768404578; Play app.gamma.mobile.",
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: [
@@ -83,15 +87,16 @@ export default {
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
       summary:
-        "Browser-verified: Free $0; Plus/Pro/Ultra monthly and annual per-seat prices. Company Gamma Tech, Inc. Third-party models and store IDs.",
+        "RA: iOS store URL is the final App Store path. Prices and models remain browser-verified.",
     },
   ],
 } satisfies ToolFacts;

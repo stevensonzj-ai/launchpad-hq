@@ -9,20 +9,22 @@ export default {
     sourceUrl: "https://www.genspark.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   apps: {
     value: {
-      ios: "https://apps.apple.com/us/app/id6739554054",
+      ios: "https://apps.apple.com/us/app/genspark-ai-workspace/id6739554054",
       android: "https://play.google.com/store/apps/details?id=ai.mainfunc.genspark",
     },
-    note: "Browser-verified 2026-10-14. iOS id6739554054; Play ai.mainfunc.genspark.",
+    note: "Browser-verified 2026-10-14. iOS final URL genspark-ai-workspace/id6739554054; Play ai.mainfunc.genspark. Company matches the site footer “Genspark Inc.” (App Store seller is “genspark inc”).",
     sourceUrl: "https://www.genspark.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: [
@@ -35,15 +37,16 @@ export default {
     sourceUrl: "https://www.genspark.ai/",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "company",
       summary:
-        "Browser-verified company, store IDs, and named third-party models. No prices (pricing page requires sign-in).",
+        "RA: iOS store URL is the final App Store path. Company kept as site footer Genspark Inc.",
     },
   ],
 } satisfies ToolFacts;

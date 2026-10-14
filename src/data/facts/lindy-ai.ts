@@ -7,9 +7,9 @@ export default {
     value: [
       {
         name: "Team",
-        price: "from $49.99/mo per active user",
+        price: "from $29.99/mo per active user (3,000 credits each)",
         period: "",
-        limits: "5,000 credits each; every active user in the workspace is billed",
+        limits: "Every active user in the workspace is billed",
       },
       {
         name: "Enterprise",
@@ -22,16 +22,18 @@ export default {
     sourceUrl: "https://www.lindy.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   platforms: {
     value: ["Web", "Chrome Extension"],
     sourceUrl: "https://www.lindy.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   models: {
     value: ["Third-party models"],
@@ -39,15 +41,16 @@ export default {
     sourceUrl: "https://www.lindy.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-14",
+    status: "verified",
   },
   changelog: [
     {
       date: "2026-10-14",
       field: "plans",
       summary:
-        "Team from $49.99/mo per active user. Enterprise custom. No free plan (7-day credits). Company omitted.",
+        "RA: Team from $29.99/mo per active user (3,000 credits each). Enterprise custom. No free plan (7-day credits).",
     },
   ],
 } satisfies ToolFacts;
