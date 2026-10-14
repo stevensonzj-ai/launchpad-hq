@@ -6,7 +6,7 @@ export const geminiTutorial: PlatformTutorialData = {
   title: "Getting Started with Gemini",
   tagline: `Google's assistant, free and genuinely capable — with a privacy model built on human review rather than a training switch.`,
   archetype: "prompts",
-  lastReviewedAt: "2026-07-27",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://gemini.google/release-notes/",
   accessTier: "FREE",
 
@@ -22,7 +22,7 @@ export const geminiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `The free tier needs nothing but a Google account — no card, no trial clock. It includes chat, image generation and editing, deep research, live voice, and the notebook research tool.`,
-    `Paid tiers ladder by usage: roughly $5 a month for double the free allowance, about $20 for four times it, and $100 or $200 a month at the top for five and twenty times the $20 tier respectively.`,
+    `Paid tiers are now named Google AI Plus (2× Free usage), Google AI Pro (4×), and Google AI Ultra (from $99.99/month on gemini.google/subscriptions as of 2026-10-14; a $199.99 Ultra band is also listed). Plus and Pro dollar amounts did not render on that page — do not use the retired “Gemini Advanced” name.`,
     `Limits are compute-based rather than message-counted, refresh on a five-hour cycle against a weekly ceiling, and can be extended by buying credits.`,
     `**Decide what you are willing to have a human read before you start typing.** See the security section — this is the part that differs most from its competitors.`,
   ],

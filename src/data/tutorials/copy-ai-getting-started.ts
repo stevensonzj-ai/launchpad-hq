@@ -7,7 +7,7 @@ export const copyAiTutorial: PlatformTutorialData = {
   tagline:
     "An AI writing assistant for marketing copy — ads, emails, social posts, and blog drafts from a prompt or a template.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://www.copy.ai/blog",
   accessTier: "FREE",
 
@@ -19,7 +19,7 @@ export const copyAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free plan (no card) gives roughly **2,000 words a month** and the template library — enough to test quality. Paid individual writing plans start higher (Copy.ai has **restructured its pricing** and the range is wide, so check current tiers before committing).",
+    "Copy.ai's public pricing page (copy.ai/prices, as of 2026-10-14) lists no free plan. Self-serve Chat is currently **$29/month** billed monthly ($24/month billed annually); team Growth starts at **$1,000/month**. Treat any leftover “2,000 words free” claims elsewhere as stale until you see them on that page.",
     "It writes text only — no images, no publishing/scheduling — so it's one piece of a content stack, not the whole thing.",
     "Go in expecting to **edit** everything it produces; the getting-started skill is prompting well and then rewriting, not publishing raw output.",
   ],

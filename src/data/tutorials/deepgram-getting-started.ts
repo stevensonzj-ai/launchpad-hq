@@ -7,7 +7,7 @@ export const deepgramTutorial: PlatformTutorialData = {
   tagline:
     "Speech recognition priced by the minute of audio, built for developers putting it inside something else — plus one Mac app you can simply install.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://developers.deepgram.com/changelog",
   accessTier: "FREE",
 
@@ -22,7 +22,7 @@ export const deepgramTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "You can look before committing anything. Deepgram runs a playground page in the browser, and its own getting-started documentation sends beginners there to try the service without writing code or signing up. What that documentation does not say is whether the playground takes audio of your own or only runs Deepgram's sample — check that first, because the question that matters is whether it is accurate enough on your kind of audio.",
     "Everything past the playground assumes code: using Deepgram properly means putting an **API key** (a password that identifies your app, and that spends your money) into a program. If you do not write code and have no plans to, that is not a shortcoming on your side — it is the shape of this product, and the meeting-notes tools under Where to next are the finished-article version of the same idea.",
-    "Signing up is free, Deepgram's documentation says it includes $200 of credit, and the pricing page currently says no credit card is required. Its main **model** (the AI \"brain\" that does the actual thinking), Nova-3, currently lists at $0.0043 a minute for pre-recorded English — putting that $200 in the region of several hundred hours of audio. It is a fixed pot that drains as you use it, and at those rates most people evaluating Deepgram never reach the bottom.",
+    "Signing up is free, Deepgram's documentation says it includes $200 of credit, and the pricing page currently says no credit card is required. Nova-3 Monolingual pre-recorded currently lists at **$0.0048/min** promotional (regular strikethrough **$0.0077/min** on deepgram.com/pricing as of 2026-10-14). It is a fixed pot that drains as you use it.",
   ],
 
   security: [
@@ -71,7 +71,7 @@ export const deepgramTutorial: PlatformTutorialData = {
       whatItDoes:
         "Estimates your monthly bill from the hours of audio you expect to process and the per-minute rate on the pricing page.",
       whyHere:
-        "Hours of audio per month × 60 × the per-minute rate. Billing is by the minute, and pre-recorded Nova-3 English currently lists at $0.0043 — which makes the $200 credit several hundred hours rather than a weekend trial. That multiplication tells you whether you are evaluating a purchase or something that stays effectively free for a year.",
+        "Hours of audio per month × 60 × the per-minute rate. Billing is by the minute, and pre-recorded Nova-3 English currently lists at $0.0048/min promotional ($0.0077 regular) — which makes the $200 credit hundreds of hours rather than a weekend trial. That multiplication tells you whether you are evaluating a purchase or something that stays effectively free for a year.",
       tweak:
         "Run it twice, at the pre-recorded rate and at the streaming rate. Live transcription costs more per minute, and that gap is frequently the whole design decision.",
     },

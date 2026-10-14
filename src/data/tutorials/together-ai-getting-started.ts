@@ -7,7 +7,7 @@ export const togetherAiTutorial: PlatformTutorialData = {
   tagline:
     "Two hundred-plus open AI models — text, images, video, speech — on one prepaid account. There is no free trial: it starts with $5 on a card.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://docs.together.ai/docs/changelog",
   accessTier: "FREE",
 
@@ -21,7 +21,7 @@ export const togetherAiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**There is no free trial, and that is the first thing to know.** Together removed its free tier in a July 2025 billing change; reaching the platform now means putting at least $5 of credit on a card up front, and at a zero balance your access is suspended until you top it up. If you want to try open models without paying, Groq's free tier or a model on your own computer are the honest starting points — come back once you know what you want to build.",
-    "For text, $5 goes further than you would expect; the cheaper models cost cents for a great deal of it. Video is the exception, billed per clip at a few cents each, which moves a balance in a way text never will.",
+    "For text, $5 goes further than you would expect; serverless chat currently lists from **$0.04 per million input tokens**, and some models at $0.00 (together.ai/pricing, as of 2026-10-14). Video is the exception, billed per clip at a few cents each.",
     "Nothing to install — a browser covers everything here. Together Chat may be usable without the card: it launched free with a daily allowance, though Together no longer publishes its limits, so treat what you get there as a bonus rather than a plan.",
   ],
 

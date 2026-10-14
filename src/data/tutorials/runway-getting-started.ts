@@ -7,7 +7,7 @@ export const runwayTutorial: PlatformTutorialData = {
   tagline:
     "Turn a text prompt or a still image into short AI-generated video — a filmmaking tool you drive by describing what you want.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://runwayml.com/research",
   accessTier: "FREE",
 
@@ -19,7 +19,7 @@ export const runwayTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **free plan is a one-time sample, not a monthly allowance**: a single deposit of credits that never refills, and every clip carries a **Runway watermark**. It's for evaluating quality. Paid plans start around **$12/month (billed annually)** for a monthly credit allotment and watermark-free output.",
+    "The **free plan is a one-time sample, not a monthly allowance**: 125 credits that never expire (official FAQ, 2026-10-14), and clips carry a **Runway watermark**. Paid plans: Standard $15/month or $12 billed annually; Pro $35/$28; Max $95/$76. The $76 figure is Max annual, not Pro.",
     "**Budget for iteration.** AI video rarely nails it first try; plan on multiple takes per usable clip, and know that credits mostly don't roll over (only the top plan rolls a little forward).",
     "Web-app credits and API credits are **separate pools** — don't assume buying one covers the other.",
   ],

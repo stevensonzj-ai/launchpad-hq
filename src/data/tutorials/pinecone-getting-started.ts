@@ -7,7 +7,7 @@ export const pineconeTutorial: PlatformTutorialData = {
   tagline:
     "The searchable memory behind \"chat with your own documents\" apps — free to start, with one part the docs say you can use in a browser without code.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-14",
   changelogUrl: "https://docs.pinecone.io/release-notes",
   accessTier: "FREE",
 
@@ -21,7 +21,7 @@ export const pineconeTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free Starter plan is a standing allowance, not a trial — Pinecone's docs say it \"has no monthly minimum,\" and it does not expire. It currently covers around 2 GB of stored data, one project and two people. You enter a card only if you upgrade; the first paid step is currently $20 a month flat.",
+    "The free Starter plan is a standing allowance, not a trial — Pinecone's docs say it \"has no monthly minimum,\" and it does not expire. It currently covers around 2 GB of stored data, one project and two people. Paid: Builder **$20/month** flat, then Standard at a **$50/month** usage minimum, then Enterprise at a **$500/month** minimum (pinecone.io/pricing, as of 2026-10-14).",
     "It blocks rather than bills. On the flat-fee plans, using up a monthly allowance returns an error and an upgrade prompt instead of an overage charge.",
     "Nothing installs. Everything runs on Pinecone's servers, in a browser at app.pinecone.io — which also means your uploaded material lives on their infrastructure.",
     "If you only want to ask questions about your own files, a consumer AI assistant with file upload gets you there faster. Pinecone earns its place when the material is bigger than that, or when something you are building must search it for other people.",
