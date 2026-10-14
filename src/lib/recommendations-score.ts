@@ -59,7 +59,12 @@ export type MatchReason =
   | "Free tier"
   | "Beginner-friendly"
   | "Works on mobile"
+  | "Works in the browser"
   | "Runs offline";
+
+function hasListedFreeTier(platform: ScoreablePlatform): boolean {
+  return platform.costTier === "FREE" || platform.costTier === "FREEMIUM";
+}
 
 const DIFFICULTY_RANK: Record<Difficulty, number> = {
   BEGINNER: 0,
@@ -160,7 +165,9 @@ export function scorePlatform(
     }
     if (p === "free" && platform.costTier === "FREE") {
       score += 10;
-      if (!matchReasons.includes("Free tier")) matchReasons.push("Free tier");
+      if (hasListedFreeTier(platform) && !matchReasons.includes("Free tier")) {
+        matchReasons.push("Free tier");
+      }
     }
     if (p === "mobile") {
       if (platform.hasMobileApp) {
@@ -178,8 +185,8 @@ export function scorePlatform(
     }
     if (p === "browser" && platform.mobileWebFriendly) {
       score += 8;
-      if (!matchReasons.includes("Works on mobile")) {
-        matchReasons.push("Works on mobile");
+      if (!matchReasons.includes("Works in the browser")) {
+        matchReasons.push("Works in the browser");
       }
     }
   }
@@ -192,7 +199,9 @@ export function scorePlatform(
     platform.freeTierFeatures
   ) {
     score += 5;
-    if (!matchReasons.includes("Free tier")) matchReasons.push("Free tier");
+    if (hasListedFreeTier(platform) && !matchReasons.includes("Free tier")) {
+      matchReasons.push("Free tier");
+    }
   }
 
   if (aboveDifficulty) score = Math.round(score * ABOVE_DIFFICULTY_PENALTY);

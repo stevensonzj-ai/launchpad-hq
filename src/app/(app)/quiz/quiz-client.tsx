@@ -61,6 +61,7 @@ export function QuizClient() {
   const [runtime, setRuntime] = useState<string | undefined>();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [goalLimitNotice, setGoalLimitNotice] = useState(false);
 
   function buildAnswers(): QuizAnswers {
     return {
@@ -98,8 +99,15 @@ export function QuizClient() {
 
   function toggleGoal(id: string) {
     setSelectedGoals((current) => {
-      if (current.includes(id)) return current.filter((g) => g !== id);
-      if (current.length >= QUIZ_MAX_GOALS) return current;
+      if (current.includes(id)) {
+        setGoalLimitNotice(false);
+        return current.filter((g) => g !== id);
+      }
+      if (current.length >= QUIZ_MAX_GOALS) {
+        setGoalLimitNotice(true);
+        return current;
+      }
+      setGoalLimitNotice(false);
       return [...current, id];
     });
   }
@@ -132,6 +140,7 @@ export function QuizClient() {
       <div
         className="mt-6 h-2 overflow-hidden rounded-full bg-gray-800"
         role="progressbar"
+        aria-label={`Question ${step + 1} of ${QUIZ_QUESTION_COUNT}`}
         aria-valuenow={step + 1}
         aria-valuemin={1}
         aria-valuemax={QUIZ_QUESTION_COUNT}
@@ -149,11 +158,17 @@ export function QuizClient() {
               What do you want to accomplish?
             </p>
             <p className="text-xs text-gray-500">Pick up to two.</p>
+            {goalLimitNotice && (
+              <p role="status" className="text-sm text-orange-400">
+                Pick up to 2 goals
+              </p>
+            )}
             <div className="grid grid-cols-2 gap-2">
               {GOALS.map((g) => (
                 <button
                   key={g.id}
                   type="button"
+                  aria-pressed={selectedGoals.includes(g.id)}
                   onClick={() => toggleGoal(g.id)}
                   className={optionClass(selectedGoals.includes(g.id))}
                 >
@@ -174,6 +189,7 @@ export function QuizClient() {
                 <button
                   key={g.id}
                   type="button"
+                  aria-pressed={experience === g.id}
                   onClick={() => setExperience(g.id)}
                   className={optionClass(experience === g.id)}
                 >
@@ -194,6 +210,7 @@ export function QuizClient() {
                 <button
                   key={g.id}
                   type="button"
+                  aria-pressed={budget === g.id}
                   onClick={() => setBudget(g.id)}
                   className={optionClass(budget === g.id)}
                 >
@@ -217,6 +234,7 @@ export function QuizClient() {
                 <button
                   key={g.id}
                   type="button"
+                  aria-pressed={runtime === g.id}
                   onClick={() => setRuntime(g.id)}
                   className={optionClass(runtime === g.id)}
                 >

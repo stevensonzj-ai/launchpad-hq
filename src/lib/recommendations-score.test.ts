@@ -92,6 +92,8 @@ describe("priority scoring", () => {
       input,
     );
     assert.ok(friendly.score > notFriendly.score);
+    assert.ok(friendly.matchReasons.includes("Works in the browser"));
+    assert.ok(!friendly.matchReasons.includes("Works on mobile"));
   });
 
   it("does not add ease_of_use points for advanced users on beginner tools", () => {

@@ -30,6 +30,7 @@ export function ResultsClient() {
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
 
+  // `undefined` while we read sessionStorage on mount; then QuizAnswers or `null`.
   const [stash, setStash] = useState<QuizAnswers | null | undefined>(undefined);
   const [recs, setRecs] = useState<Rec[] | null>(null);
   const [recsError, setRecsError] = useState<string | null>(null);
@@ -74,6 +75,9 @@ export function ResultsClient() {
     };
   }, [stash]);
 
+  // Post-auth save handoff: when an authenticated user lands here with a
+  // stash (returning from sign-in/up), persist the answers, clear the stash,
+  // and redirect. One-shot via ref so the effect can't fire twice.
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
     if (stash === undefined) return;
@@ -84,6 +88,8 @@ export function ResultsClient() {
     }
     saveAttempted.current = true;
     void runSave(stash);
+    // runSave is stable within this component's render scope; depending on it
+    // would re-fire the effect every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, isSignedIn, stash, router]);
 
@@ -97,6 +103,7 @@ export function ResultsClient() {
         body: JSON.stringify({ answers }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      // Only clear after a confirmed save — failure must keep the stash.
       sessionStorage.removeItem(STASH_KEY);
       setSaveState("saved");
       router.replace("/for-you");
