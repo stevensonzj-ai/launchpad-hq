@@ -5,8 +5,13 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { PlatformCard } from "@/components/platforms/platform-card";
+import { QuizMatchSections } from "@/components/quiz/quiz-match-sections";
 import { computeRecommendations } from "@/lib/recommendations-core";
-import { quizToRecommendationInput, type QuizAnswers } from "@/lib/quiz-map";
+import {
+  normalizeQuizGoals,
+  quizToRecommendationInput,
+  type QuizAnswers,
+} from "@/lib/quiz-map";
 
 type Rec = Awaited<
   ReturnType<typeof computeRecommendations>
@@ -96,6 +101,7 @@ export default async function ForYouPage() {
         ) : (
           <QuizRecommendations
             recs={recs}
+            goals={normalizeQuizGoals(prefs!.quizAnswers as unknown as QuizAnswers)}
             favoriteIds={favoriteIds}
             isShortList={recs.length <= 2}
           />
@@ -130,10 +136,12 @@ function QuizZeroRecsState() {
 
 function QuizRecommendations({
   recs,
+  goals,
   favoriteIds,
   isShortList,
 }: {
   recs: Rec[];
+  goals: string[];
   favoriteIds: Set<string>;
   isShortList?: boolean;
 }) {
@@ -149,26 +157,13 @@ function QuizRecommendations({
           for more.
         </p>
       )}
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {recs.map((p) => (
-          <PlatformCard
-            key={p.id}
-            slug={p.slug}
-            name={p.name}
-            company={p.company}
-            primaryUse={p.primaryUse}
-            costTier={p.costTier}
-            difficultyLevel={p.difficultyLevel}
-            category={p.category}
-            freeTierFeatures={p.freeTierFeatures}
-            hasMobileApp={p.hasMobileApp}
-            mobileWebFriendly={p.mobileWebFriendly}
-            matchScore={p.matchScore}
-            aboveDifficulty={p.aboveDifficulty}
-            isFavorited={favoriteIds.has(p.id)}
-            isSignedIn={true}
-          />
-        ))}
+      <div className="mt-4">
+        <QuizMatchSections
+          recs={recs}
+          goals={goals}
+          favoriteIds={favoriteIds}
+          isSignedIn={true}
+        />
       </div>
       <p className="mt-8 text-center text-sm">
         <Link href="/quiz" className="text-orange-400 hover:underline">
@@ -232,7 +227,7 @@ function QuizCta() {
     <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-8 text-center">
       <h2 className="text-xl font-semibold text-white">Get personalized picks</h2>
       <p className="mt-2 text-sm text-gray-400">
-        Answer 5 quick questions and we&apos;ll match you to AI tools that fit your goals, experience level, and budget.
+        Answer 4 quick questions and we&apos;ll match you to AI tools that fit your goals, experience level, and budget.
       </p>
       <Link
         href="/quiz"

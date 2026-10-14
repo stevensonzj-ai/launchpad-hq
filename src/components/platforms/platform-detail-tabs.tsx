@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 import { PlatformTutorials } from "@/components/tutorials/platform-tutorials";
 import { PlatformDiscussions } from "@/components/discussions/platform-discussions";
 import { PlatformPrompts } from "@/components/prompts/platform-prompts";
@@ -19,19 +20,21 @@ const TABS: { id: PlatformDetailTab; label: string; countKey?: TabCountKey }[] =
   { id: "prompts", label: "Prompts", countKey: "prompts" },
 ];
 
-const TAB_IDS: PlatformDetailTab[] = ["overview", "tutorials", "discussions", "prompts"];
-
-function isTab(value: string | undefined): value is PlatformDetailTab {
-  return Boolean(value && TAB_IDS.includes(value as PlatformDetailTab));
-}
-
 type PlatformDetailTabsProps = {
   platformName: string;
   platformSlug: string;
   children: ReactNode;
   counts?: PlatformDetailTabCounts;
+  /** Server-passed ?tab= fallback; client also reads searchParams (PR #43). */
   initialTab?: string;
 };
+
+function tabFromParam(value: string | null | undefined): PlatformDetailTab {
+  if (value === "tutorials" || value === "discussions" || value === "prompts") {
+    return value;
+  }
+  return "overview";
+}
 
 export function PlatformDetailTabs({
   platformName,
@@ -40,8 +43,9 @@ export function PlatformDetailTabs({
   counts,
   initialTab,
 }: PlatformDetailTabsProps) {
-  const [activeTab, setActiveTab] = useState<PlatformDetailTab>(
-    isTab(initialTab) ? initialTab : "overview",
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState<PlatformDetailTab>(() =>
+    tabFromParam(searchParams.get("tab") ?? initialTab),
   );
 
   return (

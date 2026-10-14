@@ -5,7 +5,8 @@ import { computeRecommendations } from "@/lib/recommendations-core";
  * Recommendation engine — returns personalized platform suggestions
  * based on user preferences from onboarding survey or quiz.
  *
- * POST body: { goals, budget, experienceLevel, industries, priorities }
+ * POST body: { goals, budget, experienceLevel, priorities }
+ * Each recommendation includes matchReasons chips derived from score parts.
  */
 export async function POST(request: NextRequest) {
   const body = await request.json();

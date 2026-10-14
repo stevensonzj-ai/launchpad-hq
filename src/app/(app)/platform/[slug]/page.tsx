@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { Suspense } from "react";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -128,6 +129,7 @@ export default async function PlatformPage({
         </div>
       </div>
 
+      <Suspense>
       <PlatformDetailTabs
         platformName={platform.name}
         platformSlug={platform.slug}
@@ -236,6 +238,7 @@ export default async function PlatformPage({
         </section>
       )}
       </PlatformDetailTabs>
+      </Suspense>
     </div>
   );
 }
