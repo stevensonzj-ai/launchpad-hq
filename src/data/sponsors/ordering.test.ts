@@ -75,7 +75,7 @@ function quizSnapshot(candidates: ScoreablePlatform[]) {
 describe("sponsor placements stay off ranking surfaces", () => {
   it("keeps the live placement list empty by default", () => {
     assert.equal(PLACEMENTS.length, 0);
-    assert.equal(getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")), null);
+    assert.equal(getActivePlacement("discover", new Date("2026-10-14T17:00:00Z")), null);
   });
 
   it("Discover orderBy contract has no sponsor fields", () => {
@@ -101,12 +101,12 @@ describe("sponsor placements stay off ranking surfaces", () => {
     for (const sort of ["popular", "alpha", "recent"] as const) {
       const without = sortDiscoverCatalog(catalog, sort);
       assert.equal(
-        getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")),
+        getActivePlacement("discover", new Date("2026-10-14T17:00:00Z")),
         null,
       );
       const withPlacement = withLivePlacement(TEST_ONLY_EXAMPLE_PLACEMENT, () => {
         assert.ok(
-          getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")),
+          getActivePlacement("discover", new Date("2026-10-14T17:00:00Z")),
         );
         return sortDiscoverCatalog(catalog, sort);
       });
@@ -126,11 +126,11 @@ describe("sponsor placements stay off ranking surfaces", () => {
 
     const without = quizSnapshot(candidates);
     assert.equal(
-      getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")),
+      getActivePlacement("discover", new Date("2026-10-14T17:00:00Z")),
       null,
     );
     const withPlacement = withLivePlacement(TEST_ONLY_EXAMPLE_PLACEMENT, () => {
-      assert.ok(getActivePlacement("homepage", new Date("2026-10-14T17:00:00Z")));
+      assert.ok(getActivePlacement("discover", new Date("2026-10-14T17:00:00Z")));
       return quizSnapshot(candidates);
     });
     assert.deepEqual(withPlacement, without);

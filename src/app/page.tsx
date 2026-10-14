@@ -12,8 +12,6 @@ import {
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
-import { getActivePlacement } from "@/data/sponsors";
-import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
 
 /** Date windows are America/Chicago calendar days; refresh without a redeploy. */
 export const revalidate = 3600;
@@ -25,7 +23,6 @@ export default async function HomePage() {
     getCategoryCount(),
   ]);
   const platformCount = roundDownToTen(rawCount);
-  const homepageSponsor = getActivePlacement("homepage");
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -106,12 +103,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {homepageSponsor ? (
-        <section className="mx-auto max-w-5xl px-4 pb-12">
-          <SponsoredSpotlight placement={homepageSponsor} />
-        </section>
-      ) : null}
 
       {/* Workflow templates — prominent above the fold */}
       <section className="mx-auto max-w-5xl px-4 pb-20">
