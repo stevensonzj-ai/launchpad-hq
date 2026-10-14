@@ -28,7 +28,6 @@ function week(
  * Edit this list to mark slots booked; nothing writes to a database.
  */
 export const SPONSOR_CALENDAR: readonly SponsorCalendarWeek[] = [
-  week("2026-10-12"),
   week("2026-10-19"),
   week("2026-10-26"),
   week("2026-11-02"),
@@ -37,22 +36,6 @@ export const SPONSOR_CALENDAR: readonly SponsorCalendarWeek[] = [
   week("2026-11-23"),
   week("2026-11-30"),
   week("2026-12-07"),
-  week("2026-12-14"),
-  week("2026-12-21"),
-  week("2026-12-28"),
-  week("2027-01-04"),
-  week("2027-01-11"),
-  week("2027-01-18"),
-  week("2027-01-25"),
-  week("2027-02-01"),
-  week("2027-02-08"),
-  week("2027-02-15"),
-  week("2027-02-22"),
-  week("2027-03-01"),
-  week("2027-03-08"),
-  week("2027-03-15"),
-  week("2027-03-22"),
-  week("2027-03-29"),
 ];
 
 const SLOT_LABEL: Record<SponsorCalendarSlot, string> = {

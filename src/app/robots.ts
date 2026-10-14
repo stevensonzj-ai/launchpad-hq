@@ -8,8 +8,7 @@ import { SITE_IS_PUBLIC, SITE_URL } from "@/lib/site";
  * friends-and-family noindex posture — crawlers should not treat the catalog
  * as public while that guard remains.
  *
- * TODO(launch): flip SITE_IS_PUBLIC in src/lib/site.ts when noindex is lifted.
- * The launch-time rules below then apply: allow the public catalog, keep
+ * When SITE_IS_PUBLIC is true, allow the public catalog, keep
  * auth/account/api out of crawlers, and advertise sitemap.xml.
  *
  * Launch-time version (gated, not active):

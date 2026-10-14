@@ -2,12 +2,11 @@
 export const SITE_URL = "https://www.launchpadhq.io";
 
 /**
- * Friends-and-family / pre-launch guard.
- * Controls both robots.txt (Disallow: /) and site-wide metadata noindex.
- * TODO(launch): flip to true only when the catalog is ready for public search;
- * that single flip lifts robots.txt and noindex together.
+ * Public-search guard.
+ * Controls both robots.txt (Disallow: / vs public allow list) and site-wide
+ * metadata noindex. True = catalog is indexable; false = friends-and-family.
  */
-export const SITE_IS_PUBLIC = false;
+export const SITE_IS_PUBLIC = true;
 
 /**
  * User-facing Pro subscription. Stripe checkout/portal stay in the repo

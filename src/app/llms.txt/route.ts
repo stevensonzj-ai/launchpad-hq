@@ -22,10 +22,7 @@ export function GET() {
 
 > LaunchpadHQ is a curated AI-platform discovery site for beginners and budget-conscious users. It helps people find real alternatives beyond ChatGPT and Claude — writing, image, video, audio, code, research, and automation tools, including free tiers and local/open-source options.
 
-${
-  // TODO(launch): remove this sentence when SITE_IS_PUBLIC is flipped.
-  "The site is not publicly launched. Browsing the directory, quiz, platform overviews, prompt library, and discussions is intended to stay free. Auth, account, and admin routes are omitted here."
-}
+Browsing the directory, quiz, platform overviews, prompt library, and discussions is intended to stay free. Auth, account, and admin routes are omitted here.
 
 ## Sections
 
@@ -36,7 +33,7 @@ ${
 - [Workflows](${SITE_URL}/workflows): Curated multi-tool workflow templates
 - [Tutorials](${SITE_URL}/tutorials): Tutorial library index (guides live on each platform page)
 - [How we make money](${SITE_URL}/how-we-make-money): How Launchpad stays free, labeled sponsor placements, and affiliates
-- [Sponsor guidelines](${SITE_URL}/sponsor-guidelines): Redirects to the advertise rate card when the site is public${
+- [Advertise](${SITE_URL}/advertise): Sponsor rate card, weekly availability, rates and how to book by email${
     getActivePlacement("ai-of-the-week")
       ? `
 - [AI of the Week](${SITE_URL}/ai-of-the-week): Sponsored feature with an honest-take box`

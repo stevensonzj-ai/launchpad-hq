@@ -43,7 +43,7 @@ export default function HowWeMakeMoneyPage() {
             Companies can pay for the clearly-labelled &quot;Sponsored spotlight&quot; and &quot;AI of the
             Week&quot;. They are always marked <em>Sponsored</em>. They never change rankings, quiz
             results, workflow picks or tutorial verdicts.{" "}
-            <Link href="/sponsor-guidelines" className="text-orange-400 hover:underline">
+            <Link href="/advertise" className="text-orange-400 hover:underline">
               Sponsor guidelines
             </Link>
             .
