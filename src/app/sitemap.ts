@@ -14,6 +14,8 @@ const STATIC_PUBLIC_PATHS = [
   "/workflows",
   "/tutorials",
   "/pricing",
+  "/privacy",
+  "/terms",
   "/models",
   "/models/compare/claude-vs-gpt",
 ] as const;
