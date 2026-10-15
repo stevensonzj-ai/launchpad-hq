@@ -9,41 +9,41 @@ const MAIL = "launchpadhq.admin@gmail.com";
 export function AdvertiseGuidelines() {
   return (
     <>
-      <p className="mt-3 text-gray-400">
+      <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-300">
         Launchpad HQ is a free directory that helps people find the right AI tools, and
         sponsorships keep it free. This page covers what you can book, how we label it, what
         we accept and how booking works. Launchpad HQ (launchpadhq.io) is operated by Lakeside
         Innovation Labs LLC, a Texas limited liability company.
       </p>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">What sponsorship includes</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-4 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">What sponsorship includes</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Every slot runs for one week (Monday to Sunday, US Central Time) and is labeled{" "}
           <strong className="font-semibold text-gray-200">&quot;Sponsored.&quot;</strong> There
           are two paid placements on the site:
         </p>
-        <ul className="list-disc space-y-2 pl-5 text-sm text-gray-300">
-          <li>
+        <ul className="grid gap-4 text-sm text-gray-300 lg:grid-cols-3">
+          <li className="flex flex-col rounded-xl border border-amber-100/20 bg-gray-950/50 p-4">
             <strong className="font-semibold text-white">AI of the Week.</strong> Our top
             slot: a dedicated page at /ai-of-the-week with your hero image, a 150–400 word
             feature, up to 3 bullets and a call-to-action button, plus an optional post on X.
-            One sponsor per week. <strong className="font-semibold text-white">$99/week.</strong>
+            One sponsor per week. <strong className="mt-3 block text-2xl font-semibold tracking-tight text-amber-200">$99/week.</strong>
           </li>
-          <li>
+          <li className="flex flex-col rounded-xl border border-amber-100/20 bg-gray-950/50 p-4">
             <strong className="font-semibold text-white">Discover Spotlight.</strong> A
             sponsored banner at the top of the Discover page with your logo, headline, blurb
             and link. It&apos;s clearly labeled &quot;Sponsored&quot; and kept separate from
             the organic results below it, which it never reorders. One sponsor per week.{" "}
-            <strong className="font-semibold text-white">$49/week, or $149 for 4 weeks.</strong>
+            <strong className="mt-3 block text-2xl font-semibold tracking-tight text-amber-200">$49/week, or $149 for 4 weeks.</strong>
           </li>
-          <li>
+          <li className="flex flex-col rounded-xl border border-amber-100/20 bg-gray-950/50 p-4">
             <strong className="font-semibold text-white">Same-week bundle.</strong> Discover
             Spotlight plus AI of the Week in the same week:{" "}
-            <strong className="font-semibold text-white">$129</strong> (instead of $148).
+            <strong className="mt-3 block text-2xl font-semibold tracking-tight text-amber-200">$129</strong> (instead of $148).
           </li>
         </ul>
-        <p className="text-sm text-gray-400">All prices are in USD.</p>
+        <p className="text-sm leading-relaxed text-gray-300">All prices are in USD.</p>
         <p className="text-sm font-semibold text-gray-200">Coming later:</p>
         <ul className="list-disc space-y-1 pl-5 text-sm text-gray-300">
           <li>
@@ -59,9 +59,9 @@ export function AdvertiseGuidelines() {
         </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Founding sponsor offer</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Founding sponsor offer</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Our first 5 sponsors get 50% off their first booking and any rebookings made within
           3 months of it, up to a maximum of 4 weeks of slots per sponsor. A same-week bundle
           counts as one week. The discount applies to the standard weekly rates ($24.50/week
@@ -70,17 +70,17 @@ export function AdvertiseGuidelines() {
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Rate protection</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Rate protection</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Prices may rise as demand grows. Once you&apos;ve booked, your price is locked:
           booked rates and founding rates are honored even if our list prices go up.
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Editorial independence</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Editorial independence</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Sponsorship buys visibility. It never buys rankings, reviews or ratings.{" "}
           <strong className="font-semibold text-gray-200">
             Rankings, quiz results and workflows are never sold.
@@ -100,9 +100,9 @@ export function AdvertiseGuidelines() {
         </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">How we disclose sponsorships</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">How we disclose sponsorships</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Following FTC guidance, every paid placement is labeled{" "}
           <strong className="font-semibold text-gray-200">&quot;Sponsored&quot;</strong>,
           wherever it appears:
@@ -125,22 +125,22 @@ export function AdvertiseGuidelines() {
             label where available.
           </li>
         </ul>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm leading-relaxed text-gray-300">
           We never run an unlabeled placement, and we never use &quot;Partner&quot; or
           &quot;Featured&quot; alone in place of &quot;Sponsored.&quot;
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Acceptance policy</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Acceptance policy</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           We review every sponsor before the slot is confirmed, using the same vetting we
           apply to the tools listed in our catalog. We accept tools that are real, work as
           described and would belong in our catalog. Every claim in your copy must be
           checkable on your official website, and we may edit copy for length, clarity or
           accuracy.
         </p>
-        <p className="text-sm text-gray-400">We decline:</p>
+        <p className="text-sm leading-relaxed text-gray-300">We decline:</p>
         <ul className="list-disc space-y-1 pl-5 text-sm text-gray-300">
           <li>
             Misleading or unverifiable claims, including medical, legal or financial-return
@@ -159,7 +159,7 @@ export function AdvertiseGuidelines() {
             AI&quot; problems
           </li>
         </ul>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm leading-relaxed text-gray-300">
           We may decline or remove any sponsorship at our discretion, including after booking
           if new information comes to light.{" "}
           <strong className="font-semibold text-gray-200">
@@ -168,8 +168,8 @@ export function AdvertiseGuidelines() {
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Creative and asset requirements</h2>
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Creative and asset requirements</h2>
         <ul className="list-disc space-y-1 pl-5 text-sm text-gray-300">
           <li>
             <strong className="font-semibold text-white">Logo:</strong> square PNG or SVG, at
@@ -200,7 +200,7 @@ export function AdvertiseGuidelines() {
             you&apos;d like a tag
           </li>
         </ul>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm leading-relaxed text-gray-300">
           <strong className="font-semibold text-gray-200">Deadline:</strong> final assets are
           due 5 business days before your slot starts, and they go through the same vetting as
           the tools listed in our catalog. Late assets may move your slot to the next open
@@ -208,8 +208,8 @@ export function AdvertiseGuidelines() {
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Booking and scheduling</h2>
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Booking and scheduling</h2>
         <ol className="list-decimal space-y-1 pl-5 text-sm text-gray-300">
           <li>Email us with your tool, the slot you want and your preferred week(s).</li>
           <li>We check availability and confirm your tool meets these guidelines.</li>
@@ -220,7 +220,7 @@ export function AdvertiseGuidelines() {
             promise reach, not results.
           </li>
         </ol>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm leading-relaxed text-gray-300">
           Slots are first come, first served, and a booking is confirmed once payment is
           received.
         </p>
@@ -232,16 +232,16 @@ export function AdvertiseGuidelines() {
         </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Payment terms</h2>
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Payment terms</h2>
         <ul className="list-disc space-y-1 pl-5 text-sm text-gray-300">
           <li>Payment is due 100% upfront, by Stripe invoice.</li>
           <li>No slot goes live unpaid.</li>
         </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Cancellation and refunds</h2>
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Cancellation and refunds</h2>
         <ul className="list-disc space-y-1 pl-5 text-sm text-gray-300">
           <li>
             <strong className="font-semibold text-white">
@@ -269,9 +269,9 @@ export function AdvertiseGuidelines() {
         </ul>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Make-goods</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Make-goods</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           If your slot is down for more than 24 hours, or starts late or not at all, because
           of a problem on our side, we extend or reschedule it by the time lost. We promise
           reach, not results: we don&apos;t guarantee impressions, clicks or sales. Make-goods
@@ -280,18 +280,18 @@ export function AdvertiseGuidelines() {
         </p>
       </section>
 
-      <section className="mt-10 space-y-3">
-        <h2 className="text-xl font-semibold text-white">Contact us</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Contact us</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Questions, bookings, the waitlist or the newsletter interest list:{" "}
           <a href={`mailto:${MAIL}`} className="text-orange-400 hover:underline">
             <strong className="font-semibold">{MAIL}</strong>
           </a>
         </p>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm leading-relaxed text-gray-300">
           Launchpad HQ is operated by Lakeside Innovation Labs LLC (Texas).
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm leading-relaxed text-gray-300">
           Prefer the How We Make Money page?{" "}
           <Link href="/how-we-make-money" className="text-orange-400 hover:underline">
             How we make money

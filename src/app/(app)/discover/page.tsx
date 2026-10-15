@@ -7,6 +7,9 @@ import Link from "next/link";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { X } from "lucide-react";
+import Image from "next/image";
+import { MatchingBanner } from "@/components/brand/matching-banner";
+import { getToolFacts } from "@/data/facts";
 import { DiscoverFilterBar } from "./discover-filter-bar";
 import {
   buildDiscoverQuery,
@@ -36,6 +39,7 @@ export default async function DiscoverPage({
   searchParams,
 }: {
   searchParams: Promise<{
+    q?: string;
     category?: string;
     cost?: string;
     difficulty?: string;
@@ -44,11 +48,17 @@ export default async function DiscoverPage({
   }>;
 }) {
   const params = await searchParams;
+  const query = typeof params.q === "string" ? params.q.trim().slice(0, 120) : "";
   const sort = normalizeSort(params.sort);
   const costQs = params.cost?.toLowerCase();
   const difficultyQs = params.difficulty?.toLowerCase();
 
   const where: Record<string, unknown> = {};
+  if (query) {
+    where.OR = ["name", "company", "primaryUse", "description"].map((field) => ({
+      [field]: { contains: query, mode: "insensitive" },
+    }));
+  }
   if (params.category) {
     where.category = { slug: params.category };
   }
@@ -134,6 +144,13 @@ export default async function DiscoverPage({
   // preserves the rest). Labels come from the same option lists the bar uses,
   // so an unknown/hand-typed value that the server ignores also yields no pill.
   const activeFilters: { key: string; label: string; href: string }[] = [];
+  if (query) {
+    activeFilters.push({
+      key: "q",
+      label: `Search: ${query}`,
+      href: "/discover" + buildDiscoverQuery({ category: params.category, cost: costQs, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
+    });
+  }
   if (params.category) {
     const name = categories.find((c) => c.slug === params.category)?.name;
     if (name) {
@@ -142,7 +159,7 @@ export default async function DiscoverPage({
         label: name,
         href:
           "/discover" +
-          buildDiscoverQuery({ cost: costQs, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
+          buildDiscoverQuery({ q: query, cost: costQs, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
       });
     }
   }
@@ -154,7 +171,7 @@ export default async function DiscoverPage({
         label,
         href:
           "/discover" +
-          buildDiscoverQuery({ category: params.category, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
+          buildDiscoverQuery({ q: query, category: params.category, difficulty: difficultyQs, mobile: params.mobile, sort: params.sort }),
       });
     }
   }
@@ -166,7 +183,7 @@ export default async function DiscoverPage({
         label,
         href:
           "/discover" +
-          buildDiscoverQuery({ category: params.category, cost: costQs, mobile: params.mobile, sort: params.sort }),
+          buildDiscoverQuery({ q: query, category: params.category, cost: costQs, mobile: params.mobile, sort: params.sort }),
       });
     }
   }
@@ -178,33 +195,25 @@ export default async function DiscoverPage({
         label,
         href:
           "/discover" +
-          buildDiscoverQuery({ category: params.category, cost: costQs, difficulty: difficultyQs, sort: params.sort }),
+          buildDiscoverQuery({ q: query, category: params.category, cost: costQs, difficulty: difficultyQs, sort: params.sort }),
       });
     }
   }
   const hasActiveFilter = activeFilters.length > 0;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
-      <h1 className="mb-2 text-3xl font-bold text-white">Discover AI Tools</h1>
-      <p className="mb-4 text-gray-400">
-        {hasActiveFilter
-          ? `Showing ${platforms.length} ${platforms.length === 1 ? "tool" : "tools"}`
-          : `Browse ${platforms.length} vetted tools across ${categories.length} categories`}
-      </p>
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 min-[100rem]:max-w-[108rem]">
+      <section className="lp-stars lp-discover-sky relative isolate mb-7 overflow-hidden rounded-2xl border-b border-amber-100/10 py-7 pr-2 sm:py-10 sm:pr-72">
+        <Image src="/images/launchpad/discover-rocket.jpg" alt="" width={900} height={450} priority className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden h-full w-[540px] object-cover object-right [mask-image:linear-gradient(to_right,transparent,black_35%)] sm:block" />
+        <p className="mb-3 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-400"><span aria-hidden="true" className="h-px w-6 bg-orange-300/60" />A universe of possibilities</p>
+        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">What will you <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">try next?</span></h1>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-300">Explore tools for your ideas, your budget, and your next project.</p>
+      </section>
       {discoverSpotlight ? (
         <div className="mb-8">
           <SponsoredSpotlight placement={discoverSpotlight} />
         </div>
       ) : null}
-      <div className="mb-8 rounded-xl border border-orange-500/20 bg-orange-500/5 px-4 py-3 text-sm text-gray-300">
-        <span className="font-medium text-orange-200">Workflow templates</span>
-        {" — "}
-        Compare optimal, hybrid, and budget stacks for blogging, video, code, and more.{" "}
-        <Link href="/workflows" className="font-medium text-orange-400 hover:underline">
-          Browse workflows
-        </Link>
-      </div>
 
       {/* Filter bar — the five facet rows collapsed into one control row.
           Client component; it only emits URLs via the shared buildDiscoverQuery.
@@ -216,6 +225,7 @@ export default async function DiscoverPage({
           count: cat._count.platforms,
         }))}
         current={{
+          q: query,
           category: params.category ?? "",
           cost: costQs ?? "",
           difficulty: difficultyQs ?? "",
@@ -223,6 +233,10 @@ export default async function DiscoverPage({
           sort,
         }}
       />
+      <p className="mb-5 text-sm text-gray-300" aria-live="polite">
+        Showing {platforms.length === 200 ? "the first " : ""}{platforms.length} {platforms.length === 1 ? "tool" : "tools"}{query ? ` for “${query}”` : ""}{!hasActiveFilter && !query ? ` across ${categories.length} categories` : ""}.
+        {platforms.length === 200 ? " Narrow your search or choose a category to explore more." : ""}
+      </p>
 
       {/* Active-filter pills — server-rendered; each removes just its own param */}
       {hasActiveFilter && (
@@ -275,7 +289,7 @@ export default async function DiscoverPage({
                 <span
                   key={letter}
                   aria-disabled="true"
-                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-600"
+                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-400"
                 >
                   {letter}
                 </span>
@@ -287,7 +301,7 @@ export default async function DiscoverPage({
 
       {/* Grid */}
       {sort === "alpha" ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
           {orderedGroupKeys.flatMap((letter) => [
             <h2
               key={`header-${letter}`}
@@ -299,6 +313,8 @@ export default async function DiscoverPage({
             ...groups.get(letter)!.map((p) => (
               <PlatformCard
                 key={p.id}
+                facts={getToolFacts(p.slug)}
+                logoUrl={p.logoUrl}
                 slug={p.slug}
                 name={p.name}
                 company={p.company}
@@ -316,10 +332,12 @@ export default async function DiscoverPage({
           ])}
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
           {platforms.map((p) => (
             <PlatformCard
               key={p.id}
+              facts={getToolFacts(p.slug)}
+              logoUrl={p.logoUrl}
               slug={p.slug}
               name={p.name}
               company={p.company}
@@ -338,13 +356,15 @@ export default async function DiscoverPage({
       )}
 
       {platforms.length === 0 && (
-        <p className="py-12 text-center text-gray-500">
+        <p className="py-12 text-center text-gray-400">
           No platforms match your filters.{" "}
           <Link href="/discover" className="text-orange-400">
             Clear filters
           </Link>
         </p>
       )}
+      <MatchingBanner />
+      <p className="mt-5 text-center text-sm text-gray-400">Want to combine your tools? <Link href="/workflows" className="inline-flex min-h-11 items-center text-orange-300 hover:underline">Explore workflow templates →</Link></p>
     </div>
   );
 }

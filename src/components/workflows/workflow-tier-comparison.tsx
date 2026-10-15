@@ -113,7 +113,7 @@ export function WorkflowTierComparison({
               }`}
             >
               <p className="text-sm font-semibold">{m.label}</p>
-              <p className="mt-0.5 text-xs text-gray-500">{m.subtitle}</p>
+              <p className="mt-0.5 text-xs text-gray-300">{m.subtitle}</p>
             </button>
           );
         })}
@@ -128,13 +128,13 @@ export function WorkflowTierComparison({
         <div className={`h-1 bg-gradient-to-r ${meta.bar}`} />
         <div className="border-b border-gray-800 px-4 py-4 sm:px-5">
           <h2 className="text-lg font-bold text-white">{meta.label}</h2>
-          <p className="text-xs text-gray-500">{meta.subtitle}</p>
+          <p className="text-xs text-gray-300">{meta.subtitle}</p>
           <p className="mt-1 text-sm text-gray-400">{t.tagline}</p>
           {(t.estMonthlyCost || t.timeEstimate) && (
             <p className="mt-3 text-sm leading-relaxed text-gray-300">
               {t.estMonthlyCost ? <span>{t.estMonthlyCost}</span> : null}
               {t.estMonthlyCost && t.timeEstimate ? (
-                <span className="text-gray-600"> · </span>
+                <span className="text-gray-400"> · </span>
               ) : null}
               {t.timeEstimate ? <span>{t.timeEstimate}</span> : null}
             </p>
@@ -176,7 +176,7 @@ export function WorkflowTierComparison({
                       {hasTutorial && slug ? (
                         <Link
                           href={`/platform/${slug}?tab=tutorials`}
-                          className="text-gray-500 hover:text-orange-300 hover:underline"
+                          className="text-gray-400 hover:text-orange-300 hover:underline"
                         >
                           Tutorial
                         </Link>
@@ -185,7 +185,7 @@ export function WorkflowTierComparison({
                     {step.prompt ? (
                       <div className="mt-3 rounded-lg border border-gray-800 bg-gray-950/60 p-3">
                         <div className="mb-2 flex items-center justify-between gap-2">
-                          <p className="text-[11px] font-medium uppercase tracking-wide text-gray-500">
+                          <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
                             Prompt
                           </p>
                           <CopyPromptButton prompt={step.prompt} />
@@ -202,13 +202,13 @@ export function WorkflowTierComparison({
           </ol>
         ) : (
           <div className="flex flex-1 flex-col px-4 py-4">
-            <p className="mb-3 text-xs font-medium uppercase tracking-wide text-gray-500">
+            <p className="mb-3 text-xs font-medium uppercase tracking-wide text-gray-400">
               Suggested tools
             </p>
             <ul className="space-y-3">
               {t.tools.map((tool, i) => (
                 <li key={i} className="flex gap-2 text-sm text-gray-300">
-                  <span className="text-gray-600">•</span>
+                  <span className="text-gray-400">•</span>
                   <WorkflowToolName
                     name={tool.name}
                     slug={tool.slug}
@@ -222,7 +222,7 @@ export function WorkflowTierComparison({
         )}
 
         {t.note && (
-          <p className="border-t border-gray-800 px-4 py-3 text-xs leading-relaxed text-gray-500 sm:px-5">
+          <p className="border-t border-gray-800 px-4 py-3 text-xs leading-relaxed text-gray-400 sm:px-5">
             {t.note}
           </p>
         )}

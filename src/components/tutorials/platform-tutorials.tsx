@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import type { TutorialArchetype } from "@/data/tutorials";
+import { LaunchpadArt } from "@/components/brand/launchpad-art";
 
 // Section-G heading depends on the tutorial archetype.
 const STARTER_HEADING: Record<TutorialArchetype, string> = {
@@ -29,8 +30,8 @@ const STARTER_HEADING: Record<TutorialArchetype, string> = {
 };
 
 // Shared style tokens — match the app's existing card language.
-const CARD = "rounded-xl border border-gray-800 bg-gray-900/90 p-6 sm:p-7";
-const BODY = "text-sm leading-relaxed text-gray-300";
+const CARD = "border-t border-gray-800 pt-7";
+const BODY = "max-w-[75ch] text-base leading-7 text-gray-300";
 
 // Section heading: a hardcoded (semantic, never string-matched) accent icon
 // + the <h3>. Sub-items inside sections use <h4> to preserve the outline.
@@ -63,7 +64,7 @@ function CopyPromptButton({ prompt }: { prompt: string }) {
       type="button"
       onClick={handleCopy}
       aria-label={copied ? "Prompt copied" : "Copy prompt"}
-      className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-gray-700 bg-gray-800/80 px-2.5 py-1 text-xs font-semibold text-gray-300 transition-colors hover:border-orange-500/50 hover:text-orange-300"
+      className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-lg border border-gray-700 bg-gray-800/80 px-3 py-2 text-xs font-semibold text-gray-300 transition-colors hover:border-orange-500/50 hover:text-orange-300"
     >
       {copied ? (
         <Check className="h-3.5 w-3.5 text-green-400" aria-hidden />
@@ -134,7 +135,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <p className="mt-1 text-sm text-gray-400">
           Step-by-step guides for <span className="text-gray-300">{platformName}</span>
         </p>
-        <p className="mt-6 rounded-lg border border-dashed border-gray-700 bg-gray-950/50 px-4 py-10 text-center text-sm text-gray-500">
+        <p className="mt-6 rounded-lg border border-dashed border-gray-700 bg-gray-950/50 px-4 py-10 text-center text-sm text-gray-400">
           Coming soon — we&apos;re writing guides for this platform.
         </p>
       </div>
@@ -143,15 +144,16 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
   return (
     <div className="space-y-8">
-      {/* Hero — flat orange-tinted panel (no gradient), eyebrow + title + tagline */}
-      <header className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-6 sm:p-8">
+      <header className="relative isolate overflow-hidden rounded-2xl border border-gray-700 bg-gray-900 p-6 sm:p-8">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden w-2/3 opacity-45 sm:block"><LaunchpadArt kind="guide" /></div>
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent" aria-hidden="true" />
         <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-orange-400">
           <BookOpen className="h-3.5 w-3.5" aria-hidden />
           Tutorial · {tutorial.accessTier}
         </p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-gray-300">{tutorial.tagline}</p>
-        <p className="mt-3 text-xs text-gray-500">
+        <h2 className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</h2>
+        <p className="mt-3 max-w-xl text-base leading-relaxed text-gray-300">{tutorial.tagline}</p>
+        <p className="mt-4 text-xs text-gray-400">
           Last reviewed {tutorial.lastReviewedAt} · for {platformName}
         </p>
       </header>
@@ -210,7 +212,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
 
       {/* Security & privacy — accent left-border callout, calibrated caution.
           Renders as labeled lists (structured like the triad), not a wall of text. */}
-      <section className="border-l-2 border-orange-500/50 bg-orange-500/5 p-5 sm:p-6">
+      <section className="rounded-xl border border-amber-400/25 bg-amber-400/5 p-5 sm:p-6">
         <SectionHeading icon={Shield}>Security &amp; privacy</SectionHeading>
         <div className="mt-4 space-y-4">
           {tutorial.security.map((block) =>
@@ -275,13 +277,13 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <SectionHeading icon={Lightbulb}>{STARTER_HEADING[tutorial.archetype]}</SectionHeading>
         <div className="mt-4 space-y-4">
           {tutorial.starterActions.map((action) => (
-            <article key={action.title} className="rounded-xl border border-gray-800 bg-gray-900/90 p-5 sm:p-6">
+            <article key={action.title} className="rounded-2xl border border-gray-700/70 bg-gray-900/50 p-5 sm:p-6">
               <h4 className="text-base font-semibold text-white">{action.title}</h4>
 
               {action.prompt ? (
-                <div className="mt-3 rounded-lg border border-gray-700/70 bg-gray-950/60 p-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <p className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-gray-300">
+                <div className="mt-4 rounded-xl border border-gray-700/70 bg-gray-950/60 p-4">
+                  <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
+                    <p className="whitespace-pre-wrap text-sm leading-7 text-gray-200">
                       {action.prompt}
                     </p>
                     <CopyPromptButton prompt={action.prompt} />

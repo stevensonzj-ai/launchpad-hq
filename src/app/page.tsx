@@ -1,223 +1,82 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Search,
-  Sparkles,
-  Rocket,
-  Star,
-  Zap,
-  Shield,
-  Layers,
-} from "lucide-react";
+import { ArrowRight, Sparkles, Rocket } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
-import { WorkflowCard } from "@/components/workflows/workflow-card";
-import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
+import { getPlatformCount, getCategoryCount } from "@/lib/platforms";
+import { Header } from "@/components/layout/header";
+import { LaunchpadArt } from "@/components/brand/launchpad-art";
+import { GoalEmblem } from "@/components/brand/goal-emblem";
 
-/** Date windows are America/Chicago calendar days; refresh without a redeploy. */
 export const revalidate = 3600;
 
+const goals = [
+  { title: "Something to say", description: "Write, brainstorm, and turn your ideas into something people will love.", kind: "writing", category: "text-conversational-ai" },
+  { title: "Something to see", description: "Generate and edit images, designs, and visual ideas.", kind: "images", category: "image-generation-editing" },
+  { title: "Something to discover", description: "Research, explore, and make sense of information faster.", kind: "research", category: "research-academic-tools" },
+  { title: "Something that runs itself", description: "Automate your work and connect your favorite apps.", kind: "automation", category: "workflow-automation" },
+] as const;
+
 export default async function HomePage() {
-  const featuredWorkflows = getAllWorkflows().slice(0, 3);
-  const [rawCount, categoryCount] = await Promise.all([
-    getPlatformCount(),
-    getCategoryCount(),
-  ]);
-  const platformCount = roundDownToTen(rawCount);
-
+  const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
+  const featuredWorkflows = getAllWorkflows().filter((w) => ["blog-post-generator", "image-generation"].includes(w.slug));
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-24 pt-20 text-center">
-        {/* Background glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-900/20 via-blue-900/10 to-transparent" />
-        {/* Stars effect */}
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "radial-gradient(2px 2px at 20px 30px, white, transparent), radial-gradient(2px 2px at 40px 70px, white, transparent), radial-gradient(1px 1px at 90px 40px, white, transparent), radial-gradient(1px 1px at 130px 80px, white, transparent), radial-gradient(2px 2px at 160px 30px, white, transparent)",
-            backgroundSize: "200px 100px",
-          }}
-        />
-
-        <div className="relative mx-auto max-w-4xl">
-          {/* Rocket illustration */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative">
-              <div className="absolute -inset-4 animate-pulse rounded-full bg-orange-500/20 blur-xl" />
-              <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-2 border-orange-500/30 bg-gray-900">
-                <Rocket className="h-12 w-12 text-orange-400" style={{ transform: "rotate(-45deg)" }} />
-              </div>
-              {/* Exhaust particles */}
-              <div className="absolute -bottom-2 left-1/2 h-8 w-8 -translate-x-1/2 rounded-full bg-orange-500/30 blur-md" />
-              <div className="absolute -bottom-4 left-1/2 h-6 w-6 -translate-x-1/2 rounded-full bg-yellow-500/20 blur-lg" />
-            </div>
+    <>
+      <Header />
+      <main className="lp-stars lp-home-sky relative isolate overflow-hidden bg-gray-950">
+        <section className="relative mx-auto max-w-7xl px-5 pb-20 pt-12 text-center sm:px-8 sm:pb-24 sm:pt-16 lg:pt-14">
+          <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-orange-400/40 bg-gray-900/60 shadow-[0_0_36px_-8px_var(--color-orange-500)]">
+            <Rocket className="h-10 w-10 -rotate-45 text-orange-400" aria-hidden="true" />
           </div>
-
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-orange-400">
-            Your AI Mission Control
-          </p>
-          <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Launch your{" "}
-            <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">
-              AI journey
-            </span>{" "}
-            with confidence
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-orange-400">Your AI mission control</p>
+          <h1 className="mx-auto max-w-6xl text-[clamp(2.65rem,6.2vw,5.5rem)] font-bold leading-[1.04] tracking-[-0.045em] text-white">
+            <span className="sm:block">Launch your <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">AI journey</span></span>{" "}
+            <span className="sm:block">with confidence</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-400">
-            {platformCount}+ vetted AI tools across {categoryCount}{" "}categories. Find the perfect platforms for your goals, budget, and skill
-            level &mdash; in minutes, not months.
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/discover"
-              className="flex items-center gap-2 rounded-xl bg-orange-500 px-8 py-3.5 text-lg font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-600 hover:shadow-orange-500/40"
-            >
-              <Rocket className="h-5 w-5" /> Explore All Tools <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link
-              href="/quiz"
-              className="flex items-center gap-2 rounded-xl border border-gray-700 px-8 py-3.5 text-lg font-semibold text-white hover:border-orange-500/50 hover:bg-gray-900"
-            >
-              <Sparkles className="h-5 w-5 text-orange-400" /> Get Matched
-            </Link>
-            <Link
-              href="/workflows"
-              className="flex items-center gap-2 rounded-xl border border-orange-500/40 bg-orange-500/10 px-8 py-3.5 text-lg font-semibold text-orange-200 hover:border-orange-400/60 hover:bg-orange-500/15"
-            >
-              <Layers className="h-5 w-5 text-orange-400" /> View Workflows
-            </Link>
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-gray-300 sm:text-lg lg:text-xl">Find the right AI tools for your goals, budget, and skill level —<br className="hidden sm:block" /> and discover what you can create.</p>
+          <div className="mx-auto mt-7 flex max-w-xl flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/discover" className="lp-button min-h-12 sm:min-w-60">Explore AI tools <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+            <Link href="/quiz" className="lp-button-secondary min-h-12 sm:min-w-60">Find my match <Sparkles className="h-4 w-4 text-purple-300" aria-hidden="true" /></Link>
           </div>
-
-          {/* Trust badges */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-            <span className="flex items-center gap-1.5">
-              <Star className="h-4 w-4 text-yellow-500" /> {platformCount}+ vetted platforms
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Shield className="h-4 w-4 text-blue-400" /> Free tier analysis
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Zap className="h-4 w-4 text-green-400" /> Updated weekly
-            </span>
+          <p className="mt-4 text-xs text-gray-300 sm:text-sm">Free to explore. No account needed.</p>
+        </section>
+        <section aria-labelledby="create-heading" className="relative mx-auto max-w-7xl px-5 sm:px-8">
+          <h2 id="create-heading" className="mb-8 text-center text-2xl font-bold tracking-tight text-white sm:text-3xl">What will you create?</h2>
+          <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {goals.map(({ title, description, kind, category }) => (
+              <Link key={kind} href={`/discover?category=${category}`} className={`lp-goal lp-goal-${kind} group flex min-w-0 flex-col overflow-hidden rounded-2xl border p-5 pb-0 transition-transform motion-safe:hover:-translate-y-1`}>
+                <div className="flex items-start gap-3">
+                  <span className="lp-goal-emblem"><GoalEmblem kind={kind} /></span>
+                  <div><h3 className="text-[15px] font-semibold leading-snug text-white">{title}</h3><p className="mt-2 text-sm leading-relaxed text-gray-300">{description}</p></div>
+                </div>
+                <div className="relative -mx-5 mt-auto h-40 overflow-hidden sm:h-44"><LaunchpadArt kind={kind} /></div>
+              </Link>
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* Workflow templates — prominent above the fold */}
-      <section className="mx-auto max-w-5xl px-4 pb-20">
-        <div className="mb-8 flex flex-col items-center text-center sm:flex-row sm:justify-between sm:text-left">
-          <div>
-            <h2 className="mb-2 flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-orange-400 sm:justify-start">
-              <Layers className="h-4 w-4" />
-              Workflow templates
-            </h2>
-            <p className="text-2xl font-bold text-white">Optimal, hybrid &amp; budget stacks</p>
-            <p className="mt-2 max-w-xl text-sm text-gray-400">
-              Same job, three price points. Compare suggested tools side by side, then dive into each platform profile.
-            </p>
+        </section>
+        <section aria-labelledby="inspiration-heading" className="relative mx-auto max-w-7xl px-5 pb-16 pt-12 sm:px-8 sm:pt-14">
+          <h2 id="inspiration-heading" className="mb-7 text-center text-2xl font-bold tracking-tight text-white sm:text-3xl">A little inspiration for your next launch</h2>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {featuredWorkflows.map((workflow, index) => (
+              <Link key={workflow.slug} href={`/workflows/${workflow.slug}`} className="group flex flex-col overflow-hidden rounded-2xl border border-gray-700/80 bg-gray-900/50 transition-colors hover:border-orange-400/50 sm:flex-row">
+                <div className="relative h-44 shrink-0 overflow-hidden sm:h-auto sm:w-2/5"><LaunchpadArt kind={index === 0 ? "writing" : "images"} /></div>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <p className={`mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] ${index === 0 ? "text-purple-300" : "text-cyan-300"}`}>Featured workflow</p>
+                  <h3 className="text-lg font-semibold leading-snug text-white">{index === 0 ? "From rough idea to finished article" : "Make your first visual campaign"}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-400">{workflow.description}</p>
+                  <div className="my-4 flex items-center gap-2 text-xs text-gray-400" aria-label="Workflow stages">
+                    {(index === 0 ? ["Research", "Draft", "Polish"] : ["Imagine", "Generate", "Refine"]).map((step, i) => <span key={step} className="flex items-center gap-2">{i > 0 && <span className="h-px w-4 bg-gray-600" />}<span className="h-1.5 w-1.5 rounded-full bg-purple-400" />{step}</span>)}
+                  </div>
+                  <span className="mt-auto flex items-center gap-2 text-sm font-semibold text-orange-400">Explore workflow <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span>
+                </div>
+              </Link>
+            ))}
           </div>
-          <Link
-            href="/workflows"
-            className="mt-6 inline-flex items-center gap-2 rounded-xl border border-gray-700 px-5 py-2.5 text-sm font-semibold text-white hover:border-orange-500/50 hover:bg-gray-900 sm:mt-0"
-          >
-            View all <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {featuredWorkflows.map((w) => (
-            <WorkflowCard key={w.slug} workflow={w} compact />
-          ))}
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="mx-auto max-w-5xl px-4 pb-20">
-        <h2 className="mb-2 text-center text-sm font-semibold uppercase tracking-widest text-orange-400">
-          How it works
-        </h2>
-        <p className="mb-12 text-center text-2xl font-bold text-white">Three steps to your perfect AI stack</p>
-        <div className="grid gap-8 md:grid-cols-3">
-          <div className="flex flex-col items-center rounded-xl border border-gray-800 bg-gray-900/50 p-6 text-center transition-colors hover:border-orange-500/30">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-orange-500/10">
-              <Search className="h-6 w-6 text-orange-400" />
-            </div>
-            <h3 className="mb-2 text-lg font-semibold text-white">1. Discover</h3>
-            <p className="text-sm text-gray-400">
-              Browse tools by category, price, difficulty, and privacy level. Every platform vetted across 28 data
-              points.
-            </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 text-center text-sm text-gray-400 sm:flex-row sm:gap-8">
+            <span>{platformCount} tools across {categoryCount} categories</span>
+            <Link href="/discover" className="inline-flex min-h-11 items-center gap-2 text-gray-200 hover:text-orange-300">Browse the directory <ArrowRight className="h-4 w-4" /></Link>
+            <Link href="/workflows" className="inline-flex min-h-11 items-center gap-2 text-gray-200 hover:text-orange-300">All workflows <ArrowRight className="h-4 w-4" /></Link>
           </div>
-          <div className="flex flex-col items-center rounded-xl border border-gray-800 bg-gray-900/50 p-6 text-center transition-colors hover:border-orange-500/30">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10">
-              <Sparkles className="h-6 w-6 text-purple-400" />
-            </div>
-            <h3 className="mb-2 text-lg font-semibold text-white">2. Get Matched</h3>
-            <p className="text-sm text-gray-400">
-              Take a 2-minute survey. Our engine matches you with the best tools for your goals, budget, and experience
-              level.
-            </p>
-          </div>
-          <div className="flex flex-col items-center rounded-xl border border-gray-800 bg-gray-900/50 p-6 text-center transition-colors hover:border-orange-500/30">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10">
-              <Rocket className="h-6 w-6 text-green-400" />
-            </div>
-            <h3 className="mb-2 text-lg font-semibold text-white">3. Launch</h3>
-            <p className="text-sm text-gray-400">
-              Follow step-by-step tutorials. Track your progress. Build powerful multi-tool workflows with confidence.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="mx-auto max-w-5xl px-4 pb-20">
-        <h2 className="mb-8 text-center text-2xl font-bold text-white">{categoryCount}{" "}Categories of AI Tools</h2>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {[
-            { name: "Text & Chat AI", icon: "💬", slug: "text-conversational-ai" },
-            { name: "Image Generation", icon: "🎨", slug: "image-generation-editing" },
-            { name: "Video Creation", icon: "🎬", slug: "video-creation-editing" },
-            { name: "Music Generation", icon: "🎵", slug: "music-generation" },
-            { name: "Voice & Speech", icon: "🎙️", slug: "voice-speech" },
-            { name: "Meetings & Notes", icon: "📝", slug: "meetings-notes" },
-            { name: "Coding & Dev", icon: "💻", slug: "ai-coding-development" },
-            { name: "Automation", icon: "⚡", slug: "workflow-automation" },
-            { name: "Research", icon: "📚", slug: "research-academic-tools" },
-            { name: "Documents", icon: "📄", slug: "document-pdf-processing" },
-            { name: "Sales & Marketing", icon: "📈", slug: "sales-marketing-seo-ai" },
-            { name: "Education", icon: "🎓", slug: "education-learning-ai" },
-            { name: "Healthcare AI", icon: "🏥", slug: "healthcare-ai" },
-            { name: "Legal AI", icon: "⚖️", slug: "legal-ai" },
-            { name: "Open Source", icon: "🔓", slug: "local-open-source-ai" },
-          ].map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/discover?category=${cat.slug}`}
-              className="group rounded-lg border border-gray-800 bg-gray-900/50 px-3 py-3 text-center transition-all hover:border-orange-500/40 hover:bg-gray-900"
-            >
-              <span className="text-xl">{cat.icon}</span>
-              <span className="mt-1 block text-sm text-gray-300 group-hover:text-white">{cat.name}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="border-t border-gray-800 bg-gradient-to-b from-gray-900/80 to-gray-950 px-4 py-20 text-center">
-        <Rocket className="mx-auto mb-6 h-10 w-10 text-orange-400" style={{ transform: "rotate(-45deg)" }} />
-        <h2 className="mb-4 text-3xl font-bold text-white">Ready for liftoff?</h2>
-        <p className="mb-8 text-lg text-gray-400">
-          Join Launchpad HQ and find the tools that will transform your work.
-        </p>
-        <Link
-          href="/discover"
-          className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-8 py-3.5 text-lg font-semibold text-white shadow-lg shadow-orange-500/25 hover:bg-orange-600"
-        >
-          Start Exploring <ArrowRight className="h-5 w-5" />
-        </Link>
-        <p className="mt-4 text-sm text-gray-600">Free to browse. No account required.</p>
-      </section>
-    </div>
+        </section>
+      </main>
+    </>
   );
 }

@@ -102,6 +102,7 @@ export const SORT_FILTERS = [
 ] as const;
 
 export function buildDiscoverQuery(parts: {
+  q?: string;
   category?: string;
   cost?: string;
   difficulty?: string;
@@ -109,6 +110,7 @@ export function buildDiscoverQuery(parts: {
   sort?: string;
 }) {
   const sp = new URLSearchParams();
+  if (parts.q?.trim()) sp.set("q", parts.q.trim().slice(0, 120));
   if (parts.category) sp.set("category", parts.category);
   if (parts.cost) sp.set("cost", parts.cost);
   if (parts.difficulty) sp.set("difficulty", parts.difficulty);

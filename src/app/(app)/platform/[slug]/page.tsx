@@ -7,6 +7,7 @@ import { ExternalLink } from "lucide-react";
 import { ModerationStatus } from "@prisma/client";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
+import { PlatformLogo } from "@/components/platforms/platform-logo";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { PlatformToolOverview } from "@/components/platforms/platform-tool-overview";
@@ -95,8 +96,8 @@ export default async function PlatformPage({
   const isFavorited = favoriteIds.has(platform.id);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
-      <div className="mb-6 flex items-center gap-2 text-sm text-gray-500">
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
+      <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
         <Link href={`/discover?category=${platform.category.slug}`} className="hover:text-white">
@@ -106,9 +107,13 @@ export default async function PlatformPage({
         <span className="text-gray-300">{view.name ?? platform.name}</span>
       </div>
 
-      <div className="mb-8 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-white">{view.name ?? platform.name}</h1>
+      <div className="lp-stars relative isolate mb-6 flex flex-col justify-between gap-5 py-3 sm:flex-row sm:items-center">
+        <div className="flex min-w-0 items-center gap-4">
+          <PlatformLogo slug={platform.slug} name={view.name ?? platform.name} logoUrl={platform.logoUrl} large />
+          <div className="min-w-0">
+            <h1 className="text-4xl font-bold tracking-tight text-amber-50 sm:text-5xl">{view.name ?? platform.name}</h1>
+            {(view.company ?? platform.company) && <p className="mt-2 text-sm text-gray-300">by {view.company ?? platform.company}</p>}
+          </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <FavoriteButton
@@ -122,9 +127,9 @@ export default async function PlatformPage({
               href={platform.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-orange-600"
+              className="lp-button"
             >
-              Visit <ExternalLink className="h-4 w-4" />
+              Open {view.name ?? platform.name} <ExternalLink className="h-4 w-4 shrink-0" />
             </a>
           )}
         </div>
@@ -141,6 +146,7 @@ export default async function PlatformPage({
         initialTab={tab}
       >
         <PlatformToolOverview
+          gettingStartedHref={hasTutorial ? `/platform/${platform.slug}?tab=tutorials` : undefined}
           platform={{
             ...view,
             name: view.name ?? platform.name,
@@ -170,10 +176,12 @@ export default async function PlatformPage({
       {alternatives.length > 0 && (
         <section className="mt-10">
           <h2 className="mb-4 text-xl font-semibold text-white">Alternatives</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             {alternatives.map((p) => (
               <PlatformCard
                 key={p.id}
+                facts={getToolFacts(p.slug)}
+                logoUrl={p.logoUrl}
                 slug={p.slug}
                 name={p.name}
                 company={p.company}
@@ -197,10 +205,12 @@ export default async function PlatformPage({
       {complementary.length > 0 && (
         <section className="mt-10">
           <h2 className="mb-4 text-xl font-semibold text-white">Works Well With</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             {complementary.map((p) => (
               <PlatformCard
                 key={p.id}
+                facts={getToolFacts(p.slug)}
+                logoUrl={p.logoUrl}
                 slug={p.slug}
                 name={p.name}
                 company={p.company}

@@ -70,34 +70,123 @@ export function extractCaveatNotes(text: string): string[] {
   return [...new Set(notes)];
 }
 
+const MONEY_TOKEN =
+  /(?:~?\s*)?(?:USD|EUR|GBP|\$|€|£)\s*\d[\d,]*(?:\.\d+)?(?:\s*\/\s*[A-Za-z][\w.%]*|\/[A-Za-z][\w.%]*)?/i;
+
+/** Split catalog pricing on semicolons that are not inside parentheses. */
+function splitPricingParts(text: string): string[] {
+  const parts: string[] = [];
+  let buf = "";
+  let depth = 0;
+  for (const ch of text) {
+    if (ch === "(") depth += 1;
+    else if (ch === ")" && depth > 0) depth -= 1;
+    if (ch === ";" && depth === 0) {
+      if (buf.trim()) parts.push(buf.trim());
+      buf = "";
+    } else {
+      buf += ch;
+    }
+  }
+  if (buf.trim()) parts.push(buf.trim());
+  return parts;
+}
+
+function unstructuredPlan(part: string): DisplayPlan {
+  const money = part.match(MONEY_TOKEN);
+  if (money?.[0]) {
+    return { name: part, price: money[0].trim(), period: "", limits: "" };
+  }
+  return { name: part, price: "See pricing", period: "", limits: "" };
+}
+
+function parseFreePlan(part: string): DisplayPlan | null {
+  if (!/^free\b/i.test(part)) return null;
+  if (part.length > 80 && /unverified|did not|not published|official page/i.test(part)) {
+    return null;
+  }
+  const match = part.match(/^free(?:\s+(?:tier|forever|to start|to sign up|app))?\b(.*)$/i);
+  if (!match) return null;
+  let rest = match[1].trim().replace(/^[:\-–—]\s*/, "");
+  let price = "Free";
+  const money = rest.match(MONEY_TOKEN);
+  if (money?.[0] && money.index === 0) {
+    price = money[0].trim();
+    rest = rest.slice(money[0].length).trim().replace(/^[,;]\s*/, "");
+  }
+  let limits = "";
+  const paren = rest.match(/^\(([^)]*)\)\s*(.*)$/);
+  if (paren) {
+    limits = paren[1].trim();
+    const tail = paren[2].trim();
+    if (tail) limits = limits ? `${limits}; ${tail}` : tail;
+  } else if (rest) {
+    limits = rest;
+  }
+  return { name: "Free", price, period: "", limits };
+}
+
+function parsePlanPart(part: string): DisplayPlan {
+  const colon = part.indexOf(":");
+  if (colon > 0 && colon < 48 && !/^https?:/i.test(part)) {
+    const name = part.slice(0, colon).trim();
+    const price = part.slice(colon + 1).trim();
+    if (name && price) {
+      return { name, price, period: "", limits: "" };
+    }
+  }
+
+  const free = parseFreePlan(part);
+  if (free) return free;
+
+  const named = part.match(
+    /^(.+?)\s+((?:~?\s*)?(?:USD|EUR|GBP|\$|€|£)\s*\d[\d,]*(?:\.\d+)?(?:\s*\/\s*[A-Za-z][\w.%]*|\/[A-Za-z][\w.%]*)?)(.*)$/i,
+  );
+  if (named) {
+    const name = named[1].trim();
+    const price = `${named[2]}${named[3]}`.trim();
+    const limitsMatch = price.match(/^(.*?)(?:\s+\(([^)]*)\))\s*$/);
+    if (name && limitsMatch && !name.includes("$")) {
+      return {
+        name,
+        price: limitsMatch[1].trim(),
+        period: "",
+        limits: limitsMatch[2].trim(),
+      };
+    }
+    if (name) return { name, price, period: "", limits: "" };
+  }
+
+  const leading = part.match(
+    /^((?:~?\s*)?(?:USD|EUR|GBP|\$|€|£)\s*\d[\d,]*(?:\.\d+)?(?:\s*\/\s*[A-Za-z][\w.%]*|\/[A-Za-z][\w.%]*)?)\s+([A-Z][A-Za-z0-9+&.-]{1,40})\b(.*)$/,
+  );
+  if (leading) {
+    const extra = leading[3].trim().replace(/^\(([^)]*)\)$/, "$1").trim();
+    return {
+      name: leading[2].trim(),
+      price: leading[1].trim(),
+      period: "",
+      limits: extra,
+    };
+  }
+
+  const custom = part.match(/^([A-Za-z][\w+&. /-]{0,32}?)\s+custom\b(.*)$/i);
+  if (custom && custom[1].trim().length <= 32) {
+    return {
+      name: custom[1].trim(),
+      price: "Custom",
+      period: "",
+      limits: custom[2].trim().replace(/^[,;]\s*/, ""),
+    };
+  }
+
+  return unstructuredPlan(part);
+}
+
 export function parsePricingProse(prose: string): DisplayPlan[] {
   const cleaned = stripInlineCitations(prose);
   if (!cleaned) return [];
-  return cleaned
-    .split(";")
-    .map((part) => part.trim())
-    .filter(Boolean)
-    .map((part) => {
-      const colon = part.indexOf(":");
-      if (colon > 0 && colon < 48) {
-        return {
-          name: part.slice(0, colon).trim(),
-          price: part.slice(colon + 1).trim(),
-          period: "",
-          limits: "",
-        };
-      }
-      const money = part.match(/^(.+?)\s+(\$[\d][\w./,%]*)(.*)$/);
-      if (money) {
-        return {
-          name: money[1].trim(),
-          price: `${money[2]}${money[3]}`.trim(),
-          period: "",
-          limits: "",
-        };
-      }
-      return { name: "Listed", price: part, period: "", limits: "" };
-    });
+  return splitPricingParts(cleaned).map(parsePlanPart);
 }
 
 export function plansFromFactsOrProse(
@@ -112,7 +201,33 @@ export function plansFromFactsOrProse(
     return parsePricingProse(currentPricing);
   }
   const label = COST_TIER_LABEL[costTier] ?? costTier;
-  return label ? [{ name: "Listed", price: label, period: "", limits: "" }] : [];
+  return label ? [{ name: label, price: "See pricing", period: "", limits: "" }] : [];
+}
+
+const PRICE_UNIT = /^(month|year|week|day|mo|yr|wk|seat|user|person)$/i;
+
+function planPriceText(plan: DisplayPlan): string {
+  const unit = plan.period.trim();
+  if (unit && PRICE_UNIT.test(unit)) return `${plan.price}/${unit}`;
+  return plan.price;
+}
+
+function isFreeDisplayPlan(plan: DisplayPlan): boolean {
+  const price = plan.price.trim().toLowerCase();
+  const name = plan.name.trim().toLowerCase();
+  const zero = /^[$€£]\s*0(?:\.0+)?(?:\b|\/)/;
+  if (price === "free" || price === "free tier" || zero.test(price)) return true;
+  return /^free\b/.test(name) && (price === "" || price === name);
+}
+
+function paidAmount(plan: DisplayPlan): number | null {
+  if (isFreeDisplayPlan(plan)) return null;
+  const text = planPriceText(plan).replace(/,/g, "");
+  const match = text.match(/(?:usd|eur|gbp|\$|€|£)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:€|£)/i);
+  if (!match) return null;
+  const value = Number(match[1] ?? match[2]);
+  if (!Number.isFinite(value) || value <= 0) return null;
+  return value;
 }
 
 /** Fold leftover DB usageLimits into the Free plan row when that row has no limits. */
@@ -129,15 +244,29 @@ export function applyUsageLimitsToFreePlan(
   });
 }
 
+function lowestPaidPlan(plans: DisplayPlan[]): DisplayPlan | undefined {
+  const paid = plans.filter((plan) => !isFreeDisplayPlan(plan) && plan.price.trim());
+  const ranked = paid
+    .map((plan) => ({ plan, amount: paidAmount(plan) }))
+    .filter((row): row is { plan: DisplayPlan; amount: number } => row.amount !== null)
+    .sort((a, b) => a.amount - b.amount);
+  return ranked[0]?.plan ?? paid[0];
+}
+
+/** Lowest paid amount for card copy such as "Paid options: $20/month". */
+export function paidStartingPrice(plans: DisplayPlan[]): string | undefined {
+  const lowest = lowestPaidPlan(plans);
+  return lowest ? planPriceText(lowest) : undefined;
+}
+
 export function startingPriceLabel(plans: DisplayPlan[]): string {
   if (plans.length === 0) return "See site";
-  const paid = plans.find((plan) => {
-    const price = plan.price.toLowerCase();
-    return !/^\$0\b/.test(plan.price) && price !== "free" && price !== "$0";
-  });
-  const plan = paid ?? plans[0];
-  if (plan.period) return `${plan.price}/${plan.period}`;
-  return plan.price;
+  const free = plans.some(isFreeDisplayPlan);
+  const lowest = lowestPaidPlan(plans);
+  if (free && lowest) return `Free, from ${planPriceText(lowest)}`;
+  if (free) return "Free";
+  const plan = lowest ?? plans[0];
+  return planPriceText(plan);
 }
 
 export function freeTierSummary(

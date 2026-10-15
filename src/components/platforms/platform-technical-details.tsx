@@ -42,12 +42,14 @@ export function buildTechnicalDetailRows(
   ];
 
   const timeToProductivity = props.timeToProductivity?.trim();
+  const learningCurve = props.learningCurve?.trim();
+  // Catalog "learning curve" words (Instant, Easy, Moderate, Steep) are a coarse
+  // bin of time-to-productivity, not a skill rating. Showing "Instant" beside
+  // Difficulty makes the two fields sound like they disagree.
   if (timeToProductivity) {
     rows.push({ label: "Time to productivity", value: timeToProductivity });
-  }
-  const learningCurve = props.learningCurve?.trim();
-  if (learningCurve) {
-    rows.push({ label: "Learning curve", value: learningCurve });
+  } else if (learningCurve) {
+    rows.push({ label: "Ramp-up", value: learningCurve });
   }
   if (props.upgradeTriggers?.trim()) {
     rows.push({
@@ -77,16 +79,16 @@ export function PlatformTechnicalDetails(props: PlatformTechnicalDetailsProps) {
   const rows = buildTechnicalDetailRows(props);
 
   return (
-    <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+    <section className="lp-overview-panel">
       <h2 className="mb-4 text-lg font-semibold text-white">Technical details</h2>
-      <dl className="grid grid-cols-[minmax(7.5rem,9rem)_1fr] items-baseline gap-x-4 gap-y-2.5 text-sm">
+      <dl className="grid gap-x-8 sm:grid-cols-2 text-sm">
         {rows.map((row) => (
-          <div key={row.label} className="contents">
-            <dt className="text-gray-500">
+          <div key={row.label} className="min-w-0 border-t border-gray-700/50 py-4">
+            <dt className="mb-1.5 text-xs text-gray-300">
               {row.label}
               <FactCite fact={row.fact} />
             </dt>
-            <dd className="min-w-0 text-gray-200">
+            <dd className="min-w-0 break-words leading-relaxed text-gray-200">
               {row.truncate ? <TruncatedValue text={row.value} /> : row.value}
             </dd>
           </div>

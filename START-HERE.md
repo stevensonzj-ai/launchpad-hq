@@ -171,6 +171,15 @@ Discovered by accident in Session 22. OpenAI ended the web and app experiences o
 
 ---
 
+### Added during the 2026-10-15 design refresh
+
+**4.23 — "There is no test suite."**
+*Where:* § 3 and the standing-debt/autonomy summaries below, plus `CLAUDE.md`.
+*Truth:* Current `origin/main` includes `npm test`, with 44 passing tests before this design work, covering quiz mapping/scoring, platform display, overview field uniqueness, sponsor ordering, and fact-file audits. The design branch adds five checks for Discover search/filter URLs and card fact precedence/quiz signals. This does not establish full end-to-end coverage or change the autonomy level. Follow current `package.json` for the test command.
+
+**4.24 — The small palette is no longer the entire visual brief.**
+The owner explicitly approved additional violet, coral, cyan, and mint accents for discovery in the 2026-10-15 design conversation. The final direction retains the original headline and rocket, uses faint stars without nebula clouds, preserves the four colorful goal cards and two workflow previews, and uses charcoal/white/orange/gold for the matching banner and guide surfaces. This is a scoped, owner-approved design evolution, not permission to add arbitrary colors elsewhere.
+
 ## 4b. Credentials
 
 **A full scan of every file added by this handoff, and of every file tracked in git, found no live credentials.** Specifically checked for: Stripe live and test keys, Stripe webhook secrets, Resend API keys, Postgres connection strings containing a password, AWS access key IDs, GitHub personal access tokens, and PEM private key blocks.
