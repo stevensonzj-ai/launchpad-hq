@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, LayoutGrid, PenLine, ImageIcon, BookOpen, Workflow } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   buildDiscoverQuery,
@@ -119,12 +119,18 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
       </form>
       <div className="mb-5 flex flex-wrap gap-2 border-b border-gray-800 pb-5" aria-label="Quick categories">
         {[
-          { value: "", label: "All tools", color: "text-gray-300" },
-          { value: "text-conversational-ai", label: "Writing", color: "text-purple-300" },
-          { value: "image-generation-editing", label: "Images", color: "text-rose-300" },
-          { value: "research-academic-tools", label: "Research", color: "text-cyan-300" },
-          { value: "workflow-automation", label: "Automation", color: "text-emerald-300" },
-        ].map((item) => <button key={item.value} type="button" aria-pressed={current.category === item.value} onClick={() => update("category", item.value)} className={cn("min-h-11 rounded-lg border px-4 py-2 text-sm font-medium transition-colors", item.color, current.category === item.value ? "border-current bg-white/5" : "border-transparent hover:bg-white/5")}>{item.label}</button>)}
+          { value: "", label: "All tools", icon: LayoutGrid, color: "text-orange-200", surface: "bg-orange-400/10" },
+          { value: "text-conversational-ai", label: "Writing", icon: PenLine, color: "text-purple-300", surface: "bg-purple-400/15" },
+          { value: "image-generation-editing", label: "Images", icon: ImageIcon, color: "text-rose-300", surface: "bg-rose-400/15" },
+          { value: "research-academic-tools", label: "Research", icon: BookOpen, color: "text-cyan-300", surface: "bg-cyan-400/15" },
+          { value: "workflow-automation", label: "Automation", icon: Workflow, color: "text-emerald-300", surface: "bg-emerald-400/15" },
+        ].map((item) => {
+          const selected = current.category === item.value;
+          return <button key={item.value} type="button" aria-pressed={selected} onClick={() => update("category", item.value)} className={cn("group relative isolate inline-flex min-h-12 items-center gap-3 overflow-hidden rounded-xl border px-4 py-3 text-sm font-medium transition-all focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current", item.color, selected ? "border-current shadow-[inset_0_1px_0_rgb(255_255_255_/_0.12)]" : "border-transparent hover:border-current/60")}>
+            <span aria-hidden="true" className={cn("pointer-events-none absolute inset-0 -z-10 transition-opacity", item.surface, selected ? "opacity-100" : "opacity-0 group-hover:opacity-100")} />
+            <item.icon aria-hidden="true" className="h-5 w-5 shrink-0" />{item.label}
+          </button>;
+        })}
       </div>
       <div className="grid grid-cols-2 items-center gap-3 sm:flex sm:flex-wrap sm:gap-2">
       <FilterSelect

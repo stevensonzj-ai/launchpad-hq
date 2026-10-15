@@ -6,7 +6,8 @@ import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 import { getOrCreateDbUser } from "@/lib/auth-db";
-import { Rocket, X } from "lucide-react";
+import { X } from "lucide-react";
+import Image from "next/image";
 import { MatchingBanner } from "@/components/brand/matching-banner";
 import { getToolFacts } from "@/data/facts";
 import { DiscoverFilterBar } from "./discover-filter-bar";
@@ -201,12 +202,12 @@ export default async function DiscoverPage({
   const hasActiveFilter = activeFilters.length > 0;
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">
-      <section className="relative mb-7 overflow-hidden pr-2 sm:pr-32">
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 min-[100rem]:max-w-[108rem]">
+      <section className="lp-stars relative isolate mb-7 overflow-hidden rounded-2xl py-7 pr-2 sm:py-10 sm:pr-72">
+        <Image src="/images/launchpad/discover-rocket.jpg" alt="" width={900} height={450} priority className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden h-full w-[540px] object-cover object-right [mask-image:linear-gradient(to_right,transparent,black_35%)] sm:block" />
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-400">A universe of possibilities</p>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">What will you <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">try next?</span></h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-300">Explore tools for your ideas, your budget, and your next project.</p>
-        <Rocket className="pointer-events-none absolute right-3 top-3 hidden h-24 w-24 -rotate-12 text-orange-300/70 sm:block" aria-hidden="true" />
       </section>
       {discoverSpotlight ? (
         <div className="mb-8">
@@ -300,7 +301,7 @@ export default async function DiscoverPage({
 
       {/* Grid */}
       {sort === "alpha" ? (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
           {orderedGroupKeys.flatMap((letter) => [
             <h2
               key={`header-${letter}`}
@@ -331,7 +332,7 @@ export default async function DiscoverPage({
           ])}
         </div>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
           {platforms.map((p) => (
             <PlatformCard
               key={p.id}

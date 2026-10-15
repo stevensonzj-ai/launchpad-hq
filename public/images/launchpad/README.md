@@ -15,3 +15,6 @@ Create a single decorative artwork asset for a premium creative AI discovery web
 ### guide.jpg
 
 Create one wide landscape decorative banner illustration for an AI getting started guide. Very dark charcoal navy background, composition entirely in RIGHT TWO THIRDS with left third empty dark for live HTML headline. Warm ivory paper sheets floating lightly with abstract short gray lines, one elegant orange-gold fountain pen, very sparse tiny gold star shapes and thin gold curved lines. Restrained warm light, cream charcoal gold and orange palette ONLY, no purple no blue no saturated full backgrounds. Friendly polished editorial 3D paper craft, not childish, no actual words or readable letters no logos no UI no borders. Wide 3:1 aspect ratio.
+# Discover header refinement — 2026-10-15
+
+`discover-rocket.jpg`: generated decorative illustration, resized to 1000px JPEG. Prompt: Wide 2:1 scene with the subject on the right half: a small crafted orange/gold rocket launching diagonally, dark navy inset gold window, warm exhaust, layered charcoal-navy curved clouds with thin muted blue-gray edges, sparse gold four-point stars and dim white dots. Professional and friendly. No purple, nebula, dense galaxy, text, or UI. Solid #030712 edges to blend into the page.

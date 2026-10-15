@@ -1,0 +1,1340 @@
+[
+  {
+    "slug": "activepieces",
+    "name": "Activepieces",
+    "file": "activepieces.png",
+    "website": "https://activepieces.com",
+    "source": "https://www.activepieces.com/favicon.svg"
+  },
+  {
+    "slug": "adobe-acrobat-ai-assistant",
+    "name": "Adobe Acrobat AI Assistant",
+    "file": "adobe-acrobat-ai-assistant.png",
+    "website": "https://acrobat.adobe.com",
+    "source": "https://acrobat.adobe.com/apple-touch-icon-144x144-precomposed.png"
+  },
+  {
+    "slug": "adobe-firefly",
+    "name": "Adobe Firefly",
+    "file": "adobe-firefly.png",
+    "website": "https://firefly.adobe.com",
+    "source": "https://firefly.adobe.com/releases/9b9be71fb59601063602b08decb89bc0e2d69fad/assets/fi_touch_icon_80-CYMZMllL.png"
+  },
+  {
+    "slug": "adobe-sensei-firefly-in-cc",
+    "name": "Adobe Sensei / Firefly in CC",
+    "file": "adobe-sensei-firefly-in-cc.ico",
+    "website": "https://adobe.com/sensei",
+    "source": "https://adobe.com/favicon.ico"
+  },
+  {
+    "slug": "aiva",
+    "name": "AIVA",
+    "file": "aiva.ico",
+    "website": "https://aiva.ai",
+    "source": "https://www.aiva.ai/assets/img/favicon.ico"
+  },
+  {
+    "slug": "aleph-alpha-luminous",
+    "name": "Aleph Alpha (Luminous)",
+    "file": "aleph-alpha-luminous.png",
+    "website": "https://aleph-alpha.com",
+    "source": "https://aleph-alpha.com/favicon-96x96.png"
+  },
+  {
+    "slug": "alphasense",
+    "name": "AlphaSense",
+    "file": "alphasense.png",
+    "website": "https://alpha-sense.com",
+    "source": "https://www.alpha-sense.com/apple-touch-icon.png"
+  },
+  {
+    "slug": "amazon-bedrock",
+    "name": "Amazon Bedrock",
+    "file": "amazon-bedrock.png",
+    "website": "https://aws.amazon.com/bedrock/",
+    "source": "https://a0.awsstatic.com/libra-css/images/site/touch-icon-iphone-114-smile.png"
+  },
+  {
+    "slug": "amazon-q-developer",
+    "name": "Amazon Q Developer",
+    "file": "amazon-q-developer.png",
+    "website": "https://aws.amazon.com/q/developer/",
+    "source": "https://a0.awsstatic.com/libra-css/images/site/touch-icon-iphone-114-smile.png"
+  },
+  {
+    "slug": "anthropic-api",
+    "name": "Anthropic API",
+    "file": "anthropic-api.png",
+    "website": "https://console.anthropic.com",
+    "source": "https://platform.claude.com/favicon.svg"
+  },
+  {
+    "slug": "apollo-io",
+    "name": "Apollo.io",
+    "file": "apollo-io.png",
+    "website": "https://www.apollo.io",
+    "source": "https://www.apollo.io/icon.svg?icon.11df6mby0rn6l.svg"
+  },
+  {
+    "slug": "assemblyai",
+    "name": "AssemblyAI",
+    "file": "assemblyai.ico",
+    "website": "https://assemblyai.com",
+    "source": "https://www.assemblyai.com/favicon.ico"
+  },
+  {
+    "slug": "azure-openai-service",
+    "name": "Azure OpenAI Service",
+    "file": "azure-openai-service.ico",
+    "website": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
+    "source": "https://azure.microsoft.com/favicon.ico?v2"
+  },
+  {
+    "slug": "beatoven-ai",
+    "name": "Beatoven.ai",
+    "file": "beatoven-ai.png",
+    "website": "https://beatoven.ai",
+    "source": "https://cdn.prod.website-files.com/65d772a7cbf713010f7736f6/66634faf309426cbf03b120b_logo%20(1).png"
+  },
+  {
+    "slug": "bloomberg-gpt-terminal-ai",
+    "name": "Bloomberg GPT / Terminal AI",
+    "file": "bloomberg-gpt-terminal-ai.ico",
+    "website": "https://bloomberg.com/professional/",
+    "source": "https://bloomberg.com/favicon.ico"
+  },
+  {
+    "slug": "bolt-new",
+    "name": "Bolt.new",
+    "file": "bolt-new.png",
+    "website": "https://bolt.new",
+    "source": "https://bolt.new/static/favicon.svg"
+  },
+  {
+    "slug": "brisk-teaching",
+    "name": "Brisk Teaching",
+    "file": "brisk-teaching.png",
+    "website": "https://www.briskteaching.com",
+    "source": "https://cdn.prod.website-files.com/6a6b7e36c7e8274794581e32/6a6b7e36c7e8274794582e22_Brisk%20Logo.png"
+  },
+  {
+    "slug": "canva-ai-magic-studio",
+    "name": "Canva AI (Magic Studio)",
+    "file": "canva-ai-magic-studio.ico",
+    "website": "https://canva.com",
+    "source": "https://canva.com/favicon.ico"
+  },
+  {
+    "slug": "canva-magic-studio",
+    "name": "Canva Magic Studio",
+    "file": "canva-magic-studio.ico",
+    "website": "https://canva.com",
+    "source": "https://canva.com/favicon.ico"
+  },
+  {
+    "slug": "capcut",
+    "name": "CapCut",
+    "file": "capcut.ico",
+    "website": "https://www.capcut.com",
+    "source": "https://sf16-web-tos-buz.capcutcdn-us.com/obj/capcut-web-buz-tx2/common/images/lv_web-2.ico"
+  },
+  {
+    "slug": "captions",
+    "name": "Captions",
+    "file": "captions.png",
+    "website": "https://www.captions.ai",
+    "source": "https://captions.ai/mrkt-static/favicon.svg"
+  },
+  {
+    "slug": "casetext-cocounsel",
+    "name": "Casetext (CoCounsel)",
+    "file": "casetext-cocounsel.ico",
+    "website": "https://casetext.com",
+    "source": "https://www.thomsonreuters.com/favicon.ico"
+  },
+  {
+    "slug": "character-ai",
+    "name": "Character.AI",
+    "file": "character-ai.ico",
+    "website": "https://character.ai",
+    "source": "https://character.ai/favicon.ico"
+  },
+  {
+    "slug": "chatpdf",
+    "name": "ChatPDF",
+    "file": "chatpdf.png",
+    "website": "https://chatpdf.com",
+    "source": "https://www.chatpdf.com/icon.svg"
+  },
+  {
+    "slug": "claude",
+    "name": "Claude",
+    "file": "claude.ico",
+    "website": "https://claude.ai",
+    "source": "https://claude.ai/favicon.ico"
+  },
+  {
+    "slug": "claude-code",
+    "name": "Claude Code",
+    "file": "claude-code.png",
+    "website": "https://docs.anthropic.com/en/docs/claude-code",
+    "source": "https://code.claude.com/docs/_mintlify/favicons/claude-code/pLsy-mRpNksna2sx/_generated/favicon/android-chrome-192x192.png"
+  },
+  {
+    "slug": "clay",
+    "name": "Clay",
+    "file": "clay.png",
+    "website": "https://www.clay.com",
+    "source": "https://cdn.prod.website-files.com/61477f2c24a826836f969afe/6a3a92ab841a6313dc068fb8_dot-com_favicon_2026_512.png"
+  },
+  {
+    "slug": "cline",
+    "name": "Cline",
+    "file": "cline.png",
+    "website": "https://cline.bot",
+    "source": "https://cline.bot/assets/branding/favicons/favicon-16x16.png"
+  },
+  {
+    "slug": "cohere",
+    "name": "Cohere",
+    "file": "cohere.png",
+    "website": "https://cohere.com",
+    "source": "https://cohere.com/apple-touch-icon.png"
+  },
+  {
+    "slug": "comfyui",
+    "name": "ComfyUI",
+    "file": "comfyui.png",
+    "website": "https://www.comfy.org",
+    "source": "https://comfy.org/favicon-96x96.png"
+  },
+  {
+    "slug": "connected-papers",
+    "name": "Connected Papers",
+    "file": "connected-papers.ico",
+    "website": "https://connectedpapers.com",
+    "source": "https://www.connectedpapers.com/favicon.ico"
+  },
+  {
+    "slug": "consensus",
+    "name": "Consensus",
+    "file": "consensus.png",
+    "website": "https://consensus.app",
+    "source": "https://consensus.app/favicon.svg"
+  },
+  {
+    "slug": "copy-ai",
+    "name": "Copy.ai",
+    "file": "copy-ai.png",
+    "website": "https://copy.ai",
+    "source": "https://cdn.prod.website-files.com/628288c5cd3e8411b90a36a4/6793eea386b5ac27242bb8eb_favicon_32x32px%20(1).png"
+  },
+  {
+    "slug": "cursor",
+    "name": "Cursor",
+    "file": "cursor.png",
+    "website": "https://cursor.com",
+    "source": "https://cursor.com/marketing-static/icon-192x192-light.png"
+  },
+  {
+    "slug": "deepgram",
+    "name": "Deepgram",
+    "file": "deepgram.ico",
+    "website": "https://deepgram.com",
+    "source": "https://deepgram.com/favicon.ico?93834efdfdd5438d"
+  },
+  {
+    "slug": "deepl",
+    "name": "DeepL",
+    "file": "deepl.png",
+    "website": "https://www.deepl.com",
+    "source": "https://www.deepl.com/icon?96dd39650c8ded7a"
+  },
+  {
+    "slug": "deepseek",
+    "name": "DeepSeek",
+    "file": "deepseek.ico",
+    "website": "https://www.deepseek.com",
+    "source": "https://www.deepseek.com/favicon.ico"
+  },
+  {
+    "slug": "descript",
+    "name": "Descript",
+    "file": "descript.png",
+    "website": "https://descript.com",
+    "source": "https://static-cdn.descript.com/web/icons/favicon-96x96.png"
+  },
+  {
+    "slug": "docsumo",
+    "name": "Docsumo",
+    "file": "docsumo.png",
+    "website": "https://docsumo.com",
+    "source": "https://www.docsumo.com/favicon-32.png"
+  },
+  {
+    "slug": "doximity-gpt",
+    "name": "Doximity GPT",
+    "file": "doximity-gpt.ico",
+    "website": "https://www.doximity.com/gpt",
+    "source": "https://www.doximity.com/favicon.ico"
+  },
+  {
+    "slug": "dragon-medical-one",
+    "name": "Dragon Medical One",
+    "file": "dragon-medical-one.png",
+    "website": "https://nuance.com",
+    "source": "https://dragon.nuance.com/shared/images/favicon-16x16.png"
+  },
+  {
+    "slug": "duolingo-max",
+    "name": "Duolingo Max",
+    "file": "duolingo-max.png",
+    "website": "https://duolingo.com",
+    "source": "https://d35aaqx5ub95lt.cloudfront.net/images/duolingo-touch-icon2.png"
+  },
+  {
+    "slug": "elevenlabs",
+    "name": "ElevenLabs",
+    "file": "elevenlabs.png",
+    "website": "https://elevenlabs.io",
+    "source": "https://elevenlabs.io/icon.svg?c23f5371fdd26632"
+  },
+  {
+    "slug": "elicit",
+    "name": "Elicit",
+    "file": "elicit.png",
+    "website": "https://elicit.com",
+    "source": "https://framerusercontent.com/images/GBpaTmhagvahuZIt8uDryBpioi4.png"
+  },
+  {
+    "slug": "fathom",
+    "name": "Fathom",
+    "file": "fathom.png",
+    "website": "https://www.fathom.ai",
+    "source": "https://cdn.prod.website-files.com/6899da9beccbdbe92be49b5d/6a4283d5585a382afdece3f2_fathom_favicon.png"
+  },
+  {
+    "slug": "figma-ai",
+    "name": "Figma AI",
+    "file": "figma-ai.png",
+    "website": "https://figma.com",
+    "source": "https://static.figma.com/app/icon/2/icon-128.png"
+  },
+  {
+    "slug": "firecrawl",
+    "name": "Firecrawl",
+    "file": "firecrawl.png",
+    "website": "https://www.firecrawl.dev",
+    "source": "https://www.firecrawl.dev/favicon.png"
+  },
+  {
+    "slug": "fireflies-ai",
+    "name": "Fireflies.ai",
+    "file": "fireflies-ai.png",
+    "website": "https://fireflies.ai",
+    "source": "https://fireflies.ai/icon.png?8ca41d3ade63e552"
+  },
+  {
+    "slug": "fireworks-ai",
+    "name": "Fireworks AI",
+    "file": "fireworks-ai.png",
+    "website": "https://fireworks.ai",
+    "source": "https://fireworks.ai/icon0.svg?e3d99deadffb6216"
+  },
+  {
+    "slug": "flux",
+    "name": "FLUX",
+    "file": "flux.png",
+    "website": "https://blackforestlabs.ai",
+    "source": "https://bfl.ai/icon0.svg?7e050ff634b43f18"
+  },
+  {
+    "slug": "freepik-ai",
+    "name": "Freepik AI",
+    "file": "freepik-ai.png",
+    "website": "https://www.freepik.com/ai",
+    "source": "https://media.magnific.com/magnific-favicons/favicon-96x96.png?w=96&v=2"
+  },
+  {
+    "slug": "genspark",
+    "name": "Genspark",
+    "file": "genspark.png",
+    "website": "https://www.genspark.ai",
+    "source": "https://www.genspark.ai/favicon.ico"
+  },
+  {
+    "slug": "gong",
+    "name": "Gong",
+    "file": "gong.png",
+    "website": "https://gong.io",
+    "source": "https://www.gong.io/marketing-assets/apple-touch-icon.png"
+  },
+  {
+    "slug": "google-antigravity",
+    "name": "Google Antigravity",
+    "file": "google-antigravity.png",
+    "website": "https://idx.google.com",
+    "source": "https://firebase.studio/apple-touch-icon.png"
+  },
+  {
+    "slug": "google-imagen-3",
+    "name": "Google Imagen 3",
+    "file": "google-imagen-3.ico",
+    "website": "https://deepmind.google/technologies/imagen-3/",
+    "source": "https://deepmind.google/favicon.ico"
+  },
+  {
+    "slug": "google-lyria-3",
+    "name": "Google Lyria 3",
+    "file": "google-lyria-3.ico",
+    "website": "https://deepmind.google",
+    "source": "https://deepmind.google/favicon.ico"
+  },
+  {
+    "slug": "google-veo-3-1",
+    "name": "Google Veo 3.1",
+    "file": "google-veo-3-1.ico",
+    "website": "https://deepmind.google/technologies/veo/",
+    "source": "https://deepmind.google/favicon.ico"
+  },
+  {
+    "slug": "google-vertex-ai",
+    "name": "Google Vertex AI",
+    "file": "google-vertex-ai.png",
+    "website": "https://cloud.google.com/vertex-ai",
+    "source": "https://www.gstatic.com/cgc/super_cloud_gradient.png"
+  },
+  {
+    "slug": "gpt4all",
+    "name": "GPT4All",
+    "file": "gpt4all.png",
+    "website": "https://gpt4all.io",
+    "source": "https://www.nomic.ai/favicon-48x48.png"
+  },
+  {
+    "slug": "grammarly",
+    "name": "Grammarly",
+    "file": "grammarly.png",
+    "website": "https://grammarly.com",
+    "source": "https://static-web.grammarly.com/cms/master/public/favicon-16x16.png"
+  },
+  {
+    "slug": "granola",
+    "name": "Granola",
+    "file": "granola.png",
+    "website": "https://www.granola.ai",
+    "source": "https://www.granola.ai/favicon/favicon-96x96.png"
+  },
+  {
+    "slug": "grok",
+    "name": "Grok",
+    "file": "grok.png",
+    "website": "https://x.com",
+    "source": "https://x.com/apple-touch-icon.png"
+  },
+  {
+    "slug": "groq",
+    "name": "Groq",
+    "file": "groq.png",
+    "website": "https://groq.com",
+    "source": "https://groq.com/favicon.svg"
+  },
+  {
+    "slug": "gumloop",
+    "name": "Gumloop",
+    "file": "gumloop.ico",
+    "website": "https://gumloop.com",
+    "source": "https://www.gumloop.com/favicon.ico"
+  },
+  {
+    "slug": "harvey-ai",
+    "name": "Harvey AI",
+    "file": "harvey-ai.png",
+    "website": "https://harvey.ai",
+    "source": "https://www.harvey.ai/icons/brand-favicon.png"
+  },
+  {
+    "slug": "healthee",
+    "name": "Healthee",
+    "file": "healthee.png",
+    "website": "https://healthee.co",
+    "source": "https://healthee.com/wp-content/uploads/2024/09/favicon.png"
+  },
+  {
+    "slug": "hedra",
+    "name": "Hedra",
+    "file": "hedra.png",
+    "website": "https://www.hedra.com",
+    "source": "https://imagedelivery.net/yn_JX_LzJpQI9TTynGwR_Q/www-static/www/apple-touch-icon.png/public"
+  },
+  {
+    "slug": "heygen",
+    "name": "HeyGen",
+    "file": "heygen.ico",
+    "website": "https://heygen.com",
+    "source": "https://www.heygen.com/favicon.ico?favicon.2m321y0geyyfh.ico"
+  },
+  {
+    "slug": "higgsfield",
+    "name": "Higgsfield",
+    "file": "higgsfield.png",
+    "website": "https://higgsfield.ai",
+    "source": "https://higgsfield.ai/icon.png"
+  },
+  {
+    "slug": "hubspot-ai",
+    "name": "HubSpot AI",
+    "file": "hubspot-ai.png",
+    "website": "https://hubspot.com",
+    "source": "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png"
+  },
+  {
+    "slug": "hugging-face",
+    "name": "Hugging Face",
+    "file": "hugging-face.ico",
+    "website": "https://huggingface.co",
+    "source": "https://huggingface.co/favicon.ico"
+  },
+  {
+    "slug": "ideogram",
+    "name": "Ideogram",
+    "file": "ideogram.ico",
+    "website": "https://ideogram.ai",
+    "source": "https://ideogram.ai/favicon.ico"
+  },
+  {
+    "slug": "invideo-ai",
+    "name": "InVideo AI",
+    "file": "invideo-ai.png",
+    "website": "https://invideo.io",
+    "source": "https://invideo.io/favicon.svg"
+  },
+  {
+    "slug": "inworld-ai",
+    "name": "Inworld AI",
+    "file": "inworld-ai.png",
+    "website": "https://inworld.ai",
+    "source": "https://inworld.ai/favicon.ico?favicon.22-v1jeb_rtrm.ico"
+  },
+  {
+    "slug": "jan",
+    "name": "Jan",
+    "file": "jan.ico",
+    "website": "https://jan.ai",
+    "source": "https://jan.ai/favicon.ico"
+  },
+  {
+    "slug": "jasper",
+    "name": "Jasper",
+    "file": "jasper.png",
+    "website": "https://jasper.ai",
+    "source": "https://cdn.prod.website-files.com/6807ee8d73c233fb82842313/681e121b52f97ed0b2098aab_Favicon.png"
+  },
+  {
+    "slug": "jenni-ai",
+    "name": "Jenni AI",
+    "file": "jenni-ai.png",
+    "website": "https://jenni.ai",
+    "source": "https://framerusercontent.com/images/qYjbIznnZuv0AsCQzQJcoyhQI.svg"
+  },
+  {
+    "slug": "jetbrains-ai",
+    "name": "JetBrains AI",
+    "file": "jetbrains-ai.png",
+    "website": "https://www.jetbrains.com/ai/",
+    "source": "https://www.jetbrains.com/apple-touch-icon.png?r=1234"
+  },
+  {
+    "slug": "julius-ai",
+    "name": "Julius AI",
+    "file": "julius-ai.ico",
+    "website": "https://julius.ai",
+    "source": "https://julius.ai/favicon.ico"
+  },
+  {
+    "slug": "khan-academy-khanmigo",
+    "name": "Khan Academy (Khanmigo)",
+    "file": "khan-academy-khanmigo.ico",
+    "website": "https://khanacademy.org",
+    "source": "https://khanacademy.org/favicon.ico"
+  },
+  {
+    "slug": "kimi",
+    "name": "Kimi",
+    "file": "kimi.png",
+    "website": "https://www.kimi.com",
+    "source": "https://www.kimi.com/pwa-192.png"
+  },
+  {
+    "slug": "kira-systems",
+    "name": "Kira Systems",
+    "file": "kira-systems.ico",
+    "website": "https://kirasystems.com",
+    "source": "https://www.litera.com/themes/custom/kinetic/favicon.ico"
+  },
+  {
+    "slug": "kiro",
+    "name": "Kiro",
+    "file": "kiro.png",
+    "website": "https://kiro.dev",
+    "source": "https://kiro.dev/icon.svg?fe599162bb293ea0"
+  },
+  {
+    "slug": "kling-ai",
+    "name": "Kling AI",
+    "file": "kling-ai.png",
+    "website": "https://klingai.com",
+    "source": "https://s16-kling.klingai.com/kos/s101/nlav112918/kling-homepage-aio/logo-180x180.png"
+  },
+  {
+    "slug": "krea",
+    "name": "Krea",
+    "file": "krea.png",
+    "website": "https://www.krea.ai",
+    "source": "https://www.krea.ai/favicon/favicon-32.png"
+  },
+  {
+    "slug": "krisp",
+    "name": "Krisp",
+    "file": "krisp.png",
+    "website": "https://krisp.ai",
+    "source": "https://krisp.ai/wp-content/uploads/2023/12/cropped-favicon-1-32x32.png"
+  },
+  {
+    "slug": "legora",
+    "name": "Legora",
+    "file": "legora.png",
+    "website": "https://legora.com",
+    "source": "https://framerusercontent.com/images/WY5ORpPObnBhMgjnlR4uFUElzWs.png"
+  },
+  {
+    "slug": "lindy-ai",
+    "name": "Lindy AI",
+    "file": "lindy-ai.png",
+    "website": "https://lindy.ai",
+    "source": "https://www.lindy.ai/_sherpa/assets/static/lindy/69f7b16693056b585636be03_lindy-avatar-favicon.png"
+  },
+  {
+    "slug": "litmaps",
+    "name": "Litmaps",
+    "file": "litmaps.png",
+    "website": "https://litmaps.com",
+    "source": "https://cdn.prod.website-files.com/6343739329c53451d4f4a69a/6387e1263f80a9ebdc4fff60_favicon.png"
+  },
+  {
+    "slug": "lm-studio",
+    "name": "LM Studio",
+    "file": "lm-studio.png",
+    "website": "https://lmstudio.ai",
+    "source": "https://lmstudio.ai/assets/marketing/logo-192x192.png"
+  },
+  {
+    "slug": "lovable",
+    "name": "Lovable",
+    "file": "lovable.png",
+    "website": "https://lovable.dev",
+    "source": "https://lovable.dev/favicon.ico"
+  },
+  {
+    "slug": "ludo-ai",
+    "name": "Ludo AI",
+    "file": "ludo-ai.png",
+    "website": "https://ludo.ai",
+    "source": "https://ludo.ai/apple-touch-icon.png"
+  },
+  {
+    "slug": "luma-dream-machine-ray3",
+    "name": "Luma Dream Machine (Ray3)",
+    "file": "luma-dream-machine-ray3.ico",
+    "website": "https://lumalabs.ai",
+    "source": "https://lumalabs.ai/favicons/favicon-black.ico"
+  },
+  {
+    "slug": "luminance",
+    "name": "Luminance",
+    "file": "luminance.png",
+    "website": "https://luminance.com",
+    "source": "https://framerusercontent.com/images/4aeMDkNNMMROr651sNr7iF6Ur5Y.png"
+  },
+  {
+    "slug": "magicschool",
+    "name": "MagicSchool",
+    "file": "magicschool.png",
+    "website": "https://www.magicschool.ai",
+    "source": "https://cdn.prod.website-files.com/645187265d5e5e386be40629/69446a90ee324df666f4baea_Favicon_32x32.webp"
+  },
+  {
+    "slug": "mailchimp-ai",
+    "name": "Mailchimp AI",
+    "file": "mailchimp-ai.png",
+    "website": "https://mailchimp.com",
+    "source": "https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/mailchimp-favicons/apple-touch-icon.png"
+  },
+  {
+    "slug": "make-integromat",
+    "name": "Make (Integromat)",
+    "file": "make-integromat.png",
+    "website": "https://make.com",
+    "source": "https://cdn.prod.website-files.com/6a294495bc84130c6dd0c4fd/6a7b944121e8a94aaf6ca04f_favicon-32x32.png"
+  },
+  {
+    "slug": "manus",
+    "name": "Manus",
+    "file": "manus.png",
+    "website": "https://manus.im",
+    "source": "https://manus.im/icon.png?icon.1k-e-nyr3k65n.png"
+  },
+  {
+    "slug": "mem",
+    "name": "Mem",
+    "file": "mem.png",
+    "website": "https://mem.ai",
+    "source": "https://mem.ai/favicons/favicon-16x16.png"
+  },
+  {
+    "slug": "meshy",
+    "name": "Meshy",
+    "file": "meshy.png",
+    "website": "https://meshy.ai",
+    "source": "https://www.meshy.ai/icon1.png?icon1.096grnl0ekqcw.png"
+  },
+  {
+    "slug": "meta-ai",
+    "name": "Meta AI",
+    "file": "meta-ai.ico",
+    "website": "https://www.meta.ai",
+    "source": "https://www.meta.ai/favicon.ico"
+  },
+  {
+    "slug": "microsoft-copilot",
+    "name": "Microsoft Copilot",
+    "file": "microsoft-copilot.png",
+    "website": "https://copilot.microsoft.com",
+    "source": "https://copilot.microsoft.com/static/cmc/favicon.svg"
+  },
+  {
+    "slug": "microsoft-designer",
+    "name": "Microsoft Designer",
+    "file": "microsoft-designer.png",
+    "website": "https://designer.microsoft.com",
+    "source": "https://res.public.onecdn.static.microsoft/designer/client/prod/static/media/favicon-16.png"
+  },
+  {
+    "slug": "mistral-ai-le-chat",
+    "name": "Mistral AI (Le Chat)",
+    "file": "mistral-ai-le-chat.ico",
+    "website": "https://mistral.ai",
+    "source": "https://mistral.ai/favicon.ico"
+  },
+  {
+    "slug": "monarch",
+    "name": "Monarch",
+    "file": "monarch.png",
+    "website": "https://www.monarch.com",
+    "source": "https://www.monarch.com/favicon-96x96.png"
+  },
+  {
+    "slug": "mubert",
+    "name": "Mubert",
+    "file": "mubert.png",
+    "website": "https://mubert.com",
+    "source": "https://mubert.com/apple-icon-57x57.png"
+  },
+  {
+    "slug": "n8n",
+    "name": "n8n",
+    "file": "n8n.ico",
+    "website": "https://n8n.io",
+    "source": "https://n8n.io/favicon.ico"
+  },
+  {
+    "slug": "nanonets",
+    "name": "Nanonets",
+    "file": "nanonets.png",
+    "website": "https://nanonets.com",
+    "source": "https://nanonets.com/icon.png?icon.0nqxf4k4e__mk.png?dpl=dpl_8pjyqtTfVdiGKYsu5SnAusRGhAAd"
+  },
+  {
+    "slug": "napkin-ai",
+    "name": "Napkin AI",
+    "file": "napkin-ai.ico",
+    "website": "https://www.napkin.ai",
+    "source": "https://www.napkin.ai/favicon.ico"
+  },
+  {
+    "slug": "naver-hyperclova-x-cue",
+    "name": "Naver (HyperCLOVA X / Cue:)",
+    "file": "naver-hyperclova-x-cue.png",
+    "website": "https://clova.ai",
+    "source": "https://clova.ai/favicon/apple-icon-57x57.png"
+  },
+  {
+    "slug": "notebooklm",
+    "name": "NotebookLM",
+    "file": "notebooklm.png",
+    "website": "https://notebooklm.google.com",
+    "source": "https://www.gstatic.com/tailwind/_/static/branding/v6/light_mode/favicon/favicon.svg"
+  },
+  {
+    "slug": "notion-ai",
+    "name": "Notion AI",
+    "file": "notion-ai.png",
+    "website": "https://notion.so",
+    "source": "https://www.notion.com/front-static/logo-ios.png"
+  },
+  {
+    "slug": "ollama",
+    "name": "Ollama",
+    "file": "ollama.png",
+    "website": "https://ollama.com",
+    "source": "https://ollama.com/public/ollama-nav.png",
+    "note": "Existing hand-verified navigation logo retained"
+  },
+  {
+    "slug": "open-webui",
+    "name": "Open WebUI",
+    "file": "open-webui.png",
+    "website": "https://openwebui.com",
+    "source": "https://openwebui.com/favicon.png"
+  },
+  {
+    "slug": "openevidence",
+    "name": "OpenEvidence",
+    "file": "openevidence.ico",
+    "website": "https://www.openevidence.com",
+    "source": "https://www.openevidence.com/favicon.ico"
+  },
+  {
+    "slug": "openrouter",
+    "name": "OpenRouter",
+    "file": "openrouter.png",
+    "website": "https://openrouter.ai",
+    "source": "https://openrouter.ai/favicon/glyph.png"
+  },
+  {
+    "slug": "opus-clip",
+    "name": "Opus Clip",
+    "file": "opus-clip.png",
+    "website": "https://opus.pro",
+    "source": "https://cdn.prod.website-files.com/6388604483b03a9ecb34d695/64351a9e4e9223f5e0f46d64_ico-final.png"
+  },
+  {
+    "slug": "otter-ai",
+    "name": "Otter AI",
+    "file": "otter-ai.png",
+    "website": "https://otter.ai",
+    "source": "https://cdn.prod.website-files.com/618e9316785b3582a5178502/618e94bcbca88b51e2ad81f7_favicon.png"
+  },
+  {
+    "slug": "outreach",
+    "name": "Outreach",
+    "file": "outreach.png",
+    "website": "https://outreach.io",
+    "source": "https://cdn.prod.website-files.com/696ea7504e736c595e9a2313/699fa86f95fdd7f81f024bc5_favicon.png"
+  },
+  {
+    "slug": "pabbly-connect",
+    "name": "Pabbly Connect",
+    "file": "pabbly-connect.png",
+    "website": "https://pabbly.com/connect/",
+    "source": "https://www.pabbly.com/wp-content/uploads/2026/01/favicon.png"
+  },
+  {
+    "slug": "paperpal",
+    "name": "Paperpal",
+    "file": "paperpal.png",
+    "website": "https://paperpal.com",
+    "source": "https://cdn.paperpal.com/assets/images/logo/favicon-16x16.png"
+  },
+  {
+    "slug": "pathai",
+    "name": "PathAI",
+    "file": "pathai.png",
+    "website": "https://pathai.com",
+    "source": "https://pathai.com/favicon.ico"
+  },
+  {
+    "slug": "perplexity-ai",
+    "name": "Perplexity AI",
+    "file": "perplexity-ai.png",
+    "website": "https://perplexity.ai",
+    "source": "https://www.perplexity.ai/favicon.svg"
+  },
+  {
+    "slug": "perplexity-comet",
+    "name": "Perplexity Comet",
+    "file": "perplexity-comet.png",
+    "website": "https://www.perplexity.ai/comet",
+    "source": "https://framerusercontent.com/images/bnQ1gGSCHS8T2mb5FVI2rQnx5YI.png"
+  },
+  {
+    "slug": "photoroom",
+    "name": "Photoroom",
+    "file": "photoroom.png",
+    "website": "https://photoroom.com",
+    "source": "https://www.photoroom.com/favicons/favicon-32x32.png"
+  },
+  {
+    "slug": "pika",
+    "name": "Pika",
+    "file": "pika.png",
+    "website": "https://pika.art",
+    "source": "https://pika.art/icon.svg?icon.3bty87qirfeg8.svg"
+  },
+  {
+    "slug": "pinecone",
+    "name": "Pinecone",
+    "file": "pinecone.ico",
+    "website": "https://pinecone.io",
+    "source": "https://www.pinecone.io/favicon.ico?favicon.16aah0kd0o17q.ico"
+  },
+  {
+    "slug": "poe",
+    "name": "Poe",
+    "file": "poe.ico",
+    "website": "https://poe.com",
+    "source": "https://poe.com/favicon.ico"
+  },
+  {
+    "slug": "qwen",
+    "name": "Qwen",
+    "file": "qwen.png",
+    "website": "https://qwen.ai",
+    "source": "https://img.alicdn.com/imgextra/i4/O1CN01OXv3EM1FN8t9W4P79_!!6000000000474-2-tps-80-80.png"
+  },
+  {
+    "slug": "ramp-intelligence",
+    "name": "Ramp Intelligence",
+    "file": "ramp-intelligence.png",
+    "website": "https://ramp.com",
+    "source": "https://ramp.com/favicon-16x16.png"
+  },
+  {
+    "slug": "read-ai",
+    "name": "Read AI",
+    "file": "read-ai.png",
+    "website": "https://www.read.ai",
+    "source": "https://cdn.prod.website-files.com/614e5e239ea0f25fe5b6a797/615f7213c6091b296dd6ebd0_ReadLogomark_32x32.png"
+  },
+  {
+    "slug": "recraft",
+    "name": "Recraft",
+    "file": "recraft.png",
+    "website": "https://recraft.ai",
+    "source": "https://framerusercontent.com/images/id5ZjKRfENkLEfAMrnKLKJfqfE.png"
+  },
+  {
+    "slug": "reducto",
+    "name": "Reducto",
+    "file": "reducto.png",
+    "website": "https://reducto.ai",
+    "source": "https://reducto.ai/favicon-16x16.png"
+  },
+  {
+    "slug": "relay-app",
+    "name": "Relay.app",
+    "file": "relay-app.png",
+    "website": "https://relay.app",
+    "source": "https://relay.app/favicon.png"
+  },
+  {
+    "slug": "relevance-ai",
+    "name": "Relevance AI",
+    "file": "relevance-ai.png",
+    "website": "https://relevanceai.com",
+    "source": "https://cdn.relevanceai.com/images/favicon-32x32.png"
+  },
+  {
+    "slug": "replicate",
+    "name": "Replicate",
+    "file": "replicate.png",
+    "website": "https://replicate.com",
+    "source": "https://static.replicateassets.com/fe/4fa86b07de3ad4ea584bc1f339cff05cc96889c9/favicon-CKiqAkf2.png"
+  },
+  {
+    "slug": "replit-agent",
+    "name": "Replit Agent",
+    "file": "replit-agent.png",
+    "website": "https://replit.com",
+    "source": "https://replit.com/public/icons/favicon-prompt-192-rebrand.png"
+  },
+  {
+    "slug": "research-rabbit",
+    "name": "Research Rabbit",
+    "file": "research-rabbit.png",
+    "website": "https://researchrabbit.ai",
+    "source": "https://cdn.prod.website-files.com/68367775ca3b1655a71e1698/6902a7c6e08f5fb714469b84_Frame%202-2.png"
+  },
+  {
+    "slug": "restb-ai",
+    "name": "Restb.ai",
+    "file": "restb-ai.png",
+    "website": "https://restb.ai",
+    "source": "https://i0.wp.com/restb.ai/wp-content/uploads/2021/12/cropped-Icon.png?fit=32%2C32&#038;ssl=1"
+  },
+  {
+    "slug": "retell-ai",
+    "name": "Retell AI",
+    "file": "retell-ai.png",
+    "website": "https://www.retellai.com",
+    "source": "https://cdn.prod.website-files.com/64ada0f2685b2d18caa5e699/69d92020a42693dbcb8413d7_favicon-32x32.png"
+  },
+  {
+    "slug": "runway",
+    "name": "Runway",
+    "file": "runway.png",
+    "website": "https://runwayml.com",
+    "source": "https://runway.com/icon.png?icon.35ps9bmugbe1e.png"
+  },
+  {
+    "slug": "sakana-ai",
+    "name": "Sakana AI",
+    "file": "sakana-ai.ico",
+    "website": "https://sakana.ai",
+    "source": "https://sakana.ai/favicon.ico"
+  },
+  {
+    "slug": "salesforce-einstein",
+    "name": "Salesforce Einstein",
+    "file": "salesforce-einstein.ico",
+    "website": "https://salesforce.com/einstein",
+    "source": "https://www.salesforce.com/c2/public/app/favicon.ico"
+  },
+  {
+    "slug": "sarvam-ai",
+    "name": "Sarvam AI",
+    "file": "sarvam-ai.png",
+    "website": "https://www.sarvam.ai",
+    "source": "https://www.sarvam.ai/favicon.svg"
+  },
+  {
+    "slug": "scale-ai",
+    "name": "Scale AI",
+    "file": "scale-ai.png",
+    "website": "https://scale.com",
+    "source": "https://scale.com/favicon.svg"
+  },
+  {
+    "slug": "scenario",
+    "name": "Scenario",
+    "file": "scenario.png",
+    "website": "https://scenario.com",
+    "source": "https://www.scenario.com/favicon-16x16.png"
+  },
+  {
+    "slug": "scispace",
+    "name": "SciSpace",
+    "file": "scispace.png",
+    "website": "https://typeset.io",
+    "source": "https://typeset.io/favicon.ico"
+  },
+  {
+    "slug": "semantic-scholar",
+    "name": "Semantic Scholar",
+    "file": "semantic-scholar.png",
+    "website": "https://semanticscholar.org",
+    "source": "https://cdn.semanticscholar.org/96374d262d7c8584/img/favicon-196x196.png"
+  },
+  {
+    "slug": "semrush-ai",
+    "name": "Semrush AI",
+    "file": "semrush-ai.png",
+    "website": "https://semrush.com",
+    "source": "https://www.semrush.com/__static__/apple-touch-icon.fe16ae843d17.png"
+  },
+  {
+    "slug": "shopify-magic-sidekick",
+    "name": "Shopify Magic / Sidekick",
+    "file": "shopify-magic-sidekick.png",
+    "website": "https://shopify.com/magic",
+    "source": "https://cdn.shopify.com/b/shopify-brochure2-assets/61cc781fe73f11e9d4bd160d27cc627b.png"
+  },
+  {
+    "slug": "slack-ai",
+    "name": "Slack AI",
+    "file": "slack-ai.png",
+    "website": "https://slack.com/features/ai",
+    "source": "https://a.slack-edge.com/9cc0056/img/icons/favicon-32.png"
+  },
+  {
+    "slug": "soundraw",
+    "name": "Soundraw",
+    "file": "soundraw.png",
+    "website": "https://soundraw.io",
+    "source": "https://soundraw.io/assets/favicon-32x32-7cdd952a4c7329c7538aeea99fca42344faefb5c4e8c5157067a823d50cb2b40.png"
+  },
+  {
+    "slug": "speak-language-ai",
+    "name": "Speak (Language AI)",
+    "file": "speak-language-ai.png",
+    "website": "https://speak.com",
+    "source": "https://www.speak.com/cdn.prod.website-files.com/61a88c135006e8345b005efd/61a8e2a6251030428df089f2_favicon.png"
+  },
+  {
+    "slug": "speechify",
+    "name": "Speechify",
+    "file": "speechify.png",
+    "website": "https://speechify.com",
+    "source": "https://speechify.com/apple-icon.png?apple-icon.04iq4tvtx2n2e.png"
+  },
+  {
+    "slug": "spellbook",
+    "name": "Spellbook",
+    "file": "spellbook.png",
+    "website": "https://spellbook.legal",
+    "source": "https://cdn.prod.website-files.com/66fc4a00d70e086034b6699f/67194c71632aa74c8b08c797_favicon.png"
+  },
+  {
+    "slug": "squarespace-ai",
+    "name": "Squarespace AI",
+    "file": "squarespace-ai.png",
+    "website": "https://squarespace.com",
+    "source": "https://static1.squarespace.com/static/5134cbefe4b0c6fb04df8065/t/6553aa5af16e670f2674a81d/favicon.ico"
+  },
+  {
+    "slug": "stability-ai",
+    "name": "Stability AI",
+    "file": "stability-ai.png",
+    "website": "https://stability.ai",
+    "source": "https://images.squarespace-cdn.com/content/v1/6213c340453c3f502425776e/804f0e8b-0028-4262-a8b0-b9f1c5de72c0/favicon.ico?format=100w"
+  },
+  {
+    "slug": "suno",
+    "name": "Suno",
+    "file": "suno.png",
+    "website": "https://suno.com",
+    "source": "https://cdn-o.suno.com/favicon-192x192.png"
+  },
+  {
+    "slug": "surfer-seo",
+    "name": "Surfer SEO",
+    "file": "surfer-seo.png",
+    "website": "https://surferseo.com",
+    "source": "https://marketing-assets.surferseo.art/wf-cdn/62666115cfab458794bd512f/65e7306fad1e1e849f147176_Webclip.png"
+  },
+  {
+    "slug": "synthesia",
+    "name": "Synthesia",
+    "file": "synthesia.png",
+    "website": "https://synthesia.io",
+    "source": "https://cdn.prod.website-files.com/65e89895c5a4b8d764c0d710/664f0f482fa5a4d527d892bc_Favicon-Web-Security%201.png"
+  },
+  {
+    "slug": "tactiq",
+    "name": "Tactiq",
+    "file": "tactiq.png",
+    "website": "https://tactiq.io",
+    "source": "https://cdn.prod.website-files.com/61120cb2509e011efcf0b1e4/67565f59f637f92de18a3f5e_Favicon%20Webclip%20(1).png"
+  },
+  {
+    "slug": "tl-dv",
+    "name": "tl;dv",
+    "file": "tl-dv.png",
+    "website": "https://tldv.io",
+    "source": "https://tldv.io/faviconV2.png"
+  },
+  {
+    "slug": "together-ai",
+    "name": "Together AI",
+    "file": "together-ai.png",
+    "website": "https://together.ai",
+    "source": "https://cdn.prod.website-files.com/69654e88dce9154b5f1206dd/699e382b218f39bfa0a115d9_favicon.png"
+  },
+  {
+    "slug": "topaz-labs",
+    "name": "Topaz Labs",
+    "file": "topaz-labs.png",
+    "website": "https://topazlabs.com",
+    "source": "https://cdn.prod.website-files.com/6005fac27a49a9cd477afb63/66207d4875f767e21d812b11_tnb-favicon-32.png"
+  },
+  {
+    "slug": "tray-ai",
+    "name": "Tray.ai",
+    "file": "tray-ai.png",
+    "website": "https://tray.ai",
+    "source": "https://tray.ai/favicon.svg"
+  },
+  {
+    "slug": "trinka-ai",
+    "name": "Trinka AI",
+    "file": "trinka-ai.png",
+    "website": "https://trinka.ai",
+    "source": "https://www.trinka.ai/favicon.ico"
+  },
+  {
+    "slug": "udio",
+    "name": "Udio",
+    "file": "udio.ico",
+    "website": "https://udio.com",
+    "source": "https://www.udio.com/favicon.ico?favicon.0wbc3vz33genq.ico"
+  },
+  {
+    "slug": "unriddle",
+    "name": "Unriddle",
+    "file": "unriddle.png",
+    "website": "https://unriddle.ai",
+    "source": "https://anara.com/favicon.svg?v=f767a1093581"
+  },
+  {
+    "slug": "upstage-solar",
+    "name": "Upstage (Solar)",
+    "file": "upstage-solar.png",
+    "website": "https://upstage.ai",
+    "source": "https://cdn.prod.website-files.com/6743d5190bb2b52f38e99e37/6748713db65988aab4e2dbf7_G.WEB.svg"
+  },
+  {
+    "slug": "v0",
+    "name": "v0",
+    "file": "v0.png",
+    "website": "https://v0.dev",
+    "source": "https://v0.app/assets/icon-light-32x32.png"
+  },
+  {
+    "slug": "vapi",
+    "name": "Vapi",
+    "file": "vapi.png",
+    "website": "https://vapi.ai",
+    "source": "https://vapi.ai/icon.svg?icon.05txosa6z_gu8.svg"
+  },
+  {
+    "slug": "veed",
+    "name": "VEED",
+    "file": "veed.ico",
+    "website": "https://www.veed.io",
+    "source": "https://www.veed.io/favicon.ico"
+  },
+  {
+    "slug": "viz-ai",
+    "name": "Viz.ai",
+    "file": "viz-ai.png",
+    "website": "https://viz.ai",
+    "source": "https://www.viz.ai/wp-content/uploads/2023/06/cropped-favicon-32x32.png"
+  },
+  {
+    "slug": "vllm",
+    "name": "vLLM",
+    "file": "vllm.png",
+    "website": "https://vllm.ai",
+    "source": "https://vllm.ai/vLLM-Logo.svg"
+  },
+  {
+    "slug": "warp",
+    "name": "Warp",
+    "file": "warp.png",
+    "website": "https://www.warp.dev",
+    "source": "https://www.warp.dev/favicon-16x16.png"
+  },
+  {
+    "slug": "windsurf",
+    "name": "Windsurf",
+    "file": "windsurf.png",
+    "website": "https://windsurf.ai",
+    "source": "https://devin.ai/favicon.svg"
+  },
+  {
+    "slug": "wispr-flow",
+    "name": "Wispr Flow",
+    "file": "wispr-flow.png",
+    "website": "https://wisprflow.ai",
+    "source": "https://cdn.prod.website-files.com/682f84b3838c89f8ff7667db/6a8406645defe8dfdb19c7f3_flow-favicon.png"
+  },
+  {
+    "slug": "wix-ai",
+    "name": "Wix AI",
+    "file": "wix-ai.png",
+    "website": "https://wix.com",
+    "source": "https://www.wix.com/favicon.ico"
+  },
+  {
+    "slug": "wonder-dynamics-wonder-studio",
+    "name": "Wonder Dynamics (Wonder Studio)",
+    "file": "wonder-dynamics-wonder-studio.png",
+    "website": "https://wonderdynamics.com",
+    "source": "https://damassets.autodesk.net/content/dam/autodesk/dotcom-next/favicon.svg"
+  },
+  {
+    "slug": "wondershare-pdfelement-ai",
+    "name": "Wondershare PDFelement AI",
+    "file": "wondershare-pdfelement-ai.ico",
+    "website": "https://pdf.wondershare.com",
+    "source": "https://pdf.wondershare.com/favicon.ico"
+  },
+  {
+    "slug": "wordpress-ai-jetpack-ai",
+    "name": "WordPress AI (Jetpack AI)",
+    "file": "wordpress-ai-jetpack-ai.png",
+    "website": "https://jetpack.com/ai/",
+    "source": "https://jetpack.com/wp-content/uploads/2022/06/85c4b-74462-jp-favicon-new.png?w=32"
+  },
+  {
+    "slug": "workato",
+    "name": "Workato",
+    "file": "workato.png",
+    "website": "https://workato.com",
+    "source": "https://www.workato.com/favicon.ico"
+  },
+  {
+    "slug": "writesonic-chatsonic",
+    "name": "Writesonic / Chatsonic",
+    "file": "writesonic-chatsonic.png",
+    "website": "https://writesonic.com",
+    "source": "https://writesonic.com/icon.svg?icon.0hdydehcy1ouj.svg"
+  },
+  {
+    "slug": "zapier",
+    "name": "Zapier",
+    "file": "zapier.ico",
+    "website": "https://zapier.com",
+    "source": "https://zapier.com/favicon.ico"
+  },
+  {
+    "slug": "zillow-ai-zestimate",
+    "name": "Zillow AI / Zestimate",
+    "file": "zillow-ai-zestimate.ico",
+    "website": "https://zillow.com",
+    "source": "https://zillow.com/favicon.ico"
+  },
+  {
+    "slug": "zoom-ai-companion",
+    "name": "Zoom AI Companion",
+    "file": "zoom-ai-companion.ico",
+    "website": "https://zoom.us",
+    "source": "https://st1.zoom.us/homepage/20261014-1234/primary/favicon.ico"
+  },
+  {
+    "slug": "chatgpt",
+    "file": "openai.png",
+    "website": "https://github.com/openai",
+    "source": "https://avatars.githubusercontent.com/u/14957082?v=4",
+    "note": "Official OpenAI organization mark, not a product-specific icon"
+  },
+  {
+    "slug": "openai-api",
+    "file": "openai.png",
+    "website": "https://github.com/openai",
+    "source": "https://avatars.githubusercontent.com/u/14957082?v=4",
+    "note": "Official OpenAI organization mark, not a product-specific icon"
+  },
+  {
+    "slug": "openai-codex-cli",
+    "file": "openai.png",
+    "website": "https://github.com/openai",
+    "source": "https://avatars.githubusercontent.com/u/14957082?v=4",
+    "note": "Official OpenAI organization mark, not a product-specific icon"
+  },
+  {
+    "slug": "gpt-image-1-5-dall-e-successor",
+    "file": "openai.png",
+    "website": "https://github.com/openai",
+    "source": "https://avatars.githubusercontent.com/u/14957082?v=4",
+    "note": "Official OpenAI organization mark, not a product-specific icon"
+  },
+  {
+    "slug": "sora-2",
+    "file": "openai.png",
+    "website": "https://github.com/openai",
+    "source": "https://avatars.githubusercontent.com/u/14957082?v=4",
+    "note": "Official OpenAI organization mark, not a product-specific icon"
+  }
+]

@@ -53,3 +53,16 @@ Draft pull request: https://github.com/stevensonzj-ai/launchpad-hq/pull/59 . Ver
 ## Self-assessment and corrected guidance
 
 The implementation is a responsive translation of approved concepts, not a pixel-identical image. Decorative asset compositions differ slightly, and existing real content is retained instead of mockup sample copy. `START-HERE.md` now records the existing test suite and the owner's expanded palette approval in its correction ledger. Its older current-state claims remain historical. Catalog facts were reused, not newly researched; this is not a content freshness audit. No new environment variables are needed.
+
+## Owner-requested Discover refinements
+
+- Restored all five category icons, colored backgrounds and borders for selected/hover states, and visible keyboard focus. URL filtering and pending-navigation protection remain intact.
+- Expanded Discover at 100rem and above to three columns in a 108rem container. Browser measurements: 541px cards at 1920px, 534px cards at 1440px (two columns), and one 335px column at 390px. The wide breakpoint uses rem consistently with Tailwind's default breakpoints to preserve cascade ordering.
+- Replaced the outline-only rocket with optimized decorative artwork: rocket, restrained clouds, and sparse stars. Hero copy remains unchanged. Homepage and its four goal cards/workflow strip are unchanged in this refinement.
+- Added local official-site icons for most catalog entries, with exact source provenance in `public/images/platforms/catalog-logos.json`. Compact runtime index in `src/lib/platform-logo-assets.json`; existing manually selected logos take precedence. OpenAI uses its official organization mark, clearly labeled in the provenance. Generic GitHub hosting icons were discarded. Missing icons retain initials; no vendor marks were generated.
+- Public production API returned 221 catalog entries; local app returned 170. Icons were collected through the public API and official websites, without database scripts or data writes. This discrepancy is recorded, not treated as an instruction to sync databases.
+- The repeated Grok concerns were rechecked: real fact-file/legacy plan details still appear, the existing `PlatformToolOverview` remains intact, and no editorial fact/tutorial/model/workflow data is changed. Save/Prompts/Discussions predate this PR and are wired existing features, not newly invented UI.
+- Verification: typecheck, 49 tests, changed-file ESLint, and audit of 164 tutorials passed. Browser verified category selection/reset, five icons, responsive column widths, and no horizontal overflow at 390/1440/1920. Server returned 200 for category and reset navigation. Actual screenshots: `tmp/design-review/discover-refined-wide.jpg`, `discover-refined-writing.jpg`, and `discover-refined-mobile.jpg`. No broken loaded images in the checked mobile state.
+- The previous Vercel preview completed successfully before these refinements. Recheck the new deployment after pushing; nothing is merged or promoted to production.
+
+Final refinement production build passed (47 static pages generated); git diff whitespace check passed.

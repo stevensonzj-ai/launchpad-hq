@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import catalogLogos from "@/lib/platform-logo-assets.json";
 
 // Local copies of official vendor assets; provenance is recorded in the handoff.
 const logos: Record<string, string> = {
+  ...catalogLogos,
   claude: "claude.png",
   "claude-code": "claude.png",
   "anthropic-api": "anthropic.ico",
@@ -14,6 +16,7 @@ const logos: Record<string, string> = {
   "canva-ai-magic-studio": "canva.ico",
   "canva-magic-studio": "canva.ico",
   ollama: "ollama.png",
+  "runway-for-education": catalogLogos.runway,
 };
 
 export function PlatformLogo({ slug, name, logoUrl, large = false }: { slug: string; name: string; logoUrl?: string | null; large?: boolean }) {
