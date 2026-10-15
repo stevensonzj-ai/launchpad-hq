@@ -1,8 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   buildDiscoverQuery,
@@ -25,6 +26,7 @@ import {
 type FilterField = "category" | "cost" | "difficulty" | "mobile" | "sort";
 
 type CurrentFilters = {
+  q: string;
   category: string;
   cost: string;
   difficulty: string;
@@ -90,28 +92,46 @@ function FilterSelect({
 
 export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProps) {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   function update(field: FilterField, value: string) {
     const next = { ...current, [field]: value };
     const url =
       "/discover" +
       buildDiscoverQuery({
+        q: next.q || undefined,
         category: next.category || undefined,
         cost: next.cost || undefined,
         difficulty: next.difficulty || undefined,
         mobile: next.mobile || undefined,
         sort: next.sort || undefined,
       });
-    router.push(url, { scroll: false });
+    startTransition(() => router.push(url, { scroll: false }));
   }
 
   return (
-    <div className="mb-4 flex flex-wrap items-center gap-2">
+    <fieldset disabled={isPending} aria-label="Search and filter tools" aria-busy={isPending} className="mb-5 min-w-0 disabled:opacity-70">
+      <form action="/discover" className="relative mb-5 flex items-center gap-2 rounded-xl border border-gray-600/80 bg-gray-900/80 p-2 sm:p-2.5">
+        <Search className="ml-2 h-5 w-5 shrink-0 text-gray-400" aria-hidden="true" />
+        <input key={current.q} name="q" defaultValue={current.q} maxLength={120} type="search" aria-label="Search tools or tasks" placeholder="Search tools or something you want to do" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none" />
+        {Object.entries(current).filter(([key, value]) => key !== "q" && value && !(key === "sort" && value === "popular")).map(([key, value]) => <input key={key} type="hidden" name={key} value={value} />)}
+        <button type="submit" className="min-h-11 rounded-lg bg-gray-800 px-3 text-sm font-medium text-gray-200 hover:bg-gray-700">Search</button>
+      </form>
+      <div className="mb-5 flex flex-wrap gap-2 border-b border-gray-800 pb-5" aria-label="Quick categories">
+        {[
+          { value: "", label: "All tools", color: "text-gray-300" },
+          { value: "text-conversational-ai", label: "Writing", color: "text-purple-300" },
+          { value: "image-generation-editing", label: "Images", color: "text-rose-300" },
+          { value: "research-academic-tools", label: "Research", color: "text-cyan-300" },
+          { value: "workflow-automation", label: "Automation", color: "text-emerald-300" },
+        ].map((item) => <button key={item.value} type="button" aria-pressed={current.category === item.value} onClick={() => update("category", item.value)} className={cn("min-h-11 rounded-lg border px-4 py-2 text-sm font-medium transition-colors", item.color, current.category === item.value ? "border-current bg-white/5" : "border-transparent hover:bg-white/5")}>{item.label}</button>)}
+      </div>
+      <div className="grid grid-cols-2 items-center gap-3 sm:flex sm:flex-wrap sm:gap-2">
       <FilterSelect
         label="Filter by category"
         value={current.category}
         onChange={(v) => update("category", v)}
-        className="min-w-[11rem] flex-1 sm:max-w-[16rem]"
+        className="min-w-0 sm:w-56"
       >
         <option value="">All categories</option>
         {categories.map((cat) => (
@@ -162,7 +182,7 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
 
       {/* sm:ml-auto — right-aligned on the filter row at desktop, but flush-left
           on mobile where it wraps to its own row (ml-auto would strand it right). */}
-      <div className="flex items-center gap-2 sm:ml-auto">
+      <div className="col-span-2 flex items-center gap-2 sm:ml-auto">
         <span className="text-xs uppercase tracking-wide text-gray-500">Sort</span>
         <FilterSelect
           label="Sort platforms"
@@ -176,6 +196,7 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
           ))}
         </FilterSelect>
       </div>
-    </div>
+      </div>
+    </fieldset>
   );
 }

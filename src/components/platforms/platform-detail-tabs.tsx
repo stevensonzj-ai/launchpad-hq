@@ -35,7 +35,7 @@ export function PlatformDetailTabs({
   if (hasTutorial) {
     tabs.push({
       id: "tutorials",
-      label: "Tutorials",
+      label: "Getting started",
       href: `/platform/${platformSlug}?tab=tutorials`,
       count: counts?.tutorials,
     });
@@ -57,14 +57,15 @@ export function PlatformDetailTabs({
 
   return (
     <>
-      <nav className="mb-8 flex flex-wrap gap-1" aria-label="Platform sections">
+      <nav className="mb-8 flex flex-wrap gap-1 border-b border-gray-800" aria-label="Platform sections">
         {tabs.map((tab) => {
           const active = activeTab === tab.id;
           return (
             <Link
               key={tab.id}
               href={tab.href}
-              className={`border-b-2 px-4 py-3 text-[15px] font-medium transition-colors ${
+              aria-current={active ? "page" : undefined}
+              className={`shrink-0 border-b-2 px-2 py-3 text-xs font-medium transition-colors sm:px-4 sm:text-sm ${
                 active
                   ? "border-orange-500 text-white"
                   : "border-transparent text-gray-400 hover:text-white"

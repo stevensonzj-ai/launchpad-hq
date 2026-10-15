@@ -22,8 +22,53 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+/* Approved design round: quiet space texture, colorful discovery, warm guides. */
+.lp-stars::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: .24;
+  background-image: radial-gradient(1px 1px at 24px 36px, white, transparent), radial-gradient(1px 1px at 143px 112px, white, transparent), radial-gradient(1px 1px at 291px 62px, var(--color-amber-300), transparent), radial-gradient(1px 1px at 347px 207px, white, transparent);
+  background-size: 403px 267px;
+}
+.lp-button, .lp-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  border-radius: .7rem;
+  padding: .85rem 1.5rem;
+  font-size: .9rem;
+  font-weight: 600;
+  transition: background .18s, border-color .18s;
+}
+.lp-button { color: var(--color-gray-950); background: var(--color-orange-400); border: 1px solid var(--color-orange-300); box-shadow: 0 5px 22px -12px var(--color-orange-500); }
+.lp-button:hover { background: var(--color-orange-300); }
+.lp-button-secondary { border: 1px solid var(--color-purple-400); color: white; background: var(--color-gray-950); }
+.lp-button-secondary:hover { background: var(--color-gray-900); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--color-orange-300); outline-offset: 4px; }
+.lp-goal-writing { --goal: var(--color-purple-400); }
+.lp-goal-images { --goal: var(--color-rose-400); }
+.lp-goal-research { --goal: var(--color-cyan-400); }
+.lp-goal-automation { --goal: var(--color-emerald-400); }
+.lp-goal { border-color: color-mix(in srgb, var(--goal) 65%, transparent); background: linear-gradient(145deg, color-mix(in srgb, var(--goal) 10%, var(--color-gray-950)), var(--color-gray-950)); }
+.lp-goal-icon { color: var(--goal); border-color: color-mix(in srgb, var(--goal) 60%, transparent); background: color-mix(in srgb, var(--goal) 12%, transparent); }
+.lp-art { position: absolute; inset: 0; color: var(--goal); }
+.lp-art-orbit { position: absolute; inset: 25% 12%; border: 1px solid color-mix(in srgb, var(--goal) 35%, transparent); border-radius: 45%; transform: rotate(-12deg); }
+.lp-art-node { position: absolute; display: flex; align-items: center; justify-content: center; width: 3.1rem; height: 3.1rem; border-radius: .7rem; border: 1px solid color-mix(in srgb, var(--goal) 40%, transparent); background: linear-gradient(145deg, color-mix(in srgb, var(--goal) 20%, var(--color-gray-900)), var(--color-gray-900)); box-shadow: 0 8px 20px var(--color-gray-950); }
+.lp-art-node svg { width: 1.4rem; height: 1.4rem; }
+.lp-node-one { top: 15%; left: 13%; transform: rotate(-8deg); }
+.lp-node-two { top: 13%; right: 13%; transform: rotate(8deg); }
+.lp-node-three { bottom: 8%; right: 10%; }
+.lp-node-main { top: 38%; left: 37%; width: 4.5rem; height: 3.7rem; background: color-mix(in srgb, var(--goal) 65%, var(--color-gray-900)); color: white; }
+.lp-art-dot { position: absolute; width: .6rem; height: .6rem; border-radius: 50%; background: var(--goal); }
+.lp-dot-one { bottom: 18%; left: 20%; }
+.lp-dot-two { top: 40%; right: 8%; }
 
 html {
   scroll-behavior: smooth;

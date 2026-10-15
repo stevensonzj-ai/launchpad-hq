@@ -1,13 +1,18 @@
 import Link from "next/link";
-import { Globe, Smartphone } from "lucide-react";
+import { ArrowRight, Globe, Smartphone } from "lucide-react";
+import { PlatformLogo } from "@/components/platforms/platform-logo";
+import type { ToolFacts } from "@/data/facts/types";
+import { startingPriceLabel } from "@/lib/platform-display";
 import { cn } from "@/lib/utils";
 import { COST_TIER_LABEL, COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { Tooltip } from "@/components/ui/tooltip";
 
 interface PlatformCardProps {
+  facts?: Pick<ToolFacts, "freeTier" | "plans">;
   slug: string;
   name: string;
+  logoUrl?: string | null;
   company: string | null;
   primaryUse: string | null;
   costTier: string;
@@ -38,8 +43,10 @@ const diffColors: Record<string, string> = {
 };
 
 export function PlatformCard({
+  facts,
   slug,
   name,
+  logoUrl,
   company,
   primaryUse,
   costTier,
@@ -54,22 +61,33 @@ export function PlatformCard({
   isSignedIn,
 }: PlatformCardProps) {
   const showFavorite = isSignedIn !== undefined;
+  const freeDetails = facts?.freeTier?.value.summary ?? freeTierFeatures;
+  const source = facts?.freeTier;
+  const price = facts?.plans && facts.plans.value.some((plan) => !/^(?:\$0(?:\/|\b)|free\b)/i.test(plan.price)) ? startingPriceLabel(facts.plans.value) : undefined;
+  const categoryLabel: Record<string, string> = {
+    "text-conversational-ai": "writing & conversation",
+    "image-generation-editing": "images & design",
+    "research-academic-tools": "research",
+    "workflow-automation": "automation",
+    "ai-coding-development": "coding",
+    "voice-speech": "voice & speech",
+    "video-creation-editing": "video",
+    "local-open-source-ai": "local AI",
+  };
 
   return (
-    <Link
-      href={`/platform/${slug}`}
-      className="group block rounded-xl border border-gray-800 bg-gray-900/50 p-5 transition-all hover:border-gray-700 hover:bg-gray-900"
-    >
+    <article className="group relative flex min-w-0 flex-col rounded-2xl border border-gray-700/70 bg-gradient-to-br from-gray-900/80 to-gray-900/30 p-5 transition-colors hover:border-gray-500 hover:bg-gray-900">
       <div className="mb-3 flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h3 className="text-lg font-semibold text-white group-hover:text-orange-400">
-            {name}
-          </h3>
-          {company && (
-            <p className="text-sm text-gray-500">by {company}</p>
-          )}
+        <div className="flex min-w-0 items-start gap-3">
+          <PlatformLogo slug={slug} name={name} logoUrl={logoUrl} />
+          <div className="min-w-0">
+            <h3 className="text-lg font-semibold leading-snug text-white group-hover:text-orange-300">
+              <Link href={`/platform/${slug}`} className="after:absolute after:inset-0 after:rounded-2xl">{name}</Link>
+            </h3>
+            {company && <p className="mt-1 text-xs text-gray-400">by {company}</p>}
+          </div>
         </div>
-        <div className="flex shrink-0 items-start gap-2">
+        <div className="relative z-10 flex shrink-0 flex-wrap items-start justify-end gap-2">
           {matchScore !== undefined && matchScore > 0 && (
             <span className="rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-400">
               {matchScore}% match
@@ -81,27 +99,27 @@ export function PlatformCard({
               initialFavorited={isFavorited ?? false}
               isSignedIn={isSignedIn ?? false}
               variant="icon"
-              className="-mr-1 -mt-1"
+              className="-mr-1 -mt-1 flex min-h-11 min-w-11 items-center justify-center"
             />
           )}
         </div>
       </div>
 
       {primaryUse && (
-        <p className="mb-3 line-clamp-2 text-sm text-gray-400">
+        <p className="mb-3 text-sm leading-relaxed text-gray-300">
           {primaryUse}
         </p>
       )}
 
       <div className="mb-3 flex flex-wrap gap-2">
-        <Tooltip content={COST_TIER_TOOLTIP[costTier] ?? ""}>
+        <Tooltip content={facts?.freeTier ? facts.freeTier.value.summary : COST_TIER_TOOLTIP[costTier] ?? ""}>
           <span
             className={cn(
-              "rounded-md border px-2 py-0.5 text-xs font-medium",
+              "relative z-10 rounded-md border px-2 py-0.5 text-xs font-medium",
               tierColors[costTier] || tierColors.FREEMIUM,
             )}
           >
-            {COST_TIER_LABEL[costTier] ?? costTier}
+            {facts?.freeTier ? (facts.freeTier.value.available ? "Free plan" : "No free plan") : COST_TIER_LABEL[costTier] ?? costTier}
           </span>
         </Tooltip>
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
@@ -115,7 +133,6 @@ export function PlatformCard({
             Advanced
           </span>
         )}
-        <span className="text-xs text-gray-600">{category.name}</span>
         {hasMobileApp && (
           <span
             className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs font-medium text-emerald-400"
@@ -135,12 +152,14 @@ export function PlatformCard({
           </span>
         )}
       </div>
-
-      {freeTierFeatures && (
-        <p className="line-clamp-1 text-xs text-gray-500">
-          Free: {freeTierFeatures.replace(/^\s*free\s*:\s*/i, "")}
-        </p>
-      )}
-    </Link>
+      <p className="mb-5 text-xs leading-relaxed text-gray-300"><span className="rounded-full bg-white/5 px-2.5 py-1">Good for {categoryLabel[category.slug] ?? category.name}</span></p>
+      <div className="mt-auto border-t border-gray-700/60 pt-4">
+        <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-400">Free-plan details</p>
+        <p className="text-sm leading-relaxed text-gray-300">{freeDetails ? freeDetails.replace(/^\s*free\s*:\s*/i, "") : "See the platform guide for available plans."}</p>
+        {price && <p className="mt-2 text-xs text-gray-300">Paid options: {price}</p>}
+        {source && <a href={source.sourceUrl} target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 inline-flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Source · checked {source.checkedAt}{source.status !== "verified" ? ` · ${source.status}` : ""} ↗</a>}
+        <span className="mt-4 flex items-center gap-2 text-sm font-semibold text-orange-400">Meet the tool <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
+      </div>
+    </article>
   );
 }
