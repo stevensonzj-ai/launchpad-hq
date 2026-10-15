@@ -10,7 +10,6 @@ const logos: Record<string, string> = {
   ...catalogLogos,
   claude: "claude.png",
   "claude-code": "claude.png",
-  "anthropic-api": "anthropic.ico",
   "perplexity-ai": "perplexity.svg",
   "perplexity-comet": "perplexity.svg",
   "canva-ai-magic-studio": "canva.ico",

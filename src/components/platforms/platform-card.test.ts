@@ -36,3 +36,22 @@ test("Cards retain real catalog details and quiz difficulty signals without fact
   assert.ok(html.includes("Above the difficulty level you selected in the quiz"));
   assert.ok(html.includes("Advanced"));
 });
+
+test("Missing plan details do not imply that a guide contains available pricing", () => {
+  const html = renderToStaticMarkup(createElement(PlatformCard, { ...platform, freeTierFeatures: null }));
+  assert.ok(!html.includes("See the platform guide"));
+  assert.ok(!html.includes("Free-plan details"));
+  assert.ok(html.includes("Freemium"));
+  assert.ok(html.includes('href="/platform/fixture-tool"'));
+});
+
+test("Paid options keep their own citation when no free-tier fact is available", () => {
+  const html = renderToStaticMarkup(createElement(PlatformCard, {
+    ...platform,
+    freeTierFeatures: null,
+    facts: { plans: { value: [{ name: "Pro", price: "$20", period: "month", limits: "" }], sourceUrl: "https://example.com/pricing", checkedAt: "2026-10-15", gatheredBy: "test fixture", status: "verified" } },
+  }));
+  assert.ok(html.includes("Paid options:"));
+  assert.ok(html.includes('href="https://example.com/pricing"'));
+  assert.ok(html.includes("Pricing source · checked 2026-10-15"));
+});

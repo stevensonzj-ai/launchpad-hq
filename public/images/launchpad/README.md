@@ -18,3 +18,15 @@ Create one wide landscape decorative banner illustration for an AI getting start
 # Discover header refinement — 2026-10-15
 
 `discover-rocket.jpg`: generated decorative illustration, resized to 1000px JPEG. Prompt: Wide 2:1 scene with the subject on the right half: a small crafted orange/gold rocket launching diagonally, dark navy inset gold window, warm exhaust, layered charcoal-navy curved clouds with thin muted blue-gray edges, sparse gold four-point stars and dim white dots. Professional and friendly. No purple, nebula, dense galaxy, text, or UI. Solid #030712 edges to blend into the page.
+
+## Research and automation card artwork — 2026-10-15
+
+Built-in image generation was used for both assets; final files were optimized to 1200px JPEG, without changing composition. They replace the simpler CSS illustrations; all card titles and descriptions remain accessible HTML.
+
+### research.jpg
+
+Prompt: Premium decorative website card illustration, landscape 3:2. Research and discovery: layered ivory research notes, a translucent cyan glass panel showing an abstract constellation of connected points, a crafted magnifying glass in brushed silver/cyan glass across the papers, and a folded celestial map. Nearly black navy #030712 backdrop; tactile 3D editorial paper-craft style, soft studio light, cyan edges, subtle depth/shadows. Richness comparable to premium paper, pen and art-print illustrations. Composition in middle/lower portion, generous dark margins, clear thumbnail silhouette. Cyan/teal, ivory, restrained warm gold. No readable text, letters, logos, UI, buttons, border, icon grid, watermark, or flat line diagram.
+
+### automation.jpg
+
+Prompt: Premium decorative website card illustration, landscape 3:2. A workflow that runs itself: three luminous translucent mint glass tiles connected by curved silver tracks, champagne-metal gear, central emerald-glass lightning-bolt sculpture, physical envelope and ivory checklist passing through the mechanism. Nearly black navy #030712 backdrop; rich layered materials, polished 3D editorial paper-craft/product style, studio lighting, emerald edges, delicate shadows. Match richness of paper, pen and art-print collage rather than a flat diagram. Composition in middle/lower portion, generous dark margins, clear thumbnail silhouette. Mint/emerald, ivory, silver, restrained warm gold. No readable text, letters, logos, UI, buttons, borders, simple orbiting icons, purple, watermark or robot mascot.

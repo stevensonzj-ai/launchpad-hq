@@ -65,9 +65,10 @@
   {
     "slug": "anthropic-api",
     "name": "Anthropic API",
-    "file": "anthropic-api.png",
+    "file": "anthropic-api-hq.png",
     "website": "https://console.anthropic.com",
-    "source": "https://platform.claude.com/favicon.svg"
+    "source": "https://platform.claude.com/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "apollo-io",
@@ -93,9 +94,10 @@
   {
     "slug": "beatoven-ai",
     "name": "Beatoven.ai",
-    "file": "beatoven-ai.png",
+    "file": "beatoven-ai-hq.png",
     "website": "https://beatoven.ai",
-    "source": "https://cdn.prod.website-files.com/65d772a7cbf713010f7736f6/66634faf309426cbf03b120b_logo%20(1).png"
+    "source": "https://cdn.prod.website-files.com/65d772a7cbf713010f7736f6/6663501af2d9db64c264bfce_logo%20(2).png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "bloomberg-gpt-terminal-ai",
@@ -107,16 +109,18 @@
   {
     "slug": "bolt-new",
     "name": "Bolt.new",
-    "file": "bolt-new.png",
+    "file": "bolt-new-hq.png",
     "website": "https://bolt.new",
-    "source": "https://bolt.new/static/favicon.svg"
+    "source": "https://bolt.new/static/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "brisk-teaching",
     "name": "Brisk Teaching",
-    "file": "brisk-teaching.png",
+    "file": "brisk-teaching-hq.png",
     "website": "https://www.briskteaching.com",
-    "source": "https://cdn.prod.website-files.com/6a6b7e36c7e8274794581e32/6a6b7e36c7e8274794582e22_Brisk%20Logo.png"
+    "source": "https://cdn.prod.website-files.com/6a60ebc76629ecced39e180e/6a60eca1eb88a57a32331878_Brisk%20Logo.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "canva-ai-magic-studio",
@@ -163,9 +167,10 @@
   {
     "slug": "chatpdf",
     "name": "ChatPDF",
-    "file": "chatpdf.png",
+    "file": "chatpdf-hq.png",
     "website": "https://chatpdf.com",
-    "source": "https://www.chatpdf.com/icon.svg"
+    "source": "https://www.chatpdf.com/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "claude",
@@ -184,16 +189,18 @@
   {
     "slug": "clay",
     "name": "Clay",
-    "file": "clay.png",
+    "file": "clay-hq.png",
     "website": "https://www.clay.com",
-    "source": "https://cdn.prod.website-files.com/61477f2c24a826836f969afe/6a3a92ab841a6313dc068fb8_dot-com_favicon_2026_512.png"
+    "source": "https://cdn.prod.website-files.com/61477f2c24a826836f969afe/6a3a92ab3c92c9caa6245619_dot-com_favicon_2026_512.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "cline",
     "name": "Cline",
-    "file": "cline.png",
+    "file": "cline-hq.png",
     "website": "https://cline.bot",
-    "source": "https://cline.bot/assets/branding/favicons/favicon-16x16.png"
+    "source": "https://cline.bot/assets/branding/favicons/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "cohere",
@@ -226,9 +233,10 @@
   {
     "slug": "copy-ai",
     "name": "Copy.ai",
-    "file": "copy-ai.png",
+    "file": "copy-ai-hq.png",
     "website": "https://copy.ai",
-    "source": "https://cdn.prod.website-files.com/628288c5cd3e8411b90a36a4/6793eea386b5ac27242bb8eb_favicon_32x32px%20(1).png"
+    "source": "https://cdn.prod.website-files.com/628288c5cd3e8411b90a36a4/6793eea6a090d6d2f4fa5570_favicon_256x256%20(2).png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "cursor",
@@ -268,9 +276,10 @@
   {
     "slug": "docsumo",
     "name": "Docsumo",
-    "file": "docsumo.png",
+    "file": "docsumo-hq.png",
     "website": "https://docsumo.com",
-    "source": "https://www.docsumo.com/favicon-32.png"
+    "source": "https://www.docsumo.com/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "doximity-gpt",
@@ -303,16 +312,18 @@
   {
     "slug": "elicit",
     "name": "Elicit",
-    "file": "elicit.png",
+    "file": "elicit-hq.png",
     "website": "https://elicit.com",
-    "source": "https://framerusercontent.com/images/GBpaTmhagvahuZIt8uDryBpioi4.png"
+    "source": "https://framerusercontent.com/images/GWXKVhGBLC34aTLlmLIMsRVb4.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "fathom",
     "name": "Fathom",
-    "file": "fathom.png",
+    "file": "fathom-hq.png",
     "website": "https://www.fathom.ai",
-    "source": "https://cdn.prod.website-files.com/6899da9beccbdbe92be49b5d/6a4283d5585a382afdece3f2_fathom_favicon.png"
+    "source": "https://cdn.prod.website-files.com/6899da9beccbdbe92be49b5d/6a4282cf896cae98018bfa8c_fathom_favicon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "figma-ai",
@@ -338,9 +349,10 @@
   {
     "slug": "fireworks-ai",
     "name": "Fireworks AI",
-    "file": "fireworks-ai.png",
+    "file": "fireworks-ai-hq.png",
     "website": "https://fireworks.ai",
-    "source": "https://fireworks.ai/icon0.svg?e3d99deadffb6216"
+    "source": "https://fireworks.ai/apple-icon.png?851b7c333784c47b",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "flux",
@@ -408,9 +420,10 @@
   {
     "slug": "gpt4all",
     "name": "GPT4All",
-    "file": "gpt4all.png",
+    "file": "gpt4all-hq.png",
     "website": "https://gpt4all.io",
-    "source": "https://www.nomic.ai/favicon-48x48.png"
+    "source": "https://www.nomic.ai/images/webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "grammarly",
@@ -436,9 +449,10 @@
   {
     "slug": "groq",
     "name": "Groq",
-    "file": "groq.png",
+    "file": "groq-hq.png",
     "website": "https://groq.com",
-    "source": "https://groq.com/favicon.svg"
+    "source": "https://groq.com/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "gumloop",
@@ -506,9 +520,10 @@
   {
     "slug": "invideo-ai",
     "name": "InVideo AI",
-    "file": "invideo-ai.png",
+    "file": "invideo-ai-hq.png",
     "website": "https://invideo.io",
-    "source": "https://invideo.io/favicon.svg"
+    "source": "https://invideo.io/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "inworld-ai",
@@ -527,16 +542,18 @@
   {
     "slug": "jasper",
     "name": "Jasper",
-    "file": "jasper.png",
+    "file": "jasper-hq.png",
     "website": "https://jasper.ai",
-    "source": "https://cdn.prod.website-files.com/6807ee8d73c233fb82842313/681e121b52f97ed0b2098aab_Favicon.png"
+    "source": "https://cdn.prod.website-files.com/6807ee8d73c233fb82842313/681e121f9445a06741087852_Webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "jenni-ai",
     "name": "Jenni AI",
-    "file": "jenni-ai.png",
+    "file": "jenni-ai-hq.png",
     "website": "https://jenni.ai",
-    "source": "https://framerusercontent.com/images/qYjbIznnZuv0AsCQzQJcoyhQI.svg"
+    "source": "https://framerusercontent.com/images/qYjbIznnZuv0AsCQzQJcoyhQI.svg",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "jetbrains-ai",
@@ -590,37 +607,42 @@
   {
     "slug": "krea",
     "name": "Krea",
-    "file": "krea.png",
+    "file": "krea-hq.png",
     "website": "https://www.krea.ai",
-    "source": "https://www.krea.ai/favicon/favicon-32.png"
+    "source": "https://www.krea.ai/favicon/favicon-192.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "krisp",
     "name": "Krisp",
-    "file": "krisp.png",
+    "file": "krisp-hq.png",
     "website": "https://krisp.ai",
-    "source": "https://krisp.ai/wp-content/uploads/2023/12/cropped-favicon-1-32x32.png"
+    "source": "https://krisp.ai/wp-content/uploads/2023/12/cropped-favicon-1-180x180.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "legora",
     "name": "Legora",
-    "file": "legora.png",
+    "file": "legora-hq.png",
     "website": "https://legora.com",
-    "source": "https://framerusercontent.com/images/WY5ORpPObnBhMgjnlR4uFUElzWs.png"
+    "source": "https://framerusercontent.com/images/t4E7HtGvgFipxaYtePy1dSQAjks.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "lindy-ai",
     "name": "Lindy AI",
-    "file": "lindy-ai.png",
+    "file": "lindy-ai-hq.png",
     "website": "https://lindy.ai",
-    "source": "https://www.lindy.ai/_sherpa/assets/static/lindy/69f7b16693056b585636be03_lindy-avatar-favicon.png"
+    "source": "https://www.lindy.ai/_sherpa/assets/static/lindy/69f7b166e16ce668638e689d_lindy-avatar-favicon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "litmaps",
     "name": "Litmaps",
-    "file": "litmaps.png",
+    "file": "litmaps-hq.png",
     "website": "https://litmaps.com",
-    "source": "https://cdn.prod.website-files.com/6343739329c53451d4f4a69a/6387e1263f80a9ebdc4fff60_favicon.png"
+    "source": "https://cdn.prod.website-files.com/6343739329c53451d4f4a69a/6387e1285e5c124dd7b95206_webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "lm-studio",
@@ -660,9 +682,10 @@
   {
     "slug": "magicschool",
     "name": "MagicSchool",
-    "file": "magicschool.png",
+    "file": "magicschool-hq.png",
     "website": "https://www.magicschool.ai",
-    "source": "https://cdn.prod.website-files.com/645187265d5e5e386be40629/69446a90ee324df666f4baea_Favicon_32x32.webp"
+    "source": "https://cdn.prod.website-files.com/645187265d5e5e386be40629/69446a3bf302af048b1b6297_Webclip_256x256.webp",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "mailchimp-ai",
@@ -674,9 +697,10 @@
   {
     "slug": "make-integromat",
     "name": "Make (Integromat)",
-    "file": "make-integromat.png",
+    "file": "make-integromat-hq.png",
     "website": "https://make.com",
-    "source": "https://cdn.prod.website-files.com/6a294495bc84130c6dd0c4fd/6a7b944121e8a94aaf6ca04f_favicon-32x32.png"
+    "source": "https://cdn.prod.website-files.com/6a294495bc84130c6dd0c4fd/6a7b9441756d01907cfc9bc0_favicon-32x32.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "manus",
@@ -688,16 +712,18 @@
   {
     "slug": "mem",
     "name": "Mem",
-    "file": "mem.png",
+    "file": "mem-hq.png",
     "website": "https://mem.ai",
-    "source": "https://mem.ai/favicons/favicon-16x16.png"
+    "source": "https://mem.ai/favicons/apple-touch-icon-144x144.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "meshy",
     "name": "Meshy",
-    "file": "meshy.png",
+    "file": "meshy-hq.png",
     "website": "https://meshy.ai",
-    "source": "https://www.meshy.ai/icon1.png?icon1.096grnl0ekqcw.png"
+    "source": "https://www.meshy.ai/apple-icon.png?apple-icon.1x2jivih2_8ii.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "meta-ai",
@@ -716,9 +742,10 @@
   {
     "slug": "microsoft-designer",
     "name": "Microsoft Designer",
-    "file": "microsoft-designer.png",
+    "file": "microsoft-designer-hq.png",
     "website": "https://designer.microsoft.com",
-    "source": "https://res.public.onecdn.static.microsoft/designer/client/prod/static/media/favicon-16.png"
+    "source": "https://res.public.onecdn.static.microsoft/designer/client/prod/static/media/designer-logo-192.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "mistral-ai-le-chat",
@@ -737,9 +764,10 @@
   {
     "slug": "mubert",
     "name": "Mubert",
-    "file": "mubert.png",
+    "file": "mubert-hq.png",
     "website": "https://mubert.com",
-    "source": "https://mubert.com/apple-icon-57x57.png"
+    "source": "https://mubert.com/apple-icon-144x144.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "n8n",
@@ -751,9 +779,10 @@
   {
     "slug": "nanonets",
     "name": "Nanonets",
-    "file": "nanonets.png",
+    "file": "nanonets-hq.png",
     "website": "https://nanonets.com",
-    "source": "https://nanonets.com/icon.png?icon.0nqxf4k4e__mk.png?dpl=dpl_8pjyqtTfVdiGKYsu5SnAusRGhAAd"
+    "source": "https://nanonets.com/apple-icon.png?apple-icon.01j-4josku-y7.png?dpl=dpl_8pjyqtTfVdiGKYsu5SnAusRGhAAd",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "napkin-ai",
@@ -765,9 +794,10 @@
   {
     "slug": "naver-hyperclova-x-cue",
     "name": "Naver (HyperCLOVA X / Cue:)",
-    "file": "naver-hyperclova-x-cue.png",
+    "file": "naver-hyperclova-x-cue-hq.png",
     "website": "https://clova.ai",
-    "source": "https://clova.ai/favicon/apple-icon-57x57.png"
+    "source": "https://clova.ai/favicon/apple-icon-144x144.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "notebooklm",
@@ -815,30 +845,34 @@
   {
     "slug": "opus-clip",
     "name": "Opus Clip",
-    "file": "opus-clip.png",
+    "file": "opus-clip-hq.png",
     "website": "https://opus.pro",
-    "source": "https://cdn.prod.website-files.com/6388604483b03a9ecb34d695/64351a9e4e9223f5e0f46d64_ico-final.png"
+    "source": "https://cdn.prod.website-files.com/6388604483b03a9ecb34d695/6435197bfb1d6e486e04c37b_webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "otter-ai",
     "name": "Otter AI",
-    "file": "otter-ai.png",
+    "file": "otter-ai-hq.png",
     "website": "https://otter.ai",
-    "source": "https://cdn.prod.website-files.com/618e9316785b3582a5178502/618e94bcbca88b51e2ad81f7_favicon.png"
+    "source": "https://cdn.prod.website-files.com/618e9316785b3582a5178502/618e943a80919a98b5e9bf69_apple-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "outreach",
     "name": "Outreach",
-    "file": "outreach.png",
+    "file": "outreach-hq.png",
     "website": "https://outreach.io",
-    "source": "https://cdn.prod.website-files.com/696ea7504e736c595e9a2313/699fa86f95fdd7f81f024bc5_favicon.png"
+    "source": "https://cdn.prod.website-files.com/696ea7504e736c595e9a2313/699fa8741dc26f0119aa1286_webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "pabbly-connect",
     "name": "Pabbly Connect",
-    "file": "pabbly-connect.png",
+    "file": "pabbly-connect-hq.png",
     "website": "https://pabbly.com/connect/",
-    "source": "https://www.pabbly.com/wp-content/uploads/2026/01/favicon.png"
+    "source": "https://www.pabbly.com/assets/pabbly_icon.svg",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "paperpal",
@@ -871,16 +905,18 @@
   {
     "slug": "photoroom",
     "name": "Photoroom",
-    "file": "photoroom.png",
+    "file": "photoroom-hq.png",
     "website": "https://photoroom.com",
-    "source": "https://www.photoroom.com/favicons/favicon-32x32.png"
+    "source": "https://www.photoroom.com/favicons/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "pika",
     "name": "Pika",
-    "file": "pika.png",
+    "file": "pika-hq.png",
     "website": "https://pika.art",
-    "source": "https://pika.art/icon.svg?icon.3bty87qirfeg8.svg"
+    "source": "https://pika.art/apple-icon.png?apple-icon.1pc-f1mhs57mu.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "pinecone",
@@ -906,30 +942,34 @@
   {
     "slug": "ramp-intelligence",
     "name": "Ramp Intelligence",
-    "file": "ramp-intelligence.png",
+    "file": "ramp-intelligence-hq.png",
     "website": "https://ramp.com",
-    "source": "https://ramp.com/favicon-16x16.png"
+    "source": "https://ramp.com/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "read-ai",
     "name": "Read AI",
-    "file": "read-ai.png",
+    "file": "read-ai-hq.png",
     "website": "https://www.read.ai",
-    "source": "https://cdn.prod.website-files.com/614e5e239ea0f25fe5b6a797/615f7213c6091b296dd6ebd0_ReadLogomark_32x32.png"
+    "source": "https://cdn.prod.website-files.com/614e5e239ea0f25fe5b6a797/615f71de842b191ea061fda6_ReadLogomark_256x256.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "recraft",
     "name": "Recraft",
-    "file": "recraft.png",
+    "file": "recraft-hq.png",
     "website": "https://recraft.ai",
-    "source": "https://framerusercontent.com/images/id5ZjKRfENkLEfAMrnKLKJfqfE.png"
+    "source": "https://framerusercontent.com/images/abL15N3UiE3oDA6S807KUBarXrQ.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "reducto",
     "name": "Reducto",
-    "file": "reducto.png",
+    "file": "reducto-hq.png",
     "website": "https://reducto.ai",
-    "source": "https://reducto.ai/favicon-16x16.png"
+    "source": "https://reducto.ai/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "relay-app",
@@ -941,9 +981,10 @@
   {
     "slug": "relevance-ai",
     "name": "Relevance AI",
-    "file": "relevance-ai.png",
+    "file": "relevance-ai-hq.png",
     "website": "https://relevanceai.com",
-    "source": "https://cdn.relevanceai.com/images/favicon-32x32.png"
+    "source": "https://cdn.relevanceai.com/images/favicon-256x256.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "replicate",
@@ -962,23 +1003,26 @@
   {
     "slug": "research-rabbit",
     "name": "Research Rabbit",
-    "file": "research-rabbit.png",
+    "file": "research-rabbit-hq.png",
     "website": "https://researchrabbit.ai",
-    "source": "https://cdn.prod.website-files.com/68367775ca3b1655a71e1698/6902a7c6e08f5fb714469b84_Frame%202-2.png"
+    "source": "https://cdn.prod.website-files.com/68367775ca3b1655a71e1698/68f169d618fea3828326bbe2_RR_icon_256.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "restb-ai",
     "name": "Restb.ai",
-    "file": "restb-ai.png",
+    "file": "restb-ai-hq.png",
     "website": "https://restb.ai",
-    "source": "https://i0.wp.com/restb.ai/wp-content/uploads/2021/12/cropped-Icon.png?fit=32%2C32&#038;ssl=1"
+    "source": "https://i0.wp.com/restb.ai/wp-content/uploads/2021/12/cropped-Icon.png?fit=180%2C180&#038;ssl=1",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "retell-ai",
     "name": "Retell AI",
-    "file": "retell-ai.png",
+    "file": "retell-ai-hq.png",
     "website": "https://www.retellai.com",
-    "source": "https://cdn.prod.website-files.com/64ada0f2685b2d18caa5e699/69d92020a42693dbcb8413d7_favicon-32x32.png"
+    "source": "https://cdn.prod.website-files.com/64ada0f2685b2d18caa5e699/69d7b35ce160f153aa823cf0_output-Retellai%20(2).png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "runway",
@@ -1011,16 +1055,18 @@
   {
     "slug": "scale-ai",
     "name": "Scale AI",
-    "file": "scale-ai.png",
+    "file": "scale-ai-hq.png",
     "website": "https://scale.com",
-    "source": "https://scale.com/favicon.svg"
+    "source": "https://scale.com/static/global/favicon/v3/apple-touch-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "scenario",
     "name": "Scenario",
-    "file": "scenario.png",
+    "file": "scenario-hq.png",
     "website": "https://scenario.com",
-    "source": "https://www.scenario.com/favicon-16x16.png"
+    "source": "https://www.scenario.com/favicon-196x196.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "scispace",
@@ -1046,9 +1092,10 @@
   {
     "slug": "shopify-magic-sidekick",
     "name": "Shopify Magic / Sidekick",
-    "file": "shopify-magic-sidekick.png",
+    "file": "shopify-magic-sidekick-hq.png",
     "website": "https://shopify.com/magic",
-    "source": "https://cdn.shopify.com/b/shopify-brochure2-assets/61cc781fe73f11e9d4bd160d27cc627b.png"
+    "source": "https://cdn.shopify.com/b/shopify-brochure2-assets/b13486e5693b246af63c66ab047a6b6b.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "slack-ai",
@@ -1060,16 +1107,18 @@
   {
     "slug": "soundraw",
     "name": "Soundraw",
-    "file": "soundraw.png",
+    "file": "soundraw-hq.png",
     "website": "https://soundraw.io",
-    "source": "https://soundraw.io/assets/favicon-32x32-7cdd952a4c7329c7538aeea99fca42344faefb5c4e8c5157067a823d50cb2b40.png"
+    "source": "https://soundraw.io/assets/apple-touch-icon-4ffadde212293f472dc6fde485807f0a51992631e0f2d9169dfac04b84d5e98e.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "speak-language-ai",
     "name": "Speak (Language AI)",
-    "file": "speak-language-ai.png",
+    "file": "speak-language-ai-hq.png",
     "website": "https://speak.com",
-    "source": "https://www.speak.com/cdn.prod.website-files.com/61a88c135006e8345b005efd/61a8e2a6251030428df089f2_favicon.png"
+    "source": "https://www.speak.com/cdn.prod.website-files.com/61a88c135006e8345b005efd/686a5c29b8678b5802ceb837_WebIcon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "speechify",
@@ -1081,9 +1130,10 @@
   {
     "slug": "spellbook",
     "name": "Spellbook",
-    "file": "spellbook.png",
+    "file": "spellbook-hq.png",
     "website": "https://spellbook.legal",
-    "source": "https://cdn.prod.website-files.com/66fc4a00d70e086034b6699f/67194c71632aa74c8b08c797_favicon.png"
+    "source": "https://cdn.prod.website-files.com/66fc4a00d70e086034b6699f/673f8362e07dee522e1d6c08_webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "squarespace-ai",
@@ -1116,16 +1166,18 @@
   {
     "slug": "synthesia",
     "name": "Synthesia",
-    "file": "synthesia.png",
+    "file": "synthesia-hq.png",
     "website": "https://synthesia.io",
-    "source": "https://cdn.prod.website-files.com/65e89895c5a4b8d764c0d710/664f0f482fa5a4d527d892bc_Favicon-Web-Security%201.png"
+    "source": "https://cdn.prod.website-files.com/65e89895c5a4b8d764c0d710/6618fd69d436784c0bba5e9e_webclip.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "tactiq",
     "name": "Tactiq",
-    "file": "tactiq.png",
+    "file": "tactiq-hq.png",
     "website": "https://tactiq.io",
-    "source": "https://cdn.prod.website-files.com/61120cb2509e011efcf0b1e4/67565f59f637f92de18a3f5e_Favicon%20Webclip%20(1).png"
+    "source": "https://cdn.prod.website-files.com/61120cb2509e011efcf0b1e4/675659f30393924f83fb1f3b_Tactiq%20Webclip%20(1).png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "tl-dv",
@@ -1137,23 +1189,26 @@
   {
     "slug": "together-ai",
     "name": "Together AI",
-    "file": "together-ai.png",
+    "file": "together-ai-hq.png",
     "website": "https://together.ai",
-    "source": "https://cdn.prod.website-files.com/69654e88dce9154b5f1206dd/699e382b218f39bfa0a115d9_favicon.png"
+    "source": "https://cdn.prod.website-files.com/69654e88dce9154b5f1206dd/69a59cff65ed0f267dd2fbe8_touchicon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "topaz-labs",
     "name": "Topaz Labs",
-    "file": "topaz-labs.png",
+    "file": "topaz-labs-hq.png",
     "website": "https://topazlabs.com",
-    "source": "https://cdn.prod.website-files.com/6005fac27a49a9cd477afb63/66207d4875f767e21d812b11_tnb-favicon-32.png"
+    "source": "https://cdn.prod.website-files.com/6005fac27a49a9cd477afb63/66207d48d19641ced6ae4796_tnb-favicon-256.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "tray-ai",
     "name": "Tray.ai",
-    "file": "tray-ai.png",
+    "file": "tray-ai-hq.png",
     "website": "https://tray.ai",
-    "source": "https://tray.ai/favicon.svg"
+    "source": "https://tray.ai/apple-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "trinka-ai",
@@ -1179,23 +1234,26 @@
   {
     "slug": "upstage-solar",
     "name": "Upstage (Solar)",
-    "file": "upstage-solar.png",
+    "file": "upstage-solar-hq.png",
     "website": "https://upstage.ai",
-    "source": "https://cdn.prod.website-files.com/6743d5190bb2b52f38e99e37/6748713db65988aab4e2dbf7_G.WEB.svg"
+    "source": "https://cdn.prod.website-files.com/6743d5190bb2b52f38e99e37/6761994342af9b1ae6a14b36_upstage%20symbol_social%20profiel(256px).png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "v0",
     "name": "v0",
-    "file": "v0.png",
+    "file": "v0-hq.png",
     "website": "https://v0.dev",
-    "source": "https://v0.app/assets/icon-light-32x32.png"
+    "source": "https://v0.app/assets/apple-icon.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "vapi",
     "name": "Vapi",
-    "file": "vapi.png",
+    "file": "vapi-hq.png",
     "website": "https://vapi.ai",
-    "source": "https://vapi.ai/icon.svg?icon.05txosa6z_gu8.svg"
+    "source": "https://vapi.ai/apple-icon.png?apple-icon.09ry4e6-9jbfq.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "veed",
@@ -1207,9 +1265,10 @@
   {
     "slug": "viz-ai",
     "name": "Viz.ai",
-    "file": "viz-ai.png",
+    "file": "viz-ai-hq.png",
     "website": "https://viz.ai",
-    "source": "https://www.viz.ai/wp-content/uploads/2023/06/cropped-favicon-32x32.png"
+    "source": "https://www.viz.ai/wp-content/uploads/2023/06/cropped-favicon-180x180.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "vllm",
@@ -1221,9 +1280,10 @@
   {
     "slug": "warp",
     "name": "Warp",
-    "file": "warp.png",
+    "file": "warp-hq.png",
     "website": "https://www.warp.dev",
-    "source": "https://www.warp.dev/favicon-16x16.png"
+    "source": "https://www.warp.dev/apple-touch-icon-144x144.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "windsurf",
@@ -1235,9 +1295,10 @@
   {
     "slug": "wispr-flow",
     "name": "Wispr Flow",
-    "file": "wispr-flow.png",
+    "file": "wispr-flow-hq.png",
     "website": "https://wisprflow.ai",
-    "source": "https://cdn.prod.website-files.com/682f84b3838c89f8ff7667db/6a8406645defe8dfdb19c7f3_flow-favicon.png"
+    "source": "https://cdn.prod.website-files.com/682f84b3838c89f8ff7667db/68d27d1a8a10f417b5644527_flow-wc-v2.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "wix-ai",
@@ -1249,9 +1310,10 @@
   {
     "slug": "wonder-dynamics-wonder-studio",
     "name": "Wonder Dynamics (Wonder Studio)",
-    "file": "wonder-dynamics-wonder-studio.png",
+    "file": "wonder-dynamics-wonder-studio-hq.png",
     "website": "https://wonderdynamics.com",
-    "source": "https://damassets.autodesk.net/content/dam/autodesk/dotcom-next/favicon.svg"
+    "source": "https://damassets.autodesk.net/content/dam/autodesk/dotcom-next/favicon.svg",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "wondershare-pdfelement-ai",
@@ -1263,9 +1325,10 @@
   {
     "slug": "wordpress-ai-jetpack-ai",
     "name": "WordPress AI (Jetpack AI)",
-    "file": "wordpress-ai-jetpack-ai.png",
+    "file": "wordpress-ai-jetpack-ai-hq.png",
     "website": "https://jetpack.com/ai/",
-    "source": "https://jetpack.com/wp-content/uploads/2022/06/85c4b-74462-jp-favicon-new.png?w=32"
+    "source": "https://jetpack.com/wp-content/uploads/2022/06/85c4b-74462-jp-favicon-new.png?w=180",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "workato",
@@ -1277,9 +1340,10 @@
   {
     "slug": "writesonic-chatsonic",
     "name": "Writesonic / Chatsonic",
-    "file": "writesonic-chatsonic.png",
+    "file": "writesonic-chatsonic-hq.png",
     "website": "https://writesonic.com",
-    "source": "https://writesonic.com/icon.svg?icon.0hdydehcy1ouj.svg"
+    "source": "https://writesonic.com/apple-icon.png?apple-icon.0.210mtbpi.lj.png",
+    "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
     "slug": "zapier",

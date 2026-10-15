@@ -111,7 +111,7 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
 
   return (
     <fieldset disabled={isPending} aria-label="Search and filter tools" aria-busy={isPending} className="mb-5 min-w-0 disabled:opacity-70">
-      <form action="/discover" className="relative mb-5 flex items-center gap-2 rounded-xl border border-gray-600/80 bg-gray-900/80 p-2 sm:p-2.5">
+      <form action="/discover" className="relative mb-5 flex items-center gap-2 rounded-xl border border-gray-600/80 bg-gray-900/80 p-2 focus-within:border-orange-300 focus-within:ring-2 focus-within:ring-orange-300/30 sm:p-2.5">
         <Search className="ml-2 h-5 w-5 shrink-0 text-gray-400" aria-hidden="true" />
         <input key={current.q} name="q" defaultValue={current.q} maxLength={120} type="search" aria-label="Search tools or tasks" placeholder="Search tools or something you want to do" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none" />
         {Object.entries(current).filter(([key, value]) => key !== "q" && value && !(key === "sort" && value === "popular")).map(([key, value]) => <input key={key} type="hidden" name={key} value={value} />)}
