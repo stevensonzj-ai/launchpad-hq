@@ -163,6 +163,16 @@ import { pabblyConnectTutorial } from "./pabbly-connect-getting-started";
 import { relevanceAiTutorial } from "./relevance-ai-getting-started";
 import { trayAiTutorial } from "./tray-ai-getting-started";
 import { workatoTutorial } from "./workato-getting-started";
+// Manual batch 1, 2026-10-15
+import { deepseekTutorial } from "./deepseek-getting-started";
+import { metaAiTutorial } from "./meta-ai-getting-started";
+import { gammaTutorial } from "./gamma-getting-started";
+import { capcutTutorial } from "./capcut-getting-started";
+import { perplexityCometTutorial } from "./perplexity-comet-getting-started";
+import { poeTutorial } from "./poe-getting-started";
+import { qwenTutorial } from "./qwen-getting-started";
+import { kimiTutorial } from "./kimi-getting-started";
+import { quillbotTutorial } from "./quillbot-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
@@ -329,6 +339,15 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [relevanceAiTutorial.platformSlug]: relevanceAiTutorial,
   [trayAiTutorial.platformSlug]: trayAiTutorial,
   [workatoTutorial.platformSlug]: workatoTutorial,
+  [deepseekTutorial.platformSlug]: deepseekTutorial,
+  [metaAiTutorial.platformSlug]: metaAiTutorial,
+  [gammaTutorial.platformSlug]: gammaTutorial,
+  [capcutTutorial.platformSlug]: capcutTutorial,
+  [perplexityCometTutorial.platformSlug]: perplexityCometTutorial,
+  [poeTutorial.platformSlug]: poeTutorial,
+  [qwenTutorial.platformSlug]: qwenTutorial,
+  [kimiTutorial.platformSlug]: kimiTutorial,
+  [quillbotTutorial.platformSlug]: quillbotTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
