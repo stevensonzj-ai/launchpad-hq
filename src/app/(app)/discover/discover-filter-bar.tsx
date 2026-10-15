@@ -189,7 +189,7 @@ export function DiscoverFilterBar({ categories, current }: DiscoverFilterBarProp
       {/* sm:ml-auto — right-aligned on the filter row at desktop, but flush-left
           on mobile where it wraps to its own row (ml-auto would strand it right). */}
       <div className="col-span-2 flex items-center gap-2 sm:ml-auto">
-        <span className="text-xs uppercase tracking-wide text-gray-500">Sort</span>
+        <span className="text-xs uppercase tracking-wide text-gray-400">Sort</span>
         <FilterSelect
           label="Sort platforms"
           value={current.sort}

@@ -61,7 +61,7 @@ export function Header() {
                 >
                   <span className="font-medium text-white">{r.name}</span>
                   {r.company && (
-                    <span className="ml-2 text-gray-500">by {r.company}</span>
+                    <span className="ml-2 text-gray-400">by {r.company}</span>
                   )}
                 </Link>
               ))}
@@ -167,7 +167,7 @@ export function Header() {
                 Account
               </Link>
               <div className="flex items-center gap-2 py-2">
-                <span className="text-sm text-gray-500">Signed in</span>
+                <span className="text-sm text-gray-400">Signed in</span>
                 <UserButton />
               </div>
             </>

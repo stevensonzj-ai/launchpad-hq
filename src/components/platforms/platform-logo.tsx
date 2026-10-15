@@ -13,8 +13,8 @@ const logos: Record<string, string> = {
   "claude-code": "claude-mark.png",
   "perplexity-ai": "perplexity.svg",
   "perplexity-comet": "perplexity.svg",
-  "canva-ai-magic-studio": "canva.ico",
-  "canva-magic-studio": "canva.ico",
+  "canva-ai-magic-studio": "canva.png",
+  "canva-magic-studio": "canva.png",
   ollama: "ollama.png",
   "runway-for-education": catalogLogos.runway,
 };

@@ -65,7 +65,7 @@ export default function AdvertisePage() {
                           className={
                             status === "open"
                               ? "text-green-400"
-                              : "text-gray-500"
+                              : "text-gray-400"
                           }
                         >
                           {status === "open" ? "Open" : "Booked"}

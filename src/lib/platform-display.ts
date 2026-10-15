@@ -97,7 +97,7 @@ function unstructuredPlan(part: string): DisplayPlan {
   if (money?.[0]) {
     return { name: part, price: money[0].trim(), period: "", limits: "" };
   }
-  return { name: part, price: part, period: "", limits: "" };
+  return { name: part, price: "See pricing", period: "", limits: "" };
 }
 
 function parseFreePlan(part: string): DisplayPlan | null {
@@ -201,7 +201,7 @@ export function plansFromFactsOrProse(
     return parsePricingProse(currentPricing);
   }
   const label = COST_TIER_LABEL[costTier] ?? costTier;
-  return label ? [{ name: label, price: label, period: "", limits: "" }] : [];
+  return label ? [{ name: label, price: "See pricing", period: "", limits: "" }] : [];
 }
 
 const PRICE_UNIT = /^(month|year|week|day|mo|yr|wk|seat|user|person)$/i;

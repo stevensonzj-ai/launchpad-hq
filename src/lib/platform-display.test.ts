@@ -6,6 +6,7 @@ import {
   extractUrls,
   freeTierSummary,
   parsePricingProse,
+  plansFromFactsOrProse,
   resolvePlatformTab,
   startingPriceLabel,
   staticTutorialCount,
@@ -81,6 +82,16 @@ describe("platform display helpers", () => {
     );
     assert.equal(plans[0]?.limits, "20 prompts/day");
     assert.equal(plans[1]?.limits, "higher");
+  });
+
+  it("shows See pricing when a price string cannot be parsed", () => {
+    const rows = parsePricingProse("Contact sales for enterprise access");
+    assert.deepEqual(rows, [
+      { name: "Contact sales for enterprise access", price: "See pricing", period: "", limits: "" },
+    ]);
+    assert.deepEqual(plansFromFactsOrProse(undefined, null, "ENTERPRISE"), [
+      { name: "Enterprise", price: "See pricing", period: "", limits: "" },
+    ]);
   });
 
   it("hides the tutorials tab when there is no static file", () => {

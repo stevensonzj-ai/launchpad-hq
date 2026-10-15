@@ -68,7 +68,7 @@ export function PlatformMobileSection({
               className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-gray-600 hover:bg-gray-900"
             >
               <span className="text-[13px] font-semibold">{button.label}</span>
-              {button.hint && <span className="text-xs text-gray-500">{button.hint}</span>}
+              {button.hint && <span className="text-xs text-gray-400">{button.hint}</span>}
               <ExternalLink className="h-3.5 w-3.5 text-gray-500" aria-hidden />
             </a>
           ))}
@@ -95,7 +95,7 @@ export function PlatformMobileSection({
           </li>
         )}
         {!mobileWebFriendly && buttons.length === 0 && (
-          <li className="text-gray-500">
+          <li className="text-gray-400">
             Not optimized for mobile browsers (e.g. desktop-first or CLI). Use a desktop when possible.
           </li>
         )}

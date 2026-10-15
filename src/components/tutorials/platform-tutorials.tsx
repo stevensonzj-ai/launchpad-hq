@@ -135,7 +135,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
         <p className="mt-1 text-sm text-gray-400">
           Step-by-step guides for <span className="text-gray-300">{platformName}</span>
         </p>
-        <p className="mt-6 rounded-lg border border-dashed border-gray-700 bg-gray-950/50 px-4 py-10 text-center text-sm text-gray-500">
+        <p className="mt-6 rounded-lg border border-dashed border-gray-700 bg-gray-950/50 px-4 py-10 text-center text-sm text-gray-400">
           Coming soon — we&apos;re writing guides for this platform.
         </p>
       </div>

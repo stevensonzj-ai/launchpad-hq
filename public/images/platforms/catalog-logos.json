@@ -129,16 +129,18 @@
   {
     "slug": "canva-ai-magic-studio",
     "name": "Canva AI (Magic Studio)",
-    "file": "canva-ai-magic-studio.ico",
+    "file": "canva.png",
     "website": "https://canva.com",
-    "source": "https://canva.com/favicon.ico"
+    "source": "https://static.canva.com/static/images/apple-touch-icon-180x180.png",
+    "note": "Official Canva apple-touch-icon (180px) from static.canva.com."
   },
   {
     "slug": "canva-magic-studio",
     "name": "Canva Magic Studio",
-    "file": "canva-magic-studio.ico",
+    "file": "canva.png",
     "website": "https://canva.com",
-    "source": "https://canva.com/favicon.ico"
+    "source": "https://static.canva.com/static/images/apple-touch-icon-180x180.png",
+    "note": "Official Canva apple-touch-icon (180px) from static.canva.com."
   },
   {
     "slug": "capcut",
@@ -302,9 +304,10 @@
   {
     "slug": "dragon-medical-one",
     "name": "Dragon Medical One",
-    "file": "dragon-medical-one.png",
+    "file": "dragon-medical-one.svg",
     "website": "https://nuance.com",
-    "source": "https://dragon.nuance.com/shared/images/favicon-16x16.png"
+    "source": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/icon-dragon-medical-one-1",
+    "note": "Official Dragon Medical One icon SVG from Microsoft for Healthcare."
   },
   {
     "slug": "duolingo-max",
@@ -444,7 +447,8 @@
     "name": "Grammarly",
     "file": "grammarly.png",
     "website": "https://grammarly.com",
-    "source": "https://static-web.grammarly.com/cms/master/public/favicon-16x16.png"
+    "source": "https://superhuman.com/media-resources/grammarly-logo-icon-color",
+    "note": "Official Grammarly icon from the Grammarly/Superhuman media assets press kit (132px)."
   },
   {
     "slug": "granola",
@@ -487,7 +491,8 @@
     "name": "Healthee",
     "file": "healthee.png",
     "website": "https://healthee.co",
-    "source": "https://healthee.com/wp-content/uploads/2024/09/favicon.png"
+    "source": "https://healthee.com/wp-content/uploads/2024/09/cropped-favicon.png",
+    "note": "Official Healthee cropped favicon (512px) from healthee.com."
   },
   {
     "slug": "hedra",
@@ -529,9 +534,10 @@
   {
     "slug": "ideogram",
     "name": "Ideogram",
-    "file": "ideogram.ico",
+    "file": "ideogram.svg",
     "website": "https://ideogram.ai",
-    "source": "https://ideogram.ai/favicon.ico"
+    "source": "https://206862853-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/organizations%2Fx2xIwb5o3vuACKLKy49E%2Fsites%2Fsite_RbZzQ%2Ficon%2FZaDz28JoeOVmzzq2RefK%2FAvatar-onwhite.svg?alt=media&token=7a140727-f1ed-4bce-b384-42ba17b206f3",
+    "note": "Official Ideogram avatar SVG from docs.ideogram.ai (GitBook org icon). White plate rect removed for transparency; mark paths unchanged."
   },
   {
     "slug": "invideo-ai",
@@ -590,9 +596,10 @@
   {
     "slug": "khan-academy-khanmigo",
     "name": "Khan Academy (Khanmigo)",
-    "file": "khan-academy-khanmigo.ico",
+    "file": "khan-academy-khanmigo.png",
     "website": "https://khanacademy.org",
-    "source": "https://khanacademy.org/favicon.ico"
+    "source": "https://cdn.prod.website-files.com/659ee90e075c502b5cc49dae/659ee90e075c502b5cc49e16_KA_Favicon_72x72.png",
+    "note": "Official Khan Academy favicon from khanmigo.ai (256px despite filename)."
   },
   {
     "slug": "kimi",
@@ -899,9 +906,10 @@
   {
     "slug": "paperpal",
     "name": "Paperpal",
-    "file": "paperpal.png",
+    "file": "paperpal.svg",
     "website": "https://paperpal.com",
-    "source": "https://cdn.paperpal.com/assets/images/logo/favicon-16x16.png"
+    "source": "https://cdn.paperpal.com/assets/images/icons/paperpal-grey-icon.svg",
+    "note": "Official Paperpal mark SVG from paperpal.com CDN."
   },
   {
     "slug": "pathai",
@@ -1360,9 +1368,10 @@
   {
     "slug": "workato",
     "name": "Workato",
-    "file": "workato.png",
+    "file": "workato.svg",
     "website": "https://workato.com",
-    "source": "https://www.workato.com/favicon.ico"
+    "source": "https://cdn.marie.awsprod.workato.com/mktg-assets/img/workato-icon.0f905247.svg",
+    "note": "Official Workato icon SVG from workato.com marketing assets."
   },
   {
     "slug": "writesonic-chatsonic",

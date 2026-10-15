@@ -289,7 +289,7 @@ export default async function DiscoverPage({
                 <span
                   key={letter}
                   aria-disabled="true"
-                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-600"
+                  className="pointer-events-none cursor-default rounded px-1.5 py-0.5 text-sm text-gray-400"
                 >
                   {letter}
                 </span>
@@ -356,7 +356,7 @@ export default async function DiscoverPage({
       )}
 
       {platforms.length === 0 && (
-        <p className="py-12 text-center text-gray-500">
+        <p className="py-12 text-center text-gray-400">
           No platforms match your filters.{" "}
           <Link href="/discover" className="text-orange-400">
             Clear filters
