@@ -32,7 +32,7 @@ Potential conflicts are limited to presentation files: `src/app/(app)/platform/[
 - `git diff --check`: passed.
 - Browser checks in `next dev`, signed out: homepage and Discover at 1440px and 390px; guide and overview at desktop and mobile; correct combined `q=claude`, writing category, and free-tier state; empty search/reset; mobile menu navigation; copy-prompt control visibly changed to `Prompt copied`; overview headings retained. No page-width overflow on checked mobile pages; no broken images. Four desktop goal cards measured with identical top (808px) and height (295px) in the checked viewport.
 - Saved actual-browser screenshots in ignored `tmp/design-review/`: homepage desktop/mobile, Discover desktop/mobile/empty mobile, overview desktop, guide desktop/mobile.
-- A final `next start` process was also started. The in-app browser failed to reconnect after the dev-server shutdown, so production-mode browser verification is not claimed. Final HTTP page/asset checks are reported in the chat/tool record. Owner Vercel-preview verification is still required before merge.
+- A final `next start` process was also started. The in-app browser failed to reconnect after the dev-server shutdown, and page HTTP requests ended in 500 responses through the local Clerk/proxy loop. Direct artwork/logo asset requests returned 200. Production-mode browser verification is not claimed; the local servers started by this session were stopped. Owner Vercel-preview verification is still required before merge.
 - Local dependency installation is Next 16.2.2 while current main declares 16.2.11. No install was performed per repository instructions. The Vercel preview should verify the lockfile-selected environment.
 
 ## Assets
@@ -42,6 +42,8 @@ Local decorative art and exact built-in-generation prompts: `public/images/launc
 Official logo sources are recorded in `public/images/platforms/README.md`. Coverage is incomplete by design; additional logos can be added without altering the component contract. No generated vendor logo substitutes are used.
 
 ## Requires owner verification
+
+Draft pull request: https://github.com/stevensonzj-ai/launchpad-hq/pull/59 . Vercel preview was still building at handoff. Initial implementation commit: `bb444d02`.
 
 - Review a Vercel preview with its current catalog and queued editorial work reconciled.
 - Review signed-in save/account behavior; this session checked signed-out controls and left auth/moderation code unchanged.
