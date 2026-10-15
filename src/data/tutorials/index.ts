@@ -3,6 +3,17 @@ import { chatgptTutorial } from "./chatgpt-getting-started";
 import { ollamaTutorial } from "./ollama-getting-started";
 import { zapierTutorial } from "./zapier-getting-started";
 import { midjourneyTutorial } from "./midjourney-getting-started";
+// Manual batch 2, 2026-10-15
+import { klingAiTutorial } from "./kling-ai-getting-started";
+import { kreaTutorial } from "./krea-getting-started";
+import { freepikAiTutorial } from "./freepik-ai-getting-started";
+import { higgsfieldTutorial } from "./higgsfield-getting-started";
+import { hedraTutorial } from "./hedra-getting-started";
+import { captionsTutorial } from "./captions-getting-started";
+import { veedTutorial } from "./veed-getting-started";
+import { napkinAiTutorial } from "./napkin-ai-getting-started";
+import { speechifyTutorial } from "./speechify-getting-started";
+import { deeplTutorial } from "./deepl-getting-started";
 import { githubCopilotTutorial } from "./github-copilot-getting-started";
 import { otterTutorial } from "./otter-getting-started";
 import { sunoTutorial } from "./suno-getting-started";
@@ -165,6 +176,16 @@ import { trayAiTutorial } from "./tray-ai-getting-started";
 import { workatoTutorial } from "./workato-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
+  [klingAiTutorial.platformSlug]: klingAiTutorial,
+  [kreaTutorial.platformSlug]: kreaTutorial,
+  [freepikAiTutorial.platformSlug]: freepikAiTutorial,
+  [higgsfieldTutorial.platformSlug]: higgsfieldTutorial,
+  [hedraTutorial.platformSlug]: hedraTutorial,
+  [captionsTutorial.platformSlug]: captionsTutorial,
+  [veedTutorial.platformSlug]: veedTutorial,
+  [napkinAiTutorial.platformSlug]: napkinAiTutorial,
+  [speechifyTutorial.platformSlug]: speechifyTutorial,
+  [deeplTutorial.platformSlug]: deeplTutorial,
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
   [assemblyaiTutorial.platformSlug]: assemblyaiTutorial,
   [azureOpenaiServiceTutorial.platformSlug]: azureOpenaiServiceTutorial,
