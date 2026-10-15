@@ -113,7 +113,7 @@ export function WorkflowTierComparison({
               }`}
             >
               <p className="text-sm font-semibold">{m.label}</p>
-              <p className="mt-0.5 text-xs text-gray-500">{m.subtitle}</p>
+              <p className="mt-0.5 text-xs text-gray-300">{m.subtitle}</p>
             </button>
           );
         })}
@@ -128,7 +128,7 @@ export function WorkflowTierComparison({
         <div className={`h-1 bg-gradient-to-r ${meta.bar}`} />
         <div className="border-b border-gray-800 px-4 py-4 sm:px-5">
           <h2 className="text-lg font-bold text-white">{meta.label}</h2>
-          <p className="text-xs text-gray-500">{meta.subtitle}</p>
+          <p className="text-xs text-gray-300">{meta.subtitle}</p>
           <p className="mt-1 text-sm text-gray-400">{t.tagline}</p>
           {(t.estMonthlyCost || t.timeEstimate) && (
             <p className="mt-3 text-sm leading-relaxed text-gray-300">

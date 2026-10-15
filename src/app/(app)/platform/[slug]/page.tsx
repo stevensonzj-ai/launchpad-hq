@@ -97,7 +97,7 @@ export default async function PlatformPage({
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
-      <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-400">
+      <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
         <Link href={`/discover?category=${platform.category.slug}`} className="hover:text-white">
@@ -112,7 +112,7 @@ export default async function PlatformPage({
           <PlatformLogo slug={platform.slug} name={view.name ?? platform.name} logoUrl={platform.logoUrl} large />
           <div className="min-w-0">
             <h1 className="text-4xl font-bold tracking-tight text-amber-50 sm:text-5xl">{view.name ?? platform.name}</h1>
-            {(view.company ?? platform.company) && <p className="mt-2 text-sm text-gray-400">by {view.company ?? platform.company}</p>}
+            {(view.company ?? platform.company) && <p className="mt-2 text-sm text-gray-300">by {view.company ?? platform.company}</p>}
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">

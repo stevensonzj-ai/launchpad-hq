@@ -30,23 +30,26 @@
   {
     "slug": "aiva",
     "name": "AIVA",
-    "file": "aiva.ico",
+    "file": "aiva.png",
     "website": "https://aiva.ai",
-    "source": "https://www.aiva.ai/assets/img/favicon.ico"
+    "source": "https://www.aiva.ai/assets/img/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "aleph-alpha-luminous",
     "name": "Aleph Alpha (Luminous)",
-    "file": "aleph-alpha-luminous.png",
+    "file": "aleph-alpha-luminous.svg",
     "website": "https://aleph-alpha.com",
-    "source": "https://aleph-alpha.com/favicon-96x96.png"
+    "source": "https://aleph-alpha.com/favicon.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "alphasense",
     "name": "AlphaSense",
-    "file": "alphasense.png",
-    "website": "https://alpha-sense.com",
-    "source": "https://www.alpha-sense.com/apple-touch-icon.png"
+    "file": "alphasense.svg",
+    "website": "https://www.alpha-sense.com",
+    "source": "https://www.alpha-sense.com/favicon.svg",
+    "note": "Official site icon. Solid white background rectangle removed; mark paths unchanged."
   },
   {
     "slug": "amazon-bedrock",
@@ -87,9 +90,10 @@
   {
     "slug": "azure-openai-service",
     "name": "Azure OpenAI Service",
-    "file": "azure-openai-service.ico",
+    "file": "azure-openai-service.png",
     "website": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
-    "source": "https://azure.microsoft.com/favicon.ico?v2"
+    "source": "https://azure.microsoft.com/favicon.ico?v2",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "beatoven-ai",
@@ -153,16 +157,18 @@
   {
     "slug": "casetext-cocounsel",
     "name": "Casetext (CoCounsel)",
-    "file": "casetext-cocounsel.ico",
-    "website": "https://casetext.com",
-    "source": "https://www.thomsonreuters.com/favicon.ico"
+    "file": "casetext-cocounsel.png",
+    "website": "https://www.thomsonreuters.com",
+    "source": "https://www.thomsonreuters.com/content/dam/emcm/icons/apple-touch-icon.png",
+    "note": "Official site icon. Near-white edge matte cleared; mark pixels unchanged."
   },
   {
     "slug": "character-ai",
     "name": "Character.AI",
-    "file": "character-ai.ico",
+    "file": "character-ai.png",
     "website": "https://character.ai",
-    "source": "https://character.ai/favicon.ico"
+    "source": "https://character.ai/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "chatpdf",
@@ -175,16 +181,18 @@
   {
     "slug": "claude",
     "name": "Claude",
-    "file": "claude.ico",
-    "website": "https://claude.ai",
-    "source": "https://claude.ai/favicon.ico"
+    "file": "claude-mark.png",
+    "website": "https://claude.com",
+    "source": "https://code.claude.com/docs/_mintlify/favicons/claude-code/pLsy-mRpNksna2sx/_generated/favicon/android-chrome-192x192.png",
+    "note": "Official site icon. "
   },
   {
     "slug": "claude-code",
     "name": "Claude Code",
-    "file": "claude-code.png",
-    "website": "https://docs.anthropic.com/en/docs/claude-code",
-    "source": "https://code.claude.com/docs/_mintlify/favicons/claude-code/pLsy-mRpNksna2sx/_generated/favicon/android-chrome-192x192.png"
+    "file": "claude-mark.png",
+    "website": "https://code.claude.com",
+    "source": "https://code.claude.com/docs/_mintlify/favicons/claude-code/pLsy-mRpNksna2sx/_generated/favicon/android-chrome-192x192.png",
+    "note": "Official site icon. "
   },
   {
     "slug": "clay",
@@ -219,9 +227,10 @@
   {
     "slug": "connected-papers",
     "name": "Connected Papers",
-    "file": "connected-papers.ico",
+    "file": "connected-papers.png",
     "website": "https://connectedpapers.com",
-    "source": "https://www.connectedpapers.com/favicon.ico"
+    "source": "https://www.connectedpapers.com/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "consensus",
@@ -262,9 +271,10 @@
   {
     "slug": "deepseek",
     "name": "DeepSeek",
-    "file": "deepseek.ico",
+    "file": "deepseek.png",
     "website": "https://www.deepseek.com",
-    "source": "https://www.deepseek.com/favicon.ico"
+    "source": "https://www.deepseek.com/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "descript",
@@ -284,9 +294,10 @@
   {
     "slug": "doximity-gpt",
     "name": "Doximity GPT",
-    "file": "doximity-gpt.ico",
-    "website": "https://www.doximity.com/gpt",
-    "source": "https://www.doximity.com/favicon.ico"
+    "file": "doximity-gpt.png",
+    "website": "https://www.doximity.com",
+    "source": "https://assets.doxcdn.com/image/upload/logos/doximity/apple-touch-icon.png",
+    "note": "Official site icon. "
   },
   {
     "slug": "dragon-medical-one",
@@ -392,23 +403,26 @@
   {
     "slug": "google-imagen-3",
     "name": "Google Imagen 3",
-    "file": "google-imagen-3.ico",
-    "website": "https://deepmind.google/technologies/imagen-3/",
-    "source": "https://deepmind.google/favicon.ico"
+    "file": "google-g.svg",
+    "website": "https://deepmind.google/models/gemini-image/",
+    "source": "https://storage.googleapis.com/gdm-deepmind-com-prod-public/icons/google_deepmind_48dp.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "google-lyria-3",
     "name": "Google Lyria 3",
-    "file": "google-lyria-3.ico",
+    "file": "google-g.svg",
     "website": "https://deepmind.google",
-    "source": "https://deepmind.google/favicon.ico"
+    "source": "https://storage.googleapis.com/gdm-deepmind-com-prod-public/icons/google_deepmind_48dp.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "google-veo-3-1",
     "name": "Google Veo 3.1",
-    "file": "google-veo-3-1.ico",
-    "website": "https://deepmind.google/technologies/veo/",
-    "source": "https://deepmind.google/favicon.ico"
+    "file": "google-g.svg",
+    "website": "https://deepmind.google",
+    "source": "https://storage.googleapis.com/gdm-deepmind-com-prod-public/icons/google_deepmind_48dp.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "google-vertex-ai",
@@ -485,9 +499,10 @@
   {
     "slug": "heygen",
     "name": "HeyGen",
-    "file": "heygen.ico",
-    "website": "https://heygen.com",
-    "source": "https://www.heygen.com/favicon.ico?favicon.2m321y0geyyfh.ico"
+    "file": "heygen.png",
+    "website": "https://www.heygen.com",
+    "source": "https://www.heygen.com/images/heygen-logo.png",
+    "note": "Official site icon. "
   },
   {
     "slug": "higgsfield",
@@ -506,9 +521,10 @@
   {
     "slug": "hugging-face",
     "name": "Hugging Face",
-    "file": "hugging-face.ico",
+    "file": "hugging-face.png",
     "website": "https://huggingface.co",
-    "source": "https://huggingface.co/favicon.ico"
+    "source": "https://huggingface.co/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "ideogram",
@@ -535,9 +551,10 @@
   {
     "slug": "jan",
     "name": "Jan",
-    "file": "jan.ico",
-    "website": "https://jan.ai",
-    "source": "https://jan.ai/favicon.ico"
+    "file": "jan.png",
+    "website": "https://www.jan.ai",
+    "source": "https://www.jan.ai/_next/static/media/logo-jan.db83c5f0.svg",
+    "note": "Raster extracted from the official site SVG (embedded PNG). The SVG itself includes a white plate."
   },
   {
     "slug": "jasper",
@@ -565,9 +582,10 @@
   {
     "slug": "julius-ai",
     "name": "Julius AI",
-    "file": "julius-ai.ico",
+    "file": "julius-ai.png",
     "website": "https://julius.ai",
-    "source": "https://julius.ai/favicon.ico"
+    "source": "https://julius.ai/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring. Near-white edge matte cleared."
   },
   {
     "slug": "khan-academy-khanmigo",
@@ -750,9 +768,10 @@
   {
     "slug": "mistral-ai-le-chat",
     "name": "Mistral AI (Le Chat)",
-    "file": "mistral-ai-le-chat.ico",
+    "file": "mistral-ai-le-chat.png",
     "website": "https://mistral.ai",
-    "source": "https://mistral.ai/favicon.ico"
+    "source": "https://mistral.ai/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "monarch",
@@ -772,9 +791,10 @@
   {
     "slug": "n8n",
     "name": "n8n",
-    "file": "n8n.ico",
+    "file": "n8n.png",
     "website": "https://n8n.io",
-    "source": "https://n8n.io/favicon.ico"
+    "source": "https://n8n.io/apple-touch-icon.png",
+    "note": "Official site icon. Near-white edge matte cleared; mark pixels unchanged."
   },
   {
     "slug": "nanonets",
@@ -787,9 +807,10 @@
   {
     "slug": "napkin-ai",
     "name": "Napkin AI",
-    "file": "napkin-ai.ico",
+    "file": "napkin-ai.png",
     "website": "https://www.napkin.ai",
-    "source": "https://www.napkin.ai/favicon.ico"
+    "source": "https://www.napkin.ai/apple-touch-icon.png?v=2",
+    "note": "Official site icon. "
   },
   {
     "slug": "naver-hyperclova-x-cue",
@@ -831,9 +852,10 @@
   {
     "slug": "openevidence",
     "name": "OpenEvidence",
-    "file": "openevidence.ico",
+    "file": "openevidence.png",
     "website": "https://www.openevidence.com",
-    "source": "https://www.openevidence.com/favicon.ico"
+    "source": "https://www.openevidence.com/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "openrouter",
@@ -1041,9 +1063,10 @@
   {
     "slug": "salesforce-einstein",
     "name": "Salesforce Einstein",
-    "file": "salesforce-einstein.ico",
-    "website": "https://salesforce.com/einstein",
-    "source": "https://www.salesforce.com/c2/public/app/favicon.ico"
+    "file": "salesforce.svg",
+    "website": "https://www.salesforce.com",
+    "source": "https://wp.sfdcdigital.com/en-us/wp-content/uploads/sites/4/2024/11/logo-salesforce.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "sarvam-ai",
@@ -1071,9 +1094,10 @@
   {
     "slug": "scispace",
     "name": "SciSpace",
-    "file": "scispace.png",
-    "website": "https://typeset.io",
-    "source": "https://typeset.io/favicon.ico"
+    "file": "scispace.svg",
+    "website": "https://scispace.com",
+    "source": "https://scispace.com/favicon.ico",
+    "note": "Official site icon. "
   },
   {
     "slug": "semantic-scholar",
@@ -1213,16 +1237,18 @@
   {
     "slug": "trinka-ai",
     "name": "Trinka AI",
-    "file": "trinka-ai.png",
-    "website": "https://trinka.ai",
-    "source": "https://www.trinka.ai/favicon.ico"
+    "file": "trinka.svg",
+    "website": "https://www.trinka.ai",
+    "source": "https://www.trinka.ai/assets/images/trinka_logo.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "udio",
     "name": "Udio",
-    "file": "udio.ico",
+    "file": "udio.png",
     "website": "https://udio.com",
-    "source": "https://www.udio.com/favicon.ico?favicon.0wbc3vz33genq.ico"
+    "source": "https://www.udio.com/favicon.ico?favicon.0wbc3vz33genq.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "unriddle",
@@ -1318,9 +1344,10 @@
   {
     "slug": "wondershare-pdfelement-ai",
     "name": "Wondershare PDFelement AI",
-    "file": "wondershare-pdfelement-ai.ico",
+    "file": "pdfelement-square.svg",
     "website": "https://pdf.wondershare.com",
-    "source": "https://pdf.wondershare.com/favicon.ico"
+    "source": "https://neveragain.allstatics.com/2019/assets/icon/logo/pdfelement-square.svg",
+    "note": "Official site icon. "
   },
   {
     "slug": "wordpress-ai-jetpack-ai",
@@ -1348,23 +1375,26 @@
   {
     "slug": "zapier",
     "name": "Zapier",
-    "file": "zapier.ico",
+    "file": "zapier.png",
     "website": "https://zapier.com",
-    "source": "https://zapier.com/favicon.ico"
+    "source": "https://zapier.com/favicon.ico",
+    "note": "Largest embedded frame of the official ICO, saved as PNG without recoloring."
   },
   {
     "slug": "zillow-ai-zestimate",
     "name": "Zillow AI / Zestimate",
-    "file": "zillow-ai-zestimate.ico",
-    "website": "https://zillow.com",
-    "source": "https://zillow.com/favicon.ico"
+    "file": "zillow-ai-zestimate.png",
+    "website": "https://www.zillow.com",
+    "source": "https://www.zillow.com/apple-touch-icon.png",
+    "note": "Official site icon. "
   },
   {
     "slug": "zoom-ai-companion",
     "name": "Zoom AI Companion",
-    "file": "zoom-ai-companion.ico",
-    "website": "https://zoom.us",
-    "source": "https://st1.zoom.us/homepage/20261014-1234/primary/favicon.ico"
+    "file": "zoom-ai-companion.png",
+    "website": "https://www.zoom.com",
+    "source": "https://www.zoom.com/apple-touch-icon.png",
+    "note": "Official site icon. Near-white edge matte cleared; mark pixels unchanged."
   },
   {
     "slug": "chatgpt",
@@ -1400,5 +1430,109 @@
     "website": "https://github.com/openai",
     "source": "https://avatars.githubusercontent.com/u/14957082?v=4",
     "note": "Official OpenAI organization mark, not a product-specific icon"
+  },
+  {
+    "slug": "ai21-labs-jamba",
+    "name": "AI21 Labs (Jamba)",
+    "file": "ai21-labs-jamba.png",
+    "website": "https://ai21.com",
+    "source": "https://www.ai21.com/wp-content/uploads/2026/01/favicon.png",
+    "note": "Official site favicon."
+  },
+  {
+    "slug": "aider",
+    "name": "Aider",
+    "file": "aider.svg",
+    "website": "https://aider.chat",
+    "source": "https://aider.chat/assets/logo.svg",
+    "note": "Official site icon added where the catalog previously had no local asset."
+  },
+  {
+    "slug": "canopy-tax",
+    "name": "Canopy (Tax)",
+    "file": "canopy-tax.png",
+    "website": "https://canopytax.com",
+    "source": "https://www.getcanopy.com/wp-content/uploads/2026/04/cropped-favicon-192x192.png",
+    "note": "Official icon from the site canopytax.com redirects to."
+  },
+  {
+    "slug": "cleo",
+    "name": "Cleo",
+    "file": "cleo.png",
+    "website": "https://web.meetcleo.com",
+    "source": "https://www.datocms-assets.com/157778/1748858417-icon.png",
+    "note": "Official icon linked from the vendor homepage."
+  },
+  {
+    "slug": "evenup",
+    "name": "EvenUp",
+    "file": "evenup.png",
+    "website": "https://www.evenuplaw.com",
+    "source": "https://www.evenuplaw.com/wp-content/uploads/cropped-favicon-192x192.png",
+    "note": "Official site apple-touch icon."
+  },
+  {
+    "slug": "gemini",
+    "name": "Gemini",
+    "file": "gemini.png",
+    "website": "https://gemini.google.com",
+    "source": "https://www.gstatic.com/lamda/images/gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+    "note": "Official site icon added where the catalog previously had no local asset."
+  },
+  {
+    "slug": "grok-bot",
+    "name": "Grok Bot",
+    "file": "grok-bot.png",
+    "website": "https://grokbot.com",
+    "source": "https://x.ai/icon.png",
+    "note": "Official icon from the site grokbot.com redirects to (x.ai). Near-white edge matte cleared."
+  },
+  {
+    "slug": "localai",
+    "name": "LocalAI",
+    "file": "localai.png",
+    "website": "https://localai.io",
+    "source": "https://localai.io/img/logo-mark.png",
+    "note": "Official site icon added where the catalog previously had no local asset."
+  },
+  {
+    "slug": "microsoft-power-automate",
+    "name": "Microsoft Power Automate",
+    "file": "microsoft-power-automate.png",
+    "website": "https://www.microsoft.com/en-us/power-platform/products/power-automate/",
+    "source": "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/Hero_PAU_icon",
+    "note": "Official site icon added where the catalog previously had no local asset."
+  },
+  {
+    "slug": "murf-ai",
+    "name": "Murf AI",
+    "file": "murf-ai.png",
+    "website": "https://murf.ai",
+    "source": "https://cdn.prod.website-files.com/66b3765153a8a0c399c70981/67065c22d34646f3bb23b232_android-chrome-256x256.png",
+    "note": "Official site icon added where the catalog previously had no local asset."
+  },
+  {
+    "slug": "pictory-ai",
+    "name": "Pictory AI",
+    "file": "pictory-ai.png",
+    "website": "https://pictory.ai",
+    "source": "https://pictory.ai/wp-content/uploads/2022/03/cropped-Just-Octopus-with-oct-1.png",
+    "note": "Official site icon."
+  },
+  {
+    "slug": "scholarcy",
+    "name": "Scholarcy",
+    "file": "scholarcy.png",
+    "website": "https://scholarcy.com",
+    "source": "https://cdn.prod.website-files.com/65388e98a52fc34922751f84/660f85738e8cf8c170342621_logo__webclip.png",
+    "note": "Official site web clip icon."
+  },
+  {
+    "slug": "scite",
+    "name": "Scite",
+    "file": "scite.png",
+    "website": "https://scite.ai",
+    "source": "https://cdn.scite.ai/assets/images/favicon.ico",
+    "note": "Official site icon added where the catalog previously had no local asset."
   }
 ]

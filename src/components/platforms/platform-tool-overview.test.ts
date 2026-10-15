@@ -4,6 +4,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, it } from "node:test";
 import { overlayPlatformWithFacts } from "@/data/facts/overlay";
 import { validExampleFacts } from "@/data/facts/fixtures/valid-example";
+import { PlatformPricingTable } from "./platform-pricing-table";
+import { buildTechnicalDetailRows } from "./platform-technical-details";
 import { PlatformToolOverview } from "./platform-tool-overview";
 
 function countOccurrences(html: string, needle: string): number {
@@ -133,5 +135,56 @@ describe("platform overview field uniqueness", () => {
     assert.ok(html.includes("API pricing"));
     assert.ok(html.includes("Flash $0.30 / 1M input"));
     assert.ok(html.includes("Plus"));
+  });
+});
+
+describe("pricing table and ramp-up labels", () => {
+  it("hides an empty key-limits column and keeps plan names", () => {
+    const html = renderToStaticMarkup(
+      h(PlatformPricingTable, {
+        plans: [
+          { name: "Free", price: "Free", period: "", limits: "" },
+          { name: "Pro", price: "$20/mo", period: "", limits: "" },
+        ],
+      }),
+    );
+    assert.equal(html.includes("Key limits"), false);
+    assert.equal(html.includes("Listed"), false);
+    assert.ok(html.includes("Free"));
+    assert.ok(html.includes("Pro"));
+  });
+
+  it("shows key limits only for rows that have them", () => {
+    const html = renderToStaticMarkup(
+      h(PlatformPricingTable, {
+        plans: [
+          { name: "Free", price: "Free", period: "", limits: "20 messages/day" },
+          { name: "Pro", price: "$20/mo", period: "", limits: "" },
+        ],
+      }),
+    );
+    assert.ok(html.includes("Key limits"));
+    assert.ok(html.includes("20 messages/day"));
+    assert.equal(html.includes("—"), false);
+  });
+
+  it("does not show a learning-curve speed word beside difficulty when a time is known", () => {
+    const rows = buildTechnicalDetailRows({
+      difficultyLevel: "INTERMEDIATE",
+      privacyLevel: "MEDIUM",
+      timeToProductivity: "5 min",
+      learningCurve: "Instant",
+      offlineCapable: false,
+      apiAvailable: true,
+      languageSupport: "English",
+      keyIntegrations: null,
+      upgradeTriggers: null,
+    });
+    const labels = rows.map((row) => row.label);
+    assert.ok(labels.includes("Difficulty"));
+    assert.ok(labels.includes("Time to productivity"));
+    assert.equal(labels.includes("Learning curve"), false);
+    assert.equal(rows.some((row) => row.value === "Instant"), false);
+    assert.equal(rows.find((row) => row.label === "Difficulty")?.value, "Intermediate");
   });
 });

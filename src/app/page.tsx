@@ -36,7 +36,7 @@ export default async function HomePage() {
             <Link href="/discover" className="lp-button min-h-12 sm:min-w-60">Explore AI tools <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             <Link href="/quiz" className="lp-button-secondary min-h-12 sm:min-w-60">Find my match <Sparkles className="h-4 w-4 text-purple-300" aria-hidden="true" /></Link>
           </div>
-          <p className="mt-4 text-xs text-gray-400 sm:text-sm">Free to explore. No account needed.</p>
+          <p className="mt-4 text-xs text-gray-300 sm:text-sm">Free to explore. No account needed.</p>
         </section>
         <section aria-labelledby="create-heading" className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <h2 id="create-heading" className="mb-8 text-center text-2xl font-bold tracking-tight text-white sm:text-3xl">What will you create?</h2>

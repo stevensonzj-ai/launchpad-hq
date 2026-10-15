@@ -26,22 +26,24 @@ export default function AdvertisePage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-white">Sponsor Guidelines</h1>
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
+      <header className="lp-stars relative isolate overflow-hidden rounded-3xl border border-amber-100/10 bg-gradient-to-br from-gray-900/80 to-gray-950 px-6 py-10 sm:px-10">
+        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">Sponsor Guidelines</h1>
+      </header>
       <AdvertiseGuidelines />
 
-      <section className="mt-12 space-y-4">
-        <h2 className="text-xl font-semibold text-white">Weekly availability</h2>
-        <p className="text-sm text-gray-400">
+      <section className="mt-8 space-y-4 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Weekly availability</h2>
+        <p className="text-sm leading-relaxed text-gray-300">
           Weeks start Monday, US Central Time. This calendar is a static list — email{" "}
           <a href={`mailto:${MAIL}`} className="text-orange-400 hover:underline">
             {MAIL}
           </a>{" "}
           to book. There is no checkout on this page.
         </p>
-        <div className="overflow-x-auto rounded-xl border border-gray-800">
-          <table className="w-full min-w-[28rem] text-left text-sm">
-            <thead className="border-b border-gray-800 bg-gray-900/80 text-xs uppercase tracking-wide text-gray-500">
+        <div className="overflow-x-auto rounded-xl border border-white/10">
+          <table className="w-full text-left text-sm">
+            <thead className="border-b border-white/10 bg-gray-950/60 text-xs uppercase tracking-wide text-gray-300">
               <tr>
                 <th className="px-4 py-3 font-medium">Week (Mon–Sun CT)</th>
                 {SPONSOR_SLOT_KEYS.map((slot) => (
@@ -54,7 +56,7 @@ export default function AdvertisePage() {
             <tbody>
               {SPONSOR_CALENDAR.map((row) => (
                 <tr key={row.weekStart} className="border-b border-gray-800/80 last:border-0">
-                  <td className="px-4 py-3 text-gray-300">{formatWeekRange(row.weekStart)}</td>
+                  <td className="px-4 py-3 text-gray-200">{formatWeekRange(row.weekStart)}</td>
                   {SPONSOR_SLOT_KEYS.map((slot) => {
                     const status = row.slots[slot];
                     return (

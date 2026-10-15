@@ -42,12 +42,14 @@ export function buildTechnicalDetailRows(
   ];
 
   const timeToProductivity = props.timeToProductivity?.trim();
+  const learningCurve = props.learningCurve?.trim();
+  // Catalog "learning curve" words (Instant, Easy, Moderate, Steep) are a coarse
+  // bin of time-to-productivity, not a skill rating. Showing "Instant" beside
+  // Difficulty makes the two fields sound like they disagree.
   if (timeToProductivity) {
     rows.push({ label: "Time to productivity", value: timeToProductivity });
-  }
-  const learningCurve = props.learningCurve?.trim();
-  if (learningCurve) {
-    rows.push({ label: "Learning curve", value: learningCurve });
+  } else if (learningCurve) {
+    rows.push({ label: "Ramp-up", value: learningCurve });
   }
   if (props.upgradeTriggers?.trim()) {
     rows.push({
@@ -82,7 +84,7 @@ export function PlatformTechnicalDetails(props: PlatformTechnicalDetailsProps) {
       <dl className="grid gap-x-8 sm:grid-cols-2 text-sm">
         {rows.map((row) => (
           <div key={row.label} className="min-w-0 border-t border-gray-700/50 py-4">
-            <dt className="mb-1.5 text-xs text-gray-400">
+            <dt className="mb-1.5 text-xs text-gray-300">
               {row.label}
               <FactCite fact={row.fact} />
             </dt>

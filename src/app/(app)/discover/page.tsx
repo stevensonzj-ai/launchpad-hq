@@ -233,7 +233,7 @@ export default async function DiscoverPage({
           sort,
         }}
       />
-      <p className="mb-5 text-sm text-gray-400" aria-live="polite">
+      <p className="mb-5 text-sm text-gray-300" aria-live="polite">
         Showing {platforms.length === 200 ? "the first " : ""}{platforms.length} {platforms.length === 1 ? "tool" : "tools"}{query ? ` for “${query}”` : ""}{!hasActiveFilter && !query ? ` across ${categories.length} categories` : ""}.
         {platforms.length === 200 ? " Narrow your search or choose a category to explore more." : ""}
       </p>

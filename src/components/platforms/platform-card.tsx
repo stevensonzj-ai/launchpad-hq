@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Globe, Smartphone } from "lucide-react";
 import { PlatformLogo } from "@/components/platforms/platform-logo";
 import type { ToolFacts } from "@/data/facts/types";
-import { startingPriceLabel } from "@/lib/platform-display";
+import { paidStartingPrice } from "@/lib/platform-display";
 import { cn } from "@/lib/utils";
 import { COST_TIER_LABEL, COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
@@ -63,7 +63,7 @@ export function PlatformCard({
   const showFavorite = isSignedIn !== undefined;
   const freeDetails = facts?.freeTier?.value.summary ?? freeTierFeatures;
   const source = facts?.freeTier;
-  const price = facts?.plans && facts.plans.value.some((plan) => !/^(?:\$0(?:\/|\b)|free\b)/i.test(plan.price)) ? startingPriceLabel(facts.plans.value) : undefined;
+  const price = facts?.plans ? paidStartingPrice(facts.plans.value) : undefined;
   const pricingSource = price && facts?.plans && (!source || source.sourceUrl !== facts.plans.sourceUrl || source.checkedAt !== facts.plans.checkedAt || source.status !== facts.plans.status) ? facts.plans : undefined;
   const categoryLabel: Record<string, string> = {
     "text-conversational-ai": "writing & conversation",
@@ -85,7 +85,7 @@ export function PlatformCard({
             <h3 className="text-lg font-semibold leading-snug text-white group-hover:text-orange-300">
               <Link href={`/platform/${slug}`} className="after:absolute after:inset-0 after:rounded-2xl">{name}</Link>
             </h3>
-            {company && <p className="mt-1 text-xs text-gray-400">by {company}</p>}
+            {company && <p className="mt-1 text-xs text-gray-300">by {company}</p>}
           </div>
         </div>
         <div className="relative z-10 flex shrink-0 flex-wrap items-start justify-end gap-2">

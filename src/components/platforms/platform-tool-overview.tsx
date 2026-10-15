@@ -116,7 +116,7 @@ export function PlatformToolOverview({
         <span className="flex items-center gap-3"><BookOpen aria-hidden="true" className="h-5 w-5 text-amber-300" /><span>Ready to try {platform.name}? <span className="text-gray-400">Start with the getting-started guide.</span></span></span><ArrowRight aria-hidden="true" className="h-4 w-4 text-amber-300 transition-transform group-hover:translate-x-1" />
       </Link>}
 
-      <div className="grid items-start gap-x-10 lg:grid-cols-[1.2fr_1fr]">
+      <div className="grid min-w-0 items-start gap-x-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
         <PlatformOverviewSections platform={platform} />
       </div>

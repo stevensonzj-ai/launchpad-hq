@@ -35,14 +35,26 @@ describe("platform display helpers", () => {
     assert.match(rows[1]?.price ?? "", /\$8/);
   });
 
-  it("picks a starting price from the first paid plan", () => {
+  it("picks a starting price from the free plan and the lowest paid price", () => {
     assert.equal(
       startingPriceLabel([
         { name: "Free", price: "$0", period: "month", limits: "" },
         { name: "Plus", price: "$8", period: "month", limits: "" },
       ]),
-      "$8/month",
+      "Free, from $8/month",
     );
+  });
+
+  it("reads plan names out of catalog pricing prose", () => {
+    const rows = parsePricingProse("Free tier; $20/mo Pro");
+    assert.deepEqual(
+      rows.map((row) => [row.name, row.price]),
+      [
+        ["Free", "Free"],
+        ["Pro", "$20/mo"],
+      ],
+    );
+    assert.equal(startingPriceLabel(rows), "Free, from $20/mo");
   });
 
   it("prefers fact-file free-tier copy", () => {

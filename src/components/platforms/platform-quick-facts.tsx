@@ -24,7 +24,7 @@ export function PlatformQuickFacts({ items }: { items: QuickFact[] }) {
           return (
           <div key={item.label} className="rounded-xl border border-gray-700/60 bg-gray-900/40 p-4">
             <Icon aria-hidden="true" className="mb-3 h-5 w-5 text-amber-200/80" />
-            <dt className="text-[10px] font-medium uppercase tracking-widest text-gray-400">
+            <dt className="text-[10px] font-medium uppercase tracking-widest text-gray-300">
               {item.label}
               <FactCite fact={item.fact} />
             </dt>
