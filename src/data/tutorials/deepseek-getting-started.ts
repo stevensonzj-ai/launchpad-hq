@@ -30,7 +30,7 @@ export const deepseekTutorial: PlatformTutorialData = {
   security: [
     { kind: 'text', text: "DeepSeek's privacy policy (last updated 10 February 2026) states that it directly collects, processes and stores your personal data in the People's Republic of China, and its terms of use (last updated 27 March 2026) are governed by the laws of mainland China, with disputes heard by a court near the company's registered office in Hangzhou. The policy also says DeepSeek may share data to comply with legal process or government requests. You do not need to be alarmed to take that seriously: it simply means your chats sit under a different legal system from the one you probably live in, with fewer practical ways for you to challenge how they are used." },
     { kind: 'list', label: "What the same policy says about your chats:", items: [
-      "DeepSeek's privacy policy says it uses your data to train and improve its models, and lists opting out of that as one of your rights. It describes no switch for this in the app; the route is a request to privacy@deepseek.com — check the current policy for how before relying on it.",
+      "DeepSeek's privacy policy says it uses your data to train and improve its models, and lists opting out of that as one of your rights. It describes no switch for this in the app, and it does not spell out how to make that request, so read the current policy before assuming you can opt out.",
       "The policy says DeepSeek keeps your personal data for as long as you have an account, and longer where it needs to for legal or contractual reasons.",
     ] },
     { kind: 'list', label: "Before you type anything:", items: [
