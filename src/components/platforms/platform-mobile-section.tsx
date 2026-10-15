@@ -44,7 +44,7 @@ export function PlatformMobileSection({
   }
 
   return (
-    <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
+    <section className="lp-overview-panel">
       <div className="mb-4 flex items-center gap-2">
         <Smartphone className="h-5 w-5 text-orange-400" aria-hidden />
         <h2 className="text-lg font-semibold text-white">Get it</h2>

@@ -36,6 +36,30 @@ body {
   background-image: radial-gradient(1px 1px at 24px 36px, white, transparent), radial-gradient(1px 1px at 143px 112px, white, transparent), radial-gradient(1px 1px at 291px 62px, var(--color-amber-300), transparent), radial-gradient(1px 1px at 347px 207px, white, transparent);
   background-size: 403px 267px;
 }
+.lp-home-sky::before {
+  opacity: .6;
+  background-image: radial-gradient(1.5px 1.5px at 24px 36px, white 20%, transparent 80%), radial-gradient(1px 1px at 143px 112px, white 20%, transparent 80%), radial-gradient(1.5px 1.5px at 291px 62px, var(--color-amber-200) 10%, transparent 80%), radial-gradient(1px 1px at 347px 207px, white 20%, transparent 80%), radial-gradient(1px 1px at 78px 222px, var(--color-sky-200), transparent);
+  mask-image: linear-gradient(black, black 65%, transparent);
+}
+.lp-home-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 35% 24% at 18% 19%, color-mix(in srgb, var(--color-sky-400) 7%, transparent), transparent), radial-gradient(ellipse 31% 28% at 80% 29%, color-mix(in srgb, var(--color-purple-400) 6%, transparent), transparent), radial-gradient(ellipse 30% 12% at 55% 4%, color-mix(in srgb, var(--color-orange-300) 4%, transparent), transparent);
+}
+.lp-goal-emblem { color: var(--goal); filter: drop-shadow(0 0 9px color-mix(in srgb, var(--goal) 18%, transparent)); }
+.lp-overview-panel {
+  min-width: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-amber-100) 14%, transparent);
+  padding: 1.75rem 0;
+}
+.lp-overview-panel h2 { letter-spacing: -.025em; }
+.lp-discover-sky {
+  background: radial-gradient(ellipse at 55% 95%, color-mix(in srgb, var(--color-sky-300) 5%, transparent), transparent 65%);
+}
+.lp-discover-sky::before { opacity: .5; }
 .lp-button, .lp-button-secondary {
   display: inline-flex;
   align-items: center;

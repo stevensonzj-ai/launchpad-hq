@@ -96,7 +96,7 @@ export default async function PlatformPage({
   const isFavorited = favoriteIds.has(platform.id);
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-10">
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
       <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-400">
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
@@ -107,11 +107,11 @@ export default async function PlatformPage({
         <span className="text-gray-300">{view.name ?? platform.name}</span>
       </div>
 
-      <div className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+      <div className="lp-stars relative isolate mb-6 flex flex-col justify-between gap-5 py-3 sm:flex-row sm:items-center">
         <div className="flex min-w-0 items-center gap-4">
           <PlatformLogo slug={platform.slug} name={view.name ?? platform.name} logoUrl={platform.logoUrl} large />
           <div className="min-w-0">
-            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{view.name ?? platform.name}</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-amber-50 sm:text-5xl">{view.name ?? platform.name}</h1>
             {(view.company ?? platform.company) && <p className="mt-2 text-sm text-gray-400">by {view.company ?? platform.company}</p>}
           </div>
         </div>
@@ -129,7 +129,7 @@ export default async function PlatformPage({
               rel="noopener noreferrer"
               className="lp-button"
             >
-              Visit <ExternalLink className="h-4 w-4" />
+              Open {view.name ?? platform.name} <ExternalLink className="h-4 w-4 shrink-0" />
             </a>
           )}
         </div>
@@ -146,6 +146,7 @@ export default async function PlatformPage({
         initialTab={tab}
       >
         <PlatformToolOverview
+          gettingStartedHref={hasTutorial ? `/platform/${platform.slug}?tab=tutorials` : undefined}
           platform={{
             ...view,
             name: view.name ?? platform.name,

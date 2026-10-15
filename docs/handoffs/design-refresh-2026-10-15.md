@@ -66,3 +66,19 @@ The implementation is a responsive translation of approved concepts, not a pixel
 - The previous Vercel preview completed successfully before these refinements. Recheck the new deployment after pushing; nothing is merged or promoted to production.
 
 Final refinement production build passed (47 static pages generated); git diff whitespace check passed.
+
+## Homepage atmosphere and overview design round
+
+Owner requested more visible homepage stars, an optional very faint nebula, more intentionally designed goal emblems, a restrained Discover-header refinement, and an overview closer to the warm illustrated concept.
+
+- Homepage uses brighter sparse star points and low-opacity blue/violet/gold radial haze. These layers are static, decorative, and behind the existing content. Existing hero text, spacing, goal content, and workflow strip remain intact.
+- Added `src/components/brand/goal-emblem.tsx`: four coordinated custom SVG mission badges (quill/inkwell, framed picture, orbital compass, and automation circuit). They reuse each goal's existing accent color, are hidden from assistive technology, and contain no external image requests.
+- Discover adds a quiet ambient background, eyebrow accent line, and bottom divider. Existing rocket artwork, filters, and three-column wide layout remain.
+- Platform overview now has an illustrated warm Verdict lead, four scannable Quick facts tiles, a conditional link to the existing tutorial, a desktop pricing/capabilities pairing, capability chips, and a responsive Technical details grid. The profile heading and Open action also have stronger hierarchy. Guide artwork uses responsive sizes appropriate for wide banners.
+- Editorial content, fact citation logic, plan calculations, model sections, and source handling are preserved. No `src/data/`, Prisma, auth, proxy, or dependency changes. The new tutorial link renders only when a registered static tutorial exists. The decorative paper/pen illustration represents the editorial guide, not a claim about a tool's capabilities.
+- Presentation components now additionally touched: Verdict, Quick facts, Pricing, Key capabilities, Get it, Technical details, and the overview composition. Any concurrent template work should reconcile these presentation changes while retaining the latest editorial/fact logic.
+- Browser checks: homepage at 1440px/390px, four emblems present, no page overflow; Claude overview at 1440px/390px with all expected section headings, no broken loaded images; Anthropic API at 390px retains API pricing, What changed, and Models without page overflow; new guide link opens the existing Getting started tab. Discover header verified at 1440px. Screenshots are in ignored `tmp/design-review/`: `home-personable-desktop.jpg`, `home-personable-mobile.jpg`, `overview-personable-top.jpg`, `overview-personable-desktop.jpg`, `overview-personable-mobile.jpg`, and `discover-personable-header.jpg`.
+- Initial local Claude route returned a stale 404 while the public catalog API still listed the record. Stopped the server, moved the resolved `.next/dev` cache aside, and restarted; the catalog link and subsequent direct profile navigations rendered normally. The saved cache is at ignored `.next/dev-cache-before-overview`. Initially keeping it under `tmp/design-review/` caused TypeScript to include a malformed generated route declaration in the build; moving the cache under `.next/` removed that stray build input. No app logic or database changes were needed.
+- Validation: 49 regression tests passed (including overview field uniqueness), changed-file ESLint passed, tutorial audit passed for all 164 registered pages, and whitespace checks passed. Production build result recorded below.
+
+Final production build passed, including TypeScript and all 47 static pages. Previous Vercel deployment was successful and PR #59 remained draft/mergeable before this round was pushed. Updated preview requires its own deployment review.

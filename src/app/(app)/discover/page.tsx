@@ -203,9 +203,9 @@ export default async function DiscoverPage({
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 min-[100rem]:max-w-[108rem]">
-      <section className="lp-stars relative isolate mb-7 overflow-hidden rounded-2xl py-7 pr-2 sm:py-10 sm:pr-72">
+      <section className="lp-stars lp-discover-sky relative isolate mb-7 overflow-hidden rounded-2xl border-b border-amber-100/10 py-7 pr-2 sm:py-10 sm:pr-72">
         <Image src="/images/launchpad/discover-rocket.jpg" alt="" width={900} height={450} priority className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden h-full w-[540px] object-cover object-right [mask-image:linear-gradient(to_right,transparent,black_35%)] sm:block" />
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-400">A universe of possibilities</p>
+        <p className="mb-3 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-400"><span aria-hidden="true" className="h-px w-6 bg-orange-300/60" />A universe of possibilities</p>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">What will you <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">try next?</span></h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-300">Explore tools for your ideas, your budget, and your next project.</p>
       </section>

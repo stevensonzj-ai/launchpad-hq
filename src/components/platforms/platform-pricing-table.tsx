@@ -11,7 +11,7 @@ export function PlatformPricingTable({ plans, plansFact }: PlatformPricingTableP
   if (plans.length === 0) return null;
 
   return (
-    <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+    <section className="lp-overview-panel">
       <div className="mb-4 flex items-center gap-1">
         <h2 className="text-lg font-semibold text-white">Pricing</h2>
         <FactCite fact={plansFact} />
@@ -32,7 +32,7 @@ export function PlatformPricingTable({ plans, plansFact }: PlatformPricingTableP
             {plans.map((plan) => {
               const price = plan.period ? `${plan.price}/${plan.period}` : plan.price;
               return (
-                <tr key={`${plan.name}-${price}`} className="border-b border-gray-800/80 last:border-0">
+                <tr key={`${plan.name}-${price}`} className="border-b border-gray-800/80 transition-colors hover:bg-amber-100/[0.03] last:border-0">
                   <td className="py-2.5 pr-4 font-medium text-white">{plan.name}</td>
                   <td className="py-2.5 pr-4 text-gray-200">{price}</td>
                   <td className="py-2.5 text-gray-400">{plan.limits || "—"}</td>

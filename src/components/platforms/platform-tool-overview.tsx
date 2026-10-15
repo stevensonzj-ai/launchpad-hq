@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { FactCite } from "@/components/platforms/fact-cite";
 import { PlatformMobileSection } from "@/components/platforms/platform-mobile-section";
 import { PlatformOverviewSections } from "@/components/platforms/platform-overview-sections";
@@ -46,6 +48,7 @@ type PlatformToolOverviewProps = {
   /** When true, models live in the dedicated Models section, not Technical details. */
   hasModelFamily: boolean;
   modelsSection?: ReactNode;
+  gettingStartedHref?: string;
 };
 
 export function PlatformToolOverview({
@@ -53,6 +56,7 @@ export function PlatformToolOverview({
   facts,
   hasModelFamily,
   modelsSection,
+  gettingStartedHref,
 }: PlatformToolOverviewProps) {
   const plans = applyUsageLimitsToFreePlan(
     plansFromFactsOrProse(facts, platform.currentPricing, platform.costTier),
@@ -70,7 +74,7 @@ export function PlatformToolOverview({
   const showModelsInTechnical = Boolean(facts?.models) && !hasModelFamily;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-7">
       {facts?.lifecycle === "discontinued" && (
         <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
           This tool is marked discontinued. Confirm current availability on the official site before signing up.
@@ -108,10 +112,17 @@ export function PlatformToolOverview({
         ]}
       />
 
-      <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
+      {gettingStartedHref && <Link href={gettingStartedHref} className="group flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200/20 bg-gradient-to-r from-amber-100/[0.07] to-transparent px-5 py-4 text-sm text-amber-50 transition-colors hover:border-amber-300/50">
+        <span className="flex items-center gap-3"><BookOpen aria-hidden="true" className="h-5 w-5 text-amber-300" /><span>Ready to try {platform.name}? <span className="text-gray-400">Start with the getting-started guide.</span></span></span><ArrowRight aria-hidden="true" className="h-4 w-4 text-amber-300 transition-transform group-hover:translate-x-1" />
+      </Link>}
+
+      <div className="grid items-start gap-x-10 lg:grid-cols-[1.2fr_1fr]">
+        <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
+        <PlatformOverviewSections platform={platform} />
+      </div>
 
       {facts?.apiPricing ? (
-        <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <section className="lp-overview-panel">
           <div className="mb-2 flex items-center gap-1">
             <h2 className="text-lg font-semibold text-white">API pricing</h2>
             <FactCite fact={facts.apiPricing} />
@@ -122,8 +133,6 @@ export function PlatformToolOverview({
           ) : null}
         </section>
       ) : null}
-
-      <PlatformOverviewSections platform={platform} />
 
       <PlatformMobileSection
         name={platform.name}

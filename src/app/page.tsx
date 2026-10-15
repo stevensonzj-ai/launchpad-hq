@@ -1,17 +1,18 @@
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles, Rocket, PenLine, ImageIcon, Workflow } from "lucide-react";
+import { ArrowRight, Sparkles, Rocket } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
 import { getPlatformCount, getCategoryCount } from "@/lib/platforms";
 import { Header } from "@/components/layout/header";
 import { LaunchpadArt } from "@/components/brand/launchpad-art";
+import { GoalEmblem } from "@/components/brand/goal-emblem";
 
 export const revalidate = 3600;
 
 const goals = [
-  { title: "Something to say", description: "Write, brainstorm, and turn your ideas into something people will love.", kind: "writing", icon: PenLine, category: "text-conversational-ai" },
-  { title: "Something to see", description: "Generate and edit images, designs, and visual ideas.", kind: "images", icon: ImageIcon, category: "image-generation-editing" },
-  { title: "Something to discover", description: "Research, explore, and make sense of information faster.", kind: "research", icon: Search, category: "research-academic-tools" },
-  { title: "Something that runs itself", description: "Automate your work and connect your favorite apps.", kind: "automation", icon: Workflow, category: "workflow-automation" },
+  { title: "Something to say", description: "Write, brainstorm, and turn your ideas into something people will love.", kind: "writing", category: "text-conversational-ai" },
+  { title: "Something to see", description: "Generate and edit images, designs, and visual ideas.", kind: "images", category: "image-generation-editing" },
+  { title: "Something to discover", description: "Research, explore, and make sense of information faster.", kind: "research", category: "research-academic-tools" },
+  { title: "Something that runs itself", description: "Automate your work and connect your favorite apps.", kind: "automation", category: "workflow-automation" },
 ] as const;
 
 export default async function HomePage() {
@@ -20,7 +21,7 @@ export default async function HomePage() {
   return (
     <>
       <Header />
-      <main className="lp-stars relative isolate overflow-hidden bg-gray-950">
+      <main className="lp-stars lp-home-sky relative isolate overflow-hidden bg-gray-950">
         <section className="relative mx-auto max-w-7xl px-5 pb-20 pt-12 text-center sm:px-8 sm:pb-24 sm:pt-16 lg:pt-14">
           <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-orange-400/40 bg-gray-900/60 shadow-[0_0_36px_-8px_var(--color-orange-500)]">
             <Rocket className="h-10 w-10 -rotate-45 text-orange-400" aria-hidden="true" />
@@ -40,10 +41,10 @@ export default async function HomePage() {
         <section aria-labelledby="create-heading" className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <h2 id="create-heading" className="mb-8 text-center text-2xl font-bold tracking-tight text-white sm:text-3xl">What will you create?</h2>
           <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {goals.map(({ title, description, kind, icon: Icon, category }) => (
+            {goals.map(({ title, description, kind, category }) => (
               <Link key={kind} href={`/discover?category=${category}`} className={`lp-goal lp-goal-${kind} group flex min-w-0 flex-col overflow-hidden rounded-2xl border p-5 pb-0 transition-transform motion-safe:hover:-translate-y-1`}>
                 <div className="flex items-start gap-3">
-                  <span className="lp-goal-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border"><Icon className="h-5 w-5" aria-hidden="true" /></span>
+                  <span className="lp-goal-emblem"><GoalEmblem kind={kind} /></span>
                   <div><h3 className="text-[15px] font-semibold leading-snug text-white">{title}</h3><p className="mt-2 text-sm leading-relaxed text-gray-300">{description}</p></div>
                 </div>
                 <div className="relative -mx-5 mt-auto h-40 overflow-hidden sm:h-44"><LaunchpadArt kind={kind} /></div>
