@@ -22,6 +22,7 @@ import {
   MOBILE_FILTERS,
 } from "@/lib/discover-filters";
 import { getActivePlacement } from "@/data/sponsors";
+import { HourlyRocket } from "@/components/sponsors/hourly-rocket";
 import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -214,6 +215,7 @@ export default async function DiscoverPage({
           <SponsoredSpotlight placement={discoverSpotlight} />
         </div>
       ) : null}
+      <HourlyRocket hasSponsorTarget={Boolean(discoverSpotlight)} />
 
       {/* Filter bar — the five facet rows collapsed into one control row.
           Client component; it only emits URLs via the shared buildDiscoverQuery.

@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { AdvertiseGuidelines } from "@/components/sponsors/advertise-guidelines";
 import {
   formatWeekRange,
+  getSponsorCalendar,
   slotLabel,
-  SPONSOR_CALENDAR,
   SPONSOR_SLOT_KEYS,
 } from "@/data/sponsors/calendar";
 import { SITE_IS_PUBLIC } from "@/lib/site";
@@ -25,6 +25,8 @@ export default function AdvertisePage() {
     notFound();
   }
 
+  const calendar = getSponsorCalendar();
+
   return (
     <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
       <header className="lp-stars relative isolate overflow-hidden rounded-3xl border border-amber-100/10 bg-gradient-to-br from-gray-900/80 to-gray-950 px-6 py-10 sm:px-10">
@@ -35,7 +37,8 @@ export default function AdvertisePage() {
       <section className="mt-8 space-y-4 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
         <h2 className="text-2xl font-semibold tracking-tight text-white">Weekly availability</h2>
         <p className="text-sm leading-relaxed text-gray-300">
-          Weeks start Monday, US Central Time. This calendar is a static list — email{" "}
+          Weeks start Monday, US Central Time. Open/Booked is derived from{" "}
+          <code className="text-gray-200">placements.ts</code> — email{" "}
           <a href={`mailto:${MAIL}`} className="text-orange-400 hover:underline">
             {MAIL}
           </a>{" "}
@@ -54,7 +57,7 @@ export default function AdvertisePage() {
               </tr>
             </thead>
             <tbody>
-              {SPONSOR_CALENDAR.map((row) => (
+              {calendar.map((row) => (
                 <tr key={row.weekStart} className="border-b border-gray-800/80 last:border-0">
                   <td className="px-4 py-3 text-gray-200">{formatWeekRange(row.weekStart)}</td>
                   {SPONSOR_SLOT_KEYS.map((slot) => {

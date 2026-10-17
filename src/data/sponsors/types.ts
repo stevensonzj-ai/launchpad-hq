@@ -13,6 +13,15 @@
  * - one https CTA
  */
 
+export const SPONSOR_COPY_LIMITS = {
+  headlineMax: 90,
+  blurbMax: 200,
+  featureBodyMinWords: 150,
+  featureBodyMaxWords: 400,
+  maxBullets: 3,
+  bulletMax: 80,
+} as const;
+
 export const SPONSOR_SLOTS = ["discover", "ai-of-the-week"] as const;
 export type SponsorSlot = (typeof SPONSOR_SLOTS)[number];
 

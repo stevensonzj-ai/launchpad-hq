@@ -1,3 +1,6 @@
+import { chicagoCalendarDate, PLACEMENTS } from "./index";
+import type { SponsorPlacement, SponsorSlot } from "./types";
+
 export const SPONSOR_SLOT_KEYS = ["discover-spotlight", "ai-of-the-week"] as const;
 export type SponsorCalendarSlot = (typeof SPONSOR_SLOT_KEYS)[number];
 
@@ -9,34 +12,10 @@ export type SponsorCalendarWeek = {
   slots: Record<SponsorCalendarSlot, SlotAvailability>;
 };
 
-function week(
-  weekStart: string,
-  discover: SlotAvailability = "open",
-  aiOfTheWeek: SlotAvailability = "open",
-): SponsorCalendarWeek {
-  return {
-    weekStart,
-    slots: {
-      "discover-spotlight": discover,
-      "ai-of-the-week": aiOfTheWeek,
-    },
-  };
-}
-
-/**
- * Static weekly inventory. Weeks start Monday, US Central Time.
- * Edit this list to mark slots booked; nothing writes to a database.
- */
-export const SPONSOR_CALENDAR: readonly SponsorCalendarWeek[] = [
-  week("2026-10-19"),
-  week("2026-10-26"),
-  week("2026-11-02"),
-  week("2026-11-09"),
-  week("2026-11-16"),
-  week("2026-11-23"),
-  week("2026-11-30"),
-  week("2026-12-07"),
-];
+const SLOT_TO_PLACEMENT: Record<SponsorCalendarSlot, SponsorSlot> = {
+  "discover-spotlight": "discover",
+  "ai-of-the-week": "ai-of-the-week",
+};
 
 const SLOT_LABEL: Record<SponsorCalendarSlot, string> = {
   "discover-spotlight": "Discover Spotlight",
@@ -65,3 +44,67 @@ export function formatWeekRange(weekStart: string): string {
   }).format(end);
   return `${startFmt} – ${endFmt}`;
 }
+
+function addUtcDays(ymd: string, days: number): string {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const date = new Date(Date.UTC(y, m - 1, d + days));
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+/** Monday on or before `ymd` (YYYY-MM-DD treated as a calendar date). */
+export function mondayOnOrBefore(ymd: string): string {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const date = new Date(Date.UTC(y, m - 1, d));
+  const weekday = date.getUTCDay(); // 0 Sun … 6 Sat
+  const delta = weekday === 0 ? -6 : 1 - weekday;
+  return addUtcDays(ymd, delta);
+}
+
+function weekOverlapsPlacement(weekStart: string, placement: SponsorPlacement): boolean {
+  const weekEnd = addUtcDays(weekStart, 6);
+  return placement.startDate <= weekEnd && weekStart <= placement.endDate;
+}
+
+function availabilityForSlot(
+  weekStart: string,
+  slot: SponsorCalendarSlot,
+  placements: readonly SponsorPlacement[],
+): SlotAvailability {
+  const placementSlot = SLOT_TO_PLACEMENT[slot];
+  return placements.some(
+    (placement) =>
+      placement.slot === placementSlot && weekOverlapsPlacement(weekStart, placement),
+  )
+    ? "booked"
+    : "open";
+}
+
+/**
+ * Upcoming inventory derived from `PLACEMENTS`. Weeks start Monday, US Central.
+ * Do not hand-edit booked/open here — add or remove rows in placements.ts.
+ */
+export function getSponsorCalendar(
+  date: Date = new Date(),
+  placements: readonly SponsorPlacement[] = PLACEMENTS,
+  weekCount = 8,
+): SponsorCalendarWeek[] {
+  let weekStart = mondayOnOrBefore(chicagoCalendarDate(date));
+  const weeks: SponsorCalendarWeek[] = [];
+  for (let i = 0; i < weekCount; i++) {
+    weeks.push({
+      weekStart,
+      slots: {
+        "discover-spotlight": availabilityForSlot(weekStart, "discover-spotlight", placements),
+        "ai-of-the-week": availabilityForSlot(weekStart, "ai-of-the-week", placements),
+      },
+    });
+    weekStart = addUtcDays(weekStart, 7);
+  }
+  return weeks;
+}
+
+/** Compat snapshot for callers that still import a constant list. */
+export const SPONSOR_CALENDAR: readonly SponsorCalendarWeek[] = getSponsorCalendar();

@@ -103,3 +103,22 @@ html {
     scroll-behavior: auto;
   }
 }
+
+@keyframes lp-rocket-to-banner {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-18deg);
+  }
+  100% {
+    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(8deg);
+  }
+}
+
+@keyframes lp-rocket-home-loop {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  45% {
+    transform: translate3d(min(28vw, 140px), min(18vh, 90px), 0) rotate(28deg);
+  }
+}

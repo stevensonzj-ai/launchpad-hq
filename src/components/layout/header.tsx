@@ -32,8 +32,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/90 backdrop-blur-md">
       <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
-          <Rocket className="h-6 w-6 text-orange-400" />
+          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
+          <Rocket data-hourly-rocket-home className="h-6 w-6 text-orange-400" />
           <span>Launchpad<span className="text-orange-400">HQ</span></span>
         </Link>
 
@@ -84,6 +84,9 @@ export function Header() {
           </Link>
           <Link href="/for-you" className="text-sm text-gray-400 hover:text-white">
             For you
+          </Link>
+          <Link href="/advertise" className="text-sm text-gray-400 hover:text-white">
+            Advertise
           </Link>
           {PRO_PLAN_ENABLED && (
             <Link href="/pricing" className="text-sm text-gray-400 hover:text-white">
@@ -145,6 +148,9 @@ export function Header() {
           </Link>
           <Link href="/for-you" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
             For you
+          </Link>
+          <Link href="/advertise" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+            Advertise
           </Link>
           {PRO_PLAN_ENABLED && (
             <Link href="/pricing" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>

@@ -6,7 +6,10 @@ export function SponsoredSpotlight({ placement }: { placement: SponsorPlacement 
   const image = placement.spotlightImageUrl ?? placement.heroImageUrl ?? placement.logoUrl;
 
   return (
-    <aside className="rounded-xl border border-orange-500/25 bg-gray-900/60 p-4 sm:p-5">
+    <aside
+      data-hourly-rocket-target
+      className="rounded-xl border border-orange-500/25 bg-gray-900/60 p-4 sm:p-5"
+    >
       <div className="mb-3 flex items-center gap-2">
         <SponsoredLabel />
         <span className="text-sm text-gray-400">{placement.sponsorName}</span>
