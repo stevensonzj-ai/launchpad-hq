@@ -5,20 +5,40 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import {
   chicagoHourKey,
+  craftPad,
   decideHourlyRocketLaunch,
   createRocketFlightPlan,
+  HOURLY_ROCKET_CRAFT,
   HOURLY_ROCKET_FLIGHT_MS,
+  headingDeg,
   HOURLY_ROCKET_STORAGE_KEY,
   isChicagoTopOfHour,
   isRocketDemo,
   isRocketPreview,
   readLastPlayedHourKey,
+  LANDING_ATTITUDE_START,
+  ROCKET_MIN_SETTLE_PX,
   ROCKET_PHASE,
   rocketPoseAt,
   shortestAngleDelta,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
 } from "./hourly-rocket";
+
+const PAD = craftPad(HOURLY_ROCKET_CRAFT);
+
+function assertCraftInside(
+  home: { x: number; y: number },
+  pose: { x: number; y: number },
+  viewport: { width: number; height: number },
+) {
+  const x = home.x + pose.x;
+  const y = home.y + pose.y;
+  assert.ok(x >= PAD - 0.5, `x ${x} < pad ${PAD}`);
+  assert.ok(y >= PAD - 0.5, `y ${y} < pad ${PAD}`);
+  assert.ok(x <= viewport.width - PAD + 0.5, `x ${x} > ${viewport.width - PAD}`);
+  assert.ok(y <= viewport.height - PAD + 0.5, `y ${y} > ${viewport.height - PAD}`);
+}
 
 describe("hourly rocket timing (US Central)", () => {
   it("treats the first seconds of a Chicago hour as top-of-hour", () => {
@@ -180,13 +200,8 @@ describe("hourly rocket flight path", () => {
     const plan = createRocketFlightPlan(home, { x: 520, y: 360 }, viewport);
     assert.ok(plan.sweep > Math.PI * 1.15);
     assert.ok(plan.sweep < Math.PI * 2.16);
-    const inset = 8;
     for (let i = 0; i <= 80; i++) {
-      const pose = rocketPoseAt(plan, i / 80);
-      assert.ok(home.x + pose.x >= inset - 0.5);
-      assert.ok(home.y + pose.y >= inset - 0.5);
-      assert.ok(home.x + pose.x <= viewport.width - inset + 0.5);
-      assert.ok(home.y + pose.y <= viewport.height - inset + 0.5);
+      assertCraftInside(home, rocketPoseAt(plan, i / 80), viewport);
     }
   });
 
@@ -230,24 +245,99 @@ describe("hourly rocket flight path", () => {
     const phoneHome = { x: 28, y: 24 };
     const phone = { width: 390, height: 844 };
     const plan = createRocketFlightPlan(phoneHome, { x: 160, y: 420 }, phone);
-    const inset = 8;
     for (let i = 0; i <= 60; i++) {
-      const pose = rocketPoseAt(plan, i / 60);
-      assert.ok(phoneHome.x + pose.x >= inset - 0.5);
-      assert.ok(phoneHome.y + pose.y >= inset - 0.5);
-      assert.ok(phoneHome.x + pose.x <= phone.width - inset + 0.5);
-      assert.ok(phoneHome.y + pose.y <= phone.height - inset + 0.5);
+      assertCraftInside(phoneHome, rocketPoseAt(plan, i / 60), phone);
     }
   });
 
   it("loops and lands back at header home when there is no booking target", () => {
     const plan = createRocketFlightPlan(home, { x: 0, y: 0 }, viewport);
     const land = rocketPoseAt(plan, 1);
-    assert.ok(Math.abs(plan.land.x) < 1);
-    assert.ok(Math.abs(plan.land.y) < 1);
-    assert.ok(plan.hover.y < plan.land.y);
-    assert.ok(Math.abs(land.x) < 1);
-    assert.ok(Math.abs(land.y) < 1);
+    assert.ok(Math.abs(home.x + plan.land.x - Math.max(PAD, home.x)) < 1);
+    assert.ok(Math.abs(home.y + plan.land.y - Math.max(PAD, home.y)) < 1);
+    assert.ok(Math.hypot(plan.hover.x - plan.land.x, plan.hover.y - plan.land.y) >= ROCKET_MIN_SETTLE_PX);
+    assert.ok(Math.abs(land.x - plan.land.x) < 1);
+    assert.ok(Math.abs(land.y - plan.land.y) < 1);
+  });
+
+  for (const [label, headerHome, view] of [
+    ["desktop", { x: 272, y: 30 }, { width: 1280, height: 800 }],
+    ["phone", { x: 272, y: 30 }, { width: 390, height: 844 }],
+  ] as const) {
+    it(`keeps the full craft on screen for header-home ${label} and shows a visible settle`, () => {
+      const plan = createRocketFlightPlan(headerHome, { x: 0, y: 0 }, view);
+      const hover = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd);
+      const land = rocketPoseAt(plan, 1);
+      const settle = Math.hypot(hover.x - land.x, hover.y - land.y);
+
+      assertCraftInside(headerHome, hover, view);
+      assertCraftInside(headerHome, land, view);
+      assert.ok(settle >= ROCKET_MIN_SETTLE_PX, `settle ${settle}px`);
+
+      const stepMs = 50;
+      for (let ms = 0; ms <= HOURLY_ROCKET_FLIGHT_MS; ms += stepMs) {
+        assertCraftInside(headerHome, rocketPoseAt(plan, ms / HOURLY_ROCKET_FLIGHT_MS), view);
+      }
+    });
+  }
+
+  /**
+   * Nose vs finite-difference travel. 25° when moving, on takeoff / loop /
+   * mid-approach. The loop-exit hermite (first 22% of approach) and the
+   * landing-attitude blend are excluded: the nose is rate-limited there so it
+   * does not snap, then pitches up for hover.
+   */
+  const HEADING_ALIGN_DEG = 25;
+  const HEADING_MIN_STEP_PX = 2.5;
+  const HEADING_SNAP_DEG = 36;
+
+  function assertHeadingTracksPath(
+    home: { x: number; y: number },
+    land: { x: number; y: number },
+    view: { width: number; height: number },
+    label: string,
+  ) {
+    const plan = createRocketFlightPlan(home, land, view);
+    const stepMs = 25;
+    let prev = rocketPoseAt(plan, 0);
+    let maxTurn = 0;
+    for (let ms = stepMs; ms <= HOURLY_ROCKET_FLIGHT_MS; ms += stepMs) {
+      const pose = rocketPoseAt(plan, ms / HOURLY_ROCKET_FLIGHT_MS);
+      const dx = pose.x - prev.x;
+      const dy = pose.y - prev.y;
+      const step = Math.hypot(dx, dy);
+      const turn = Math.abs(shortestAngleDelta(prev.angle, pose.angle));
+      if (turn > maxTurn) maxTurn = turn;
+      const midT = (ms - stepMs / 2) / HOURLY_ROCKET_FLIGHT_MS;
+      const approachS =
+        midT < ROCKET_PHASE.loopEnd
+          ? 0
+          : (midT - ROCKET_PHASE.loopEnd) /
+            (ROCKET_PHASE.approachEnd - ROCKET_PHASE.loopEnd);
+      const flying =
+        midT < ROCKET_PHASE.loopEnd ||
+        (midT < ROCKET_PHASE.approachEnd &&
+          approachS >= 0.22 &&
+          approachS < LANDING_ATTITUDE_START);
+      if (flying && step >= HEADING_MIN_STEP_PX) {
+        const travel = headingDeg(dx, dy);
+        const err = Math.abs(shortestAngleDelta(pose.angle, travel));
+        assert.ok(
+          err < HEADING_ALIGN_DEG,
+          `${label} t=${ms}ms heading ${pose.angle.toFixed(1)} vs travel ${travel.toFixed(1)} (err ${err.toFixed(1)}°)`,
+        );
+      }
+      if (midT >= ROCKET_PHASE.approachEnd) {
+        assert.ok(Math.abs(pose.angle) < 1, `${label} hover/land angle ${pose.angle}`);
+      }
+      prev = pose;
+    }
+    assert.ok(maxTurn < HEADING_SNAP_DEG, `${label} heading step ${maxTurn}deg`);
+  }
+
+  it("points the nose along travel for header-home and sponsor-target flights", () => {
+    assertHeadingTracksPath({ x: 272, y: 30 }, { x: 0, y: 0 }, viewport, "header-home");
+    assertHeadingTracksPath(home, { x: 400, y: 380 }, viewport, "sponsor-target");
   });
 });
 
