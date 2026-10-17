@@ -4,6 +4,11 @@ export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
 export const HOURLY_ROCKET_FLIGHT_MS = 7500;
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
 
+/** Preferred hover offset above the land target; also used below when the top edge is too tight. */
+export const ROCKET_HOVER_OFFSET_PX = 150;
+/** Minimum hover→land travel so the settle reads as a landing, not a fade-in. */
+export const ROCKET_MIN_SETTLE_PX = 60;
+
 /** Linear-time phase ends. Global motion uses easeInOut on this same 0–1 clock. */
 export const ROCKET_PHASE = {
   takeoffEnd: 0.1,
@@ -40,7 +45,8 @@ export type RocketFlightPlan = {
   pad: number;
 };
 
-function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
+/** Bounding-radius pad so a 56×80 craft stays inside the viewport even when rotated. */
+export function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
   return Math.max(craft.width, craft.height) / 2 + 8;
 }
 
@@ -55,16 +61,6 @@ function clampAbs(
   };
 }
 
-function clampOff(
-  off: RocketPoint,
-  home: RocketPoint,
-  viewport: RocketViewport,
-  pad: number,
-): RocketPoint {
-  const abs = clampAbs({ x: home.x + off.x, y: home.y + off.y }, viewport, pad);
-  return { x: abs.x - home.x, y: abs.y - home.y };
-}
-
 export function clamp01(t: number): number {
   return Math.min(1, Math.max(0, t));
 }
@@ -75,8 +71,13 @@ export function easeInOutCubic(t: number): number {
   return x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2;
 }
 
-function headingDeg(dx: number, dy: number): number {
+/** Nose heading in degrees: 0 is up, clockwise positive (CSS rotate). */
+export function headingDeg(dx: number, dy: number): number {
   return (Math.atan2(dx, -dy) * 180) / Math.PI;
+}
+
+function unwrapHeading(raw: number, expected: number): number {
+  return raw + 360 * Math.round((expected - raw) / 360);
 }
 
 export function shortestAngleDelta(from: number, to: number): number {
@@ -148,14 +149,54 @@ function phaseAt(u: number): RocketFlightPhase {
   return "land";
 }
 
-function ellipseHeadingUnwrapped(
-  rx: number,
-  ry: number,
-  theta: number,
-  expected: number,
-): number {
-  return headingDeg(-rx * Math.sin(theta), ry * Math.cos(theta)) +
-    360 * Math.round((expected - headingDeg(-rx * Math.sin(theta), ry * Math.cos(theta))) / 360);
+function displayedOffset(plan: RocketFlightPlan, u: number): RocketPoint {
+  const { p } = pathAt(plan, clamp01(u));
+  const abs = clampAbs(
+    { x: plan.home.x + p.x, y: plan.home.y + p.y },
+    plan.viewport,
+    plan.pad,
+  );
+  return { x: abs.x - plan.home.x, y: abs.y - plan.home.y };
+}
+
+function displayedVelocity(plan: RocketFlightPlan, u: number): RocketPoint {
+  const du = 8e-4;
+  const from = Math.max(0, u - du);
+  const a = displayedOffset(plan, from);
+  const b = displayedOffset(plan, u);
+  const dt = u - from || du;
+  return { x: (b.x - a.x) / dt, y: (b.y - a.y) / dt };
+}
+
+function firstTravelHeading(plan: RocketFlightPlan): number {
+  for (let t = 0.002; t <= ROCKET_PHASE.takeoffEnd; t += 0.002) {
+    const v = displayedVelocity(plan, t);
+    if (Math.hypot(v.x, v.y) >= 40) return headingDeg(v.x, v.y);
+  }
+  return 0;
+}
+
+/**
+ * Mid-page pads hover 150px above land. A header-like pad has no room
+ * above (home is already inside the craft radius), so hover sits below
+ * the logo instead — then the land phase settles onto it.
+ */
+function hoverAnchor(
+  landAbs: RocketPoint,
+  viewport: RocketViewport,
+  pad: number,
+): RocketPoint {
+  const above = landAbs.y - ROCKET_HOVER_OFFSET_PX;
+  if (above >= pad) {
+    return clampAbs({ x: landAbs.x, y: above }, viewport, pad);
+  }
+  const below = Math.min(viewport.height - pad, landAbs.y + ROCKET_HOVER_OFFSET_PX);
+  const travel = Math.abs(below - landAbs.y);
+  const y =
+    travel >= ROCKET_MIN_SETTLE_PX
+      ? below
+      : Math.min(viewport.height - pad, landAbs.y + ROCKET_MIN_SETTLE_PX);
+  return clampAbs({ x: landAbs.x, y }, viewport, pad);
 }
 
 /**
@@ -169,12 +210,9 @@ export function createRocketFlightPlan(
   craft = HOURLY_ROCKET_CRAFT,
 ): RocketFlightPlan {
   const pad = craftPad(craft);
-  const landAbs = {
-    x: Math.min(viewport.width - pad, Math.max(pad, home.x + land.x)),
-    y: home.y + land.y,
-  };
-  const hoverAbs = clampAbs({ x: landAbs.x, y: landAbs.y - 150 }, viewport, 8);
-  const takeoffAbs = clampAbs({ x: home.x, y: home.y - 72 }, viewport, 8);
+  const landAbs = clampAbs({ x: home.x + land.x, y: home.y + land.y }, viewport, pad);
+  const hoverAbs = hoverAnchor(landAbs, viewport, pad);
+  const takeoffAbs = clampAbs({ x: home.x, y: home.y - 72 }, viewport, pad);
   const approachAbs = clampAbs({ x: landAbs.x, y: landAbs.y + 70 }, viewport, pad);
 
   const cxAbs = viewport.width / 2;
@@ -217,13 +255,13 @@ function loopPoint(plan: RocketFlightPlan, s: number): { p: RocketPoint; v: Rock
   return { p, v };
 }
 
-/**
- * Pose at linear flight progress `t` in [0, 1]. Phases use that same clock so
- * the oval keeps ~4.5s; each join is a C1 hermite (matched position + velocity).
- */
-export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
-  const u = clamp01(t);
-  const origin = { x: 0, y: 0 };
+function padOrigin(plan: RocketFlightPlan): RocketPoint {
+  const abs = clampAbs(plan.home, plan.viewport, plan.pad);
+  return { x: abs.x - plan.home.x, y: abs.y - plan.home.y };
+}
+
+function pathAt(plan: RocketFlightPlan, u: number): { p: RocketPoint; v: RocketPoint } {
+  const origin = padOrigin(plan);
   const loopStart = loopPoint(plan, 0);
   const loopEnd = loopPoint(plan, 1);
   const takeoffDur = ROCKET_PHASE.takeoffEnd;
@@ -240,53 +278,62 @@ export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
   };
   const rise = { x: 0, y: (plan.hover.y - plan.approach.y) * 0.85 };
 
-  let p: RocketPoint;
-
   if (u < ROCKET_PHASE.takeoffEnd) {
     const s = u / takeoffDur;
-    p = hermite(origin, { x: 0, y: plan.takeoff.y * 2 }, loopStart.p, takeoffOut, s).p;
-  } else if (u < ROCKET_PHASE.loopEnd) {
+    // Only an upward takeoff handle; a header pad has no room above, so start at rest.
+    const takeoffIn = { x: 0, y: Math.min(0, plan.takeoff.y) * 2 };
+    return hermite(origin, takeoffIn, loopStart.p, takeoffOut, s);
+  }
+  if (u < ROCKET_PHASE.loopEnd) {
     const s = (u - ROCKET_PHASE.takeoffEnd) / loopDur;
-    p = loopPoint(plan, s).p;
-  } else if (u < ROCKET_PHASE.approachEnd) {
+    return loopPoint(plan, s);
+  }
+  if (u < ROCKET_PHASE.approachEnd) {
     const s = (u - ROCKET_PHASE.loopEnd) / approachDur;
-    p =
-      s < 0.5
-        ? hermite(loopEnd.p, approachIn, plan.approach, rise, s * 2).p
-        : hermite(plan.approach, rise, plan.hover, { x: 0, y: 0 }, (s - 0.5) * 2).p;
-  } else if (u <= ROCKET_PHASE.hoverEnd) {
-    p = plan.hover;
-  } else {
-    const s = (u - ROCKET_PHASE.hoverEnd) / (1 - ROCKET_PHASE.hoverEnd);
-    p = hermite(plan.hover, { x: 0, y: 0 }, plan.land, { x: 0, y: 0 }, s).p;
+    return s < 0.5
+      ? hermite(loopEnd.p, approachIn, plan.approach, rise, s * 2)
+      : hermite(plan.approach, rise, plan.hover, { x: 0, y: 0 }, (s - 0.5) * 2);
   }
+  if (u <= ROCKET_PHASE.hoverEnd) {
+    return { p: plan.hover, v: { x: 0, y: 0 } };
+  }
+  const s = (u - ROCKET_PHASE.hoverEnd) / (1 - ROCKET_PHASE.hoverEnd);
+  return hermite(plan.hover, { x: 0, y: 0 }, plan.land, { x: 0, y: 0 }, s);
+}
 
-  const clamped = clampOff(p, plan.home, plan.viewport, 8);
-  const entryExpected = headingDeg(-plan.rx * Math.sin(plan.entryTheta), plan.ry * Math.cos(plan.entryTheta));
-  const loopS =
-    u < ROCKET_PHASE.takeoffEnd
-      ? 0
-      : u < ROCKET_PHASE.loopEnd
-        ? (u - ROCKET_PHASE.takeoffEnd) / loopDur
-        : 1;
-  const loopAngle = ellipseHeadingUnwrapped(
-    plan.rx,
-    plan.ry,
-    plan.entryTheta + plan.sweep * loopS,
-    entryExpected + (plan.sweep * loopS * 180) / Math.PI,
-  );
-  let angle = loopAngle;
-  if (u < ROCKET_PHASE.takeoffEnd) {
-    angle = lerpAngle(0, loopAngle, u / takeoffDur);
-  } else if (u >= ROCKET_PHASE.loopEnd && u < ROCKET_PHASE.approachEnd) {
-    angle = lerpAngle(loopAngle, 0, (u - ROCKET_PHASE.loopEnd) / approachDur);
-  } else if (u >= ROCKET_PHASE.approachEnd) {
-    angle = 0;
+/** Last portion of approach: rotate to upright so hover is not a heading snap. */
+export const LANDING_ATTITUDE_START = 0.55;
+
+function headingAlongDisplayedPath(plan: RocketFlightPlan, u: number): number {
+  const end = Math.min(u, ROCKET_PHASE.approachEnd);
+  const dt = 1 / 400;
+  const maxTurn = 16;
+  let angle = firstTravelHeading(plan);
+  for (let t = dt; t <= end + 1e-12; t += dt) {
+    const v = displayedVelocity(plan, Math.min(t, end));
+    if (Math.hypot(v.x, v.y) < 40) continue;
+    const raw = unwrapHeading(headingDeg(v.x, v.y), angle);
+    const delta = shortestAngleDelta(angle, raw);
+    angle += Math.max(-maxTurn, Math.min(maxTurn, delta));
   }
+  const approachS =
+    end <= ROCKET_PHASE.loopEnd
+      ? 0
+      : (end - ROCKET_PHASE.loopEnd) / (ROCKET_PHASE.approachEnd - ROCKET_PHASE.loopEnd);
+  const attitude = easeInOutCubic(
+    clamp01((approachS - LANDING_ATTITUDE_START) / (1 - LANDING_ATTITUDE_START)),
+  );
+  return lerpAngle(angle, 0, attitude);
+}
+
+export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
+  const u = clamp01(t);
+  const p = displayedOffset(plan, u);
+  const angle = u < ROCKET_PHASE.approachEnd ? headingAlongDisplayedPath(plan, u) : 0;
 
   return {
-    x: clamped.x,
-    y: clamped.y,
+    x: p.x,
+    y: p.y,
     angle,
     phase: phaseAt(u),
     plume: plumeFor(u),
