@@ -17,7 +17,7 @@ export const captionsTutorial: PlatformTutorialData = {
     "Captions is a video editor built around one kind of footage: a person talking to the camera. It listens to the clip, puts the words on screen, and can cut out the pauses and \"ums\", tidy the sound, translate the captions and add music and extra footage around you.",
     "It is made for the phone first. The iPhone app gets the full toolset, there is a lighter Android app called Captions Lite, and on a computer you use it in a web browser.",
     "Its other half is AI-generated people. You can pick a ready-made avatar (a computer-generated presenter who speaks a script you type), describe one in words, or build an \"AI twin\" of yourself from a short recording, then have it deliver lines you never filmed.",
-    "The company behind the app announced in September 2025 that it was renaming itself Mirage. The app kept the Captions name, but its terms, privacy policy and support email now say Mirage — that is the same company, not a different product.",
+    "The company behind the app is NOCAP, Inc. d/b/a Captions.",
   ],
 
   beforeYouStart: [
@@ -28,14 +28,14 @@ export const captionsTutorial: PlatformTutorialData = {
   ],
 
   security: [
-    { kind: 'text', text: "Captions' privacy section is mostly about your face and voice, because that is what you feed it. Its privacy policy (Mirage's, effective 10 November 2025) says it uses what it collects to \"train our artificial intelligence/machine learning models\", that it may generate information from your face or voice for some features, and that it may disclose information to third parties \"for their own business and commercial purposes, including … training their algorithms.\" Its pricing page lists \"Training data exclusion\" as a feature of the Enterprise plan. The policy we read does not describe a way for an ordinary account to switch training off." },
+    { kind: 'text', text: "Captions' privacy section is mostly about your face and voice, because that is what you feed it. Its privacy policy (effective 10 November 2025) says it uses what it collects to \"train our artificial intelligence/machine learning models\", that it may generate information from your face or voice for some features, and that it may disclose information to third parties \"for their own business and commercial purposes, including … training their algorithms.\" Its pricing page lists \"Training data exclusion\" as a feature of the Enterprise plan. The policy we read does not describe a way for an ordinary account to switch training off." },
     { kind: 'list', label: 'What the terms say about your face and voice (Captions Terms, effective 4 September 2025)', items: [
-      "You own what you upload and what you make, but you give Mirage a licence to store, change and use both \"to improve the Services, and to develop new services and products\". That licence continues after you leave.",
-      "The one specific promise is about your voice: Mirage \"will not commercialize your voice on a standalone basis without your written permission.\" The terms make no matching promise about your face.",
+      "You own what you upload and what you make, but you give Captions a licence to store, change and use both \"to improve the Services, and to develop new services and products\". That licence continues after you leave.",
+      "The one specific promise is about your voice: Captions \"will not commercialize your voice on a standalone basis without your written permission.\" The terms make no matching promise about your face.",
       "You must have the written consent of every identifiable person in what you upload to use their name, likeness or voice. An AI twin of a friend or partner needs their written OK, not just a nod.",
       "The usage policy (effective 4 September 2025) forbids presenting AI-made content as made \"solely by a human\", impersonating anyone, and making anything that relates to or appears to represent people under 18.",
     ] },
-    { kind: 'text', text: "Mirage's privacy policy says it deletes face and voice measurements once their purpose is served, or three years after your last interaction with it, whichever comes first, and that your information may be transferred to and stored in the United States." },
+    { kind: 'text', text: "Captions' privacy policy says it deletes face and voice measurements once their purpose is served, or three years after your last interaction with it, whichever comes first, and that your information may be transferred to and stored in the United States." },
     { kind: 'text', text: "One contradiction to know about if you'll use it for business: the help centre says you \"retain full rights\" to generated videos, but the terms (section 3.1) bar \"making any commercial use of the Services including the Mirage Content\" without written consent \"except as authorized hereunder\". The terms are the binding document. If you plan to run paid ads with it, read that section yourself first." },
   ],
 
