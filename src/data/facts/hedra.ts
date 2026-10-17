@@ -66,6 +66,19 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  usageLimits: {
+    value: {
+      creditsExpire:
+        "Credit-pack credits do not expire. Monthly subscription credits reset at the start of each billing cycle (they do not carry over).",
+      rollover:
+        "Monthly subscription credits do not roll over between billing cycles. Unused credit-pack credits roll over between billing cycles.",
+    },
+    sourceUrl: "https://www.hedra.com/docs/pages/app/billing/how-credits-work",
+    checkedAt: "2026-10-17",
+    gatheredBy: "research-analyst",
+    verifiedBy: "pending",
+    status: "unverified",
+  },
   changelog: [
     {
       date: "2026-10-14",

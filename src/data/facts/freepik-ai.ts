@@ -59,6 +59,20 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  usageLimits: {
+    value: {
+      creditsExpire:
+        "Plan credits expire at your next credit refresh. Extra credits (purchased packs) expire 3 years after purchase and require an active subscription (forfeited if the subscription ends).",
+      rollover:
+        "Plan credits do not roll over. Extra credits roll over (used last). Remaining credits from a plan upgrade become one-time roll-over credits until the end of the current billing cycle.",
+    },
+    sourceUrl: "https://www.magnific.com/ai/docs/ai-credits-and-limits",
+    note: "FLAG: vendor-stated / divergent Business rollover. This Fact follows the general AI-credits doc (no plan-credit rollover). Business-plan docs state a different rule (plan credits roll up to 3 months). Wording left vendor-stated; not reconciled. Schema has no per-plan split.",
+    checkedAt: "2026-10-17",
+    gatheredBy: "research-analyst",
+    verifiedBy: "pending",
+    status: "unverified",
+  },
   changelog: [
     {
       date: "2026-10-14",
