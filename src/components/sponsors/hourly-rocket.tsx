@@ -7,8 +7,7 @@ import {
   HOURLY_ROCKET_CRAFT,
   HOURLY_ROCKET_FLIGHT_MS,
   readLastPlayedHourKey,
-  rocketHoverOffset,
-  rocketTourOffsets,
+  rocketStraightFlight,
   writeLastPlayedHourKey,
 } from "@/lib/hourly-rocket";
 
@@ -21,12 +20,7 @@ const CRAFT_H = HOURLY_ROCKET_CRAFT.height;
 type Flight = {
   left: number;
   top: number;
-  endX: number;
-  endY: number;
-  hoverX: number;
-  hoverY: number;
-  tour: ReturnType<typeof rocketTourOffsets>;
-};
+} & ReturnType<typeof rocketStraightFlight>;
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -70,21 +64,16 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         previewLaunchedRef.current = true;
       }
 
-      const viewport = { width: window.innerWidth, height: window.innerHeight };
-      const tour = rocketTourOffsets(home, viewport);
-      const end = target
-        ? { x: target.x - home.x, y: target.y - home.y }
-        : { x: 0, y: 0 };
-      const hover = rocketHoverOffset(home, end, viewport);
+      const path = rocketStraightFlight(
+        home,
+        target ? { x: target.x - home.x, y: target.y - home.y } : { x: 0, y: 0 },
+        { width: window.innerWidth, height: window.innerHeight },
+      );
 
       setFlight({
         left: home.x,
         top: home.y,
-        endX: end.x,
-        endY: end.y,
-        hoverX: hover.x,
-        hoverY: hover.y,
-        tour,
+        ...path,
       });
     };
 
@@ -116,16 +105,13 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
           marginLeft: -CRAFT_W / 2,
           marginTop: -CRAFT_H / 2,
           animation: `lp-rocket-land ${HOURLY_ROCKET_FLIGHT_MS}ms cubic-bezier(0.42, 0, 0.58, 1) forwards`,
-          ["--rocket-dx" as string]: `${flight.endX}px`,
-          ["--rocket-dy" as string]: `${flight.endY}px`,
+          ["--takeoff-x" as string]: `${flight.takeoffX}px`,
+          ["--takeoff-y" as string]: `${flight.takeoffY}px`,
           ["--hover-x" as string]: `${flight.hoverX}px`,
           ["--hover-y" as string]: `${flight.hoverY}px`,
-          ["--tour-x1" as string]: `${flight.tour.x1}px`,
-          ["--tour-y1" as string]: `${flight.tour.y1}px`,
-          ["--tour-x2" as string]: `${flight.tour.x2}px`,
-          ["--tour-y2" as string]: `${flight.tour.y2}px`,
-          ["--tour-x3" as string]: `${flight.tour.x3}px`,
-          ["--tour-y3" as string]: `${flight.tour.y3}px`,
+          ["--rocket-dx" as string]: `${flight.landX}px`,
+          ["--rocket-dy" as string]: `${flight.landY}px`,
+          ["--cruise-rot" as string]: `${flight.cruiseRotateDeg}deg`,
         }}
       >
         {/* Plume is a separate cutout of the same art, stacked on the body canvas.

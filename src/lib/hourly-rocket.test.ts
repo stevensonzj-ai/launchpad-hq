@@ -10,8 +10,7 @@ import {
   isRocketDemo,
   isRocketPreview,
   readLastPlayedHourKey,
-  rocketHoverOffset,
-  rocketTourOffsets,
+  rocketStraightFlight,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
 } from "./hourly-rocket";
@@ -169,34 +168,36 @@ describe("hourly rocket flight path", () => {
     assert.equal(HOURLY_ROCKET_FLIGHT_MS, 6500);
   });
 
-  it("clamps cruise waypoints so the craft stays inside the viewport", () => {
+  it("uses one straight cruise to a hover above the pad and stays in viewport", () => {
     const home = { x: 48, y: 28 };
-    const mobile = rocketTourOffsets(home, { width: 375, height: 720 });
-    const desktop = rocketTourOffsets(home, { width: 1280, height: 800 });
+    const viewport = { width: 1280, height: 800 };
     const pad = Math.max(HOURLY_ROCKET_CRAFT.width, HOURLY_ROCKET_CRAFT.height) / 2 + 10;
+    const land = { x: 520, y: 360 };
+    const path = rocketStraightFlight(home, land, viewport);
 
-    for (const tour of [mobile, desktop]) {
-      for (const [x, y] of [
-        [tour.x1, tour.y1],
-        [tour.x2, tour.y2],
-        [tour.x3, tour.y3],
-      ] as const) {
-        const absX = home.x + x;
-        const absY = home.y + y;
-        assert.ok(absX >= pad);
-        assert.ok(absY >= pad);
-        assert.ok(absX <= (tour === mobile ? 375 : 1280) - pad + 0.01);
-        assert.ok(absY <= (tour === mobile ? 720 : 800) - pad + 0.01);
-      }
+    const points = [
+      [path.takeoffX, path.takeoffY],
+      [path.hoverX, path.hoverY],
+      [path.landX, path.landY],
+    ] as const;
+    for (const [x, y] of points) {
+      assert.ok(home.x + x >= pad);
+      assert.ok(home.y + y >= pad);
+      assert.ok(home.x + x <= viewport.width - pad + 0.01);
+      assert.ok(home.y + y <= viewport.height - pad + 0.01);
     }
-    assert.ok(desktop.x1 > mobile.x1);
-    assert.ok(desktop.x1 > desktop.x2);
+    assert.ok(Math.abs(path.hoverX - path.landX) < 1);
+    assert.ok(path.hoverY < path.landY);
+    assert.ok(path.cruiseRotateDeg !== 0);
   });
 
-  it("keeps the pre-descent hover inside the viewport", () => {
+  it("lengthens a short home-return shot along the same vector, not sideways", () => {
     const home = { x: 48, y: 28 };
-    const hover = rocketHoverOffset(home, { x: 20, y: 40 }, { width: 375, height: 720 });
-    assert.ok(home.y + hover.y >= 50);
-    assert.ok(home.x + hover.x >= 50);
+    const path = rocketStraightFlight(home, { x: 0, y: 0 }, { width: 375, height: 720 });
+    const cruise = Math.hypot(path.hoverX - path.takeoffX, path.hoverY - path.takeoffY);
+    assert.ok(cruise >= 150);
+    assert.ok(Math.abs(path.takeoffX) < 8);
+    assert.ok(Math.abs(path.hoverX) < 8);
+    assert.ok(Math.abs(path.cruiseRotateDeg) < 8);
   });
 });

@@ -5,49 +5,94 @@ export const HOURLY_ROCKET_FLIGHT_MS = 6500;
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
 
 export type RocketPoint = { x: number; y: number };
-export type RocketTourOffsets = {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  x3: number;
-  y3: number;
+export type RocketViewport = { width: number; height: number };
+
+export type RocketStraightFlight = {
+  takeoffX: number;
+  takeoffY: number;
+  hoverX: number;
+  hoverY: number;
+  landX: number;
+  landY: number;
+  /** CSS rotate (deg) so the nose follows takeoff → hover. */
+  cruiseRotateDeg: number;
 };
 
-/**
- * Viewport-relative cruise waypoints as offsets from the header home.
- * Clamped so the craft stays fully inside the overlay.
- */
-export function rocketTourOffsets(
-  home: RocketPoint,
-  viewport: { width: number; height: number },
-  craft = HOURLY_ROCKET_CRAFT,
-): RocketTourOffsets {
-  const pad = Math.max(craft.width, craft.height) / 2 + 10;
-  const clampOffset = (absX: number, absY: number): RocketPoint => ({
-    x: Math.min(viewport.width - pad, Math.max(pad, absX)) - home.x,
-    y: Math.min(viewport.height - pad, Math.max(pad, absY)) - home.y,
-  });
-  const a = clampOffset(viewport.width * 0.82, viewport.height * 0.2);
-  const b = clampOffset(viewport.width * 0.18, viewport.height * 0.74);
-  const c = clampOffset(viewport.width * 0.7, viewport.height * 0.16);
-  return { x1: a.x, y1: a.y, x2: b.x, y2: b.y, x3: c.x, y3: c.y };
+function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
+  return Math.max(craft.width, craft.height) / 2 + 10;
 }
 
-/** Upright hover point above the landing pad, still inside the viewport. */
-export function rocketHoverOffset(
+function clampAbs(
+  abs: RocketPoint,
+  viewport: RocketViewport,
+  pad: number,
+): RocketPoint {
+  return {
+    x: Math.min(viewport.width - pad, Math.max(pad, abs.x)),
+    y: Math.min(viewport.height - pad, Math.max(pad, abs.y)),
+  };
+}
+
+function dist(a: RocketPoint, b: RocketPoint): number {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+/**
+ * One straight cruise: vertical takeoff, then a single vector to a hover
+ * point directly above the pad. If that shot is short, the takeoff point is
+ * pushed backward along the same vector (and hover is raised) so the line
+ * still spans the viewport — no lateral waypoints.
+ */
+export function rocketStraightFlight(
   home: RocketPoint,
   land: RocketPoint,
-  viewport: { width: number; height: number },
+  viewport: RocketViewport,
   craft = HOURLY_ROCKET_CRAFT,
-): RocketPoint {
-  const pad = Math.max(craft.width, craft.height) / 2 + 10;
-  const absX = Math.min(viewport.width - pad, Math.max(pad, home.x + land.x));
-  const absY = Math.min(
-    viewport.height - pad,
-    Math.max(pad, home.y + land.y - 112),
-  );
-  return { x: absX - home.x, y: absY - home.y };
+): RocketStraightFlight {
+  const pad = craftPad(craft);
+  const landAbs = clampAbs({ x: home.x + land.x, y: home.y + land.y }, viewport, pad);
+  let hoverAbs = clampAbs({ x: landAbs.x, y: landAbs.y - 112 }, viewport, pad);
+  let takeoffAbs = clampAbs({ x: home.x, y: home.y - 72 }, viewport, pad);
+
+  const minSpan = Math.max(160, Math.min(viewport.width, viewport.height) * 0.42);
+
+  let dx = hoverAbs.x - takeoffAbs.x;
+  let dy = hoverAbs.y - takeoffAbs.y;
+  let length = Math.hypot(dx, dy);
+  if (length < 1) {
+    dx = 0;
+    dy = -1;
+    length = 1;
+  }
+  const ux = dx / length;
+  const uy = dy / length;
+
+  if (dist(takeoffAbs, hoverAbs) < minSpan) {
+    const extra = minSpan - dist(takeoffAbs, hoverAbs);
+    takeoffAbs = clampAbs(
+      { x: takeoffAbs.x - ux * extra, y: takeoffAbs.y - uy * extra },
+      viewport,
+      pad,
+    );
+  }
+  if (dist(takeoffAbs, hoverAbs) < minSpan) {
+    const extra = minSpan - dist(takeoffAbs, hoverAbs);
+    hoverAbs = clampAbs({ x: landAbs.x, y: hoverAbs.y - extra }, viewport, pad);
+  }
+
+  const cdx = hoverAbs.x - takeoffAbs.x;
+  const cdy = hoverAbs.y - takeoffAbs.y;
+  const cruiseRotateDeg = (Math.atan2(cdx, -cdy) * 180) / Math.PI;
+
+  return {
+    takeoffX: takeoffAbs.x - home.x,
+    takeoffY: takeoffAbs.y - home.y,
+    hoverX: hoverAbs.x - home.x,
+    hoverY: hoverAbs.y - home.y,
+    landX: landAbs.x - home.x,
+    landY: landAbs.y - home.y,
+    cruiseRotateDeg,
+  };
 }
 
 const CHICAGO = "America/Chicago";

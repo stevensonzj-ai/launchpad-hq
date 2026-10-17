@@ -104,29 +104,27 @@ html {
   }
 }
 
-/* 6.5s Falcon-style profile: vertical takeoff, wide viewport tour, upright hover, vertical descent. */
+/* 6.5s: vertical takeoff, one straight cruise, upright hover, vertical descent. */
 @keyframes lp-rocket-land {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
     animation-timing-function: cubic-bezier(0.45, 0.05, 0.25, 1);
   }
-  10% {
-    transform: translate3d(0, -72px, 0) rotate(0deg);
+  12% {
+    transform: translate3d(var(--takeoff-x, 0px), var(--takeoff-y, -72px), 0) rotate(0deg);
     animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   }
-  28% {
-    transform: translate3d(var(--tour-x1, 180px), var(--tour-y1, 80px), 0) rotate(28deg);
+  18% {
+    transform: translate3d(var(--takeoff-x, 0px), var(--takeoff-y, -72px), 0)
+      rotate(var(--cruise-rot, 0deg));
     animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   }
-  48% {
-    transform: translate3d(var(--tour-x2, 40px), var(--tour-y2, 220px), 0) rotate(-22deg);
-    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
-  }
-  64% {
-    transform: translate3d(var(--tour-x3, 140px), var(--tour-y3, 60px), 0) rotate(16deg);
+  68% {
+    transform: translate3d(var(--hover-x, 0px), var(--hover-y, -112px), 0)
+      rotate(var(--cruise-rot, 0deg));
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
-  72% {
+  76% {
     transform: translate3d(var(--hover-x, 0px), var(--hover-y, -112px), 0) rotate(0deg);
     animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
   }
