@@ -167,6 +167,7 @@ export function PlatformToolOverview({
                 label: facts.models.label ?? "Models",
                 value: facts.models.value.join(", "),
                 fact: facts.models,
+                showNote: facts.slug === "meta-ai",
               }
             : undefined
         }

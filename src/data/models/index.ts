@@ -5,6 +5,7 @@ import { googleGemini } from "./google-gemini";
 import { xaiGrok } from "./xai-grok";
 import { mistral } from "./mistral";
 import { metaLlama } from "./meta-llama";
+import { metaMuse } from "./meta-muse";
 import { deepseek } from "./deepseek";
 import { alibabaQwen } from "./alibaba-qwen";
 
@@ -17,6 +18,7 @@ const families: PlatformModelFamily[] = [
   xaiGrok,
   mistral,
   metaLlama,
+  metaMuse,
   deepseek,
   alibabaQwen,
 ];

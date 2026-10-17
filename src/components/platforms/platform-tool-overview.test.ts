@@ -141,6 +141,51 @@ describe("platform overview field uniqueness", () => {
     assert.ok(html.includes("flagship chat model"));
   });
 
+  it("does not render a models Fact note for a non-meta-ai fixture", () => {
+    const facts = {
+      ...validExampleFacts,
+      slug: "fixture-valid",
+      models: {
+        ...validExampleFacts.models,
+        note: "Browser-verified 2026-10-14 unpublished ellipsis in the source not expanded",
+      },
+    };
+    const view = overlayPlatformWithFacts(basePlatform, facts);
+    const html = renderToStaticMarkup(
+      h(PlatformToolOverview, {
+        platform: { ...view, name: "Fixture Tool" },
+        facts,
+        hasModelFamily: false,
+      }),
+    );
+    assert.ok(html.includes("flagship chat model"));
+    assert.equal(html.includes("Browser-verified 2026-10-14"), false);
+    assert.equal(html.includes("unpublished"), false);
+    assert.equal(html.includes("ellipsis in the source not expanded"), false);
+  });
+
+  it("renders the Meta AI models distinction note under Technical details", () => {
+    const facts = {
+      ...validExampleFacts,
+      slug: "meta-ai",
+      models: {
+        ...validExampleFacts.models,
+        value: ["Muse Spark", "Muse Spark Open"],
+        note: "Muse Spark Open is Meta's downloadable open-weight model (also via hosted APIs) — it is not a model of the consumer Meta AI assistant app.",
+      },
+    };
+    const view = overlayPlatformWithFacts(basePlatform, facts);
+    const html = renderToStaticMarkup(
+      h(PlatformToolOverview, {
+        platform: { ...view, name: "Fixture Tool" },
+        facts,
+        hasModelFamily: false,
+      }),
+    );
+    assert.ok(html.includes("downloadable open-weight model"));
+    assert.ok(html.includes("not a model of the consumer Meta AI assistant app"));
+  });
+
   it("renders API pricing as its own section, not inside the plans table", () => {
     const facts = {
       ...validExampleFacts,

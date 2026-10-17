@@ -7,8 +7,9 @@ import type { Fact } from "@/data/facts/types";
 export type TechnicalDetailRow = {
   label: string;
   value: string;
-  fact?: Pick<Fact<unknown>, "sourceUrl" | "checkedAt" | "status"> | null;
+  fact?: Pick<Fact<unknown>, "sourceUrl" | "checkedAt" | "status" | "note"> | null;
   truncate?: boolean;
+  showNote?: boolean;
 };
 
 type PlatformTechnicalDetailsProps = {
@@ -21,7 +22,13 @@ type PlatformTechnicalDetailsProps = {
   languageSupport: string | null;
   keyIntegrations: string | null;
   upgradeTriggers: string | null;
-  modelsRow?: { label: string; value: string; fact?: Fact<string[]> };
+  modelsRow?: {
+    label: string;
+    value: string;
+    fact?: Fact<string[]>;
+    /** Opt-in: only Meta AI's models distinction note is shown publicly. */
+    showNote?: boolean;
+  };
 };
 
 export function buildTechnicalDetailRows(
@@ -69,6 +76,7 @@ export function buildTechnicalDetailRows(
       label: props.modelsRow.label,
       value: props.modelsRow.value,
       fact: props.modelsRow.fact,
+      showNote: props.modelsRow.showNote === true,
     });
   }
 
@@ -90,6 +98,9 @@ export function PlatformTechnicalDetails(props: PlatformTechnicalDetailsProps) {
             </dt>
             <dd className="min-w-0 break-words leading-relaxed text-gray-200">
               {row.truncate ? <TruncatedValue text={row.value} /> : row.value}
+              {row.showNote && row.fact?.note ? (
+                <p className="mt-2 text-sm text-gray-400">{row.fact.note}</p>
+              ) : null}
             </dd>
           </div>
         ))}
