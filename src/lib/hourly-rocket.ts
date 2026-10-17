@@ -1,25 +1,32 @@
 export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
 
 /** Shared duration for hourly, ?rocket=1, and ?rocket=demo flights. */
-export const HOURLY_ROCKET_FLIGHT_MS = 6500;
+export const HOURLY_ROCKET_FLIGHT_MS = 7500;
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
+export const HOURLY_ROCKET_LOOP_SAMPLES = 28;
 
 export type RocketPoint = { x: number; y: number };
 export type RocketViewport = { width: number; height: number };
 
-export type RocketStraightFlight = {
-  takeoffX: number;
-  takeoffY: number;
-  hoverX: number;
-  hoverY: number;
-  landX: number;
-  landY: number;
-  /** CSS rotate (deg) so the nose follows takeoff → hover. */
-  cruiseRotateDeg: number;
+export type RocketFlightFrame = {
+  pct: number;
+  x: number;
+  y: number;
+  rotate: number;
+  scale?: number;
+};
+
+export type RocketLoopFlight = {
+  frames: RocketFlightFrame[];
+  loop: RocketPoint[];
+  takeoff: RocketPoint;
+  approach: RocketPoint;
+  hover: RocketPoint;
+  land: RocketPoint;
 };
 
 function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
-  return Math.max(craft.width, craft.height) / 2 + 10;
+  return Math.max(craft.width, craft.height) / 2 + 8;
 }
 
 function clampAbs(
@@ -33,66 +40,103 @@ function clampAbs(
   };
 }
 
-function dist(a: RocketPoint, b: RocketPoint): number {
-  return Math.hypot(a.x - b.x, a.y - b.y);
+function headingDeg(dx: number, dy: number): number {
+  return (Math.atan2(dx, -dy) * 180) / Math.PI;
+}
+
+function ellipsePoint(
+  cx: number,
+  cy: number,
+  rx: number,
+  ry: number,
+  theta: number,
+): RocketPoint {
+  return { x: cx + rx * Math.cos(theta), y: cy + ry * Math.sin(theta) };
+}
+
+function ellipseHeading(rx: number, ry: number, theta: number, dTheta: number): number {
+  const tx = -rx * Math.sin(theta) * Math.sign(dTheta || 1);
+  const ty = ry * Math.cos(theta) * Math.sign(dTheta || 1);
+  return headingDeg(tx, ty);
 }
 
 /**
- * One straight cruise: vertical takeoff, then a single vector to a hover
- * point directly above the pad. If that shot is short, the takeoff point is
- * pushed backward along the same vector (and hover is raised) so the line
- * still spans the viewport — no lateral waypoints.
+ * Vertical takeoff, one viewport-scaled oval, rise/overshoot above the pad,
+ * then a slow vertical landing. Coordinates are offsets from `home`.
  */
-export function rocketStraightFlight(
+export function rocketLoopFlight(
   home: RocketPoint,
   land: RocketPoint,
   viewport: RocketViewport,
   craft = HOURLY_ROCKET_CRAFT,
-): RocketStraightFlight {
+): RocketLoopFlight {
   const pad = craftPad(craft);
-  const landAbs = clampAbs({ x: home.x + land.x, y: home.y + land.y }, viewport, pad);
-  let hoverAbs = clampAbs({ x: landAbs.x, y: landAbs.y - 112 }, viewport, pad);
-  let takeoffAbs = clampAbs({ x: home.x, y: home.y - 72 }, viewport, pad);
-
-  const minSpan = Math.max(160, Math.min(viewport.width, viewport.height) * 0.42);
-
-  let dx = hoverAbs.x - takeoffAbs.x;
-  let dy = hoverAbs.y - takeoffAbs.y;
-  let length = Math.hypot(dx, dy);
-  if (length < 1) {
-    dx = 0;
-    dy = -1;
-    length = 1;
-  }
-  const ux = dx / length;
-  const uy = dy / length;
-
-  if (dist(takeoffAbs, hoverAbs) < minSpan) {
-    const extra = minSpan - dist(takeoffAbs, hoverAbs);
-    takeoffAbs = clampAbs(
-      { x: takeoffAbs.x - ux * extra, y: takeoffAbs.y - uy * extra },
-      viewport,
-      pad,
-    );
-  }
-  if (dist(takeoffAbs, hoverAbs) < minSpan) {
-    const extra = minSpan - dist(takeoffAbs, hoverAbs);
-    hoverAbs = clampAbs({ x: landAbs.x, y: hoverAbs.y - extra }, viewport, pad);
-  }
-
-  const cdx = hoverAbs.x - takeoffAbs.x;
-  const cdy = hoverAbs.y - takeoffAbs.y;
-  const cruiseRotateDeg = (Math.atan2(cdx, -cdy) * 180) / Math.PI;
-
-  return {
-    takeoffX: takeoffAbs.x - home.x,
-    takeoffY: takeoffAbs.y - home.y,
-    hoverX: hoverAbs.x - home.x,
-    hoverY: hoverAbs.y - home.y,
-    landX: landAbs.x - home.x,
-    landY: landAbs.y - home.y,
-    cruiseRotateDeg,
+  const landAbs = {
+    x: Math.min(viewport.width - pad, Math.max(pad, home.x + land.x)),
+    y: home.y + land.y,
   };
+  const hoverAbs = clampAbs({ x: landAbs.x, y: landAbs.y - 150 }, viewport, 8);
+  const takeoffAbs = clampAbs({ x: home.x, y: home.y - 72 }, viewport, 8);
+  const approachAbs = clampAbs({ x: landAbs.x, y: landAbs.y + 70 }, viewport, pad);
+
+  const cx = viewport.width / 2;
+  const cy = viewport.height / 2;
+  const rx = Math.max(36, viewport.width / 2 - pad - 16);
+  const ry = Math.max(36, viewport.height / 2 - pad - 16);
+
+  const entryTheta = Math.atan2((takeoffAbs.y - cy) / ry, (takeoffAbs.x - cx) / rx);
+  const sweep = Math.PI * 2;
+
+  const loopAbs: RocketPoint[] = [];
+  const loopHeadings: number[] = [];
+  for (let i = 0; i <= HOURLY_ROCKET_LOOP_SAMPLES; i++) {
+    const t = i / HOURLY_ROCKET_LOOP_SAMPLES;
+    const theta = entryTheta + sweep * t;
+    loopAbs.push(clampAbs(ellipsePoint(cx, cy, rx, ry, theta), viewport, pad));
+    loopHeadings.push(ellipseHeading(rx, ry, theta, sweep));
+  }
+
+  const toOff = (abs: RocketPoint): RocketPoint => ({
+    x: abs.x - home.x,
+    y: abs.y - home.y,
+  });
+
+  const takeoff = toOff(takeoffAbs);
+  const hover = toOff(hoverAbs);
+  const landOff = toOff(landAbs);
+  const approach = toOff(approachAbs);
+  const loop = loopAbs.map(toOff);
+
+  const frames: RocketFlightFrame[] = [
+    { pct: 0, x: 0, y: 0, rotate: 0 },
+    { pct: 10, x: takeoff.x, y: takeoff.y, rotate: 0 },
+    { pct: 13, x: loop[0].x, y: loop[0].y, rotate: loopHeadings[0] },
+  ];
+
+  for (let i = 1; i < loop.length; i++) {
+    const pct = 13 + (59 * i) / (loop.length - 1);
+    frames.push({ pct, x: loop[i].x, y: loop[i].y, rotate: loopHeadings[i] });
+  }
+
+  frames.push(
+    { pct: 76, x: approach.x, y: approach.y, rotate: 0 },
+    { pct: 82, x: hover.x, y: hover.y, rotate: 0 },
+    { pct: 86, x: hover.x, y: hover.y, rotate: 0 },
+    { pct: 96, x: landOff.x, y: landOff.y - 6, rotate: 0 },
+    { pct: 100, x: landOff.x, y: landOff.y, rotate: 0, scale: 0.98 },
+  );
+
+  return { frames, loop, takeoff, approach, hover, land: landOff };
+}
+
+export function rocketFlightKeyframesCss(name: string, frames: RocketFlightFrame[]): string {
+  const rules = frames
+    .map((frame) => {
+      const scale = frame.scale != null ? ` scale(${frame.scale})` : "";
+      return `  ${frame.pct.toFixed(2)}% { transform: translate3d(${frame.x}px, ${frame.y}px, 0) rotate(${frame.rotate}deg)${scale}; animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }`;
+    })
+    .join("\n");
+  return `@keyframes ${name} {\n${rules}\n}`;
 }
 
 const CHICAGO = "America/Chicago";

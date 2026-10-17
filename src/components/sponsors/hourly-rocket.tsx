@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   chicagoHourKey,
   decideHourlyRocketLaunch,
   HOURLY_ROCKET_CRAFT,
   HOURLY_ROCKET_FLIGHT_MS,
   readLastPlayedHourKey,
-  rocketStraightFlight,
+  rocketFlightKeyframesCss,
+  rocketLoopFlight,
   writeLastPlayedHourKey,
 } from "@/lib/hourly-rocket";
 
@@ -20,7 +21,9 @@ const CRAFT_H = HOURLY_ROCKET_CRAFT.height;
 type Flight = {
   left: number;
   top: number;
-} & ReturnType<typeof rocketStraightFlight>;
+  css: string;
+  name: string;
+};
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -33,6 +36,7 @@ function pointOf(el: Element | null): { x: number; y: number } | null {
 }
 
 export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }) {
+  const rawId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const [flight, setFlight] = useState<Flight | null>(null);
   const previewLaunchedRef = useRef(false);
 
@@ -64,23 +68,24 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         previewLaunchedRef.current = true;
       }
 
-      const path = rocketStraightFlight(
+      const path = rocketLoopFlight(
         home,
         target ? { x: target.x - home.x, y: target.y - home.y } : { x: 0, y: 0 },
         { width: window.innerWidth, height: window.innerHeight },
       );
-
+      const name = `lp-rocket-loop-${rawId}`;
       setFlight({
         left: home.x,
         top: home.y,
-        ...path,
+        name,
+        css: rocketFlightKeyframesCss(name, path.frames),
       });
     };
 
     tryLaunch();
     const id = window.setInterval(tryLaunch, 1000);
     return () => window.clearInterval(id);
-  }, [hasSponsorTarget]);
+  }, [hasSponsorTarget, rawId]);
 
   useEffect(() => {
     if (!flight) return;
@@ -95,6 +100,7 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-[60] overflow-hidden"
     >
+      <style>{flight.css}</style>
       <div
         className="absolute"
         style={{
@@ -104,18 +110,10 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
           height: CRAFT_H,
           marginLeft: -CRAFT_W / 2,
           marginTop: -CRAFT_H / 2,
-          animation: `lp-rocket-land ${HOURLY_ROCKET_FLIGHT_MS}ms cubic-bezier(0.42, 0, 0.58, 1) forwards`,
-          ["--takeoff-x" as string]: `${flight.takeoffX}px`,
-          ["--takeoff-y" as string]: `${flight.takeoffY}px`,
-          ["--hover-x" as string]: `${flight.hoverX}px`,
-          ["--hover-y" as string]: `${flight.hoverY}px`,
-          ["--rocket-dx" as string]: `${flight.landX}px`,
-          ["--rocket-dy" as string]: `${flight.landY}px`,
-          ["--cruise-rot" as string]: `${flight.cruiseRotateDeg}deg`,
+          animation: `${flight.name} ${HOURLY_ROCKET_FLIGHT_MS}ms cubic-bezier(0.42, 0, 0.58, 1) forwards`,
         }}
       >
-        {/* Plume is a separate cutout of the same art, stacked on the body canvas.
-            scaleY/opacity flicker the plume only; body stays still relative to the craft. */}
+        {/* Plume is a separate cutout of the same art, stacked on the body canvas. */}
         {/* eslint-disable-next-line @next/next/no-img-element -- overlay sprite, not a content image */}
         <img
           src="/images/launchpad/hourly-rocket-plume.webp"

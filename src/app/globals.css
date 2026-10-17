@@ -104,79 +104,38 @@ html {
   }
 }
 
-/* 6.5s: vertical takeoff, one straight cruise, upright hover, vertical descent. */
-@keyframes lp-rocket-land {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-    animation-timing-function: cubic-bezier(0.45, 0.05, 0.25, 1);
-  }
-  12% {
-    transform: translate3d(var(--takeoff-x, 0px), var(--takeoff-y, -72px), 0) rotate(0deg);
-    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
-  }
-  18% {
-    transform: translate3d(var(--takeoff-x, 0px), var(--takeoff-y, -72px), 0)
-      rotate(var(--cruise-rot, 0deg));
-    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
-  }
-  68% {
-    transform: translate3d(var(--hover-x, 0px), var(--hover-y, -112px), 0)
-      rotate(var(--cruise-rot, 0deg));
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  76% {
-    transform: translate3d(var(--hover-x, 0px), var(--hover-y, -112px), 0) rotate(0deg);
-    animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
-  }
-  92% {
-    transform: translate3d(var(--rocket-dx, 0px), calc(var(--rocket-dy, 0px) - 8px), 0) rotate(0deg);
-    animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
-  }
-  96% {
-    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg);
-    animation-timing-function: ease-out;
-  }
-  100% {
-    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg) scale(0.98);
-  }
-}
-
-/* Plume cutout only: slow flicker, throttled descent burn, off after touchdown. */
+/* Plume cutout only: slow flicker on the loop, throttled descent, off after touchdown. */
 @keyframes lp-rocket-plume {
   0%,
-  10% {
+  12% {
     opacity: 1;
     transform: scaleY(1);
   }
-  22% {
-    opacity: 0.88;
-    transform: scaleY(0.94);
+  28% {
+    opacity: 0.9;
+    transform: scaleY(0.95);
   }
-  36% {
+  46% {
     opacity: 1;
     transform: scaleY(1.04);
   }
-  50% {
-    opacity: 0.9;
+  64% {
+    opacity: 0.92;
     transform: scaleY(0.96);
   }
-  64% {
-    opacity: 0.95;
-    transform: scaleY(1.02);
+  76% {
+    opacity: 0.85;
+    transform: scaleY(0.9);
   }
-  72% {
-    opacity: 0.62;
-    transform: scaleY(0.52);
+  82% {
+    opacity: 0.58;
+    transform: scaleY(0.5);
   }
-  84% {
-    opacity: 0.5;
-    transform: scaleY(0.44);
+  90% {
+    opacity: 0.4;
+    transform: scaleY(0.38);
   }
-  91% {
-    opacity: 0.28;
-    transform: scaleY(0.3);
-  }
-  94%,
+  95%,
   100% {
     opacity: 0;
     transform: scaleY(0.08);
