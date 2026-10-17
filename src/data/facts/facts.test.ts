@@ -12,7 +12,7 @@ import { staleFacts } from "./fixtures/stale";
 import { validExampleFacts } from "./fixtures/valid-example";
 import { overlayPlatformWithFacts } from "./overlay";
 import { REGISTERED_TOOL_FACTS, listRegisteredToolFacts } from "./registry";
-import { isPublishedVerified } from "./walk";
+import { isPublishedVerified, publishedUsageLimits } from "./walk";
 
 const NOW = new Date("2026-10-14T12:00:00.000Z");
 
@@ -185,9 +185,38 @@ describe("fact-file audit", () => {
         ...base,
         status: "verified",
         verifiedBy: "cos",
+      }),
+      false,
+    );
+    assert.equal(
+      isPublishedVerified({
+        ...base,
+        status: "verified",
+        verifiedBy: "cos",
         verifiedAt: "2026-10-02",
       }),
       true,
+    );
+    assert.equal(
+      publishedUsageLimits({
+        slug: "kling-ai",
+        lifecycle: "active",
+        usageLimits: {
+          ...base,
+          status: "verified",
+          verifiedBy: "ra",
+          verifiedAt: "2026-10-17",
+        },
+      })?.value.rollover,
+      "No rollover",
+    );
+    assert.equal(
+      publishedUsageLimits({
+        slug: "kling-ai",
+        lifecycle: "active",
+        usageLimits: { ...base, status: "unverified", verifiedBy: "ra" },
+      }),
+      undefined,
     );
   });
 

@@ -4,9 +4,38 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, it } from "node:test";
 import { overlayPlatformWithFacts } from "@/data/facts/overlay";
 import { validExampleFacts } from "@/data/facts/fixtures/valid-example";
+import type { Fact, ToolUsageLimits } from "@/data/facts/types";
 import { PlatformPricingTable } from "./platform-pricing-table";
 import { buildTechnicalDetailRows } from "./platform-technical-details";
 import { PlatformToolOverview } from "./platform-tool-overview";
+
+const verifiedUsageLimits: Fact<ToolUsageLimits> = {
+  value: {
+    creditsExpire: "Plan credits expire at renewal",
+    watermark: "Free plan keeps the vendor badge",
+    commercialUse: "Paid plans include commercial use",
+    rollover: "No rollover",
+    other: ["Daily refresh on the free plan"],
+  },
+  sourceUrl: "https://example.com/fixture-valid/usage",
+  checkedAt: "2026-10-17",
+  gatheredBy: "research-analyst",
+  verifiedBy: "ra",
+  verifiedAt: "2026-10-17",
+  status: "verified",
+  note: "Both official sources, same date (2026-10-17).",
+};
+
+function renderOverview(facts: typeof validExampleFacts | (typeof validExampleFacts & { usageLimits?: Fact<ToolUsageLimits> })) {
+  const view = overlayPlatformWithFacts(basePlatform, facts);
+  return renderToStaticMarkup(
+    h(PlatformToolOverview, {
+      platform: { ...view, name: "Fixture Tool" },
+      facts,
+      hasModelFamily: false,
+    }),
+  );
+}
 
 function countOccurrences(html: string, needle: string): number {
   let count = 0;
@@ -135,6 +164,89 @@ describe("platform overview field uniqueness", () => {
     assert.ok(html.includes("API pricing"));
     assert.ok(html.includes("Flash $0.30 / 1M input"));
     assert.ok(html.includes("Plus"));
+  });
+
+  it("renders a verified usageLimits fact as stored", () => {
+    const html = renderOverview({ ...validExampleFacts, usageLimits: verifiedUsageLimits });
+    const visible = html.replace(/<details[\s\S]*?<\/details>/g, "");
+    assert.ok(visible.includes("Usage limits"));
+    assert.ok(visible.includes("Credits expire"));
+    assert.ok(visible.includes("Plan credits expire at renewal"));
+    assert.ok(visible.includes("Watermark"));
+    assert.ok(visible.includes("Free plan keeps the vendor badge"));
+    assert.ok(visible.includes("Commercial use"));
+    assert.ok(visible.includes("Paid plans include commercial use"));
+    assert.ok(visible.includes("Rollover"));
+    assert.ok(visible.includes("No rollover"));
+    assert.ok(visible.includes("Other"));
+    assert.ok(visible.includes("Daily refresh on the free plan"));
+    assert.equal(visible.includes("Both official sources, same date (2026-10-17)."), false);
+    assert.equal(html.includes("Both official sources, same date (2026-10-17)."), false);
+    assert.ok(html.includes("https://example.com/fixture-valid/usage"));
+    assert.ok(html.includes("2026-10-17"));
+  });
+
+  it("never renders a usageLimits editorial note containing FLAG:", () => {
+    const html = renderOverview({
+      ...validExampleFacts,
+      usageLimits: {
+        ...verifiedUsageLimits,
+        note: "FLAG: vendor self-conflict on Free commercial license. Do not state Free commercial terms.",
+      },
+    });
+    assert.ok(html.includes("Usage limits"));
+    assert.ok(html.includes("Plan credits expire at renewal"));
+    assert.equal(html.includes("FLAG:"), false);
+    assert.equal(html.includes("vendor self-conflict"), false);
+  });
+
+  it("does not render unverified or pending usageLimits", () => {
+    const unpublished: Fact<ToolUsageLimits>[] = [
+      { ...verifiedUsageLimits, status: "unverified", verifiedBy: "ra" },
+      { ...verifiedUsageLimits, status: "verified", verifiedBy: "pending" },
+      {
+        ...verifiedUsageLimits,
+        status: "verified",
+        verifiedBy: "ra",
+        verifiedAt: undefined,
+      },
+    ];
+    for (const usageLimits of unpublished) {
+      const html = renderOverview({ ...validExampleFacts, usageLimits });
+      const visible = html.replace(/<details[\s\S]*?<\/details>/g, "");
+      assert.equal(visible.includes("Usage limits"), false, `published unpublished fact: ${JSON.stringify(usageLimits.status)}`);
+      assert.equal(visible.includes("Plan credits expire at renewal"), false);
+      assert.equal(html.includes("https://example.com/fixture-valid/usage"), false);
+    }
+  });
+
+  it("does not render usageLimits when verifiedBy equals gatheredBy", () => {
+    const html = renderOverview({
+      ...validExampleFacts,
+      usageLimits: {
+        ...verifiedUsageLimits,
+        gatheredBy: "research-analyst",
+        verifiedBy: "research-analyst",
+        verifiedAt: "2026-10-17",
+        status: "verified",
+      },
+    });
+    const visible = html.replace(/<details[\s\S]*?<\/details>/g, "");
+    assert.equal(visible.includes("Usage limits"), false);
+    assert.equal(visible.includes("Plan credits expire at renewal"), false);
+    assert.equal(html.includes("https://example.com/fixture-valid/usage"), false);
+  });
+
+  it("shows nothing extra when a tool has no usageLimits fact", () => {
+    const without = renderOverview(validExampleFacts);
+    const withVerified = renderOverview({ ...validExampleFacts, usageLimits: verifiedUsageLimits });
+    assert.equal(without.includes("Usage limits"), false);
+    assert.equal(without.includes("Credits expire"), false);
+    assert.equal(without.includes("Commercial use"), false);
+    assert.ok(withVerified.includes("Usage limits"));
+    const leftover = without.includes("leftover usage");
+    const leftoverWith = withVerified.includes("leftover usage");
+    assert.equal(leftover, leftoverWith);
   });
 });
 

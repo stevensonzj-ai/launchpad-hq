@@ -8,8 +8,10 @@ import { PlatformPricingTable } from "@/components/platforms/platform-pricing-ta
 import { PlatformQuickFacts } from "@/components/platforms/platform-quick-facts";
 import { PlatformSources } from "@/components/platforms/platform-sources";
 import { PlatformTechnicalDetails } from "@/components/platforms/platform-technical-details";
+import { PlatformUsageLimits } from "@/components/platforms/platform-usage-limits";
 import { PlatformVerdictCard } from "@/components/platforms/platform-verdict-card";
 import type { OverlayPlatform, PlatformFactFields } from "@/data/facts/overlay";
+import { publishedUsageLimits } from "@/data/facts/walk";
 import type { ToolFacts } from "@/data/facts/types";
 import {
   applyUsageLimitsToFreePlan,
@@ -72,6 +74,7 @@ export function PlatformToolOverview({
   ]);
   const fallbackVerdict = platform.description?.trim() || platform.primaryUse?.trim() || null;
   const showModelsInTechnical = Boolean(facts?.models) && !hasModelFamily;
+  const usageLimitsFact = publishedUsageLimits(facts);
 
   return (
     <div className="space-y-7">
@@ -133,6 +136,8 @@ export function PlatformToolOverview({
           ) : null}
         </section>
       ) : null}
+
+      <PlatformUsageLimits fact={usageLimitsFact} />
 
       <PlatformMobileSection
         name={platform.name}
