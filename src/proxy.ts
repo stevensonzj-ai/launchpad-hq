@@ -57,7 +57,7 @@ export default clerkMiddleware(async (auth, request) => {
 
 export const config = {
   matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|ttf|woff2?|csv|txt|xml)).*)",
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };

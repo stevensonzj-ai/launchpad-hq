@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
 import {
   chicagoHourKey,
   decideHourlyRocketLaunch,
@@ -245,5 +248,74 @@ describe("hourly rocket flight path", () => {
     assert.ok(plan.hover.y < plan.land.y);
     assert.ok(Math.abs(land.x) < 1);
     assert.ok(Math.abs(land.y) < 1);
+  });
+});
+
+describe("hourly rocket public sprites bypass Clerk matcher", () => {
+  const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+  const componentPath = path.join(repoRoot, "src/components/sponsors/hourly-rocket.tsx");
+  const proxyPath = path.join(repoRoot, "src/proxy.ts");
+
+  function spritePathsFromComponent(source: string): string[] {
+    const paths = [...source.matchAll(/src=["'](\/images\/[^"']+)["']/g)].map((m) => m[1]);
+    assert.ok(paths.length > 0, "hourly-rocket.tsx must reference at least one /images sprite");
+    return paths;
+  }
+
+  function matcherExtensionsFromProxy(source: string): Set<string> {
+    const start = source.indexOf("\\\\.(?:");
+    assert.ok(start >= 0, "src/proxy.ts matcher must contain a static-extension exclusion group");
+    const innerStart = start + "\\\\.(?:".length;
+    let depth = 1;
+    let i = innerStart;
+    while (i < source.length && depth > 0) {
+      if (source[i] === "(") depth += 1;
+      else if (source[i] === ")") depth -= 1;
+      if (depth > 0) i += 1;
+    }
+    assert.ok(depth === 0, "src/proxy.ts matcher extension group must be balanced");
+    const inner = source.slice(innerStart, i);
+    const tokens = inner
+      .split("|")
+      .map((token) => token.replace(/\(\?!on\)/g, "").replace(/[?\\]/g, ""))
+      .filter(Boolean);
+    assert.ok(tokens.includes("png"), "parsed matcher extensions should include known png token");
+    return new Set(tokens);
+  }
+
+  it("ships both referenced sprite files under public/", () => {
+    const source = readFileSync(componentPath, "utf8");
+    const spritePaths = spritePathsFromComponent(source);
+    assert.ok(
+      spritePaths.includes("/images/launchpad/hourly-rocket-body.webp"),
+      "body sprite path must stay referenced",
+    );
+    assert.ok(
+      spritePaths.includes("/images/launchpad/hourly-rocket-plume.webp"),
+      "plume sprite path must stay referenced",
+    );
+    for (const spritePath of spritePaths) {
+      const onDisk = path.join(repoRoot, "public", spritePath.replace(/^\//, ""));
+      assert.equal(existsSync(onDisk), true, `missing public asset: ${spritePath}`);
+    }
+  });
+
+  it("excludes every hourly-rocket asset extension in the Clerk matcher", () => {
+    const componentSource = readFileSync(componentPath, "utf8");
+    const proxySource = readFileSync(proxyPath, "utf8");
+    const spritePaths = spritePathsFromComponent(componentSource);
+    const extensions = matcherExtensionsFromProxy(proxySource);
+
+    assert.ok(extensions.has("webp"), "matcher exclusion group must include webp");
+    assert.ok(extensions.has("avif"), "matcher exclusion group must include avif");
+
+    for (const spritePath of spritePaths) {
+      const ext = path.extname(spritePath).replace(/^\./, "").toLowerCase();
+      assert.ok(ext, `sprite path must have an extension: ${spritePath}`);
+      assert.ok(
+        extensions.has(ext),
+        `src/proxy.ts matcher must exclude .${ext} (referenced by ${spritePath}); parsed=${[...extensions].join(",")}`,
+      );
+    }
   });
 });
