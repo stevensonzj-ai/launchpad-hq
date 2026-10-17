@@ -1,14 +1,26 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getActivePlacement, listAiOfTheWeekArchive } from "@/data/sponsors";
 import { SponsorDisclosure } from "@/components/sponsors/sponsor-disclosure";
 import { SponsoredLabel } from "@/components/sponsors/sponsored-label";
 
-export const metadata: Metadata = {
-  title: "AI of the Week (Sponsored) | Launchpad HQ",
-  description: "A labeled paid placement with LaunchpadHQ’s honest take. Hidden when nothing is booked.",
-};
-
 export const revalidate = 3600;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const current = getActivePlacement("ai-of-the-week");
+  if (!current) {
+    return {
+      title: "AI of the Week (Sponsored) | Launchpad HQ",
+      description:
+        "No sponsored AI of the Week is booked this week. See Advertise to book a labeled placement.",
+      robots: { index: false, follow: true },
+    };
+  }
+  return {
+    title: "AI of the Week (Sponsored) | Launchpad HQ",
+    description: "A labeled paid placement with LaunchpadHQ’s honest take.",
+  };
+}
 
 export default function AiOfTheWeekPage() {
   const current = getActivePlacement("ai-of-the-week");
@@ -23,9 +35,19 @@ export default function AiOfTheWeekPage() {
       <SponsorDisclosure className="mt-3" />
 
       {!current ? (
-        <p className="mt-10 rounded-xl border border-gray-800 bg-gray-900/40 p-6 text-gray-400">
-          No sponsored AI of the Week is booked right now.
-        </p>
+        <div className="mt-10 rounded-xl border border-gray-800 bg-gray-900/40 p-6">
+          <p className="text-gray-300">
+            No sponsored AI of the Week is booked right now. This page stays up so the
+            slot is honest when it is empty.
+          </p>
+          <p className="mt-3 text-sm text-gray-400">
+            If you want this week&apos;s feature, see{" "}
+            <Link href="/advertise" className="text-orange-400 hover:underline">
+              Advertise
+            </Link>{" "}
+            for availability and how to book.
+          </p>
+        </div>
       ) : (
         <article className="mt-10 space-y-6">
           {current.heroImageUrl ? (

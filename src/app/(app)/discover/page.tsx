@@ -22,6 +22,8 @@ import {
   MOBILE_FILTERS,
 } from "@/lib/discover-filters";
 import { getActivePlacement } from "@/data/sponsors";
+import { ROCKET_DEMO_PLACEMENT } from "@/data/sponsors/rocket-demo";
+import { HourlyRocket } from "@/components/sponsors/hourly-rocket";
 import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -45,9 +47,11 @@ export default async function DiscoverPage({
     difficulty?: string;
     mobile?: string;
     sort?: string;
+    rocket?: string;
   }>;
 }) {
   const params = await searchParams;
+  const isRocketDemo = params.rocket === "demo";
   const query = typeof params.q === "string" ? params.q.trim().slice(0, 120) : "";
   const sort = normalizeSort(params.sort);
   const costQs = params.cost?.toLowerCase();
@@ -209,11 +213,16 @@ export default async function DiscoverPage({
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">What will you <span className="bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">try next?</span></h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-300">Explore tools for your ideas, your budget, and your next project.</p>
       </section>
-      {discoverSpotlight ? (
+      {isRocketDemo ? (
+        <div className="mb-8">
+          <SponsoredSpotlight placement={ROCKET_DEMO_PLACEMENT} badge="Sponsored — demo" />
+        </div>
+      ) : discoverSpotlight ? (
         <div className="mb-8">
           <SponsoredSpotlight placement={discoverSpotlight} />
         </div>
       ) : null}
+      <HourlyRocket hasSponsorTarget={isRocketDemo || Boolean(discoverSpotlight)} />
 
       {/* Filter bar — the five facet rows collapsed into one control row.
           Client component; it only emits URLs via the shared buildDiscoverQuery.
