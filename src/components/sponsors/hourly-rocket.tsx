@@ -1,6 +1,5 @@
 "use client";
 
-import { Rocket } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import {
   chicagoHourKey,
@@ -12,12 +11,14 @@ import {
 export const HOURLY_ROCKET_HOME = "hourly-rocket-home";
 export const HOURLY_ROCKET_TARGET = "hourly-rocket-target";
 
-const FLIGHT_MS = 3600;
+const FLIGHT_MS = 3800;
+const CRAFT_W = 56;
+const CRAFT_H = 80;
 
 type Flight = {
   left: number;
   top: number;
-  animationName: "lp-rocket-to-banner" | "lp-rocket-home-loop";
+  animationName: "lp-rocket-land" | "lp-rocket-home-loop";
   endX: number;
   endY: number;
 };
@@ -29,7 +30,7 @@ function prefersReducedMotion(): boolean {
 function pointOf(el: Element | null): { x: number; y: number } | null {
   if (!el) return null;
   const rect = el.getBoundingClientRect();
-  return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+  return { x: rect.left + rect.width / 2, y: rect.top + rect.height * 0.28 };
 }
 
 export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }) {
@@ -41,7 +42,6 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
 
     const tryLaunch = () => {
       if (prefersReducedMotion()) return;
-      // window.location.search — no useSearchParams, so Discover stays free of a Suspense boundary.
       const search = window.location.search;
       const now = new Date();
       const decision = decideHourlyRocketLaunch({
@@ -69,7 +69,7 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         setFlight({
           left: home.x,
           top: home.y,
-          animationName: "lp-rocket-to-banner",
+          animationName: "lp-rocket-land",
           endX: target.x - home.x,
           endY: target.y - home.y,
         });
@@ -102,18 +102,43 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-[60] overflow-hidden"
     >
-      <Rocket
-        className="absolute h-7 w-7 text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.55)]"
+      <div
+        className="absolute"
         style={{
           left: flight.left,
           top: flight.top,
-          marginLeft: -14,
-          marginTop: -14,
-          animation: `${flight.animationName} ${FLIGHT_MS}ms ease-in-out forwards`,
+          width: CRAFT_W,
+          height: CRAFT_H,
+          marginLeft: -CRAFT_W / 2,
+          marginTop: -CRAFT_H / 2,
+          animation: `${flight.animationName} ${FLIGHT_MS}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`,
           ["--rocket-dx" as string]: `${flight.endX}px`,
           ["--rocket-dy" as string]: `${flight.endY}px`,
         }}
-      />
+      >
+        {/* Plume is a separate cutout of the same art, stacked on the body canvas.
+            scaleY/opacity flicker the plume only; body stays still relative to the craft. */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- overlay sprite, not a content image */}
+        <img
+          src="/images/launchpad/hourly-rocket-plume.webp"
+          alt=""
+          width={CRAFT_W}
+          height={CRAFT_H}
+          className="absolute inset-0 h-full w-full object-contain"
+          style={{
+            transformOrigin: "52% 38%",
+            animation: `lp-rocket-plume ${FLIGHT_MS}ms linear forwards`,
+          }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element -- overlay sprite, not a content image */}
+        <img
+          src="/images/launchpad/hourly-rocket-body.webp"
+          alt=""
+          width={CRAFT_W}
+          height={CRAFT_H}
+          className="absolute inset-0 h-full w-full object-contain"
+        />
+      </div>
     </div>
   );
 }

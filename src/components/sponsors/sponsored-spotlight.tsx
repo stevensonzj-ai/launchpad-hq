@@ -2,7 +2,13 @@ import type { SponsorPlacement } from "@/data/sponsors/types";
 import { SponsorDisclosure } from "./sponsor-disclosure";
 import { SponsoredLabel } from "./sponsored-label";
 
-export function SponsoredSpotlight({ placement }: { placement: SponsorPlacement }) {
+export function SponsoredSpotlight({
+  placement,
+  badge,
+}: {
+  placement: SponsorPlacement;
+  badge?: string;
+}) {
   const image = placement.spotlightImageUrl ?? placement.heroImageUrl ?? placement.logoUrl;
 
   return (
@@ -11,7 +17,13 @@ export function SponsoredSpotlight({ placement }: { placement: SponsorPlacement 
       className="rounded-xl border border-orange-500/25 bg-gray-900/60 p-4 sm:p-5"
     >
       <div className="mb-3 flex items-center gap-2">
-        <SponsoredLabel />
+        {badge ? (
+          <span className="inline-block rounded px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-orange-200 ring-1 ring-orange-500/40">
+            {badge}
+          </span>
+        ) : (
+          <SponsoredLabel />
+        )}
         <span className="text-sm text-gray-400">{placement.sponsorName}</span>
       </div>
       <div className="flex flex-col gap-4 sm:flex-row">

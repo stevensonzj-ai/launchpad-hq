@@ -104,21 +104,98 @@ html {
   }
 }
 
-@keyframes lp-rocket-to-banner {
+/* ~3.8s Falcon-style profile: vertical takeoff, cruise arc, upright hover, vertical descent. */
+@keyframes lp-rocket-land {
   0% {
-    transform: translate3d(0, 0, 0) rotate(-18deg);
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  14% {
+    transform: translate3d(0, -80px, 0) rotate(0deg);
+  }
+  38% {
+    transform: translate3d(calc(var(--rocket-dx, 0px) * 0.42), calc(-70px + var(--rocket-dy, 0px) * 0.18), 0)
+      rotate(48deg);
+  }
+  56% {
+    transform: translate3d(calc(var(--rocket-dx, 0px) * 0.88), calc(var(--rocket-dy, 0px) - 120px), 0)
+      rotate(12deg);
+  }
+  66% {
+    transform: translate3d(var(--rocket-dx, 0px), calc(var(--rocket-dy, 0px) - 118px), 0) rotate(0deg);
+  }
+  90% {
+    transform: translate3d(var(--rocket-dx, 0px), calc(var(--rocket-dy, 0px) - 10px), 0) rotate(0deg);
+  }
+  96% {
+    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg);
   }
   100% {
-    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(8deg);
+    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg) scale(0.97);
   }
 }
 
 @keyframes lp-rocket-home-loop {
-  0%,
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  14% {
+    transform: translate3d(0, -80px, 0) rotate(0deg);
+  }
+  40% {
+    transform: translate3d(min(26vw, 128px), min(14vh, 64px), 0) rotate(48deg);
+  }
+  58% {
+    transform: translate3d(min(8vw, 36px), -110px, 0) rotate(8deg);
+  }
+  66% {
+    transform: translate3d(0, -110px, 0) rotate(0deg);
+  }
+  90% {
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+  }
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
-  45% {
-    transform: translate3d(min(28vw, 140px), min(18vh, 90px), 0) rotate(28deg);
+}
+
+/* Plume cutout only: full flicker, throttled descent burn, off after touchdown. */
+@keyframes lp-rocket-plume {
+  0%,
+  12% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  18% {
+    opacity: 0.78;
+    transform: scaleY(0.84);
+  }
+  28% {
+    opacity: 1;
+    transform: scaleY(1.08);
+  }
+  40% {
+    opacity: 0.82;
+    transform: scaleY(0.88);
+  }
+  52% {
+    opacity: 0.95;
+    transform: scaleY(1.04);
+  }
+  66% {
+    opacity: 0.7;
+    transform: scaleY(0.55);
+  }
+  78% {
+    opacity: 0.55;
+    transform: scaleY(0.42);
+  }
+  88% {
+    opacity: 0.4;
+    transform: scaleY(0.36);
+  }
+  93%,
+  100% {
+    opacity: 0;
+    transform: scaleY(0.08);
   }
 }
