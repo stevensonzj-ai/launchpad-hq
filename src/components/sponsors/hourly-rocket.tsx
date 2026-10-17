@@ -1,11 +1,11 @@
 "use client";
 
 import { Rocket } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   chicagoHourKey,
+  decideHourlyRocketLaunch,
   readLastPlayedHourKey,
-  shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
 } from "@/lib/hourly-rocket";
 
@@ -34,15 +34,23 @@ function pointOf(el: Element | null): { x: number; y: number } | null {
 
 export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }) {
   const [flight, setFlight] = useState<Flight | null>(null);
+  const previewLaunchedRef = useRef(false);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
     const tryLaunch = () => {
       if (prefersReducedMotion()) return;
+      // window.location.search — no useSearchParams, so Discover stays free of a Suspense boundary.
+      const search = window.location.search;
       const now = new Date();
-      const last = readLastPlayedHourKey(window.localStorage);
-      if (!shouldLaunchHourlyRocket(now, last)) return;
+      const decision = decideHourlyRocketLaunch({
+        now,
+        lastPlayedHourKey: readLastPlayedHourKey(window.localStorage),
+        search,
+      });
+      if (!decision.launch) return;
+      if (!decision.persistHourKey && previewLaunchedRef.current) return;
 
       const home = pointOf(document.querySelector(`[data-${HOURLY_ROCKET_HOME}]`));
       if (!home) return;
@@ -51,7 +59,11 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         ? pointOf(document.querySelector(`[data-${HOURLY_ROCKET_TARGET}]`))
         : null;
 
-      writeLastPlayedHourKey(window.localStorage, chicagoHourKey(now));
+      if (decision.persistHourKey) {
+        writeLastPlayedHourKey(window.localStorage, chicagoHourKey(now));
+      } else {
+        previewLaunchedRef.current = true;
+      }
 
       if (target) {
         setFlight({

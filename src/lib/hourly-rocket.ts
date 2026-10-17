@@ -57,6 +57,38 @@ export function shouldLaunchHourlyRocket(
   return lastPlayedHourKey !== chicagoHourKey(now);
 }
 
+/** True only for the exact preview query `rocket=1`. */
+export function isRocketPreview(search: string): boolean {
+  const query = search.startsWith("?") ? search.slice(1) : search;
+  return new URLSearchParams(query).get("rocket") === "1";
+}
+
+export type HourlyRocketDecision = {
+  launch: boolean;
+  persistHourKey: boolean;
+};
+
+/**
+ * Preview (`?rocket=1`) launches immediately and never writes the hourly key.
+ * With no preview param, production gating is unchanged.
+ */
+export function decideHourlyRocketLaunch(input: {
+  now: Date;
+  lastPlayedHourKey: string | null;
+  search: string;
+  windowSeconds?: number;
+}): HourlyRocketDecision {
+  if (isRocketPreview(input.search)) {
+    return { launch: true, persistHourKey: false };
+  }
+  const launch = shouldLaunchHourlyRocket(
+    input.now,
+    input.lastPlayedHourKey,
+    input.windowSeconds,
+  );
+  return { launch, persistHourKey: launch };
+}
+
 export function readLastPlayedHourKey(
   storage: Pick<Storage, "getItem"> | null | undefined,
 ): string | null {

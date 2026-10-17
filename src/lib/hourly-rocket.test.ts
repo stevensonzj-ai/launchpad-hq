@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
   chicagoHourKey,
+  decideHourlyRocketLaunch,
+  HOURLY_ROCKET_STORAGE_KEY,
   isChicagoTopOfHour,
+  isRocketPreview,
   readLastPlayedHourKey,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
@@ -56,5 +59,72 @@ describe("hourly rocket once-per-hour storage", () => {
   it("does not launch away from the top of the hour even with empty storage", () => {
     const mid = new Date("2026-10-17T17:30:00.000Z");
     assert.equal(shouldLaunchHourlyRocket(mid, null), false);
+  });
+});
+
+describe("hourly rocket preview query", () => {
+  it("treats only rocket=1 as a preview trigger", () => {
+    assert.equal(isRocketPreview("?rocket=1"), true);
+    assert.equal(isRocketPreview("rocket=1"), true);
+    assert.equal(isRocketPreview("?q=tools&rocket=1"), true);
+    assert.equal(isRocketPreview(""), false);
+    assert.equal(isRocketPreview("?rocket=true"), false);
+    assert.equal(isRocketPreview("?rocket=0"), false);
+  });
+
+  it("launches on ?rocket=1 ignoring hour and storage and does not mark storage", () => {
+    const memory: Record<string, string> = {
+      [HOURLY_ROCKET_STORAGE_KEY]: "2026-10-17T12",
+    };
+    const storage = {
+      getItem(key: string) {
+        return memory[key] ?? null;
+      },
+      setItem(key: string, value: string) {
+        memory[key] = value;
+      },
+    };
+    const midHour = new Date("2026-10-17T17:30:00.000Z");
+    const last = readLastPlayedHourKey(storage);
+    const decision = decideHourlyRocketLaunch({
+      now: midHour,
+      lastPlayedHourKey: last,
+      search: "?rocket=1",
+    });
+    assert.deepEqual(decision, { launch: true, persistHourKey: false });
+    assert.equal(decision.persistHourKey, false);
+    if (decision.persistHourKey) {
+      writeLastPlayedHourKey(storage, chicagoHourKey(midHour));
+    }
+    assert.equal(memory[HOURLY_ROCKET_STORAGE_KEY], "2026-10-17T12");
+  });
+
+  it("keeps normal gating when the preview param is absent", () => {
+    const mid = new Date("2026-10-17T17:30:00.000Z");
+    const top = new Date("2026-10-17T17:00:02.000Z");
+    assert.deepEqual(
+      decideHourlyRocketLaunch({
+        now: mid,
+        lastPlayedHourKey: null,
+        search: "?q=writing",
+      }),
+      { launch: false, persistHourKey: false },
+    );
+    assert.deepEqual(
+      decideHourlyRocketLaunch({
+        now: top,
+        lastPlayedHourKey: null,
+        search: "",
+      }),
+      { launch: true, persistHourKey: true },
+    );
+    assert.deepEqual(
+      decideHourlyRocketLaunch({
+        now: top,
+        lastPlayedHourKey: chicagoHourKey(top),
+        search: "",
+      }),
+      { launch: false, persistHourKey: false },
+    );
   });
 });
