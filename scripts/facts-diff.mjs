@@ -42,6 +42,7 @@ const FACT_KEYS = [
   "apps",
   "models",
   "privacy",
+  "usageLimits",
 ];
 
 const args = process.argv.slice(2);

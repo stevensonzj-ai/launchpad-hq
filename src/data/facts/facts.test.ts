@@ -12,6 +12,7 @@ import { staleFacts } from "./fixtures/stale";
 import { validExampleFacts } from "./fixtures/valid-example";
 import { overlayPlatformWithFacts } from "./overlay";
 import { REGISTERED_TOOL_FACTS, listRegisteredToolFacts } from "./registry";
+import { isPublishedVerified } from "./walk";
 
 const NOW = new Date("2026-10-14T12:00:00.000Z");
 
@@ -59,6 +60,134 @@ describe("fact-file audit", () => {
           issue.message.includes("GPT-4o mini"),
       ),
       `expected retired-term, got ${JSON.stringify(issues)}`,
+    );
+  });
+
+  it("fails when usageLimits has no sourceUrl or checkedAt", () => {
+    const issues = auditToolFacts(
+      {
+        slug: "kling-ai",
+        lifecycle: "active",
+        usageLimits: {
+          value: { creditsExpire: "Plan credits expire at renewal" },
+          sourceUrl: "",
+          checkedAt: "",
+          gatheredBy: "research-analyst",
+          status: "unverified",
+        },
+      },
+      NOW,
+    );
+    assert.ok(
+      issues.some((issue) => issue.kind === "missing-source" && issue.field === "usageLimits"),
+      `expected missing-source on usageLimits, got ${JSON.stringify(issues)}`,
+    );
+    assert.ok(
+      issues.some(
+        (issue) =>
+          issue.kind === "stale" &&
+          issue.field === "usageLimits" &&
+          issue.message.includes("YYYY-MM-DD"),
+      ),
+      `expected checkedAt format failure on usageLimits, got ${JSON.stringify(issues)}`,
+    );
+  });
+
+  it("uses a 90-day recheck window for usageLimits on video/image tools", () => {
+    const fresh = auditToolFacts(
+      {
+        slug: "kling-ai",
+        lifecycle: "active",
+        usageLimits: {
+          value: { creditsExpire: "Membership credits expire" },
+          sourceUrl: "https://kling.ai/docs/payment-policy",
+          checkedAt: "2026-07-20",
+          gatheredBy: "research-analyst",
+          status: "unverified",
+        },
+      },
+      NOW,
+    );
+    assert.equal(
+      fresh.some((issue) => issue.kind === "stale" && issue.field === "usageLimits"),
+      false,
+      `86-day usageLimits on a video tool should be fresh, got ${JSON.stringify(fresh)}`,
+    );
+
+    const stale = auditToolFacts(
+      {
+        slug: "kling-ai",
+        lifecycle: "active",
+        usageLimits: {
+          value: { creditsExpire: "Membership credits expire" },
+          sourceUrl: "https://kling.ai/docs/payment-policy",
+          checkedAt: "2026-07-01",
+          gatheredBy: "research-analyst",
+          status: "unverified",
+        },
+      },
+      NOW,
+    );
+    assert.ok(
+      stale.some(
+        (issue) =>
+          issue.kind === "stale" &&
+          issue.field === "usageLimits" &&
+          issue.message.includes("limit 90"),
+      ),
+      `expected 90-day stale usageLimits, got ${JSON.stringify(stale)}`,
+    );
+  });
+
+  it("keeps the 60-day window for usageLimits on non video/image tools", () => {
+    const issues = auditToolFacts(
+      {
+        slug: "chatgpt",
+        lifecycle: "active",
+        usageLimits: {
+          value: { other: ["Example unused field"] },
+          sourceUrl: "https://example.com/chatgpt/usage",
+          checkedAt: "2026-08-01",
+          gatheredBy: "research-analyst",
+          status: "unverified",
+        },
+      },
+      NOW,
+    );
+    assert.ok(
+      issues.some(
+        (issue) =>
+          issue.kind === "stale" &&
+          issue.field === "usageLimits" &&
+          issue.message.includes("limit 60"),
+      ),
+      `expected 60-day stale usageLimits on a chat tool, got ${JSON.stringify(issues)}`,
+    );
+  });
+
+  it("keeps unverified or pending usageLimits unpublished", () => {
+    const base = {
+      value: { rollover: "No rollover" },
+      sourceUrl: "https://example.com/usage",
+      checkedAt: "2026-10-01",
+      gatheredBy: "research-analyst",
+    };
+    assert.equal(
+      isPublishedVerified({ ...base, status: "unverified", verifiedBy: "ra" }),
+      false,
+    );
+    assert.equal(
+      isPublishedVerified({ ...base, status: "verified", verifiedBy: "pending" }),
+      false,
+    );
+    assert.equal(
+      isPublishedVerified({
+        ...base,
+        status: "verified",
+        verifiedBy: "cos",
+        verifiedAt: "2026-10-02",
+      }),
+      true,
     );
   });
 

@@ -4,6 +4,29 @@ import { flattenFactValues, listFactEntries } from "./walk";
 
 export const STALE_DAYS_DEFAULT = 60;
 export const STALE_DAYS_PRICE = 30;
+/** Recheck window for `usageLimits` on video / image-generation tools (RA). */
+export const STALE_DAYS_USAGE_LIMITS_VIDEO_IMAGE = 90;
+
+/**
+ * Fact-file slugs whose usage-limits terms change on the video/image cadence.
+ * Other tools keep the 60-day default for this field.
+ */
+export const VIDEO_IMAGE_GENERATION_FACT_SLUGS = new Set<string>([
+  "capcut",
+  "captions",
+  "comfyui",
+  "freepik-ai",
+  "hedra",
+  "higgsfield",
+  "invideo-ai",
+  "kling-ai",
+  "krea",
+  "veed",
+]);
+
+export function isVideoOrImageGenerationTool(facts: ToolFacts): boolean {
+  return VIDEO_IMAGE_GENERATION_FACT_SLUGS.has(facts.slug);
+}
 
 export type FactIssueKind =
   | "missing-source"
@@ -35,6 +58,14 @@ function isPriceFact(key: FactValueKey): boolean {
   return (PRICE_FACT_KEYS as readonly string[]).includes(key);
 }
 
+export function staleDaysForFact(key: FactValueKey, facts: ToolFacts): number {
+  if (isPriceFact(key)) return STALE_DAYS_PRICE;
+  if (key === "usageLimits" && isVideoOrImageGenerationTool(facts)) {
+    return STALE_DAYS_USAGE_LIMITS_VIDEO_IMAGE;
+  }
+  return STALE_DAYS_DEFAULT;
+}
+
 export function auditToolFacts(facts: ToolFacts, now = new Date()): FactIssue[] {
   const issues: FactIssue[] = [];
 
@@ -57,7 +88,7 @@ export function auditToolFacts(facts: ToolFacts, now = new Date()): FactIssue[] 
         message: `${key} checkedAt must be YYYY-MM-DD (got ${JSON.stringify(fact.checkedAt)})`,
       });
     } else {
-      const limit = isPriceFact(key) ? STALE_DAYS_PRICE : STALE_DAYS_DEFAULT;
+      const limit = staleDaysForFact(key, facts);
       const age = daysBetween(checked, now);
       if (age > limit) {
         issues.push({

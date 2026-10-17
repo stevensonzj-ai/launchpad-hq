@@ -15,10 +15,12 @@ export function listFactEntries(facts: ToolFacts): FactEntry[] {
 }
 
 export function isPublishedVerified(fact: Fact<unknown>): boolean {
+  const verifier = fact.verifiedBy?.trim();
   return Boolean(
     fact.status === "verified" &&
-      fact.verifiedBy &&
-      fact.verifiedBy !== fact.gatheredBy,
+      verifier &&
+      verifier !== "pending" &&
+      verifier !== fact.gatheredBy,
   );
 }
 
