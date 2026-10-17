@@ -1,5 +1,55 @@
 export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
 
+/** Shared duration for hourly, ?rocket=1, and ?rocket=demo flights. */
+export const HOURLY_ROCKET_FLIGHT_MS = 6500;
+export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
+
+export type RocketPoint = { x: number; y: number };
+export type RocketTourOffsets = {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  x3: number;
+  y3: number;
+};
+
+/**
+ * Viewport-relative cruise waypoints as offsets from the header home.
+ * Clamped so the craft stays fully inside the overlay.
+ */
+export function rocketTourOffsets(
+  home: RocketPoint,
+  viewport: { width: number; height: number },
+  craft = HOURLY_ROCKET_CRAFT,
+): RocketTourOffsets {
+  const pad = Math.max(craft.width, craft.height) / 2 + 10;
+  const clampOffset = (absX: number, absY: number): RocketPoint => ({
+    x: Math.min(viewport.width - pad, Math.max(pad, absX)) - home.x,
+    y: Math.min(viewport.height - pad, Math.max(pad, absY)) - home.y,
+  });
+  const a = clampOffset(viewport.width * 0.82, viewport.height * 0.2);
+  const b = clampOffset(viewport.width * 0.18, viewport.height * 0.74);
+  const c = clampOffset(viewport.width * 0.7, viewport.height * 0.16);
+  return { x1: a.x, y1: a.y, x2: b.x, y2: b.y, x3: c.x, y3: c.y };
+}
+
+/** Upright hover point above the landing pad, still inside the viewport. */
+export function rocketHoverOffset(
+  home: RocketPoint,
+  land: RocketPoint,
+  viewport: { width: number; height: number },
+  craft = HOURLY_ROCKET_CRAFT,
+): RocketPoint {
+  const pad = Math.max(craft.width, craft.height) / 2 + 10;
+  const absX = Math.min(viewport.width - pad, Math.max(pad, home.x + land.x));
+  const absY = Math.min(
+    viewport.height - pad,
+    Math.max(pad, home.y + land.y - 112),
+  );
+  return { x: absX - home.x, y: absY - home.y };
+}
+
 const CHICAGO = "America/Chicago";
 
 export type ChicagoClockParts = {

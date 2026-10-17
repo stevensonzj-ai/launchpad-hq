@@ -104,96 +104,81 @@ html {
   }
 }
 
-/* ~3.8s Falcon-style profile: vertical takeoff, cruise arc, upright hover, vertical descent. */
+/* 6.5s Falcon-style profile: vertical takeoff, wide viewport tour, upright hover, vertical descent. */
 @keyframes lp-rocket-land {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0.05, 0.25, 1);
   }
-  14% {
-    transform: translate3d(0, -80px, 0) rotate(0deg);
+  10% {
+    transform: translate3d(0, -72px, 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   }
-  38% {
-    transform: translate3d(calc(var(--rocket-dx, 0px) * 0.42), calc(-70px + var(--rocket-dy, 0px) * 0.18), 0)
-      rotate(48deg);
+  28% {
+    transform: translate3d(var(--tour-x1, 180px), var(--tour-y1, 80px), 0) rotate(28deg);
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   }
-  56% {
-    transform: translate3d(calc(var(--rocket-dx, 0px) * 0.88), calc(var(--rocket-dy, 0px) - 120px), 0)
-      rotate(12deg);
+  48% {
+    transform: translate3d(var(--tour-x2, 40px), var(--tour-y2, 220px), 0) rotate(-22deg);
+    animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   }
-  66% {
-    transform: translate3d(var(--rocket-dx, 0px), calc(var(--rocket-dy, 0px) - 118px), 0) rotate(0deg);
+  64% {
+    transform: translate3d(var(--tour-x3, 140px), var(--tour-y3, 60px), 0) rotate(16deg);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
-  90% {
-    transform: translate3d(var(--rocket-dx, 0px), calc(var(--rocket-dy, 0px) - 10px), 0) rotate(0deg);
+  72% {
+    transform: translate3d(var(--hover-x, 0px), var(--hover-y, -112px), 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+  }
+  92% {
+    transform: translate3d(var(--rocket-dx, 0px), calc(var(--rocket-dy, 0px) - 8px), 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
   }
   96% {
     transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg);
+    animation-timing-function: ease-out;
   }
   100% {
-    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg) scale(0.97);
+    transform: translate3d(var(--rocket-dx, 0px), var(--rocket-dy, 0px), 0) rotate(0deg) scale(0.98);
   }
 }
 
-@keyframes lp-rocket-home-loop {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-  14% {
-    transform: translate3d(0, -80px, 0) rotate(0deg);
-  }
-  40% {
-    transform: translate3d(min(26vw, 128px), min(14vh, 64px), 0) rotate(48deg);
-  }
-  58% {
-    transform: translate3d(min(8vw, 36px), -110px, 0) rotate(8deg);
-  }
-  66% {
-    transform: translate3d(0, -110px, 0) rotate(0deg);
-  }
-  90% {
-    transform: translate3d(0, -10px, 0) rotate(0deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-}
-
-/* Plume cutout only: full flicker, throttled descent burn, off after touchdown. */
+/* Plume cutout only: slow flicker, throttled descent burn, off after touchdown. */
 @keyframes lp-rocket-plume {
   0%,
-  12% {
+  10% {
     opacity: 1;
     transform: scaleY(1);
   }
-  18% {
-    opacity: 0.78;
-    transform: scaleY(0.84);
+  22% {
+    opacity: 0.88;
+    transform: scaleY(0.94);
   }
-  28% {
+  36% {
     opacity: 1;
-    transform: scaleY(1.08);
-  }
-  40% {
-    opacity: 0.82;
-    transform: scaleY(0.88);
-  }
-  52% {
-    opacity: 0.95;
     transform: scaleY(1.04);
   }
-  66% {
-    opacity: 0.7;
-    transform: scaleY(0.55);
+  50% {
+    opacity: 0.9;
+    transform: scaleY(0.96);
   }
-  78% {
-    opacity: 0.55;
-    transform: scaleY(0.42);
+  64% {
+    opacity: 0.95;
+    transform: scaleY(1.02);
   }
-  88% {
-    opacity: 0.4;
-    transform: scaleY(0.36);
+  72% {
+    opacity: 0.62;
+    transform: scaleY(0.52);
   }
-  93%,
+  84% {
+    opacity: 0.5;
+    transform: scaleY(0.44);
+  }
+  91% {
+    opacity: 0.28;
+    transform: scaleY(0.3);
+  }
+  94%,
   100% {
     opacity: 0;
     transform: scaleY(0.08);

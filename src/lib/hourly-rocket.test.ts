@@ -3,11 +3,15 @@ import { describe, it } from "node:test";
 import {
   chicagoHourKey,
   decideHourlyRocketLaunch,
+  HOURLY_ROCKET_CRAFT,
+  HOURLY_ROCKET_FLIGHT_MS,
   HOURLY_ROCKET_STORAGE_KEY,
   isChicagoTopOfHour,
   isRocketDemo,
   isRocketPreview,
   readLastPlayedHourKey,
+  rocketHoverOffset,
+  rocketTourOffsets,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
 } from "./hourly-rocket";
@@ -157,5 +161,42 @@ describe("hourly rocket preview query", () => {
       }),
       { launch: false, persistHourKey: false },
     );
+  });
+});
+
+describe("hourly rocket flight path", () => {
+  it("uses a 6.5s shared duration", () => {
+    assert.equal(HOURLY_ROCKET_FLIGHT_MS, 6500);
+  });
+
+  it("clamps cruise waypoints so the craft stays inside the viewport", () => {
+    const home = { x: 48, y: 28 };
+    const mobile = rocketTourOffsets(home, { width: 375, height: 720 });
+    const desktop = rocketTourOffsets(home, { width: 1280, height: 800 });
+    const pad = Math.max(HOURLY_ROCKET_CRAFT.width, HOURLY_ROCKET_CRAFT.height) / 2 + 10;
+
+    for (const tour of [mobile, desktop]) {
+      for (const [x, y] of [
+        [tour.x1, tour.y1],
+        [tour.x2, tour.y2],
+        [tour.x3, tour.y3],
+      ] as const) {
+        const absX = home.x + x;
+        const absY = home.y + y;
+        assert.ok(absX >= pad);
+        assert.ok(absY >= pad);
+        assert.ok(absX <= (tour === mobile ? 375 : 1280) - pad + 0.01);
+        assert.ok(absY <= (tour === mobile ? 720 : 800) - pad + 0.01);
+      }
+    }
+    assert.ok(desktop.x1 > mobile.x1);
+    assert.ok(desktop.x1 > desktop.x2);
+  });
+
+  it("keeps the pre-descent hover inside the viewport", () => {
+    const home = { x: 48, y: 28 };
+    const hover = rocketHoverOffset(home, { x: 20, y: 40 }, { width: 375, height: 720 });
+    assert.ok(home.y + hover.y >= 50);
+    assert.ok(home.x + hover.x >= 50);
   });
 });

@@ -4,23 +4,28 @@ import { useEffect, useRef, useState } from "react";
 import {
   chicagoHourKey,
   decideHourlyRocketLaunch,
+  HOURLY_ROCKET_CRAFT,
+  HOURLY_ROCKET_FLIGHT_MS,
   readLastPlayedHourKey,
+  rocketHoverOffset,
+  rocketTourOffsets,
   writeLastPlayedHourKey,
 } from "@/lib/hourly-rocket";
 
 export const HOURLY_ROCKET_HOME = "hourly-rocket-home";
 export const HOURLY_ROCKET_TARGET = "hourly-rocket-target";
 
-const FLIGHT_MS = 3800;
-const CRAFT_W = 56;
-const CRAFT_H = 80;
+const CRAFT_W = HOURLY_ROCKET_CRAFT.width;
+const CRAFT_H = HOURLY_ROCKET_CRAFT.height;
 
 type Flight = {
   left: number;
   top: number;
-  animationName: "lp-rocket-land" | "lp-rocket-home-loop";
   endX: number;
   endY: number;
+  hoverX: number;
+  hoverY: number;
+  tour: ReturnType<typeof rocketTourOffsets>;
 };
 
 function prefersReducedMotion(): boolean {
@@ -65,23 +70,22 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         previewLaunchedRef.current = true;
       }
 
-      if (target) {
-        setFlight({
-          left: home.x,
-          top: home.y,
-          animationName: "lp-rocket-land",
-          endX: target.x - home.x,
-          endY: target.y - home.y,
-        });
-      } else {
-        setFlight({
-          left: home.x,
-          top: home.y,
-          animationName: "lp-rocket-home-loop",
-          endX: 0,
-          endY: 0,
-        });
-      }
+      const viewport = { width: window.innerWidth, height: window.innerHeight };
+      const tour = rocketTourOffsets(home, viewport);
+      const end = target
+        ? { x: target.x - home.x, y: target.y - home.y }
+        : { x: 0, y: 0 };
+      const hover = rocketHoverOffset(home, end, viewport);
+
+      setFlight({
+        left: home.x,
+        top: home.y,
+        endX: end.x,
+        endY: end.y,
+        hoverX: hover.x,
+        hoverY: hover.y,
+        tour,
+      });
     };
 
     tryLaunch();
@@ -91,7 +95,7 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
 
   useEffect(() => {
     if (!flight) return;
-    const id = window.setTimeout(() => setFlight(null), FLIGHT_MS);
+    const id = window.setTimeout(() => setFlight(null), HOURLY_ROCKET_FLIGHT_MS);
     return () => window.clearTimeout(id);
   }, [flight]);
 
@@ -111,9 +115,17 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
           height: CRAFT_H,
           marginLeft: -CRAFT_W / 2,
           marginTop: -CRAFT_H / 2,
-          animation: `${flight.animationName} ${FLIGHT_MS}ms cubic-bezier(0.4, 0, 0.2, 1) forwards`,
+          animation: `lp-rocket-land ${HOURLY_ROCKET_FLIGHT_MS}ms cubic-bezier(0.42, 0, 0.58, 1) forwards`,
           ["--rocket-dx" as string]: `${flight.endX}px`,
           ["--rocket-dy" as string]: `${flight.endY}px`,
+          ["--hover-x" as string]: `${flight.hoverX}px`,
+          ["--hover-y" as string]: `${flight.hoverY}px`,
+          ["--tour-x1" as string]: `${flight.tour.x1}px`,
+          ["--tour-y1" as string]: `${flight.tour.y1}px`,
+          ["--tour-x2" as string]: `${flight.tour.x2}px`,
+          ["--tour-y2" as string]: `${flight.tour.y2}px`,
+          ["--tour-x3" as string]: `${flight.tour.x3}px`,
+          ["--tour-y3" as string]: `${flight.tour.y3}px`,
         }}
       >
         {/* Plume is a separate cutout of the same art, stacked on the body canvas.
@@ -127,7 +139,7 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
           className="absolute inset-0 h-full w-full object-contain"
           style={{
             transformOrigin: "52% 38%",
-            animation: `lp-rocket-plume ${FLIGHT_MS}ms linear forwards`,
+            animation: `lp-rocket-plume ${HOURLY_ROCKET_FLIGHT_MS}ms ease-in-out forwards`,
           }}
         />
         {/* eslint-disable-next-line @next/next/no-img-element -- overlay sprite, not a content image */}
