@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
+        "prebuild": "tsx scripts/validate-sponsor-placements.ts",
         "build": "next build",
         "start": "next start",
         "lint": "eslint",

@@ -64,6 +64,11 @@ export function validatePlacements(
     if (!placement.id.trim()) {
       issues.push({ id, message: "id is required" });
     }
+    for (const field of ["sponsorName", "ctaLabel", "headline", "blurb"] as const) {
+      if (!placement[field].trim()) {
+        issues.push({ id, message: `${field} must not be empty` });
+      }
+    }
     if (!(SPONSOR_SLOTS as readonly string[]).includes(placement.slot)) {
       issues.push({ id, message: `slot must be one of ${SPONSOR_SLOTS.join(", ")}` });
     }
@@ -142,6 +147,16 @@ export function validatePlacements(
           message: `asset ${asset} is missing under public/sponsors/`,
         });
       }
+    }
+  }
+
+  const seenIds = new Map<string, number>();
+  for (const placement of placements) {
+    if (!placement.id.trim()) continue;
+    const count = (seenIds.get(placement.id) ?? 0) + 1;
+    seenIds.set(placement.id, count);
+    if (count === 2) {
+      issues.push({ id: placement.id, message: `duplicate placement id ${placement.id}` });
     }
   }
 

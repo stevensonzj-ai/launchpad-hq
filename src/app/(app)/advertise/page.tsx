@@ -37,8 +37,8 @@ export default function AdvertisePage() {
       <section className="mt-8 space-y-4 rounded-2xl border border-white/10 bg-gray-900/40 p-6 sm:p-7">
         <h2 className="text-2xl font-semibold tracking-tight text-white">Weekly availability</h2>
         <p className="text-sm leading-relaxed text-gray-300">
-          Weeks start Monday, US Central Time. Open/Booked is derived from{" "}
-          <code className="text-gray-200">placements.ts</code> — email{" "}
+          Weeks start Monday, US Central Time. Availability updates as bookings are
+          confirmed. Email{" "}
           <a href={`mailto:${MAIL}`} className="text-orange-400 hover:underline">
             {MAIL}
           </a>{" "}

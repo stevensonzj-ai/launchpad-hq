@@ -115,6 +115,32 @@ describe("sponsor placement validation", () => {
     assert.deepEqual(issues, []);
   });
 
+  it("rejects duplicate placement ids", () => {
+    const issues = validatePlacements(
+      [placement({ id: "same-id" }), placement({ id: "same-id", slot: "discover" })],
+      withAssets(),
+    );
+    assert.ok(issues.some((issue) => issue.message.includes("duplicate placement id")));
+  });
+
+  it("rejects empty or whitespace sponsorName, ctaLabel, headline, and blurb", () => {
+    const issues = validatePlacements(
+      [
+        placement({
+          sponsorName: "   ",
+          ctaLabel: "",
+          headline: " \n",
+          blurb: "\t",
+        }),
+      ],
+      withAssets(),
+    );
+    assert.ok(issues.some((issue) => issue.message.includes("sponsorName")));
+    assert.ok(issues.some((issue) => issue.message.includes("ctaLabel")));
+    assert.ok(issues.some((issue) => issue.message.includes("headline")));
+    assert.ok(issues.some((issue) => issue.message.includes("blurb")));
+  });
+
   it("fails when a /sponsors/ asset is missing", () => {
     const issues = validatePlacements(
       [placement({ logoUrl: "/sponsors/missing-logo.png" })],
