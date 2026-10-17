@@ -5,7 +5,7 @@ export const poeTutorial: PlatformTutorialData = {
   platformSlug: "poe",
   title: "Getting Started with Poe",
   tagline:
-    "One app, many AI chatbots from different companies — paid for with a shared daily allowance of points instead of a separate subscription to each.",
+    "One app, many AI chatbots from different companies — paid for with a shared pool of points instead of a separate subscription to each.",
   archetype: "prompts",
   lastReviewedAt: "2026-10-15",
   accessTier: "FREE",
@@ -21,9 +21,9 @@ export const poeTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "You can start without paying. You need a Poe account, and non-paying accounts get a fresh allowance of points every day; it resets every 24 hours and whatever you do not use is gone rather than saved up.",
-    "**Every bot costs a different amount, and the cost is shown before you send.** Each bot's page displays how many points a message takes, and a \"Rates\" section explains how that price is worked out. A quick text bot and a video generator spend your one daily allowance at very different speeds, so which bots you use decides how far it goes.",
-    "Whether you will ever need to pay depends on that mix. Poe's help pages say subscribers get more points than free users plus access to more advanced bots, and that points come daily, monthly or both depending on the plan. If you mostly chat with lighter bots, the free allowance may be all you need; if you lean on image or video generation, expect to run out quickly. Prices change, so check Poe's own pricing screen rather than any figure quoted elsewhere.",
+    "You can start without paying. You need a Poe account.",
+    "**Every bot costs a different amount, and the cost is shown before you send.** Each bot's page displays how many points a message takes, and a \"Rates\" section explains how that price is worked out. A quick text bot and a video generator spend points at very different speeds, so which bots you use decides how far a given balance goes.",
+    "Poe sells subscriptions; we have not verified its plans — check poe.com. If you lean on image or video generation, expect to run out of points quickly compared with lighter chat. Check Poe's own site rather than any figure quoted elsewhere.",
     "If you do subscribe, decide where first. Poe's purchases FAQ says you can only upgrade on the same platform you subscribed on, and switching means cancelling and subscribing again. Subscriptions bought in the app stores renew automatically unless cancelled at least 24 hours before the period ends.",
   ],
 
@@ -75,7 +75,7 @@ export const poeTutorial: PlatformTutorialData = {
       prompt:
         "I want to understand how a credit score is calculated. Explain it in under 150 words for someone who has never had a credit card, and end with the single most common misunderstanding.",
       whyHere:
-        "Send it to one bot, then send it again to a bot from a different company, in the same chat or a new one. Every bot's page shows its points cost, so you see both how the answers differ and what each one cost from the same daily allowance.",
+        "Send it to one bot, then send it again to a bot from a different company, in the same chat or a new one. Every bot's page shows its points cost, so you see both how the answers differ and what each one cost.",
       tweak:
         "Swap in any topic you are trying to learn. The differences are usually clearest on explanations, not on simple facts.",
     },
@@ -84,7 +84,7 @@ export const poeTutorial: PlatformTutorialData = {
       whatItDoes:
         "Open a bot's page and look at its Rates section, send one short message, then open that message's info menu to see what it actually cost. Settings lets you view your points history.",
       whyHere:
-        "Poe charges per message from one shared balance, and the cost differs bot to bot — which is not how a single-company chatbot like ChatGPT works, where you never see a per-message price. Two minutes of checking tells you which bots your daily allowance can comfortably cover.",
+        "Poe charges per message from one shared balance, and the cost differs bot to bot — which is not how a single-company chatbot like ChatGPT works, where you never see a per-message price. Two minutes of checking tells you which bots a given balance can comfortably cover.",
     },
     {
       title: "Build your own bot in a form, no code",
@@ -104,7 +104,6 @@ export const poeTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**Unused points do not carry over.** There is no saving up for a big job later in the week.",
     "**A long chat gets more expensive as it goes.** Turning off auto-manage context lets the bot see more of the conversation but spends more points per reply.",
     "**In a group chat, the person who calls a bot pays for it.** Bots only reply when mentioned, unless automatic replies are switched on, and the points come from whoever triggered the reply.",
     "**It sounds equally sure of itself whichever AI you pick.** Comparing two answers helps you spot disagreement, but two bots agreeing is not the same as being right — check anything that matters.",
