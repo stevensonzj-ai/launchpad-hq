@@ -85,12 +85,12 @@ export default {
       creditsExpire:
         "Unused units expire at the end of each billing cycle. One-time compute packs are valid for 90 days (added instantly, expire after 90 days).",
       rollover:
-        "Pro and Max: compute units do not roll over. Business and Enterprise: unused compute credits may roll over to the next billing period with customizable rollover periods.",
+        "Basic, Pro and Max: compute units do not roll over. Business and Enterprise: unused compute credits may roll over to the next billing period with customizable rollover periods.",
       commercialUse:
-        "Pro, Max, Business and Enterprise include a commercial license for generated content (marketing, products, client work). Free-plan commercial use: UNCONFIRMED — see report note.",
+        "Basic, Pro, Max, Business and Enterprise include a commercial license for generated content (marketing, products, client work). Free-plan commercial use: UNCONFIRMED — see report note.",
     },
     sourceUrl: "https://www.krea.ai/pricing",
-    note: "FLAG: vendor self-conflict on Free commercial license (pricing page vs FAQ). This Fact stays paid-only (Pro/Max/Business/Enterprise). Do not state Free commercial terms either way until Krea clarifies.",
+    note: "FLAG: vendor self-conflict on Free commercial license (pricing page vs FAQ). This Fact stays paid-only (Basic/Pro/Max/Business/Enterprise). Do not state Free commercial terms either way until Krea clarifies.",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
@@ -103,6 +103,12 @@ export default {
       field: "plans",
       summary:
         "RA: Business is 80k units/month under For Teams and Enterprises. Models labeled third-party. Per-user unpublished.",
+    },
+    {
+      date: "2026-10-17",
+      field: "usageLimits",
+      summary:
+        "Basic added to commercial license coverage and to no-rollover wording per Krea pricing FAQ re-check 2026-10-17; no prices changed; Free commercial use still unconfirmed.",
     },
   ],
 } satisfies ToolFacts;
