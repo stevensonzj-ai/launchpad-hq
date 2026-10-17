@@ -35,6 +35,7 @@ const FACT_LABEL: Record<(typeof FACT_VALUE_KEYS)[number], string> = {
   apps: "Apps",
   models: "Models",
   privacy: "Privacy",
+  usageLimits: "Usage limits",
 };
 
 export function extractUrls(text: string): string[] {

@@ -35,6 +35,24 @@ export type ToolPrivacy = {
   policyUrl?: string;
 };
 
+/**
+ * What a paid/free user can keep or use after generation — not plan prices
+ * (those stay on `plans[].limits`).
+ *
+ * One `Fact<ToolUsageLimits>` wraps the object, same as `plans` / `privacy` /
+ * `models`: a single official `sourceUrl` + `checkedAt` + gatherer/verifier
+ * provenance. Nested keys are optional strings (or `other: string[]`); an
+ * absent key is unpublished and must not be inferred. Per-entry provenance is
+ * therefore the parent Fact — do not attach a parallel Fact shape per key.
+ */
+export type ToolUsageLimits = {
+  creditsExpire?: string;
+  watermark?: string;
+  commercialUse?: string;
+  rollover?: string;
+  other?: string[];
+};
+
 export type ToolChangelogEntry = {
   date: string;
   field: string;
@@ -58,6 +76,7 @@ export type ToolFacts = {
   apps?: Fact<ToolApps>;
   models?: Fact<string[]>;
   privacy?: Fact<ToolPrivacy>;
+  usageLimits?: Fact<ToolUsageLimits>;
   pros?: string[];
   cons?: string[];
   changelog?: ToolChangelogEntry[];
@@ -74,6 +93,7 @@ export const FACT_VALUE_KEYS = [
   "apps",
   "models",
   "privacy",
+  "usageLimits",
 ] as const;
 
 export type FactValueKey = (typeof FACT_VALUE_KEYS)[number];
