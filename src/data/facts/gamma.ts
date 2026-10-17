@@ -98,14 +98,15 @@ export default {
       rollover:
         "Plan credits roll over up to double the plan size (e.g. 1,000-credit Plus can hold up to 2,000). Purchased credits do not count toward the rollover cap.",
       watermark:
-        "Free plan: 'Made with Gamma' badge on PDF/PPTX exports and shared decks. Paid plan removes it from future exports only; files already exported keep it.",
+        "Free plan: 'Made with Gamma' badge on PDF/PPTX exports. Paid plan removes it from future exports only; files already exported keep it.",
     },
     sourceUrl: "https://help.gamma.app/en/articles/7834324-how-do-credits-work-in-gamma",
     note: "Both official sources, same date (2026-10-17): credits/rollover from https://help.gamma.app/en/articles/7834324-how-do-credits-work-in-gamma; watermark wording from https://help.gamma.app/en/articles/8022861-what-s-the-easiest-way-to-export-my-gamma.",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
   },
   changelog: [
     {

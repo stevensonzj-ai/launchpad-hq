@@ -76,8 +76,9 @@ export default {
     sourceUrl: "https://www.hedra.com/docs/pages/app/billing/how-credits-work",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
   },
   changelog: [
     {

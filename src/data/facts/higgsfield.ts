@@ -94,8 +94,9 @@ export default {
     sourceUrl: "https://higgsfield.ai/creator-hub/help-center/credits-and-usage/how-credits-work",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
   },
   changelog: [
     {

@@ -70,8 +70,9 @@ export default {
     note: "FLAG: vendor-stated / divergent Business rollover. This Fact follows the general AI-credits doc (no plan-credit rollover). Business-plan docs state a different rule (plan credits roll up to 3 months). Wording left vendor-stated; not reconciled. Schema has no per-plan split.",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
   },
   changelog: [
     {

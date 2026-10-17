@@ -93,8 +93,9 @@ export default {
     note: "FLAG: vendor self-conflict on Free commercial license (pricing page vs FAQ). This Fact stays paid-only (Pro/Max/Business/Enterprise). Do not state Free commercial terms either way until Krea clarifies.",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
-    verifiedBy: "pending",
-    status: "unverified",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
   },
   changelog: [
     {
