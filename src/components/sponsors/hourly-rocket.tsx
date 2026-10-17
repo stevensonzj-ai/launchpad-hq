@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   chicagoHourKey,
+  createRocketFlightPlan,
   decideHourlyRocketLaunch,
   HOURLY_ROCKET_CRAFT,
   HOURLY_ROCKET_FLIGHT_MS,
   readLastPlayedHourKey,
-  rocketFlightKeyframesCss,
-  rocketLoopFlight,
+  rocketPoseAt,
   writeLastPlayedHourKey,
+  type RocketFlightPlan,
 } from "@/lib/hourly-rocket";
 
 export const HOURLY_ROCKET_HOME = "hourly-rocket-home";
@@ -17,13 +18,6 @@ export const HOURLY_ROCKET_TARGET = "hourly-rocket-target";
 
 const CRAFT_W = HOURLY_ROCKET_CRAFT.width;
 const CRAFT_H = HOURLY_ROCKET_CRAFT.height;
-
-type Flight = {
-  left: number;
-  top: number;
-  css: string;
-  name: string;
-};
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -36,15 +30,19 @@ function pointOf(el: Element | null): { x: number; y: number } | null {
 }
 
 export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }) {
-  const rawId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const [flight, setFlight] = useState<Flight | null>(null);
+  const [home, setHome] = useState<{ x: number; y: number } | null>(null);
+  const craftRef = useRef<HTMLDivElement | null>(null);
+  const plumeRef = useRef<HTMLImageElement | null>(null);
   const previewLaunchedRef = useRef(false);
+  const planRef = useRef<RocketFlightPlan | null>(null);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
     const tryLaunch = () => {
       if (prefersReducedMotion()) return;
+      if (planRef.current) return;
       const search = window.location.search;
       const now = new Date();
       const decision = decideHourlyRocketLaunch({
@@ -55,8 +53,8 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
       if (!decision.launch) return;
       if (!decision.persistHourKey && previewLaunchedRef.current) return;
 
-      const home = pointOf(document.querySelector(`[data-${HOURLY_ROCKET_HOME}]`));
-      if (!home) return;
+      const nextHome = pointOf(document.querySelector(`[data-${HOURLY_ROCKET_HOME}]`));
+      if (!nextHome) return;
 
       const target = hasSponsorTarget
         ? pointOf(document.querySelector(`[data-${HOURLY_ROCKET_TARGET}]`))
@@ -68,63 +66,80 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         previewLaunchedRef.current = true;
       }
 
-      const path = rocketLoopFlight(
-        home,
-        target ? { x: target.x - home.x, y: target.y - home.y } : { x: 0, y: 0 },
+      planRef.current = createRocketFlightPlan(
+        nextHome,
+        target ? { x: target.x - nextHome.x, y: target.y - nextHome.y } : { x: 0, y: 0 },
         { width: window.innerWidth, height: window.innerHeight },
       );
-      const name = `lp-rocket-loop-${rawId}`;
-      setFlight({
-        left: home.x,
-        top: home.y,
-        name,
-        css: rocketFlightKeyframesCss(name, path.frames),
-      });
+      setHome(nextHome);
     };
 
     tryLaunch();
     const id = window.setInterval(tryLaunch, 1000);
-    return () => window.clearInterval(id);
-  }, [hasSponsorTarget, rawId]);
+    return () => {
+      window.clearInterval(id);
+      window.cancelAnimationFrame(rafRef.current);
+      planRef.current = null;
+    };
+  }, [hasSponsorTarget]);
 
   useEffect(() => {
-    if (!flight) return;
-    const id = window.setTimeout(() => setFlight(null), HOURLY_ROCKET_FLIGHT_MS);
-    return () => window.clearTimeout(id);
-  }, [flight]);
+    if (!home || !planRef.current) return;
+    if (prefersReducedMotion()) return;
 
-  if (!flight) return null;
+    const started = performance.now();
+    const tick = (now: number) => {
+      const plan = planRef.current;
+      const craft = craftRef.current;
+      const plume = plumeRef.current;
+      if (!plan || !craft || !plume) return;
+      const t = Math.min(1, (now - started) / HOURLY_ROCKET_FLIGHT_MS);
+      const pose = rocketPoseAt(plan, t);
+      craft.style.transform = `translate3d(${pose.x}px, ${pose.y}px, 0) rotate(${pose.angle}deg)`;
+      plume.style.opacity = String(pose.plume.opacity);
+      plume.style.transform = `scaleY(${pose.plume.scaleY})`;
+      if (t < 1) {
+        rafRef.current = window.requestAnimationFrame(tick);
+        return;
+      }
+      planRef.current = null;
+      setHome(null);
+    };
+
+    rafRef.current = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(rafRef.current);
+  }, [home]);
+
+  if (!home) return null;
 
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-[60] overflow-hidden"
     >
-      <style>{flight.css}</style>
       <div
+        ref={craftRef}
         className="absolute"
         style={{
-          left: flight.left,
-          top: flight.top,
+          left: home.x,
+          top: home.y,
           width: CRAFT_W,
           height: CRAFT_H,
           marginLeft: -CRAFT_W / 2,
           marginTop: -CRAFT_H / 2,
-          animation: `${flight.name} ${HOURLY_ROCKET_FLIGHT_MS}ms cubic-bezier(0.42, 0, 0.58, 1) forwards`,
+          transform: "translate3d(0, 0, 0) rotate(0deg)",
+          willChange: "transform",
         }}
       >
-        {/* Plume is a separate cutout of the same art, stacked on the body canvas. */}
         {/* eslint-disable-next-line @next/next/no-img-element -- overlay sprite, not a content image */}
         <img
+          ref={plumeRef}
           src="/images/launchpad/hourly-rocket-plume.webp"
           alt=""
           width={CRAFT_W}
           height={CRAFT_H}
           className="absolute inset-0 h-full w-full object-contain"
-          style={{
-            transformOrigin: "52% 38%",
-            animation: `lp-rocket-plume ${HOURLY_ROCKET_FLIGHT_MS}ms ease-in-out forwards`,
-          }}
+          style={{ transformOrigin: "52% 38%", opacity: 1, transform: "scaleY(1)" }}
         />
         {/* eslint-disable-next-line @next/next/no-img-element -- overlay sprite, not a content image */}
         <img
