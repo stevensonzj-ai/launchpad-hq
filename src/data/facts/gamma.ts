@@ -91,6 +91,23 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  usageLimits: {
+    value: {
+      creditsExpire:
+        "Free-plan credits do not refresh. Purchased credits never expire while your plan is active; after your subscription ends, purchased credits expire after one year.",
+      rollover:
+        "Plan credits roll over up to double the plan size (e.g. 1,000-credit Plus can hold up to 2,000). Purchased credits do not count toward the rollover cap.",
+      watermark:
+        "Free plan: 'Made with Gamma' badge on PDF/PPTX exports. Paid plan removes it from future exports only; files already exported keep it.",
+    },
+    sourceUrl: "https://help.gamma.app/en/articles/7834324-how-do-credits-work-in-gamma",
+    note: "Both official sources, same date (2026-10-17): credits/rollover from https://help.gamma.app/en/articles/7834324-how-do-credits-work-in-gamma; watermark wording from https://help.gamma.app/en/articles/8022861-what-s-the-easiest-way-to-export-my-gamma.",
+    checkedAt: "2026-10-17",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
+  },
   changelog: [
     {
       date: "2026-10-14",

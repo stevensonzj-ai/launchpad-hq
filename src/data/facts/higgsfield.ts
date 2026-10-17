@@ -84,6 +84,20 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  usageLimits: {
+    value: {
+      creditsExpire:
+        "Subscription credits expire at renewal (monthly: each paid renewal; annual: every 30 days). Credit Pack, Auto-Refill and Boost credits expire 90 days from purchase. Promo credits expire on the date shown when issued.",
+      rollover:
+        "Subscription credits do not roll over. If you cancel, purchased credits stay available on the free plan until their validity period ends.",
+    },
+    sourceUrl: "https://higgsfield.ai/creator-hub/help-center/credits-and-usage/how-credits-work",
+    checkedAt: "2026-10-17",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-17",
+    status: "verified",
+  },
   changelog: [
     {
       date: "2026-10-14",
