@@ -63,6 +63,25 @@ describe("platform display helpers", () => {
     assert.equal(freeTierSummary(undefined, "Free: 20 prompts (as of 2026-01-01)"), "Free: 20 prompts");
   });
 
+  it("omits unpublished usageLimits from the source list", () => {
+    const unpublished = {
+      ...validExampleFacts,
+      usageLimits: {
+        value: { rollover: "No rollover" },
+        sourceUrl: "https://example.com/fixture-valid/usage-unpublished",
+        checkedAt: "2026-10-17",
+        gatheredBy: "research-analyst",
+        verifiedBy: "pending",
+        status: "unverified" as const,
+      },
+    };
+    const { sources } = collectDisplaySources(unpublished, []);
+    assert.equal(
+      sources.some((s) => s.url.includes("usage-unpublished")),
+      false,
+    );
+  });
+
   it("collects unique fact-file sources plus catalog URLs", () => {
     const { sources, notes } = collectDisplaySources(validExampleFacts, [
       "See https://help.openai.com/pricing as of 2026-10-14 (unverified)",

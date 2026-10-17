@@ -1,4 +1,10 @@
-import { FACT_VALUE_KEYS, type Fact, type FactValueKey, type ToolFacts } from "./types";
+import {
+  FACT_VALUE_KEYS,
+  type Fact,
+  type FactValueKey,
+  type ToolFacts,
+  type ToolUsageLimits,
+} from "./types";
 
 export type FactEntry = {
   key: FactValueKey;
@@ -20,8 +26,18 @@ export function isPublishedVerified(fact: Fact<unknown>): boolean {
     fact.status === "verified" &&
       verifier &&
       verifier !== "pending" &&
-      verifier !== fact.gatheredBy,
+      verifier !== fact.gatheredBy &&
+      fact.verifiedAt?.trim(),
   );
+}
+
+/** Published `usageLimits` only. Unverified / pending / undated facts stay unpublished. */
+export function publishedUsageLimits(
+  facts: ToolFacts | undefined,
+): Fact<ToolUsageLimits> | undefined {
+  const fact = facts?.usageLimits;
+  if (!fact || !isPublishedVerified(fact)) return undefined;
+  return fact;
 }
 
 export function flattenFactValues(facts: ToolFacts): { field: string; text: string }[] {

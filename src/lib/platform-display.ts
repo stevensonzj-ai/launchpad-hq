@@ -1,4 +1,5 @@
 import { COST_TIER_LABEL } from "@/lib/labels";
+import { isPublishedVerified } from "@/data/facts/walk";
 import {
   FACT_VALUE_KEYS,
   type Fact,
@@ -310,9 +311,9 @@ export function collectDisplaySources(
   if (facts) {
     for (const key of FACT_VALUE_KEYS) {
       const fact = facts[key];
-      if (fact?.sourceUrl) {
-        add(FACT_LABEL[key], fact.sourceUrl, fact.checkedAt);
-      }
+      if (!fact?.sourceUrl) continue;
+      if (key === "usageLimits" && !isPublishedVerified(fact)) continue;
+      add(FACT_LABEL[key], fact.sourceUrl, fact.checkedAt);
     }
   }
 
