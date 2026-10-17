@@ -90,7 +90,7 @@ export default {
         "Basic, Pro, Max, Business and Enterprise include a commercial license for generated content (marketing, products, client work). Free-plan commercial use: UNCONFIRMED — see report note.",
     },
     sourceUrl: "https://www.krea.ai/pricing",
-    note: "FLAG: vendor self-conflict on Free commercial license (pricing page vs FAQ). This Fact stays paid-only (Pro/Max/Business/Enterprise). Do not state Free commercial terms either way until Krea clarifies.",
+    note: "FLAG: vendor self-conflict on Free commercial license (pricing page vs FAQ). This Fact stays paid-only (Basic/Pro/Max/Business/Enterprise). Do not state Free commercial terms either way until Krea clarifies.",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
