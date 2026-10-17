@@ -72,7 +72,6 @@ export function PlatformUsageLimits({
         <h2 className="text-lg font-semibold text-white">Usage limits</h2>
         <FactCite fact={fact} />
       </div>
-      {fact.note ? <p className="mb-3 text-sm text-gray-400">{fact.note}</p> : null}
       <dl className="space-y-3 text-sm">
         {rows.map((row) => (
           <div key={row.key}>

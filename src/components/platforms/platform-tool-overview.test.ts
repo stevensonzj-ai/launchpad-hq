@@ -180,9 +180,24 @@ describe("platform overview field uniqueness", () => {
     assert.ok(visible.includes("No rollover"));
     assert.ok(visible.includes("Other"));
     assert.ok(visible.includes("Daily refresh on the free plan"));
-    assert.ok(visible.includes("Both official sources, same date (2026-10-17)."));
+    assert.equal(visible.includes("Both official sources, same date (2026-10-17)."), false);
+    assert.equal(html.includes("Both official sources, same date (2026-10-17)."), false);
     assert.ok(html.includes("https://example.com/fixture-valid/usage"));
     assert.ok(html.includes("2026-10-17"));
+  });
+
+  it("never renders a usageLimits editorial note containing FLAG:", () => {
+    const html = renderOverview({
+      ...validExampleFacts,
+      usageLimits: {
+        ...verifiedUsageLimits,
+        note: "FLAG: vendor self-conflict on Free commercial license. Do not state Free commercial terms.",
+      },
+    });
+    assert.ok(html.includes("Usage limits"));
+    assert.ok(html.includes("Plan credits expire at renewal"));
+    assert.equal(html.includes("FLAG:"), false);
+    assert.equal(html.includes("vendor self-conflict"), false);
   });
 
   it("does not render unverified or pending usageLimits", () => {
@@ -203,6 +218,23 @@ describe("platform overview field uniqueness", () => {
       assert.equal(visible.includes("Plan credits expire at renewal"), false);
       assert.equal(html.includes("https://example.com/fixture-valid/usage"), false);
     }
+  });
+
+  it("does not render usageLimits when verifiedBy equals gatheredBy", () => {
+    const html = renderOverview({
+      ...validExampleFacts,
+      usageLimits: {
+        ...verifiedUsageLimits,
+        gatheredBy: "research-analyst",
+        verifiedBy: "research-analyst",
+        verifiedAt: "2026-10-17",
+        status: "verified",
+      },
+    });
+    const visible = html.replace(/<details[\s\S]*?<\/details>/g, "");
+    assert.equal(visible.includes("Usage limits"), false);
+    assert.equal(visible.includes("Plan credits expire at renewal"), false);
+    assert.equal(html.includes("https://example.com/fixture-valid/usage"), false);
   });
 
   it("shows nothing extra when a tool has no usageLimits fact", () => {
