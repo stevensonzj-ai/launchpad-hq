@@ -141,6 +141,26 @@ describe("platform overview field uniqueness", () => {
     assert.ok(html.includes("flagship chat model"));
   });
 
+  it("shows a models Fact note under the Technical details models row", () => {
+    const facts = {
+      ...validExampleFacts,
+      models: {
+        ...validExampleFacts.models,
+        note: "Muse Spark Open is Meta's downloadable open-weight model (also via hosted APIs) — it is not a model of the consumer Meta AI assistant app.",
+      },
+    };
+    const view = overlayPlatformWithFacts(basePlatform, facts);
+    const html = renderToStaticMarkup(
+      h(PlatformToolOverview, {
+        platform: { ...view, name: "Fixture Tool" },
+        facts,
+        hasModelFamily: false,
+      }),
+    );
+    assert.ok(html.includes("downloadable open-weight model"));
+    assert.ok(html.includes("not a model of the consumer Meta AI assistant app"));
+  });
+
   it("renders API pricing as its own section, not inside the plans table", () => {
     const facts = {
       ...validExampleFacts,

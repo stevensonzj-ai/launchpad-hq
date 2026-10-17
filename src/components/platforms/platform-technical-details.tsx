@@ -7,7 +7,7 @@ import type { Fact } from "@/data/facts/types";
 export type TechnicalDetailRow = {
   label: string;
   value: string;
-  fact?: Pick<Fact<unknown>, "sourceUrl" | "checkedAt" | "status"> | null;
+  fact?: Pick<Fact<unknown>, "sourceUrl" | "checkedAt" | "status" | "note"> | null;
   truncate?: boolean;
 };
 
@@ -90,6 +90,9 @@ export function PlatformTechnicalDetails(props: PlatformTechnicalDetailsProps) {
             </dt>
             <dd className="min-w-0 break-words leading-relaxed text-gray-200">
               {row.truncate ? <TruncatedValue text={row.value} /> : row.value}
+              {row.fact?.note ? (
+                <p className="mt-2 text-sm text-gray-400">{row.fact.note}</p>
+              ) : null}
             </dd>
           </div>
         ))}
