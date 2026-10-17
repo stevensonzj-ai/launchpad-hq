@@ -49,7 +49,7 @@ export default {
   },
   models: {
     value: ["Muse Spark", "Muse Spark Open"],
-    note: "Muse Spark Open is Meta's downloadable open-weight model (also via hosted APIs) — it is not a model of the consumer Meta AI assistant app. Muse Spark is the name listed on Meta's consumer assistant page; this Fact's sourceUrl is the Muse Spark Open research blog so the Open release is not cited from that assistant page.",
+    note: "Muse Spark Open is Meta's downloadable open-weight model (also via hosted APIs) — it is not a model of the consumer Meta AI assistant app.",
     sourceUrl: "https://research.meta.ai/blog/muse-spark-open/",
     checkedAt: "2026-10-17",
     gatheredBy: "research-analyst",
@@ -62,7 +62,7 @@ export default {
       date: "2026-10-17",
       field: "models",
       summary:
-        "Added Muse Spark Open as a distinct listing from Muse Spark. Muse Spark Open is Meta's downloadable open-weight model (also via hosted APIs) — it is not a model of the consumer Meta AI assistant app. Fact sourceUrl repointed to the 15 Oct 2026 research blog; assistant-page citation no longer covers the Open release.",
+        "Added Muse Spark Open as a distinct listing from Muse Spark. Muse Spark Open is Meta's downloadable open-weight model (also via hosted APIs) — it is not a model of the consumer Meta AI assistant app.",
     },
     {
       date: "2026-10-14",

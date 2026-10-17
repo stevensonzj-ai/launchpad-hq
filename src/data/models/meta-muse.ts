@@ -84,7 +84,7 @@ export const metaMuse: PlatformModelFamily = {
         "Open-weight under Muse Model License (limited commercial terms) — not an Apache or MIT grant.",
         "Hosted API prices are provider-set; no pricing is published here.",
         "Max output tokens unverified on the official pages checked.",
-        "BF16 serving still loads the full 816B weights into VRAM.",
+        "BF16 ~1.65 TB checkpoint; budget roughly 2 TB VRAM for BF16",
       ],
       sourceUrls: [
         { label: "Muse Spark Open docs", url: DOCS },
