@@ -10,7 +10,7 @@ export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
  * Measured on the 205×290 art (`public/images/launchpad/hourly-rocket-body.webp`
  * and the matching plume): body nose tip at first opaque pixel (193, 4),
  * plume far tip at (19, 284). The craft axis from plume to nose is
- * atan2(193 − 19, 4 − 284) ≈ 31.9° east of up. Subtract this from the
+ * atan2(174, 280) ≈ 31.9° east of up (dx tail→nose over the up-component). Subtract this from the
  * path heading so `rotate(pose.angle)` points the painted nose along the
  * intended heading (hover/land heading 0 → render −31.9°).
  */
