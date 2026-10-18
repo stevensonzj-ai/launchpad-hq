@@ -10,6 +10,7 @@ import {
   createRocketFlightPlan,
   HOURLY_ROCKET_CRAFT,
   HOURLY_ROCKET_FLIGHT_MS,
+  HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG,
   headingDeg,
   HOURLY_ROCKET_STORAGE_KEY,
   isChicagoTopOfHour,
@@ -237,7 +238,10 @@ describe("hourly rocket flight path", () => {
     assert.ok(plan.approach.y > plan.hover.y);
     assert.ok(Math.abs(land.x - plan.land.x) < 1);
     assert.ok(Math.abs(land.y - plan.land.y) < 1);
-    assert.ok(Math.abs(land.angle) < 1);
+    assert.ok(
+      Math.abs(land.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) < 1,
+      `land render ${land.angle} should be nose-up (−offset)`,
+    );
     assert.ok(land.plume.opacity < 0.05);
   });
 
@@ -321,14 +325,18 @@ describe("hourly rocket flight path", () => {
           approachS < LANDING_ATTITUDE_START);
       if (flying && step >= HEADING_MIN_STEP_PX) {
         const travel = headingDeg(dx, dy);
-        const err = Math.abs(shortestAngleDelta(pose.angle, travel));
+        const renderedNose = pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG;
+        const err = Math.abs(shortestAngleDelta(renderedNose, travel));
         assert.ok(
           err < HEADING_ALIGN_DEG,
-          `${label} t=${ms}ms heading ${pose.angle.toFixed(1)} vs travel ${travel.toFixed(1)} (err ${err.toFixed(1)}°)`,
+          `${label} t=${ms}ms rendered nose ${renderedNose.toFixed(1)} vs travel ${travel.toFixed(1)} (err ${err.toFixed(1)}°)`,
         );
       }
       if (midT >= ROCKET_PHASE.approachEnd) {
-        assert.ok(Math.abs(pose.angle) < 1, `${label} hover/land angle ${pose.angle}`);
+        assert.ok(
+          Math.abs(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) < 1,
+          `${label} hover/land should render nose-up; angle ${pose.angle}`,
+        );
       }
       prev = pose;
     }
@@ -338,6 +346,12 @@ describe("hourly rocket flight path", () => {
   it("points the nose along travel for header-home and sponsor-target flights", () => {
     assertHeadingTracksPath({ x: 272, y: 30 }, { x: 0, y: 0 }, viewport, "header-home");
     assertHeadingTracksPath(home, { x: 400, y: 380 }, viewport, "sponsor-target");
+    assertHeadingTracksPath(
+      { x: 72, y: 40 },
+      { x: 0, y: 0 },
+      { width: 1080, height: 920 },
+      "narrow-home",
+    );
   });
 });
 
