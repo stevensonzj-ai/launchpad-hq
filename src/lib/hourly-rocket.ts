@@ -4,6 +4,18 @@ export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
 export const HOURLY_ROCKET_FLIGHT_MS = 7500;
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
 
+/**
+ * Sprite nose is not vertical at CSS `rotate(0)`.
+ *
+ * Measured on the 205×290 art (`public/images/launchpad/hourly-rocket-body.webp`
+ * and the matching plume): body nose tip at first opaque pixel (193, 4),
+ * plume far tip at (19, 284). The craft axis from plume to nose is
+ * atan2(174, 280) ≈ 31.9° east of up (dx tail→nose over the up-component). Subtract this from the
+ * path heading so `rotate(pose.angle)` points the painted nose along the
+ * intended heading (hover/land heading 0 → render −31.9°).
+ */
+export const HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG = 31.9;
+
 /** Preferred hover offset above the land target; also used below when the top edge is too tight. */
 export const ROCKET_HOVER_OFFSET_PX = 150;
 /** Minimum hover→land travel so the settle reads as a landing, not a fade-in. */
@@ -329,7 +341,9 @@ function headingAlongDisplayedPath(plan: RocketFlightPlan, u: number): number {
 export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
   const u = clamp01(t);
   const p = displayedOffset(plan, u);
-  const angle = u < ROCKET_PHASE.approachEnd ? headingAlongDisplayedPath(plan, u) : 0;
+  const heading = u < ROCKET_PHASE.approachEnd ? headingAlongDisplayedPath(plan, u) : 0;
+  // Render angle: painted nose = heading when CSS rotate(pose.angle) is applied.
+  const angle = heading - HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG;
 
   return {
     x: p.x,
