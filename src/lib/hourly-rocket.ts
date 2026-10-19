@@ -1,5 +1,7 @@
 export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
 export const HOURLY_ROCKET_FLIGHT_MS = 9500;
+export const ROCKET_DETACH_MS = 1400;
+export const ROCKET_AFTERLAND_MS = 2400;
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
 /** Measured artwork axis: nose (193,4), plume tip (19,284), in 205×290 sprites. */
 export const HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG = 31.9;
@@ -44,7 +46,7 @@ export type RocketFlightPlan = {
   length: number;
 };
 export function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
-  return Math.hypot(craft.width, craft.height) / 2 + 12;
+  return Math.hypot(craft.width, craft.height) / 2 + 36;
 }
 export function clamp01(t: number): number { return Math.min(1, Math.max(0, t)); }
 /** Quintic easing has zero velocity AND acceleration at both ends. */
@@ -75,7 +77,7 @@ export function createRocketFlightPlan(home: RocketPoint, land: RocketPoint, vie
   const safe = (x: number, y: number) => ({ x: Math.max(pad, Math.min(viewport.width - pad, x)), y: Math.max(pad, Math.min(viewport.height - pad, y)) });
   const returnsHome = Math.hypot(land.x, land.y) < 1;
   const top = pad + 12;
-  const settle = Math.min(ROCKET_HOVER_OFFSET_PX, (viewport.height - 2 * pad) / 3);
+  const settle = Math.min(ROCKET_HOVER_OFFSET_PX, (viewport.height - 2 * pad) / 2);
   const landing = safe(home.x + land.x, Math.max(top + settle, home.y + land.y));
   const hover = { x: landing.x, y: landing.y - settle };
   const origin = safe(home.x, top + Math.min(75, settle));
@@ -139,11 +141,27 @@ export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
     p = { x: plan.hover.x, y: plan.hover.y + (plan.land.y - plan.hover.y) * descent };
   }
   const seconds = u * HOURLY_ROCKET_FLIGHT_MS / 1000;
-  const pulse = 0.065 * Math.sin(seconds * 73) + 0.035 * Math.sin(seconds * 117);
-  const thrust = phase === "takeoff" ? 0.95 : phase === "loop" ? 0.65 : phase === "approach" ? 0.8 : phase === "hover" ? 0.45 : 0.6;
+  const pulse = 0.14 * Math.sin(seconds * 73) + 0.09 * Math.sin(seconds * 117);
+  const thrust = phase === "takeoff" ? 1.35 : phase === "loop" ? 1.05 : phase === "approach" ? 1.25 : phase === "hover" ? 0.75 : 1.1;
   const cutoff = 1 - smoothStep((u - 0.96) / 0.04);
   return { ...p, angle: heading - HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, phase,
-    plume: { opacity: (0.8 + pulse) * cutoff, scaleY: (thrust + pulse) * cutoff } };
+    plume: { opacity: Math.min(1, 0.9 + pulse * 0.4) * cutoff, scaleY: (thrust + pulse) * cutoff } };
+}
+
+/** Engine-off detachment is intentional freefall, before nose-first powered flight.
+ * Both ends come to rest, matching the flight curve without a position/velocity jump.
+ */
+export function rocketDetachAt(plan: RocketFlightPlan, progress: number) {
+  const t = clamp01(progress);
+  const drop = smoothStep(t);
+  return {
+    x: plan.origin.x * drop,
+    y: plan.origin.y * drop,
+    angle: 45 * (1 - smoothStep((t - 0.15) / 0.75)) - HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG,
+    scale: 0.42 + 0.58 * smoothStep((t - 0.15) / 0.85),
+    artwork: smoothStep((t - 0.25) / 0.35),
+    ignition: smoothStep((t - 0.62) / 0.38),
+  };
 }
 
 const CHICAGO = "America/Chicago";

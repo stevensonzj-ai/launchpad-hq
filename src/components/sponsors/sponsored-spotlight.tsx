@@ -34,7 +34,7 @@ export function SponsoredSpotlight({
           alt=""
           width={320}
           height={168}
-          className="h-auto w-full max-w-xs rounded-lg border border-gray-800 object-cover sm:w-40"
+          className="aspect-[40/21] h-auto w-full max-w-xs self-start rounded-lg border border-gray-800 object-contain sm:w-40"
         />
         <div className="min-w-0 flex-1">
           <h2 className="text-lg font-semibold text-white">{placement.headline}</h2>

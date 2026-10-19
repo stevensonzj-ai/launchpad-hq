@@ -20,6 +20,7 @@ import {
   ROCKET_MIN_SETTLE_PX,
   ROCKET_PHASE,
   rocketPoseAt,
+  rocketDetachAt,
   shortestAngleDelta,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
@@ -189,6 +190,28 @@ describe("hourly rocket preview query", () => {
 });
 
 describe("hourly rocket flight path", () => {
+  it("detaches at the exact logo center without thrust and ignites before joining the flight", () => {
+    const plan = createRocketFlightPlan({x:32,y:32},{x:0,y:0},{width:390,height:844});
+    const start = rocketDetachAt(plan,0);
+    assert.equal(start.x,0);
+    assert.equal(start.y,0);
+    assert.equal(start.artwork,0);
+    assert.equal(start.ignition,0);
+    assert.equal(rocketDetachAt(plan,0.6).ignition,0);
+    let previous = start;
+    for(let i=1;i<=200;i++) {
+      const pose=rocketDetachAt(plan,i/200);
+      assert.ok(pose.y>=previous.y,"gravity drop must not reverse before ignition");
+      assert.ok(Math.hypot(pose.x-previous.x,pose.y-previous.y)<3);
+      previous=pose;
+    }
+    const flight = rocketPoseAt(plan,0);
+    assert.ok(Math.hypot(previous.x-flight.x,previous.y-flight.y)<0.001);
+    assert.ok(Math.abs(previous.angle-flight.angle)<0.001);
+    assert.equal(previous.scale,1);
+    assert.equal(previous.ignition,1);
+    assert.equal(previous.artwork,1);
+  });
   it("allows time for braking and a deliberate descent", () => {
     assert.equal(HOURLY_ROCKET_FLIGHT_MS, 9500);
   });
@@ -236,7 +259,7 @@ describe("hourly rocket flight path", () => {
     for (let i = 0; i <= 1000; i++) {
       const plume = rocketPoseAt(plan, i / 1000).plume;
       assert.ok(plume.opacity >= 0 && plume.opacity <= 1);
-      assert.ok(plume.scaleY >= 0 && plume.scaleY <= 1.1);
+      assert.ok(plume.scaleY >= 0 && plume.scaleY <= 1.6);
       scales.add(plume.scaleY);
     }
     assert.ok(scales.size > 900);
