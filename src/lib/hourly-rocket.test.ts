@@ -204,6 +204,7 @@ describe("hourly rocket flight path", () => {
       const pose=rocketDetachAt(plan,i/200);
       assert.ok(pose.y>=previous.y,"gravity drop must not reverse before ignition");
       assert.ok(Math.hypot(pose.x-previous.x,pose.y-previous.y)<3);
+      assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 1, "detachment pitch must ease");
       previous=pose;
     }
     const flight = rocketPoseAt(plan,0);
@@ -233,7 +234,13 @@ describe("hourly rocket flight path", () => {
         const dx = pose.x - previous.x, dy = pose.y - previous.y;
         const step = Math.hypot(dx, dy);
         assert.ok(step < 10, `position discontinuity: ${step}`);
-        assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 8, "attitude discontinuity");
+        assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 2, "attitude discontinuity on any flight leg");
+        const next = rocketPoseAt(plan, Math.min(1, t + 1 / 1900));
+        const horizontalTravel = next.x - previous.x;
+        if (Math.abs(horizontalTravel) > 0.02) {
+          const noseX = Math.sin((pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) * Math.PI / 180);
+          assert.equal(Math.sign(noseX), Math.sign(horizontalTravel), `heading must lean into horizontal travel at ${t}`);
+        }
         if (t < ROCKET_PHASE.loopEnd && step > 0.01) {
           const error = Math.abs(shortestAngleDelta(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, headingDeg(dx, dy)));
           assert.ok(error < 3, `nose alignment error ${error} at ${t}`);

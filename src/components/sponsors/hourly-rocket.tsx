@@ -27,6 +27,7 @@ function pointOf(el: Element | null, verticalAnchor = 0.5) {
 export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }) {
   const [home, setHome] = useState<{ x: number; y: number } | null>(null);
   const craftRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
   const iconRef = useRef<HTMLDivElement | null>(null);
   const plumeRef = useRef<HTMLImageElement | null>(null);
   const glowRef = useRef<HTMLImageElement | null>(null);
@@ -85,6 +86,8 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
       icon.replaceChildren(copy);
     }
     const started = performance.now();
+    const initialViewport = { width: window.innerWidth, height: window.innerHeight };
+    let fade: Animation | null = null;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const puffs = smokeRef.current?.querySelectorAll<HTMLElement>("[data-smoke]");
     const finish = () => {
@@ -93,9 +96,24 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
       planRef.current = null;
       setHome(null);
     };
+    const fadeOut = () => {
+      if (fade) return;
+      window.cancelAnimationFrame(rafRef.current);
+      if (!overlayRef.current) { finish(); return; }
+      fade = overlayRef.current.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 200, easing: "ease-out", fill: "forwards",
+      });
+      fade.onfinish = finish;
+    };
+    const onResize = () => {
+      // Safari's collapsing address bar changes the viewport height mid-flight.
+      // Compare with launch dimensions so repeated small changes cannot accumulate.
+      if (Math.abs(window.innerWidth - initialViewport.width) > 100 ||
+          Math.abs(window.innerHeight - initialViewport.height) > 100) fadeOut();
+    };
     const onVisibility = () => { if (document.hidden) finish(); };
-    window.addEventListener("resize", finish);
-    window.addEventListener("scroll", finish, { passive: true });
+    window.addEventListener("resize", onResize);
+    window.addEventListener("scroll", fadeOut, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     motion.addEventListener("change", finish);
 
@@ -139,6 +157,7 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         const life = clamp01(age / 2.2);
         const side = i % 2 === 0 ? -1 : 1;
         const spread = 65 + (i % 7) * 13;
+        puff.style.willChange = life > 0 && life < 1 ? "transform, opacity" : "auto";
         puff.style.opacity = String(age > 0 ? Math.sin(Math.PI * life) * (0.42 + i % 3 * 0.06) : 0);
         puff.style.transform = `translate3d(${side * life * spread}px, ${-life * (12 + i % 5 * 6)}px, 0) scale(${0.4 + life * 2.3})`;
       });
@@ -148,10 +167,11 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
     rafRef.current = window.requestAnimationFrame(tick);
     return () => {
       window.cancelAnimationFrame(rafRef.current);
+      if (fade) { fade.onfinish = null; fade.cancel(); }
       if (logo) logo.style.opacity = previousOpacity;
       icon?.replaceChildren();
-      window.removeEventListener("resize", finish);
-      window.removeEventListener("scroll", finish);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", fadeOut);
       document.removeEventListener("visibilitychange", onVisibility);
       motion.removeEventListener("change", finish);
     };
@@ -159,13 +179,13 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
 
   if (!home) return null;
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[60] overflow-hidden">
+    <div ref={overlayRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-[60] overflow-hidden">
       <div ref={smokeRef} className="absolute" style={{ left: home.x, top: home.y }}>
         {Array.from({ length: 24 }, (_, i) => (
           <span key={i} data-smoke className="absolute rounded-full text-gray-300" style={{
             width: 28 + i % 4 * 10, height: 22 + i % 3 * 8, marginLeft: -18,
             background: "radial-gradient(ellipse, currentColor 15%, transparent 70%)",
-            filter: `blur(${2 + i % 3}px)`, opacity: 0, willChange: "transform, opacity",
+            opacity: 0,
           }} />
         ))}
       </div>
@@ -177,7 +197,7 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         transformOrigin: "64% 30%", opacity: 0, willChange: "transform, opacity",
       }}>
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative engine glow */}
-        <img ref={glowRef} src="/images/launchpad/hourly-rocket-plume.webp" alt="" width={CRAFT_W} height={CRAFT_H} className="absolute inset-0 h-full w-full object-contain blur-sm" style={{ transformOrigin: "52% 38%", opacity: 0 }} />
+        <img ref={glowRef} src="/images/launchpad/hourly-rocket-plume.webp" alt="" width={CRAFT_W} height={CRAFT_H} className="absolute inset-0 h-full w-full object-contain blur-sm" style={{ transformOrigin: "52% 38%", opacity: 0, willChange: "transform" }} />
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative engine sprite */}
         <img ref={plumeRef} src="/images/launchpad/hourly-rocket-plume.webp" alt="" width={CRAFT_W} height={CRAFT_H} className="absolute inset-0 h-full w-full object-contain" style={{ transformOrigin: "52% 38%", opacity: 0 }} />
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative flight sprite */}
