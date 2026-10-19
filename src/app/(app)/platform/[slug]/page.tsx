@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { OutboundLink } from "@/components/analytics/outbound-link";
 import { ModerationStatus } from "@prisma/client";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
@@ -123,14 +124,16 @@ export default async function PlatformPage({
             variant="labeled"
           />
           {platform.website && (
-            <a
+            <OutboundLink
               href={platform.website}
+              platform={platform.slug}
+              surface="platform_cta"
               target="_blank"
               rel="noopener noreferrer"
               className="lp-button"
             >
               Open {view.name ?? platform.name} <ExternalLink className="h-4 w-4 shrink-0" />
-            </a>
+            </OutboundLink>
           )}
         </div>
       </div>
@@ -149,6 +152,7 @@ export default async function PlatformPage({
           gettingStartedHref={hasTutorial ? `/platform/${platform.slug}?tab=tutorials` : undefined}
           platform={{
             ...view,
+            slug: platform.slug,
             name: view.name ?? platform.name,
             company: view.company ?? platform.company,
             primaryUse: platform.primaryUse,

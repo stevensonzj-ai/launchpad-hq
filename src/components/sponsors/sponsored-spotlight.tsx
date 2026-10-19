@@ -1,3 +1,4 @@
+import { OutboundLink } from "@/components/analytics/outbound-link";
 import type { SponsorPlacement } from "@/data/sponsors/types";
 import { SponsorDisclosure } from "./sponsor-disclosure";
 import { SponsoredLabel } from "./sponsored-label";
@@ -45,14 +46,17 @@ export function SponsoredSpotlight({
               ))}
             </ul>
           ) : null}
-          <a
+          <OutboundLink
             href={placement.ctaUrl}
+            platform={placement.id}
+            surface="sponsor_spotlight"
+            eventName="sponsor_clickout"
             rel="sponsored noopener"
             target="_blank"
             className="mt-3 inline-flex rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600"
           >
             {placement.ctaLabel}
-          </a>
+          </OutboundLink>
         </div>
       </div>
       <SponsorDisclosure className="mt-4" />
