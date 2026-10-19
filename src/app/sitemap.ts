@@ -4,24 +4,9 @@ import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
-import { getActivePlacement } from "@/data/sponsors";
+import { SITEMAP_STATIC_PUBLIC_PATHS, sitemapUrl } from "@/lib/sitemap-coverage";
 
 export const dynamic = "force-dynamic";
-
-const STATIC_PUBLIC_PATHS = [
-  "/",
-  "/discover",
-  "/quiz",
-  "/workflows",
-  "/tutorials",
-  "/pricing",
-  "/privacy",
-  "/terms",
-  "/models",
-  "/models/compare/claude-vs-gpt",
-  "/how-we-make-money",
-  "/advertise",
-] as const;
 
 function parseRealDate(value: string | Date | null | undefined): Date | undefined {
   if (!value) return undefined;
@@ -44,17 +29,17 @@ function withLastModified(
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticEntries: MetadataRoute.Sitemap = STATIC_PUBLIC_PATHS.map((path) => ({
-    url: `${SITE_URL}${path === "/" ? "" : path}`,
+  const staticEntries: MetadataRoute.Sitemap = SITEMAP_STATIC_PUBLIC_PATHS.map((path) => ({
+    url: sitemapUrl(SITE_URL, path),
   }));
 
   const workflowEntries: MetadataRoute.Sitemap = WORKFLOWS.map((workflow) => ({
-    url: `${SITE_URL}/workflows/${workflow.slug}`,
+    url: sitemapUrl(SITE_URL, `/workflows/${workflow.slug}`),
   }));
 
   const modelFamilyEntries: MetadataRoute.Sitemap = listModelFamilies().map((family) =>
     withLastModified(
-      `${SITE_URL}/models/${family.familySlug}`,
+      sitemapUrl(SITE_URL, `/models/${family.familySlug}`),
       parseRealDate(family.lastVerifiedAt),
     ),
   );
@@ -62,6 +47,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tutorials = listRegisteredTutorials();
   const lastReviewedBySlug = new Map(
     tutorials.map((tutorial) => [tutorial.platformSlug, tutorial.lastReviewedAt]),
+  );
+
+  const tutorialEntries: MetadataRoute.Sitemap = tutorials.map((tutorial) =>
+    withLastModified(
+      sitemapUrl(SITE_URL, `/platform/${tutorial.platformSlug}`),
+      parseRealDate(tutorial.lastReviewedAt),
+    ),
   );
 
   let platformEntries: MetadataRoute.Sitemap;
@@ -82,28 +74,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         parseRealDate(platform.updatedAt),
         parseRealDate(lastReviewedBySlug.get(platform.slug)),
       );
-      return withLastModified(`${SITE_URL}/platform/${platform.slug}`, lastModified);
+      return withLastModified(sitemapUrl(SITE_URL, `/platform/${platform.slug}`), lastModified);
     });
   } catch {
     // DB unavailable (local build without DATABASE_URL, Neon blip): keep
     // the static catalog plus tutorial-backed platform URLs only. Do not
     // invent lastmod for rows we could not read.
-    platformEntries = tutorials.map((tutorial) =>
-      withLastModified(
-        `${SITE_URL}/platform/${tutorial.platformSlug}`,
-        parseRealDate(tutorial.lastReviewedAt),
-      ),
-    );
+    platformEntries = tutorialEntries;
   }
-
-  const aiOfTheWeek =
-    getActivePlacement("ai-of-the-week") != null
-      ? [{ url: `${SITE_URL}/ai-of-the-week` }]
-      : [];
 
   return [
     ...staticEntries,
-    ...aiOfTheWeek,
     ...workflowEntries,
     ...modelFamilyEntries,
     ...platformEntries,

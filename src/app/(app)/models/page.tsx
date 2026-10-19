@@ -2,11 +2,14 @@ import Link from "next/link";
 import { Layers } from "lucide-react";
 import { listModelFamilies } from "@/data/models";
 import { formatVerifiedDate } from "@/lib/model-facts";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 
-export const metadata = {
-  title: "Model versions | Launchpad HQ",
-  description: "Current and prior-generation versions of major LLM families, sourced from official vendor docs.",
-};
+export const metadata = publicPageMetadata({
+  title: "AI model versions | Launchpad HQ",
+  description:
+    "Current and prior-generation versions of major LLM families, sourced from official vendor docs. Unconfirmed figures stay unmarked as guesses.",
+  path: "/models",
+});
 
 export default function ModelsIndexPage() {
   const families = listModelFamilies();

@@ -1,5 +1,12 @@
 import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
+import { privatePageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = privatePageMetadata({
+  title: "Sign up | Launchpad HQ",
+  description: "Create a free Launchpad HQ account to save matches and contribute.",
+  path: "/sign-up",
+});
 
 export default function SignUpPage() {
   return (

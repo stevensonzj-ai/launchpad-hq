@@ -5,9 +5,13 @@ import { redirect } from "next/navigation";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { prisma } from "@/lib/db";
 
-export const metadata = {
+import { privatePageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = privatePageMetadata({
   title: "Welcome | Launchpad HQ",
-};
+  description: "Welcome to Launchpad HQ. This onboarding page is for signed-in users.",
+  path: "/onboarding",
+});
 
 export default async function OnboardingPage() {
   const user = await currentUser();

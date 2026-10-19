@@ -17,24 +17,37 @@ import { getModelFamilyForPlatform } from "@/data/models";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
+import { buildPlatformMetadata } from "@/lib/seo-metadata";
+import { buildPlatformStructuredData } from "@/lib/seo-jsonld";
+import { JsonLd } from "@/components/seo/json-ld";
+import { GroupedCatalogLinks } from "@/components/seo/catalog-link-list";
+import {
+  pickRelatedPlatforms,
+  relatedCatalogLinksForPlatform,
+  sponsorExcludedSlugs,
+} from "@/lib/related-links";
+import { PLACEMENTS } from "@/data/sponsors";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const platform = await prisma.platform.findUnique({
     where: { slug },
-    select: { name: true, primaryUse: true, description: true },
+    select: {
+      name: true,
+      primaryUse: true,
+      description: true,
+      category: { select: { name: true } },
+    },
   });
   if (!platform) return { title: "Not Found" };
-  const facts = getToolFacts(slug);
-  const metaDesc =
-    facts?.verdict?.value?.trim() ||
-    platform.description?.trim() ||
-    platform.primaryUse ||
-    undefined;
-  return {
-    title: `${facts?.displayName?.value ?? platform.name} | Launchpad HQ`,
-    description: metaDesc,
-  };
+  return buildPlatformMetadata({
+    slug,
+    name: platform.name,
+    categoryName: platform.category.name,
+    primaryUse: platform.primaryUse,
+    description: platform.description,
+    facts: getToolFacts(slug),
+  });
 }
 
 export default async function PlatformPage({
@@ -71,7 +84,7 @@ export default async function PlatformPage({
   const user = await getOrCreateDbUser();
   const isSignedIn = user !== null;
 
-  const [alternatives, complementary, favoriteRows] = await Promise.all([
+  const [alternatives, complementary, favoriteRows, sameCategory] = await Promise.all([
     platform.directAlternatives.length
       ? prisma.platform.findMany({
           where: { name: { in: platform.directAlternatives, mode: "insensitive" } },
@@ -92,12 +105,44 @@ export default async function PlatformPage({
           select: { platformId: true },
         })
       : Promise.resolve([]),
+    prisma.platform.findMany({
+      where: { categoryId: platform.categoryId, slug: { not: platform.slug } },
+      select: { slug: true, name: true, category: { select: { slug: true } } },
+      orderBy: { name: "asc" },
+      take: 12,
+    }),
   ]);
   const favoriteIds = new Set(favoriteRows.map((f) => f.platformId));
   const isFavorited = favoriteIds.has(platform.id);
+  const relatedCandidates = sameCategory.map((row) => ({
+    slug: row.slug,
+    name: row.name,
+    categorySlug: row.category.slug,
+  }));
+  const related = pickRelatedPlatforms(platform.slug, platform.category.slug, relatedCandidates, {
+    excludeSlugs: sponsorExcludedSlugs(relatedCandidates, PLACEMENTS),
+  });
+  const catalogLinks = relatedCatalogLinksForPlatform({
+    slug: platform.slug,
+    name: view.name ?? platform.name,
+    categorySlug: platform.category.slug,
+    categoryName: platform.category.name,
+    related,
+  });
+  const displayName = view.name ?? platform.name;
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
+      <JsonLd
+        data={buildPlatformStructuredData({
+          name: displayName,
+          slug: platform.slug,
+          categoryName: platform.category.name,
+          categorySlug: platform.category.slug,
+          website: platform.website,
+          facts,
+        })}
+      />
       <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">
         <Link href="/discover" className="hover:text-white">Discover</Link>
         <span>/</span>
@@ -235,6 +280,7 @@ export default async function PlatformPage({
         </section>
       )}
       </PlatformDetailTabs>
+      <GroupedCatalogLinks items={catalogLinks} />
     </div>
   );
 }

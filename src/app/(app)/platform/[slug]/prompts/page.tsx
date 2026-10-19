@@ -5,11 +5,17 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PlatformPrompts } from "@/components/prompts/platform-prompts";
 
+import { publicPageMetadata } from "@/lib/seo-metadata";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const p = await prisma.platform.findUnique({ where: { slug }, select: { name: true } });
   if (!p) return { title: "Not found" };
-  return { title: `Prompts — ${p.name} | Launchpad HQ` };
+  return publicPageMetadata({
+    title: `${p.name} prompts | Launchpad HQ`,
+    description: `Community prompts for ${p.name}. Browse approved prompts on Launchpad HQ, then try them on the official site.`,
+    path: `/platform/${slug}/prompts`,
+  });
 }
 
 export default async function PlatformPromptsPage({ params }: { params: Promise<{ slug: string }> }) {

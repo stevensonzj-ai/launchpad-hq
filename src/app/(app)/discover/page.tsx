@@ -25,14 +25,16 @@ import { getActivePlacement } from "@/data/sponsors";
 import { ROCKET_DEMO_PLACEMENT } from "@/data/sponsors/rocket-demo";
 import { HourlyRocket } from "@/components/sponsors/hourly-rocket";
 import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
   const count = roundDownToTen(platformCount);
-  return {
-    title: "Discover AI Tools | Launchpad HQ",
-    description: `Browse ${count}+ vetted AI platforms across ${categoryCount} categories on LaunchpadHQ.io`,
-  };
+  return publicPageMetadata({
+    title: "Discover AI tools | Launchpad HQ",
+    description: `Browse ${count}+ vetted AI platforms across ${categoryCount} categories. Filter by cost, difficulty, and mobile — free to explore, no account needed.`,
+    path: "/discover",
+  });
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
