@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { OutboundLink } from "@/components/analytics/outbound-link";
 import { getActivePlacement, listAiOfTheWeekArchive } from "@/data/sponsors";
 import { SponsorDisclosure } from "@/components/sponsors/sponsor-disclosure";
 import { SponsoredLabel } from "@/components/sponsors/sponsored-label";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 
 export const revalidate = 3600;
 
@@ -10,16 +12,22 @@ export async function generateMetadata(): Promise<Metadata> {
   const current = getActivePlacement("ai-of-the-week");
   if (!current) {
     return {
-      title: "AI of the Week (Sponsored) | Launchpad HQ",
-      description:
-        "No sponsored AI of the Week is booked this week. See Advertise to book a labeled placement.",
+      ...publicPageMetadata({
+        title: "AI of the Week (Sponsored) | Launchpad HQ",
+        description:
+          "No sponsored AI of the Week is booked this week. See Advertise to book a labeled placement on Launchpad HQ.",
+        path: "/ai-of-the-week",
+        index: false,
+      }),
       robots: { index: false, follow: true },
     };
   }
-  return {
+  return publicPageMetadata({
     title: "AI of the Week (Sponsored) | Launchpad HQ",
-    description: "A labeled paid placement with LaunchpadHQ’s honest take.",
-  };
+    description:
+      "A labeled paid placement with Launchpad HQ’s honest take. Sponsorship never buys a better catalog rating.",
+    path: "/ai-of-the-week",
+  });
 }
 
 export default function AiOfTheWeekPage() {
@@ -77,14 +85,17 @@ export default function AiOfTheWeekPage() {
               ))}
             </ul>
           ) : null}
-          <a
+          <OutboundLink
             href={current.ctaUrl}
+            platform={current.id}
+            surface="ai_of_the_week"
+            eventName="sponsor_clickout"
             rel="sponsored noopener"
             target="_blank"
             className="inline-flex rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600"
           >
             {current.ctaLabel}
-          </a>
+          </OutboundLink>
           <section className="rounded-xl border border-gray-700 bg-gray-900/70 p-5">
             <h3 className="text-sm font-semibold uppercase tracking-widest text-orange-400">
               Our honest take

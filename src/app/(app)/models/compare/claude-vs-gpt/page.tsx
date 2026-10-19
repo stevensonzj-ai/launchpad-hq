@@ -4,11 +4,16 @@ import { getModelFamilyBySlug } from "@/data/models";
 import type { ModelVersion } from "@/data/models";
 import { formatPriceFact, formatTokenFact, formatVerifiedDate } from "@/lib/model-facts";
 import { notFound } from "next/navigation";
+import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CatalogLinkList } from "@/components/seo/catalog-link-list";
+import { platformCatalogLinks } from "@/lib/catalog-names";
 
-export const metadata = {
-  title: "Claude vs GPT | Launchpad HQ",
-  description: "Flagship and budget Claude and GPT versions, from official Anthropic and OpenAI docs.",
-};
+export const metadata = publicPageMetadata({
+  title: "Claude vs GPT models | Launchpad HQ",
+  description:
+    "Flagship and budget Claude and GPT versions, from official Anthropic and OpenAI docs. Consumer plans are not the same as API list prices.",
+  path: "/models/compare/claude-vs-gpt",
+});
 
 function pick(versions: ModelVersion[], id: string): ModelVersion | undefined {
   return versions.find((v) => v.id === id);
@@ -50,7 +55,7 @@ function Cell({ version, field }: { version: ModelVersion; field: "context" | "m
   return <span className="text-gray-400">{version.consumerAccess.summary}</span>;
 }
 
-export default function ClaudeVsGptPage() {
+export default async function ClaudeVsGptPage() {
   const claude = getModelFamilyBySlug("claude");
   const gpt = getModelFamilyBySlug("gpt");
   if (!claude || !gpt) notFound();
@@ -182,6 +187,17 @@ export default function ClaudeVsGptPage() {
           </tbody>
         </table>
       </div>
+
+      <CatalogLinkList
+        title="Related catalog pages"
+        items={[
+          { href: "/models/claude", label: "Claude models" },
+          { href: "/models/gpt", label: "GPT models" },
+          ...(await platformCatalogLinks([
+            ...new Set([...claude.platformSlugs, ...gpt.platformSlugs]),
+          ])),
+        ]}
+      />
     </div>
   );
 }

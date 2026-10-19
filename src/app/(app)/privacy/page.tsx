@@ -2,10 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/legal/legal-page";
 
-export const metadata: Metadata = {
+import { publicPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata: Metadata = publicPageMetadata({
   title: "Privacy Policy | Launchpad HQ",
-  description: "How Launchpad HQ collects, uses, and shares information.",
-};
+  description:
+    "How Launchpad HQ collects, uses, and shares information for the catalog, accounts, and labeled sponsorships.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

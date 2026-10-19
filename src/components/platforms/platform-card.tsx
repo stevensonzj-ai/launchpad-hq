@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Globe, Smartphone } from "lucide-react";
+import { OutboundLink } from "@/components/analytics/outbound-link";
 import { PlatformLogo } from "@/components/platforms/platform-logo";
 import type { ToolFacts } from "@/data/facts/types";
 import { paidStartingPrice } from "@/lib/platform-display";
@@ -160,8 +161,8 @@ export function PlatformCard({
           <p className="text-sm leading-relaxed text-gray-300">{freeDetails.replace(/^\s*free\s*:\s*/i, "")}</p>
         </>}
         {price && <p className="mt-2 text-xs text-gray-300">Paid options: {price}</p>}
-        {source && <a href={source.sourceUrl} target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 inline-flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Source · checked {source.checkedAt}{source.status !== "verified" ? ` · ${source.status}` : ""} ↗</a>}
-        {pricingSource && <a href={pricingSource.sourceUrl} target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Pricing source · checked {pricingSource.checkedAt}{pricingSource.status !== "verified" ? ` · ${pricingSource.status}` : ""} ↗</a>}
+        {source && <OutboundLink href={source.sourceUrl} platform={slug} surface="discover_card_source" eventName="source_clickout" target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 inline-flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Source · checked {source.checkedAt}{source.status !== "verified" ? ` · ${source.status}` : ""} ↗</OutboundLink>}
+        {pricingSource && <OutboundLink href={pricingSource.sourceUrl} platform={slug} surface="discover_card_pricing_source" eventName="source_clickout" target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Pricing source · checked {pricingSource.checkedAt}{pricingSource.status !== "verified" ? ` · ${pricingSource.status}` : ""} ↗</OutboundLink>}
         <span className="mt-4 flex items-center gap-2 text-sm font-semibold text-orange-400">Meet the tool <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
       </div>
     </article>

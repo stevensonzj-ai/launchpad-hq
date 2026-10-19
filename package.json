@@ -9,7 +9,7 @@
         "start": "next start",
         "lint": "eslint",
         "typecheck": "tsc --noEmit",
-        "test": "tsx --test src/lib/quiz-map.test.ts src/lib/recommendations-score.test.ts src/lib/platform-display.test.ts src/lib/discover-filters.test.ts src/lib/hourly-rocket.test.ts src/components/platforms/platform-tool-overview.test.ts src/components/platforms/platform-card.test.ts src/data/sponsors/ordering.test.ts src/data/sponsors/validate.test.ts src/data/sponsors/calendar.test.ts src/data/facts/facts.test.ts",
+        "test": "tsx --test src/lib/quiz-map.test.ts src/lib/recommendations-score.test.ts src/lib/platform-display.test.ts src/lib/discover-filters.test.ts src/lib/hourly-rocket.test.ts src/lib/seo-metadata.test.ts src/lib/seo-jsonld.test.ts src/lib/related-links.test.ts src/lib/sitemap-coverage.test.ts src/components/platforms/platform-tool-overview.test.ts src/components/platforms/platform-card.test.ts src/components/analytics/outbound-link.test.ts src/data/sponsors/ordering.test.ts src/data/sponsors/validate.test.ts src/data/sponsors/calendar.test.ts src/data/facts/facts.test.ts",
         "facts:diff": "node scripts/facts-diff.mjs",
         "audit:tutorials": "node scripts/tutorial-pipeline/audit-pages.mjs",
         "audit:workflows": "node scripts/tutorial-pipeline/audit-workflows.mjs",

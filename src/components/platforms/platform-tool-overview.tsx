@@ -24,6 +24,7 @@ import {
 export type ToolOverviewPlatform = OverlayPlatform<
   PlatformFactFields & {
     name: string;
+    slug: string;
     company: string | null;
     primaryUse: string | null;
     primaryUseCases: string | null;
@@ -140,6 +141,7 @@ export function PlatformToolOverview({
       <PlatformUsageLimits fact={usageLimitsFact} />
 
       <PlatformMobileSection
+        slug={platform.slug}
         name={platform.name}
         iosAppUrl={platform.iosAppUrl}
         androidAppUrl={platform.androidAppUrl}

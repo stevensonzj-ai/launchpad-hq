@@ -1,7 +1,7 @@
 # LaunchpadHQ
 
 A curated AI-platform discovery site for beginners. Live at
-[launchpadhq.io](https://launchpadhq.io).
+[launchpadhq.io](https://www.launchpadhq.io).
 
 > [!IMPORTANT]
 > **New here? Read [`START-HERE.md`](START-HERE.md) before anything else — including

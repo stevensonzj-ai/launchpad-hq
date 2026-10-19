@@ -5,6 +5,9 @@ import { getAllWorkflows, getWorkflowBySlug } from "@/data/workflows";
 import { WorkflowTierComparison } from "@/components/workflows/workflow-tier-comparison";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
 import { listRegisteredTutorials } from "@/data/tutorials";
+import { publicPageMetadata } from "@/lib/seo-metadata";
+import { workflowPlatformSlugs, workflowToolDisplayName } from "@/lib/related-links";
+import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 
 export function generateStaticParams() {
   return getAllWorkflows().map((w) => ({ slug: w.slug }));
@@ -14,10 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const w = getWorkflowBySlug(slug);
   if (!w) return { title: "Workflow | Launchpad HQ" };
-  return {
-    title: `${w.title} | Workflows | Launchpad HQ`,
+  return publicPageMetadata({
+    title: `${w.title} workflow | Launchpad HQ`,
     description: w.description,
-  };
+    path: `/workflows/${w.slug}`,
+  });
 }
 
 export default async function WorkflowDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -58,6 +62,16 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
         workflow={workflow}
         validSlugs={[...validSlugs]}
         tutorialSlugs={tutorialSlugs}
+      />
+
+      <CatalogLinkList
+        title="Platforms in this workflow"
+        items={workflowPlatformSlugs(workflow)
+          .filter((slug) => validSlugs.has(slug))
+          .map((slug) => ({
+            href: `/platform/${slug}`,
+            label: workflowToolDisplayName(workflow, slug),
+          }))}
       />
 
       <p className="mt-10 text-center text-sm text-gray-600">

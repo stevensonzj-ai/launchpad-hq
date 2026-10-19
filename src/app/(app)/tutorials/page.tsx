@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen, Rocket } from "lucide-react";
+import { publicPageMetadata } from "@/lib/seo-metadata";
+import { tutorialIndexLinks } from "@/lib/related-links";
 
-export const metadata = {
-  title: "Tutorial Library | Launchpad HQ",
-  description: "Step-by-step guides for every AI platform in the Launchpad HQ directory.",
-};
+export const metadata = publicPageMetadata({
+  title: "AI tutorials | Launchpad HQ",
+  description:
+    "Getting-started guides live on each platform page. Browse the catalog and open the Tutorials tab for step-by-step help without leaving Launchpad HQ.",
+  path: "/tutorials",
+});
 
 export default function TutorialsPage() {
+  const guides = tutorialIndexLinks();
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 text-center">
       <div className="mb-6 flex justify-center">
@@ -35,6 +40,18 @@ export default function TutorialsPage() {
           <Rocket className="h-5 w-5" /> Browse platforms <ArrowRight className="h-5 w-5" />
         </Link>
       </div>
+
+      {guides.length > 0 && (
+        <ul className="mx-auto mt-12 max-w-xl space-y-2 text-left text-sm">
+          {guides.map((guide) => (
+            <li key={guide.href}>
+              <Link href={guide.href} className="text-orange-400 hover:text-orange-300">
+                {guide.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

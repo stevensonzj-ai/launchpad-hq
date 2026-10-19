@@ -1,12 +1,24 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, Sparkles, Rocket } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
-import { getPlatformCount, getCategoryCount } from "@/lib/platforms";
+import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 import { Header } from "@/components/layout/header";
 import { LaunchpadArt } from "@/components/brand/launchpad-art";
 import { GoalEmblem } from "@/components/brand/goal-emblem";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 
 export const revalidate = 3600;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
+  const count = roundDownToTen(platformCount);
+  return publicPageMetadata({
+    title: "Launchpad HQ — Find the right AI tool",
+    description: `Your AI mission control: ${count}+ vetted tools across ${categoryCount} categories, with honest pricing notes, a matching quiz, and beginner workflows.`,
+    path: "/",
+  });
+}
 
 const goals = [
   { title: "Something to say", description: "Write, brainstorm, and turn your ideas into something people will love.", kind: "writing", category: "text-conversational-ai" },

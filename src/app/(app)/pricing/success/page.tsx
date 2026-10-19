@@ -2,9 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PRO_PLAN_ENABLED } from "@/lib/site";
 
-export const metadata = {
+import { privatePageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = privatePageMetadata({
   title: "Subscription | Launchpad HQ",
-};
+  description: "Subscription confirmation for Launchpad HQ.",
+  path: "/pricing/success",
+});
 
 export default async function PricingSuccessPage({
   searchParams,

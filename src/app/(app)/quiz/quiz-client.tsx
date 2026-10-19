@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
+import { track } from "@vercel/analytics";
 import { Loader2 } from "lucide-react";
 import {
   QUIZ_MAX_GOALS,
@@ -85,9 +86,11 @@ export function QuizClient() {
           body: JSON.stringify({ answers: full }),
         });
         if (!res.ok) throw new Error("Could not save quiz");
+        track("quiz_completed", { signed_in: true });
         router.push("/for-you");
       } else {
         sessionStorage.setItem("launchpad_quiz_pending", JSON.stringify(full));
+        track("quiz_completed", { signed_in: false });
         router.push("/quiz/results");
       }
     } catch (e) {

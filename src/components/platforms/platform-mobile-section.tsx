@@ -1,8 +1,10 @@
 import { ExternalLink, Globe, Smartphone } from "lucide-react";
+import { OutboundLink } from "@/components/analytics/outbound-link";
 import { FactCite } from "@/components/platforms/fact-cite";
 import type { Fact, ToolApps } from "@/data/facts/types";
 
 type PlatformMobileSectionProps = {
+  slug: string;
   name: string;
   iosAppUrl: string | null;
   androidAppUrl: string | null;
@@ -21,6 +23,7 @@ function hasPwa(platformType: string[]) {
 type StoreButton = { href: string; label: string; hint?: string };
 
 export function PlatformMobileSection({
+  slug,
   name,
   iosAppUrl,
   androidAppUrl,
@@ -60,9 +63,11 @@ export function PlatformMobileSection({
       {buttons.length > 0 && (
         <div className="mb-4 flex flex-wrap gap-3">
           {buttons.map((button) => (
-            <a
+            <OutboundLink
               key={button.href}
               href={button.href}
+              platform={slug}
+              surface="platform_mobile"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-gray-600 hover:bg-gray-900"
@@ -70,7 +75,7 @@ export function PlatformMobileSection({
               <span className="text-[13px] font-semibold">{button.label}</span>
               {button.hint && <span className="text-xs text-gray-400">{button.hint}</span>}
               <ExternalLink className="h-3.5 w-3.5 text-gray-500" aria-hidden />
-            </a>
+            </OutboundLink>
           ))}
         </div>
       )}
