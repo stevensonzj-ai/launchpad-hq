@@ -19,6 +19,7 @@ import {
   readLastPlayedHourKey,
   ROCKET_MIN_SETTLE_PX,
   ROCKET_PHASE,
+  ROCKET_APPROACH_PITCH_MS,
   rocketPoseAt,
   rocketDetachAt,
   shortestAngleDelta,
@@ -223,7 +224,7 @@ describe("hourly rocket flight path", () => {
     ["right sponsor", { x: 72, y: 40 }, { x: 900, y: 380 }, { width: 1080, height: 920 }],
     ["short viewport", { x: 28, y: 24 }, { x: 0, y: 0 }, { width: 568, height: 320 }],
   ] as const) {
-    it(`${label}: stays on screen, tracks travel through the entire approach, descends vertically`, () => {
+    it(`${label}: stays on screen, cruises nose-first, leans through approach, descends vertically`, () => {
       const plan = createRocketFlightPlan(home, target, viewport);
       let previous = rocketPoseAt(plan, 0);
       for (let i = 1; i <= 1900; i++) {
@@ -233,9 +234,21 @@ describe("hourly rocket flight path", () => {
         const step = Math.hypot(dx, dy);
         assert.ok(step < 10, `position discontinuity: ${step}`);
         assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 8, "attitude discontinuity");
-        if (t < ROCKET_PHASE.approachEnd && step > 0.01) {
+        if (t < ROCKET_PHASE.loopEnd && step > 0.01) {
           const error = Math.abs(shortestAngleDelta(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, headingDeg(dx, dy)));
           assert.ok(error < 3, `nose alignment error ${error} at ${t}`);
+        }
+        if (t >= ROCKET_PHASE.loopEnd && t < ROCKET_PHASE.approachEnd) {
+          assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 2,
+            `approach pitch must ease, not snap: ${t}`);
+          if (t >= ROCKET_PHASE.loopEnd + ROCKET_APPROACH_PITCH_MS / HOURLY_ROCKET_FLIGHT_MS) {
+            const lean = shortestAngleDelta(0, pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG);
+            assert.ok(Math.abs(lean) <= 20.001, "landing lean stays within 20 degrees");
+            if (Math.abs(dx) > 0.01) {
+              assert.equal(Math.sign(lean), Math.sign(dx), "lean follows sideways travel");
+              assert.ok(Math.abs(lean) > 0.1, "must not freeze upright while translating");
+            }
+          }
         }
         if (t >= ROCKET_PHASE.approachEnd) {
           assert.ok(Math.abs(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) < 0.001);

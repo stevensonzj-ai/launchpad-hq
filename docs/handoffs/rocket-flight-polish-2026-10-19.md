@@ -32,3 +32,9 @@ Latest main 3395fee4 (PRs #75 and #76) was merged cleanly into this draft branch
 - The demo sponsor uses the complete existing Discover rocket illustration. Sponsor images preserve their full content with object-contain and a stable aspect ratio.
 - 119 tests pass, including exact detachment origin, no early ignition, and continuity into the nose-first flight. Typecheck, changed-file ESLint, production build, and git diff whitespace checks pass.
 - Sampled local browser screenshots verify mobile detachment, larger in-flight exhaust, sponsor landing smoke, and the complete demo illustration. This is sampled inspection, not a full frame-by-frame recording. Owner visual approval remains pending.
+
+## Follow-up: powered approach attitude
+
+Owner relayed Grok's requested 0.4-0.6 second pitch transition and a 10-20 degree speed-dependent landing lean. Implemented a 500ms quintic blend from cruise tangent into a lean capped at 20 degrees, scaled continuously by horizontal speed and viewport width. Lean falls toward zero as lateral motion stops, before hover and vertical descent. This intentionally supersedes the earlier nose-first-through-entire-approach requirement; cruise remains nose-first.
+
+The return curve now enters the final approach diagonally instead of reaching upright at the left boundary and banking again. Tests retain cruise alignment and bounds, and replace the approach alignment assertion with bounded pitch increments, lean direction, maximum lean and no frozen-upright lateral travel. All 119 tests, typecheck, changed-file ESLint and build pass. Sampled desktop hover and mobile transition/lean screenshots inspected locally; owner should replay the full transition on the draft preview before merge. Main remains unchanged at 3395fee4.

@@ -2,6 +2,7 @@ export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
 export const HOURLY_ROCKET_FLIGHT_MS = 9500;
 export const ROCKET_DETACH_MS = 1400;
 export const ROCKET_AFTERLAND_MS = 2400;
+export const ROCKET_APPROACH_PITCH_MS = 500;
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
 /** Measured artwork axis: nose (193,4), plume tip (19,284), in 205×290 sprites. */
 export const HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG = 31.9;
@@ -69,8 +70,8 @@ function curveAt(curves: Curve[], parameter: number) {
 }
 const SAMPLES = 480;
 /** All control points lie inside the safe rectangle, so the entire Bézier does too.
- * A curvature-weighted distance table slows travel through tight bends. No positional
- * clamping or independent attitude easing can introduce sideways flight.
+ * A curvature-weighted distance table slows travel through tight bends. Cruise
+ * follows the tangent; powered landing approach uses a speed-dependent lean.
  */
 export function createRocketFlightPlan(home: RocketPoint, land: RocketPoint, viewport: RocketViewport, craft = HOURLY_ROCKET_CRAFT): RocketFlightPlan {
   const pad = craftPad(craft);
@@ -86,11 +87,11 @@ export function createRocketFlightPlan(home: RocketPoint, land: RocketPoint, vie
   const middle = Math.max(top + 40, Math.min(bottom - 40, viewport.height * 0.48));
   const join = { x: right, y: middle };
   const returnY = Math.min(bottom - 30, Math.max(middle, hover.y + 80));
-  const returnPoint = { x: pad, y: returnY };
+  const returnPoint = { x: pad + (hover.x - pad) * 0.2, y: returnY };
   const absCurves: Curve[] = [
     [origin, { x: origin.x, y: top }, { x: right, y: top }, join],
     [join, { x: right, y: bottom }, { x: pad, y: bottom }, returnPoint],
-    [returnPoint, { x: pad, y: returnY - (returnY - hover.y) * 0.5 }, { x: hover.x, y: hover.y + (returnY - hover.y) * 0.5 }, hover],
+    [returnPoint, { x: returnPoint.x + (returnPoint.x - pad) * 0.5, y: returnY - (bottom - returnY) * 0.5 }, { x: hover.x, y: hover.y + (returnY - hover.y) * 0.5 }, hover],
   ];
   const offset = (p: RocketPoint) => ({ x: p.x - home.x, y: p.y - home.y });
   const curves = absCurves.map(c => c.map(offset) as Curve);
@@ -135,7 +136,18 @@ export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
   const u = clamp01(t), phase = phaseAt(u);
   const flight = flightAt(plan, Math.min(1, u / ROCKET_PHASE.approachEnd));
   let p = flight.p;
-  const heading = u < ROCKET_PHASE.approachEnd ? headingDeg(flight.v.x, flight.v.y) : 0;
+  let heading = u < ROCKET_PHASE.approachEnd ? headingDeg(flight.v.x, flight.v.y) : 0;
+  if (u >= ROCKET_PHASE.loopEnd && u < ROCKET_PHASE.approachEnd) {
+    // Powered landing translation uses a modest thrust-vector lean. Measure
+    // horizontal speed in screen widths/second so phones and desktops agree.
+    const dt = 1 / HOURLY_ROCKET_FLIGHT_MS;
+    const before = flightAt(plan, (u - dt) / ROCKET_PHASE.approachEnd).p;
+    const after = flightAt(plan, (u + dt) / ROCKET_PHASE.approachEnd).p;
+    const speed = (after.x - before.x) / 0.002 / plan.viewport.width;
+    const lean = 20 * Math.tanh(speed / 0.08);
+    const blend = smoothStep((u - ROCKET_PHASE.loopEnd) * HOURLY_ROCKET_FLIGHT_MS / ROCKET_APPROACH_PITCH_MS);
+    heading += shortestAngleDelta(heading, lean) * blend;
+  }
   if (u >= ROCKET_PHASE.approachEnd) {
     const descent = smoothStep((u - ROCKET_PHASE.hoverEnd) / (1 - ROCKET_PHASE.hoverEnd));
     p = { x: plan.hover.x, y: plan.hover.y + (plan.land.y - plan.hover.y) * descent };
