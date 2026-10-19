@@ -18,7 +18,7 @@ import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildPlatformMetadata } from "@/lib/seo-metadata";
-import { buildPlatformStructuredData } from "@/lib/seo-jsonld";
+import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
 import { JsonLd } from "@/components/seo/json-ld";
 import { GroupedCatalogLinks } from "@/components/seo/catalog-link-list";
 import {
@@ -108,6 +108,7 @@ export default async function PlatformPage({
     prisma.platform.findMany({
       where: { categoryId: platform.categoryId, slug: { not: platform.slug } },
       select: { slug: true, name: true, category: { select: { slug: true } } },
+      // v1: first same-category platforms alphabetically, not relevance-ranked.
       orderBy: { name: "asc" },
       take: 12,
     }),
@@ -130,6 +131,7 @@ export default async function PlatformPage({
     related,
   });
   const displayName = view.name ?? platform.name;
+  const officialHref = officialSiteHref(platform.website);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
@@ -140,7 +142,6 @@ export default async function PlatformPage({
           categoryName: platform.category.name,
           categorySlug: platform.category.slug,
           website: platform.website,
-          facts,
         })}
       />
       <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">
@@ -168,9 +169,9 @@ export default async function PlatformPage({
             isSignedIn={isSignedIn}
             variant="labeled"
           />
-          {platform.website && (
+          {officialHref && (
             <OutboundLink
-              href={platform.website}
+              href={officialHref}
               platform={platform.slug}
               surface="platform_cta"
               target="_blank"

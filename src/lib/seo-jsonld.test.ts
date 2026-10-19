@@ -1,22 +1,19 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getToolFacts } from "@/data/facts";
 import {
   buildPlatformStructuredData,
-  verifiedOfferFromPlans,
+  officialSiteHref,
+  serializeJsonLd,
 } from "@/lib/seo-jsonld";
-import type { ToolFacts } from "@/data/facts/types";
 
 describe("platform JSON-LD", () => {
-  it("emits only name, category, optional official url, breadcrumbs, and verified offers", () => {
-    const grokFacts = getToolFacts("grok");
+  it("emits only name, category, optional official url, and breadcrumbs", () => {
     const data = buildPlatformStructuredData({
       name: "Grok",
       slug: "grok",
       categoryName: "Text & conversational AI",
       categorySlug: "text-conversational-ai",
       website: "https://x.ai/grok",
-      facts: grokFacts,
     });
     const graph = data["@graph"] as Array<Record<string, unknown>>;
     const software = graph.find((node) => node["@type"] === "SoftwareApplication");
@@ -26,39 +23,49 @@ describe("platform JSON-LD", () => {
     assert.equal(software.name, "Grok");
     assert.equal(software.applicationCategory, "Text & conversational AI");
     assert.equal(software.url, "https://x.ai/grok");
-    assert.deepEqual(Object.keys(software).sort(), ["@type", "applicationCategory", "name", "offers", "url"].sort());
-    assert.equal((software.offers as { price: string }).price, "8");
+    assert.equal(software.offers, undefined);
+    assert.deepEqual(Object.keys(software).sort(), ["@type", "applicationCategory", "name", "url"].sort());
   });
 
-  it("omits offers when plans are missing or not RA-verified", () => {
-    const chatgpt = getToolFacts("chatgpt");
-    assert.equal(verifiedOfferFromPlans(chatgpt), undefined);
+  it("uses officialSiteHref for SoftwareApplication.url, matching the Open CTA", () => {
+    assert.equal(officialSiteHref("https://x.ai/grok"), "https://x.ai/grok");
+    assert.equal(officialSiteHref("  https://x.ai/grok  "), "https://x.ai/grok");
+    assert.equal(officialSiteHref("   "), undefined);
+    assert.equal(officialSiteHref(null), undefined);
+    assert.equal(officialSiteHref(undefined), undefined);
 
-    const unverified: ToolFacts = {
-      slug: "example",
-      lifecycle: "active",
-      plans: {
-        value: [{ name: "Pro", price: "$20", period: "month", limits: "" }],
-        sourceUrl: "https://example.com",
-        checkedAt: "2026-10-14",
-        gatheredBy: "research-analyst",
-        verifiedBy: "pending",
-        verifiedAt: "2026-10-14",
-        status: "unverified",
-      },
-    };
-    assert.equal(verifiedOfferFromPlans(unverified), undefined);
+    const withUrl = buildPlatformStructuredData({
+      name: "Grok",
+      slug: "grok",
+      categoryName: "Text & conversational AI",
+      categorySlug: "text-conversational-ai",
+      website: "  https://x.ai/grok  ",
+    });
+    const softwareWith = (withUrl["@graph"] as Array<Record<string, unknown>>).find(
+      (node) => node["@type"] === "SoftwareApplication",
+    );
+    assert.equal(softwareWith?.url, officialSiteHref("  https://x.ai/grok  "));
 
-    const data = buildPlatformStructuredData({
+    const withoutUrl = buildPlatformStructuredData({
       name: "ChatGPT",
       slug: "chatgpt",
       categoryName: "Text & conversational AI",
       categorySlug: "text-conversational-ai",
-      facts: chatgpt,
+      website: "   ",
     });
-    const graph = data["@graph"] as Array<Record<string, unknown>>;
-    const software = graph.find((node) => node["@type"] === "SoftwareApplication");
-    assert.equal(software?.offers, undefined);
-    assert.equal(software?.url, undefined);
+    const softwareWithout = (withoutUrl["@graph"] as Array<Record<string, unknown>>).find(
+      (node) => node["@type"] === "SoftwareApplication",
+    );
+    assert.equal(softwareWithout?.url, undefined);
+    assert.equal(officialSiteHref("   ") ? true : false, false);
+  });
+
+  it("escapes </script> so it cannot break out of the JSON-LD script tag", () => {
+    const html = serializeJsonLd({
+      name: "</script><script>alert(1)</script>",
+    });
+    assert.equal(html.includes("</script>"), false);
+    assert.equal(html.includes("<"), false);
+    assert.ok(html.includes("\\u003c/script>"));
   });
 });

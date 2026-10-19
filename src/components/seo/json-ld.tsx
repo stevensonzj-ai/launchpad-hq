@@ -1,10 +1,10 @@
-import type { JsonLdNode } from "@/lib/seo-jsonld";
+import { serializeJsonLd, type JsonLdNode } from "@/lib/seo-jsonld";
 
 export function JsonLd({ data }: { data: JsonLdNode }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   );
 }

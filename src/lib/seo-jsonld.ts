@@ -1,36 +1,15 @@
-import { isPublishedVerified } from "@/data/facts/walk";
-import type { ToolFacts } from "@/data/facts/types";
 import { absoluteUrl } from "@/lib/site";
 
 export type JsonLdNode = Record<string, unknown>;
 
-const USD_AMOUNT = /(?:USD|\$)\s*(\d+(?:\.\d+)?)/i;
+/** Same gate as the platform page Open/official-site CTA: a non-empty website string. */
+export function officialSiteHref(website: string | null | undefined): string | undefined {
+  const href = website?.trim();
+  return href ? href : undefined;
+}
 
-/**
- * Lowest paid USD amount from a verified RA `plans` fact.
- * Omit offers when the fact is missing, unverified, or has no numeric paid price.
- */
-export function verifiedOfferFromPlans(facts: ToolFacts | undefined): {
-  "@type": "Offer";
-  price: string;
-  priceCurrency: "USD";
-} | undefined {
-  const plans = facts?.plans;
-  if (!plans || !isPublishedVerified(plans) || !plans.value.length) return undefined;
-
-  const amounts: number[] = [];
-  for (const plan of plans.value) {
-    const match = plan.price.match(USD_AMOUNT);
-    if (!match) continue;
-    const value = Number(match[1]);
-    if (Number.isFinite(value) && value > 0) amounts.push(value);
-  }
-  if (!amounts.length) return undefined;
-  return {
-    "@type": "Offer",
-    price: String(Math.min(...amounts)),
-    priceCurrency: "USD",
-  };
+export function serializeJsonLd(data: JsonLdNode): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
 export function buildPlatformStructuredData(input: {
@@ -39,7 +18,6 @@ export function buildPlatformStructuredData(input: {
   categoryName: string;
   categorySlug: string;
   website?: string | null;
-  facts?: ToolFacts;
 }): JsonLdNode {
   const pageUrl = absoluteUrl(`/platform/${input.slug}`);
   const software: JsonLdNode = {
@@ -47,10 +25,8 @@ export function buildPlatformStructuredData(input: {
     name: input.name,
     applicationCategory: input.categoryName,
   };
-  const officialUrl = input.website?.trim();
+  const officialUrl = officialSiteHref(input.website);
   if (officialUrl) software.url = officialUrl;
-  const offers = verifiedOfferFromPlans(input.facts);
-  if (offers) software.offers = offers;
 
   return {
     "@context": "https://schema.org",

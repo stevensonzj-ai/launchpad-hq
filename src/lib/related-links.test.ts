@@ -33,6 +33,20 @@ describe("related platform helper", () => {
     assert.equal(related.length, 5);
   });
 
+  it("keeps caller order so the page can take the first same-category platforms alphabetically", () => {
+    const alpha = [
+      { slug: "claude", name: "Claude", categorySlug: "text" },
+      { slug: "gemini", name: "Gemini", categorySlug: "text" },
+      { slug: "grok", name: "Grok", categorySlug: "text" },
+      { slug: "perplexity-ai", name: "Perplexity", categorySlug: "text" },
+    ];
+    const related = pickRelatedPlatforms("chatgpt", "text", alpha);
+    assert.deepEqual(
+      related.map((item) => item.slug),
+      ["claude", "gemini", "grok", "perplexity-ai"],
+    );
+  });
+
   it("drops sponsored names from related links", () => {
     const placements = [
       {
