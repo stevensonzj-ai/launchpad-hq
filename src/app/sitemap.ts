@@ -4,7 +4,7 @@ import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
-import { SITEMAP_STATIC_PUBLIC_PATHS, sitemapUrl } from "@/lib/sitemap-coverage";
+import { sitemapStaticPublicPathsForNow, sitemapUrl } from "@/lib/sitemap-coverage";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +29,7 @@ function withLastModified(
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticEntries: MetadataRoute.Sitemap = SITEMAP_STATIC_PUBLIC_PATHS.map((path) => ({
+  const staticEntries: MetadataRoute.Sitemap = sitemapStaticPublicPathsForNow().map((path) => ({
     url: sitemapUrl(SITE_URL, path),
   }));
 

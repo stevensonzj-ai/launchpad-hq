@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import type { SponsorPlacement } from "@/data/sponsors";
 import {
   pickRelatedPlatforms,
+  platformLinkLabel,
   RELATED_PLATFORM_MAX,
   sponsorExcludedSlugs,
   workflowPlatformSlugs,
@@ -67,6 +68,12 @@ describe("related platform helper", () => {
       excludeSlugs: excluded,
     });
     assert.equal(related.some((item) => item.slug === "claude"), false);
+  });
+
+  it("prefers catalog then fact display names over raw slugs", () => {
+    assert.equal(platformLinkLabel("chatgpt", "ChatGPT"), "ChatGPT");
+    assert.equal(platformLinkLabel("freepik-ai"), "Magnific (formerly Freepik)");
+    assert.equal(platformLinkLabel("no-such-platform"), "no-such-platform");
   });
 
   it("finds workflows that already mention a platform slug", () => {

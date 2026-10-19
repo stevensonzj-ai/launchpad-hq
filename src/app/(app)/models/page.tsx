@@ -7,7 +7,7 @@ import { publicPageMetadata } from "@/lib/seo-metadata";
 export const metadata = publicPageMetadata({
   title: "AI model versions | Launchpad HQ",
   description:
-    "Current and prior-generation versions of major LLM families, sourced from official vendor docs. Unconfirmed figures stay unmarked as guesses.",
+    "Current and prior-generation versions of major LLM families, sourced from official vendor docs. Unconfirmed figures are clearly marked and are not shown as fact.",
   path: "/models",
 });
 

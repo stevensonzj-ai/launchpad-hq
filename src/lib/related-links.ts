@@ -4,6 +4,7 @@ import { WORKFLOWS } from "@/data/workflows";
 import type { WorkflowTemplate } from "@/data/workflows";
 import type { SponsorPlacement } from "@/data/sponsors";
 import { PLACEMENTS } from "@/data/sponsors";
+import { getToolFacts } from "@/data/facts";
 
 export const RELATED_PLATFORM_MIN = 3;
 export const RELATED_PLATFORM_MAX = 5;
@@ -13,6 +14,15 @@ export type RelatedPlatformCandidate = {
   name: string;
   categorySlug: string;
 };
+
+/** Catalog name, then fact-file displayName, then slug. */
+export function platformLinkLabel(slug: string, catalogName?: string | null): string {
+  const fromCatalog = catalogName?.trim();
+  if (fromCatalog) return fromCatalog;
+  const fromFacts = getToolFacts(slug)?.displayName?.value?.trim();
+  if (fromFacts) return fromFacts;
+  return slug;
+}
 
 export function workflowPlatformSlugs(workflow: WorkflowTemplate): string[] {
   const slugs = new Set<string>();

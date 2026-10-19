@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getModelFamilyBySlug, listModelFamilySlugs } from "@/data/models";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
-import { publicPageMetadata, verifiedDisplayName } from "@/lib/seo-metadata";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
-import { getToolFacts } from "@/data/facts";
+import { platformCatalogLinks } from "@/lib/catalog-names";
 
 export function generateStaticParams() {
   return listModelFamilySlugs().map((family) => ({ family }));
@@ -74,10 +74,7 @@ export default async function ModelFamilyPage({ params }: { params: Promise<{ fa
       {family.platformSlugs.length > 0 && (
         <CatalogLinkList
           title="Catalog pages"
-          items={family.platformSlugs.map((slug) => ({
-            href: `/platform/${slug}`,
-            label: verifiedDisplayName(getToolFacts(slug), slug),
-          }))}
+          items={await platformCatalogLinks(family.platformSlugs)}
         />
       )}
     </div>

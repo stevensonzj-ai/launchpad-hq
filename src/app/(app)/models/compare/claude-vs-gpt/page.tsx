@@ -6,6 +6,7 @@ import { formatPriceFact, formatTokenFact, formatVerifiedDate } from "@/lib/mode
 import { notFound } from "next/navigation";
 import { publicPageMetadata } from "@/lib/seo-metadata";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
+import { platformCatalogLinks } from "@/lib/catalog-names";
 
 export const metadata = publicPageMetadata({
   title: "Claude vs GPT models | Launchpad HQ",
@@ -54,7 +55,7 @@ function Cell({ version, field }: { version: ModelVersion; field: "context" | "m
   return <span className="text-gray-400">{version.consumerAccess.summary}</span>;
 }
 
-export default function ClaudeVsGptPage() {
+export default async function ClaudeVsGptPage() {
   const claude = getModelFamilyBySlug("claude");
   const gpt = getModelFamilyBySlug("gpt");
   if (!claude || !gpt) notFound();
@@ -192,10 +193,9 @@ export default function ClaudeVsGptPage() {
         items={[
           { href: "/models/claude", label: "Claude models" },
           { href: "/models/gpt", label: "GPT models" },
-          ...[...new Set([...claude.platformSlugs, ...gpt.platformSlugs])].map((slug) => ({
-            href: `/platform/${slug}`,
-            label: slug,
-          })),
+          ...(await platformCatalogLinks([
+            ...new Set([...claude.platformSlugs, ...gpt.platformSlugs]),
+          ])),
         ]}
       />
     </div>
