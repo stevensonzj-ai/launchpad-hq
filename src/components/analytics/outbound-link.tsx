@@ -3,7 +3,7 @@
 import { track } from "@vercel/analytics";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
-export type OutboundEventName = "platform_clickout" | "sponsor_clickout";
+export type OutboundEventName = "platform_clickout" | "sponsor_clickout" | "source_clickout";
 
 /** Hostname only — no path, query string, or credentials. */
 export function destinationHost(href: string): string {

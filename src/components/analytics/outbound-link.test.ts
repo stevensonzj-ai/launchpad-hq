@@ -55,3 +55,30 @@ test("OutboundLink preserves href, target, and rel in markup", () => {
   assert.ok(html.includes("Visit"));
   assert.ok(!html.includes("destination_host"));
 });
+
+test("source citations use source_clickout with the same property shape", () => {
+  const props = outboundEventProperties(
+    "https://example.com/plans?ref=catalog",
+    "fixture-tool",
+    "discover_card_source",
+  );
+  assert.deepEqual(props, {
+    platform: "fixture-tool",
+    surface: "discover_card_source",
+    destination_host: "example.com",
+  });
+  const html = renderToStaticMarkup(
+    createElement(OutboundLink, {
+      href: "https://example.com/plans?ref=catalog",
+      platform: "fixture-tool",
+      surface: "discover_card_source",
+      eventName: "source_clickout",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      children: "Source",
+    }),
+  );
+  assert.ok(html.includes('href="https://example.com/plans?ref=catalog"'));
+  assert.ok(html.includes('target="_blank"'));
+  assert.ok(html.includes('rel="noopener noreferrer"'));
+});
