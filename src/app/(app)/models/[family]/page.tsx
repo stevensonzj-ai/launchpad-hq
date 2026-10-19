@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getModelFamilyBySlug, listModelFamilySlugs } from "@/data/models";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
+import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CatalogLinkList } from "@/components/seo/catalog-link-list";
+import { platformCatalogLinks } from "@/lib/catalog-names";
 
 export function generateStaticParams() {
   return listModelFamilySlugs().map((family) => ({ family }));
@@ -12,10 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ family: s
   const { family: familySlug } = await params;
   const family = getModelFamilyBySlug(familySlug);
   if (!family) return { title: "Models | Launchpad HQ" };
-  return {
+  return publicPageMetadata({
     title: `${family.displayName} models | Launchpad HQ`,
-    description: `Current and prior ${family.displayName} versions, sourced from official ${family.vendor} docs.`,
-  };
+    description: `Current and prior ${family.displayName} versions from official ${family.vendor} docs, including which one to pick and API notes we could verify.`,
+    path: `/models/${family.familySlug}`,
+  });
 }
 
 export default async function ModelFamilyPage({ params }: { params: Promise<{ family: string }> }) {
@@ -36,20 +40,6 @@ export default async function ModelFamilyPage({ params }: { params: Promise<{ fa
       <header className="mb-8">
         <p className="mb-2 text-xs font-medium uppercase tracking-widest text-orange-400">{family.vendor}</p>
         <h1 className="text-3xl font-bold text-white">{family.displayName} models</h1>
-        {family.platformSlugs.length > 0 && (
-          <p className="mt-3 text-sm text-gray-400">
-            Also on{" "}
-            {family.platformSlugs.map((slug, i) => (
-              <span key={slug}>
-                {i > 0 ? ", " : ""}
-                <Link href={`/platform/${slug}`} className="text-orange-400 hover:text-orange-300">
-                  /platform/{slug}
-                </Link>
-              </span>
-            ))}
-            .
-          </p>
-        )}
       </header>
 
       <PlatformModelsSection family={family} heading="Version comparison" />
@@ -80,6 +70,13 @@ export default async function ModelFamilyPage({ params }: { params: Promise<{ fa
           </article>
         ))}
       </div>
+
+      {family.platformSlugs.length > 0 && (
+        <CatalogLinkList
+          title="Catalog pages"
+          items={await platformCatalogLinks(family.platformSlugs)}
+        />
+      )}
     </div>
   );
 }

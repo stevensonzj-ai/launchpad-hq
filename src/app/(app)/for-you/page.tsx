@@ -12,15 +12,17 @@ import {
   quizToRecommendationInput,
   type QuizAnswers,
 } from "@/lib/quiz-map";
+import { privatePageMetadata } from "@/lib/seo-metadata";
 
 type Rec = Awaited<
   ReturnType<typeof computeRecommendations>
 >["recommendations"][number];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = privatePageMetadata({
   title: "For you | Launchpad HQ",
   description: "Your saved platforms and personalized recommendations.",
-};
+  path: "/for-you",
+});
 
 export default async function ForYouPage() {
   const user = await getOrCreateDbUser();

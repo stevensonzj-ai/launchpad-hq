@@ -8,13 +8,15 @@ import {
   SPONSOR_SLOT_KEYS,
 } from "@/data/sponsors/calendar";
 import { SITE_IS_PUBLIC } from "@/lib/site";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 
-export const metadata: Metadata = {
-  title: "Advertise | Launchpad HQ",
+export const metadata: Metadata = publicPageMetadata({
+  title: "Advertise on Launchpad HQ",
   description:
-    "Sponsor rate card for Launchpad HQ: AI of the Week, Discover Spotlight, availability, and booking by email.",
-  robots: SITE_IS_PUBLIC ? undefined : { index: false, follow: false },
-};
+    "Sponsor rate card for Launchpad HQ: AI of the Week, Discover Spotlight, availability, and booking by email. Placements are labeled sponsored.",
+  path: "/advertise",
+  index: SITE_IS_PUBLIC,
+});
 
 export const revalidate = 3600;
 

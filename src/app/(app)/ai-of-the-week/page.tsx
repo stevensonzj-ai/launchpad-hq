@@ -4,6 +4,7 @@ import { OutboundLink } from "@/components/analytics/outbound-link";
 import { getActivePlacement, listAiOfTheWeekArchive } from "@/data/sponsors";
 import { SponsorDisclosure } from "@/components/sponsors/sponsor-disclosure";
 import { SponsoredLabel } from "@/components/sponsors/sponsored-label";
+import { publicPageMetadata } from "@/lib/seo-metadata";
 
 export const revalidate = 3600;
 
@@ -11,16 +12,22 @@ export async function generateMetadata(): Promise<Metadata> {
   const current = getActivePlacement("ai-of-the-week");
   if (!current) {
     return {
-      title: "AI of the Week (Sponsored) | Launchpad HQ",
-      description:
-        "No sponsored AI of the Week is booked this week. See Advertise to book a labeled placement.",
+      ...publicPageMetadata({
+        title: "AI of the Week (Sponsored) | Launchpad HQ",
+        description:
+          "No sponsored AI of the Week is booked this week. See Advertise to book a labeled placement on Launchpad HQ.",
+        path: "/ai-of-the-week",
+        index: false,
+      }),
       robots: { index: false, follow: true },
     };
   }
-  return {
+  return publicPageMetadata({
     title: "AI of the Week (Sponsored) | Launchpad HQ",
-    description: "A labeled paid placement with LaunchpadHQ’s honest take.",
-  };
+    description:
+      "A labeled paid placement with Launchpad HQ’s honest take. Sponsorship never buys a better catalog rating.",
+    path: "/ai-of-the-week",
+  });
 }
 
 export default function AiOfTheWeekPage() {

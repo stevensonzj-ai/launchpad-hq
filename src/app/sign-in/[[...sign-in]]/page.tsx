@@ -1,4 +1,11 @@
 import { SignIn } from "@clerk/nextjs";
+import { privatePageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = privatePageMetadata({
+  title: "Sign in | Launchpad HQ",
+  description: "Sign in to save matches, favourite platforms, and post to Launchpad HQ.",
+  path: "/sign-in",
+});
 
 export default function SignInPage() {
   return (

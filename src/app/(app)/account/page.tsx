@@ -1,4 +1,11 @@
 import { UserProfile } from "@clerk/nextjs";
+import { privatePageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = privatePageMetadata({
+  title: "Account | Launchpad HQ",
+  description: "Manage your Launchpad HQ account.",
+  path: "/account",
+});
 
 export default function AccountPage() {
   return (

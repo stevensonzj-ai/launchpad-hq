@@ -1,11 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+import { publicPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata: Metadata = publicPageMetadata({
   title: "How we make money | Launchpad HQ",
   description:
-    "Launchpad is free to browse. We earn money from labeled sponsorships — they never buy a better rating.",
-};
+    "Launchpad is free to browse. We earn money from labeled sponsorships — they never buy a better rating or ranking.",
+  path: "/how-we-make-money",
+});
 
 export const revalidate = 3600;
 

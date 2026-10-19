@@ -1,5 +1,12 @@
-/** Canonical public origin. Used by robots, sitemap, and llms.txt. */
+/** Canonical public origin. Used by robots, sitemap, metadataBase, and llms.txt. */
 export const SITE_URL = "https://www.launchpadhq.io";
+
+/** Absolute URL on the production host. Never uses the Vercel preview hostname. */
+export function absoluteUrl(path = "/"): string {
+  const normalized = path === "" || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+  if (normalized === "/") return SITE_URL;
+  return `${SITE_URL}${normalized}`;
+}
 
 /**
  * Public-search guard.
