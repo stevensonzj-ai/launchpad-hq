@@ -50,6 +50,7 @@ function countOccurrences(html: string, needle: string): number {
 }
 
 const basePlatform = {
+  slug: "fixture-tool",
   name: "Fixture Tool",
   company: "Fixture Co",
   description: "db description leftover",
