@@ -27,12 +27,51 @@ import {
   rocketPoseAt,
   rocketDetachAt,
   rocketImageLandingTarget,
+  waitForRocketImage,
   shortestAngleDelta,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
 } from "./hourly-rocket";
 
 const PAD = craftPad(HOURLY_ROCKET_CRAFT);
+
+describe("sponsor image loading before launch", () => {
+  class ImageStub extends EventTarget {
+    complete = false;
+    naturalWidth = 0;
+  }
+  it("waits for a delayed image before allowing launch", async () => {
+    const image = new ImageStub();
+    const controller = new AbortController();
+    let settled = false;
+    const ready = waitForRocketImage(image, controller.signal).then(value => { settled = true; return value; });
+    await Promise.resolve();
+    assert.equal(settled, false, "flight must not choose its landing while the sponsor is loading");
+    image.complete = true;
+    image.naturalWidth = 320;
+    image.dispatchEvent(new Event("load"));
+    assert.equal(await ready, true);
+  });
+  it("accepts cached images immediately and rejects completed broken images", async () => {
+    const image = new ImageStub();
+    image.complete = true;
+    assert.equal(await waitForRocketImage(image, new AbortController().signal), false);
+    image.naturalWidth = 320;
+    assert.equal(await waitForRocketImage(image, new AbortController().signal), true);
+  });
+  it("releases the wait on image errors, timeout and unmount cancellation", async () => {
+    const image = new ImageStub();
+    const controller = new AbortController();
+    const failed = waitForRocketImage(image, controller.signal);
+    image.dispatchEvent(new Event("error"));
+    assert.equal(await failed, false);
+    assert.equal(await waitForRocketImage(image, controller.signal, 5), false);
+    const cancelled = waitForRocketImage(image, controller.signal);
+    controller.abort();
+    assert.equal(await cancelled, false);
+    assert.equal(await waitForRocketImage(image, controller.signal), false);
+  });
+});
 
 function assertCraftInside(
   home: { x: number; y: number },

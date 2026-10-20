@@ -5,7 +5,7 @@ import {
   chicagoHourKey, clamp01, smoothStep, createRocketFlightPlan,
   decideHourlyRocketLaunch, HOURLY_ROCKET_CRAFT, HOURLY_ROCKET_FLIGHT_MS,
   HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, ROCKET_DETACH_MS, ROCKET_AFTERLAND_MS,
-  readLastPlayedHourKey, rocketDetachAt, rocketPoseAt, rocketImageLandingTarget, writeLastPlayedHourKey,
+  readLastPlayedHourKey, rocketDetachAt, rocketPoseAt, rocketImageLandingTarget, waitForRocketImage, writeLastPlayedHourKey,
   type RocketFlightPlan,
 } from "@/lib/hourly-rocket";
 
@@ -38,8 +38,10 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
-    const tryLaunch = () => {
-      if (prefersReducedMotion() || document.hidden || planRef.current) return;
+    const waiting = new AbortController();
+    let launchPending = false;
+    const tryLaunch = async () => {
+      if (launchPending || waiting.signal.aborted || prefersReducedMotion() || document.hidden || planRef.current) return;
       let storage: Storage | null = null;
       try { storage = window.localStorage; } catch { /* Storage may be blocked. */ }
       const now = new Date();
@@ -47,26 +49,38 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
         now, lastPlayedHourKey: readLastPlayedHourKey(storage), search: window.location.search,
       });
       if (!decision.launch || (!decision.persistHourKey && previewLaunchedRef.current)) return;
-      const nextHome = pointOf(document.querySelector(`[data-${HOURLY_ROCKET_HOME}]`));
-      if (!nextHome) return;
-      const viewport = { width: window.innerWidth, height: window.innerHeight };
       const image = hasSponsorTarget
         ? document.querySelector<HTMLImageElement>(`img[data-${HOURLY_ROCKET_TARGET}]`) : null;
-      const visibleTarget = image?.complete && image.naturalWidth > 0 && image.getClientRects().length > 0
-        ? rocketImageLandingTarget(image.getBoundingClientRect(), viewport) : null;
-      planRef.current = createRocketFlightPlan(
-        nextHome,
-        visibleTarget ? { x: visibleTarget.x - nextHome.x, y: visibleTarget.y - nextHome.y } : { x: 0, y: 0 },
-        viewport,
-      );
-      if (decision.persistHourKey) writeLastPlayedHourKey(storage, chicagoHourKey(now));
-      else previewLaunchedRef.current = true;
-      setHome(nextHome);
+      launchPending = true;
+      try {
+        if (image && image.getClientRects().length > 0 && rocketImageLandingTarget(image.getBoundingClientRect(), {
+          width: window.innerWidth, height: window.innerHeight,
+        })) await waitForRocketImage(image, waiting.signal);
+        if (waiting.signal.aborted || document.hidden || prefersReducedMotion()) return;
+        // Another tab may have played the hourly flight while the image loaded.
+        if (decision.persistHourKey && readLastPlayedHourKey(storage) === chicagoHourKey(now)) return;
+        const nextHome = pointOf(document.querySelector(`[data-${HOURLY_ROCKET_HOME}]`));
+        if (!nextHome) return;
+        const viewport = { width: window.innerWidth, height: window.innerHeight };
+        const visibleTarget = image?.complete && image.naturalWidth > 0 && image.getClientRects().length > 0
+          ? rocketImageLandingTarget(image.getBoundingClientRect(), viewport) : null;
+        planRef.current = createRocketFlightPlan(
+          nextHome,
+          visibleTarget ? { x: visibleTarget.x - nextHome.x, y: visibleTarget.y - nextHome.y } : { x: 0, y: 0 },
+          viewport,
+        );
+        if (decision.persistHourKey) writeLastPlayedHourKey(storage, chicagoHourKey(now));
+        else previewLaunchedRef.current = true;
+        setHome(nextHome);
+      } finally {
+        launchPending = false;
+      }
     };
     // Defer until mount commits; Strict Mode probes must not consume the launch.
-    const launchFrame = window.requestAnimationFrame(tryLaunch);
-    const id = window.setInterval(tryLaunch, 1000);
+    const launchFrame = window.requestAnimationFrame(() => { void tryLaunch(); });
+    const id = window.setInterval(() => { void tryLaunch(); }, 1000);
     return () => {
+      waiting.abort();
       window.cancelAnimationFrame(launchFrame);
       window.clearInterval(id);
       window.cancelAnimationFrame(rafRef.current);

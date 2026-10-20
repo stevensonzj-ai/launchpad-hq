@@ -3,6 +3,32 @@ export const HOURLY_ROCKET_FLIGHT_MS = 9500;
 export const ROCKET_DETACH_MS = 1400;
 export const ROCKET_AFTERLAND_MS = 2400;
 export const ROCKET_APPROACH_PITCH_MS = 500;
+export const ROCKET_IMAGE_WAIT_MS = 2500;
+
+/** Give remote sponsor artwork a bounded chance to load before choosing a pad. */
+export function waitForRocketImage(
+  image: EventTarget & { complete: boolean; naturalWidth: number },
+  signal: AbortSignal,
+  timeoutMs = ROCKET_IMAGE_WAIT_MS,
+): Promise<boolean> {
+  if (signal.aborted) return Promise.resolve(false);
+  if (image.complete) return Promise.resolve(image.naturalWidth > 0);
+  return new Promise(resolve => {
+    const finish = (loaded: boolean) => {
+      clearTimeout(timer);
+      image.removeEventListener("load", onLoad);
+      image.removeEventListener("error", onError);
+      signal.removeEventListener("abort", onError);
+      resolve(loaded);
+    };
+    const onLoad = () => finish(image.naturalWidth > 0);
+    const onError = () => finish(false);
+    const timer = setTimeout(() => finish(image.complete && image.naturalWidth > 0), timeoutMs);
+    image.addEventListener("load", onLoad);
+    image.addEventListener("error", onError);
+    signal.addEventListener("abort", onError, { once: true });
+  });
+}
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
 /** Measured artwork axis: nose (193,4), plume tip (19,284), in 205×290 sprites. */
 export const HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG = 31.9;
