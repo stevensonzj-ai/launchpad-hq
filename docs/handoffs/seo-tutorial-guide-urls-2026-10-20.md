@@ -2,7 +2,8 @@
 
 **Audience:** Grok Bot team (LaunchPad HQ, marketing, research, coding bots) and any future Claude / Claude Code session.
 **Session owner:** Zach. Planning/review in Claude (Cowork); implementation in Claude Code (Cursor).
-**Production state at end of session:** `main` = `573ee203` (PR #77), Vercel deployment `dpl_HAYhSfwCXZVm3snZkHxSD6VKtZBr` READY, SHA matches.
+**Production state at end of session:** `main` = `4ecf12e8` (PR #81). Last code deploy: `aa596e28` (PR #80), `dpl_9KNZc9mAFCQJDKoFjixGpTh6oZWR` READY, SHA matches.
+**PRs merged this session:** #77 tutorial guide URLs · #78 this handoff · #79 lint baseline · #80 trusted URLs + webhook guard · #81 START-HERE ledger 4.31–4.33.
 
 ---
 
@@ -89,6 +90,29 @@ Original branch `feature/tutorial-guide-urls`, five commits: proxy rule (isolate
 
 ---
 
+### 7. Afternoon follow-up (Claude Code Phases A–E)
+
+**A · Handoff committed.** This file merged via PR #78 (`0cfc42e5`).
+
+**B · Read-only recon findings**
+- **Stripe webhook** (`src/app/api/stripe/webhook/route.ts`) was the only webhook handler. It was live code that never fired: no endpoint was registered, `PRO_PLAN_ENABLED = false` makes checkout, the portal and `/pricing` unreachable, and nothing in `src/` gates access on `plan`. The Stripe account is **shared with Camerata**, so registering an endpoint would have caused 500/retry loops on Camerata events. Fixed in E.
+- **Sponsors are billed by Stripe invoice directly** (not Clerk Billing). Nothing in the app records sponsor payments; the Stripe dashboard is the record. Decision: no payments table until there are more than a handful of sponsors (the trigger would be `invoice.paid` plus sponsor metadata).
+- **Security: moderation-email Approve/Reject links were built from the request `Origin` header.** A forged Origin could produce valid HMAC tokens pointing at an attacker's host. Fixed in E.
+- `SITE_URL`, `metadataBase`, canonicals, sitemap, robots, `llms.txt` and JSON-LD all use www. Nothing hardcodes the apex or `*.vercel.app`. `NEXT_PUBLIC_APP_URL` is **not set** in Vercel, and after E nothing references it.
+- Dead-product scan: see open item 4 (lifecycle design).
+
+**C · dev-local database brought up to date.** The batch-1/2/3 seed scripts were dry-run first (51 creates, 0 updates), then run against dev-local only (G1 host checked). Dev now shows 183 guides in the sitemap, 183 on `/tutorials`, and 0 orphans. **Caveat (START-HERE 4.29): the seed scripts overwrite content fields on existing rows when re-run.** Don't re-run them blindly; dry-run first.
+
+**D · Lint baseline (PR #79, `96acc47e`).** Full-repo `npm run lint` is now **0 errors** (2 known warnings). Fixes were type-only in `scripts/*` and `src/lib/db.ts`; `tmp/**` is ignored. Targeted disables (with reasons) are in `back-to-top.tsx` and `outbound-link.test.ts`. START-HERE 4.30: `scripts/` is not typechecked, and `import-platforms-legacy.ts` has 22 pre-existing type errors (candidate for deletion plus a `typecheck:scripts` gate).
+
+**E · Trusted URLs + webhook guard (PR #80, `aa596e28`)**
+- New `getAppBaseUrl()` (`src/lib/app-url.ts`) returns `SITE_URL` in production, `https://$VERCEL_URL` on previews, and localhost otherwise. It **never reads request headers**. Moderation emails (all 3 submission routes) and Stripe checkout/portal URLs use it.
+- Stripe webhook: after signature verification, it returns **200 no-op while `PRO_PLAN_ENABLED` is false**. Events that can't be matched to a LaunchPad user (by `metadata.userId`, then customer ID, then subscription ID) are 200 no-ops, so Camerata events are ignored. `invoice.payment_failed` now updates only the matched user. The "one failed payment → FREE" behaviour is still parked until Pro is built.
+- Tests: 142/142, including a real signed-event test proving flag-off has no side effects, and a forged-Origin test.
+- Production smoke test after deploy: the guide and `/tutorials` return 200; an unsigned webhook POST returns **503** "Webhook not configured" (`STRIPE_WEBHOOK_SECRET` is unset; START-HERE 4.31); `/pricing` returns **307 → `/how-we-make-money`** (intentional while Pro is off).
+
+**Clerk / onboarding (START-HERE 4.32).** `@clerk/nextjs` 7 ignores the `*_AFTER_SIGN_IN/UP_URL` names. Production still lands new users on `/onboarding` correctly (confirmed by a live sign-up), and only local `.env.local` uses the old names. `/onboarding` is a one-time welcome page (Take the quiz / Browse Discover) that sets `onboardingComplete` on the first visit, so **the Session 26 loop concern is resolved.** `.env.local` sign-in/up paths were corrected to `/sign-in` and `/sign-up` (Zach).
+
 ## Decisions made this session (don't re-litigate without new info)
 1. **Tutorials are free and public, forever-ish.** All 183 indexed. If a paid tier is built later, it should be *new* value (e.g. "what changed in your tools" alerts, the cost tracker), not gated copies of pages Google already has.
 2. **URL shape:** `/platform/[slug]/guide`. Permanent. Never change it.
@@ -102,12 +126,15 @@ Original branch `feature/tutorial-guide-urls`, five commits: proxy rule (isolate
 |---|---|---|---|
 | 1 | ~~Request indexing for the ChatGPT, Claude, Gemini guides~~ | Zach | **DONE 2026-10-20** via URL Inspection. |
 | 2 | ~~Bing Webmaster Tools~~ | Zach + Claude | **DONE 2026-10-20.** Site imported from GSC as `https://launchpadhq.io/` (signed in as zach@launchpadhq.io, read-only GSC grant). Import brought 0 sitemaps, so `https://www.launchpadhq.io/sitemap.xml` was submitted manually (status: Processing). Recheck in a few days. Optional later: IndexNow (Bing's instant-ping protocol) via a small route + key file. |
-| 3 | **Webhook handler recon** (read-only, Claude Code): list every webhook route, what depends on it, and whether it's dead code given that **nothing is registered** in Stripe or Clerk. Also list base-URL settings using bare apex or `*.vercel.app`. | Claude Code | Matters for sponsorship invoicing. Also decide: are sponsors billed via Clerk Billing or Stripe invoices directly? (Probably Stripe.) |
-| 4 | **Dead-product guides**: e.g. "Getting Started with Clarifai" says the product has been unreachable since 2026, but it's now an indexable how-to page | Zach decides | Options: retitle as "what happened + what to use instead" (recommended; same approach as Sora 2 in the Session 27 review), noindex, or remove. Audit the registry for others. |
-| 5 | **Seed dev-local DB** with the 19 platforms from the 2026-10-15 manual batches (capcut, captions, deepl, deepseek, freepik-ai, gamma, hedra, higgsfield, kimi, kling-ai, krea, meta-ai, napkin-ai, perplexity-comet, poe, quillbot, qwen, speechify, veed), plus fathom, fireflies-ai, granola | Zach | Prod has them; dev doesn't. START-HERE 4.28. |
-| 6 | **Lint chore branch**: 42 pre-existing full-repo lint errors (16 tracked files incl. `scripts/*` and the Jasper dedupe script, `src/lib/db.ts`, `back-to-top.tsx`, `outbound-link.test.ts`; rest in untracked `tmp/`) | Claude Code | Separate `chore/` branch; not caused by #77. |
+| 3 | ~~Webhook handler recon~~ | Claude Code | **DONE**; see section 7 (B/E). Webhook is now an inert no-op guard. |
+| 4 | **Lifecycle status design (tutorials + platforms)** | Zach decides, then Claude Code | Recon found: `clarifai`, `kakao-brain-karlo` (discontinued), `beatoven-ai` (uncertain) guides are live as "How to Use X" pages; catalog rows `sora-2`, `relay-app`, `play-ht` are dead but in the sitemap; `play-ht` is a step in a workflow. Guide metadata has no per-guide status or noindex mode. **Recommendation:** one `lifecycle` field (`active` / `discontinued` / `uncertain`) on tutorials and Platform rows. Discontinued pages stay indexed and become "What happened to X (and what to use instead)"; uncertain pages are noindexed and rechecked monthly; `audit:workflows` fails on non-active platforms. **Open question for Zach:** keep discontinued platforms as indexed "what happened" pages (recommended) or hide them? |
+| 5 | ~~Seed dev-local DB~~ | Claude Code | **DONE**; 183/183 guides, 0 orphans in dev. |
+| 6 | ~~Lint chore branch~~ | Claude Code | **DONE**; PR #79, 0 errors repo-wide. |
 | 7 | **Mobile check of `/tutorials`** on a phone | Zach | Desktop verified; mobile wasn't. |
 | 8 | **Watch Search Console** over 1–3 weeks: Indexing → Pages (indexed count climbing toward ~434), then the Performance report for queries | Zach / marketing bot | Performance data is the real "keyword" signal. Use it to decide which tutorials deserve more depth. |
+| 9 | Seed-script safety: make the seed scripts create-only by default (START-HERE 4.29) | Claude Code | Low effort; prevents a bot or nightly run from overwriting content. |
+| 10 | Delete `import-platforms-legacy.ts` and add a `typecheck:scripts` gate (START-HERE 4.30) | Zach decides | |
+| 11 | Before ever enabling Pro: set `STRIPE_WEBHOOK_SECRET` before registering an endpoint (4.31); fix the one-failed-payment-to-FREE behaviour | Future | |
 
 ## For the marketing / research bots specifically
 - Every tutorial now has a shareable, indexable URL: `https://www.launchpadhq.io/platform/{slug}/guide`. Use these in any outbound content, not `?tab=tutorials` links (those still work but redirect).
