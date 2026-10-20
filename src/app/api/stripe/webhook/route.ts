@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
 import Stripe from "stripe";
 import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
+import { PRO_PLAN_ENABLED } from "@/lib/site";
+import { processStripeEvent, type StripeRefs, type WebhookDeps } from "@/lib/stripe-webhook";
 
 export const dynamic = "force-dynamic";
 
@@ -21,41 +22,48 @@ function subscriptionPeriodDates(sub: Stripe.Subscription): {
   return { periodEnd, trialEnd };
 }
 
-async function applySubscriptionState(userId: string, sub: Stripe.Subscription) {
-  const status = sub.status;
-  const { periodEnd, trialEnd } = subscriptionPeriodDates(sub);
-
-  const isPro = status === "active" || status === "trialing";
-
-  await prisma.user.update({
-    where: { id: userId },
-    data: {
-      stripeSubscriptionId: sub.id,
-      stripeSubscriptionStatus: status,
-      trialEndsAt: trialEnd,
-      planExpiresAt: isPro ? periodEnd : null,
-      plan: isPro ? "PRO" : "FREE",
-    },
-  });
+/** Match order: metadata.userId, then Stripe customer, then subscription. */
+async function findUserId({ userId, customerId, subscriptionId }: StripeRefs) {
+  if (userId) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true } });
+    if (user) return user.id;
+  }
+  if (customerId) {
+    const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId }, select: { id: true } });
+    if (user) return user.id;
+  }
+  if (subscriptionId) {
+    const user = await prisma.user.findFirst({ where: { stripeSubscriptionId: subscriptionId }, select: { id: true } });
+    if (user) return user.id;
+  }
+  return null;
 }
 
-async function syncSubscription(sub: Stripe.Subscription) {
-  const metaUserId = sub.metadata?.userId;
-  if (metaUserId) {
-    await applySubscriptionState(metaUserId, sub);
-    return;
-  }
-
-  const customerId = typeof sub.customer === "string" ? sub.customer : sub.customer?.id;
-  if (!customerId) return;
-
-  const user = await prisma.user.findFirst({
-    where: { OR: [{ stripeCustomerId: customerId }, { stripeSubscriptionId: sub.id }] },
-  });
-  if (user) {
-    await applySubscriptionState(user.id, sub);
-  }
-}
+const deps: WebhookDeps = {
+  findUserId,
+  async applySubscriptionState(userId, sub) {
+    const status = sub.status;
+    const { periodEnd, trialEnd } = subscriptionPeriodDates(sub);
+    const isPro = status === "active" || status === "trialing";
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        stripeSubscriptionId: sub.id,
+        stripeSubscriptionStatus: status,
+        trialEndsAt: trialEnd,
+        planExpiresAt: isPro ? periodEnd : null,
+        plan: isPro ? "PRO" : "FREE",
+      },
+    });
+  },
+  async markPaymentFailed(userId) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { stripeSubscriptionStatus: "past_due", plan: "FREE" },
+    });
+  },
+  retrieveSubscription: (id) => getStripe().subscriptions.retrieve(id),
+};
 
 export async function POST(request: NextRequest) {
   const whSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -64,8 +72,7 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.text();
-  const headerList = await headers();
-  const sig = headerList.get("stripe-signature");
+  const sig = request.headers.get("stripe-signature");
   if (!sig) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
@@ -78,45 +85,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  // Pro is switched off: acknowledge so Stripe stops retrying, change nothing.
+  if (!PRO_PLAN_ENABLED) {
+    return NextResponse.json({ received: true, ignored: "pro-plan-disabled" });
+  }
+
   try {
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
-        if (session.mode === "subscription" && session.subscription) {
-          const stripe = getStripe();
-          const sub = await stripe.subscriptions.retrieve(session.subscription as string);
-          const uid = session.metadata?.userId || sub.metadata?.userId;
-          if (uid) {
-            await applySubscriptionState(uid, sub);
-          } else {
-            await syncSubscription(sub);
-          }
-        }
-        break;
-      }
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        const sub = event.data.object as Stripe.Subscription;
-        await syncSubscription(sub);
-        break;
-      }
-      case "invoice.payment_failed": {
-        const invoice = event.data.object as Stripe.Invoice;
-        const customerId =
-          typeof invoice.customer === "string" ? invoice.customer : invoice.customer?.id;
-        if (customerId) {
-          await prisma.user.updateMany({
-            where: { stripeCustomerId: customerId },
-            data: {
-              stripeSubscriptionStatus: "past_due",
-              plan: "FREE",
-            },
-          });
-        }
-        break;
-      }
-      default:
-        break;
+    const outcome = await processStripeEvent(event, deps);
+    if (!outcome.handled) {
+      return NextResponse.json({ received: true, ignored: outcome.reason });
     }
   } catch (e) {
     console.error("Stripe webhook handler error", e);
