@@ -16,6 +16,12 @@
 
 This file is the briefing Claude Code should read first on every session. It captures the project's mission, constraints, conventions, and decisions made to date so you don't have to re-derive them from the codebase.
 
+## Session notes (every session)
+
+At the end of every work session, save a short dated note to `C:\Users\Zach\projects\launchpadhq\docs\planning\2026-10-autonomous-business\sessions\` named `YYYY-MM-DD-<tool>-<topic>.md`. Include: what was decided, what changed (PR numbers, commits, files), what's still open, and anything Zach still needs to decide. Plain markdown, under one page. Never include passwords, keys, tokens, connection strings, or the home address. Create the folder if it doesn't exist.
+
+Example name: `2026-10-20-claude-seo-tutorial-urls.md` (`<tool>` is the agent that ran the session, e.g. `claude`, `codex`, `cowork`). This rule applies to Claude, Codex, and any other agent working in this repo.
+
 ---
 
 ## Project mission
