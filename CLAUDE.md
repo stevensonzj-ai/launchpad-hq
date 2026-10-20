@@ -58,7 +58,7 @@ The project is further along than earlier specs suggest. Auth and payments are a
 - **Feature scaffolds that exist (quality varies — audit before polishing):**
   - Platform discovery (`/discover`, `/platform/[slug]`)
   - Workflows (`/workflows` + `[slug]`)
-  - Tutorials — the /tutorials index route is still a placeholder "coming soon" page (no registry listing). The live tutorial content renders as a **Tutorials tab on each platform detail page** (/platform/{slug}) via src/components/tutorials/platform-tutorials.tsx, mounted in platform-detail-tabs.tsx; multiple pages have shipped. See the ## Tutorials section for architecture and authoring rules.
+  - Tutorials — each tutorial has its own indexable page at **`/platform/{slug}/guide`** (unique title, self-canonical, Article JSON-LD), rendered by src/components/tutorials/platform-tutorials.tsx. The platform page's "Getting started" tab links there; old `?tab=tutorials` URLs 308 to it. **`/tutorials`** is the public index, grouped by category. See the ## Tutorials section for architecture and authoring rules.
   - Quiz & For‑You (`/quiz`, `/for-you`)
   - Per-platform prompts (`/platform/[slug]/prompts`)
   - Per-platform discussions (`/platform/[slug]/discussions`)
@@ -131,7 +131,7 @@ Theme: mission-control / space launch, but **restrained and professional** — n
 - Quiz ("Get Matched") and its public results page
 - Platform overview pages
 - Viewing the prompt library and community discussions
-- Lighter tutorial tiers
+- **All tutorials** — every `/platform/{slug}/guide` page and the `/tutorials` index. Tutorials are free and public; `accessTier` is data only and is not shown to readers or used to gate anything
 - 1–2 sample workflow templates as teasers
 
 **Free account, to contribute and save:**
@@ -141,7 +141,6 @@ Theme: mission-control / space launch, but **restrained and professional** — n
 
 **Paid ($9/mo):**
 - The For You news feed — the retention engine, and the only unbuilt item on the monetization-ready bar
-- Deep platform-specific tutorials
 - Favourites-driven personalization
 - All workflow templates
 - Subscription tracker with cost alerts
@@ -158,11 +157,12 @@ Tutorials are a **live, active workstream — not a P3 placeholder.** The pilot 
 
 ### Architecture — file-based static TS, NOT the database
 
-- Tutorials are **static TypeScript** in `src/data/tutorials/*.ts`, one file per platform, exporting a named const. The filename stem is the tutorial's own **`slug`**, which is shorter than `platformSlug` on five of the 29 files — `acrobat-ai-`, `canva-ai-`, `make-`, `otter-`, `perplexity-`. Registration and lookup are by **`platformSlug`**, which must exactly match a real `Platform` row — **verify it against the database, never assume it.**
+- Tutorials are **static TypeScript** in `src/data/tutorials/*.ts`, one file per platform, exporting a named const. The filename stem is the tutorial's own **`slug`**, which differs from `platformSlug` on six files — `acrobat-ai-`, `canva-ai-`, `make-`, `otter-`, `perplexity-`, `tldv-` (→ `tl-dv`). Registration and lookup are by **`platformSlug`**, which must exactly match a real `Platform` row — **verify it against the database, never assume it.**
 - **`src/data/tutorials/types.ts` is the compile-time contract** (`PlatformTutorialData`). Author new pages straight against it; tsc enforces required fields.
 - **`chatgpt.ts` is the canonical reference page.** Worked references across archetypes: `chatgpt` (prompts), `midjourney` (prompts/image), `zapier` (recipes), `ollama` (pick-and-setup, includes the optional setup section).
 - **The dormant Prisma `Tutorial` / `UserProgress` models are intentionally UNWIRED. Do NOT route tutorials through them.** The instinct to "wire tutorials through the DB" is the wrong path — the live system is file-based by design.
-- **`accessTier` is a TypeScript union in `types.ts`, not a Prisma enum.**
+- **`accessTier` is a TypeScript union in `types.ts`, not a Prisma enum.** It is data only: tutorials are free and public, and the field is neither rendered nor used for gating.
+- **Routes:** `/platform/{slug}/guide` renders a tutorial and 404s unless both the registered tutorial and its `Platform` row exist. The sitemap lists one guide URL per tutorial with a row (`lastModified` = `lastReviewedAt`). `/tutorials` lists the same set, grouped by the row's category.
 - **`archetype` = `'prompts' | 'recipes' | 'pick-and-setup'`**, which drives the starter-section heading via an exhaustive `Record` in `platform-tutorials.tsx`.
 - **Registration is manual + two-step:** create the file AND add the import + `[x.platformSlug]: x` to `src/data/tutorials/index.ts`. Lookup is by **`platformSlug`** — must match the real Platform DB row's slug (verify, don't assume).
 - **Run `npm run audit:tutorials` alongside `npm run typecheck` before committing any tutorial change.** It is `scripts/tutorial-pipeline/audit-pages.mjs` (plain `.mjs` — no tsx, so it runs in the nightly Linux shell) and catches what tsc cannot: a card carrying both `prompt` and `whatItDoes` (the renderer drops the second), a card carrying neither, a `whereToNext.categorySlug` outside the live 20-category list (a plain string in `types.ts`, so an invented slug typechecks clean and 404s), an unregistered page file, and `howItWorks` over the 60-word cap. Non-zero exit on any finding.

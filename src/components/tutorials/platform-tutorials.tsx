@@ -151,7 +151,7 @@ export function PlatformTutorials({ platformName, platformSlug, titleAs: TitleTa
         <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent" aria-hidden="true" />
         <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-orange-400">
           <BookOpen className="h-3.5 w-3.5" aria-hidden />
-          Tutorial · {tutorial.accessTier}
+          Getting-started guide
         </p>
         <TitleTag className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</TitleTag>
         <p className="mt-3 max-w-xl text-base leading-relaxed text-gray-300">{tutorial.tagline}</p>
