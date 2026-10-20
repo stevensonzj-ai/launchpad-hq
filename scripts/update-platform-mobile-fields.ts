@@ -13,8 +13,8 @@
  */
 import "dotenv/config";
 
-const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("@prisma/client");
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";
@@ -36,7 +36,7 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, "");
 }
 
-const prisma = new PrismaClient({ adapter: new PrismaPg(getDirectUrl()) }) as any;
+const prisma = new PrismaClient({ adapter: new PrismaPg(getDirectUrl()) });
 
 type MobilePayload = {
   hasMobileApp: boolean;

@@ -36,7 +36,7 @@ const CATEGORY_NAMES = {
 
 async function main() {
   const adapter = new PrismaPg(getDirectUrl());
-  const prisma = new PrismaClient({ adapter } as any);
+  const prisma = new PrismaClient({ adapter });
 
   const textCat = await prisma.category.findFirst({
     where: { slug: slugify(CATEGORY_NAMES.text) },

@@ -273,7 +273,7 @@ async function main() {
   }
 
   const adapter = new PrismaPg(directUrl);
-  const prisma = new PrismaClient({ adapter } as any);
+  const prisma = new PrismaClient({ adapter });
 
   try {
     let wouldChange = 0;

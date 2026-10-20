@@ -13,8 +13,8 @@ import * as fs from "fs";
 import * as path from "path";
 import "dotenv/config";
 
-const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("@prisma/client");
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";
@@ -74,7 +74,7 @@ async function main() {
   }
 
   const adapter = new PrismaPg(getDirectUrl());
-  const prisma = new PrismaClient({ adapter }) as any;
+  const prisma = new PrismaClient({ adapter });
 
   try {
     const platforms = await prisma.platform.findMany({
@@ -97,7 +97,7 @@ async function main() {
     });
 
     const rows: Row[] = platforms
-      .map((p: any) => ({
+      .map((p) => ({
         id: p.id,
         slug: p.slug,
         name: p.name,

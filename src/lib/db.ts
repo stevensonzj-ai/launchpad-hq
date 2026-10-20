@@ -25,7 +25,7 @@ function getDirectUrl(): string {
 
 function createPrisma(): PrismaClient {
   const adapter = new PrismaPg(getDirectUrl());
-  return new PrismaClient({ adapter } as any);
+  return new PrismaClient({ adapter });
 }
 
 export const prisma: PrismaClient =
