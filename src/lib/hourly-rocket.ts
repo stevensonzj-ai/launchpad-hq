@@ -1,356 +1,219 @@
 export const HOURLY_ROCKET_STORAGE_KEY = "lp-hourly-rocket-chicago";
+export const HOURLY_ROCKET_FLIGHT_MS = 9500;
+export const ROCKET_DETACH_MS = 1400;
+export const ROCKET_AFTERLAND_MS = 2400;
+export const ROCKET_APPROACH_PITCH_MS = 500;
+export const ROCKET_IMAGE_WAIT_MS = 2500;
 
-/** Shared duration for hourly, ?rocket=1, and ?rocket=demo flights. */
-export const HOURLY_ROCKET_FLIGHT_MS = 7500;
+/** Give remote sponsor artwork a bounded chance to load before choosing a pad. */
+export function waitForRocketImage(
+  image: EventTarget & { complete: boolean; naturalWidth: number },
+  signal: AbortSignal,
+  timeoutMs = ROCKET_IMAGE_WAIT_MS,
+): Promise<boolean> {
+  if (signal.aborted) return Promise.resolve(false);
+  if (image.complete) return Promise.resolve(image.naturalWidth > 0);
+  return new Promise(resolve => {
+    const finish = (loaded: boolean) => {
+      clearTimeout(timer);
+      image.removeEventListener("load", onLoad);
+      image.removeEventListener("error", onError);
+      signal.removeEventListener("abort", onError);
+      resolve(loaded);
+    };
+    const onLoad = () => finish(image.naturalWidth > 0);
+    const onError = () => finish(false);
+    const timer = setTimeout(() => finish(image.complete && image.naturalWidth > 0), timeoutMs);
+    image.addEventListener("load", onLoad);
+    image.addEventListener("error", onError);
+    signal.addEventListener("abort", onError, { once: true });
+  });
+}
 export const HOURLY_ROCKET_CRAFT = { width: 56, height: 80 };
-
-/**
- * Sprite nose is not vertical at CSS `rotate(0)`.
- *
- * Measured on the 205×290 art (`public/images/launchpad/hourly-rocket-body.webp`
- * and the matching plume): body nose tip at first opaque pixel (193, 4),
- * plume far tip at (19, 284). The craft axis from plume to nose is
- * atan2(174, 280) ≈ 31.9° east of up (dx tail→nose over the up-component). Subtract this from the
- * path heading so `rotate(pose.angle)` points the painted nose along the
- * intended heading (hover/land heading 0 → render −31.9°).
- */
+/** Measured artwork axis: nose (193,4), plume tip (19,284), in 205×290 sprites. */
 export const HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG = 31.9;
-
-/** Preferred hover offset above the land target; also used below when the top edge is too tight. */
-export const ROCKET_HOVER_OFFSET_PX = 150;
-/** Minimum hover→land travel so the settle reads as a landing, not a fade-in. */
+export const ROCKET_HOVER_OFFSET_PX = 100;
 export const ROCKET_MIN_SETTLE_PX = 60;
-
-/** Linear-time phase ends. Global motion uses easeInOut on this same 0–1 clock. */
-export const ROCKET_PHASE = {
-  takeoffEnd: 0.1,
-  loopEnd: 0.7,
-  approachEnd: 0.82,
-  hoverEnd: 0.86,
-} as const;
-
-export type RocketPoint = { x: number; y: number };
-export type RocketViewport = { width: number; height: number };
+export const ROCKET_PHASE = { takeoffEnd: 0.14, loopEnd: 0.56, approachEnd: 0.72, hoverEnd: 0.78 } as const;
+export type RocketPoint = {
+  x: number;
+  y: number;
+};
+export type RocketViewport = {
+  width: number;
+  height: number;
+};
 export type RocketFlightPhase = "takeoff" | "loop" | "approach" | "hover" | "land";
-
+type Curve = [
+  RocketPoint,
+  RocketPoint,
+  RocketPoint,
+  RocketPoint
+];
 export type RocketPose = {
   x: number;
   y: number;
   angle: number;
   phase: RocketFlightPhase;
-  plume: { opacity: number; scaleY: number };
+  plume: {
+    opacity: number;
+    scaleY: number;
+  };
 };
-
 export type RocketFlightPlan = {
-  takeoff: RocketPoint;
-  approach: RocketPoint;
+  home: RocketPoint;
+  viewport: RocketViewport;
+  pad: number;
+  origin: RocketPoint;
   hover: RocketPoint;
   land: RocketPoint;
-  cx: number;
-  cy: number;
-  rx: number;
-  ry: number;
-  entryTheta: number;
-  sweep: number;
-  viewport: RocketViewport;
-  home: RocketPoint;
-  pad: number;
+  returnsHome: boolean;
+  curves: Curve[];
+  distances: number[];
+  length: number;
 };
-
-/** Bounding-radius pad so a 56×80 craft stays inside the viewport even when rotated. */
 export function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
-  return Math.max(craft.width, craft.height) / 2 + 8;
+  return Math.hypot(craft.width, craft.height) / 2 + 36;
 }
-
-function clampAbs(
-  abs: RocketPoint,
+/** An image's visible top-center, with room for the complete hover and descent.
+ * Reject unsafe targets instead of letting the flight planner move the touchdown.
+ */
+export function rocketImageLandingTarget(
+  rect: { left: number; top: number; width: number; height: number } | null,
   viewport: RocketViewport,
-  pad: number,
-): RocketPoint {
-  return {
-    x: Math.min(viewport.width - pad, Math.max(pad, abs.x)),
-    y: Math.min(viewport.height - pad, Math.max(pad, abs.y)),
-  };
+): RocketPoint | null {
+  if (!rect || rect.width <= 0 || rect.height <= 0) return null;
+  const pad = craftPad();
+  const settle = Math.min(ROCKET_HOVER_OFFSET_PX, (viewport.height - 2 * pad) / 2);
+  const x = rect.left + rect.width / 2;
+  if (x < pad || x > viewport.width - pad ||
+      rect.top < pad + 12 + settle || rect.top > viewport.height - pad) return null;
+  return { x, y: rect.top };
 }
-
-export function clamp01(t: number): number {
-  return Math.min(1, Math.max(0, t));
-}
-
-/** Smoothstep on a unit parameter; used on local segment time, not the global clock. */
-export function easeInOutCubic(t: number): number {
+export function clamp01(t: number): number { return Math.min(1, Math.max(0, t)); }
+/** Quintic easing has zero velocity AND acceleration at both ends. */
+export function smoothStep(t: number): number {
   const x = clamp01(t);
-  return x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2;
+  return x * x * x * (10 + x * (-15 + 6 * x));
 }
-
-/** Nose heading in degrees: 0 is up, clockwise positive (CSS rotate). */
-export function headingDeg(dx: number, dy: number): number {
-  return (Math.atan2(dx, -dy) * 180) / Math.PI;
-}
-
-function unwrapHeading(raw: number, expected: number): number {
-  return raw + 360 * Math.round((expected - raw) / 360);
-}
-
-export function shortestAngleDelta(from: number, to: number): number {
-  return ((((to - from) % 360) + 540) % 360) - 180;
-}
-
-export function lerpAngle(from: number, to: number, t: number): number {
-  return from + shortestAngleDelta(from, to) * t;
-}
-
-function ellipsePoint(cx: number, cy: number, rx: number, ry: number, theta: number): RocketPoint {
-  return { x: cx + rx * Math.cos(theta), y: cy + ry * Math.sin(theta) };
-}
-
-function ellipseVelocity(rx: number, ry: number, theta: number, dTheta: number): RocketPoint {
+export function headingDeg(dx: number, dy: number): number { return Math.atan2(dx, -dy) * 180 / Math.PI; }
+export function shortestAngleDelta(from: number, to: number): number { return ((to - from) % 360 + 540) % 360 - 180; }
+function bezier(curve: Curve, t: number) {
+  const [a, b, c, d] = curve, s = 1 - t;
   return {
-    x: -rx * Math.sin(theta) * dTheta,
-    y: ry * Math.cos(theta) * dTheta,
+    p: { x: s * s * s * a.x + 3 * s * s * t * b.x + 3 * s * t * t * c.x + t * t * t * d.x, y: s * s * s * a.y + 3 * s * s * t * b.y + 3 * s * t * t * c.y + t * t * t * d.y },
+    v: { x: 3 * s * s * (b.x - a.x) + 6 * s * t * (c.x - b.x) + 3 * t * t * (d.x - c.x), y: 3 * s * s * (b.y - a.y) + 6 * s * t * (c.y - b.y) + 3 * t * t * (d.y - c.y) },
   };
 }
-
-function hermite(
-  p0: RocketPoint,
-  m0: RocketPoint,
-  p1: RocketPoint,
-  m1: RocketPoint,
-  t: number,
-): { p: RocketPoint; v: RocketPoint } {
-  const t2 = t * t;
-  const t3 = t2 * t;
-  const h00 = 2 * t3 - 3 * t2 + 1;
-  const h10 = t3 - 2 * t2 + t;
-  const h01 = -2 * t3 + 3 * t2;
-  const h11 = t3 - t2;
-  const d00 = 6 * t2 - 6 * t;
-  const d10 = 3 * t2 - 4 * t + 1;
-  const d01 = -6 * t2 + 6 * t;
-  const d11 = 3 * t2 - 2 * t;
-  return {
-    p: {
-      x: h00 * p0.x + h10 * m0.x + h01 * p1.x + h11 * m1.x,
-      y: h00 * p0.y + h10 * m0.y + h01 * p1.y + h11 * m1.y,
-    },
-    v: {
-      x: d00 * p0.x + d10 * m0.x + d01 * p1.x + d11 * m1.x,
-      y: d00 * p0.y + d10 * m0.y + d01 * p1.y + d11 * m1.y,
-    },
-  };
+function curveAt(curves: Curve[], parameter: number) {
+  const i = Math.min(curves.length - 1, Math.floor(parameter));
+  return bezier(curves[i], parameter - i);
 }
-
-function plumeFor(u: number): { opacity: number; scaleY: number } {
-  const flicker = Math.sin(u * Math.PI * 4);
-  if (u < ROCKET_PHASE.approachEnd) {
-    return { opacity: 0.9 + 0.08 * flicker, scaleY: 0.96 + 0.06 * flicker };
+const SAMPLES = 480;
+/** All control points lie inside the safe rectangle, so the entire Bézier does too.
+ * A curvature-weighted distance table slows travel through tight bends. Cruise
+ * follows the tangent; powered landing approach uses a speed-dependent lean.
+ */
+export function createRocketFlightPlan(home: RocketPoint, land: RocketPoint, viewport: RocketViewport, craft = HOURLY_ROCKET_CRAFT): RocketFlightPlan {
+  const pad = craftPad(craft);
+  const safe = (x: number, y: number) => ({ x: Math.max(pad, Math.min(viewport.width - pad, x)), y: Math.max(pad, Math.min(viewport.height - pad, y)) });
+  const returnsHome = Math.hypot(land.x, land.y) < 1;
+  const top = pad + 12;
+  const settle = Math.min(ROCKET_HOVER_OFFSET_PX, (viewport.height - 2 * pad) / 2);
+  const landing = safe(home.x + land.x, Math.max(top + settle, home.y + land.y));
+  const hover = { x: landing.x, y: landing.y - settle };
+  const origin = safe(home.x, top + Math.min(75, settle));
+  const right = viewport.width - pad;
+  const bottom = viewport.height - pad;
+  const middle = Math.max(top + 40, Math.min(bottom - 40, viewport.height * 0.48));
+  const join = { x: right, y: middle };
+  const returnY = Math.min(bottom - 30, Math.max(middle, hover.y + 80));
+  const returnPoint = { x: pad + (hover.x - pad) * 0.2, y: returnY };
+  const absCurves: Curve[] = [
+    [origin, { x: origin.x, y: top }, { x: right, y: top }, join],
+    [join, { x: right, y: bottom }, { x: pad, y: bottom }, returnPoint],
+    [returnPoint, { x: returnPoint.x + (returnPoint.x - pad) * 0.5, y: returnY - (bottom - returnY) * 0.5 }, { x: hover.x, y: hover.y + (returnY - hover.y) * 0.5 }, hover],
+  ];
+  const offset = (p: RocketPoint) => ({ x: p.x - home.x, y: p.y - home.y });
+  const curves = absCurves.map(c => c.map(offset) as Curve);
+  const distances = [0];
+  let previous = curveAt(curves, 0);
+  for (let i = 1; i <= SAMPLES; i++) {
+    const sample = curveAt(curves, i / SAMPLES * curves.length);
+    const travel = Math.hypot(sample.p.x - previous.p.x, sample.p.y - previous.p.y);
+    const turn = shortestAngleDelta(headingDeg(previous.v.x, previous.v.y), headingDeg(sample.v.x, sample.v.y)) * Math.PI / 180;
+    // Slow the craft in tighter bends rather than allowing attitude to lag travel.
+    distances.push(distances[i - 1] + Math.hypot(travel, 220 * turn));
+    previous = sample;
   }
-  if (u < ROCKET_PHASE.hoverEnd) {
-    return { opacity: 0.55 + 0.08 * flicker, scaleY: 0.48 + 0.06 * flicker };
-  }
-  const descent = (u - ROCKET_PHASE.hoverEnd) / (1 - ROCKET_PHASE.hoverEnd);
-  const fade = 1 - easeInOutCubic(descent);
-  return { opacity: 0.45 * fade, scaleY: 0.12 + 0.28 * fade };
+  return { home, viewport, pad, origin: offset(origin), hover: offset(hover), land: offset(landing), returnsHome, curves, distances, length: distances[SAMPLES] };
 }
-
-function phaseAt(u: number): RocketFlightPhase {
-  if (u < ROCKET_PHASE.takeoffEnd) return "takeoff";
-  if (u < ROCKET_PHASE.loopEnd) return "loop";
-  if (u < ROCKET_PHASE.approachEnd) return "approach";
-  if (u <= ROCKET_PHASE.hoverEnd) return "hover";
+function flightAt(plan: RocketFlightPlan, progress: number) {
+  const distance = smoothStep(progress) * plan.length;
+  let lo = 0, hi = SAMPLES;
+  while (lo + 1 < hi) {
+    const mid = (lo + hi) >> 1;
+    if (plan.distances[mid] < distance)
+      lo = mid;
+    else
+      hi = mid;
+  }
+  const span = plan.distances[hi] - plan.distances[lo];
+  const parameter = (lo + (span ? (distance - plan.distances[lo]) / span : 0)) / SAMPLES * plan.curves.length;
+  return curveAt(plan.curves, parameter);
+}
+function phaseAt(t: number): RocketFlightPhase {
+  if (t < ROCKET_PHASE.takeoffEnd)
+    return "takeoff";
+  if (t < ROCKET_PHASE.loopEnd)
+    return "loop";
+  if (t < ROCKET_PHASE.approachEnd)
+    return "approach";
+  if (t <= ROCKET_PHASE.hoverEnd)
+    return "hover";
   return "land";
 }
-
-function displayedOffset(plan: RocketFlightPlan, u: number): RocketPoint {
-  const { p } = pathAt(plan, clamp01(u));
-  const abs = clampAbs(
-    { x: plan.home.x + p.x, y: plan.home.y + p.y },
-    plan.viewport,
-    plan.pad,
-  );
-  return { x: abs.x - plan.home.x, y: abs.y - plan.home.y };
-}
-
-function displayedVelocity(plan: RocketFlightPlan, u: number): RocketPoint {
-  const du = 8e-4;
-  const from = Math.max(0, u - du);
-  const a = displayedOffset(plan, from);
-  const b = displayedOffset(plan, u);
-  const dt = u - from || du;
-  return { x: (b.x - a.x) / dt, y: (b.y - a.y) / dt };
-}
-
-function firstTravelHeading(plan: RocketFlightPlan): number {
-  for (let t = 0.002; t <= ROCKET_PHASE.takeoffEnd; t += 0.002) {
-    const v = displayedVelocity(plan, t);
-    if (Math.hypot(v.x, v.y) >= 40) return headingDeg(v.x, v.y);
-  }
-  return 0;
-}
-
-/**
- * Mid-page pads hover 150px above land. A header-like pad has no room
- * above (home is already inside the craft radius), so hover sits below
- * the logo instead — then the land phase settles onto it.
- */
-function hoverAnchor(
-  landAbs: RocketPoint,
-  viewport: RocketViewport,
-  pad: number,
-): RocketPoint {
-  const above = landAbs.y - ROCKET_HOVER_OFFSET_PX;
-  if (above >= pad) {
-    return clampAbs({ x: landAbs.x, y: above }, viewport, pad);
-  }
-  const below = Math.min(viewport.height - pad, landAbs.y + ROCKET_HOVER_OFFSET_PX);
-  const travel = Math.abs(below - landAbs.y);
-  const y =
-    travel >= ROCKET_MIN_SETTLE_PX
-      ? below
-      : Math.min(viewport.height - pad, landAbs.y + ROCKET_MIN_SETTLE_PX);
-  return clampAbs({ x: landAbs.x, y }, viewport, pad);
-}
-
-/**
- * Viewport-scaled oval plus pad anchors. Offsets are relative to `home`.
- * Sweep is one circuit that *ends* near the pad (not back at takeoff).
- */
-export function createRocketFlightPlan(
-  home: RocketPoint,
-  land: RocketPoint,
-  viewport: RocketViewport,
-  craft = HOURLY_ROCKET_CRAFT,
-): RocketFlightPlan {
-  const pad = craftPad(craft);
-  const landAbs = clampAbs({ x: home.x + land.x, y: home.y + land.y }, viewport, pad);
-  const hoverAbs = hoverAnchor(landAbs, viewport, pad);
-  const takeoffAbs = clampAbs({ x: home.x, y: home.y - 72 }, viewport, pad);
-  const approachAbs = clampAbs({ x: landAbs.x, y: landAbs.y + 70 }, viewport, pad);
-
-  const cxAbs = viewport.width / 2;
-  const cyAbs = viewport.height / 2;
-  const rx = Math.max(36, viewport.width / 2 - pad - 16);
-  const ry = Math.max(36, viewport.height / 2 - pad - 16);
-
-  const entryTheta = Math.atan2((takeoffAbs.y - cyAbs) / ry, (takeoffAbs.x - cxAbs) / rx);
-  const exitTheta = Math.atan2((approachAbs.y - cyAbs) / ry, (approachAbs.x - cxAbs) / rx);
-  let sweep = exitTheta - entryTheta;
-  while (sweep <= Math.PI * 1.15) sweep += Math.PI * 2;
-  while (sweep > Math.PI * 2.15) sweep -= Math.PI * 2;
-
-  const toOff = (abs: RocketPoint): RocketPoint => ({
-    x: abs.x - home.x,
-    y: abs.y - home.y,
-  });
-
-  return {
-    takeoff: toOff(takeoffAbs),
-    approach: toOff(approachAbs),
-    hover: toOff(hoverAbs),
-    land: toOff(landAbs),
-    cx: cxAbs - home.x,
-    cy: cyAbs - home.y,
-    rx,
-    ry,
-    entryTheta,
-    sweep,
-    viewport,
-    home,
-    pad,
-  };
-}
-
-function loopPoint(plan: RocketFlightPlan, s: number): { p: RocketPoint; v: RocketPoint } {
-  const theta = plan.entryTheta + plan.sweep * s;
-  const p = ellipsePoint(plan.cx, plan.cy, plan.rx, plan.ry, theta);
-  const v = ellipseVelocity(plan.rx, plan.ry, theta, plan.sweep);
-  return { p, v };
-}
-
-function padOrigin(plan: RocketFlightPlan): RocketPoint {
-  const abs = clampAbs(plan.home, plan.viewport, plan.pad);
-  return { x: abs.x - plan.home.x, y: abs.y - plan.home.y };
-}
-
-function pathAt(plan: RocketFlightPlan, u: number): { p: RocketPoint; v: RocketPoint } {
-  const origin = padOrigin(plan);
-  const loopStart = loopPoint(plan, 0);
-  const loopEnd = loopPoint(plan, 1);
-  const takeoffDur = ROCKET_PHASE.takeoffEnd;
-  const loopDur = ROCKET_PHASE.loopEnd - ROCKET_PHASE.takeoffEnd;
-  const approachDur = ROCKET_PHASE.approachEnd - ROCKET_PHASE.loopEnd;
-  const halfApproach = approachDur / 2;
-  const takeoffOut = {
-    x: loopStart.v.x * (takeoffDur / loopDur),
-    y: loopStart.v.y * (takeoffDur / loopDur),
-  };
-  const approachIn = {
-    x: loopEnd.v.x * (halfApproach / loopDur),
-    y: loopEnd.v.y * (halfApproach / loopDur),
-  };
-  const rise = { x: 0, y: (plan.hover.y - plan.approach.y) * 0.85 };
-
-  if (u < ROCKET_PHASE.takeoffEnd) {
-    const s = u / takeoffDur;
-    // Only an upward takeoff handle; a header pad has no room above, so start at rest.
-    const takeoffIn = { x: 0, y: Math.min(0, plan.takeoff.y) * 2 };
-    return hermite(origin, takeoffIn, loopStart.p, takeoffOut, s);
-  }
-  if (u < ROCKET_PHASE.loopEnd) {
-    const s = (u - ROCKET_PHASE.takeoffEnd) / loopDur;
-    return loopPoint(plan, s);
-  }
-  if (u < ROCKET_PHASE.approachEnd) {
-    const s = (u - ROCKET_PHASE.loopEnd) / approachDur;
-    return s < 0.5
-      ? hermite(loopEnd.p, approachIn, plan.approach, rise, s * 2)
-      : hermite(plan.approach, rise, plan.hover, { x: 0, y: 0 }, (s - 0.5) * 2);
-  }
-  if (u <= ROCKET_PHASE.hoverEnd) {
-    return { p: plan.hover, v: { x: 0, y: 0 } };
-  }
-  const s = (u - ROCKET_PHASE.hoverEnd) / (1 - ROCKET_PHASE.hoverEnd);
-  return hermite(plan.hover, { x: 0, y: 0 }, plan.land, { x: 0, y: 0 }, s);
-}
-
-/** Last portion of approach: rotate to upright so hover is not a heading snap. */
-export const LANDING_ATTITUDE_START = 0.55;
-
-function headingAlongDisplayedPath(plan: RocketFlightPlan, u: number): number {
-  const end = Math.min(u, ROCKET_PHASE.approachEnd);
-  const dt = 1 / 400;
-  const maxTurn = 16;
-  let angle = firstTravelHeading(plan);
-  for (let t = dt; t <= end + 1e-12; t += dt) {
-    const v = displayedVelocity(plan, Math.min(t, end));
-    if (Math.hypot(v.x, v.y) < 40) continue;
-    const raw = unwrapHeading(headingDeg(v.x, v.y), angle);
-    const delta = shortestAngleDelta(angle, raw);
-    angle += Math.max(-maxTurn, Math.min(maxTurn, delta));
-  }
-  const approachS =
-    end <= ROCKET_PHASE.loopEnd
-      ? 0
-      : (end - ROCKET_PHASE.loopEnd) / (ROCKET_PHASE.approachEnd - ROCKET_PHASE.loopEnd);
-  const attitude = easeInOutCubic(
-    clamp01((approachS - LANDING_ATTITUDE_START) / (1 - LANDING_ATTITUDE_START)),
-  );
-  return lerpAngle(angle, 0, attitude);
-}
-
 export function rocketPoseAt(plan: RocketFlightPlan, t: number): RocketPose {
-  const u = clamp01(t);
-  const p = displayedOffset(plan, u);
-  const heading = u < ROCKET_PHASE.approachEnd ? headingAlongDisplayedPath(plan, u) : 0;
-  // Render angle: painted nose = heading when CSS rotate(pose.angle) is applied.
-  const angle = heading - HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG;
+  const u = clamp01(t), phase = phaseAt(u);
+  const flight = flightAt(plan, Math.min(1, u / ROCKET_PHASE.approachEnd));
+  let p = flight.p;
+  let heading = u < ROCKET_PHASE.approachEnd ? headingDeg(flight.v.x, flight.v.y) : 0;
+  if (u >= ROCKET_PHASE.loopEnd && u < ROCKET_PHASE.approachEnd) {
+    // Powered landing translation uses a modest thrust-vector lean. Measure
+    // horizontal speed in screen widths/second so phones and desktops agree.
+    const dt = 1 / HOURLY_ROCKET_FLIGHT_MS;
+    const before = flightAt(plan, (u - dt) / ROCKET_PHASE.approachEnd).p;
+    const after = flightAt(plan, (u + dt) / ROCKET_PHASE.approachEnd).p;
+    const speed = (after.x - before.x) / 0.002 / plan.viewport.width;
+    const lean = 20 * Math.tanh(speed / 0.08);
+    const blend = smoothStep((u - ROCKET_PHASE.loopEnd) * HOURLY_ROCKET_FLIGHT_MS / ROCKET_APPROACH_PITCH_MS);
+    heading += shortestAngleDelta(heading, lean) * blend;
+  }
+  if (u >= ROCKET_PHASE.approachEnd) {
+    const descent = smoothStep((u - ROCKET_PHASE.hoverEnd) / (1 - ROCKET_PHASE.hoverEnd));
+    p = { x: plan.hover.x, y: plan.hover.y + (plan.land.y - plan.hover.y) * descent };
+  }
+  const seconds = u * HOURLY_ROCKET_FLIGHT_MS / 1000;
+  const pulse = 0.14 * Math.sin(seconds * 73) + 0.09 * Math.sin(seconds * 117);
+  const thrust = phase === "takeoff" ? 1.35 : phase === "loop" ? 1.05 : phase === "approach" ? 1.25 : phase === "hover" ? 0.75 : 1.1;
+  const cutoff = 1 - smoothStep((u - 0.96) / 0.04);
+  return { ...p, angle: heading - HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, phase,
+    plume: { opacity: Math.min(1, 0.9 + pulse * 0.4) * cutoff, scaleY: (thrust + pulse) * cutoff } };
+}
 
+/** Engine-off detachment is intentional freefall, before nose-first powered flight.
+ * Both ends come to rest, matching the flight curve without a position/velocity jump.
+ */
+export function rocketDetachAt(plan: RocketFlightPlan, progress: number) {
+  const t = clamp01(progress);
+  const drop = smoothStep(t);
   return {
-    x: p.x,
-    y: p.y,
-    angle,
-    phase: phaseAt(u),
-    plume: plumeFor(u),
+    x: plan.origin.x * drop,
+    y: plan.origin.y * drop,
+    angle: 45 * (1 - smoothStep((t - 0.15) / 0.75)) - HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG,
+    scale: 0.42 + 0.58 * smoothStep((t - 0.15) / 0.85),
+    artwork: smoothStep((t - 0.25) / 0.35),
+    ignition: smoothStep((t - 0.62) / 0.38),
   };
 }
 

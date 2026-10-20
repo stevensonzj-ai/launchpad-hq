@@ -3,6 +3,10 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { SponsoredSpotlight } from "../components/sponsors/sponsored-spotlight";
+import { ROCKET_DEMO_PLACEMENT } from "../data/sponsors/rocket-demo";
 import {
   chicagoHourKey,
   craftPad,
@@ -17,16 +21,57 @@ import {
   isRocketDemo,
   isRocketPreview,
   readLastPlayedHourKey,
-  LANDING_ATTITUDE_START,
   ROCKET_MIN_SETTLE_PX,
   ROCKET_PHASE,
+  ROCKET_APPROACH_PITCH_MS,
   rocketPoseAt,
+  rocketDetachAt,
+  rocketImageLandingTarget,
+  waitForRocketImage,
   shortestAngleDelta,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
 } from "./hourly-rocket";
 
 const PAD = craftPad(HOURLY_ROCKET_CRAFT);
+
+describe("sponsor image loading before launch", () => {
+  class ImageStub extends EventTarget {
+    complete = false;
+    naturalWidth = 0;
+  }
+  it("waits for a delayed image before allowing launch", async () => {
+    const image = new ImageStub();
+    const controller = new AbortController();
+    let settled = false;
+    const ready = waitForRocketImage(image, controller.signal).then(value => { settled = true; return value; });
+    await Promise.resolve();
+    assert.equal(settled, false, "flight must not choose its landing while the sponsor is loading");
+    image.complete = true;
+    image.naturalWidth = 320;
+    image.dispatchEvent(new Event("load"));
+    assert.equal(await ready, true);
+  });
+  it("accepts cached images immediately and rejects completed broken images", async () => {
+    const image = new ImageStub();
+    image.complete = true;
+    assert.equal(await waitForRocketImage(image, new AbortController().signal), false);
+    image.naturalWidth = 320;
+    assert.equal(await waitForRocketImage(image, new AbortController().signal), true);
+  });
+  it("releases the wait on image errors, timeout and unmount cancellation", async () => {
+    const image = new ImageStub();
+    const controller = new AbortController();
+    const failed = waitForRocketImage(image, controller.signal);
+    image.dispatchEvent(new Event("error"));
+    assert.equal(await failed, false);
+    assert.equal(await waitForRocketImage(image, controller.signal, 5), false);
+    const cancelled = waitForRocketImage(image, controller.signal);
+    controller.abort();
+    assert.equal(await cancelled, false);
+    assert.equal(await waitForRocketImage(image, controller.signal), false);
+  });
+});
 
 function assertCraftInside(
   home: { x: number; y: number },
@@ -190,168 +235,144 @@ describe("hourly rocket preview query", () => {
 });
 
 describe("hourly rocket flight path", () => {
-  const home = { x: 48, y: 28 };
-  const viewport = { width: 1280, height: 800 };
-
-  it("uses a 7.5s shared duration", () => {
-    assert.equal(HOURLY_ROCKET_FLIGHT_MS, 7500);
-  });
-
-  it("keeps one oval circuit and stays inside the viewport", () => {
-    const plan = createRocketFlightPlan(home, { x: 520, y: 360 }, viewport);
-    assert.ok(plan.sweep > Math.PI * 1.15);
-    assert.ok(plan.sweep < Math.PI * 2.16);
-    for (let i = 0; i <= 80; i++) {
-      assertCraftInside(home, rocketPoseAt(plan, i / 80), viewport);
+  it("marks only the sponsor image as the landing target for regular and demo cards", () => {
+    for (const badge of [undefined, "Sponsored — demo"]) {
+      const html = renderToStaticMarkup(createElement(SponsoredSpotlight, { placement: ROCKET_DEMO_PLACEMENT, badge }));
+      const markedTags = html.match(/<[^>]*data-hourly-rocket-target[^>]*>/g) ?? [];
+      assert.equal(markedTags.length, 1);
+      assert.match(markedTags[0], /^<img\s/);
+      assert.ok(markedTags[0].includes(`src="${ROCKET_DEMO_PLACEMENT.logoUrl}"`));
     }
   });
-
-  it("is C0/C1: fine steps stay small and headings do not flip", () => {
-    const plan = createRocketFlightPlan(home, { x: 400, y: 380 }, viewport);
-    let maxStep = 0;
-    let maxAngle = 0;
-    let prev = rocketPoseAt(plan, 0);
-    for (let i = 1; i <= 400; i++) {
-      const pose = rocketPoseAt(plan, i / 400);
-      const step = Math.hypot(pose.x - prev.x, pose.y - prev.y);
-      const turn = Math.abs(shortestAngleDelta(prev.angle, pose.angle));
-      if (step > maxStep) maxStep = step;
-      if (turn > maxAngle) maxAngle = turn;
-      prev = pose;
-    }
-    assert.ok(maxStep < 28, `position step ${maxStep}px`);
-    assert.ok(maxAngle < 18, `heading step ${maxAngle}deg`);
-  });
-
-  it("starts descent from the hover point the approach actually reached", () => {
-    const plan = createRocketFlightPlan(home, { x: 400, y: 380 }, viewport);
-    const hover = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd);
-    const descentStart = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd + 1e-6);
-    const land = rocketPoseAt(plan, 1);
-    assert.equal(hover.phase, "hover");
-    assert.equal(rocketPoseAt(plan, ROCKET_PHASE.hoverEnd - 1e-4).phase, "hover");
-    assert.ok(Math.abs(hover.x - plan.hover.x) < 1);
-    assert.ok(Math.abs(hover.y - plan.hover.y) < 1);
-    assert.ok(Math.abs(descentStart.x - hover.x) < 0.6);
-    assert.ok(Math.abs(descentStart.y - hover.y) < 0.6);
-    assert.ok(plan.hover.y < plan.land.y);
-    assert.ok(plan.approach.y > plan.hover.y);
-    assert.ok(Math.abs(land.x - plan.land.x) < 1);
-    assert.ok(Math.abs(land.y - plan.land.y) < 1);
-    assert.ok(
-      Math.abs(land.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) < 1,
-      `land render ${land.angle} should be nose-up (−offset)`,
-    );
-    assert.ok(land.plume.opacity < 0.05);
-  });
-
-  it("scales the oval to a phone viewport and stays on screen", () => {
-    const phoneHome = { x: 28, y: 24 };
-    const phone = { width: 390, height: 844 };
-    const plan = createRocketFlightPlan(phoneHome, { x: 160, y: 420 }, phone);
-    for (let i = 0; i <= 60; i++) {
-      assertCraftInside(phoneHome, rocketPoseAt(plan, i / 60), phone);
-    }
-  });
-
-  it("loops and lands back at header home when there is no booking target", () => {
-    const plan = createRocketFlightPlan(home, { x: 0, y: 0 }, viewport);
-    const land = rocketPoseAt(plan, 1);
-    assert.ok(Math.abs(home.x + plan.land.x - Math.max(PAD, home.x)) < 1);
-    assert.ok(Math.abs(home.y + plan.land.y - Math.max(PAD, home.y)) < 1);
-    assert.ok(Math.hypot(plan.hover.x - plan.land.x, plan.hover.y - plan.land.y) >= ROCKET_MIN_SETTLE_PX);
-    assert.ok(Math.abs(land.x - plan.land.x) < 1);
-    assert.ok(Math.abs(land.y - plan.land.y) < 1);
-  });
-
-  for (const [label, headerHome, view] of [
-    ["desktop", { x: 272, y: 30 }, { width: 1280, height: 800 }],
-    ["phone", { x: 272, y: 30 }, { width: 390, height: 844 }],
-  ] as const) {
-    it(`keeps the full craft on screen for header-home ${label} and shows a visible settle`, () => {
-      const plan = createRocketFlightPlan(headerHome, { x: 0, y: 0 }, view);
-      const hover = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd);
-      const land = rocketPoseAt(plan, 1);
-      const settle = Math.hypot(hover.x - land.x, hover.y - land.y);
-
-      assertCraftInside(headerHome, hover, view);
-      assertCraftInside(headerHome, land, view);
-      assert.ok(settle >= ROCKET_MIN_SETTLE_PX, `settle ${settle}px`);
-
-      const stepMs = 50;
-      for (let ms = 0; ms <= HOURLY_ROCKET_FLIGHT_MS; ms += stepMs) {
-        assertCraftInside(headerHome, rocketPoseAt(plan, ms / HOURLY_ROCKET_FLIGHT_MS), view);
+  for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+    it(`lands at the sponsor image top-center after a stationary hover and vertical drop (${viewport.width}px)`, () => {
+      const home = { x: 32, y: 32 };
+      const image = { left: 36, top: 400, width: 160, height: 84 };
+      const target = rocketImageLandingTarget(image, viewport);
+      assert.deepEqual(target, { x: 116, y: 400 });
+      assert.ok(target);
+      const plan = createRocketFlightPlan(home, { x: target.x - home.x, y: target.y - home.y }, viewport);
+      const hover = rocketPoseAt(plan, ROCKET_PHASE.approachEnd);
+      const endHover = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd);
+      assert.equal(hover.x + home.x, target.x);
+      assert.ok(hover.y + home.y <= target.y - ROCKET_MIN_SETTLE_PX);
+      assert.equal(endHover.y, hover.y);
+      let previousY = hover.y;
+      for (let i = 0; i <= 100; i++) {
+        const pose = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd + (1 - ROCKET_PHASE.hoverEnd) * i / 100);
+        assert.equal(pose.x + home.x, target.x, "drop must remain centered over image");
+        assert.ok(pose.y >= previousY);
+        previousY = pose.y;
       }
+      const final = rocketPoseAt(plan, 1);
+      assert.deepEqual({ x: final.x + home.x, y: final.y + home.y }, target);
+      assert.equal(plan.returnsHome, false);
     });
   }
-
-  /**
-   * Nose vs finite-difference travel. 25° when moving, on takeoff / loop /
-   * mid-approach. The loop-exit hermite (first 22% of approach) and the
-   * landing-attitude blend are excluded: the nose is rate-limited there so it
-   * does not snap, then pitches up for hover.
-   */
-  const HEADING_ALIGN_DEG = 25;
-  const HEADING_MIN_STEP_PX = 2.5;
-  const HEADING_SNAP_DEG = 36;
-
-  function assertHeadingTracksPath(
-    home: { x: number; y: number },
-    land: { x: number; y: number },
-    view: { width: number; height: number },
-    label: string,
-  ) {
-    const plan = createRocketFlightPlan(home, land, view);
-    const stepMs = 25;
-    let prev = rocketPoseAt(plan, 0);
-    let maxTurn = 0;
-    for (let ms = stepMs; ms <= HOURLY_ROCKET_FLIGHT_MS; ms += stepMs) {
-      const pose = rocketPoseAt(plan, ms / HOURLY_ROCKET_FLIGHT_MS);
-      const dx = pose.x - prev.x;
-      const dy = pose.y - prev.y;
-      const step = Math.hypot(dx, dy);
-      const turn = Math.abs(shortestAngleDelta(prev.angle, pose.angle));
-      if (turn > maxTurn) maxTurn = turn;
-      const midT = (ms - stepMs / 2) / HOURLY_ROCKET_FLIGHT_MS;
-      const approachS =
-        midT < ROCKET_PHASE.loopEnd
-          ? 0
-          : (midT - ROCKET_PHASE.loopEnd) /
-            (ROCKET_PHASE.approachEnd - ROCKET_PHASE.loopEnd);
-      const flying =
-        midT < ROCKET_PHASE.loopEnd ||
-        (midT < ROCKET_PHASE.approachEnd &&
-          approachS >= 0.22 &&
-          approachS < LANDING_ATTITUDE_START);
-      if (flying && step >= HEADING_MIN_STEP_PX) {
-        const travel = headingDeg(dx, dy);
-        const renderedNose = pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG;
-        const err = Math.abs(shortestAngleDelta(renderedNose, travel));
-        assert.ok(
-          err < HEADING_ALIGN_DEG,
-          `${label} t=${ms}ms rendered nose ${renderedNose.toFixed(1)} vs travel ${travel.toFixed(1)} (err ${err.toFixed(1)}°)`,
-        );
-      }
-      if (midT >= ROCKET_PHASE.approachEnd) {
-        assert.ok(
-          Math.abs(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) < 1,
-          `${label} hover/land should render nose-up; angle ${pose.angle}`,
-        );
-      }
-      prev = pose;
+  it("rejects missing, hidden, offscreen or unsafe image targets so flight can return home", () => {
+    const viewport = { width: 390, height: 844 };
+    for (const rect of [null,
+      { left: 36, top: 400, width: 0, height: 84 },
+      { left: 36, top: 900, width: 160, height: 84 },
+      { left: -200, top: 400, width: 160, height: 84 },
+      { left: 36, top: -20, width: 160, height: 84 },
+      { left: 36, top: 100, width: 160, height: 84 },
+    ]) assert.equal(rocketImageLandingTarget(rect, viewport), null);
+    const homePlan = createRocketFlightPlan({x:32,y:32}, {x:0,y:0}, viewport);
+    assert.equal(homePlan.returnsHome, true);
+  });
+  it("detaches at the exact logo center without thrust and ignites before joining the flight", () => {
+    const plan = createRocketFlightPlan({x:32,y:32},{x:0,y:0},{width:390,height:844});
+    const start = rocketDetachAt(plan,0);
+    assert.equal(start.x,0);
+    assert.equal(start.y,0);
+    assert.equal(start.artwork,0);
+    assert.equal(start.ignition,0);
+    assert.equal(rocketDetachAt(plan,0.6).ignition,0);
+    let previous = start;
+    for(let i=1;i<=200;i++) {
+      const pose=rocketDetachAt(plan,i/200);
+      assert.ok(pose.y>=previous.y,"gravity drop must not reverse before ignition");
+      assert.ok(Math.hypot(pose.x-previous.x,pose.y-previous.y)<3);
+      assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 1, "detachment pitch must ease");
+      previous=pose;
     }
-    assert.ok(maxTurn < HEADING_SNAP_DEG, `${label} heading step ${maxTurn}deg`);
+    const flight = rocketPoseAt(plan,0);
+    assert.ok(Math.hypot(previous.x-flight.x,previous.y-flight.y)<0.001);
+    assert.ok(Math.abs(previous.angle-flight.angle)<0.001);
+    assert.equal(previous.scale,1);
+    assert.equal(previous.ignition,1);
+    assert.equal(previous.artwork,1);
+  });
+  it("allows time for braking and a deliberate descent", () => {
+    assert.equal(HOURLY_ROCKET_FLIGHT_MS, 9500);
+  });
+  for (const [label, home, target, viewport] of [
+    ["desktop home", { x: 272, y: 30 }, { x: 0, y: 0 }, { width: 1280, height: 800 }],
+    ["phone home", { x: 28, y: 24 }, { x: 0, y: 0 }, { width: 390, height: 844 }],
+    ["desktop sponsor", { x: 48, y: 28 }, { x: 520, y: 360 }, { width: 1280, height: 800 }],
+    ["phone sponsor", { x: 28, y: 24 }, { x: 160, y: 420 }, { width: 390, height: 844 }],
+    ["right sponsor", { x: 72, y: 40 }, { x: 900, y: 380 }, { width: 1080, height: 920 }],
+    ["short viewport", { x: 28, y: 24 }, { x: 0, y: 0 }, { width: 568, height: 320 }],
+  ] as const) {
+    it(`${label}: stays on screen, cruises nose-first, leans through approach, descends vertically`, () => {
+      const plan = createRocketFlightPlan(home, target, viewport);
+      let previous = rocketPoseAt(plan, 0);
+      for (let i = 1; i <= 1900; i++) {
+        const t = i / 1900, pose = rocketPoseAt(plan, t);
+        assertCraftInside(home, pose, viewport);
+        const dx = pose.x - previous.x, dy = pose.y - previous.y;
+        const step = Math.hypot(dx, dy);
+        assert.ok(step < 10, `position discontinuity: ${step}`);
+        assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 2, "attitude discontinuity on any flight leg");
+        const next = rocketPoseAt(plan, Math.min(1, t + 1 / 1900));
+        const horizontalTravel = next.x - previous.x;
+        if (Math.abs(horizontalTravel) > 0.02) {
+          const noseX = Math.sin((pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) * Math.PI / 180);
+          assert.equal(Math.sign(noseX), Math.sign(horizontalTravel), `heading must lean into horizontal travel at ${t}`);
+        }
+        if (t < ROCKET_PHASE.loopEnd && step > 0.01) {
+          const error = Math.abs(shortestAngleDelta(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, headingDeg(dx, dy)));
+          assert.ok(error < 3, `nose alignment error ${error} at ${t}`);
+        }
+        if (t >= ROCKET_PHASE.loopEnd && t < ROCKET_PHASE.approachEnd) {
+          assert.ok(Math.abs(shortestAngleDelta(previous.angle, pose.angle)) < 2,
+            `approach pitch must ease, not snap: ${t}`);
+          if (t >= ROCKET_PHASE.loopEnd + ROCKET_APPROACH_PITCH_MS / HOURLY_ROCKET_FLIGHT_MS) {
+            const lean = shortestAngleDelta(0, pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG);
+            assert.ok(Math.abs(lean) <= 20.001, "landing lean stays within 20 degrees");
+            if (Math.abs(dx) > 0.01) {
+              assert.equal(Math.sign(lean), Math.sign(dx), "lean follows sideways travel");
+              assert.ok(Math.abs(lean) > 0.1, "must not freeze upright while translating");
+            }
+          }
+        }
+        if (t >= ROCKET_PHASE.approachEnd) {
+          assert.ok(Math.abs(pose.angle + HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG) < 0.001);
+          assert.ok(Math.abs(pose.x - plan.land.x) < 0.001, "no sideways drift in hover/descent");
+          assert.ok(dy >= -0.001, "landing must descend tail-first");
+        }
+        previous = pose;
+      }
+      assert.ok(plan.land.y - plan.hover.y >= ROCKET_MIN_SETTLE_PX);
+      assert.deepEqual({ x: previous.x, y: previous.y }, plan.land);
+      assert.equal(previous.plume.opacity, 0);
+      assert.equal(previous.plume.scaleY, 0);
+      const hover = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd);
+      assert.equal(hover.phase, "hover");
+      assert.ok(Math.hypot(hover.x - plan.hover.x, hover.y - plan.hover.y) < 0.001);
+    });
   }
-
-  it("points the nose along travel for header-home and sponsor-target flights", () => {
-    assertHeadingTracksPath({ x: 272, y: 30 }, { x: 0, y: 0 }, viewport, "header-home");
-    assertHeadingTracksPath(home, { x: 400, y: 380 }, viewport, "sponsor-target");
-    assertHeadingTracksPath(
-      { x: 72, y: 40 },
-      { x: 0, y: 0 },
-      { width: 1080, height: 920 },
-      "narrow-home",
-    );
+  it("throttles and flickers during flight without negative exhaust dimensions", () => {
+    const plan = createRocketFlightPlan({ x: 48, y: 28 }, { x: 0, y: 0 }, { width: 1280, height: 800 });
+    const scales = new Set<number>();
+    for (let i = 0; i <= 1000; i++) {
+      const plume = rocketPoseAt(plan, i / 1000).plume;
+      assert.ok(plume.opacity >= 0 && plume.opacity <= 1);
+      assert.ok(plume.scaleY >= 0 && plume.scaleY <= 1.6);
+      scales.add(plume.scaleY);
+    }
+    assert.ok(scales.size > 900);
   });
 });
 
