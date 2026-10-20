@@ -14,7 +14,6 @@ export function SponsoredSpotlight({
 
   return (
     <aside
-      data-hourly-rocket-target
       className="rounded-xl border border-orange-500/25 bg-gray-900/60 p-4 sm:p-5"
     >
       <div className="mb-3 flex items-center gap-2">
@@ -30,6 +29,7 @@ export function SponsoredSpotlight({
       <div className="flex flex-col gap-4 sm:flex-row">
         {/* eslint-disable-next-line @next/next/no-img-element -- sponsor assets are remote https URLs, not in /public */}
         <img
+          data-hourly-rocket-target
           src={image}
           alt=""
           width={320}

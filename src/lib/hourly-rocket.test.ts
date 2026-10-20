@@ -3,6 +3,10 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { SponsoredSpotlight } from "../components/sponsors/sponsored-spotlight";
+import { ROCKET_DEMO_PLACEMENT } from "../data/sponsors/rocket-demo";
 import {
   chicagoHourKey,
   craftPad,
@@ -22,6 +26,7 @@ import {
   ROCKET_APPROACH_PITCH_MS,
   rocketPoseAt,
   rocketDetachAt,
+  rocketImageLandingTarget,
   shortestAngleDelta,
   shouldLaunchHourlyRocket,
   writeLastPlayedHourKey,
@@ -191,6 +196,52 @@ describe("hourly rocket preview query", () => {
 });
 
 describe("hourly rocket flight path", () => {
+  it("marks only the sponsor image as the landing target for regular and demo cards", () => {
+    for (const badge of [undefined, "Sponsored — demo"]) {
+      const html = renderToStaticMarkup(createElement(SponsoredSpotlight, { placement: ROCKET_DEMO_PLACEMENT, badge }));
+      const markedTags = html.match(/<[^>]*data-hourly-rocket-target[^>]*>/g) ?? [];
+      assert.equal(markedTags.length, 1);
+      assert.match(markedTags[0], /^<img\s/);
+      assert.ok(markedTags[0].includes(`src="${ROCKET_DEMO_PLACEMENT.logoUrl}"`));
+    }
+  });
+  for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
+    it(`lands at the sponsor image top-center after a stationary hover and vertical drop (${viewport.width}px)`, () => {
+      const home = { x: 32, y: 32 };
+      const image = { left: 36, top: 400, width: 160, height: 84 };
+      const target = rocketImageLandingTarget(image, viewport);
+      assert.deepEqual(target, { x: 116, y: 400 });
+      assert.ok(target);
+      const plan = createRocketFlightPlan(home, { x: target.x - home.x, y: target.y - home.y }, viewport);
+      const hover = rocketPoseAt(plan, ROCKET_PHASE.approachEnd);
+      const endHover = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd);
+      assert.equal(hover.x + home.x, target.x);
+      assert.ok(hover.y + home.y <= target.y - ROCKET_MIN_SETTLE_PX);
+      assert.equal(endHover.y, hover.y);
+      let previousY = hover.y;
+      for (let i = 0; i <= 100; i++) {
+        const pose = rocketPoseAt(plan, ROCKET_PHASE.hoverEnd + (1 - ROCKET_PHASE.hoverEnd) * i / 100);
+        assert.equal(pose.x + home.x, target.x, "drop must remain centered over image");
+        assert.ok(pose.y >= previousY);
+        previousY = pose.y;
+      }
+      const final = rocketPoseAt(plan, 1);
+      assert.deepEqual({ x: final.x + home.x, y: final.y + home.y }, target);
+      assert.equal(plan.returnsHome, false);
+    });
+  }
+  it("rejects missing, hidden, offscreen or unsafe image targets so flight can return home", () => {
+    const viewport = { width: 390, height: 844 };
+    for (const rect of [null,
+      { left: 36, top: 400, width: 0, height: 84 },
+      { left: 36, top: 900, width: 160, height: 84 },
+      { left: -200, top: 400, width: 160, height: 84 },
+      { left: 36, top: -20, width: 160, height: 84 },
+      { left: 36, top: 100, width: 160, height: 84 },
+    ]) assert.equal(rocketImageLandingTarget(rect, viewport), null);
+    const homePlan = createRocketFlightPlan({x:32,y:32}, {x:0,y:0}, viewport);
+    assert.equal(homePlan.returnsHome, true);
+  });
   it("detaches at the exact logo center without thrust and ignites before joining the flight", () => {
     const plan = createRocketFlightPlan({x:32,y:32},{x:0,y:0},{width:390,height:844});
     const start = rocketDetachAt(plan,0);

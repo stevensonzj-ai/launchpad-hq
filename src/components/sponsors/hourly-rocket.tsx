@@ -5,7 +5,7 @@ import {
   chicagoHourKey, clamp01, smoothStep, createRocketFlightPlan,
   decideHourlyRocketLaunch, HOURLY_ROCKET_CRAFT, HOURLY_ROCKET_FLIGHT_MS,
   HOURLY_ROCKET_SPRITE_NOSE_OFFSET_DEG, ROCKET_DETACH_MS, ROCKET_AFTERLAND_MS,
-  readLastPlayedHourKey, rocketDetachAt, rocketPoseAt, writeLastPlayedHourKey,
+  readLastPlayedHourKey, rocketDetachAt, rocketPoseAt, rocketImageLandingTarget, writeLastPlayedHourKey,
   type RocketFlightPlan,
 } from "@/lib/hourly-rocket";
 
@@ -49,13 +49,15 @@ export function HourlyRocket({ hasSponsorTarget }: { hasSponsorTarget: boolean }
       if (!decision.launch || (!decision.persistHourKey && previewLaunchedRef.current)) return;
       const nextHome = pointOf(document.querySelector(`[data-${HOURLY_ROCKET_HOME}]`));
       if (!nextHome) return;
-      const target = hasSponsorTarget
-        ? pointOf(document.querySelector(`[data-${HOURLY_ROCKET_TARGET}]`), 0.28) : null;
-      const visibleTarget = target && target.y > 200 && target.y < window.innerHeight - 100 ? target : null;
+      const viewport = { width: window.innerWidth, height: window.innerHeight };
+      const image = hasSponsorTarget
+        ? document.querySelector<HTMLImageElement>(`img[data-${HOURLY_ROCKET_TARGET}]`) : null;
+      const visibleTarget = image?.complete && image.naturalWidth > 0 && image.getClientRects().length > 0
+        ? rocketImageLandingTarget(image.getBoundingClientRect(), viewport) : null;
       planRef.current = createRocketFlightPlan(
         nextHome,
         visibleTarget ? { x: visibleTarget.x - nextHome.x, y: visibleTarget.y - nextHome.y } : { x: 0, y: 0 },
-        { width: window.innerWidth, height: window.innerHeight },
+        viewport,
       );
       if (decision.persistHourKey) writeLastPlayedHourKey(storage, chicagoHourKey(now));
       else previewLaunchedRef.current = true;

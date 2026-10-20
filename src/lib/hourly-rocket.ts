@@ -49,6 +49,21 @@ export type RocketFlightPlan = {
 export function craftPad(craft = HOURLY_ROCKET_CRAFT): number {
   return Math.hypot(craft.width, craft.height) / 2 + 36;
 }
+/** An image's visible top-center, with room for the complete hover and descent.
+ * Reject unsafe targets instead of letting the flight planner move the touchdown.
+ */
+export function rocketImageLandingTarget(
+  rect: { left: number; top: number; width: number; height: number } | null,
+  viewport: RocketViewport,
+): RocketPoint | null {
+  if (!rect || rect.width <= 0 || rect.height <= 0) return null;
+  const pad = craftPad();
+  const settle = Math.min(ROCKET_HOVER_OFFSET_PX, (viewport.height - 2 * pad) / 2);
+  const x = rect.left + rect.width / 2;
+  if (x < pad || x > viewport.width - pad ||
+      rect.top < pad + 12 + settle || rect.top > viewport.height - pad) return null;
+  return { x, y: rect.top };
+}
 export function clamp01(t: number): number { return Math.min(1, Math.max(0, t)); }
 /** Quintic easing has zero velocity AND acceleration at both ends. */
 export function smoothStep(t: number): number {
