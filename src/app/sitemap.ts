@@ -3,6 +3,7 @@ import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { prisma } from "@/lib/db";
+import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { SITE_URL } from "@/lib/site";
 import { sitemapStaticPublicPathsForNow, sitemapUrl } from "@/lib/sitemap-coverage";
 
@@ -42,12 +43,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let guideEntries: MetadataRoute.Sitemap = [];
 
   try {
-    // Same catalog visibility as Discover and /platform/[slug]: every
-    // Platform row is public. Neither page applies a published/active/
-    // verified where-clause (Discover starts with `where = {}`; the
-    // detail page is findUnique({ slug }) only). Do not invent a gate.
+    // Same catalog visibility as Discover: every Platform row is public
+    // except the slugs in hiddenPlatformSlugs() (src/lib/catalog-visibility).
+    // No published/active/verified gate exists. Do not invent one.
+    // Hidden platforms (dead-and-obscure, or duplicates that 301) stay
+    // reachable by URL but are noindexed, so they are left out here.
     const platforms = await prisma.platform.findMany({
-      where: {},
+      where: listedPlatformWhere(),
       select: { slug: true, updatedAt: true },
       orderBy: { slug: "asc" },
     });

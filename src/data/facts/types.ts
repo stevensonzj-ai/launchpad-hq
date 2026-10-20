@@ -59,11 +59,59 @@ export type ToolChangelogEntry = {
   summary: string;
 };
 
-export type ToolLifecycle = "active" | "beta" | "discontinued";
+/**
+ * Catalog status of the product itself. `acquired` and `renamed` products are
+ * still usable (under a new owner or name); `discontinued` ones are not.
+ * Pair any non-active value with a sourced `status` fact explaining it.
+ */
+export type ToolLifecycle = "active" | "beta" | "discontinued" | "acquired" | "renamed";
+
+/**
+ * Whether a platform page is offered to readers and search engines.
+ * `hidden` pages stay reachable by URL but are noindexed and left out of the
+ * sitemap, Discover, search and recommendations. Editorial call, not a fact.
+ */
+export type ToolVisibility = "listed" | "hidden";
+
+/** A live alternative shown on a status notice. `slug` must be a real Platform row. */
+export type ToolStatusAlternative = {
+  slug: string;
+  name: string;
+};
+
+/**
+ * Reader-facing status notice: what happened, when, and what to do now.
+ * Dates are written exactly as the source states them (no inferred days).
+ */
+export type ToolStatus = {
+  /** One sentence. Shown as the notice's lead line. */
+  headline: string;
+  /** Short supporting paragraphs. */
+  details?: string[];
+  /** Name readers knew it by, for "formerly X" lines. */
+  formerName?: string;
+  /** What existing users should do (export, migrate, nothing). */
+  whatToDo?: string;
+  /** Up to three live alternatives with Launchpad pages. */
+  alternatives?: ToolStatusAlternative[];
+  /**
+   * `secondary` when no primary source exists (the company is gone); the
+   * notice then says so plainly. Defaults to `official`.
+   */
+  sourceKind?: "official" | "secondary";
+  /** Extra source links beyond the Fact's own `sourceUrl`. */
+  additionalSources?: string[];
+};
 
 export type ToolFacts = {
   slug: string;
   lifecycle: ToolLifecycle;
+  /** Defaults to `listed`. */
+  visibility?: ToolVisibility;
+  /** What happened to the product (shutdown, acquisition, rename, pending sale). */
+  status?: Fact<ToolStatus>;
+  /** Overrides the Platform row's `website` (the official link). */
+  officialUrl?: Fact<string>;
   verdict?: Fact<string>;
   /** Overrides the catalog display name. Slug stays the Platform row slug. */
   displayName?: Fact<string>;
@@ -83,6 +131,8 @@ export type ToolFacts = {
 };
 
 export const FACT_VALUE_KEYS = [
+  "status",
+  "officialUrl",
   "verdict",
   "displayName",
   "company",

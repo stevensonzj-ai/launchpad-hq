@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { listedPlatformWhere } from "@/lib/catalog-visibility";
 
 export async function GET(request: NextRequest) {
   const q = request.nextUrl.searchParams.get("q");
@@ -9,6 +10,7 @@ export async function GET(request: NextRequest) {
 
   const platforms = await prisma.platform.findMany({
     where: {
+      ...listedPlatformWhere(),
       OR: [
         { name: { contains: q, mode: "insensitive" } },
         { company: { contains: q, mode: "insensitive" } },

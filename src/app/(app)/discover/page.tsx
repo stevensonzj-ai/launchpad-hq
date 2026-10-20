@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
+import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
@@ -59,7 +60,7 @@ export default async function DiscoverPage({
   const costQs = params.cost?.toLowerCase();
   const difficultyQs = params.difficulty?.toLowerCase();
 
-  const where: Record<string, unknown> = {};
+  const where: Record<string, unknown> = { ...listedPlatformWhere() };
   if (query) {
     where.OR = ["name", "company", "primaryUse", "description"].map((field) => ({
       [field]: { contains: query, mode: "insensitive" },

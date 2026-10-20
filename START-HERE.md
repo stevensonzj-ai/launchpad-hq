@@ -213,6 +213,10 @@ Clerk *_AFTER_SIGN_IN/UP_URL names are ignored by @clerk/nextjs 7. Production re
 **4.33 — Moderation emails from preview builds link to the preview host.**
 *By design, logged 2026-10-20.* `getAppBaseUrl()` (`src/lib/app-url.ts`) returns `https://${VERCEL_URL}` when `VERCEL_ENV=preview`, so Approve/Reject links in emails from a preview submission point at that `*.vercel.app` deployment, behind Vercel SSO. Production links always use `SITE_URL`.
 
+**4.34 — "Every Platform row is public; the sitemap, Discover and the detail page apply no visibility gate."**
+*Where:* the old comment in `src/app/sitemap.ts`, and the "same catalog visibility" assumption in § 9.
+*Truth (2026-10-20, catalog accuracy cleanup PR):* fact files can now set `visibility: "hidden"`, and `src/lib/catalog-redirects.ts` lists duplicate rows that 301 elsewhere. `hiddenPlatformSlugs()` (`src/lib/catalog-visibility.ts`) drops both from the sitemap, Discover, search, recommendations, `/api/platforms` and same-category related links; hidden pages stay reachable by URL but are noindexed. Fact files also gained `status` (a sourced "what happened" notice), `officialUrl` (overrides `website`) and the lifecycle values `acquired` / `renamed`. A `discontinued` product with a status gets a "What Happened to X?" title and drops its pricing, apps and guide link. `scripts/update-catalog-audit-3.ts` (operator-only, dry-run by default) syncs the renamed rows' `name` / `website` / `company` into the database; until it runs, the overlay already shows the corrected values on platform and guide pages, but Discover cards and search still use the old database names.
+
 ## 4b. Credentials
 
 **A full scan of every file added by this handoff, and of every file tracked in git, found no live credentials.** Specifically checked for: Stripe live and test keys, Stripe webhook secrets, Resend API keys, Postgres connection strings containing a password, AWS access key IDs, GitHub personal access tokens, and PEM private key blocks.

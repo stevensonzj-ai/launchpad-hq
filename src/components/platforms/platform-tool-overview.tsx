@@ -7,6 +7,7 @@ import { PlatformOverviewSections } from "@/components/platforms/platform-overvi
 import { PlatformPricingTable } from "@/components/platforms/platform-pricing-table";
 import { PlatformQuickFacts } from "@/components/platforms/platform-quick-facts";
 import { PlatformSources } from "@/components/platforms/platform-sources";
+import { PlatformStatusNotice } from "@/components/platforms/platform-status-notice";
 import { PlatformTechnicalDetails } from "@/components/platforms/platform-technical-details";
 import { PlatformUsageLimits } from "@/components/platforms/platform-usage-limits";
 import { PlatformVerdictCard } from "@/components/platforms/platform-verdict-card";
@@ -76,10 +77,20 @@ export function PlatformToolOverview({
   const fallbackVerdict = platform.description?.trim() || platform.primaryUse?.trim() || null;
   const showModelsInTechnical = Boolean(facts?.models) && !hasModelFamily;
   const usageLimitsFact = publishedUsageLimits(facts);
+  // A discontinued product keeps its description (what it was) and sources,
+  // but not pricing, apps or a getting-started link that no longer apply.
+  const retired = facts?.lifecycle === "discontinued";
 
   return (
     <div className="space-y-7">
-      {facts?.lifecycle === "discontinued" && (
+      {facts?.status ? (
+        <PlatformStatusNotice
+          platformName={platform.name}
+          lifecycle={facts.lifecycle}
+          status={facts.status}
+        />
+      ) : null}
+      {facts?.lifecycle === "discontinued" && !facts.status && (
         <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
           This tool is marked discontinued. Confirm current availability on the official site before signing up.
         </div>
@@ -98,101 +109,105 @@ export function PlatformToolOverview({
         useCases={platform.primaryUseCases}
       />
 
-      <PlatformQuickFacts
-        items={[
-          { label: "Free tier", value: freeSummary, fact: facts?.freeTier },
-          { label: "Starting price", value: startingPriceLabel(plans), fact: facts?.plans },
-          {
-            label: "Platforms",
-            value: platform.platformType.join(", "),
-            fact: facts?.platforms,
-            note: facts?.platforms?.note,
-          },
-          {
-            label: "Company",
-            value: platform.company ?? "",
-            fact: facts?.company,
-          },
-        ]}
-      />
+      {retired ? null : (
+        <>
+          <PlatformQuickFacts
+            items={[
+              { label: "Free tier", value: freeSummary, fact: facts?.freeTier },
+              { label: "Starting price", value: startingPriceLabel(plans), fact: facts?.plans },
+              {
+                label: "Platforms",
+                value: platform.platformType.join(", "),
+                fact: facts?.platforms,
+                note: facts?.platforms?.note,
+              },
+              {
+                label: "Company",
+                value: platform.company ?? "",
+                fact: facts?.company,
+              },
+            ]}
+          />
 
-      {gettingStartedHref && <Link href={gettingStartedHref} className="group flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200/20 bg-gradient-to-r from-amber-100/[0.07] to-transparent px-5 py-4 text-sm text-amber-50 transition-colors hover:border-amber-300/50">
-        <span className="flex items-center gap-3"><BookOpen aria-hidden="true" className="h-5 w-5 text-amber-300" /><span>Ready to try {platform.name}? <span className="text-gray-400">Start with the getting-started guide.</span></span></span><ArrowRight aria-hidden="true" className="h-4 w-4 text-amber-300 transition-transform group-hover:translate-x-1" />
-      </Link>}
+          {gettingStartedHref && <Link href={gettingStartedHref} className="group flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-200/20 bg-gradient-to-r from-amber-100/[0.07] to-transparent px-5 py-4 text-sm text-amber-50 transition-colors hover:border-amber-300/50">
+            <span className="flex items-center gap-3"><BookOpen aria-hidden="true" className="h-5 w-5 text-amber-300" /><span>Ready to try {platform.name}? <span className="text-gray-400">Start with the getting-started guide.</span></span></span><ArrowRight aria-hidden="true" className="h-4 w-4 text-amber-300 transition-transform group-hover:translate-x-1" />
+          </Link>}
 
-      <div className="grid min-w-0 items-start gap-x-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
-        <PlatformOverviewSections platform={platform} />
-      </div>
-
-      {facts?.apiPricing ? (
-        <section className="lp-overview-panel">
-          <div className="mb-2 flex items-center gap-1">
-            <h2 className="text-lg font-semibold text-white">API pricing</h2>
-            <FactCite fact={facts.apiPricing} />
+          <div className="grid min-w-0 items-start gap-x-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+            <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
+            <PlatformOverviewSections platform={platform} />
           </div>
-          <p className="text-sm leading-relaxed text-gray-200">{facts.apiPricing.value}</p>
-          {facts.apiPricing.note ? (
-            <p className="mt-2 text-sm text-gray-400">{facts.apiPricing.note}</p>
+
+          {facts?.apiPricing ? (
+            <section className="lp-overview-panel">
+              <div className="mb-2 flex items-center gap-1">
+                <h2 className="text-lg font-semibold text-white">API pricing</h2>
+                <FactCite fact={facts.apiPricing} />
+              </div>
+              <p className="text-sm leading-relaxed text-gray-200">{facts.apiPricing.value}</p>
+              {facts.apiPricing.note ? (
+                <p className="mt-2 text-sm text-gray-400">{facts.apiPricing.note}</p>
+              ) : null}
+            </section>
           ) : null}
-        </section>
-      ) : null}
 
-      <PlatformUsageLimits fact={usageLimitsFact} />
+          <PlatformUsageLimits fact={usageLimitsFact} />
 
-      <PlatformMobileSection
-        slug={platform.slug}
-        name={platform.name}
-        iosAppUrl={platform.iosAppUrl}
-        androidAppUrl={platform.androidAppUrl}
-        macosAppUrl={platform.macosAppUrl}
-        windowsAppUrl={platform.windowsAppUrl}
-        linuxAppUrl={platform.linuxAppUrl}
-        mobileWebFriendly={platform.mobileWebFriendly}
-        platformType={platform.platformType}
-        appsFact={facts?.apps}
-      />
+          <PlatformMobileSection
+            slug={platform.slug}
+            name={platform.name}
+            iosAppUrl={platform.iosAppUrl}
+            androidAppUrl={platform.androidAppUrl}
+            macosAppUrl={platform.macosAppUrl}
+            windowsAppUrl={platform.windowsAppUrl}
+            linuxAppUrl={platform.linuxAppUrl}
+            mobileWebFriendly={platform.mobileWebFriendly}
+            platformType={platform.platformType}
+            appsFact={facts?.apps}
+          />
 
-      <PlatformTechnicalDetails
-        difficultyLevel={platform.difficultyLevel}
-        privacyLevel={platform.privacyLevel}
-        timeToProductivity={platform.timeToProductivity}
-        learningCurve={platform.learningCurve}
-        offlineCapable={platform.offlineCapable}
-        apiAvailable={platform.apiAvailable}
-        languageSupport={platform.languageSupport}
-        keyIntegrations={platform.keyIntegrations}
-        upgradeTriggers={platform.upgradeTriggers}
-        modelsRow={
-          showModelsInTechnical && facts?.models
-            ? {
-                label: facts.models.label ?? "Models",
-                value: facts.models.value.join(", "),
-                fact: facts.models,
-                showNote: facts.slug === "meta-ai",
-              }
-            : undefined
-        }
-      />
+          <PlatformTechnicalDetails
+            difficultyLevel={platform.difficultyLevel}
+            privacyLevel={platform.privacyLevel}
+            timeToProductivity={platform.timeToProductivity}
+            learningCurve={platform.learningCurve}
+            offlineCapable={platform.offlineCapable}
+            apiAvailable={platform.apiAvailable}
+            languageSupport={platform.languageSupport}
+            keyIntegrations={platform.keyIntegrations}
+            upgradeTriggers={platform.upgradeTriggers}
+            modelsRow={
+              showModelsInTechnical && facts?.models
+                ? {
+                    label: facts.models.label ?? "Models",
+                    value: facts.models.value.join(", "),
+                    fact: facts.models,
+                    showNote: facts.slug === "meta-ai",
+                  }
+                : undefined
+            }
+          />
 
-      {facts?.changelog && facts.changelog.length > 0 && (
-        <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
-          <h2 className="mb-3 text-lg font-semibold text-white">What changed</h2>
-          <ul className="space-y-2 text-sm text-gray-300">
-            {facts.changelog.map((entry) => (
-              <li key={`${entry.date}-${entry.field}-${entry.summary}`}>
-                <span className="text-gray-500">{entry.date}</span>
-                {" · "}
-                <span className="text-gray-400">{entry.field}</span>
-                {" — "}
-                {entry.summary}
-              </li>
-            ))}
-          </ul>
-        </section>
+          {facts?.changelog && facts.changelog.length > 0 && (
+            <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
+              <h2 className="mb-3 text-lg font-semibold text-white">What changed</h2>
+              <ul className="space-y-2 text-sm text-gray-300">
+                {facts.changelog.map((entry) => (
+                  <li key={`${entry.date}-${entry.field}-${entry.summary}`}>
+                    <span className="text-gray-500">{entry.date}</span>
+                    {" · "}
+                    <span className="text-gray-400">{entry.field}</span>
+                    {" — "}
+                    {entry.summary}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {hasModelFamily ? modelsSection : null}
+        </>
       )}
-
-      {hasModelFamily ? modelsSection : null}
 
       <PlatformSources sources={sources} notes={notes} />
     </div>

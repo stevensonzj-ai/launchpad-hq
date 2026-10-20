@@ -123,7 +123,6 @@ import { microsoftDesignerTutorial } from "./microsoft-designer-getting-started"
 import { ai21LabsJambaTutorial } from "./ai21-labs-jamba-getting-started";
 import { alephAlphaLuminousTutorial } from "./aleph-alpha-luminous-getting-started";
 import { cohereTutorial } from "./cohere-getting-started";
-import { kakaoBrainKarloTutorial } from "./kakao-brain-karlo-getting-started";
 import { naverHyperclovaXCueTutorial } from "./naver-hyperclova-x-cue-getting-started";
 import { sakanaAiTutorial } from "./sakana-ai-getting-started";
 import { casetextCocounselTutorial } from "./casetext-cocounsel-getting-started";
@@ -309,7 +308,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [ai21LabsJambaTutorial.platformSlug]: ai21LabsJambaTutorial,
   [alephAlphaLuminousTutorial.platformSlug]: alephAlphaLuminousTutorial,
   [cohereTutorial.platformSlug]: cohereTutorial,
-  [kakaoBrainKarloTutorial.platformSlug]: kakaoBrainKarloTutorial,
   [naverHyperclovaXCueTutorial.platformSlug]: naverHyperclovaXCueTutorial,
   [sakanaAiTutorial.platformSlug]: sakanaAiTutorial,
   [casetextCocounselTutorial.platformSlug]: casetextCocounselTutorial,

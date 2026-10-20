@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import {
   costTiersForBudget,
   rankScoredPlatforms,
@@ -22,6 +23,7 @@ export async function computeRecommendations(body: RecommendationInput) {
 
   const candidates = await prisma.platform.findMany({
     where: {
+      ...listedPlatformWhere(),
       costTier: { in: costFilter },
     },
     include: { category: true },
