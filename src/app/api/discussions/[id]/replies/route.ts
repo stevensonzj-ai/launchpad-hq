@@ -44,10 +44,6 @@ export async function POST(
 
   // Notify the moderator; a failed email must never fail the submission.
   try {
-    const origin =
-      request.headers.get("origin") ||
-      process.env.NEXT_PUBLIC_APP_URL ||
-      "http://localhost:3000";
     await sendModerationNotification(
       {
         kind: "reply",
@@ -56,7 +52,6 @@ export async function POST(
         content: reply.body,
         author: user.name ?? "Anonymous",
       },
-      origin,
     );
   } catch (error) {
     Sentry.captureException(error);
