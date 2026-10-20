@@ -115,7 +115,13 @@ describe("platform display helpers", () => {
 
   it("hides the tutorials tab when there is no static file", () => {
     assert.equal(staticTutorialCount(false), 0);
-    assert.equal(resolvePlatformTab("tutorials", false), "overview");
-    assert.equal(resolvePlatformTab("tutorials", true), "tutorials");
+    assert.equal(staticTutorialCount(true), 1);
+  });
+
+  it("never resolves tutorials as a ?tab= view (guides live at /guide)", () => {
+    assert.equal(resolvePlatformTab("tutorials"), "overview");
+    assert.equal(resolvePlatformTab("discussions"), "discussions");
+    assert.equal(resolvePlatformTab("prompts"), "prompts");
+    assert.equal(resolvePlatformTab(undefined), "overview");
   });
 });

@@ -1,4 +1,4 @@
-import { getStaticTutorialForPlatform, listRegisteredTutorials } from "@/data/tutorials";
+import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorials";
 import { getModelFamilyForPlatform } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import type { WorkflowTemplate } from "@/data/workflows";
@@ -105,7 +105,7 @@ export function relatedCatalogLinksForPlatform(input: {
   const tutorial = getStaticTutorialForPlatform(input.slug);
   if (tutorial) {
     links.push({
-      href: `/platform/${input.slug}?tab=tutorials`,
+      href: tutorialGuidePath(input.slug),
       label: tutorial.title,
       group: "Tutorials",
     });
@@ -126,14 +126,4 @@ export function relatedCatalogLinksForPlatform(input: {
     });
   }
   return links;
-}
-
-export function tutorialIndexLinks(): Array<{ href: string; label: string }> {
-  return listRegisteredTutorials()
-    .slice()
-    .sort((a, b) => a.title.localeCompare(b.title))
-    .map((tutorial) => ({
-      href: `/platform/${tutorial.platformSlug}?tab=tutorials`,
-      label: tutorial.title,
-    }));
 }

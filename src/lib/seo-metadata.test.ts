@@ -2,8 +2,10 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { getToolFacts } from "@/data/facts";
 import { SITE_URL } from "@/lib/site";
+import { listRegisteredTutorials } from "@/data/tutorials";
 import {
   buildPlatformMetadata,
+  buildTutorialMetadata,
   clipMetaDescription,
   publicPageMetadata,
 } from "@/lib/seo-metadata";
@@ -86,6 +88,36 @@ describe("seo metadata", () => {
     for (const desc of descriptions) {
       assert.ok(desc.length <= 160, desc);
       assert.ok(desc.length >= 80, desc);
+    }
+  });
+});
+
+describe("tutorial guide metadata", () => {
+  it("gives the guide its own title, tagline description and self-canonical", () => {
+    const meta = buildTutorialMetadata({
+      platformSlug: "activepieces",
+      name: "Activepieces",
+      tagline: "Automation built from **public** code and a `free` daily allowance.",
+      lastReviewedAt: "2026-10-14",
+    });
+    assert.equal(meta.title, "How to Use Activepieces: Beginner's Guide | Launchpad HQ");
+    assert.equal(meta.description, "Automation built from public code and a free daily allowance.");
+    assert.equal(meta.alternates?.canonical, `${SITE_URL}/platform/activepieces/guide`);
+    const og = meta.openGraph as Record<string, unknown>;
+    assert.equal(og.type, "article");
+    assert.equal(og.modifiedTime, "2026-10-14");
+  });
+
+  it("keeps every registered tutorial's guide description within 160 characters", () => {
+    for (const tutorial of listRegisteredTutorials()) {
+      const meta = buildTutorialMetadata({
+        platformSlug: tutorial.platformSlug,
+        name: tutorial.platformSlug,
+        tagline: tutorial.tagline,
+        lastReviewedAt: tutorial.lastReviewedAt,
+      });
+      const description = String(meta.description);
+      assert.ok(description.length > 0 && description.length <= 160, tutorial.platformSlug);
     }
   });
 });

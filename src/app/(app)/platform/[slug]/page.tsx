@@ -1,21 +1,18 @@
 export const dynamic = "force-dynamic";
 
 import { prisma } from "@/lib/db";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
-import { OutboundLink } from "@/components/analytics/outbound-link";
 import { ModerationStatus } from "@prisma/client";
 import { PlatformCard } from "@/components/platforms/platform-card";
+import { PlatformDetailHeader } from "@/components/platforms/platform-detail-header";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
-import { PlatformLogo } from "@/components/platforms/platform-logo";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
-import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { PlatformToolOverview } from "@/components/platforms/platform-tool-overview";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { getModelFamilyForPlatform } from "@/data/models";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
-import { getStaticTutorialForPlatform } from "@/data/tutorials";
+import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildPlatformMetadata } from "@/lib/seo-metadata";
 import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
@@ -59,6 +56,13 @@ export default async function PlatformPage({
 }) {
   const { slug } = await params;
   const { tab } = await searchParams;
+
+  // Tutorials used to render here as ?tab=tutorials, sharing the overview's
+  // title and canonical. They now have their own page; 308 old links there.
+  // Platforms without a tutorial keep falling back to the overview.
+  if (tab === "tutorials" && getStaticTutorialForPlatform(slug)) {
+    permanentRedirect(tutorialGuidePath(slug));
+  }
 
   const platform = await prisma.platform.findUnique({
     where: { slug },
@@ -154,35 +158,15 @@ export default async function PlatformPage({
         <span className="text-gray-300">{view.name ?? platform.name}</span>
       </div>
 
-      <div className="lp-stars relative isolate mb-6 flex flex-col justify-between gap-5 py-3 sm:flex-row sm:items-center">
-        <div className="flex min-w-0 items-center gap-4">
-          <PlatformLogo slug={platform.slug} name={view.name ?? platform.name} logoUrl={platform.logoUrl} large />
-          <div className="min-w-0">
-            <h1 className="text-4xl font-bold tracking-tight text-amber-50 sm:text-5xl">{view.name ?? platform.name}</h1>
-            {(view.company ?? platform.company) && <p className="mt-2 text-sm text-gray-300">by {view.company ?? platform.company}</p>}
-          </div>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <FavoriteButton
-            slug={platform.slug}
-            initialFavorited={isFavorited}
-            isSignedIn={isSignedIn}
-            variant="labeled"
-          />
-          {officialHref && (
-            <OutboundLink
-              href={officialHref}
-              platform={platform.slug}
-              surface="platform_cta"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lp-button"
-            >
-              Open {view.name ?? platform.name} <ExternalLink className="h-4 w-4 shrink-0" />
-            </OutboundLink>
-          )}
-        </div>
-      </div>
+      <PlatformDetailHeader
+        slug={platform.slug}
+        name={displayName}
+        company={view.company ?? platform.company}
+        logoUrl={platform.logoUrl}
+        officialHref={officialHref}
+        isFavorited={isFavorited}
+        isSignedIn={isSignedIn}
+      />
 
       <PlatformDetailTabs
         platformName={view.name ?? platform.name}
@@ -195,7 +179,7 @@ export default async function PlatformPage({
         initialTab={tab}
       >
         <PlatformToolOverview
-          gettingStartedHref={hasTutorial ? `/platform/${platform.slug}?tab=tutorials` : undefined}
+          gettingStartedHref={hasTutorial ? tutorialGuidePath(platform.slug) : undefined}
           platform={{
             ...view,
             slug: platform.slug,

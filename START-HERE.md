@@ -10,9 +10,9 @@
 
 **LaunchpadHQ** is a curated AI-platform discovery site for beginners and budget-conscious users, live at **launchpadhq.io**. Its thesis is that the AI world is bigger than ChatGPT and Claude — that there are ~170 real, catalogued options across writing, image, video, audio, code, research and automation, many with genuinely usable free tiers or local open-source alternatives. The product is a guided discovery experience: browse the directory, take a matching quiz, read honest per-platform getting-started guides, save favourites, and discuss. The differentiator is *editorial honesty* — the site tells users what a tool is bad at, what its free tier actually limits, and what its privacy posture really is. That editorial work is the moat; it is hard to fake at scale, which is the entire defence against AI-generated competitor directories.
 
-**Current status.** Live in production and functional, but **not publicly launched and not monetized**. Indexing is controlled by `SITE_IS_PUBLIC` in `src/lib/site.ts` (PR #37, `144cfea`) — that flag drives both the root metadata `robots` noindex/nofollow and `robots.txt` `Disallow: /`. It is **currently `false`** (friends-and-family). Flip that one constant to lift both together at launch. There is no paywall enforcement; payment plumbing exists but is not switched on. It is a solo side project executed with professional discipline: the owner does not depend on it for income, and the operating constraint that governs every architectural decision is that it must stay **low-cost and low-maintenance**. Features requiring constant human attention are disqualified unless they directly drive revenue.
+**Current status.** Live in production and functional, but **not publicly launched and not monetized**. Indexing is controlled by `SITE_IS_PUBLIC` in `src/lib/site.ts` (PR #37, `144cfea`) — that flag drives both the root metadata `robots` noindex/nofollow and `robots.txt` `Disallow: /`. It is **currently `true`** (verified 2026-10-20: `src/lib/site.ts`, and live `robots.txt` serves `Allow: /` with a sitemap) — the catalog is indexable. It was `false` (friends-and-family) when this file was written; see 4.25. There is no paywall enforcement; payment plumbing exists but is not switched on. It is a solo side project executed with professional discipline: the owner does not depend on it for income, and the operating constraint that governs every architectural decision is that it must stay **low-cost and low-maintenance**. Features requiring constant human attention are disqualified unless they directly drive revenue.
 
-The last substantive work (July 2026) was the tutorial content pipeline, which has produced 29 live per-platform guides. The project has been dormant since.
+The tutorial content pipeline has produced **183 registered per-platform guides** (count as of 2026-10-20; see 4.15 and 4.26).
 
 ---
 
@@ -36,7 +36,7 @@ You will hit these within minutes. Nothing here is a bug; all of it is history.
 | `Prompt.author` (String?) | A legacy column that coexists with the modern `user` relation. Some old rows have one and not the other; the API projection falls back `user.name → author → "Anonymous"`. |
 | `dev-local` / `ep-hidden-truth-aj8wfxc2` | The Neon **development** database branch. Local development points here. |
 | `ep-odd-mud-ajdk8f99` | The Neon **production** compute. If you see this hostname in a local `DATABASE_URL`, stop — see gate **G1**. |
-| `make-integromat`, `otter-ai`, `perplexity-ai`, `canva-ai-magic-studio`, `adobe-acrobat-ai-assistant` | Real database platform slugs whose tutorial **filenames** are shorter (`make-`, `otter-`, `perplexity-`, `canva-ai-`, `acrobat-ai-`). Five of the 29 tutorial files diverge this way. `CLAUDE.md` describes the convention incorrectly — see § 4. |
+| `make-integromat`, `otter-ai`, `perplexity-ai`, `canva-ai-magic-studio`, `adobe-acrobat-ai-assistant` | Real database platform slugs whose tutorial **filenames** are shorter (`make-`, `otter-`, `perplexity-`, `canva-ai-`, `acrobat-ai-`). Six of the 183 tutorial files diverge this way (`tldv-` → `tl-dv` is the sixth). `CLAUDE.md` describes the convention incorrectly — see § 4. |
 | `github-copilot` ≠ `microsoft-copilot` | Two separate catalog rows. Cross-wiring them is an easy mistake. |
 | `runway` ≠ `runway-for-education` | Same — two separate rows. |
 | `canva-ai-magic-studio` ≠ `canva-magic-studio` | Same — two rows. The second is deliberately left unwired to any tutorial. |
@@ -86,7 +86,7 @@ This is the most valuable section of this document. Every entry is a claim that 
 
 **4.2 — "Tutorials are greenfield / zero work done."**
 *Where:* `docs/history/product-roadmap-reference.md`, feature inventory table.
-*Truth:* **29 tutorial pages are live in production.** They render as a Tutorials tab on each platform detail page. This claim is roughly four months and three shipped batches out of date.
+*Truth:* **183 tutorial pages are registered** (as of 2026-10-20). Each renders at its own `/platform/{slug}/guide` URL (see 4.27). This claim is roughly four months and three shipped batches out of date.
 
 **4.3 — "Tutorials are database-backed; a three-column migration adds `lastReviewedAt`, `changelogUrl` and an `accessTier` enum to the tutorial table."**
 *Where:* `docs/history/tutorial-template-spec.md` § 9, and `docs/history/session-14-handoff.md`, both stating it as a locked decision.
@@ -128,7 +128,7 @@ This is the most valuable section of this document. Every entry is a claim that 
 **4.11 — "Tutorial files are named `{platformSlug}-getting-started.ts`."**
 **[Corrected in CLAUDE.md on 2026-09-07.]** 
 *Where:* `CLAUDE.md`, § "Tutorials".
-*Truth:* The filename stem is the tutorial's own **`slug`**, which is shorter than `platformSlug` on five of the 29 files: `acrobat-ai-`, `canva-ai-`, `make-`, `otter-`, `perplexity-`. Registration and lookup are by `platformSlug`, which must exactly match a real `Platform` row — **verify it against the database, never assume it.**
+*Truth:* The filename stem is the tutorial's own **`slug`**, which differs from `platformSlug` on six of the 183 files: `acrobat-ai-`, `canva-ai-`, `make-`, `otter-`, `perplexity-`, `tldv-`. Registration and lookup are by `platformSlug`, which must exactly match a real `Platform` row — **verify it against the database, never assume it.**
 
 **4.12 — "`getPlatformCount()` rounds down to the nearest ten."**
 **[Corrected in CLAUDE.md on 2026-09-07.]** 
@@ -141,11 +141,11 @@ This is the most valuable section of this document. Every entry is a claim that 
 
 **4.14 — "Pilot tutorial pages stay in documents and are not indexed until the quality bar is confirmed."**
 *Where:* `docs/history/tutorial-template-spec.md` § 10.
-*Truth:* All 29 pages are live in production. They are not indexed while `SITE_IS_PUBLIC` in `src/lib/site.ts` is `false` — that flag (PR #37, `144cfea`) applies metadata noindex and `robots.txt` `Disallow: /`. Different mechanism and reason from a per-page tutorial hold; flip the flag at launch.
+*Truth:* All registered pages are live in production. Indexing is governed by `SITE_IS_PUBLIC` in `src/lib/site.ts` (PR #37, `144cfea`), not a per-page tutorial hold — and that flag is now `true` (4.25).
 
 ### Time-rotted — harmless once you know, confusing until you do
 
-**4.15 — Tutorial page counts.** Handoffs state 4, 5, 9, 19 and 29 live pages at their respective dates. **29 is current** (`ls src/data/tutorials/*.ts` minus `types.ts` and `index.ts`).
+**4.15 — Tutorial page counts.** Handoffs state 4, 5, 9, 19 and 29 live pages at their respective dates. **183 is current as of 2026-10-20** (`ls src/data/tutorials/*.ts` minus `types.ts` and `index.ts`; it matches the `index.ts` registry). Re-count rather than trusting this number.
 
 **4.16 — "main is at `<sha>`."** Every handoff opens with one. All are superseded; several are *below* the current HEAD. See § 8 for the real state — which is itself untidy.
 
@@ -179,6 +179,23 @@ Discovered by accident in Session 22. OpenAI ended the web and app experiences o
 
 **4.24 — The small palette is no longer the entire visual brief.**
 The owner explicitly approved additional violet, coral, cyan, and mint accents for discovery in the 2026-10-15 design conversation. The final direction retains the original headline and rocket, uses faint stars without nebula clouds, preserves the four colorful goal cards and two workflow previews, and uses charcoal/white/orange/gold for the matching banner and guide surfaces. This is a scoped, owner-approved design evolution, not permission to add arbitrary colors elsewhere.
+
+### Added 2026-10-20 (tutorial guide URLs)
+
+**4.25 — "`SITE_IS_PUBLIC` is `false`; the site is friends-and-family noindex."**
+*Where:* § 1, 4.14, § 9 (Google Search Console), § 10 (launch chain, demand evidence), and the `robots.ts` header comment.
+*Truth:* `SITE_IS_PUBLIC` in `src/lib/site.ts` is **`true`**. Verified 2026-10-20 against the code and against live `https://www.launchpadhq.io/robots.txt` (`Allow: /`, sitemap advertised). It was flipped on 2026-10-14 in `47f0e2e5` ("Go-public flip: index the catalog and open /advertise", #50). Paywall enforcement is a separate switch (`PRO_PLAN_ENABLED`, currently `false`).
+
+**4.26 — "29 tutorial pages."**
+*Where:* §§ 1, 2, 4.2, 4.11, 4.14, 4.15, 8, 9, 11 — corrected in place.
+*Truth:* **183 registered tutorials** as of 2026-10-20. `accessTier` splits them **152 `FREE` / 31 `PREMIUM`, but that split is data only**: nothing renders the field or gates on it (4.27).
+
+**4.27 — "Tutorials render as a Tutorials tab; deep tutorials are a paid feature."**
+*Where:* § 9 source map, § 10 access levels, and `CLAUDE.md` § "Access model" (corrected there on 2026-10-20).
+*Truth:* Owner decision 2026-10-20: **tutorials are free and public, all of them.** Each has its own indexable page at `/platform/{slug}/guide` (own title, self-canonical, Article JSON-LD); `/platform/{slug}?tab=tutorials` 308s there when a tutorial exists; `/tutorials` is a real index; the sitemap lists one guide URL per tutorial whose `Platform` row exists. The reader-facing "Tutorial · FREE/PREMIUM" label was removed; the `accessTier` field was left in place.
+
+**4.28 — The `dev-local` Neon branch is missing Platform rows that exist in production.**
+*Not superseded — an environment gap, recorded so it isn't mistaken for a bug.* On 2026-10-20, 19 registered tutorials had no `Platform` row in `dev-local` (`capcut`, `captions`, `deepl`, `deepseek`, `freepik-ai`, `gamma`, `hedra`, `higgsfield`, `kimi`, `kling-ai`, `krea`, `meta-ai`, `napkin-ai`, `perplexity-comet`, `poe`, `quillbot`, `qwen`, `speechify`, `veed` — the two "Manual batch, 2026-10-15" groups in `src/data/tutorials/index.ts`), while all 19 overview pages return 200 in production. Locally their `/guide` pages 404 and they drop out of the sitemap and `/tutorials`, by design. Bringing `dev-local` level with production is an operator step (G3).
 
 ## 4b. Credentials
 
@@ -358,7 +375,7 @@ The working tree carries no untracked items beyond the handoff documents themsel
 
 - 170-platform catalog (operator-confirmed; not verifiable from this repository — the database is not here and `data/ai_platforms_enhanced_metadata.xlsx` is import history, not a current export) across a 20-category taxonomy, with a Discover page whose filters are a compact native-`<select>` bar with removable pills and a reactive count.
 - Platform detail pages with Overview, Tutorials, Prompts and Discussions tabs.
-- **29 tutorial pages**, static TypeScript in `src/data/tutorials/`, across three archetypes and eight categories.
+- **183 tutorial pages** (as of 2026-10-20), static TypeScript in `src/data/tutorials/`, across three archetypes, each at `/platform/{slug}/guide`, indexed from `/tutorials`.
 - A four-question matching quiz with a public results page for signed-out users, a soft difficulty penalty with an "Advanced" badge, and a goal-relevance floor.
 - Workflows, favourites, a For You page, account and pricing pages.
 - Authentication via Clerk (development instance), payments plumbing via raw Stripe, both fully wired.
@@ -372,7 +389,7 @@ Production was confirmed live against `7615a1f3` on 2026-07-27 — deployment `R
 ### What is owed
 
 1. **A catalog liveness audit.** The highest-priority open item. Nothing detects whether a catalogued platform still exists; one confirmed-dead entry has already been found by accident.
-2. **The maintenance cadence layer.** Specified in the batch playbook and gated on "20+ deep pages exist." There are 29. Overdue.
+2. **The maintenance cadence layer.** Specified in the batch playbook and gated on "20+ deep pages exist." There are 183. Overdue.
 3. **The Jasper deduplication run.** Script merged and reviewed; only the operator run is owed. (G2)
 4. **Clerk development→production migration.** A pre-paywall prerequisite. The DNS and OAuth reconfiguration has sharp edges; recon it before touching it.
 5. **Two dated re-check triggers that have now passed** without anyone checking: a promotional API rate that expired 2026-08-31 and is stated explicitly on a live page, and a branding change on another platform expected within roughly two months of late July.
@@ -432,14 +449,14 @@ src/
 |---|---|
 | `src/proxy.ts` | **Middleware.** Clerk auth gating, plus the one-to-many category redirects that cannot live in `next.config.ts`. |
 | `src/app/(app)/` | The authenticated app surface: `discover`, `platform/[slug]` (+ `prompts`, `discussions`), `workflows`, `quiz`, `for-you`, `account`, `pricing`, `onboarding`, `tutorials`. |
-| `src/app/(app)/tutorials/page.tsx` | A "coming soon" placeholder **by design.** Live tutorials are the Tutorials tab on each platform page, not a standalone route. |
+| `src/app/(app)/tutorials/page.tsx` | The public tutorial index: every guide, grouped by its platform's category. Each tutorial renders at `src/app/(app)/platform/[slug]/guide/page.tsx`; `?tab=tutorials` 308s there. |
 | `src/app/quiz/results/` | The **public** quiz results page for signed-out users. Outside the `(app)` group deliberately. Historically where bugs hide, because it is the anonymous path. |
 | `src/app/api/` | Route handlers: platforms, categories, search, recommendations, user/quiz, prompts (rate/report), discussions (replies/vote/report), moderation, and the three Stripe routes. |
-| `src/components/tutorials/platform-tutorials.tsx` | **The shared tutorial renderer.** One change here benefits all 29 pages — which is the only justification for touching it. Per-page visual divergence is the trap. |
+| `src/components/tutorials/platform-tutorials.tsx` | **The shared tutorial renderer.** One change here benefits every tutorial page — which is the only justification for touching it. Per-page visual divergence is the trap. |
 | `src/components/platforms/`, `prompts/`, `discussions/`, `workflows/`, `layout/`, `ui/` | Feature-grouped components. `ui/` contains exactly one hand-rolled tooltip. |
 | `src/data/tutorials/types.ts` | **The compile-time contract for all tutorial content.** Author new pages straight against it. |
 | `src/data/tutorials/index.ts` | The registry. Adding a page is **two manual steps**: create the file *and* add its import plus `[x.platformSlug]: x` here. |
-| `src/data/tutorials/*-getting-started.ts` | 29 tutorial pages. Canonical references: `chatgpt` (prompts), `midjourney` (prompts/image), `zapier` (recipes), `ollama` (pick-and-setup, the only one with a setup section). |
+| `src/data/tutorials/*-getting-started.ts` | 183 tutorial pages (2026-10-20). Canonical references: `chatgpt` (prompts), `midjourney` (prompts/image), `zapier` (recipes), `ollama` (pick-and-setup, the only one with a setup section). |
 | `src/data/workflows/`, `src/data/research/` | Static workflow definitions and one research document. |
 | `src/lib/` | `platforms.ts` (counts), `discover-filters.ts` (the Discover URL contract and its enum whitelists — the security-relevant one), `recommendations-core.ts` (quiz scoring), `quiz-map.ts`, `auth-db.ts` (Clerk↔Prisma bridge), `stripe.ts`, `email.ts`, `moderation-token.ts` (HMAC), `labels.ts`, `platform-slugs.ts`. |
 | `scripts/restructure-categories-2026-05.ts` | Contains `FINAL_CATEGORIES`, **the authoritative category name↔slug map.** Pull category slugs from here, never from memory. |
@@ -458,7 +475,7 @@ src/
 | **Resend** | Transactional email. Root domain verified. Send-only API key. | Owner |
 | **Sentry** — org `launchpad-hq`, project `javascript-nextjs` | Error monitoring and tracing. DSN hardcoded (correctly). | Owner |
 | **Google Workspace** | `zach@launchpadhq.io`. Owned by a dedicated Google account, not the personal one, for reasons documented in the Session 9 archive. | Owner |
-| **Google Search Console** | Domain property, Cloudflare-DNS verified. **Shows zero query data and will continue to** until `SITE_IS_PUBLIC` is flipped to `true` in `src/lib/site.ts` and pages index — weeks to months after that. Do not plan around GSC data; it structurally does not exist yet. | Owner |
+| **Google Search Console** | Domain property, Cloudflare-DNS verified. **Shows zero query data and will continue to** until pages index. `SITE_IS_PUBLIC` in `src/lib/site.ts` is now `true` (4.25), so data can start to accrue — expect weeks to months before it is meaningful. | Owner |
 | **Claude project "LaunchPad HQ"** | Where all 24 archived documents came from. **You cannot see it.** It may still be receiving updates that never reach this repository. | Owner |
 
 ### What is explicitly NOT in this repository
@@ -483,9 +500,9 @@ Everything here is drawn from the archived documents. Where they establish nothi
 - **Price: $9/month**, deliberately set below the $10 threshold at which users start scrutinising a subscription. Positioning is "subscribe and forget."
 - **Free trial:** one week, no credit card. *(Note: this shape came from the abandoned Clerk Billing plan — see 4.1. Whether raw Stripe is configured the same way is unverified. `TODO(Zach)`: confirm the trial mechanics that actually exist in the Stripe configuration.)*
 - **Gating philosophy, locked:** gate interaction, personalization and depth — **never** the catalog's existence or browsability. A full-site gate was explicitly considered and rejected because it would destroy the organic search funnel, present maximum friction to the lowest-confidence users, and delete top-of-funnel rather than convert it.
-- **Three access levels:** read freely with no account (catalog, filters, quiz, platform pages, lighter tutorials) → free account to contribute (save results, favourite, post) → paid (deep tutorials, the For You news feed, favourites-driven personalization).
+- **Three access levels:** read freely with no account (catalog, filters, quiz, platform pages, **all tutorials** — see 4.27) → free account to contribute (save results, favourite, post) → paid (the For You news feed, favourites-driven personalization).
 - **The monetization-ready bar** — the definition of "ready to charge," and all three must be true: the For You **news feed** works; tutorials have a real first batch live; personalization is solid. Two of the three now arguably hold. **The news feed is the entire retention mechanism** — it is the only feature giving anyone a reason to return next week, and it has zero work done.
-- **Launch prerequisites, in dependency order:** the **LLC has been applied for and is pending as of 2026-09-06** (Texas, ~$300); from here the chain is EIN → business bank account → production Stripe account → Clerk production migration → run the Jasper dedup → flip `SITE_IS_PUBLIC` to `true` in `src/lib/site.ts` (lifts noindex and robots together) → enforce the paywall. Almost all coding work sits *off* this critical path. **The production Stripe account will be shared with a second product, Camerata** — see the webhook product-scoping item in § 8.
+- **Launch prerequisites, in dependency order:** the **LLC has been applied for and is pending as of 2026-09-06** (Texas, ~$300); from here the chain is EIN → business bank account → production Stripe account → Clerk production migration → run the Jasper dedup → ~~flip `SITE_IS_PUBLIC` to `true`~~ (already `true` as of 2026-10-20 — 4.25) → enforce the paywall. Almost all coding work sits *off* this critical path. **The production Stripe account will be shared with a second product, Camerata** — see the webhook product-scoping item in § 8.
 
 ### Market and competition
 
@@ -497,7 +514,7 @@ Everything here is drawn from the archived documents. Where they establish nothi
 ### What is unknown
 
 - `TODO(Zach)`: **Traffic and audience.** Analytics have run since June 2026, but no archived document records actual numbers beyond a single early data point. Unknown: current monthly visitors, top entry pages, sources.
-- `TODO(Zach)`: **Demand evidence.** No search demand data exists and none will until `SITE_IS_PUBLIC` is true. Page-production ordering has been driven by editorial judgement alone.
+- `TODO(Zach)`: **Demand evidence.** No search demand data exists yet; `SITE_IS_PUBLIC` is now `true`, so it can begin to accrue. Page-production ordering has been driven by editorial judgement alone.
 - `TODO(Zach)`: **Willingness to pay.** No pricing validation, no user interviews, no waitlist, no signal that anyone will pay $9/month. The price was reasoned to, not tested.
 - `TODO(Zach)`: **User count.** Clerk holds it; no document records it.
 - `TODO(Zach)`: **Cost to run.** Every service is on a free tier except Google Workspace (~$8.40/month) and the domain. Total monthly cost is not written down anywhere.
@@ -556,7 +573,7 @@ Everything here is drawn from the archived documents. Where they establish nothi
 - **Misplaced Sentry build options** in `next.config.ts` — `automaticVercelMonitors` and `treeshake` are nested under a `webpack:` key where they are silently ignored. No runtime impact.
 - **`sslmode=require` in `DATABASE_URL` should be `verify-full`.** On `pg` 8 the two behave identically — `require` is currently an alias for full certificate and hostname verification — so changing it today is a functional no-op. On `pg` 9 (and `pg-connection-string` 3) `require` reverts to libpq semantics: encryption with **no certificate or hostname verification**, which is a man-in-the-middle exposure on the production database connection. The change is silent: no error, no test failure, and the deprecation warning *stops firing*, because the behaviour finally matches the name it was warning about. **Fix this before the next `pg` major bump, not during it.** Operator step — `DATABASE_URL` lives in `.env` and in Vercel; see gates G9 and G10. Neon recommends `verify-full` for production. The warning currently fires roughly 40 times a day in production, which is just serverless cold starts re-parsing the connection string, not a symptom.
 - **Build time trend.** Roughly 50–70 seconds historically, ~146 seconds on the last large batch deploy. Logged as a baseline, not chased. If it climbs toward a timeout, that trend started here.
-- **Two string styles across the 29 tutorial files** — earlier files use double-quoted strings with escapes, later ones use template literals. The template-literal style is better (apostrophes and quotes transcribe with zero escaping) and should be the convention. Do not introduce a third.
+- **Two string styles across the tutorial files** — earlier files use double-quoted strings with escapes, later ones use template literals. The template-literal style is better (apostrophes and quotes transcribe with zero escaping) and should be the convention. Do not introduce a third.
 
 ---
 

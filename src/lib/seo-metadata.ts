@@ -99,6 +99,32 @@ export function composePlatformDescription(input: {
   return clipMetaDescription(`${lead}${middle}${tail}`);
 }
 
+export function composeTutorialTitle(name: string): string {
+  return `How to Use ${name}: Beginner's Guide | Launchpad HQ`;
+}
+
+/** Drops the renderer's inline **bold** / `code` markers so they never leak into meta tags. */
+export function stripInlineMarkup(text: string): string {
+  return text.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/`([^`]+)`/g, "$1");
+}
+
+export function buildTutorialMetadata(input: {
+  platformSlug: string;
+  name: string;
+  tagline: string;
+  lastReviewedAt: string;
+}): Metadata {
+  const base = publicPageMetadata({
+    title: composeTutorialTitle(input.name),
+    description: stripInlineMarkup(input.tagline),
+    path: `/platform/${input.platformSlug}/guide`,
+  });
+  return {
+    ...base,
+    openGraph: { ...base.openGraph, type: "article", modifiedTime: input.lastReviewedAt },
+  };
+}
+
 export function buildPlatformMetadata(input: {
   slug: string;
   name: string;

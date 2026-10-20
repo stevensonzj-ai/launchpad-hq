@@ -1,4 +1,4 @@
-import { listRegisteredTutorials } from "@/data/tutorials";
+import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { WORKFLOWS } from "@/data/workflows";
 import { SITE_URL } from "@/lib/site";
 import { getActivePlacement } from "@/data/sponsors";
@@ -10,7 +10,7 @@ export function GET() {
   const tutorialLinks = tutorials
     .map(
       (tutorial) =>
-        `- [${tutorial.title}](${SITE_URL}/platform/${tutorial.platformSlug}): Getting-started guide (Tutorials tab)`,
+        `- [${tutorial.title}](${SITE_URL}${tutorialGuidePath(tutorial.platformSlug)}): Getting-started guide`,
     )
     .join("\n");
 
@@ -31,7 +31,7 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 - [Quiz](${SITE_URL}/quiz): Matching quiz to recommend platforms
 - [Quiz results](${SITE_URL}/quiz/results): Public results page (signed-out path)
 - [Workflows](${SITE_URL}/workflows): Curated multi-tool workflow templates
-- [Tutorials](${SITE_URL}/tutorials): Tutorial library index (guides live on each platform page)
+- [Tutorials](${SITE_URL}/tutorials): Every getting-started guide, grouped by category
 - [How we make money](${SITE_URL}/how-we-make-money): How Launchpad stays free, labeled sponsor placements, and affiliates
 - [Advertise](${SITE_URL}/advertise): Sponsor rate card, weekly availability, rates and how to book by email${
     getActivePlacement("ai-of-the-week")
