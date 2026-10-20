@@ -204,6 +204,15 @@ The owner explicitly approved additional violet, coral, cyan, and mint accents f
 **4.30 — `scripts/` is excluded from typecheck.**
 *Not superseded — an open tooling gap, logged 2026-10-20, not acted on.* `tsconfig.json` has `"exclude": ["node_modules", "scripts"]`, so `npm run typecheck` never sees the operator scripts, and tsx runs them without type-checking. A one-off check on 2026-10-20 found the only errors were 22 pre-existing ones in `scripts/import-platforms-legacy.ts`, a pre-2026-05-taxonomy importer that refuses to run without `--force-legacy-import`. Candidates: delete that script, then add a `typecheck:scripts` gate.
 
+**4.31 — The Stripe webhook returns 503 before the Pro guard when `STRIPE_WEBHOOK_SECRET` is unset.**
+*Not superseded — an open gap, logged 2026-10-20, not acted on.* Since #80, `src/app/api/stripe/webhook/route.ts` acknowledges verified events with a 200 no-op while `PRO_PLAN_ENABLED` is false. The guard runs after signature verification, though, which needs the secret. Without the secret the route returns 503 first, so registering an endpoint in the Stripe dashboard before setting the secret in Vercel would send Stripe into retries. Set the secret before registering any endpoint. Confirmed 2026-10-20: production returns 503 to an unsigned POST, so the secret is unset.
+
+**4.32 — The Clerk `*_AFTER_SIGN_IN_URL` / `*_AFTER_SIGN_UP_URL` env vars are ignored.**
+Clerk *_AFTER_SIGN_IN/UP_URL names are ignored by @clerk/nextjs 7. Production reaches /onboarding correctly anyway (confirmed by a live sign-up), so routing comes from newer env names in Vercel or the Clerk dashboard paths. Only local .env.local uses the old names; optional local fix: rename to NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL / _SIGN_UP_FALLBACK_REDIRECT_URL. /onboarding is a one-time welcome page (quiz / Discover choice) that sets onboardingComplete on first visit, so the Session 26 loop concern is resolved. No action needed.
+
+**4.33 — Moderation emails from preview builds link to the preview host.**
+*By design, logged 2026-10-20.* `getAppBaseUrl()` (`src/lib/app-url.ts`) returns `https://${VERCEL_URL}` when `VERCEL_ENV=preview`, so Approve/Reject links in emails from a preview submission point at that `*.vercel.app` deployment, behind Vercel SSO. Production links always use `SITE_URL`.
+
 ## 4b. Credentials
 
 **A full scan of every file added by this handoff, and of every file tracked in git, found no live credentials.** Specifically checked for: Stripe live and test keys, Stripe webhook secrets, Resend API keys, Postgres connection strings containing a password, AWS access key IDs, GitHub personal access tokens, and PEM private key blocks.
