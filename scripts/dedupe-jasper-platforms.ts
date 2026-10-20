@@ -43,8 +43,8 @@
  */
 import "dotenv/config";
 
-const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("@prisma/client");
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";
@@ -184,7 +184,7 @@ async function main() {
   console.log(dryRun ? "Mode: DRY RUN (no writes)" : "Mode: LIVE");
 
   const adapter = new PrismaPg(directUrl);
-  const prisma = new PrismaClient({ adapter } as any);
+  const prisma = new PrismaClient({ adapter });
 
   // 1. Discover duplicates at runtime.
   const candidates: PlatformRow[] = await prisma.platform.findMany({
@@ -265,7 +265,7 @@ async function main() {
   if (!skipCountdown) await countdown(5);
 
   // 4. Migrate references and delete duplicates atomically.
-  await prisma.$transaction(async (tx: any) => {
+  await prisma.$transaction(async (tx) => {
     // -- Unique-constrained joins: drop duplicate-side rows that would
     //    collide with an existing canonical-side row, then repoint the rest.
 
@@ -274,7 +274,7 @@ async function main() {
       where: { platformId: canonical.id },
       select: { userId: true },
     });
-    const favUserIds = new Set(favCanonical.map((f: any) => f.userId));
+    const favUserIds = new Set(favCanonical.map((f) => f.userId));
     const favCollisions = await tx.userFavorite.deleteMany({
       where: {
         platformId: { in: dupIds },
@@ -294,7 +294,7 @@ async function main() {
       where: { platformId: canonical.id },
       select: { userId: true },
     });
-    const revUserIds = new Set(revCanonical.map((r: any) => r.userId));
+    const revUserIds = new Set(revCanonical.map((r) => r.userId));
     const revCollisions = await tx.review.deleteMany({
       where: {
         platformId: { in: dupIds },
@@ -318,15 +318,15 @@ async function main() {
       select: { userId: true, tutorialId: true },
     });
     const progKeys = new Set(
-      progCanonical.map((p: any) => `${p.userId}|${p.tutorialId ?? ""}`),
+      progCanonical.map((p) => `${p.userId}|${p.tutorialId ?? ""}`),
     );
     const progDupRows = await tx.userProgress.findMany({
       where: { platformId: { in: dupIds } },
       select: { id: true, userId: true, tutorialId: true },
     });
     const progCollisionIds = progDupRows
-      .filter((p: any) => progKeys.has(`${p.userId}|${p.tutorialId ?? ""}`))
-      .map((p: any) => p.id);
+      .filter((p) => progKeys.has(`${p.userId}|${p.tutorialId ?? ""}`))
+      .map((p) => p.id);
     if (progCollisionIds.length) {
       await tx.userProgress.deleteMany({
         where: { id: { in: progCollisionIds } },
@@ -341,11 +341,18 @@ async function main() {
     );
 
     // -- Unconstrained FKs: straight repoint.
-    for (const [label, model] of [
+    type RepointDelegate = {
+      updateMany(args: {
+        where: { platformId: { in: string[] } };
+        data: { platformId: string };
+      }): Promise<{ count: number }>;
+    };
+    const repointTargets: [string, RepointDelegate][] = [
       ["tutorials", tx.tutorial],
       ["prompts", tx.prompt],
       ["discussions", tx.discussion],
-    ] as const) {
+    ];
+    for (const [label, model] of repointTargets) {
       const moved = await model.updateMany({
         where: { platformId: { in: dupIds } },
         data: { platformId: canonical.id },

@@ -36,8 +36,8 @@ import "dotenv/config";
 import * as fs from "fs";
 import * as path from "path";
 
-const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("@prisma/client");
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";
@@ -215,7 +215,7 @@ async function main() {
   }
 
   const adapter = new PrismaPg(directUrl);
-  const prisma = new PrismaClient({ adapter }) as any;
+  const prisma = new PrismaClient({ adapter });
 
   try {
     // -------- 1. Capture before-state for audit log --------
@@ -389,7 +389,7 @@ async function main() {
           spotChecks: SPOT_CHECKS.map(([slug, expected]) => ({ slug, expected })),
           before: beforeRows,
           after: afterRows,
-          finalCounts: allCategories.map((c: any) => ({
+          finalCounts: allCategories.map((c) => ({
             sortOrder: c.sortOrder,
             slug: c.slug,
             name: c.name,

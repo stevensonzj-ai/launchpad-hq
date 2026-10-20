@@ -25,8 +25,8 @@ import * as XLSX from "xlsx";
 import * as path from "path";
 import "dotenv/config";
 
-const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("@prisma/client");
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
 
 if (!process.argv.includes("--force-legacy-import")) {
   console.error(
@@ -60,7 +60,7 @@ function getDirectUrl(): string {
 }
 
 const adapter = new PrismaPg(getDirectUrl());
-const prisma = new PrismaClient({ adapter }) as any;
+const prisma = new PrismaClient({ adapter });
 
 const EXCEL_PATH = path.join(
   process.env.HOME || process.env.USERPROFILE || "",

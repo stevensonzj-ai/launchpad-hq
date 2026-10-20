@@ -37,6 +37,8 @@ test("outboundEventProperties uses slug, surface, and host — nothing else", ()
 
 test("OutboundLink preserves href, target, and rel in markup", () => {
   const html = renderToStaticMarkup(
+    // OutboundLink's props type requires children, so createElement needs it in the props object (.ts file, no JSX).
+    // eslint-disable-next-line react/no-children-prop
     createElement(OutboundLink, {
       href: "https://example.com/offer?utm=1",
       platform: "example-sponsor",
@@ -68,6 +70,8 @@ test("source citations use source_clickout with the same property shape", () => 
     destination_host: "example.com",
   });
   const html = renderToStaticMarkup(
+    // OutboundLink's props type requires children, so createElement needs it in the props object (.ts file, no JSX).
+    // eslint-disable-next-line react/no-children-prop
     createElement(OutboundLink, {
       href: "https://example.com/plans?ref=catalog",
       platform: "fixture-tool",

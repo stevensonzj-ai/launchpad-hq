@@ -17,6 +17,8 @@ export function BackToTop() {
     };
 
     // Sync initial state — covers deep links that land mid-page.
+    // window is only readable after mount, so a lazy useState initializer would break SSR hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisible(window.scrollY > 400);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
