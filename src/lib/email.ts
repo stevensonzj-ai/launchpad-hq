@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { getAppBaseUrl } from "@/lib/app-url";
 import {
   createModerationToken,
   type ModerationKind,
@@ -92,15 +93,26 @@ function truncate(value: string, max: number): string {
 }
 
 /**
- * Notify the moderator of a new PENDING submission with one-click signed
- * approve/reject links. `baseUrl` is the request origin (same fallback chain
- * the Stripe routes use) so links point at the deployment that took the
- * submission.
+ * Signed approve/reject links for one submission. The host comes from
+ * getAppBaseUrl() (deployment environment only), never from request headers,
+ * so a forged Origin can't point a valid token at another site.
  */
-export async function sendModerationNotification(
-  submission: ModerationSubmission,
-  baseUrl: string,
-) {
+export function buildModerationLinks(
+  kind: ModerationKind,
+  id: string,
+  baseUrl: string = getAppBaseUrl(),
+): { approveUrl: string; rejectUrl: string } {
+  return {
+    approveUrl: `${baseUrl}/api/moderation?token=${createModerationToken(kind, id, "approve")}`,
+    rejectUrl: `${baseUrl}/api/moderation?token=${createModerationToken(kind, id, "reject")}`,
+  };
+}
+
+/**
+ * Notify the moderator of a new PENDING submission with one-click signed
+ * approve/reject links (see buildModerationLinks).
+ */
+export async function sendModerationNotification(submission: ModerationSubmission) {
   const to = process.env.MODERATION_NOTIFICATION_EMAIL;
   if (!to) {
     throw new Error(
@@ -109,8 +121,7 @@ export async function sendModerationNotification(
   }
 
   const { kind, id, title, content, platformName, author } = submission;
-  const approveUrl = `${baseUrl}/api/moderation?token=${createModerationToken(kind, id, "approve")}`;
-  const rejectUrl = `${baseUrl}/api/moderation?token=${createModerationToken(kind, id, "reject")}`;
+  const { approveUrl, rejectUrl } = buildModerationLinks(kind, id);
 
   const label = KIND_LABEL[kind];
   const preview = truncate(content, PREVIEW_LENGTH);
