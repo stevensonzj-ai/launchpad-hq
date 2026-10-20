@@ -152,7 +152,8 @@ export function WorkflowTierComparison({
             {steps.map((step) => {
               const slug = step.toolSlug;
               const inDb = Boolean(slug && valid.has(slug));
-              const hasTutorial = Boolean(slug && tutorials.has(slug));
+              // /guide 404s without a Platform row, so a tutorial link needs both.
+              const hasTutorial = Boolean(inDb && slug && tutorials.has(slug));
               const displayName = step.name ?? slug ?? "Tool";
               return (
                 <li key={step.order} className="flex gap-3">
