@@ -333,11 +333,15 @@ export function staticTutorialCount(hasTutorial: boolean): number {
   return hasTutorial ? 1 : 0;
 }
 
+/**
+ * ?tab= views on /platform/[slug]. Tutorials are not one: they live at
+ * /platform/[slug]/guide, and the page 308s ?tab=tutorials there when a
+ * tutorial exists. Anything else (including ?tab=tutorials with no
+ * tutorial) falls back to the overview.
+ */
 export function resolvePlatformTab(
   tab: string | undefined,
-  hasTutorial: boolean,
-): "overview" | "tutorials" | "discussions" | "prompts" {
-  if (tab === "tutorials" && hasTutorial) return "tutorials";
+): "overview" | "discussions" | "prompts" {
   if (tab === "discussions") return "discussions";
   if (tab === "prompts") return "prompts";
   return "overview";

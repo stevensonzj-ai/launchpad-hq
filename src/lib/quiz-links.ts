@@ -1,4 +1,4 @@
-import { getStaticTutorialForPlatform } from "@/data/tutorials";
+import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorials";
 import { WORKFLOWS, getWorkflowBySlug } from "@/data/workflows";
 
 /** First matching workflow template for a quiz goal. */
@@ -41,12 +41,12 @@ export function workflowFeaturingPlatform(platformSlug: string): QuizLink | null
   return null;
 }
 
-/** Tutorials render on the platform detail page (Tutorials tab). */
+/** Tutorials have their own page at /platform/[slug]/guide. */
 export function tutorialLinkForPlatform(platformSlug: string): QuizLink | null {
   const tutorial = getStaticTutorialForPlatform(platformSlug);
   if (!tutorial) return null;
   return {
-    href: `/platform/${platformSlug}?tab=tutorials`,
+    href: tutorialGuidePath(platformSlug),
     label: "Getting-started tutorial",
   };
 }

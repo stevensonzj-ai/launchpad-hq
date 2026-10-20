@@ -175,7 +175,7 @@ export function WorkflowTierComparison({
                       )}
                       {hasTutorial && slug ? (
                         <Link
-                          href={`/platform/${slug}?tab=tutorials`}
+                          href={`/platform/${slug}/guide`}
                           className="text-gray-400 hover:text-orange-300 hover:underline"
                         >
                           Tutorial

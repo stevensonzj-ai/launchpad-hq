@@ -379,6 +379,11 @@ export function listRegisteredTutorials(): PlatformTutorialData[] {
   return Object.values(byPlatformSlug);
 }
 
+/** The tutorial's own indexable page. 404s when no tutorial or Platform row exists. */
+export function tutorialGuidePath(platformSlug: string): string {
+  return `/platform/${platformSlug}/guide`;
+}
+
 export type {
   AccessTier,
   TutorialArchetype,

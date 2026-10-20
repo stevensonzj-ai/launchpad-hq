@@ -123,9 +123,11 @@ function richText(s: string): ReactNode[] {
 type PlatformTutorialsProps = {
   platformName: string;
   platformSlug: string;
+  /** /platform/[slug]/guide passes "h1": the tutorial title is that page's main heading. */
+  titleAs?: "h1" | "h2";
 };
 
-export function PlatformTutorials({ platformName, platformSlug }: PlatformTutorialsProps) {
+export function PlatformTutorials({ platformName, platformSlug, titleAs: TitleTag = "h2" }: PlatformTutorialsProps) {
   const tutorial = getStaticTutorialForPlatform(platformSlug);
 
   if (!tutorial) {
@@ -151,7 +153,7 @@ export function PlatformTutorials({ platformName, platformSlug }: PlatformTutori
           <BookOpen className="h-3.5 w-3.5" aria-hidden />
           Tutorial · {tutorial.accessTier}
         </p>
-        <h2 className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</h2>
+        <TitleTag className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</TitleTag>
         <p className="mt-3 max-w-xl text-base leading-relaxed text-gray-300">{tutorial.tagline}</p>
         <p className="mt-4 text-xs text-gray-400">
           Last reviewed {tutorial.lastReviewedAt} · for {platformName}

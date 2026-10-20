@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { listRegisteredTutorials } from "@/data/tutorials";
+import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { prisma } from "@/lib/db";
@@ -13,12 +13,6 @@ function parseRealDate(value: string | Date | null | undefined): Date | undefine
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return undefined;
   return date;
-}
-
-function laterDate(...candidates: Array<Date | undefined>): Date | undefined {
-  const valid = candidates.filter((d): d is Date => d instanceof Date);
-  if (!valid.length) return undefined;
-  return new Date(Math.max(...valid.map((d) => d.getTime())));
 }
 
 function withLastModified(
@@ -44,19 +38,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ),
   );
 
-  const tutorials = listRegisteredTutorials();
-  const lastReviewedBySlug = new Map(
-    tutorials.map((tutorial) => [tutorial.platformSlug, tutorial.lastReviewedAt]),
-  );
-
-  const tutorialEntries: MetadataRoute.Sitemap = tutorials.map((tutorial) =>
-    withLastModified(
-      sitemapUrl(SITE_URL, `/platform/${tutorial.platformSlug}`),
-      parseRealDate(tutorial.lastReviewedAt),
-    ),
-  );
-
-  let platformEntries: MetadataRoute.Sitemap;
+  let platformEntries: MetadataRoute.Sitemap = [];
+  let guideEntries: MetadataRoute.Sitemap = [];
 
   try {
     // Same catalog visibility as Discover and /platform/[slug]: every
@@ -69,18 +52,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       orderBy: { slug: "asc" },
     });
 
-    platformEntries = platforms.map((platform) => {
-      const lastModified = laterDate(
+    // Tutorial content now lives at /guide, so the overview's lastmod is
+    // the row's own updatedAt — a tutorial review no longer changes it.
+    platformEntries = platforms.map((platform) =>
+      withLastModified(
+        sitemapUrl(SITE_URL, `/platform/${platform.slug}`),
         parseRealDate(platform.updatedAt),
-        parseRealDate(lastReviewedBySlug.get(platform.slug)),
+      ),
+    );
+
+    // One guide per registered tutorial whose Platform row exists. The
+    // guide route 404s without that row, so orphans are left out here too.
+    const platformSlugs = new Set(platforms.map((platform) => platform.slug));
+    guideEntries = listRegisteredTutorials()
+      .filter((tutorial) => platformSlugs.has(tutorial.platformSlug))
+      .sort((a, b) => a.platformSlug.localeCompare(b.platformSlug))
+      .map((tutorial) =>
+        withLastModified(
+          sitemapUrl(SITE_URL, tutorialGuidePath(tutorial.platformSlug)),
+          parseRealDate(tutorial.lastReviewedAt),
+        ),
       );
-      return withLastModified(sitemapUrl(SITE_URL, `/platform/${platform.slug}`), lastModified);
-    });
   } catch {
     // DB unavailable (local build without DATABASE_URL, Neon blip): keep
-    // the static catalog plus tutorial-backed platform URLs only. Do not
-    // invent lastmod for rows we could not read.
-    platformEntries = tutorialEntries;
+    // only the static, workflow and model URLs. Platform and guide URLs
+    // are both omitted rather than guessed from the tutorial registry —
+    // without the DB we cannot tell which slugs would 404. A URL missing
+    // from one sitemap fetch is harmless; a listed 404 is not.
   }
 
   return [
@@ -88,5 +86,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...workflowEntries,
     ...modelFamilyEntries,
     ...platformEntries,
+    ...guideEntries,
   ];
 }
