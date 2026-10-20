@@ -8,6 +8,7 @@ import { PlatformDetailHeader } from "@/components/platforms/platform-detail-hea
 import { PlatformTabNav } from "@/components/platforms/platform-detail-tabs";
 import { PlatformTutorials } from "@/components/tutorials/platform-tutorials";
 import { JsonLd } from "@/components/seo/json-ld";
+import { PlatformStatusNotice } from "@/components/platforms/platform-status-notice";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
@@ -33,6 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return buildTutorialMetadata({
     platformSlug: slug,
     name: verifiedDisplayName(getToolFacts(slug), platform.name),
+    index: getToolFacts(slug)?.visibility === "hidden" ? false : undefined,
     tagline: tutorial.tagline,
     lastReviewedAt: tutorial.lastReviewedAt,
   });
@@ -61,7 +63,8 @@ export default async function PlatformGuidePage({
   });
   if (!platform) notFound();
 
-  const view = overlayPlatformWithFacts(platform, getToolFacts(platform.slug));
+  const facts = getToolFacts(platform.slug);
+  const view = overlayPlatformWithFacts(platform, facts);
   const displayName = view.name ?? platform.name;
   const user = await getOrCreateDbUser();
   const favorite = user
@@ -82,7 +85,7 @@ export default async function PlatformGuidePage({
           categoryName: platform.category.name,
           categorySlug: platform.category.slug,
           lastReviewedAt: tutorial.lastReviewedAt,
-          website: platform.website,
+          website: view.website,
         })}
       />
       <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">
@@ -104,7 +107,7 @@ export default async function PlatformGuidePage({
         name={displayName}
         company={view.company ?? platform.company}
         logoUrl={platform.logoUrl}
-        officialHref={officialSiteHref(platform.website)}
+        officialHref={officialSiteHref(view.website)}
         isFavorited={favorite !== null}
         isSignedIn={user !== null}
         nameAs="p"
@@ -119,6 +122,17 @@ export default async function PlatformGuidePage({
           prompts: platform._count.prompts,
         }}
       />
+
+      {facts?.status ? (
+        <div className="mb-8">
+          <PlatformStatusNotice
+            platformName={displayName}
+            lifecycle={facts.lifecycle}
+            status={facts.status}
+            compact
+          />
+        </div>
+      ) : null}
 
       <PlatformTutorials platformName={displayName} platformSlug={platform.slug} titleAs="h1" />
 

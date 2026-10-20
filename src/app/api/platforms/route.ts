@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { Prisma } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest) {
   const page = Math.max(1, parseInt(params.get("page") || "1"));
   const limit = Math.min(50, parseInt(params.get("limit") || "20"));
 
-  const where: Prisma.PlatformWhereInput = {};
+  const where: Prisma.PlatformWhereInput = { ...listedPlatformWhere() };
 
   if (category) {
     where.category = { slug: category };

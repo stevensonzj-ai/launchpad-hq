@@ -1,5 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
+import { catalogRedirects } from "./src/lib/catalog-redirects";
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
@@ -28,6 +29,10 @@ const nextConfig: NextConfig = {
       // next.config.ts redirects() passes `has`-matched query params through
       // to the destination, so stripping the filter here would infinite-loop.
       // See Next.js issue #24949.
+
+      // Duplicate catalog rows and retired guides (301, not 308).
+      // Data and rationale: src/lib/catalog-redirects.ts.
+      ...catalogRedirects(),
     ];
   },
 };

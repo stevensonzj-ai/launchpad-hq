@@ -3,6 +3,20 @@ import type { ToolFacts } from "./types";
 export default {
   slug: "character-ai",
   lifecycle: "active",
+  status: {
+    value: {
+      headline:
+        "On October 12, 2026, Character.AI announced a voluntary Chapter 11 process to run a court-supervised sale of the company. It says the platform remains up and running, and that it will be wound down if no buyer keeps it operating.",
+      whatToDo:
+        "Character.AI says you can export your data or delete your account in the app or on the website.",
+    },
+    sourceUrl: "https://blog.character.ai/an-update-on-character-ai/",
+    checkedAt: "2026-10-20",
+    gatheredBy: "claude-subagent",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-20",
+    status: "verified",
+  },
   company: {
     value: "Character Technologies Inc. dba Character.ai",
     note: "Menlo Park, CA.",
@@ -64,6 +78,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-20",
+      field: "status",
+      summary: "Added dated note on the Chapter 11 sale process (company blog, 2026-10-12).",
+    },
     {
       date: "2026-10-14",
       field: "plans",

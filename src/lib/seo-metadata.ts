@@ -99,6 +99,11 @@ export function composePlatformDescription(input: {
   return clipMetaDescription(`${lead}${middle}${tail}`);
 }
 
+/** "What happened to X" title for discontinued products with a sourced status. */
+export function composeDiscontinuedTitle(name: string): string {
+  return `What Happened to ${name}? Shutdown and Alternatives | Launchpad HQ`;
+}
+
 export function composeTutorialTitle(name: string): string {
   return `How to Use ${name}: Beginner's Guide | Launchpad HQ`;
 }
@@ -113,11 +118,14 @@ export function buildTutorialMetadata(input: {
   name: string;
   tagline: string;
   lastReviewedAt: string;
+  /** false for hidden platforms; defaults to the site-wide setting. */
+  index?: boolean;
 }): Metadata {
   const base = publicPageMetadata({
     title: composeTutorialTitle(input.name),
     description: stripInlineMarkup(input.tagline),
     path: `/platform/${input.platformSlug}/guide`,
+    index: input.index,
   });
   return {
     ...base,
@@ -134,6 +142,19 @@ export function buildPlatformMetadata(input: {
   facts?: ToolFacts;
 }): Metadata {
   const name = verifiedDisplayName(input.facts, input.name);
+  const facts = input.facts;
+  // Hidden pages (src/lib/catalog-visibility.ts) stay reachable but are
+  // kept out of search results.
+  const index = facts?.visibility === "hidden" ? false : undefined;
+  const status = facts?.status && isPublishedVerified(facts.status) ? facts.status.value : undefined;
+  if (facts?.lifecycle === "discontinued" && status) {
+    return publicPageMetadata({
+      title: composeDiscontinuedTitle(name),
+      description: status.headline,
+      path: `/platform/${input.slug}`,
+      index,
+    });
+  }
   return publicPageMetadata({
     title: composePlatformTitle(name, input.categoryName),
     description: composePlatformDescription({
@@ -144,5 +165,6 @@ export function buildPlatformMetadata(input: {
       verdict: verifiedVerdict(input.facts),
     }),
     path: `/platform/${input.slug}`,
+    index,
   });
 }

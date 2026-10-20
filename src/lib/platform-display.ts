@@ -26,6 +26,8 @@ export type DisplayPlan = {
 };
 
 const FACT_LABEL: Record<(typeof FACT_VALUE_KEYS)[number], string> = {
+  status: "Status",
+  officialUrl: "Official site",
   verdict: "Verdict",
   displayName: "Name",
   company: "Company",

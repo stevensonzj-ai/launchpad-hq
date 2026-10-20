@@ -24,6 +24,7 @@ import {
   sponsorExcludedSlugs,
 } from "@/lib/related-links";
 import { PLACEMENTS } from "@/data/sponsors";
+import { listedPlatformWhere } from "@/lib/catalog-visibility";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -110,7 +111,10 @@ export default async function PlatformPage({
         })
       : Promise.resolve([]),
     prisma.platform.findMany({
-      where: { categoryId: platform.categoryId, slug: { not: platform.slug } },
+      where: {
+        categoryId: platform.categoryId,
+        AND: [{ slug: { not: platform.slug } }, listedPlatformWhere()],
+      },
       select: { slug: true, name: true, category: { select: { slug: true } } },
       // v1: first same-category platforms alphabetically, not relevance-ranked.
       orderBy: { name: "asc" },
@@ -135,7 +139,7 @@ export default async function PlatformPage({
     related,
   });
   const displayName = view.name ?? platform.name;
-  const officialHref = officialSiteHref(platform.website);
+  const officialHref = officialSiteHref(view.website);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
@@ -145,7 +149,7 @@ export default async function PlatformPage({
           slug: platform.slug,
           categoryName: platform.category.name,
           categorySlug: platform.category.slug,
-          website: platform.website,
+          website: view.website,
         })}
       />
       <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">

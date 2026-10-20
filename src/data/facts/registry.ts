@@ -50,6 +50,22 @@ import veedFacts from "./veed";
 import warpFacts from "./warp";
 import wisprFlowFacts from "./wispr-flow";
 import writesonicChatsonicFacts from "./writesonic-chatsonic";
+import sora2Facts from "./sora-2";
+import playHtFacts from "./play-ht";
+import relayAppFacts from "./relay-app";
+import kakaoBrainKarloFacts from "./kakao-brain-karlo";
+import googleAntigravityFacts from "./google-antigravity";
+import runwayForEducationFacts from "./runway-for-education";
+import tabnineFacts from "./tabnine";
+import windsurfFacts from "./windsurf";
+import notebooklmFacts from "./notebooklm";
+import surferSeoFacts from "./surfer-seo";
+import wonderDynamicsWonderStudioFacts from "./wonder-dynamics-wonder-studio";
+import unriddleFacts from "./unriddle";
+import kiraSystemsFacts from "./kira-systems";
+import casetextCocounselFacts from "./casetext-cocounsel";
+import lexisPlusAiFacts from "./lexis-plus-ai";
+import alephAlphaLuminousFacts from "./aleph-alpha-luminous";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -105,6 +121,23 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [warpFacts.slug]: warpFacts,
   [wisprFlowFacts.slug]: wisprFlowFacts,
   [writesonicChatsonicFacts.slug]: writesonicChatsonicFacts,
+  // Catalog accuracy cleanup, 2026-10-20: status / rename / URL fixes.
+  [sora2Facts.slug]: sora2Facts,
+  [playHtFacts.slug]: playHtFacts,
+  [relayAppFacts.slug]: relayAppFacts,
+  [kakaoBrainKarloFacts.slug]: kakaoBrainKarloFacts,
+  [googleAntigravityFacts.slug]: googleAntigravityFacts,
+  [runwayForEducationFacts.slug]: runwayForEducationFacts,
+  [tabnineFacts.slug]: tabnineFacts,
+  [windsurfFacts.slug]: windsurfFacts,
+  [notebooklmFacts.slug]: notebooklmFacts,
+  [surferSeoFacts.slug]: surferSeoFacts,
+  [wonderDynamicsWonderStudioFacts.slug]: wonderDynamicsWonderStudioFacts,
+  [unriddleFacts.slug]: unriddleFacts,
+  [kiraSystemsFacts.slug]: kiraSystemsFacts,
+  [casetextCocounselFacts.slug]: casetextCocounselFacts,
+  [lexisPlusAiFacts.slug]: lexisPlusAiFacts,
+  [alephAlphaLuminousFacts.slug]: alephAlphaLuminousFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

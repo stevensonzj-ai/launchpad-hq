@@ -2,6 +2,7 @@ import type { ToolFacts, ToolPlan } from "./types";
 
 export type PlatformFactFields = {
   name?: string;
+  website?: string | null;
   company?: string | null;
   description: string | null;
   currentPricing: string | null;
@@ -52,6 +53,9 @@ export function overlayPlatformWithFacts<T extends PlatformFactFields>(
 
   if (!facts) return next;
 
+  if (facts.officialUrl) {
+    next.website = facts.officialUrl.value;
+  }
   if (facts.displayName) {
     next.name = facts.displayName.value;
   }
