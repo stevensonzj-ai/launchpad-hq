@@ -24,6 +24,9 @@ const isPublicRoute = createRouteMatcher([
   "/sitemap.xml",
   "/robots.txt",
   "/llms.txt",
+  // Read-only MCP connector: anonymous by design (no auth in v0.1).
+  // Without this, auth.protect() would block signed-out MCP clients.
+  "/mcp",
 ]);
 
 /**

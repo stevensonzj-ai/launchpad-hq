@@ -1,0 +1,10 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "PLACEHOLDER/launchpad-hq",
+  "title": "Launchpad HQ",
+  "description": "Read-only, sourced and dated facts on AI tools: search, compare, pricing, free alternatives.",
+  "version": "0.1.0",
+  "websiteUrl": "https://www.launchpadhq.io",
+  "repository": { "url": "https://github.com/stevensonzj-ai/launchpad-hq", "source": "github" },
+  "remotes": [{ "type": "streamable-http", "url": "https://www.launchpadhq.io/mcp" }]
+}
