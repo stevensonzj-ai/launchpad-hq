@@ -3,7 +3,7 @@
 A free, anonymous, **read-only** [Model Context Protocol](https://modelcontextprotocol.io) server that lets AI assistants look up Launchpad HQ's catalog of AI tools.
 
 - **URL:** `https://www.launchpadhq.io/mcp`
-- **Transport:** Streamable HTTP (stateless), served by `mcp-handler` v2. It serves the 2026-07-28 MCP spec and falls back for 2025-era clients.
+- **Transport:** Streamable HTTP (stateless), served by `mcp-handler` 2.1.1 on `@modelcontextprotocol/server` 2.4.0. Modern clients get the 2026-07-28 protocol (`server/discover` advertises it). Older clients that send an `initialize` handshake are negotiated to a 2025 version (2025-11-25 or 2025-06-18). `src/lib/mcp/server.test.ts` checks both.
 - **Auth:** none. No accounts, and no writes.
 - **Support:** launchpadhq.admin@gmail.com
 
@@ -33,7 +33,7 @@ All four tools are annotated `readOnlyHint: true`, `destructiveHint: false`, `id
 
 - **Inputs:** strings are capped at 200 characters. `limit` is at most 10 (default 5). `compare` takes 2–4 tools.
 - **Catalog caching:** the catalog is read once per server instance and cached for 10 minutes.
-- **Rate limiting:** a per-IP limit is applied at the edge (Vercel firewall). It is not in this code.
+- **Rate limiting:** handled at the edge by a Vercel firewall rule (per IP), not in this code. The rule starts in log-only mode.
 
 ## Privacy
 

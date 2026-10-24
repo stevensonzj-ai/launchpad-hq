@@ -200,7 +200,7 @@ describe("sponsorship never affects results", () => {
 
 describe("read-only guard", () => {
   it("no MCP file calls a Prisma write", () => {
-    const writes = /\b(create|createMany|update|updateMany|upsert|delete|deleteMany)\(|\$executeRaw|\$queryRawUnsafe/;
+    const writes = /\b(create|createMany|update|updateMany|upsert|delete|deleteMany)\(|\$executeRaw|\$queryRaw|\$transaction/;
     for (const file of mcpSourceFiles()) {
       if (file.endsWith(".test.ts")) continue; // this file names the patterns
       const src = readFileSync(file, "utf8");

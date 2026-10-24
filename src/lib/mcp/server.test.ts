@@ -165,4 +165,58 @@ describe("MCP handler (in-process, no network)", () => {
     const res = await handler(new Request("https://www.launchpadhq.io/mcp", { method: "GET" }));
     assert.ok(res.status < 500, `status ${res.status}`);
   });
+
+  it("advertises the 2026-07-28 protocol to modern clients", async () => {
+    const handler = buildHandler();
+    const res = await handler(
+      new Request("https://www.launchpadhq.io/mcp", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json, text/event-stream",
+          "mcp-protocol-version": "2026-07-28",
+          "mcp-method": "server/discover",
+        },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "server/discover",
+          params: {
+            _meta: {
+              "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+              "io.modelcontextprotocol/clientInfo": { name: "test-client", version: "1.0.0" },
+              "io.modelcontextprotocol/clientCapabilities": {},
+            },
+          },
+        }),
+      }),
+    );
+    assert.equal(res.status, 200);
+    const body = await rpcBody(res);
+    assert.deepEqual((body.result as { supportedVersions: string[] }).supportedVersions, ["2026-07-28"]);
+  });
+
+  it("negotiates a 2025 protocol version for legacy initialize clients", async () => {
+    const handler = buildHandler();
+    for (const version of ["2025-11-25", "2025-06-18"]) {
+      const res = await handler(
+        new Request("https://www.launchpadhq.io/mcp", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            accept: "application/json, text/event-stream",
+            "mcp-protocol-version": version,
+          },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: 1,
+            method: "initialize",
+            params: { protocolVersion: version, capabilities: {}, clientInfo: { name: "t", version: "1" } },
+          }),
+        }),
+      );
+      const body = await rpcBody(res);
+      assert.equal((body.result as { protocolVersion: string }).protocolVersion, version);
+    }
+  });
 });
