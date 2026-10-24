@@ -184,7 +184,19 @@ import { qwenTutorial } from "./qwen-getting-started";
 import { kimiTutorial } from "./kimi-getting-started";
 import { quillbotTutorial } from "./quillbot-getting-started";
 
+// PR 4 batch, 2026-10-23
+import { openrouterTutorial } from "./openrouter-getting-started";
+import { granolaTutorial } from "./granola-getting-started";
+import { wisprFlowTutorial } from "./wispr-flow-getting-started";
+import { apolloIoTutorial } from "./apollo-io-getting-started";
+import { magicschoolTutorial } from "./magicschool-getting-started";
+
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
+  [openrouterTutorial.platformSlug]: openrouterTutorial,
+  [granolaTutorial.platformSlug]: granolaTutorial,
+  [wisprFlowTutorial.platformSlug]: wisprFlowTutorial,
+  [apolloIoTutorial.platformSlug]: apolloIoTutorial,
+  [magicschoolTutorial.platformSlug]: magicschoolTutorial,
   [klingAiTutorial.platformSlug]: klingAiTutorial,
   [kreaTutorial.platformSlug]: kreaTutorial,
   [freepikAiTutorial.platformSlug]: freepikAiTutorial,
