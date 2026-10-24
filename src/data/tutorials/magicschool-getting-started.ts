@@ -25,7 +25,7 @@ export const magicschoolTutorial: PlatformTutorialData = {
     "**It's for educators, free to start.** You sign up as \"An Educator\" with an email and password, or with Google or Microsoft. MagicSchool's terms say educators use it as a professional aid for their work at a school, not for personal use, and must not let students or other minors use their teacher account.",
     "**Free means 20 generations a week.** MagicSchool's help centre says the free plan includes 20 AI generations per week; every tool output, refinement and Raina reply counts as one, while student use doesn't count. The count resets every Sunday at midnight UTC. Some features, such as Class Writing Feedback, have their own separate limits.",
     "**Plus removes the weekly cap.** The pricing page lists MagicSchool Plus at $12.99 a month billed monthly, or $99.96 a year (shown as $8.33 a month) billed annually. Plus adds unlimited generations, output history, and the full set of student tools. Schools and districts can request Enterprise pricing, which adds a data privacy agreement, single sign-on and LMS integrations.",
-    "**Refunds have a short window.** MagicSchool's FAQ says refunds are given only if you ask within 14 days of your most recent payment.",
+    "**Refunds have a short window.** MagicSchool's FAQ says an annual subscription can be refunded only if you ask within 14 calendar days of your most recent annual payment; after that it's non-refundable. Monthly plans have the same 14-day window from the most recent monthly payment.",
   ],
 
   security: [
@@ -78,7 +78,7 @@ export const magicschoolTutorial: PlatformTutorialData = {
       prompt:
         "Rewrite this passage for a 4th-grade reading level. Keep every key fact, use shorter sentences, and define any word a 9-year-old might not know: [paste your text]",
       whyHere:
-        "Use the Text Rewriter — MagicSchool's most-used teacher tool in 2025. It's the fastest way to give the same content to students reading at different levels.",
+        "Use the Text Rewriter — one of MagicSchool's most-used teacher tools in 2025. It's the fastest way to give the same content to students reading at different levels.",
     },
     {
       title: "Build a quick check for understanding",

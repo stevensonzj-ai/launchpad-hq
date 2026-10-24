@@ -41,14 +41,14 @@ export const apolloIoTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: "Apollo holds information about people who never signed up for it, and the legal duty to contact them properly is yours. Apollo's GDPR overview says users must give recipients a way to opt out and handle any notices or consent the law requires where they live. For US marketing email, CAN-SPAM requires an unsubscribe option, which Apollo can add to emails automatically.",
+      text: "Apollo holds information about people who never signed up for it, and the legal duty to contact them properly is yours. Apollo's GDPR overview says you must give the people you email a way to opt out, and that you're responsible for setting Apollo up to meet your own privacy obligations. In the US, the FTC's CAN-SPAM guide says commercial email must include a working opt-out that you honour within 10 business days, a valid physical postal address, a subject line that matches the message, and accurate sender details; Apollo can add an unsubscribe link automatically. Many other countries are stricter, and some require consent before you email at all. This is general information, not legal advice — Apollo itself says to check your obligations with local counsel.",
     },
     {
       kind: "list",
       label: "Compliance tools to know about:",
       items: [
-        "Apollo's compliance settings can automatically exclude contacts in the EU — but its GDPR overview says this doesn't apply in the Chrome extension, so check a person's location before reaching out from LinkedIn.",
-        "Do-Not-Call screening covers US and UK phone numbers only.",
+        "Apollo's GDPR settings (admin only, under Settings → Outbound → Prospecting configuration) can block prospecting, emailing and email tracking for people located in the EU. Apollo says they only work when it can determine a person's location, so check where someone is yourself before contacting them.",
+        "Do-Not-Call screening checks numbers only against certain national registries — Apollo names the UK and Germany. Its GDPR overview notes calling rules vary by country, and some places require consent before certain calls rather than just letting people opt out.",
         "If you are in Apollo's database yourself, its privacy center lets you request a copy of your data or have it removed.",
       ],
     },

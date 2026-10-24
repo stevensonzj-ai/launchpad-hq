@@ -23,7 +23,7 @@ export const granolaTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Free gets you started; history is the limit.** Granola's free Basic plan lets you see only your last 30 days of notes, and chat and AI connections only look at those 30 days too. Older notes are kept, not deleted — they reappear if you upgrade.",
-    "**The paid step is a team plan.** Granola's pricing page lists Business at $14 per user per month, which removes the history limit and adds integrations with tools like Notion and HubSpot, and Enterprise from $35 per user per month. Its help centre says Business is billed monthly; annual billing is offered only on Enterprise contracts.",
+    "**The paid step is a team plan.** Granola's pricing page lists Business at $14 per user per month, which removes the history limit and adds integrations with tools like Notion and HubSpot, and Enterprise at $35 per user per month. Its help centre says Business is billed monthly; annual billing is offered only on Enterprise contracts.",
     "**You sign in with Google or Microsoft.** Those are the only two sign-in options, and Granola works best with the account that holds your work calendar, because it reads your calendar to know which meeting you are in. Microsoft works with cloud Microsoft 365 calendars, not on-premises Exchange.",
     "**On a Mac, allow both audio permissions.** Setup asks for the microphone and for system audio. If you skip system audio, Granola's troubleshooting guide says it will hear you but not the other people on the call.",
   ],

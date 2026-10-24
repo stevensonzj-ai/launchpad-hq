@@ -22,7 +22,7 @@ export const openrouterTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**You can start free, within limits.** OpenRouter's free plan gives access to a set of free models (their IDs end in `:free`). Its rate-limit docs say free models allow 20 requests a minute and 50 a day; once you have bought at least $10 of credits in total, the daily cap rises to 1,000. Failed attempts count toward the cap.",
+    "**You can start free, within limits.** OpenRouter's free plan gives access to a set of free models (their IDs end in `:free`). Its rate-limit docs say free models allow 20 requests a minute and 50 a day; once you have bought at least $10 of credits in total, the daily cap rises to 1,000.",
     "**Paid models run on prepaid credits.** OpenRouter says it passes through each provider's price with no markup on the model itself, and instead charges a platform fee when you buy credits — 5.5% on the standard pay-as-you-go plan, per its pricing page. The minimum purchase in its terms is $5. Prices are per million **tokens** (chunks of text, roughly three-quarters of a word), usually different for what you send and what comes back.",
     "**Unused credits are not a savings account.** OpenRouter's terms let you refund unused credits only within 24 hours of buying them (the fee is not refunded), and say it may expire credits that go unused for a year. Buy small amounts while you learn.",
     "**You'll need a little code to use the API.** If you only want to chat with AI, a regular chat app is simpler; OpenRouter earns its keep once you are building something or comparing models.",

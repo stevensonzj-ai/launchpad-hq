@@ -49,7 +49,7 @@ export const wisprFlowTutorial: PlatformTutorialData = {
       items: [
         "**Model training is on by default** on Free and Pro. Wispr's security FAQ says the \"Improve the model for everyone\" setting can be turned off; it was previously called Privacy Mode. Even with it off, some metadata (such as which app you were in and word counts) is still sent.",
         "**Cloud storage is on by default.** A separate setting stores your transcripts, audio and history on Wispr's servers. Turn it off if you don't want a history kept there.",
-        "**Context awareness is on by default.** To format text to suit the app, Flow reads the app name and website, nearby on-screen text and the text around your cursor. Wispr says it skips password fields and banking apps and doesn't take screenshots. On iPhone there is no switch for it.",
+        "**Context awareness is on by default.** To format text to suit the app, Flow reads the app name and website, nearby on-screen text and the text around your cursor. Wispr says it doesn't take screenshots and skips banking and financial apps and standard password fields — but custom or web-based password fields may still be read like normal text. On iPhone there is no switch for it.",
       ],
     },
     {
