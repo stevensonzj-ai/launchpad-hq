@@ -23,7 +23,7 @@ export const openevidenceTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**It's free for clinicians — and ad-supported.** OpenEvidence's advertising policy says it is committed to providing the service free to healthcare professionals, paid for by a limited number of clearly marked ads, and that advertisers cannot influence answers. Its user guide says all three answer models are available to verified clinicians with unlimited usage at no cost.",
-    "**You'll be asked to prove you're a professional.** Its terms say registration asks for your name, email, profession, specialty and NPI number (or another licensing number), which OpenEvidence may try to verify. You must be 18 or older.",
+    "**You'll be asked to prove you're a professional.** Its terms say registration asks for your name, email, profession, specialty and NPI number (or another licensing number), which OpenEvidence may try to verify. Its privacy policy says the service isn't intended for anyone under 18.",
     "**Not available everywhere.** OpenEvidence's terms say the service is not available in the EU, UK or EEA.",
     "**If you're not a clinician, this isn't for you.** OpenEvidence says so in its terms. Patients looking for health information should talk to their own clinician; the general chat assistants on Launchpad HQ are not a substitute for medical advice either.",
   ],
@@ -37,7 +37,7 @@ export const openevidenceTutorial: PlatformTutorialData = {
       kind: "list",
       label: "What OpenEvidence says about your data:",
       items: [
-        "Its privacy policy (updated September 17, 2026) says your raw queries are confidential and that it does not train AI models on protected health information.",
+        "Its privacy policy (updated September 17, 2026) says your raw queries are confidential, that it does not train AI models on protected health information, and that it secures protected health information in compliance with HIPAA.",
         "Its terms say it may use de-identified data for research and development, and its privacy policy describes ads using cookies and pixels — but not ads based on your queries, uploads, chats or health information.",
         "It states it is SOC 2 Type II certified and encrypts data at rest.",
       ],

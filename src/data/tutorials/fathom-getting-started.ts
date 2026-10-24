@@ -16,22 +16,22 @@ export const fathomTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Fathom is an AI meeting assistant. Its homepage describes it as an AI notetaker that summarizes your meetings so you can focus on the conversation. It works with Zoom, Google Meet and Microsoft Teams, and its free plan includes unlimited recordings, storage and transcription, per its help centre.",
-    "Most people meet Fathom as a bot: a participant called \"Fathom Notetaker\" joins the call and records. Fathom's help centre says a newer bot-free mode is rolling out on Macs, which can capture just a transcript or audio without a bot; Microsoft Teams calls still use the bot. Fathom records only while you are on the call and leaves when the meeting ends.",
-    "After the call you get a transcript in one of 38 languages, an AI summary using a meeting template, and highlights you can turn into short clips. Paid plans add **Ask Fathom** — a chat that answers questions about a call — plus AI action items, follow-up emails and CRM syncing. An iPhone app records in-person conversations.",
+    "Most people meet Fathom as a bot: a participant called \"Fathom Notetaker\" joins the call and records. Fathom's help centre says a newer bot-free mode is rolling out on Macs, which can capture just a transcript or audio without a bot. For Microsoft Teams, bot-free recording is so far only a limited Windows alpha, so expect the bot on Teams calls for now. Fathom records only while you are on the call and leaves when the meeting ends.",
+    "After the call you get a transcript in one of 38 languages, an AI summary using a meeting template, and highlights you can turn into short clips. Free includes limited use of **Ask Fathom**, a chat that answers questions about your calls; Fathom's pricing page says paid plans make it unlimited for your own calls, with unlimited lookback, and add AI action items, follow-up emails and CRM syncing. An iPhone app records in-person conversations.",
   ],
 
   beforeYouStart: [
     "**You need a Google or Microsoft account.** Fathom's help centre says it only supports Google- or Microsoft-based email addresses. Signing up with a personal address like Gmail has an extra hurdle: Fathom's quick-start guide says you need a Zoom, Meet or Teams meeting on your calendar in the next seven days to finish sign-up.",
     "**The free plan is genuinely useful.** Fathom's help centre lists unlimited recordings, storage and transcription on Free, with its advanced AI summaries for your first 5 calls each month and a simpler summary after that. New accounts also get a 30-day free preview of the paid Premium features.",
-    "**Paid plans are per person.** As of 24 October 2026, Fathom's pricing page shows Premium at $16 or $20 per user per month, Team at $15 or $19, and Business at $25 or $34, depending on the billing option selected (the page offers Monthly or Annually, \"save 25%+\"). Team and Business need at least two users. Check the toggle before you buy, because both prices are shown \"/month\".",
+    "**Paid plans are per person.** As of 24 October 2026, the structured data on Fathom's pricing page lists Premium at $20 per user per month billed monthly or $16 billed annually, Team at $19 or $15, and Business at $34 or $25. Team and Business need at least two users. The visible page shows both prices as \"/month\", so check the Monthly/Annually toggle before you buy.",
   ],
 
   gettingSetUpSafely: {
     officialSource:
       "Sign up at fathom.ai and download the desktop app from fathom.video/download. Fathom's help centre warns about impostors posing as Fathom, so don't install anything from a link in an unexpected email.",
     body: [
-      "**Turn on consent requests.** Fathom has an opt-in setting, Auto Request Recording Consent, that emails external guests 24 hours before a scheduled meeting. Its help centre says that if a guest declines, auto-record is switched off for that call — but if nobody replies, Fathom still records.",
-      "**Check who gets the notes.** Fathom's sharing guide says auto-share sends notes to everyone on the calendar invite, including people who didn't attend. Change it to just yourself until you know what a recap contains.",
+      "**Turn on consent requests.** Fathom has an opt-in setting, Auto Request Recording Consent, that emails guests 24 hours before an external, scheduled meeting — but only in some cases. Its help centre says that with the bot, you must be the host and there must be exactly one guest; in bot-free mode it covers scheduled external meetings, and on Zoom only if you have host rights. Same-day meetings get no email. If a guest declines, auto-record is switched off for that call — but if nobody replies, Fathom still records.",
+      "**Check who gets the notes.** Fathom's sharing guide says that if auto-share is turned on, notes go to everyone on the calendar invite, including people who didn't attend. Leave it off, or limit it, until you know what a recap contains.",
       "**Lock down links.** On Free and individual plans, recording links default to \"Anyone with the link can view\". Restrict sensitive recordings one by one, and remember a share can't be unsent, only revoked.",
       "**Run a test call.** Start a meeting on your own and confirm a recording and summary appear in Fathom afterwards.",
     ],
@@ -61,7 +61,7 @@ export const fathomTutorial: PlatformTutorialData = {
       "Mac users who'd rather not have a bot in the call, via the bot-free mode as it rolls out.",
     ],
     okayAt: [
-      "Asking questions of your calls. Ask Fathom and account-wide search are paid features.",
+      "Asking questions of your calls on Free. Ask Fathom is limited there; paid plans make it unlimited for your own calls.",
       "Platforms beyond the big three. Fathom's help centre lists Chromebooks, Linux, iPads, webinars and breakout rooms as unsupported.",
     ],
     avoid: [
@@ -74,9 +74,9 @@ export const fathomTutorial: PlatformTutorialData = {
     {
       title: "Set sharing before your first call",
       whatItDoes:
-        "In your settings, change auto-share so notes go only to you, and switch the default link setting away from \"Anyone with the link\".",
+        "In your settings, check whether auto-share is on and, if it is, limit who receives notes; then switch recording links away from the \"Anyone with the link\" default.",
       whyHere:
-        "Fathom's defaults send notes to everyone on the invite and make links viewable by anyone who has them. Changing this first means nothing leaves your account by surprise.",
+        "If auto-share is on, Fathom sends notes to everyone on the invite, and on Free and individual plans recording links default to anyone-with-the-link. Checking both first means nothing leaves your account by surprise.",
     },
     {
       title: "Record a test call",
