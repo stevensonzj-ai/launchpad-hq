@@ -15,14 +15,14 @@ export const firefliesAiTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Fireflies.ai is a meeting assistant built around a bot. Its help centre describes Fred as Fireflies' bot, which joins calls as fred@fireflies.ai on Zoom, Google Meet, Microsoft Teams and other platforms, then produces a transcript, summary and action items. The pricing page lists transcription in more than 100 languages.",
-    "If you don't want a bot on the call, there are other ways in. The desktop app can capture your computer's audio with no bot joining — Fireflies says that mode keeps only the transcript and summary, not audio or video. The Chrome extension records from your browser, the iPhone and Android apps record in-person meetings, and you can upload audio or video files.",
+    "If you don't want a bot on the call, there are other ways in. The desktop app can capture your computer's audio with no bot joining — Fireflies says that mode keeps only the transcript and summary, not audio or video. The Chrome extension can record Google Meet calls without a bot joining — audio only, and only for Google Meet in Chrome. The iPhone and Android apps record in-person meetings, and you can upload audio or video files.",
     "After the meeting, **AskFred** answers questions about what was said — inside one meeting, or across past meetings and connected apps. You can also clip short **soundbites** of key moments, and send notes automatically to tools like Slack, Notion or a CRM; the pricing page says every plan includes all integrations.",
   ],
 
   beforeYouStart: [
     "**Sign-up connects your calendar.** You sign in with Google or Microsoft (Outlook) — the only options — and grant calendar access. Fireflies supports one calendar per account. During setup it asks two important questions: which meetings Fred should join, and who should get the recap emails.",
     "**Change the defaults before your first meeting.** Fireflies' account-setup guide says the defaults are to join every calendar meeting with a video link and to send recaps to everyone on the invite — including outside guests. Most beginners want \"Only meetings that I own\" or \"Only when I invite fred@fireflies.ai\", and recaps sent only to themselves at first.",
-    "**Free has catches.** Fireflies' pricing page lists Free at $0 with 400 minutes of storage. Its help centre says unlimited transcription on Free only applies with auto-join turned on; with auto-join off or set to invite-only, accounts created since September 1, 2026 get 3 meeting transcriptions. Downloading transcripts needs a paid plan.",
+    "**Free has catches.** Fireflies' pricing page lists Free at $0 with 400 minutes of storage, a 2-hour limit per recording and 20 one-time AI credits. Its help centre says unlimited transcription on Free only applies with auto-join turned on; with auto-join off or set to invite-only, accounts created since September 1, 2026 get 3 meeting transcriptions. Downloading transcripts needs a paid plan.",
     "**Paid plans are per seat.** The pricing page lists Pro at $18 per seat per month ($10 billed annually), Business at $29 ($19 annually) and Enterprise at $39 per seat per month, billed annually. Separately, **AI credits** pay for extra AI features; Fireflies' credits guide says paid plans are automatically subscribed to a small credit pack when they run out.",
   ],
 

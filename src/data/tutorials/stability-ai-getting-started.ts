@@ -24,7 +24,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
     "**API credits are a penny each.** Stability's pricing page says 1 credit is $0.01 and new accounts get 25 free credits; its getting-started guide describes them for accounts created with Google sign-in. An image from Stable Image Core costs 3 credits and from Stable Image Ultra 8 credits. Its terms say credits are non-refundable and expire a year after purchase.",
     "**Stable Audio has its own plans.** The web app uses a separate credit system from the API, with a free plan and paid monthly plans listed at stableaudio.com/pricing. Its credits don't carry over between months.",
     "**Running models yourself takes real hardware.** Stability's own figure for running its largest Stable Diffusion model is about 19 GB of graphics memory (VRAM), or about 11 GB with an optimised version on recent NVIDIA cards. Smaller models need less, but plan on a dedicated graphics card.",
-    "**Check the licence if you'll earn money.** Stability's Community License lets individuals and organisations with under US $1 million in annual revenue use its open models commercially, but requires registering with Stability and displaying \"Powered by Stability AI\". Above $1 million you need an Enterprise licence.",
+    "**Check the licence if you'll earn money.** Stability's Community License lets individuals and organisations with under US $1 million in annual revenue use its open models commercially, but commercial users must register with Stability. If you distribute the models, or a product or service built on them, you must also include the licence and display \"Powered by Stability AI\". Above $1 million you need an Enterprise licence.",
   ],
 
   gettingSetUpSafely: {
@@ -104,7 +104,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
   pitfalls: [
     "**Two separate credit systems.** API credits and Stable Audio credits aren't interchangeable.",
     "**Expensive extras.** Stability's pricing lists its Creative Upscaler at 60 credits per image — far more than generating the image.",
-    "**Forgetting the licence conditions.** Commercial use of the open models needs registration and the \"Powered by Stability AI\" notice, even under the revenue threshold.",
+    "**Forgetting the licence conditions.** Commercial use of the open models needs registration with Stability even under the revenue threshold, and distributing the models or a product built on them adds the licence copy and the \"Powered by Stability AI\" notice.",
     "**Out-of-date guides.** Many older tutorials point to Stable Assistant or Stability's retired video API; check against Stability's own docs.",
   ],
 
