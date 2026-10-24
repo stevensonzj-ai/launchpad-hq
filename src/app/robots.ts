@@ -45,6 +45,7 @@ export default function robots(): MetadataRoute.Robots {
         "/api/",
         "/for-you",
         "/quiz/results",
+        "/mcp",
       ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,

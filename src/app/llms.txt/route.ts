@@ -40,6 +40,13 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
       : ""
   }
 
+## Agent access
+
+- MCP (Streamable HTTP, no auth, read-only): ${SITE_URL}/mcp
+- Tools: search_tools, compare, get_pricing_facts, find_free_alternatives
+- Results are dated and sourced; sponsorship never affects them.
+- [Privacy policy](${SITE_URL}/privacy)
+
 ## Workflows
 
 ${workflowLinks}
