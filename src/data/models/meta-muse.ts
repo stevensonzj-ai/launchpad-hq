@@ -108,7 +108,7 @@ export const metaMuse: PlatformModelFamily = {
         verified: true,
       },
       strengths: [
-        "Open weights released August 2026 under the Apache 2.0 license.",
+        "Open weights released August 2026.",
         "About 30B-parameter dense model with a vision encoder: text and image in, text out.",
         "Built for agent-style tasks on consumer hardware; distilled from Muse Spark.",
         "Comes in BF16, GGUF and ExecuTorch versions, plus a small drafter model for faster output.",

@@ -17,6 +17,7 @@ export default {
   },
   plans: {
     value: [
+      { name: "Free", price: "$0", period: "month", limits: "" },
       { name: "Go", price: "$8", period: "month", limits: "May include ads" },
       { name: "Plus", price: "$20", period: "month", limits: "" },
       { name: "Pro 100", price: "$100", period: "month", limits: "Billed monthly only" },
