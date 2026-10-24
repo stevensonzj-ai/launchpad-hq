@@ -39,6 +39,17 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  models: {
+    value: ["Nemotron 3.5 Super VL (Pro and Max)", "Gemini 4 Argon (Max only)"],
+    label: "Recently added search models",
+    note: "Perplexity's help center lists these as search models as of October 17, 2026. Gemini 4 Argon is Max-only, not Pro.",
+    sourceUrl: "https://www.perplexity.ai/help-center/en/articles/10354919-what-advanced-ai-models-are-included-in-my-subscription",
+    checkedAt: "2026-10-24",
+    gatheredBy: "claude-subagent",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-24",
+    status: "verified",
+  },
   platforms: {
     value: ["Mac", "Windows", "iOS", "Android"],
     note: "Browser-verified 2026-10-14: “Available for Mac, Windows, iOS, and Android” on perplexity.ai/comet. Download is a perplexity.sng.link redirect; no apps.apple.com or play.google.com URLs recorded.",

@@ -33,7 +33,7 @@ All four tools are annotated `readOnlyHint: true`, `destructiveHint: false`, `id
 
 - **Inputs:** strings are capped at 200 characters. `limit` is at most 10 (default 5). `compare` takes 2–4 tools.
 - **Catalog caching:** the catalog is read once per server instance and cached for 10 minutes.
-- **Rate limiting:** handled at the edge by a Vercel firewall rule (per IP), not in this code. The rule starts in log-only mode.
+- **Rate limiting:** No per-IP rate limit is applied yet; Vercel's platform DDoS protection covers abuse, and usage is monitored via logs.
 
 ## Privacy
 

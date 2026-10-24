@@ -4,23 +4,25 @@ const MODELS = "https://developers.openai.com/api/docs/models";
 const PRICING = "https://developers.openai.com/api/docs/pricing";
 const CHATGPT_MODELS = "https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt";
 const WORK_CODEX = "https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex";
+const RELEASE_NOTES = "https://help.openai.com/en/articles/9624314-model-release-notes";
 
 export const openaiGpt: PlatformModelFamily = {
   familySlug: "gpt",
   displayName: "GPT (ChatGPT / OpenAI)",
   vendor: "OpenAI",
   platformSlugs: ["chatgpt", "openai-api"],
-  lastVerifiedAt: "2026-10-14",
+  lastVerifiedAt: "2026-10-24",
   whichToUse: [
     "In the ChatGPT app, what you can pick depends on the plan. OpenAI’s help center: GPT-6 Pro (powered by GPT-6 Astra) is on Pro, Business, and Enterprise; Plus gets Astra in ChatGPT Work and Codex, not as GPT-6 Pro in regular Chat. Free and Go do not get Astra.",
     "For API work, OpenAI currently tells developers to start with GPT-6 Astra for hard jobs, GPT-6.1 Sol when you want similar quality for less money, and GPT-6 Luna for cheap high-volume work.",
-    "GPT-5.5 is the previous flagship still listed on the API models and pricing pages — use it only if you already depend on it.",
+    "GPT-5.5 is the previous flagship. Use it only if your API work already depends on it.",
   ],
   sources: [
     { label: "OpenAI models", url: MODELS },
     { label: "API pricing", url: PRICING },
     { label: "GPT-6 in ChatGPT", url: CHATGPT_MODELS },
     { label: "ChatGPT Work and Codex", url: WORK_CODEX },
+    { label: "Model release notes", url: RELEASE_NOTES },
   ],
   versions: [
     {
@@ -107,6 +109,34 @@ export const openaiGpt: PlatformModelFamily = {
       verified: { specs: true, apiPricing: true, consumerAccess: true },
     },
     {
+      id: "gpt-6-sol",
+      name: "GPT-6 Sol",
+      apiId: "gpt-6-sol",
+      releaseDate: null,
+      releaseDateVerified: false,
+      status: "current",
+      role: "prior",
+      contextWindow: { tokens: 1_050_000, verified: true },
+      maxOutput: { tokens: 128_000, verified: true },
+      apiPriceInput: { usdPerMillion: 2, verified: true },
+      apiPriceOutput: { usdPerMillion: 10, verified: true },
+      consumerAccess: {
+        summary:
+          "OpenAI's ChatGPT docs list GPT-6 Sol for ChatGPT Work and Codex on paid plans. OpenAI's pages disagree on whether it also powers regular Chat, so check your model picker.",
+        verified: true,
+      },
+      strengths: [
+        "The first GPT-6 Sol release, at the same API price as GPT-6.1 Sol.",
+      ],
+      bestFor: "Existing API work built on GPT-6 Sol; new work should start on GPT-6.1 Sol.",
+      caveats: ["OpenAI's model page points to GPT-6.1 Sol as the newer Sol model."],
+      sourceUrls: [
+        { label: "GPT-6 Sol model page", url: "https://developers.openai.com/api/docs/models/gpt-6-sol" },
+        { label: "ChatGPT models", url: "https://learn.chatgpt.com/docs/models" },
+      ],
+      verified: { specs: true, apiPricing: true, consumerAccess: true },
+    },
+    {
       id: "gpt-6-luna",
       name: "GPT-6 Luna",
       apiId: "gpt-6-luna",
@@ -168,23 +198,22 @@ export const openaiGpt: PlatformModelFamily = {
         note: "Listed for prompts under 272k context length. Prompts over 272k are 2× input and 1.5× output.",
       },
       consumerAccess: {
-        summary: "Consumer ChatGPT access for GPT-5.5 in October 2026 was not confirmed on the GPT-6 help pages used for this pass.",
-        verified: false,
+        summary: "Retired from ChatGPT, ChatGPT Work and Codex on 14 Oct 2026. API access is unaffected.",
+        verified: true,
       },
       strengths: [
-        "Previous OpenAI flagship; still documented on the API models page.",
+        "Previous OpenAI flagship; still available on the API.",
         "Same 1.05M context and 128k max output as the GPT-6 models.",
       ],
       bestFor: "Existing API integrations that are not ready to move to GPT-6.",
       caveats: [
         "OpenAI now recommends GPT-6 Astra / Sol / Luna for new work.",
-        "ChatGPT app access for this snapshot is unverified on the pages checked.",
       ],
       sourceUrls: [
         { label: "GPT-5.5 model page", url: "https://developers.openai.com/api/docs/models/gpt-5.5" },
-        { label: "API pricing", url: PRICING },
+        { label: "Model release notes", url: RELEASE_NOTES },
       ],
-      verified: { specs: true, apiPricing: true, consumerAccess: false },
+      verified: { specs: true, apiPricing: true, consumerAccess: true },
     },
   ],
 };
