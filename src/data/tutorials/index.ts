@@ -3,6 +3,12 @@ import { chatgptTutorial } from "./chatgpt-getting-started";
 import { ollamaTutorial } from "./ollama-getting-started";
 import { zapierTutorial } from "./zapier-getting-started";
 import { midjourneyTutorial } from "./midjourney-getting-started";
+// PR 5 batch, 2026-10-23
+import { comfyuiTutorial } from "./comfyui-getting-started";
+import { firefliesAiTutorial } from "./fireflies-ai-getting-started";
+import { manusTutorial } from "./manus-getting-started";
+import { gensparkTutorial } from "./genspark-getting-started";
+import { stabilityAiTutorial } from "./stability-ai-getting-started";
 // Manual batch 2, 2026-10-15
 import { klingAiTutorial } from "./kling-ai-getting-started";
 import { kreaTutorial } from "./krea-getting-started";
@@ -379,6 +385,12 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [qwenTutorial.platformSlug]: qwenTutorial,
   [kimiTutorial.platformSlug]: kimiTutorial,
   [quillbotTutorial.platformSlug]: quillbotTutorial,
+  // PR 5 batch, 2026-10-23
+  [comfyuiTutorial.platformSlug]: comfyuiTutorial,
+  [firefliesAiTutorial.platformSlug]: firefliesAiTutorial,
+  [manusTutorial.platformSlug]: manusTutorial,
+  [gensparkTutorial.platformSlug]: gensparkTutorial,
+  [stabilityAiTutorial.platformSlug]: stabilityAiTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
