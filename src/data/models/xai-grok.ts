@@ -9,12 +9,11 @@ export const xaiGrok: PlatformModelFamily = {
   displayName: "Grok",
   vendor: "xAI",
   platformSlugs: ["grok"],
-  lastVerifiedAt: "2026-10-14",
+  lastVerifiedAt: "2026-10-24",
   whichToUse: [
     "xAI’s models page: for code and chat, use Grok 4.7. It is described as the most capable model they have built.",
     "Grok 4.3 is the cheaper text model in the current pricing table ($1.25 / $2.50 per 1M below 200k prompt tokens) with a larger 1M context window.",
     "Grok 4.6 is still listed at the same token price as 4.7 — treat it as the previous 4.x snapshot, not the one xAI tells you to pick.",
-    "Which Grok models appear in the free vs SuperGrok consumer app was not confirmed on docs.x.ai in this pass.",
   ],
   sources: [
     { label: "Grok models", url: MODELS },
@@ -26,8 +25,8 @@ export const xaiGrok: PlatformModelFamily = {
       id: "grok-4.7",
       name: "Grok 4.7",
       apiId: "grok-4.7",
-      releaseDate: null,
-      releaseDateVerified: false,
+      releaseDate: "2026-09-21",
+      releaseDateVerified: true,
       status: "current",
       role: "flagship",
       contextWindow: { tokens: 500_000, verified: true },
@@ -44,13 +43,13 @@ export const xaiGrok: PlatformModelFamily = {
       },
       consumerAccess: {
         summary:
-          "Consumer Grok is sold as SuperGrok and through The X Subscription (Free $0, Plus $8, Premium $30, Super $100, Ultra $200 /mo as of 2026-10-14 on docs.x.ai/x-subscription/pricing), not only via X Premium+. Which API model sits on which consumer tier was not listed on the models page.",
-        verified: false,
+          "In the Grok apps, new customers sign up through The X Subscription (since 12 Oct 2026); existing SuperGrok plans continue for current subscribers. xAI doesn't say which consumer plan uses which API model.",
+        verified: true,
       },
       strengths: [
         "xAI’s stated pick for code and everything else text-related.",
         "500k token context window.",
-        "Configurable reasoning (low, medium, high, xhigh).",
+        "Configurable reasoning (low, medium, high, xhigh); high is the default.",
       ],
       bestFor: "Grok users and API callers who want the current flagship for coding and chat.",
       caveats: [
@@ -60,9 +59,11 @@ export const xaiGrok: PlatformModelFamily = {
       ],
       sourceUrls: [
         { label: "Grok 4.7", url: GROK47 },
+        { label: "Grok 4.7 announcement", url: "https://x.ai/news/grok-4-7" },
+        { label: "The X Subscription", url: "https://x.ai/news/x-subscription" },
         { label: "Models & pricing", url: MODELS },
       ],
-      verified: { specs: true, apiPricing: true, consumerAccess: false },
+      verified: { specs: true, apiPricing: true, consumerAccess: true },
     },
     {
       id: "grok-4.3",

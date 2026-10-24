@@ -15,11 +15,13 @@ export const metaLlama: PlatformModelFamily = {
     "Llama 4 Scout: long context (10M tokens on the model card) and can run on a single H100 when quantized.",
     "Llama 4 Maverick: larger expert count (400B total / 17B active) and a 1M context window.",
     "Meta does not list a first-party per-1M-token API price on the pages checked — you download weights or pay a host. API prices are unverified here.",
+    "Llama 4 is still Meta's newest Llama-branded release, but llama.com now leads with Meta's newer Muse models (checked 2026-10-24). See the Muse family for Muse Spark Open and Muse Glimmer 30B.",
   ],
   sources: [
     { label: "Get started with Llama", url: GET_STARTED },
     { label: "Llama 4 model card", url: CARD },
     { label: "Llama 4 overview", url: LLAMA4 },
+    { label: "llama.com", url: "https://www.llama.com/" },
   ],
   versions: [
     {

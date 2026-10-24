@@ -11,9 +11,9 @@ export const googleGemini: PlatformModelFamily = {
   displayName: "Gemini",
   vendor: "Google",
   platformSlugs: ["gemini"],
-  lastVerifiedAt: "2026-10-14",
+  lastVerifiedAt: "2026-10-24",
   whichToUse: [
-    "For the Gemini consumer app, Google AI plans: Gemini 4 Argon is not on Free or Google AI Pro; it is listed for AI Ultra. Exact Gemini-app picker for 3.8 Flash is unverified on those pages.",
+    "In the Gemini app, Gemini 4 Argon needs a paid Google AI plan: AI Pro gets access and AI Ultra gets the highest limits. Exact Gemini-app picker for 3.8 Flash is unverified on those pages.",
     "For the Gemini API, use 3.8 Flash for most production work (it is on the API free tier). Use 4 Argon only when you need the flagship and can pay (not on the API free tier).",
     "3.6 Flash is the previous Flash generation at the same listed paid price as 3.8 Flash through 2026 — Google still documents it as previous-generation.",
   ],
@@ -48,7 +48,7 @@ export const googleGemini: PlatformModelFamily = {
         note: "Introductory paid price through 30 Nov 2026; $20.00 per 1M from 1 Dec 2026.",
       },
       consumerAccess: {
-        summary: "Not on Free or Google AI Pro. Google AI Ultra is listed for advanced frontier models including Gemini 4 Argon.",
+        summary: "Gemini app: included with Google AI Pro, with the highest access on Google AI Ultra (Google AI plans page, checked 2026-10-24). Not on the free plan.",
         verified: true,
       },
       strengths: [
@@ -56,15 +56,16 @@ export const googleGemini: PlatformModelFamily = {
         "Unified 1M-token context; long decode up to 1M tokens.",
         "Text, image, video, audio, and PDF in; text out.",
       ],
-      bestFor: "Hard coding, math, science, and long agent jobs if you are on a paid API or AI Ultra.",
+      bestFor: "Hard coding, math, science, and long agent jobs if you are on a paid API or a Google AI Pro or Ultra plan.",
       caveats: [
-        "Not on the Gemini API free tier or Google AI Pro.",
+        "Not on the Gemini API free tier.",
         "Introductory API price rises on 1 December 2026.",
       ],
       sourceUrls: [
         { label: "Gemini 4 Argon", url: ARGON },
         { label: "Pricing", url: PRICING },
         { label: "Google AI plans", url: PLANS },
+        { label: "Gemini subscriptions", url: "https://gemini.google/us/subscriptions/" },
       ],
       verified: { specs: true, apiPricing: true, consumerAccess: true },
     },

@@ -9,15 +9,14 @@ const NO_FIRST_PARTY_PRICE =
 
 export const metaMuse: PlatformModelFamily = {
   familySlug: "muse-spark",
-  displayName: "Muse Spark (Meta)",
+  displayName: "Muse (Meta)",
   vendor: "Meta",
   platformSlugs: [],
-  lastVerifiedAt: "2026-10-17",
+  lastVerifiedAt: "2026-10-24",
   whichToUse: [
-    "Muse Spark and Muse Spark Open are distinct entries. Do not treat them as the same checkpoint.",
-    "Muse Spark is the name listed on Meta's consumer assistant page. We do not claim it is the same weights as Muse Spark Open, or that the Open release runs inside that app.",
-    "Muse Spark Open is the open-weight release of Muse Spark (available 15 Oct 2026): 816B total / 42B active sparse MoE, 1,048,576-token context, text/image/audio/video in and text out. Weights (BF16 ~1.65 TB; NVFP4 ~537 GB) via Hugging Face, Amazon SageMaker AI, Google Cloud Model Garden, and Microsoft Foundry Models; hosted API via OpenRouter, Together AI, Fireworks AI, Groq, Baseten, Modal, and Nebius. License: Muse Model License (limited commercial terms).",
-    "Self-hosting BF16 needs a roughly 2 TB VRAM budget. Meta's blog also describes running on two Apple M5 Ultra Mac Studios with MLX. Hosted prices are unverified here.",
+    "Meta's open models are now the Muse family; llama.com leads with Muse. Muse Spark is the model named in the consumer Meta AI assistant, and Muse Spark Open is its downloadable open-weight release. We don't treat them as the same checkpoint.",
+    "Pick Muse Spark Open for a frontier open-weight model if you have data-center hardware or use a hosted provider. Pick Muse Glimmer 30B if you want one that runs on a single high-end consumer GPU.",
+    "The licenses differ: Muse Spark Open uses Meta's Muse Model License, while Muse Glimmer 30B is Apache 2.0.",
   ],
   sources: [
     { label: "Muse Spark Open blog", url: BLOG },
@@ -81,14 +80,46 @@ export const metaMuse: PlatformModelFamily = {
       bestFor:
         "Teams that want Meta's downloadable open-weight Muse Spark release or a third-party hosted API — not the consumer assistant app.",
       caveats: [
-        "Open-weight under Muse Model License (limited commercial terms) — not an Apache or MIT grant.",
+        "Muse Model License: free to use, modify and sell, but you must show “Built with Muse Spark Open”, and model-as-a-service businesses over $20M in yearly revenue need a separate agreement with Meta. Not intended for anyone under 18.",
         "Hosted API prices are provider-set; no pricing is published here.",
         "Max output tokens unverified on the official pages checked.",
-        "BF16 ~1.65 TB checkpoint; budget roughly 2 TB VRAM for BF16",
       ],
       sourceUrls: [
         { label: "Muse Spark Open docs", url: DOCS },
         { label: "Muse Spark Open blog", url: BLOG },
+        { label: "Muse Spark Open model card", url: "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B" },
+      ],
+      verified: { specs: true, apiPricing: false, consumerAccess: true },
+    },
+    {
+      id: "muse-glimmer-30b",
+      name: "Muse Glimmer 30B",
+      releaseDate: null,
+      releaseDateVerified: false,
+      status: "current",
+      role: "budget",
+      contextWindow: { tokens: 131_072, verified: true, note: "Model card: 131,072+ tokens." },
+      maxOutput: { tokens: null, verified: false },
+      apiPriceInput: { usdPerMillion: null, verified: false, note: NO_FIRST_PARTY_PRICE },
+      apiPriceOutput: { usdPerMillion: null, verified: false },
+      consumerAccess: {
+        summary:
+          "Free download on Hugging Face (not gated). The model card says it runs locally in about 24–32 GB of memory with 4-bit versions.",
+        verified: true,
+      },
+      strengths: [
+        "Open weights released August 2026 under the Apache 2.0 license.",
+        "About 30B-parameter dense model with a vision encoder: text and image in, text out.",
+        "Built for agent-style tasks on consumer hardware; distilled from Muse Spark.",
+        "Comes in BF16, GGUF and ExecuTorch versions, plus a small drafter model for faster output.",
+      ],
+      bestFor: "People who want a capable Meta model running privately on their own computer.",
+      caveats: [
+        "Much smaller than Muse Spark Open, so expect weaker results on the hardest tasks.",
+        "The model card says it isn't intended for anyone under 18.",
+      ],
+      sourceUrls: [
+        { label: "Muse Glimmer 30B model card", url: "https://huggingface.co/meta-models/Muse-Glimmer-30B" },
       ],
       verified: { specs: true, apiPricing: false, consumerAccess: true },
     },
