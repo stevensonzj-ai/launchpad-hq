@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { isHiddenPlatform, listedPlatformWhere } from "@/lib/catalog-visibility";
+import { PUBLIC_REVIEW_SELECT } from "@/lib/public-reviews";
 
 export async function GET(
   request: NextRequest,
@@ -22,12 +24,14 @@ export async function GET(
       reviews: {
         orderBy: { createdAt: "desc" },
         take: 10,
-        include: { user: { select: { name: true, avatarUrl: true } } },
+        // Public fields only: no reviewer identity (userId, name, avatar).
+        select: PUBLIC_REVIEW_SELECT,
       },
     },
   });
 
-  if (!platform) {
+  // Hidden and redirected rows are not part of the public catalog API.
+  if (!platform || isHiddenPlatform(platform.slug)) {
     return NextResponse.json({ error: "Platform not found" }, { status: 404 });
   }
 
@@ -36,6 +40,7 @@ export async function GET(
     ? await prisma.platform.findMany({
         where: {
           name: { in: platform.directAlternatives, mode: "insensitive" },
+          ...listedPlatformWhere(),
         },
         select: {
           id: true,
@@ -55,6 +60,7 @@ export async function GET(
     ? await prisma.platform.findMany({
         where: {
           name: { in: platform.complementaryTools, mode: "insensitive" },
+          ...listedPlatformWhere(),
         },
         select: {
           id: true,
