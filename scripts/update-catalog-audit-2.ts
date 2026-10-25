@@ -22,6 +22,10 @@
  *
  * Research stamp: official vendor pages re-checked 2026-10-14.
  *
+ * Superseded for grok: scripts/update-catalog-audit-4.ts (2026-10-25)
+ * rewrites its currentPricing / freeTierFeatures. Re-running this script
+ * after audit 4 would restore the old Grok wording.
+ *
  * Skipped this pass (see PR): PlayHT (official pricing 500; acquisition
  * unconfirmed); Gumloop ([U] prices did not render); Semrush dollar
  * amounts (prices did not render); AIVA monthly prices ([U]).

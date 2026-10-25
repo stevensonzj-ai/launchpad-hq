@@ -26,6 +26,24 @@ describe("catalog visibility", () => {
     }
   });
 
+  it("301s the Canva and Adobe Sensei duplicates to their guided, listed entries", () => {
+    const moves = catalogRedirects();
+    for (const [from, to] of [
+      ["canva-magic-studio", "canva-ai-magic-studio"],
+      ["adobe-sensei-firefly-in-cc", "adobe-firefly"],
+    ]) {
+      assert.equal(PLATFORM_REDIRECTS[from], to);
+      assert.ok(moves.some((m) => m.source === `/platform/${from}` && m.destination === `/platform/${to}`), from);
+      assert.ok(
+        moves.some((m) => m.source === `/platform/${from}/:path*` && m.destination === `/platform/${to}/:path*`),
+        from,
+      );
+      // A registered guide only renders when its Platform row exists, so the target is a live page.
+      assert.ok(getStaticTutorialForPlatform(to), `${to} has no guide`);
+      assert.equal(isHiddenPlatform(to), false, to);
+    }
+  });
+
   it("emits 301s (not 308s) for every catalog move", () => {
     const moves = catalogRedirects();
     assert.ok(moves.length > 0);
