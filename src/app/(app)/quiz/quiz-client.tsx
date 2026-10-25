@@ -10,39 +10,18 @@ import {
   QUIZ_QUESTION_COUNT,
   type QuizAnswers,
 } from "@/lib/quiz-map";
+import {
+  QUIZ_BUDGET_OPTIONS,
+  QUIZ_EXPERIENCE_OPTIONS,
+  QUIZ_GOAL_OPTIONS,
+  QUIZ_RUNTIME_OPTIONS,
+  quizQuestion,
+} from "@/lib/quiz-options";
 
-const GOALS = [
-  { id: "content_creation", label: "Writing & content" },
-  { id: "coding", label: "Coding & development" },
-  { id: "research", label: "Research & analysis" },
-  { id: "image_generation", label: "Images & design" },
-  { id: "video", label: "Video" },
-  { id: "audio", label: "Audio & voice" },
-  { id: "business", label: "Business & productivity" },
-  { id: "automation", label: "Automation & workflows" },
-  { id: "education", label: "Education & learning" },
-  { id: "data_analysis", label: "Data & analytics" },
-] as const;
-
-const EXP = [
-  { id: "beginner", label: "Beginner" },
-  { id: "intermediate", label: "Intermediate" },
-  { id: "advanced", label: "Advanced" },
-] as const;
-
-const BUDGET = [
-  { id: "free", label: "Free only" },
-  { id: "under_20", label: "Under $20/mo" },
-  { id: "under_50", label: "Under $50/mo" },
-  { id: "enterprise", label: "Enterprise budget" },
-] as const;
-
-const RUNTIME = [
-  { id: "cloud", label: "Cloud / SaaS" },
-  { id: "browser", label: "Browser-first" },
-  { id: "mobile", label: "Mobile apps" },
-  { id: "local", label: "Local / self-hosted" },
-] as const;
+const GOALS = QUIZ_GOAL_OPTIONS;
+const EXP = QUIZ_EXPERIENCE_OPTIONS;
+const BUDGET = QUIZ_BUDGET_OPTIONS;
+const RUNTIME = QUIZ_RUNTIME_OPTIONS;
 
 function optionClass(selected: boolean) {
   return `rounded-lg border px-4 py-3 text-left text-sm ${
@@ -158,9 +137,9 @@ export function QuizClient() {
         {step === 0 && (
           <>
             <p className="text-sm font-medium text-gray-300">
-              What do you want to accomplish?
+              {quizQuestion("goals").prompt}
             </p>
-            <p className="text-xs text-gray-500">Pick up to two.</p>
+            <p className="text-xs text-gray-500">{quizQuestion("goals").hint}</p>
             {goalLimitNotice && (
               <p role="status" className="text-sm text-orange-400">
                 Pick up to 2 goals
@@ -185,7 +164,7 @@ export function QuizClient() {
         {step === 1 && (
           <>
             <p className="text-sm font-medium text-gray-300">
-              What&apos;s your experience level?
+              {quizQuestion("experience").prompt}
             </p>
             <div className="grid gap-2">
               {EXP.map((g) => (
@@ -206,7 +185,7 @@ export function QuizClient() {
         {step === 2 && (
           <>
             <p className="text-sm font-medium text-gray-300">
-              What&apos;s your monthly tool budget?
+              {quizQuestion("budget").prompt}
             </p>
             <div className="grid gap-2">
               {BUDGET.map((g) => (
@@ -227,11 +206,9 @@ export function QuizClient() {
         {step === 3 && (
           <>
             <p className="text-sm font-medium text-gray-300">
-              Where should AI tools run?
+              {quizQuestion("runtime").prompt}
             </p>
-            <p className="text-xs text-gray-500">
-              Local/self-hosted often means more setup but more control.
-            </p>
+            <p className="text-xs text-gray-500">{quizQuestion("runtime").hint}</p>
             <div className="mt-2 grid gap-2">
               {RUNTIME.map((g) => (
                 <button

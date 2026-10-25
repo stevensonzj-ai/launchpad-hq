@@ -14,7 +14,8 @@
  *
  * Order is editorial and fixed. Sponsorship never changes inclusion or order.
  *
- * TODO(feat/data-feed-v1): expose each page as JSON at /data/v1/compare/{slug}.json.
+ * Each page is also served as JSON at /data/v1/compare/{slug}.json (see
+ * src/lib/public-data/compare.ts); the reverse-order slug 301s there too.
  */
 
 export type CompareFaq = { question: string; answer: string };
@@ -294,6 +295,30 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
 
 export function comparePagePath(page: ComparePage): string {
   return page.kind === "head-to-head" ? `/compare/${page.slug}` : `/alternatives/${page.slug}`;
+}
+
+/** The page's JSON record, relative to /data/v1. */
+export function comparePageDataPath(page: ComparePage): string {
+  return `/compare/${page.slug}.json`;
+}
+
+export type CompareSlugResolution =
+  | { kind: "page"; page: ComparePage }
+  | { kind: "redirect"; slug: string }
+  | { kind: "not_found" };
+
+/**
+ * A /data/v1/compare slug: a registry page, a reverse-order head-to-head
+ * (301 to the canonical slug, same as compareRedirects for the HTML), or
+ * nothing.
+ */
+export function resolveCompareSlug(slug: string, pages: readonly ComparePage[] = COMPARE_PAGES): CompareSlugResolution {
+  const page = pages.find((p) => p.slug === slug);
+  if (page) return { kind: "page", page };
+  const reversed = pages.find(
+    (p): p is HeadToHeadPage => p.kind === "head-to-head" && headToHeadSlug(p.b, p.a) === slug,
+  );
+  return reversed ? { kind: "redirect", slug: reversed.slug } : { kind: "not_found" };
 }
 
 /** Tools whose cards or columns the page renders (not also-consider links). */

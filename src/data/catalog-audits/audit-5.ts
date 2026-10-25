@@ -10,7 +10,12 @@ import { REF_FIELDS, type RefField } from "./audit-3-refs";
  *     replacements where the stored array split "tl;dv" into "tl" / "dv";
  *   - ref edits: drop or rename name references to discontinued or
  *     retired products (Sora 2, Kakao Brain (Karlo), Adobe Sensei) in the
- *     String[] reference columns.
+ *     String[] reference columns;
+ *   - text fixes: replace a whole text field only when its current value
+ *     still contains a known-wrong phrase (a guard on the old value, for
+ *     rows whose exact stored text was not available when the audit ran).
+ *
+ * Field patches can also correct `costTier` (the Prisma CostTier enum).
  *
  * Kept free of Prisma and dotenv so it typechecks with the app and can be
  * unit-tested (audit-5.test.ts). Every volatile fact below was re-checked
@@ -26,12 +31,19 @@ export const CHECKED_AT = "2026-10-25";
 
 export type Audit5TextField = "currentPricing" | "freeTierFeatures" | "usageLimits";
 
-export type Audit5Field = Audit5TextField | RefField;
+/** Text fields a guarded text fix may replace. */
+export type Audit5FixField = Audit5TextField | "description";
+
+/** Values of the Prisma `CostTier` enum (prisma/schema.prisma). */
+export type Audit5CostTier = "FREE" | "FREEMIUM" | "PAID" | "ENTERPRISE";
+
+export type Audit5Field = Audit5FixField | RefField | "costTier";
 
 export type Audit5Values = {
   currentPricing?: string;
   freeTierFeatures?: string;
   usageLimits?: string;
+  costTier?: Audit5CostTier;
   /** Full replacement of the stored array. */
   directAlternatives?: string[];
 };
@@ -56,6 +68,25 @@ export type Audit5Patch = {
 export type Audit5RefEdit =
   | { slug: string; field: RefField; op: "remove"; value: string }
   | { slug: string; field: RefField; op: "replace"; from: string; to: string };
+
+/**
+ * Replace `field` with `to` only if its stored value contains `ifContains`
+ * (case-insensitive). Once applied the phrase is gone, so a re-run is a
+ * no-op. Never overrides a field the slug's patch sets.
+ */
+export type Audit5TextFix = {
+  slug: string;
+  field: Audit5FixField;
+  ifContains: string;
+  to: string;
+  sources: string[];
+  checkedAt: string;
+};
+
+/** Verified 2026-10-25: "25% off any paid plan", SheerID, "up to 25% off for classes of 3 or more licenses". */
+const RUNWAY_EDUCATORS_URL = "https://runway.com/educators";
+const RUNWAY_EDUCATION_FREE_TIER =
+  "No free education plan. Verified students and educators get 25% off any paid Runway plan (via SheerID); classroom licensing gives up to 25% off for 3 or more licenses.";
 
 export const AUDIT_5_PATCHES: Audit5Patch[] = [
   {
@@ -302,6 +333,51 @@ export const AUDIT_5_PATCHES: Audit5Patch[] = [
         "Free: 1M tokens/mo (300K/day); Pro: from 10M tokens/mo with rollover; Teams: from 10M tokens per member; Enterprise: custom (official, as of 2026-10-25)",
     },
   },
+  {
+    slug: "runway-for-education",
+    finding:
+      "Row was FREEMIUM and described a free education plan; the educators page offers a discount on paid plans, not free access",
+    sources: [RUNWAY_EDUCATORS_URL],
+    checkedAt: CHECKED_AT,
+    fields: {
+      // Paid-only, self-serve: the same tier other paid-only rows use.
+      costTier: "PAID",
+      freeTierFeatures: RUNWAY_EDUCATION_FREE_TIER,
+    },
+  },
+];
+
+/**
+ * The stored runway-for-education text was not available to this audit, so
+ * any other field still calling the programme free is fixed by phrase.
+ */
+const RUNWAY_FREE_PHRASE = "free for some qualifying institutions";
+
+export const AUDIT_5_TEXT_FIXES: Audit5TextFix[] = [
+  {
+    slug: "runway-for-education",
+    field: "description",
+    ifContains: RUNWAY_FREE_PHRASE,
+    to: "Runway's education programme for students, educators and schools. It is a discount, not a free plan: verified students and educators get 25% off any paid Runway plan (via SheerID), and classroom licensing gives up to 25% off for 3 or more licenses.",
+    sources: [RUNWAY_EDUCATORS_URL],
+    checkedAt: CHECKED_AT,
+  },
+  {
+    slug: "runway-for-education",
+    field: "currentPricing",
+    ifContains: RUNWAY_FREE_PHRASE,
+    to: "Discount on paid Runway plans: 25% off any paid plan for verified students and educators (via SheerID); up to 25% off classroom licensing for 3 or more licenses.",
+    sources: [RUNWAY_EDUCATORS_URL],
+    checkedAt: CHECKED_AT,
+  },
+  {
+    slug: "runway-for-education",
+    field: "usageLimits",
+    ifContains: RUNWAY_FREE_PHRASE,
+    to: "No separate education limits: the discount applies to a paid Runway plan, and that plan's limits apply.",
+    sources: [RUNWAY_EDUCATORS_URL],
+    checkedAt: CHECKED_AT,
+  },
 ];
 
 export const AUDIT_5_REF_EDITS: Audit5RefEdit[] = [
@@ -320,9 +396,11 @@ export const AUDIT_5_REF_EDITS: Audit5RefEdit[] = [
 
 /** The current values of a row, as selected by the runner. */
 export type Audit5Row = {
+  description: string | null;
   currentPricing: string | null;
   freeTierFeatures: string | null;
   usageLimits: string | null;
+  costTier: string;
   directAlternatives: string[];
   complementaryTools: string[];
   budgetAlternativeTo: string[];
@@ -330,12 +408,19 @@ export type Audit5Row = {
 };
 
 export type Audit5Diff =
-  | { field: Audit5TextField; from: string | null; to: string }
+  | { field: Audit5FixField; from: string | null; to: string }
+  | { field: "costTier"; from: string; to: Audit5CostTier }
   | { field: RefField; from: string[]; to: string[] };
 
 /** Every slug audit 5 touches, field patches first, in data order. */
 export function audit5Slugs(): string[] {
-  return [...new Set([...AUDIT_5_PATCHES.map((p) => p.slug), ...AUDIT_5_REF_EDITS.map((e) => e.slug)])];
+  return [
+    ...new Set([
+      ...AUDIT_5_PATCHES.map((p) => p.slug),
+      ...AUDIT_5_REF_EDITS.map((e) => e.slug),
+      ...AUDIT_5_TEXT_FIXES.map((f) => f.slug),
+    ]),
+  ];
 }
 
 function sameArray(a: readonly string[], b: readonly string[]): boolean {
@@ -382,6 +467,7 @@ export function diffAudit5(
   row: Audit5Row,
   patch: Audit5Patch | undefined,
   refEdits: readonly Audit5RefEdit[],
+  textFixes: readonly Audit5TextFix[] = [],
 ): Audit5Diff[] {
   const diffs: Audit5Diff[] = [];
   const fields = patch?.fields ?? {};
@@ -389,6 +475,19 @@ export function diffAudit5(
   for (const field of ["currentPricing", "freeTierFeatures", "usageLimits"] as const) {
     const to = fields[field];
     if (to !== undefined && row[field] !== to) diffs.push({ field, from: row[field], to });
+  }
+
+  if (fields.costTier !== undefined && row.costTier !== fields.costTier) {
+    diffs.push({ field: "costTier", from: row.costTier, to: fields.costTier });
+  }
+
+  for (const fix of textFixes) {
+    if (fix.field !== "description" && fields[fix.field] !== undefined) continue;
+    if (diffs.some((d) => d.field === fix.field)) continue;
+    const current = row[fix.field];
+    if (current?.toLowerCase().includes(fix.ifContains.toLowerCase()) && current !== fix.to) {
+      diffs.push({ field: fix.field, from: current, to: fix.to });
+    }
   }
 
   for (const field of REF_FIELDS) {
@@ -402,7 +501,9 @@ export function diffAudit5(
   return diffs;
 }
 
-export type Audit5UpdateData = Partial<Record<Audit5TextField, string> & Record<RefField, string[]>>;
+export type Audit5UpdateData = Partial<
+  Record<Audit5FixField, string> & Record<RefField, string[]> & { costTier: Audit5CostTier }
+>;
 
 /** Prisma `data` for an update: only the differing fields. */
 export function audit5UpdateData(diffs: readonly Audit5Diff[]): Audit5UpdateData {

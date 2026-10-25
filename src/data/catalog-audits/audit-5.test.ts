@@ -5,6 +5,7 @@ import { describe, it } from "node:test";
 import {
   AUDIT_5_PATCHES,
   AUDIT_5_REF_EDITS,
+  AUDIT_5_TEXT_FIXES,
   CHECKED_AT,
   applyRefEdits,
   audit5Slugs,
@@ -25,10 +26,16 @@ function editsFor(slug: string): Audit5RefEdit[] {
   return AUDIT_5_REF_EDITS.filter((e) => e.slug === slug);
 }
 
+function fixesFor(slug: string) {
+  return AUDIT_5_TEXT_FIXES.filter((f) => f.slug === slug);
+}
+
 const EMPTY_ROW: Audit5Row = {
+  description: null,
   currentPricing: null,
   freeTierFeatures: null,
   usageLimits: null,
+  costTier: "FREEMIUM",
   directAlternatives: [],
   complementaryTools: [],
   budgetAlternativeTo: [],
@@ -38,15 +45,17 @@ const EMPTY_ROW: Audit5Row = {
 /** The row as it looks after audit 5 has been applied to it. */
 function applied(row: Audit5Row, slug: string): Audit5Row {
   const patch = AUDIT_5_PATCHES.find((p) => p.slug === slug);
-  return { ...row, ...audit5UpdateData(diffAudit5(row, patch, editsFor(slug))) };
+  return { ...row, ...audit5UpdateData(diffAudit5(row, patch, editsFor(slug), fixesFor(slug))) };
 }
 
 /** A stale row carrying every value audit 5 removes or replaces, plus the tl;dv split. */
 function staleRow(): Audit5Row {
   return {
+    description: "Runway's education programme, free for some qualifying institutions.",
     currentPricing: "old",
     freeTierFeatures: "old",
     usageLimits: "old",
+    costTier: "FREEMIUM",
     directAlternatives: ["tl", "dv", "Sora 2", "Kakao Brain (Karlo)", "Kept"],
     complementaryTools: [
       "Adobe Sensei / Firefly in CC (design)",
@@ -156,6 +165,53 @@ describe("diffAudit5", () => {
     assert.deepEqual(fields, Object.keys(patch.fields).sort());
   });
 
+  it("corrects runway-for-education: paid-only tier and the verified discount text", () => {
+    const patch = patchFor("runway-for-education");
+    assert.deepEqual(patch.sources, ["https://runway.com/educators"]);
+    assert.equal(patch.checkedAt, "2026-10-25");
+    assert.equal(patch.fields.costTier, "PAID");
+    assert.equal(
+      patch.fields.freeTierFeatures,
+      "No free education plan. Verified students and educators get 25% off any paid Runway plan (via SheerID); classroom licensing gives up to 25% off for 3 or more licenses.",
+    );
+    const after = applied(staleRow(), "runway-for-education");
+    assert.equal(after.costTier, "PAID");
+    assert.equal(after.freeTierFeatures, patch.fields.freeTierFeatures);
+    // The ref edit from earlier in audit 5 still applies.
+    assert.ok(!after.complementaryTools.includes("Adobe Sensei (post-production)"));
+  });
+
+  it("guards each text fix on the old phrase: replaced only when present", () => {
+    const fixes = fixesFor("runway-for-education");
+    assert.deepEqual(fixes.map((f) => f.field).sort(), ["currentPricing", "description", "usageLimits"]);
+    for (const fix of AUDIT_5_TEXT_FIXES) {
+      assert.match(fix.sources[0], /^https:\/\//);
+      assert.equal(fix.checkedAt, "2026-10-25");
+      assert.ok(!fix.to.toLowerCase().includes(fix.ifContains.toLowerCase()), "a fix must remove its own phrase");
+    }
+
+    const stale = applied(
+      { ...staleRow(), currentPricing: "Free for some qualifying institutions; otherwise paid plans" },
+      "runway-for-education",
+    );
+    assert.equal(stale.description, fixes.find((f) => f.field === "description")?.to);
+    assert.equal(stale.currentPricing, fixes.find((f) => f.field === "currentPricing")?.to);
+    // usageLimits did not carry the phrase, so it is left alone.
+    assert.equal(stale.usageLimits, "old");
+
+    const clean: Audit5Row = { ...EMPTY_ROW, description: "Runway for schools.", currentPricing: "Paid" };
+    const fields = diffAudit5(clean, undefined, [], fixes).map((d) => d.field);
+    assert.deepEqual(fields, []);
+  });
+
+  it("never lets a text fix override a field the patch sets", () => {
+    const fix = { ...fixesFor("runway-for-education")[0], field: "freeTierFeatures" as const };
+    const row: Audit5Row = { ...EMPTY_ROW, freeTierFeatures: "Free for some qualifying institutions" };
+    const diffs = diffAudit5(row, patchFor("runway-for-education"), [], [fix]);
+    assert.equal(diffs.filter((d) => d.field === "freeTierFeatures").length, 1);
+    assert.equal(diffs.find((d) => d.field === "freeTierFeatures")?.to, patchFor("runway-for-education").fields.freeTierFeatures);
+  });
+
   it("fixes the tl;dv split by replacing directAlternatives wholesale", () => {
     const row: Audit5Row = { ...EMPTY_ROW, directAlternatives: ["tl", "dv", "Otter AI"] };
     const after = applied(row, "tactiq");
@@ -190,7 +246,7 @@ describe("diffAudit5", () => {
       const patch = AUDIT_5_PATCHES.find((p) => p.slug === slug);
       for (const start of [EMPTY_ROW, staleRow()]) {
         const after = applied(start, slug);
-        assert.deepEqual(diffAudit5(after, patch, editsFor(slug)), [], slug);
+        assert.deepEqual(diffAudit5(after, patch, editsFor(slug), fixesFor(slug)), [], slug);
       }
     }
   });

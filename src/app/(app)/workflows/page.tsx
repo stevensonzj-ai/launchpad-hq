@@ -2,14 +2,17 @@ import Link from "next/link";
 import { ArrowLeft, Layers } from "lucide-react";
 import { getAllWorkflows } from "@/data/workflows";
 import { WorkflowCard } from "@/components/workflows/workflow-card";
-import { publicPageMetadata } from "@/lib/seo-metadata";
+import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 
-export const metadata = publicPageMetadata({
-  title: "AI workflow templates | Launchpad HQ",
-  description:
-    "Optimal, hybrid, and budget AI stacks for common jobs — blogging, video, code, and more. Each stack links to catalog pages already in Launchpad HQ.",
-  path: "/workflows",
-});
+export const metadata = withFeedAlternate(
+  publicPageMetadata({
+    title: "AI workflow templates | Launchpad HQ",
+    description:
+      "Optimal, hybrid, and budget AI stacks for common jobs — blogging, video, code, and more. Each stack links to catalog pages already in Launchpad HQ.",
+    path: "/workflows",
+  }),
+  "/workflows/index.json",
+);
 
 export default async function WorkflowsPage() {
   const workflows = getAllWorkflows();

@@ -4,13 +4,16 @@ import Link from "next/link";
 import { COMPARE_HUB, COMPARE_HUB_PATH, COMPARE_PAGES, comparePagePath } from "@/data/compare/pages";
 import { comparePageLoadSlugs, listedComparePages } from "@/data/compare/view";
 import { existingPlatformSlugs } from "@/lib/compare-data";
-import { publicPageMetadata } from "@/lib/seo-metadata";
+import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 
-export const metadata = publicPageMetadata({
-  title: COMPARE_HUB.title,
-  description: COMPARE_HUB.description,
-  path: COMPARE_HUB_PATH,
-});
+export const metadata = withFeedAlternate(
+  publicPageMetadata({
+    title: COMPARE_HUB.title,
+    description: COMPARE_HUB.description,
+    path: COMPARE_HUB_PATH,
+  }),
+  "/compare/index.json",
+);
 
 function PageList({ title, items }: { title: string; items: { href: string; label: string; description: string }[] }) {
   if (items.length === 0) return null;

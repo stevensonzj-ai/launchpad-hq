@@ -12,6 +12,7 @@ describe("server.json (MCP Registry metadata)", () => {
     websiteUrl: string;
     icons: { src: string; mimeType: string; sizes: string[] }[];
     remotes: { type: string; url: string }[];
+    packages?: { identifier?: string; version?: string }[];
   };
 
   it("points at the production Streamable HTTP endpoint", () => {
@@ -21,6 +22,13 @@ describe("server.json (MCP Registry metadata)", () => {
 
   it("matches the server version constant", () => {
     assert.equal(json.version, MCP_SERVER_VERSION);
+  });
+
+  it("keeps every package version equal to the server version constant", () => {
+    // Remote-only today (no packages); any package added later must match.
+    for (const pkg of json.packages ?? []) {
+      assert.equal(pkg.version, MCP_SERVER_VERSION, pkg.identifier ?? "package");
+    }
   });
 
   it("uses the approved registry name in reverse-DNS form", () => {

@@ -56,6 +56,7 @@ import {
 import {
   AUDIT_5_PATCHES,
   AUDIT_5_REF_EDITS,
+  AUDIT_5_TEXT_FIXES,
   audit5Slugs,
   audit5UpdateData,
   diffAudit5,
@@ -138,12 +139,15 @@ async function main() {
     for (const slug of audit5Slugs()) {
       const patch = AUDIT_5_PATCHES.find((p) => p.slug === slug);
       const refEdits = AUDIT_5_REF_EDITS.filter((e) => e.slug === slug);
+      const textFixes = AUDIT_5_TEXT_FIXES.filter((f) => f.slug === slug);
       const existing = await prisma.platform.findUnique({
         where: { slug },
         select: {
+          description: true,
           currentPricing: true,
           freeTierFeatures: true,
           usageLimits: true,
+          costTier: true,
           directAlternatives: true,
           complementaryTools: true,
           budgetAlternativeTo: true,
@@ -156,7 +160,7 @@ async function main() {
         continue;
       }
 
-      const diffs = diffAudit5(existing, patch, refEdits);
+      const diffs = diffAudit5(existing, patch, refEdits, textFixes);
       if (diffs.length === 0) continue;
 
       rows += 1;

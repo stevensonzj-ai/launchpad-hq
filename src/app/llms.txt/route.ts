@@ -65,8 +65,15 @@ The same dated, sourced facts as the site and the MCP connector. No sign-in; cac
 - [Index](${SITE_URL}/data/v1/index.json): Counts and links
 - [Catalog](${SITE_URL}/data/v1/catalog.json): Every listed tool in one file
 - One tool: ${SITE_URL}/data/v1/tools/{slug}.json
+- [Comparisons](${SITE_URL}/data/v1/compare/index.json): Every comparison page; one page at ${SITE_URL}/data/v1/compare/{slug}.json
+- [Guides](${SITE_URL}/data/v1/guides/index.json): Every getting-started guide; one guide at ${SITE_URL}/data/v1/guides/{slug}.json
+- [Workflows](${SITE_URL}/data/v1/workflows/index.json): Every workflow template; one workflow at ${SITE_URL}/data/v1/workflows/{slug}.json
+- [Models](${SITE_URL}/data/v1/models/index.json): Every model family; one family at ${SITE_URL}/data/v1/models/{slug}.json
+- [Claude vs GPT](${SITE_URL}/data/v1/models/compare/claude-vs-gpt.json): The Claude vs GPT models page
+- [Quiz](${SITE_URL}/data/v1/quiz.json): Quiz questions, options and scoring map
 - [OpenAPI](${SITE_URL}/data/v1/openapi.json): OpenAPI 3.1 description
 - [JSON Schema](${SITE_URL}/data/v1/schema/tool.json): Schema for one tool
+- [Full text export](${SITE_URL}/llms-full.txt): The catalog, comparisons, guides, workflows and models in one plain-text file
 
 ## Workflows
 

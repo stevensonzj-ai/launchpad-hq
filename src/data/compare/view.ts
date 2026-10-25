@@ -302,6 +302,19 @@ export function compareLinksForSlug(
     .map((page) => ({ href: comparePagePath(page), label: page.title }));
 }
 
+/** Related links, minus links to comparison pages that are not listed. */
+export function listedRelatedLinks(
+  page: ComparePage,
+  listed: readonly ComparePage[],
+): NonNullable<ComparePage["related"]> {
+  const paths = new Set(listed.map(comparePagePath));
+  return (page.related ?? []).filter(
+    (link) =>
+      !(link.href.startsWith("/compare/") || link.href.startsWith("/alternatives/")) ||
+      paths.has(link.href),
+  );
+}
+
 /** Hub plus every listed page, for sitemap.xml. */
 export function compareSitemapPaths(pages: readonly ComparePage[]): string[] {
   return [COMPARE_HUB_PATH, ...pages.map(comparePagePath)];
