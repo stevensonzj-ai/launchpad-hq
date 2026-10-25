@@ -18,6 +18,7 @@ const isPublicRoute = createRouteMatcher([
   "/sponsor-guidelines(.*)",
   "/advertise(.*)",
   "/ai-of-the-week(.*)",
+  "/connector(.*)",
   "/sign-in(.*)",
   "/sign-up(.*)",
   "/api(.*)",

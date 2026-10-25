@@ -30,6 +30,7 @@ describe("sitemap coverage", () => {
       "/advertise",
       "/privacy",
       "/terms",
+      "/connector",
     ]) {
       assert.ok(paths.has(required), `missing ${required}`);
     }

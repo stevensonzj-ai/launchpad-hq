@@ -79,6 +79,11 @@ describe("tool specs", () => {
     assert.match(first, /launchpadhq\.io/);
     assert.match(first, /Sponsorship never affects results/);
   });
+
+  it("fits the instructions in 512 characters and describes the data rather than directing the assistant", () => {
+    assert.ok(MCP_SERVER_INSTRUCTIONS.length <= 512, String(MCP_SERVER_INSTRUCTIONS.length));
+    assert.doesNotMatch(MCP_SERVER_INSTRUCTIONS, /say so|tell users/);
+  });
 });
 
 describe("runTool", () => {
@@ -100,7 +105,10 @@ describe("runTool", () => {
     const spec = TOOL_SPECS.find((t) => t.name === "get_pricing_facts")!;
     const result = await runTool(spec, { platform: "not-a-tool" }, deps());
     assert.equal("isError" in result && result.isError, true);
-    assert.equal(result.content[0].text, "Not in the Launchpad HQ catalog");
+    assert.equal(
+      result.content[0].text,
+      'Not in the Launchpad HQ catalog: "not-a-tool". Try search_tools to find the right name or slug.',
+    );
 
     const tooLong = await runTool(spec, { platform: "x".repeat(201) }, deps());
     assert.equal("isError" in tooLong && tooLong.isError, true);
