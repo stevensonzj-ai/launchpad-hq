@@ -274,6 +274,29 @@ consequential sentence on a developer-platform page — it decides whether a non
 reader starts at all — and it is exactly the sentence nobody can verify without an account.
 Attribute it (§ 8c) rather than asserting it.
 
+## 8e. Never type a price or a plan limit
+
+Owner approval, 2026-10-25: guide pages show current catalog prices, never prices typed into
+the text. Typed dollar amounts and allowances ("Plus is $20 a month", "the free plan includes
+25 generations a month") go stale between review passes, and the guide header already shows
+the tool's current starting price from the catalog.
+
+- **Default: describe the shape, not the number.** "The free plan has a small monthly
+  generation allowance", "paid plans add credits and are cheaper billed annually". Point to
+  the tool's Launchpad page for figures at most once or twice per page.
+- **When the price matters to the sentence**, use a catalog token, filled in at render time
+  by the same code that serves `/data/v1`:
+  `{{price:<slug>:<Plan name>}}` prints that plan's price; `{{from:<slug>}}` prints the
+  lowest paid plan's price. Tokens only work for tools whose fact file
+  (`src/data/facts/<slug>.ts`) has `plans`, and the plan name must match exactly. Read the
+  resolved text before keeping a token — if it reads awkwardly, rewrite instead. Never
+  tokenise a free plan; say "free". No tokens in `title` or `tagline`.
+- **Not prices:** example data inside a prompt, a funding round, a licence revenue threshold,
+  a file-size cap, a trial length. If the guard flags one, add a reasoned entry to
+  `src/lib/public-data/price-guard-allowlist.ts` rather than contorting the sentence.
+- **Check:** `npm test` runs `price-guard.test.ts` (no typed prices or plan limits) and
+  `price-tokens.test.ts` (every token resolves). Both must pass.
+
 ## 9. Run a reuse check across the batch
 
 Before submitting a batch, list every sentence frame used in more than one page's
