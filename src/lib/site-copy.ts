@@ -68,7 +68,7 @@ export const ABOUT_SECTIONS: CopySection[] = [
     heading: "How tools are chosen",
     paragraphs: [
       "A tool is included when a non-technical person could plausibly get value from it, when people are likely to hear about it and come looking for it, or when it fills a real gap in a category, such as a free or open-source alternative to a paid tool. Being popular alone is not enough.",
-      "Tools with privacy or data-handling questions are usually included with a plain, dated note rather than left out, so you can decide for yourself. Every tool carries a privacy level (high, medium or low) based on its published policies. Low is a factual signal, not a verdict.",
+      "Tools with privacy or data-handling questions are usually included with a plain, dated note rather than left out, so you can decide for yourself. Each tool shows a privacy level (high, medium or low) that summarises how it handles your data. Low is a factual signal, not a verdict.",
     ],
   },
   {

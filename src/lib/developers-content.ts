@@ -113,7 +113,7 @@ export function developerSections(): CopySection[] {
     {
       heading: "Errors",
       paragraphs: [
-        'The feed and /api return errors as JSON in one shape, with a stable code, a message and a resolution hint. Codes: bad_request (400), unauthorized (401), not_found (404), method_not_allowed (405), internal_error (500), unavailable (503). The feed is GET/HEAD only. /mcp keeps JSON-RPC errors as the protocol requires and puts the same code and resolution in error.data.',
+        'The feed and the JSON /api routes return errors in one shape, with a stable code, a message and a resolution hint. Codes: bad_request (400), unauthorized (401), not_found (404), method_not_allowed (405), internal_error (500), unavailable (503). The feed is GET/HEAD only. /mcp keeps JSON-RPC errors as the protocol requires and puts the same code and resolution in error.data.',
         ERROR_EXAMPLE,
       ],
     },
