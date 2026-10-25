@@ -21,7 +21,7 @@ export const reductoTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Reducto is built for people writing software, and its site assumes it.** That is a fact about the product rather than about you: it emits data for other programs to consume, not answers for a person to read. If what you want is to ask questions of a PDF and get a readable reply back, **ChatPDF** is the tool for that job and this site has a page on it.",
-    "There is no sales gate on the entry plan. Reducto's pricing page currently lists a self-serve Standard plan carrying **$150 in free usage** — described in the same page's FAQ as 15,000 credits — which at its published rate of around $10 per 1,000 pages for parsing works out to roughly 15,000 pages before you owe anything. Its Studio page says signing in takes \"no setup, no credit card\"; that is Reducto's own wording, worth confirming when you get there.",
+    "There is no sales gate on the entry plan. Reducto's pricing page currently lists a self-serve Standard plan that starts you with a pot of **free usage** — at its published parsing rate, enough for a sizeable batch of documents before you owe anything. Its Studio page says signing in takes \"no setup, no credit card\"; that is Reducto's own wording, worth confirming when you get there.",
     "The two plans above Standard, Growth and Enterprise, are quoted by sales rather than published — and several of the data protections described under Security below start on those plans rather than the free one.",
     "Have a genuinely awkward document ready before you sign in. The reason anyone goes looking for a parser is a scanned invoice, a financial statement whose table runs over a page break, or a form somebody filled in by hand.",
   ],
@@ -106,7 +106,7 @@ export const reductoTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**The $150 is a balance, not a monthly allowance.** The pricing page says standard rates apply after it, which reads as one pot you spend down rather than something that resets. Bulk-parsing a back catalogue is exactly how you would burn through it without noticing.",
+    "**The free usage is a balance, not a monthly allowance.** The pricing page says standard rates apply after it, which reads as one pot you spend down rather than something that resets. Bulk-parsing a back catalogue is exactly how you would burn through it without noticing.",
     "The endpoint names **are** the pricing, and the \"deep\" variants currently cost roughly double their plain counterparts on the published rate card. Reaching for the strongest option by reflex is the expensive habit here.",
     "Upload limits depend on how you send the file, not on the file. Direct upload is currently capped at 100MB, a presigned upload at 5GB, and passing a link has no stated cap — so \"too big\" usually means you used the wrong door rather than that the document is unsupported.",
     "**This company is moving fast.** It raised a $75M Series B in October 2025, acquired another company in May 2026, and has repositioned from a parsing API to an \"agentic document platform\" along the way. Product names, endpoints and prices are worth re-checking against its own docs before you build anything on them.",

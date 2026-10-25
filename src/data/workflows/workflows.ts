@@ -11,8 +11,6 @@ export const WORKFLOWS: WorkflowTemplate[] = [
     description:
       "Research, outline, draft, and polish a publish-ready article using complementary AI tools.",
     tags: ["writing", "content"],
-    costRange:
-      "$0 (Gemini Free + LanguageTool Basic) to ~$20–$50+/mo as of 2026-10-14, depending on ChatGPT Plus, Perplexity Pro, and Grammarly Pro",
     tiers: {
       optimal: {
         id: "optimal",
@@ -38,9 +36,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Best for polishing. Catches mistakes and improves clarity so your final draft reads professional.",
           },
         ],
-        note: "Prices: ChatGPT Plus $20/mo (OpenAI Help, as of 2026-10-14). Perplexity Pro listed at $17/mo billed annually on perplexity.ai/pro (as of 2026-10-14; monthly rate unverified). Grammarly Pro shows $12 on grammarly.com/plans (as of 2026-10-14; billing interval unverified).",
-        estMonthlyCost:
-          "~$20–$50+/mo as of 2026-10-14 (ChatGPT Plus $20/mo per help.openai.com; Perplexity Pro $17/mo billed annually per perplexity.ai/pro; Grammarly Pro $12 on grammarly.com/plans — billing interval unverified). Stay on Free/Basic tiers to spend $0.",
+        note: "All three tools have free plans. ChatGPT Plus, Perplexity Pro and Grammarly Pro add more use; each tool's current price is on its Launchpad page.",
         timeEstimate: "About 45–90 minutes for a 1,000-word post",
         result: "A cited outline plus a publish-ready draft with a grammar pass",
         steps: [
@@ -92,9 +88,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Keeps drafts and edits in one workspace. Fits this tier when you want structure and light AI assists in Notion.",
           },
         ],
-        note: "Notion AI is a limited trial on Free and Plus; Notion Agent is included on Business ($20/member/mo on notion.com/pricing as of 2026-10-14).",
-        estMonthlyCost:
-          "~$20/mo as of 2026-10-14 if you pay ChatGPT Plus and keep Notion on Free (Notion AI = limited trial on Free/Plus per notion.com/pricing). Notion Business is $20/member/mo if you need Notion Agent. ChatGPT Free is $0.",
+        note: "Notion AI is a limited trial on Notion's Free and Plus plans; Notion Agent comes with the Business plan.",
         timeEstimate: "About 40–75 minutes",
         result: "A structured draft living next to your notes in Notion",
         steps: [
@@ -137,9 +131,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Free grammar and style checking without a paid editor. Pairs well with any free chat model for cleanup.",
           },
         ],
-        note: "Gemini Free is listed on gemini.google/subscriptions as of 2026-10-14. LanguageTool Basic/free is on languagetool.org/pricing; Premium starts at €19.90/mo per LanguageTool Help (2026-03-24).",
-        estMonthlyCost:
-          "$0 as of 2026-10-14 on Gemini Free (gemini.google/subscriptions) and LanguageTool Basic (languagetool.org/pricing). LanguageTool Premium is optional (€19.90/mo per official Help, March 2026).",
+        note: "Gemini's Free plan and LanguageTool's free Basic checker keep this tier at no cost. LanguageTool Premium is optional.",
         timeEstimate: "About 40–80 minutes",
         result: "A readable draft you can publish after a free grammar pass",
         steps: [
@@ -158,7 +150,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             label: "Check grammar (free)",
             name: "LanguageTool",
             action:
-              "Paste the draft into LanguageTool’s free checker (2,000-character field limit on Basic per languagetool.org/pricing as of 2026-10-14 — check long posts in chunks).",
+              "Paste the draft into LanguageTool’s free checker. The free Basic checker limits how much text you can paste at once, so check long posts in chunks.",
           },
         ],
       },
@@ -290,13 +282,13 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Try free tiers for voiceovers before upgrading. Fits narrated explainers on a tight budget.",
           },
           {
-            name: "PlayHT",
-            slug: "play-ht",
+            name: "Inworld AI",
+            slug: "inworld-ai",
             rationale:
-              "Second free-first TTS to compare voices side by side—good before you commit to a paid voice stack.",
+              "Second voice tool to compare side by side. Its pay-as-you-go plan starts free and includes voice cloning, though it asks for a card on file before you create a professional clone.",
           },
         ],
-        note: "Use free tiers until you need commercial licensing.",
+        note: "Use free plans until you need commercial licensing. Clone a voice only with the speaker's permission.",
       },
     },
   },
@@ -305,8 +297,6 @@ export const WORKFLOWS: WorkflowTemplate[] = [
     title: "Video editing & shorts",
     description: "Script, generate B-roll, edit, and export for social or web.",
     tags: ["video", "social"],
-    costRange:
-      "Try-for-free / Free Gemini clips (limits unverified) up to ~$22–$45+/mo as of 2026-10-14 on Runway Standard + InVideo Starter (annual list prices)",
     tiers: {
       optimal: {
         id: "optimal",
@@ -326,9 +316,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Templates and AI-assisted assembly in one product—pairs with Runway for gen-to-edit without a legacy NLE.",
           },
         ],
-        note: "Runway Standard is $12/mo billed annually or $15/mo on runwayml.com/pricing (as of 2026-10-14); Free includes a one-time 125 credits. InVideo Starter is $10/seat/mo billed annually ($20 monthly list) on invideo.io/pricing as of 2026-10-14.",
-        estMonthlyCost:
-          "~$22–$35/mo as of 2026-10-14 on annual Runway Standard ($12) + InVideo Starter ($10/seat); ~$35/mo if both are billed monthly ($15 + $20). Credit burn above the plan allotment is unverified for your usage.",
+        note: "Runway's Free plan comes with a one-time batch of credits; paid plans such as Standard add a monthly allowance. InVideo's paid plans are priced per seat. Current prices for both are on their Launchpad pages.",
         timeEstimate: "About 1–3 hours for a 30–60s short",
         result: "A social-ready short with AI B-roll and captions from a template editor",
         steps: [
@@ -348,7 +336,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             toolSlug: "runway",
             name: "Runway",
             action:
-              "Generate short clips from each shot line. Stay inside the plan’s monthly credits (Standard: 125 credits/month on the annual page copy as of 2026-10-14).",
+              "Generate short clips from each shot line. Stay inside your plan’s monthly credits.",
           },
           {
             order: 3,
@@ -356,7 +344,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             toolSlug: "invideo-ai",
             name: "InVideo AI",
             action:
-              "Upload or describe the sequence in InVideo. Use a short-form template, add captions, export in 9:16. Starter has no guest seats (official pricing page as of 2026-10-14).",
+              "Upload or describe the sequence in InVideo. Use a short-form template, add captions, export in 9:16.",
             prompt:
               "Create a 30-second 9:16 video. Hook in the first 2 seconds. Use this script and shot list:\n[PASTE]. Add burned-in captions. No extra claims beyond the script.",
           },
@@ -380,9 +368,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Google’s generative video model for clips and ideas—pairs with InVideo for a full AI-first hybrid stack.",
           },
         ],
-        note: "Veo 3.1 Lite is described as a limited trial on Google AI Pro; Veo 3.1 is highlighted on Google AI Ultra ($99.99/mo on gemini.google/subscriptions as of 2026-10-14). Google AI Plus/Pro dollar amounts were not shown as numbers on that page fetch (unverified).",
-        estMonthlyCost:
-          "InVideo Starter $10/seat/mo billed annually ($20 monthly) as of 2026-10-14 (invideo.io/pricing), plus Google video access: Ultra listed at $99.99/mo; Plus/Pro prices unverified on gemini.google/subscriptions as of 2026-10-14.",
+        note: "Which Veo model you get, and how much you can generate, depends on your Google AI plan. Check Google's plan page before you pay.",
         timeEstimate: "About 45–120 minutes",
         result: "A template-built short with one or two generated clips",
         steps: [
@@ -423,12 +409,10 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             name: "Google Veo",
             slug: "google-veo-3-1",
             rationale:
-              "Extra generative shots on Google’s stack—stays $0-friendly when your quota allows; good variety next to Luma.",
+              "Extra generative shots on Google’s stack—stays free when your quota allows; good variety next to Luma.",
           },
         ],
-        note: "Luma lists “Try for free” and paid Plus at $30/mo (10,000 credits) on lumalabs.ai/dream-machine/pricing as of 2026-10-14; free-tier credit amounts are unverified. Gemini Free includes some creative features; video generation availability on Free is unverified.",
-        estMonthlyCost:
-          "$0 if you stay on Luma’s try-for-free path and Gemini Free (limits unverified as of 2026-10-14). Luma Plus is $30/mo official if you outgrow free.",
+        note: "Luma offers a free way to try it, and its paid plans add monthly credits. Whether Gemini's Free plan can generate video varies, so check in the app.",
         timeEstimate: "About 30–90 minutes",
         result: "A few generated clips you can post or drop into any editor",
         steps: [
@@ -438,7 +422,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             toolSlug: "luma-dream-machine-ray3",
             name: "Luma Dream Machine",
             action:
-              "Start from Luma’s try-for-free entry. If the product asks you to pay, stop — this tier is $0. Paid Plus is $30/mo official.",
+              "Start from Luma’s try-for-free entry. If the product asks you to pay, stop — this tier stays free.",
             prompt:
               "Short 5s clip of [SCENE], handheld, daylight, no text, no celebrity likeness.",
           },
@@ -515,7 +499,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             name: "Ollama",
             slug: "ollama",
             rationale:
-              "Run open models locally at no API cost. Budget pick when privacy and $0 inference matter most.",
+              "Run open models locally at no API cost. Budget pick when privacy and free inference matter most.",
           },
         ],
         note: "Hosted sandboxes or local open models for experimentation.",
@@ -575,7 +559,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
           {
             name: "Whisper (local)",
             rationale:
-              "Open-source ASR you can run offline for $0. Budget choice if you can handle setup and GPU/CPU time.",
+              "Open-source ASR you can run offline for free. Budget choice if you can handle setup and GPU/CPU time.",
           },
           {
             name: "Obsidian",
@@ -727,8 +711,6 @@ export const WORKFLOWS: WorkflowTemplate[] = [
     title: "Meeting intelligence",
     description: "Capture meetings, extract decisions, and sync tasks to your stack.",
     tags: ["productivity", "work"],
-    costRange:
-      "$0 (Fathom Free or Gemini + Docs) to ~$14–$37+/user/mo as of 2026-10-14 (Granola Business and/or Otter Pro + Zapier)",
     tiers: {
       optimal: {
         id: "optimal",
@@ -739,7 +721,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             name: "Granola",
             slug: "granola",
             rationale:
-              "Device-audio capture with no bot in the call. Business unlocks unlimited history and Zapier/Notion integrations (granola.ai/pricing as of 2026-10-14).",
+              "Device-audio capture with no bot in the call. The paid Business plan unlocks unlimited history and the Zapier and Notion integrations.",
           },
           {
             name: "Otter.ai",
@@ -754,9 +736,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Automate pushing notes into CRMs and PM tools. Best when workflows must be hands-off after each call.",
           },
         ],
-        note: "Tell every attendee before you record. Granola Business is $14/user/mo official. Otter Pro is $16.99/user/mo monthly ($8.49 annual promo copy on otter.ai/pricing as of 2026-10-14). Zapier Professional starts at $19.99/mo annual for 750 tasks (zapier.com/pricing as of 2026-10-14); Free is 100 tasks/mo.",
-        estMonthlyCost:
-          "~$14/user/mo as of 2026-10-14 for Granola Business alone (granola.ai/pricing). Add Zapier only if you need automations beyond Granola’s included integrations: Zapier Pro $19.99/mo annual (750 tasks) or Free (100 tasks). Alternative: Otter Pro $16.99/user/mo monthly + Zapier.",
+        note: "Tell every attendee before you record. Granola Business and Otter Pro are priced per user; Zapier's Free plan has a small monthly task allowance and paid plans add more. Current prices are on each tool's Launchpad page.",
         timeEstimate: "Live capture; about 10–20 minutes after the call to file actions",
         result: "Searchable notes plus tasks in the tools you already use",
         steps: [
@@ -766,7 +746,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             toolSlug: "granola",
             name: "Granola",
             action:
-              "Prefer Granola when you do not want a bot to join. Basic is $0 with 30-day history (official). Upgrade to Business ($14/user/mo) for unlimited history and Zapier. Alternatively use Otter if you need a notetaker bot.",
+              "Prefer Granola when you do not want a bot to join. The free Basic plan keeps a limited meeting history; upgrade to Business for unlimited history and Zapier. Alternatively use Otter if you need a notetaker bot.",
           },
           {
             order: 2,
@@ -784,7 +764,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             toolSlug: "zapier",
             name: "Zapier",
             action:
-              "On Granola Business, use the official Zapier integration, or a Zapier Zap from Otter/Fireflies if you captured there. Free Zapier is 100 tasks/mo and two-step Zaps only.",
+              "On Granola Business, use the official Zapier integration, or a Zapier Zap from Otter/Fireflies if you captured there. Zapier's Free plan allows two-step Zaps only and a small monthly task allowance.",
           },
         ],
       },
@@ -806,9 +786,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Link summaries to project pages your team already uses. Balanced ops: notes plus light AI assists.",
           },
         ],
-        note: "Fireflies Free is $0; Pro is $18/user/mo monthly or $10/user/mo billed annually (guide.fireflies.ai billing terms, as of 2026-10-14). Notion AI Meeting Notes is on Business ($20/member/mo) per notion.com/pricing.",
-        estMonthlyCost:
-          "$0–$18/user/mo as of 2026-10-14 for Fireflies (Free vs Pro monthly). Notion Free/Plus has an AI trial only; add $20/member/mo if you need Notion Business / AI Meeting Notes.",
+        note: "Fireflies has a free plan and per-seat paid plans. Notion's AI Meeting Notes come with its Business plan. Current prices are on each tool's Launchpad page.",
         timeEstimate: "Live capture; about 10–15 minutes to file the recap",
         result: "A searchable recap sitting on the right Notion page",
         steps: [
@@ -841,7 +819,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             name: "Fathom",
             slug: "fathom",
             rationale:
-              "Official Free plan: unlimited recordings and transcription, instant AI summaries (fathom.ai/pricing as of 2026-10-14).",
+              "Its Free plan covers recordings, transcription and instant AI summaries.",
           },
           {
             name: "Gemini",
@@ -855,9 +833,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Free shared docs for cleaned minutes. Combine with Fathom export or a manual transcript.",
           },
         ],
-        note: "Fathom Premium is $20/mo monthly / $16 annual; Team $19/$15 per user with a 2-user minimum (fathom.ai/pricing as of 2026-10-14). This budget recipe stays on Free.",
-        estMonthlyCost:
-          "$0 as of 2026-10-14 on Fathom Free (unlimited recordings + transcription per fathom.ai/pricing) and Gemini Free. Google Docs is included with a free Google account (unverified extra Docs AI cost: none required for this recipe).",
+        note: "Fathom's paid plans add more AI features; Team plans need at least two users. This budget recipe stays on Free.",
         timeEstimate: "Live capture; about 10 minutes to clean the summary",
         result: "A shared Doc with decisions and owners",
         steps: [
@@ -867,7 +843,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
             toolSlug: "fathom",
             name: "Fathom",
             action:
-              "Use Fathom’s Free plan (unlimited recordings and transcription, official). Bot-free capture is listed as beta for Mac. Consent still applies.",
+              "Use Fathom’s Free plan for recording and transcription. Bot-free capture is listed as beta for Mac. Consent still applies.",
           },
           {
             order: 2,

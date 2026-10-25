@@ -20,7 +20,7 @@ export const gumloopTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**There is no free plan.** Gumloop dropped its permanent free tier in mid-2026; the pricing page now lists Pro and Enterprise plus a 14-day trial. The entry plan is currently around $37 a month for an allowance in the tens of thousands of **credits** — the platform's unit of spend. Check the pricing page for today's figure, because this company repackaged recently.",
+    "**There is no free plan.** Gumloop dropped its permanent free tier in mid-2026; the pricing page now lists Pro and Enterprise plus a 14-day trial. The entry plan is a monthly subscription with an allowance of **credits** — the platform's unit of spend. Check the pricing page for today's figure, because this company repackaged recently.",
     "So the real question is what fourteen days can show you. Bring a card, and one job worth automating — a folder of invoices, a weekly report you assemble by hand. Open the template gallery rather than a blank canvas and run someone else's finished workflow first.",
     "Simple steps are cheap or free; the AI steps are what you actually pay for, billed on how much text the AI reads and writes, with the bigger, smarter ones costing more per word. Credits currently don't roll over.",
   ],

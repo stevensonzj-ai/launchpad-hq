@@ -21,8 +21,8 @@ export const chatpdfTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "You can try it without signing up. ChatPDF's FAQ says the service \"requires no account to get started,\" and the upload box is the first thing on the homepage. A free account adds saved history and the folders that let you chat with several files at once.",
-    "**The free ceiling is two documents a day** — that is the FAQ's own wording, \"analyze 2 documents every day.\" It counts documents, not questions, and nothing on the site states a limit on how many questions each document will take.",
-    "Paying is currently around $15 a month or about $90 a year, according to ChatPDF GmbH's own App Store listing for its mobile app. The website publishes no pricing page at all, so the figure you meet at checkout on the web may differ from that one.",
+    "**The free plan caps how many documents you can analyse each day.** It counts documents, not questions, and nothing on the site states a limit on how many questions each document will take.",
+    "The paid plan is sold monthly or yearly. The website publishes no pricing page at all — the only published figure is on ChatPDF GmbH's own App Store listing for its mobile app — so what you meet at checkout on the web may differ from that one.",
     "Files have an outer limit of 2,000 pages or 32 MB each, a figure that appears only in ChatPDF's developer documentation. The website states no separate limit for free uploads, so treat that number as a ceiling rather than a promise.",
   ],
 

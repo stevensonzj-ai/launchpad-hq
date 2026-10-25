@@ -165,7 +165,7 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
     baseline: "chatgpt",
     alternatives: [
       { slug: "gemini" },
-      { slug: "mistral-ai-le-chat" },
+      { slug: "mistral-vibe" },
       { slug: "claude" },
       { slug: "microsoft-copilot" },
     ],
@@ -175,7 +175,7 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
     ],
     picks: [
       { slug: "gemini", text: "Pick this if you already have a Google account. The paid plans add Gemini inside apps like Gmail and Docs." },
-      { slug: "mistral-ai-le-chat", text: "Pick this if you want an assistant from a European company for quick answers, web search and simple tasks." },
+      { slug: "mistral-vibe", text: "Pick this if you want an assistant from a European company for quick answers, web search and simple tasks." },
       { slug: "claude", text: "Pick this if you want to group chats into projects and have the assistant create files and run code on the free plan." },
       { slug: "microsoft-copilot", text: "Pick this if you browse with Microsoft Edge, which has Copilot built in, or already pay for a Microsoft subscription that includes Copilot in apps like Word and Excel." },
     ],

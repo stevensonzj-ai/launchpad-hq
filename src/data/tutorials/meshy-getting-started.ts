@@ -21,10 +21,10 @@ export const meshyTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "A free account currently gets 100 credits (the platform's unit of spend — each thing you make costs some) a month, resetting to 100 on the first rather than stacking up, so an unspent month is simply gone. Meshy's own credit table currently prices the shape at around 10 credits on its lightest generator and 20–25 on the heavier two, plus about 10 more for colour and surface detail — roughly five finished objects a month on the light setting, three on a heavy one. Daily sign-in bonuses add a few more credits, and those ones don't expire.",
-    "**Before you spend anything, know that the generator you pick decides whether you can keep the file.** Meshy currently offers three: Meshy 7, Meshy 6 and Meshy 6 Lite. Its free-plan help page says free accounts get around 10 downloads a month and only for Meshy 6 Lite models; its launch post for Meshy 7 says plainly that only Pro tier and above can download Meshy 7 models; its plan comparison table is blunter still and shows free downloads as simply unavailable. Those three vendor pages don't agree, so the honest version is: generating is free, keeping the file may not be, and you should check what your own account offers once you are signed in, before you burn credits on something you can't export.",
+    "A free account gets a small monthly allowance of credits (the platform's unit of spend — each thing you make costs some), resetting on the first rather than stacking up, so an unspent month is simply gone. Meshy's own credit table prices the shape lower on its lightest generator than on the heavier two, with colour and surface detail costing extra — so a free month covers only a handful of finished objects. Daily sign-in bonuses add a few more credits, and those ones don't expire.",
+    "**Before you spend anything, know that the generator you pick decides whether you can keep the file.** Meshy currently offers three: Meshy 7, Meshy 6 and Meshy 6 Lite. Its free-plan help page says free accounts get a small number of downloads a month, and only for Meshy 6 Lite models; its launch post for Meshy 7 says plainly that only Pro tier and above can download Meshy 7 models; its plan comparison table is blunter still and shows free downloads as simply unavailable. Those three vendor pages don't agree, so the honest version is: generating is free, keeping the file may not be, and you should check what your own account offers once you are signed in, before you burn credits on something you can't export.",
     "Per Meshy's own model-comparison page the newest generator, Meshy 7, does images only — typed descriptions run on Meshy 6 or Meshy 6 Lite, so the newest model isn't the one your typed words reach at all.",
-    "You'd pay for the files and for the licence: paid plans currently start at around $20 a month for 1,000 credits and move you from a share-alike licence to private ownership (see Privacy & security). Start at meshy.ai — signing up free asks for no card.",
+    "You'd pay for the files and for the licence: paid plans come with a much larger credit allowance and move you from a share-alike licence to private ownership (see Privacy & security). Start at meshy.ai — signing up free asks for no card.",
   ],
 
   security: [
@@ -103,7 +103,7 @@ export const meshyTutorial: PlatformTutorialData = {
       prompt:
         "A simple solid desk organiser shaped like a curled sleeping cat, thick rounded body, no thin parts, flat underside, one single object",
       whyHere:
-        "Meshy exports STL and 3MF and sells a separate printability-repair step for around 10 credits — which tells you plainly that a freshly generated model often isn't printable as it stands. Asking for thick, flat-bottomed shapes from the start avoids paying to fix thin walls afterwards.",
+        "Meshy exports STL and 3MF and sells a separate printability-repair step that costs extra credits — which tells you plainly that a freshly generated model often isn't printable as it stands. Asking for thick, flat-bottomed shapes from the start avoids paying to fix thin walls afterwards.",
       tweak:
         "\"Flat underside\" is the load-bearing phrase — a printer needs something to stand the model on.",
     },

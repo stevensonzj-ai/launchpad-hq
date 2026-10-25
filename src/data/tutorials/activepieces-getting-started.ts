@@ -17,14 +17,14 @@ export const activepiecesTutorial: PlatformTutorialData = {
   whatItIs: [
     "An automation tool: you build flows that connect apps you already use — Gmail, Slack, Sheets, Notion and around 760 others. Activepieces calls each of those integrations a **piece**, and the code for every one of them is published for anyone to read.",
     "The thing that separates it from Zapier or Make is its licence. The main body of Activepieces is released under the MIT licence, about as permissive as software gets: you may run it, change it and build on it. One \"enterprise\" folder inside the same code is carved out of that and governed by a commercial licence instead. So self-hosting it (running it on your own computer or server rather than the company's) is genuinely free, but not every part of the product comes with you.",
-    "Cloud billing counts runs, not steps: one flow firing is one credit — the platform's unit of spend — however many steps it contains. AI steps are the exception and sit on top at a posted rate.",
+    "Cloud billing counts runs, not steps: one flow firing is one credit — the platform's unit of spend — however many steps it contains. AI steps are the exception and cost extra on top.",
     "It has grown past plumbing. The same workspace now carries AI agents, spreadsheet-style tables, and a chat box that drafts a flow from a plain description, which the docs still mark Beta.",
   ],
 
   beforeYouStart: [
-    "**The free cloud plan is a plan, not a trial.** No card, unlimited flows, one user, and currently around 100 credits a day — a fresh batch each morning rather than a monthly bucket, so roughly a hundred flow runs a day before anything stops.",
+    "**The free cloud plan is a plan, not a trial.** No card, unlimited flows, one user, and a daily credit allowance — a fresh batch each morning rather than a monthly bucket, so running out today never eats into tomorrow.",
     "Run out and nothing breaks. The pricing page says your flows stay switched on and runs past the quota simply don't go through until credits refresh the next day. A mistake on this platform costs you a day, not a month.",
-    "You would start paying when a hundred runs a day stops being enough, or when a second person needs to be in the workspace. Plus is currently about $20 a month for 10,000 credits and Team about $200 for 50,000, with overage around $0.007 a credit. AI steps cost 2, 10 or 20 credits depending on how capable the model is, and a paid plan lets you plug in your own AI account to bring every AI step back down to 1.",
+    "You would start paying when the free daily allowance stops being enough, or when a second person needs to be in the workspace. Plus and Team are flat monthly plans with much larger credit allowances, and runs beyond the allowance are billed per credit. AI steps cost more credits the more capable the model is, and a paid plan lets you plug in your own AI account to bring every AI step back down to the cost of an ordinary run.",
     "Worth checking before you commit anything real: the Activepieces cloud currently runs in one data region, Germany. If your work has to sit somewhere else, running it yourself is the answer rather than the cloud.",
     "**First step:** sign up at activepieces.com, open the template library rather than a blank canvas, and run somebody else's finished flow once before building your own.",
   ],
@@ -57,7 +57,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
       "Staying entirely clear of technical vocabulary — the cloud side is click-based, but the self-hosting half of the story is written for people comfortable running a server",
     ],
     avoid: [
-      "Frontier-model AI steps on the free plan — at 20 credits a step, that is five runs a day out of a hundred",
+      "Frontier-model AI steps on the free plan — each one costs many times an ordinary run, so a handful of runs uses up the whole day's allowance",
       "Treating the free allowance as capacity for a backlog: credits refill daily rather than accumulating, so three hundred queued items cannot clear in one go",
       "Hosting Activepieces for other people out of the enterprise folder — that part's licence forbids copying, distributing, sublicensing or selling it, and production use needs a paid seat count",
     ],
@@ -69,7 +69,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
       whatItDoes:
         "Activepieces hosts the form itself, drops each response into a table or a spreadsheet, and sends you a message about it.",
       whyHere:
-        "Three steps, one credit. On Zapier that same flow spends a separate task per step out of a hundred a month; n8n prices by the run too, but has no permanent free cloud plan to do it on.",
+        "Three steps, one credit. On Zapier that same flow spends a separate task per step out of a small monthly allowance; n8n prices by the run too, but has no permanent free cloud plan to do it on.",
       tweak:
         "Point it at a test spreadsheet and fire it by hand a few times first. The run view shows what each step received.",
     },
@@ -83,7 +83,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
         "Start on the fast model. If the summary is good enough there, you have just bought yourself ten times the runs.",
     },
     {
-      title: "When a hundred runs a day stops being enough → then move the same flow onto your own machine",
+      title: "When the free daily allowance stops being enough → then move the same flow onto your own machine",
       whatItDoes:
         "One install command brings up the free Community Edition on a server you control, where runs and users are unlimited and there is no credit system at all.",
       whyHere:
@@ -105,7 +105,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
   pitfalls: [
     "**What you self-host is the automation core, not the cloud product minus the bill.** Community Edition leaves out projects, single sign-on, audit logs and Git Sync, and those last two sit in the paid part on cloud too. For one person automating their own work that is no loss; for a company it is the entire reason the paid tiers exist.",
     "**AI steps are the only thing that breaks the one-credit-per-run rule.** Price a single run before you schedule it hourly.",
-    "**The free daily figure has moved before.** Community posts in mid-2026 report hitting the cap sooner than they used to, so treat around 100 a day as today's number rather than a promise, and check the pricing page.",
+    "**The free daily figure has moved before.** Community posts in mid-2026 report hitting the cap sooner than they used to, so treat today's allowance as a snapshot rather than a promise, and check the pricing page.",
     "**The chat box that builds a flow from a description is still marked Beta in the docs.** Fine for a first draft; read every step it wrote before you switch it on.",
   ],
 

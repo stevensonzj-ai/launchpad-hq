@@ -3,7 +3,7 @@
   "order": [
     "grok",
     "microsoft-copilot",
-    "mistral-ai-le-chat",
+    "mistral-vibe",
     "ideogram",
     "leonardo-ai",
     "flux",

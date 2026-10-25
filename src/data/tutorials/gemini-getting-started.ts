@@ -22,7 +22,7 @@ export const geminiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `The free tier needs nothing but a Google account — no card, no trial clock. It includes chat, image generation and editing, deep research, live voice, and the notebook research tool.`,
-    `Paid tiers are now named Google AI Plus (2× Free usage), Google AI Pro (4×), and Google AI Ultra (from $99.99/month on gemini.google/subscriptions as of 2026-10-14; a $199.99 Ultra band is also listed). Plus and Pro dollar amounts did not render on that page — do not use the retired “Gemini Advanced” name.`,
+    `Paid tiers are now named Google AI Plus (2× Free usage), Google AI Pro (4×), and Google AI Ultra, the top tier; current prices are on its Launchpad page. Do not use the retired “Gemini Advanced” name.`,
     `Limits are compute-based rather than message-counted, refresh on a five-hour cycle against a weekly ceiling, and can be extended by buying credits.`,
     `**Decide what you are willing to have a human read before you start typing.** See the security section — this is the part that differs most from its competitors.`,
   ],

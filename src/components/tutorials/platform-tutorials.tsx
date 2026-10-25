@@ -18,8 +18,7 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
-import { getStaticTutorialForPlatform } from "@/data/tutorials";
-import type { TutorialArchetype } from "@/data/tutorials";
+import type { PlatformTutorialData, TutorialArchetype } from "@/data/tutorials";
 import { LaunchpadArt } from "@/components/brand/launchpad-art";
 
 // Section-G heading depends on the tutorial archetype.
@@ -123,12 +122,24 @@ function richText(s: string): ReactNode[] {
 type PlatformTutorialsProps = {
   platformName: string;
   platformSlug: string;
+  /** The tutorial with price tokens already filled in (content-view.ts), or null. */
+  tutorial: PlatformTutorialData | null;
+  /**
+   * The tool's catalog starting price when it is a concise price
+   * (conciseStartingPrice); null hides the "Current prices" line.
+   */
+  startingPrice?: string | null;
   /** /platform/[slug]/guide passes "h1": the tutorial title is that page's main heading. */
   titleAs?: "h1" | "h2";
 };
 
-export function PlatformTutorials({ platformName, platformSlug, titleAs: TitleTag = "h2" }: PlatformTutorialsProps) {
-  const tutorial = getStaticTutorialForPlatform(platformSlug);
+export function PlatformTutorials({
+  platformName,
+  platformSlug,
+  tutorial,
+  startingPrice,
+  titleAs: TitleTag = "h2",
+}: PlatformTutorialsProps) {
 
   if (!tutorial) {
     return (
@@ -155,7 +166,16 @@ export function PlatformTutorials({ platformName, platformSlug, titleAs: TitleTa
         </p>
         <TitleTag className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">{tutorial.title}</TitleTag>
         <p className="mt-3 max-w-xl text-base leading-relaxed text-gray-300">{tutorial.tagline}</p>
-        <p className="mt-4 text-xs text-gray-400">
+        {startingPrice ? (
+          <p className="mt-4 text-sm text-gray-300">
+            <span className="font-semibold text-white">Current prices:</span> {startingPrice}
+            {" · "}
+            <Link href={`/platform/${platformSlug}`} className="text-orange-400 hover:text-orange-300">
+              See all plans
+            </Link>
+          </p>
+        ) : null}
+        <p className="mt-2 text-xs text-gray-400">
           Last reviewed {tutorial.lastReviewedAt} · for {platformName}
         </p>
       </header>

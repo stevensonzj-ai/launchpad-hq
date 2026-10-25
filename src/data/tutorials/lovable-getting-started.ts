@@ -20,7 +20,7 @@ export const lovableTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "The free plan is genuinely free (no card, not a time-limited trial): a small daily grant of build credits, unlimited public projects, GitHub integration, and **code export on every plan**. It's enough to build a small prototype; a serious build day will exhaust it.",
-    "**Paid starts around $25/month** (Pro) for more credits, private projects, and custom domains.",
+    "**Paid plans start with Pro**, which adds more credits, private projects, and custom domains.",
     "Know the two cost layers (building credits vs. runtime hosting/AI) before you build something you plan to keep live — a prototype is cheap, a trafficked app is not.",
   ],
 

@@ -22,7 +22,7 @@ export const googleLyria3Tutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "You need a Google account, and Google requires you to be 18 or older to use music generation at all.",
-    "Nothing to pay to start. Google's plan comparison lists music generation on every Gemini plan including the free one, so a free account can make tracks. What Google AI Plus (currently around $5 a month), Pro (around $20) and Ultra (from around $100) buy you is a higher ceiling on how much you can generate — not a better music model.",
+    "Nothing to pay to start. Google's plan comparison lists music generation on every Gemini plan including the free one, so a free account can make tracks. What the paid Google AI Plus, Pro and Ultra plans buy you is a higher ceiling on how much you can generate — not a better music model.",
     "**The one setting that will stop you:** Gemini refuses to generate music unless Keep Activity is switched on. That is the setting that saves your chats to your Google account, so the price of making a song here is that the session is kept. A temporary chat or an activity-off account will not work.",
     "Full-length tracks — around two to three minutes — need the Gemini model switched to **Pro** in the model picker. Free accounts get some Pro access rather than unlimited, so you will run out of long tracks sooner than short ones, which run about a minute.",
     "Available in every country where the Gemini app itself is available. Google's launch announcement named eight interface languages — English, German, Spanish, French, Hindi, Japanese, Korean and Portuguese — and that list may well have grown since; what language your *lyrics* are in is a separate question from what language the app speaks.",

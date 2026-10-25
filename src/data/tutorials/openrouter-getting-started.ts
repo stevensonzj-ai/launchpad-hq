@@ -22,8 +22,8 @@ export const openrouterTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**You can start free, within limits.** OpenRouter's free plan gives access to a set of free models (their IDs end in `:free`). Its rate-limit docs say free models allow 20 requests a minute and 50 a day; once you have bought at least $10 of credits in total, the daily cap rises to 1,000.",
-    "**Paid models run on prepaid credits.** OpenRouter says it passes through each provider's price with no markup on the model itself, and instead charges a platform fee when you buy credits — 5.5% on the standard pay-as-you-go plan, per its pricing page. The minimum purchase in its terms is $5. Prices are per million **tokens** (chunks of text, roughly three-quarters of a word), usually different for what you send and what comes back.",
+    "**You can start free, within limits.** OpenRouter's free plan gives access to a set of free models (their IDs end in `:free`). Its rate-limit docs set a per-minute and a daily cap on free models, and the daily cap rises sharply once you have bought a small amount of credits in total.",
+    "**Paid models run on prepaid credits.** OpenRouter says it passes through each provider's price with no markup on the model itself, and instead charges a platform fee when you buy credits (on the standard pay-as-you-go plan: {{price:openrouter:Standard}}). Its terms set a small minimum purchase. Prices are per million **tokens** (chunks of text, roughly three-quarters of a word), usually different for what you send and what comes back.",
     "**Unused credits are not a savings account.** OpenRouter's terms let you refund unused credits only within 24 hours of buying them (the fee is not refunded), and say it may expire credits that go unused for a year. Buy small amounts while you learn.",
     "**You'll need a little code to use the API.** If you only want to chat with AI, a regular chat app is simpler; OpenRouter earns its keep once you are building something or comparing models.",
   ],
@@ -66,7 +66,7 @@ export const openrouterTutorial: PlatformTutorialData = {
       "Keeping an app running when one provider has an outage, using fallback lists.",
     ],
     okayAt: [
-      "Free experimentation. The free models are real, but OpenRouter itself calls them usually unsuitable for production use, and 50 requests a day goes quickly.",
+      "Free experimentation. The free models are real, but OpenRouter itself calls them usually unsuitable for production use, and the free daily cap goes quickly.",
       "Predicting costs. Prices are pass-through and can change; OpenRouter says requests keep working at a model's new price, so check the model page before a big job.",
     ],
     avoid: [

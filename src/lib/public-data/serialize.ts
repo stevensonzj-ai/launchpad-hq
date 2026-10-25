@@ -67,6 +67,18 @@ export function isDiscontinuedTool(facts: ToolFacts | undefined): boolean {
 }
 
 /**
+ * The public cost tier. The Prisma CostTier enum has no "discontinued" value,
+ * so a discontinued tool's row keeps its last tier (PlayHT: FREEMIUM). The
+ * feed and MCP say DISCONTINUED instead, matching the card badge
+ * (`costBadge`), so nothing calls a dead product free.
+ */
+export const DISCONTINUED_COST_TIER = "DISCONTINUED";
+
+export function publicCostTier(costTier: string, facts: ToolFacts | undefined): string {
+  return isDiscontinuedTool(facts) ? DISCONTINUED_COST_TIER : costTier;
+}
+
+/**
  * The page's Alternatives / Works Well With rows, filtered by the same rule
  * as the feed's `alternatives`: no hidden, discontinued or self, up to four.
  */
@@ -156,6 +168,7 @@ export function publicToolCore(row: CatalogRow, facts: ToolFacts | undefined) {
     website: view.website ?? null,
     description: cleanOrNull(view.description),
     lifecycle: facts?.lifecycle ?? ("active" as const),
+    cost_tier: publicCostTier(row.costTier, facts),
     free_tier,
     plans: pricing?.plans ?? [],
     starting_price: pricing?.starting_price ?? null,
@@ -242,7 +255,7 @@ export function toPublicTool(
           windows: view.windowsAppUrl,
           linux: view.linuxAppUrl,
         },
-    cost_tier: row.costTier,
+    cost_tier: core.cost_tier,
     difficulty: row.difficultyLevel,
     technical: {
       privacy_level: row.privacyLevel,

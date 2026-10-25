@@ -20,7 +20,7 @@ export const writesonicChatsonicTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**This one costs money on day one.** There is no permanently free plan. The signup page offers a 7-day free trial with no credit card, and after that the cheapest plan — currently Starter, around $79/month, less if you pay for a year up front — is the floor.",
+    "**This one costs money on day one.** There is no permanently free plan. The signup page offers a 7-day free trial with no credit card, and after that the cheapest plan — currently Starter, which costs less per month if you pay for a year up front — is the floor.",
     "You need a website you control before this is worth anything: roughly half of what you are buying is diagnosis of your own pages — audits, content scores, fixes. With no site to point it at, you are paying for a dashboard that tells you a competitor is winning and gives you nowhere to put the answer.",
     "The number that actually runs out is **prompts** (the messages you type — here, the customer questions you ask the platform to track). Plans meter these monthly, currently in the region of 100 on Basic and 200 on Growth, with separate monthly caps on articles and site audits. Article count is what people look at; tracked prompts is what constrains what you can learn.",
     "Come with a list of the questions a real customer would type before choosing someone like you — \"best accountant for freelancers in Leeds,\" not \"accounting.\" Those literal sentences are the raw material.",
@@ -103,8 +103,8 @@ export const writesonicChatsonicTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "Writesonic's own pages disagree about what it costs. The live pricing page currently shows Starter around $79/month with Basic and Growth above it, while the developer docs' subscription page lists no Starter at all and puts Basic at $249/month ($199 annually). Read the pricing page on the day you buy; third-party review figures, including this year's, are not reliable.",
-    "Its marketing pages are stale in a way that will mislead you: writesonic.com/chat still advertises Chatsonic with a free tier and an Individual plan at about $16/month, and still names models from 2024, while the live plan table has no free plan and nothing at $16. The pricing table is what you will be charged.",
+    "Writesonic's own pages disagree about what it costs. The live pricing page currently shows Starter with Basic and Growth above it, while the developer docs' subscription page lists no Starter at all and gives Basic a different price. Read the pricing page on the day you buy; third-party review figures, including this year's, are not reliable.",
+    "Its marketing pages are stale in a way that will mislead you: writesonic.com/chat still advertises Chatsonic with a free tier and a cheap Individual plan, and still names models from 2024, while the live plan table has neither. The pricing table is what you will be charged.",
     "Diary the refund window. The terms dated 12 May 2026 give self-serve customers a full refund within 7 days of purchase by email request, and fees are non-refundable after that except where the law requires otherwise; enterprise and agency subscriptions are non-refundable from the start. That window and the 7-day trial are not the same thing.",
     "Everything you see is scoped to the prompts you wrote. If you guess the questions badly, the platform will faithfully report that you are invisible for questions nobody asks. Revisit the list monthly; it is the input, not a setting.",
     "You own what it generates, but the terms make that ownership conditional — on third-party rights in underlying material and on the terms of the model providers behind the scenes.",

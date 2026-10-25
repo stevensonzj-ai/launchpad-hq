@@ -1,8 +1,8 @@
 import type { PlatformTutorialData } from "./types";
 
-export const mistralAiLeChatTutorial: PlatformTutorialData = {
-  slug: "mistral-ai-le-chat-getting-started",
-  platformSlug: "mistral-ai-le-chat",
+export const mistralVibeTutorial: PlatformTutorialData = {
+  slug: "mistral-vibe-getting-started",
+  platformSlug: "mistral-vibe",
   title: "Getting Started with Mistral Vibe (formerly Le Chat)",
   tagline:
     "The French-built assistant that also works through multi-step jobs — from a company that publishes its AI for anyone to run.",
@@ -23,7 +23,7 @@ export const mistralAiLeChatTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "Free to start: an email address and two minutes, no card. Before you type anything, open Settings and deal with the privacy toggle below — the one setting that defaults against you.",
     "**The free tier limits you by mechanism, not by a published number.** Messages, web searches, coding sessions and images are capped; hit a cap and you wait for a reset. It is not a trial that expires but a permanent account that slows when you lean on it. Mistral publishes no message count, so treat any daily-limit figure as a guess.",
-    "You will feel the ceiling only running multi-step Work tasks daily. Paid: Pro **$14.99/month** (verified students **$5.99**); Team **$24.99/user/month** (mistral.ai/pricing, as of 2026-10-14).",
+    "You will feel the ceiling only running multi-step Work tasks daily. Paid plans are Pro at **{{price:mistral-vibe:Pro}}**, with a discount for verified students, and Team at **{{price:mistral-vibe:Team}}**.",
   ],
 
   security: [

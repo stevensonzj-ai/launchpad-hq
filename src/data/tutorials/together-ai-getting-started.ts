@@ -5,7 +5,7 @@ export const togetherAiTutorial: PlatformTutorialData = {
   platformSlug: "together-ai",
   title: "Getting Started with Together AI",
   tagline:
-    "Two hundred-plus open AI models — text, images, video, speech — on one prepaid account. There is no free trial: it starts with $5 on a card.",
+    "Two hundred-plus open AI models — text, images, video, speech — on one prepaid account. There is no free trial: it starts with a small prepaid top-up on a card.",
   archetype: "pick-and-setup",
   lastReviewedAt: "2026-10-14",
   changelogUrl: "https://docs.together.ai/docs/changelog",
@@ -20,8 +20,8 @@ export const togetherAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**There is no free trial, and that is the first thing to know.** Together removed its free tier in a July 2025 billing change; reaching the platform now means putting at least $5 of credit on a card up front, and at a zero balance your access is suspended until you top it up. If you want to try open models without paying, Groq's free tier or a model on your own computer are the honest starting points — come back once you know what you want to build.",
-    "For text, $5 goes further than you would expect; serverless chat currently lists from **$0.04 per million input tokens**, and some models at $0.00 (together.ai/pricing, as of 2026-10-14). Video is the exception, billed per clip at a few cents each.",
+    "**There is no free trial, and that is the first thing to know.** Together removed its free tier in a July 2025 billing change; reaching the platform now means putting a minimum amount of credit on a card up front, and at a zero balance your access is suspended until you top it up. If you want to try open models without paying, Groq's free tier or a model on your own computer are the honest starting points — come back once you know what you want to build.",
+    "For text, that minimum goes further than you would expect: serverless chat is billed per million tokens at low rates, and a few models currently cost nothing per use. Video is the exception, billed per clip at a few cents each.",
     "Nothing to install — a browser covers everything here. Together Chat may be usable without the card: it launched free with a daily allowance, though Together no longer publishes its limits, so treat what you get there as a bonus rather than a plan.",
   ],
 
@@ -48,7 +48,7 @@ export const togetherAiTutorial: PlatformTutorialData = {
       "Growing without switching vendor: pay-as-you-go, training on your own examples, or whole machines by the hour",
     ],
     okayAt: [
-      "Being looked around cheaply — $5 is a small door charge, but it is a door charge",
+      "Being looked around cheaply — the minimum top-up is a small door charge, but it is a door charge",
       "The hardest reasoning and coding, where the leading closed models are still ahead",
       "Stability of any single model name; the catalogue turns over constantly",
     ],
@@ -65,7 +65,7 @@ export const togetherAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Picks a mid-sized chat model in the browser playground and asks it something you already know the answer to.",
       whyHere:
-        "Together takes the $5 before it shows you anything, so the number going down is your own prepaid balance, not a promotional grant burning off. Watching one real request cost real money is the fastest way to build accurate cost instincts.",
+        "Together takes the minimum top-up before it shows you anything, so the number going down is your own prepaid balance, not a promotional grant burning off. Watching one real request cost real money is the fastest way to build accurate cost instincts.",
     },
     {
       title: "Ask one question of three models from three different labs",
@@ -74,20 +74,20 @@ export const togetherAiTutorial: PlatformTutorialData = {
       whyHere:
         "The catalogue passes 200 models across about ten kinds of work, so one balance buys comparisons that are not limited to text: answer the question, then generate a picture of the answer from the same account, billed per megapixel rather than by the word.",
       tweak:
-        "Then make one short video and stop. Video bills per clip, a few cents each, and it is the only thing here that visibly moves a $5 balance.",
+        "Then make one short video and stop. Video bills per clip, a few cents each, and it is the only thing here that visibly moves a small starting balance.",
     },
     {
       title: "Try Together Chat before deciding you need the platform",
       whatItDoes:
         "Opens Together Chat — the plain chat window, separate from the developer platform — and asks it the questions you came with; Together's own pages suggest it works without the card, though the limits aren't published.",
       whyHere:
-        "Same open models in an ordinary chat window, on machines in the US and Canada, and the one route here that does not begin with a card. If it does everything you came for, what you wanted was a chatbot rather than an AI cloud — and you have saved the $5.",
+        "Same open models in an ordinary chat window, on machines in the US and Canada, and the one route here that does not begin with a card. If it does everything you came for, what you wanted was a chatbot rather than an AI cloud — and you have saved the top-up.",
     },
   ],
 
   pitfalls: [
-    "**The $5 is a door charge, not a subscription.** People arrive expecting a free tier that has not existed since July 2025, and find they cannot send a single request.",
-    "**Reading 'free model' as 'free account'.** A model or two in the catalogue currently costs $0.00 per use, but you still need the funded balance to reach it.",
+    "**The minimum top-up is a door charge, not a subscription.** People arrive expecting a free tier that has not existed since July 2025, and find they cannot send a single request.",
+    "**Reading 'free model' as 'free account'.** A model or two in the catalogue currently costs nothing per use, but you still need the funded balance to reach it.",
     "**Assuming Together built these models.** It hosts open models made by other labs; whether one is any good this month is a question about DeepSeek or Qwen, not about Together.",
   ],
 

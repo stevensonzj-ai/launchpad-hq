@@ -37,6 +37,8 @@ import {
 } from "./content";
 import { FEED_ROWS, GENERATED_AT, HIDDEN_NAME, feedFacts } from "./fixtures";
 import { llmsFullInput, renderLlmsFull } from "./llms-full";
+import { tokenText } from "./content-view";
+import { parsePriceTokens } from "./price-tokens";
 import { hasPriceText, proseCleaner } from "./prose";
 import {
   PublicCompareIndex,
@@ -281,13 +283,18 @@ describe("guides JSON", () => {
     }
   });
 
-  it("drops every sentence that typed a price, and says so", () => {
-    let removed = 0;
+  it("carries no hand-typed price: the only prices left are catalog price tokens", () => {
+    const fill = tokenText(feed);
     for (const guide of guides()) {
-      for (const text of proseStrings(guide)) assert.ok(!hasPriceText(text), `${guide.slug}: ${text}`);
-      removed += guide.prices_removed;
+      const source = getStaticTutorialForPlatform(guide.slug)!;
+      const tokenPrices = proseStrings(source)
+        .flatMap((text) => parsePriceTokens(text).map((t) => fill(t.raw)))
+        .sort((a, b) => b.length - a.length);
+      for (const text of proseStrings(guide)) {
+        const rest = tokenPrices.reduce((acc, price) => acc.split(price).join(""), text);
+        assert.ok(!hasPriceText(rest), `${guide.slug}: ${text}`);
+      }
     }
-    assert.ok(removed > 0, "some guides quoted prices");
   });
 
   it("resolves guide slugs: registered, duplicate (301), hidden, retired and unknown", () => {
@@ -326,8 +333,11 @@ describe("workflows JSON", () => {
   });
 
   it("drops discontinued tools (PlayHT) rather than recommending them", () => {
-    const voice = WORKFLOWS.find((w) => JSON.stringify(w).includes('"play-ht"'));
-    assert.ok(voice, "a workflow still names play-ht in its source data");
+    // No workflow names PlayHT any more (content-parity.test.ts); prove the
+    // feed would still drop it if one did.
+    const base = WORKFLOWS.find((w) => w.slug === "voice-clone")!;
+    const playHt = { name: "PlayHT", slug: "play-ht", rationale: "Old pick." };
+    const voice = { ...base, tiers: { ...base.tiers, budget: { ...base.tiers.budget, tools: [...base.tiers.budget.tools, playHt] } } };
     const out = toPublicWorkflow(voice, feed);
     assert.ok(!JSON.stringify(out).includes("play-ht"));
     assert.ok(!out.tiers.some((tier) => tier.tools.some((t) => t.name === "PlayHT")));

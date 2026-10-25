@@ -5,8 +5,9 @@
  * tool's price here is always the one /data/v1/tools/{slug}.json serves.
  * Hidden and discontinued tools are dropped, as in the feed's
  * `alternatives`. Editorial prose goes through `proseCleaner`, which drops
- * sentences that quote a price. Workflow cost fields (costRange,
- * estMonthlyCost, note) are hand-typed price summaries and are left out.
+ * any sentence that still types a price by hand (price-guard.test.ts keeps
+ * that at zero), and then price tokens are filled in from the catalog by
+ * the same resolver the HTML pages use (content-view.ts).
  *
  * Model API prices are the exception: no catalog row carries them. They
  * come from the model registry (src/data/models), the same values and
@@ -30,6 +31,7 @@ import { QUIZ_QUESTIONS } from "@/lib/quiz-options";
 import { costTiersForBudget, goalKeywords } from "@/lib/recommendations-score";
 import { absoluteUrl } from "@/lib/site";
 import { dataUrl } from "./compare";
+import { tokenText, type TextResolver } from "./content-view";
 import { PRICING_NOTE, proseCleaner, type ProseCleaner } from "./prose";
 import {
   SCHEMA_VERSION,
@@ -60,6 +62,26 @@ const footer = (feed: FeedTools) => ({
 });
 
 const priced = (prose: ProseCleaner) => ({ prices_removed: prose.removed, pricing_note: PRICING_NOTE });
+
+/**
+ * Feed prose: typed prices dropped first, then catalog price tokens filled
+ * in (so a token-filled price is never mistaken for a typed one).
+ */
+function feedProse(feed: FeedTools): ProseCleaner {
+  const prose = proseCleaner();
+  const fill: TextResolver = tokenText(feed);
+  const text = (value: string | null | undefined) => {
+    const cleaned = prose.text(value);
+    return cleaned === null ? null : fill(cleaned);
+  };
+  return {
+    text,
+    list: (values) => (values ?? []).map(text).filter((v): v is string => v !== null),
+    get removed() {
+      return prose.removed;
+    },
+  };
+}
 
 // ---------------------------------------------------------------- guides
 
@@ -100,7 +122,7 @@ function guideLink(item: PlatformTutorialData["whereToNext"][number], feed: Feed
 export function toPublicGuide(tutorial: PlatformTutorialData, feed: FeedTools): PublicGuideT | null {
   const tool = citedToolSummary(tutorial.platformSlug, feed);
   if (!tool || !feed.ctx.hasGuide(tutorial.platformSlug)) return null;
-  const prose = proseCleaner();
+  const prose = feedProse(feed);
   const setup = tutorial.gettingSetUpSafely;
   const guide: Omit<PublicGuideT, "prices_removed" | "pricing_note" | "generated_at" | "sponsored" | "attribution"> = {
     schema_version: SCHEMA_VERSION,
@@ -203,7 +225,7 @@ function workflowTier(tier: WorkflowTier, feed: FeedTools, prose: ProseCleaner):
 }
 
 export function toPublicWorkflow(workflow: WorkflowTemplate, feed: FeedTools): PublicWorkflowT {
-  const prose = proseCleaner();
+  const prose = feedProse(feed);
   const tiers = (["optimal", "hybrid", "budget"] as const).map((id) => workflowTier(workflow.tiers[id], feed, prose));
   return {
     schema_version: SCHEMA_VERSION,

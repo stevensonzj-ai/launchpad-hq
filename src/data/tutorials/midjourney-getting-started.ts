@@ -19,15 +19,15 @@ export const midjourneyTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Paid only — there's no free tier.** This is the big one: unlike most tools here, you pay before you make a single image. The cheapest way in is the **Basic plan at $10/month** (or $8/month billed yearly). First step: go to midjourney.com, sign in with a Google or Discord account, pick Basic, and you're in.",
-    "**Will you need to pay? Yes — so here's the honest math.** Basic ($10) covers roughly 200 images a month, then your fast generations stop. Most people who stick with it move to **Standard ($30/month)**, which adds unlimited \"Relax mode\" — slower to generate, but you stop counting. One quirk: you're buying **GPU time** (the computing power to make images), not a fixed number of images, so heavier jobs use up your allowance faster.",
+    "**Paid only — there's no free tier.** This is the big one: unlike most tools here, you pay before you make a single image. The cheapest way in is the **Basic plan** (cheaper if billed yearly). First step: go to midjourney.com, sign in with a Google or Discord account, pick Basic, and you're in.",
+    "**Will you need to pay? Yes — so here's how the plans work.** Basic gives you a limited monthly allowance of fast generations, and when it runs out your fast generations stop. Most people who stick with it move to **Standard**, which adds unlimited \"Relax mode\" — slower to generate, but you stop counting. One quirk: you're buying **GPU time** (the computing power to make images), not a fixed number of images, so heavier jobs use up your allowance faster.",
     "**If free is a dealbreaker, you're not stuck.** Midjourney is the quality benchmark, but it isn't the only option — the catalog has solid free image generators too, a gentler way to test whether AI image-making is for you before you pay for anything. Browse the Image Generation category (linked below) to compare.",
   ],
 
   security: [
     {
       kind: "text",
-      text: "Midjourney's privacy is unusual, and it's the main reason to use it deliberately. Two things are true by default: what you make is **public**, and the prompts and images you create can be **used to train Midjourney's models**. Privacy (\"Stealth Mode\") is a paid feature — Pro plan ($60/month) and up — and even then it doesn't make images you already generated private.",
+      text: "Midjourney's privacy is unusual, and it's the main reason to use it deliberately. Two things are true by default: what you make is **public**, and the prompts and images you create can be **used to train Midjourney's models**. Privacy (\"Stealth Mode\") is a paid feature — Pro plan and up — and even then it doesn't make images you already generated private.",
     },
     {
       kind: "list",
@@ -93,9 +93,9 @@ export const midjourneyTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**There's no free tier — you pay before your first image.** Unlike most tools here, you can't try it free; budget the $10 minimum before you sign up.",
+    "**There's no free tier — you pay before your first image.** Unlike most tools here, you can't try it free; budget for at least the Basic plan before you sign up.",
     "**Everything you make is public by default.** On the plans below Pro, your prompts and images are visible to others in Midjourney's gallery — don't generate anything you'd want kept private unless you're paying for Stealth Mode.",
-    "**You're buying GPU time, not a set number of images.** Basic's allowance covers roughly 200 images, then fast generation stops; Standard's unlimited \"Relax mode\" (slower) is why most people move up.",
+    "**You're buying GPU time, not a set number of images.** Basic's allowance runs out, then fast generation stops; Standard's unlimited \"Relax mode\" (slower) is why most people move up.",
     "**Overstuffing the prompt.** Beginners pile in twenty details at once and get a muddle. Start with a clear, simple description and add one element at a time.",
     "**Stopping at the first four.** The opening grid is a starting point, not the answer — pick the closest, use Vary, or run it again. The good results come from iterating.",
   ],

@@ -177,6 +177,7 @@ Tutorials are a **live, active workstream — not a P3 placeholder.** The pilot 
 
 - **Web-research pass at authoring time, every page** — not just "are old facts still true" but "what's new the page doesn't mention." Capability drift is mandatory to check.
 - **`lastReviewedAt` means "volatile facts web-verified on this date."** Stamp the build day; it's an honesty contract.
+- **Never type a price or plan limit in a guide or workflow.** Describe the shape ("a small monthly allowance"), or use a catalog token (`{{price:<slug>:<Plan>}}`, `{{from:<slug>}}`) backed by the tool's fact-file `plans`. Guide headers and workflow tiers show current catalog prices automatically. `price-guard.test.ts` and `price-tokens.test.ts` enforce it; see `scripts/tutorial-pipeline/writing-standard.md` § 8e.
 - **No volatile model-version numbers in prose.** Write facts to mechanism, hedged — version numbers rot between passes.
 - **Security posture varies completely by platform — no boilerplate.** Calibrate sharpness to the platform's `privacyLevel`.
 - **Build on the shared renderer; flag, don't custom-build.** One renderer change benefiting all pages is justified; per-page aesthetic divergence is the trap.

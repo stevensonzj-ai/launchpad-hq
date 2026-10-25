@@ -22,8 +22,8 @@ export const kiroTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "Kiro is for people who already write code, or are actively learning to. It works on a project folder that already exists on your computer, and what it produces is code you are responsible for reading. If you want to build something with AI without that background, a browser-based tool like Lovable is a gentler place to start.",
     "Getting in is free and quick: download from kiro.dev, sign in with GitHub, Google or an AWS Builder ID, and no card is asked for.",
-    "The free plan gives you 50 **credits** (the platform's unit of spend — each thing you make costs some) a month. They reset at the start of each billing month, don't roll over, and can't be topped up on the free plan. A simple question can cost under one credit; running a spec task usually costs more than one — so 50 is an evening of experimenting, not a month of work. If you want more, paid plans currently start at $20/month for 1,000 credits.",
-    "Which AI does the work changes how fast that runs out. The free plan includes Claude Sonnet 4.5 with limits plus several cheaper open-weight **models** (the AI \"brain\" that does the actual thinking). There is also a version for people who prefer typing commands, and a browser version, but the browser one needs a paid plan.",
+    "The free plan gives you a small monthly allowance of **credits** (the platform's unit of spend — each thing you make costs some). They reset at the start of each billing month, don't roll over, and can't be topped up on the free plan. A simple question can cost a fraction of a credit; running a spec task usually costs several — so the free allowance is an evening of experimenting, not a month of work. Paid plans come with much larger allowances; current prices are on its Launchpad page.",
+    "Which AI does the work changes how fast that runs out. The free plan includes a Claude Sonnet model, with limits, plus several cheaper open-weight **models** (the AI \"brain\" that does the actual thinking). There is also a version for people who prefer typing commands, and a browser version, but the browser one needs a paid plan.",
   ],
 
   gettingSetUpSafely: {
@@ -75,7 +75,7 @@ export const kiroTutorial: PlatformTutorialData = {
       whatItDoes:
         "In the chat panel's model picker, move off the default Auto to one of the cheap open-weight options for routine work.",
       whyHere:
-        "Kiro prices every model as a multiplier of Auto — currently as low as 0.05x, against 1.3x for Claude Sonnet 4.5 — so on a 50-credit month the picker, not the prompt, is what decides how long you last.",
+        "Kiro prices every model as a multiplier of Auto — currently as low as 0.05x, against 1.3x for Claude Sonnet 4.5 — so on the free plan's small allowance the picker, not the prompt, is what decides how long you last.",
     },
     {
       title: "Write your conventions down once",
@@ -95,7 +95,7 @@ export const kiroTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "The 50 free credits go faster than the number sounds. Spec refinement, task execution and hook runs all come out of the same monthly pool, and they don't carry over.",
+    "The free credits go faster than you'd expect. Spec refinement, task execution and hook runs all come out of the same monthly pool, and they don't carry over.",
     "Approving a task list is not reading the code. The plan can be right and the implementation still wrong.",
     "It's a whole editor, not a plugin. Using it means switching editors; importing your VS Code settings softens that but doesn't remove it.",
     "The docs lag the product in places — the privacy page still frames the paid exemption around Amazon Q Developer Pro, a name that predates today's plan list. Check anything you're relying on inside the app.",

@@ -22,9 +22,9 @@ export const workatoTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Signing up is genuinely self-serve now. Workato's docs list email and password, Google, GitHub or Office 365 as ways in, with no sales contact; its free-signup page mentions signing in with a work email, so whether a personal address is accepted is something you will find out at the form rather than in advance. The free plan comes with a one-time grant of 50,000 **credits** (the platform's unit of spend — each thing that runs costs some). One-time, not monthly: nothing refills it, and Workato does not publish what happens once it is gone.",
+    "Signing up is genuinely self-serve now. Workato's docs list email and password, Google, GitHub or Office 365 as ways in, with no sales contact; its free-signup page mentions signing in with a work email, so whether a personal address is accepted is something you will find out at the form rather than in advance. The free plan comes with a one-time grant of **credits** (the platform's unit of spend — each thing that runs costs some). One-time, not monthly: nothing refills it, and Workato does not publish what happens once it is gone.",
     '**The free plan is licensed for practice, not for real work.** Workato\'s Self-Service Addendum, dated 18 June 2026, limits the non-paid edition to "internal trial, experimental and evaluation purposes" and has you agree not to use it "for any production purposes." Learn on it as much as you like. Anything your job depends on belongs on a paid plan.',
-    "Paying for yourself starts at around $75 a month for 2,500 credits and runs to about $1,275 for 50,000, card on file, per Workato's self-service pricing docs. That is steep beside Zapier or Make, which both have free tiers you are allowed to run real work on. If what you want is to learn automation rather than to connect a company's systems, start with Zapier or Make on this site and come back here when a NetSuite or a Workday is the thing standing in your way.",
+    "Paying for yourself means a monthly self-serve plan, card on file, whose price climbs steeply with its credit allowance, per Workato's self-service pricing docs. Even the entry tier is steep beside Zapier or Make, which both have free tiers you are allowed to run real work on. If what you want is to learn automation rather than to connect a company's systems, start with Zapier or Make on this site and come back here when a NetSuite or a Workday is the thing standing in your way.",
     "You cannot work out in advance how far that grant goes. Workato's docs say credits are consumed by tasks, by requests other programs make to your automations, by rows of data processed and by AI actions — but the conversion rate is not published, and the docs point you to your contract for it. You find out by running things and watching the meter.",
     'Free accounts get no promised help. The same addendum says Workato "is not obligated to provide any technical support" on the non-paid edition, though it may offer some. The documentation site and the community forum are the realistic places to get unstuck.',
   ],
@@ -59,7 +59,7 @@ export const workatoTutorial: PlatformTutorialData = {
     avoid: [
       "Running anything your work depends on from the free plan — its own addendum licenses that plan for evaluation only.",
       "Any automation whose data must stay outside the United States while you are on a self-serve account, since choosing a region is an enterprise feature.",
-      "Reading the published $75–$1,275 self-serve prices as what Workato costs. Those are the self-serve tiers. The four contract editions — Standard, Business, Enterprise and Workato One — carry no published figures at all, and that is the version most companies actually buy.",
+      "Reading the published self-serve prices as what Workato costs. Those are the self-serve tiers. The four contract editions — Standard, Business, Enterprise and Workato One — carry no published figures at all, and that is the version most companies actually buy.",
     ],
   },
 
@@ -69,7 +69,7 @@ export const workatoTutorial: PlatformTutorialData = {
       whatItDoes:
         "When a new row is added to a Google Sheet → then post a message into Slack.",
       whyHere:
-        "The Slack message is not the point; watching the grant tick down for the first time is, on a platform that publishes no conversion rate between credits and runs. Zapier tells you a task is a task and gives you about a hundred a month, so the only way to calibrate here is to spend a little deliberately and look at the meter.",
+        "The Slack message is not the point; watching the grant tick down for the first time is, on a platform that publishes no conversion rate between credits and runs. Zapier tells you a task is a task and gives you a fixed monthly allowance of them, so the only way to calibrate here is to spend a little deliberately and look at the meter.",
       tweak:
         "Fire the trigger by hand the first few times — a schedule that runs every five minutes is the fastest way to find out what your grant was worth.",
     },

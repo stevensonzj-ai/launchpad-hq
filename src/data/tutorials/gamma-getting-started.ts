@@ -21,10 +21,10 @@ export const gammaTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "You can start free in a browser at gamma.app. There are also iPhone and Android apps. The free plan gives you 400 credits (the platform's unit of spend — each thing you make costs some) once, at signup. Gamma's help centre is explicit that free credits \"do not refresh\", so treat them as a trial budget rather than a monthly allowance.",
-    "Credits are spent only on AI work: generating a deck, adding slides or images with AI, asking the agent to change something, trying new layouts. Typing, moving things around and fixing a slide by hand cost nothing, and Gamma says it does not charge for AI errors or for the agent's clarifying questions. Costs vary with the length of what you ask for and, for images, with which image generator you pick — Gamma shows the cost before an image is made. On the free plan a single request can produce at most 10 slides.",
+    "You can start free in a browser at gamma.app. There are also iPhone and Android apps. The free plan gives you a one-time batch of credits (the platform's unit of spend — each thing you make costs some) at signup. Gamma's help centre is explicit that free credits \"do not refresh\", so treat them as a trial budget rather than a monthly allowance.",
+    "Credits are spent only on AI work: generating a deck, adding slides or images with AI, asking the agent to change something, trying new layouts. Typing, moving things around and fixing a slide by hand cost nothing, and Gamma says it does not charge for AI errors or for the agent's clarifying questions. Costs vary with the length of what you ask for and, for images, with which image generator you pick — Gamma shows the cost before an image is made. On the free plan a single request can produce only a limited number of slides.",
     "Anything you export on the free plan carries a badge. Gamma's help centre says a \"Made by Gamma\" badge is stamped on PDF and PowerPoint exports whenever your workspace is on the free plan at the moment you export, and a \"Made with Gamma\" badge shows on decks you share as links. A paid plan removes it from future exports only — files you already exported keep it.",
-    "Whether you will need to pay depends on whether that badge or the 400-credit budget gets in your way. Paid plans are billed per person: Plus is $12 a month (or $9 a month billed yearly) with 1,000 credits a month, Pro is $25 (or $18 yearly) with 4,000, and Ultra is $100 (or $90 yearly) with 20,000.",
+    "Whether you will need to pay depends on whether that badge or the one-time credit budget gets in your way. Paid plans are billed per person: Plus, Pro and Ultra each add a monthly credit allowance that grows with the tier, and paying yearly is cheaper.",
   ],
 
   security: [
@@ -59,7 +59,7 @@ export const gammaTutorial: PlatformTutorialData = {
     ],
     avoid: [
       "Handing over a free-plan export as finished work, unless you are happy for it to carry Gamma's badge.",
-      "Spending your free 400 credits regenerating a whole deck to fix one slide. Edit by hand, or point the agent at that slide; the one-time budget does not come back.",
+      "Spending your free credits regenerating a whole deck to fix one slide. Edit by hand, or point the agent at that slide; the one-time budget does not come back.",
     ],
   },
 

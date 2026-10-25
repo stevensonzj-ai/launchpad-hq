@@ -3,6 +3,7 @@ import { readdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
+import { getModelFamilyBySlug, type ModelVersion } from "@/data/models";
 import { auditToolFacts, auditToolFactsList } from "./audit";
 import { diffToolFacts, renderFactsDiffMarkdown } from "./diff";
 import { FACT_PAGE_SKIP_FILES } from "./filenames";
@@ -413,5 +414,23 @@ describe("facts-diff", () => {
     assert.match(markdown, /freeTier/);
     assert.match(markdown, /Updated free-tier summary/);
     assert.match(markdown, /example.com\/fixture-valid\/pricing/);
+  });
+});
+
+describe("anthropic-api prices agree with the model registry", () => {
+  it("each plan's input/output price equals the /models registry value", () => {
+    const claude = getModelFamilyBySlug("claude");
+    assert.ok(claude);
+    const plans = REGISTERED_TOOL_FACTS["anthropic-api"]?.plans?.value ?? [];
+    assert.ok(plans.length > 0);
+    const money = (n: number) => `$${n}`.replace(/(\.\d)$/, "$10");
+    for (const plan of plans) {
+      const version: ModelVersion | undefined = claude.versions.find((v) => v.name === plan.name);
+      assert.ok(version, `${plan.name} missing from the model registry`);
+      const input: number | null = version.apiPriceInput.usdPerMillion;
+      const output: number | null = version.apiPriceOutput.usdPerMillion;
+      assert.ok(input !== null && output !== null, plan.name);
+      assert.equal(plan.price, `${money(input)} input / ${money(output)} output per million tokens`, plan.name);
+    }
   });
 });

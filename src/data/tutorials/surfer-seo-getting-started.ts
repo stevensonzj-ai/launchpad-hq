@@ -20,8 +20,8 @@ export const surferSeoTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**There is no free plan.** Surfer's help centre says new accounts get a 7-day trial of its Pro plan, but you enter billing details at checkout to start it, and on day 7 it converts to whatever plan you picked and charges the card. It does not lapse quietly. Paid plans currently run from around $49/month (Discovery) to $299/month, with a custom-priced Enterprise tier above that.",
-    "Two pieces of Surfer cost nothing and want no subscription. Keyword Surfer, a browser extension Surfer's own page calls \"100% free. Forever.\", shows search volumes inside your normal Google results; the Chrome Web Store lists it as last updated January 2026 with around 600,000 users. The AI Humanizer rewrites up to 500 words with no account, or 1,000 once you register without a plan — English only, as the vendor states it today.",
+    "**There is no free plan.** Surfer's help centre says new accounts get a 7-day trial of its Pro plan, but you enter billing details at checkout to start it, and on day 7 it converts to whatever plan you picked and charges the card. It does not lapse quietly. Paid plans start at Discovery and step up through larger tiers, with a custom-priced Enterprise tier above that; current prices are on its Launchpad page.",
+    "Two pieces of Surfer cost nothing and want no subscription. Keyword Surfer, a browser extension Surfer's own page calls \"100% free. Forever.\", shows search volumes inside your normal Google results; the Chrome Web Store lists it as last updated January 2026 with around 600,000 users. The AI Humanizer rewrites a short passage with no account, and a longer one once you register without a plan — English only, as the vendor states it today.",
     "The trial runs once: Surfer's help centre says it is for new accounts only, and a card already registered with Surfer makes you ineligible, so you cannot restart it under a new email with the same card.",
     "Annual billing saves up to about 17%, but Surfer's Regulations say a cancelled prepaid annual subscription is not refundable, with only a proportional recalculation available on request. Monthly costs more per month and risks less.",
   ],
@@ -89,7 +89,7 @@ export const surferSeoTutorial: PlatformTutorialData = {
       whatItDoes:
         "Open a new document for a phrase one of your existing pages **should** be winning, paste that page in, and read the gap list without writing anything new.",
       whyHere:
-        "Surfer counts this against the same monthly \"documents\" allowance as a fresh article — currently 120 a month on the entry plan — so auditing an old page costs what creating a new one does; check your best pages first, while the allowance is full. Tested against Google Search Console, free and already in most people's hands: it tells you a page lost position, not which subtopics the pages that overtook you cover.",
+        "Surfer counts this against the same monthly \"documents\" allowance as a fresh article, so auditing an old page costs what creating a new one does; check your best pages first, while the allowance is full. Tested against Google Search Console, free and already in most people's hands: it tells you a page lost position, not which subtopics the pages that overtook you cover.",
     },
   ],
 

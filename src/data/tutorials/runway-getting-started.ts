@@ -19,7 +19,7 @@ export const runwayTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **free plan is a one-time sample, not a monthly allowance**: 125 credits that never expire (official FAQ, 2026-10-14), and clips carry a **Runway watermark**. Paid plans: Standard $15/month or $12 billed annually; Pro $35/$28; Max $95/$76. The $76 figure is Max annual, not Pro.",
+    "The **free plan is a one-time sample, not a monthly allowance**: a small credit deposit that never expires (official FAQ, 2026-10-14), and clips carry a **Runway watermark**. The paid plans — Standard, Pro and Max — are monthly, each cheaper billed annually.",
     "**Budget for iteration.** AI video rarely nails it first try; plan on multiple takes per usable clip, and know that credits mostly don't roll over (only the top plan rolls a little forward).",
     "Web-app credits and API credits are **separate pools** — don't assume buying one covers the other.",
   ],

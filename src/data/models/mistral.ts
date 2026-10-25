@@ -5,15 +5,15 @@ const LARGE4 = "https://docs.mistral.ai/models/mistral-large";
 
 export const mistral: PlatformModelFamily = {
   familySlug: "mistral",
-  displayName: "Mistral (Le Chat)",
+  displayName: "Mistral (Vibe)",
   vendor: "Mistral AI",
-  platformSlugs: ["mistral-ai-le-chat"],
+  platformSlugs: ["mistral-vibe"],
   lastVerifiedAt: "2026-10-14",
   whichToUse: [
     "On the API, Mistral Large 4 is the current flagship (public preview, open weights) at the listed sale price of $0.68 / $2.09 per 1M tokens.",
     "Mistral Small 4 is the cheap current chat model on the same pricing table ($0.15 / $0.60).",
     "Mistral Large 3 remains listed at $0.50 / $1.50 — the previous Large, still documented.",
-    "Which of these names appear in free vs Pro Le Chat was not confirmed on docs.mistral.ai in this pass.",
+    "Which of these names appear in free vs Pro Vibe was not confirmed on docs.mistral.ai in this pass.",
   ],
   sources: [
     { label: "API pricing", url: PRICING },
@@ -41,7 +41,7 @@ export const mistral: PlatformModelFamily = {
         note: "Listed sale price; original listed price $4.18 / 1M output.",
       },
       consumerAccess: {
-        summary: "Le Chat plan mapping for Large 4 was not confirmed on the Mistral docs pages checked.",
+        summary: "Vibe plan mapping for Large 4 was not confirmed on the Mistral docs pages checked.",
         verified: false,
       },
       strengths: [
@@ -74,7 +74,7 @@ export const mistral: PlatformModelFamily = {
       apiPriceInput: { usdPerMillion: 0.15, verified: true },
       apiPriceOutput: { usdPerMillion: 0.6, verified: true },
       consumerAccess: {
-        summary: "Le Chat plan mapping for Small 4 was not confirmed on the Mistral docs pages checked.",
+        summary: "Vibe plan mapping for Small 4 was not confirmed on the Mistral docs pages checked.",
         verified: false,
       },
       strengths: [
@@ -101,7 +101,7 @@ export const mistral: PlatformModelFamily = {
       apiPriceInput: { usdPerMillion: 0.5, verified: true },
       apiPriceOutput: { usdPerMillion: 1.5, verified: true },
       consumerAccess: {
-        summary: "Le Chat plan mapping for Large 3 was not confirmed on the Mistral docs pages checked.",
+        summary: "Vibe plan mapping for Large 3 was not confirmed on the Mistral docs pages checked.",
         verified: false,
       },
       strengths: ["Still listed on Mistral’s official pricing table as a flagship-family model."],

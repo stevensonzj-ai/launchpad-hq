@@ -23,7 +23,7 @@ export const grammarlyTutorial: PlatformTutorialData = {
   beforeYouStart: [
     `**The company is now called Superhuman.** It renamed itself on 2025-10-29, uniting the writing tool with an email client and a workspace product. You will see Superhuman branding and prompts for other products. The writing assistant you came for is still Grammarly.`,
     `The free plan covers spelling, grammar, and tone signals plus a limited monthly allowance of AI prompts — roughly a hundred.`,
-    `The main paid tier runs about $12 per person a month paid annually, or about $30 month to month, and raises the AI prompt allowance to around two thousand. There is no published top-up if you exhaust it.`,
+    `The main paid tier is priced per person, cheaper if you pay annually, and raises the AI prompt allowance many times over. There is no published top-up if you exhaust it.`,
     `**Decide where it runs before you install it.** The extension can see what you type on the sites it is enabled for, and that choice is more consequential than any setting inside the product.`,
   ],
 
@@ -91,7 +91,7 @@ export const grammarlyTutorial: PlatformTutorialData = {
     {
       title: "Watch your monthly AI allowance for one cycle",
       whatItDoes:
-        "Keeps track of how many AI prompts you use in a month against the free allowance of roughly a hundred, without changing how you write.",
+        "Keeps track of how many AI prompts you use in a month against the free plan's small allowance, without changing how you write.",
       whyHere: `Free and paid tiers differ mostly in this number, so knowing your real usage tells you whether upgrading would change anything.`,
       tweak: `If you never approach the free limit, the paid tier is buying you features rather than capacity — decide on that basis.`,
     },

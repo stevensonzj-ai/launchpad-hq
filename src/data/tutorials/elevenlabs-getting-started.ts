@@ -19,7 +19,7 @@ export const elevenlabsTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **free tier** gives 10,000 credits a month and lets you try text-to-speech and cloning — but its output is **non-commercial and must credit ElevenLabs**. Commercial use starts on Starter at **$6/month** (30k credits; official FAQ, 2026-10-14). Creator is $22/month; Pro $99; Scale $299.",
+    "The **free tier** gives a monthly credit allowance and lets you try text-to-speech and cloning — but its output is **non-commercial and must credit ElevenLabs**. Commercial use starts on the cheapest paid plan, **Starter** (official FAQ, 2026-10-14); Creator, Pro and Scale add more credits and features.",
     "**If you're going to clone a voice, sort out consent first** — this is the single most important thing about the platform (below).",
     "Credits are metered by characters of text and reset monthly; unused credits generally don't carry over.",
   ],

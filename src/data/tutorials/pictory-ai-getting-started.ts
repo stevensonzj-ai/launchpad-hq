@@ -21,9 +21,9 @@ export const pictoryAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "There is no free tier. Pictory currently gives you a 14-day trial that its pricing page limits to 3 video projects, 15 minutes of video in total and a 5-minute cap on any one video; its signup pages say no card is needed to start. After that it is a paid product, currently from around $29/month on the Starter plan, or around $25/month if you pay for a year up front.",
+    "There is no free tier. Pictory currently gives you a 14-day trial that its pricing page keeps tight, with small limits on how many videos you make and how long they run; its signup pages say no card is needed to start. After that it is a paid product, starting with the Starter plan, a little cheaper if you pay for a year up front.",
     `**Assume trial exports carry Pictory's branding.** Its plan-comparison table lists "no watermark" (a mark on generated output identifying it as AI-made) against the paid plans only, and its free script-to-video landing page also files watermark-free export under the paid tiers. Neither page states outright that the trial is watermarked, so this is an inference from where the vendor puts the line rather than something Pictory says — worth confirming in the app before you build anything around trial output.`,
-    "Two separate allowances run at once. Video minutes cover finished videos — currently around 200 a month on Starter, 600 on Professional. AI **credits** (the platform's unit of spend — each thing you make costs some) are a different pot entirely, spent only when you generate original AI images, AI video or a presenter, and Pictory's credits article says unused ones roll into the next cycle.",
+    "Two separate allowances run at once. Video minutes cover finished videos — each plan has a monthly allowance, larger on Professional than on Starter. AI **credits** (the platform's unit of spend — each thing you make costs some) are a different pot entirely, spent only when you generate original AI images, AI video or a presenter, and Pictory's credits article says unused ones roll into the next cycle.",
     "The language you narrate in decides which voice pool you draw from. Pictory's help centre lists 7 languages for its standard voices — English, Dutch, French, German, Italian, Portuguese and Spanish — and 29 for the premium voices it licenses from ElevenLabs, which every plan meters by the minute. Whether transcription and auto-captions cover the same 29 languages is not stated on any Pictory page we could reach.",
   ],
 
@@ -56,7 +56,7 @@ export const pictoryAiTutorial: PlatformTutorialData = {
     okayAt: [
       "Clip choice. A concrete sentence gets a usable shot; an abstract one gets a generic office corridor you will want to swap",
       "Voice performance. The standard voices read cleanly but flatly; the ones that sound genuinely human come out of the premium pool",
-      "Slide decks. It converts PowerPoint, currently metered as 100 slides a month on Starter, but the result is a narrated slideshow rather than a redesign",
+      "Slide decks. It converts PowerPoint, metered against a monthly slide allowance, but the result is a narrated slideshow rather than a redesign",
     ],
     avoid: [
       "Publishing anything with Pictory's background music to YouTube without following Pictory's own new rule. Its help centre states that from 1 September 2026 you must add the appropriate clearance code — a short string in your video description that tells YouTube's system you are licensed — before publishing, or the track's owner can claim your video. Pictory points to a separate article for where that code comes from, which we could not retrieve, so budget time to find it.",
@@ -79,7 +79,7 @@ export const pictoryAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Upload a webinar, Zoom call or podcast episode, wait for Pictory to write out everything said, then delete the filler sentences from that text and watch the matching video go with them.",
       whyHere:
-        "Descript does transcript-based cutting too, and does it on a permanent free plan capped at 60 minutes of media a month. What Pictory adds on the same file is offering to pick the summary sentences for you and rebuild the recording as a short — Descript leaves every choice to you.",
+        "Descript does transcript-based cutting too, and does it on a permanent free plan with a monthly cap on how much media you can work with. What Pictory adds on the same file is offering to pick the summary sentences for you and rebuild the recording as a short — Descript leaves every choice to you.",
     },
     {
       title: "Export once, change something, export again",
@@ -93,7 +93,7 @@ export const pictoryAiTutorial: PlatformTutorialData = {
       prompt:
         "A slow overhead shot of a wooden desk at dawn, one open notebook and a cooling cup of coffee, warm low light, no people, no text on screen.",
       whyHere:
-        "Pictory publishes a per-model, per-second price for this — its credits article currently puts generated video somewhere between about 1.6 and 20 credits a second depending which model you choose, and a presenter at around 15 credits per 30 seconds. Descript meters AI credits per plan too, but against editing features rather than a published per-second rate, so there is no equivalent meter to calibrate against.",
+        "Pictory publishes a per-model, per-second price for this — its credits article lists a per-second credit cost for generated video that varies widely depending which model you choose, and a separate rate for a presenter. Descript meters AI credits per plan too, but against editing features rather than a published per-second rate, so there is no equivalent meter to calibrate against.",
       tweak:
         "Run the same description on the cheapest and the dearest model in the list and decide whether you can see the difference at the size you publish.",
     },
@@ -109,7 +109,7 @@ export const pictoryAiTutorial: PlatformTutorialData = {
   pitfalls: [
     `The first pass's clip choices are the weakest thing about the output — "our team has grown" reliably returns a stranger's open-plan office. Budget time to swap shots; publishing pass one is how Pictory videos come to look like Pictory videos.`,
     "The trial clock runs on days, not on use — it expires whether or not you make anything, so start it on a day you already have a script ready.",
-    "Annual and monthly plans describe the same allowance with very different-looking numbers — Starter appears as roughly 2,400 minutes a year or roughly 200 a month. Those are the same thing said two ways, not a bigger pot for paying annually.",
+    "Annual and monthly plans describe the same allowance with very different-looking numbers — Starter's minutes appear as a yearly total on one and a monthly figure on the other. Those are the same thing said two ways, not a bigger pot for paying annually.",
     "Any single video is capped at 30 minutes on the paid plans, so a two-hour webinar cannot come out whole. It has to be cut down or split first, which is what the transcript editor is for.",
   ],
 

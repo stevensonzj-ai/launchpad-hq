@@ -22,7 +22,7 @@ export const deepgramTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "You can look before committing anything. Deepgram runs a playground page in the browser, and its own getting-started documentation sends beginners there to try the service without writing code or signing up. What that documentation does not say is whether the playground takes audio of your own or only runs Deepgram's sample — check that first, because the question that matters is whether it is accurate enough on your kind of audio.",
     "Everything past the playground assumes code: using Deepgram properly means putting an **API key** (a password that identifies your app, and that spends your money) into a program. If you do not write code and have no plans to, that is not a shortcoming on your side — it is the shape of this product, and the meeting-notes tools under Where to next are the finished-article version of the same idea.",
-    "Signing up is free, Deepgram's documentation says it includes $200 of credit, and the pricing page currently says no credit card is required. Nova-3 Monolingual pre-recorded currently lists at **$0.0048/min** promotional (regular strikethrough **$0.0077/min** on deepgram.com/pricing as of 2026-10-14). It is a fixed pot that drains as you use it.",
+    "Signing up is free, Deepgram's documentation says it includes a starting balance of free credit, and the pricing page currently says no credit card is required. Transcription is billed by the minute of audio. It is a fixed pot that drains as you use it.",
   ],
 
   security: [
@@ -35,7 +35,7 @@ export const deepgramTutorial: PlatformTutorialData = {
       label: "Two things that are specific to Deepgram rather than to speech tools generally:",
       items: [
         "Deepgram's Terms of Service currently say it may use your content \"to improve our Services... including training and testing our Models,\" under a licence it calls perpetual and royalty-free. No account-level switch turns this off. The documented way out is adding `mip_opt_out=true` to each request — so it lives in the code, must be there from the first request, and cannot be applied backwards to audio already sent.",
-        "Treat the API key as a card number rather than a password. It authorises spending, not merely access: whoever copies it can burn through the $200 and then whatever payment method the account carries, and a stolen key looks like ordinary use from Deepgram's side.",
+        "Treat the API key as a card number rather than a password. It authorises spending, not merely access: whoever copies it can burn through the free credit and then whatever payment method the account carries, and a stolen key looks like ordinary use from Deepgram's side.",
       ],
     },
   ],
@@ -71,7 +71,7 @@ export const deepgramTutorial: PlatformTutorialData = {
       whatItDoes:
         "Estimates your monthly bill from the hours of audio you expect to process and the per-minute rate on the pricing page.",
       whyHere:
-        "Hours of audio per month × 60 × the per-minute rate. Billing is by the minute, and pre-recorded Nova-3 English currently lists at $0.0048/min promotional ($0.0077 regular) — which makes the $200 credit hundreds of hours rather than a weekend trial. That multiplication tells you whether you are evaluating a purchase or something that stays effectively free for a year.",
+        "Hours of audio per month × 60 × the per-minute rate. Billing is by the minute (current rates are on its Launchpad page), and the per-minute rate is low enough that the free credit covers hundreds of hours rather than a weekend trial. That multiplication tells you whether you are evaluating a purchase or something that stays effectively free for a year.",
       tweak:
         "Run it twice, at the pre-recorded rate and at the streaming rate. Live transcription costs more per minute, and that gap is frequently the whole design decision.",
     },
@@ -87,7 +87,7 @@ export const deepgramTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "Reading the $200 as a plan rather than a balance. How fast it disappears depends entirely on how many minutes of audio you push through.",
+    "Reading the free credit as a plan rather than a balance. How fast it disappears depends entirely on how many minutes of audio you push through.",
     "Copying model names and settings out of an old tutorial. Deepgram ships changes most weeks and has already deprecated one speaker-labelling parameter; the changelog is the source of truth.",
   ],
 

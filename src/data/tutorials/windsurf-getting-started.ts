@@ -19,9 +19,9 @@ export const windsurfTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Currently $0: unlimited inline edits and tab completions, a light agent quota, a reduced model list. You need a machine you can install software on (macOS, Windows 10 or later, mainstream Linux) and a folder of code.",
+    "Free to start: unlimited inline edits and tab completions, a light agent quota, a reduced model list. You need a machine you can install software on (macOS, Windows 10 or later, mainstream Linux) and a folder of code.",
     "Usage is metered in **tokens** — chunks of text, roughly a short word each, how AI usage gets counted — not messages, so a big model on a big file costs far more than a quick question. Budgets refresh daily as well as weekly.",
-    "Living off autocomplete you probably will not pay; hand the agent multi-file jobs most days and paid entry currently sits around $20/month. This category reprices often.",
+    "Living off autocomplete you probably will not pay; hand the agent multi-file jobs most days and you will want the entry paid plan — current prices are on its Launchpad page. This category reprices often.",
   ],
 
   gettingSetUpSafely: {

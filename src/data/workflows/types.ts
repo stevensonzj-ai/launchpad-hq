@@ -25,14 +25,13 @@ export type WorkflowTier = {
   name: string;
   tagline: string;
   tools: WorkflowTool[];
+  /**
+   * Short tier note. Never type a price here: the page lists each tool's
+   * current catalog price, and price-guard.test.ts fails on typed prices.
+   */
   note?: string;
   /** Numbered how-to. Omit on unconverted workflows. */
   steps?: WorkflowStep[];
-  /**
-   * Human-readable monthly cost for this tier, with an "as of" date,
-   * or the word "unverified" when official prices could not be confirmed.
-   */
-  estMonthlyCost?: string;
   timeEstimate?: string;
   result?: string;
 };
@@ -42,8 +41,6 @@ export type WorkflowTemplate = {
   title: string;
   description: string;
   tags: string[];
-  /** Short range for index cards, e.g. "$0–~$50/mo as of 2026-10-14". */
-  costRange?: string;
   tiers: {
     optimal: WorkflowTier;
     hybrid: WorkflowTier;

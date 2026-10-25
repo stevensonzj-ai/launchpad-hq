@@ -22,7 +22,7 @@ export const microsoftCopilotTutorial: PlatformTutorialData = {
     "**Nothing to start.** Go to `copilot.com`, or open the Copilot app on a Windows 11 PC, where Microsoft says it is typically installed by default. You can chat without an account.",
     "Signing in with a free personal Microsoft, Apple or Google account is optional, but Microsoft says it unlocks chat history, longer conversations, more image creation and longer voice sessions.",
     "The free tier is not a trial that expires but a working assistant with ceilings: ordinary chat keeps going, while image generation, voice and the heaviest thinking run down and refill.",
-    "Most beginners never pay. You would pay for two things — Copilot inside the Word, Excel and PowerPoint desktop apps, and Copilot Vision, which lets it look at your screen — both currently needing a Microsoft 365 Personal, Family or Premium subscription at roughly $10–20 a month. The business add-on is currently around $20–30 per user per month; prices move.",
+    "Most beginners never pay. You would pay for two things — Copilot inside the Word, Excel and PowerPoint desktop apps, and Copilot Vision, which lets it look at your screen — both currently needing a paid Microsoft 365 Personal, Family or Premium subscription. Businesses pay for a separate per-user add-on; see current plans on the tool page.",
   ],
 
   security: [

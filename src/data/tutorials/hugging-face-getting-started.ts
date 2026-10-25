@@ -23,7 +23,7 @@ export const huggingFaceTutorial: PlatformTutorialData = {
   beforeYouStart: [
     `This platform is marked Advanced in our catalogue and that is honest. Getting real value from it generally means writing some Python. Browsing and trying demos does not.`,
     `A free account costs nothing and needs no card. It covers unrestricted access to public models and datasets, private storage, basic demo hosting, and a small daily allowance of shared GPU time.`,
-    `The individual paid tier runs about $9 a month and mostly buys a larger GPU allowance and more storage. Team and enterprise tiers are per seat.`,
+    `The individual paid tier is a low monthly fee and mostly buys a larger GPU allowance and more storage. Team and enterprise tiers are per seat.`,
     `**The subscription is not the bill.** Compute — hosted demos on upgraded hardware, and dedicated model deployments — is billed separately by the hour on top of any plan.`,
     `Most beginners should arrive here to fetch a model for a different tool, not to run one here.`,
   ],

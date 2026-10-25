@@ -21,9 +21,9 @@ export const deeplTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "You can start right now at deepl.com, with no account and no card. Paste some text into the translator, or go to deepl.com/write for the writing tool. The free version allows 50,000 characters (letters, spaces and punctuation all count) a month, plus one file translation a month of up to 5 MB and one glossary (your own list of how particular terms should be translated). DeepL also limits how much text you can paste at once, so very long text has to go in chunks.",
+    "You can start right now at deepl.com, with no account and no card. Paste some text into the translator, or go to deepl.com/write for the writing tool. The free version has a monthly character allowance (letters, spaces and punctuation all count), a small monthly file-translation allowance with a size cap, and one glossary (your own list of how particular terms should be translated). DeepL also limits how much text you can paste at once, so very long text has to go in chunks.",
     "**Free DeepL is for text you'd be comfortable sharing.** DeepL's free Terms of Use (last updated November 2024) say you \"may not use the Free Services for processing content containing confidential or personal data of any kind.\" That rules out other people's names, addresses or details, and confidential work documents. The terms add that this kind of content \"is only allowed within a DeepL Pro subscription.\" The privacy section below explains why.",
-    "You'll only need to pay if you translate a lot, or if what you translate is private or confidential. DeepL's own name for its paid plans is DeepL Pro. The cheapest is Individual, at €7.49 a month billed annually with VAT included, for 300,000 characters and 3 files a month. Team costs €24.99 per user a month (1,000,000 characters, 20 files) and Business costs €49.99 per user a month (unlimited characters under a fair-use policy, 100 files). Both are also billed annually in euros. Enterprise is custom-priced. DeepL doesn't publish dollar prices for these plans, so if you're outside Europe, check the price shown for your country on deepl.com/pro before you buy.",
+    "You'll only need to pay if you translate a lot, or if what you translate is private or confidential. DeepL's own name for its paid plans is DeepL Pro. The cheapest is Individual, followed by Team and Business, which are priced per user. Each step up raises the character and file allowances, and Business has unlimited characters under a fair-use policy. All three are billed annually in euros with VAT included. Enterprise is custom-priced. DeepL doesn't publish dollar prices for these plans, so if you're outside Europe, check the price shown for your country on deepl.com/pro before you buy.",
     "If you add any of DeepL's browser extensions (small add-ons to your web browser), there are versions for Chrome, Firefox and Edge. The extensions let you translate or polish text while you browse. You sign in with your DeepL account to use them.",
   ],
 
@@ -94,7 +94,7 @@ export const deeplTutorial: PlatformTutorialData = {
       whatItDoes:
         "Drop a Word, PowerPoint or PDF file onto the translator, something non-sensitive like a menu, a brochure or a public notice, and download the translated copy with its layout intact.",
       whyHere:
-        "DeepL's translator page invites you to drag and drop PDF, Word and PowerPoint files straight into the same box you type in. The free version allows one file a month, so use it on something where keeping the layout actually matters. For a few paragraphs, pasting the text is cheaper.",
+        "DeepL's translator page invites you to drag and drop PDF, Word and PowerPoint files straight into the same box you type in. The free version's file allowance is small, so use it on something where keeping the layout actually matters. For a few paragraphs, pasting the text is cheaper.",
     },
   ],
 

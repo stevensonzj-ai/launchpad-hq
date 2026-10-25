@@ -20,8 +20,8 @@ export const quillbotTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "There is a free plan, and QuillBot's own grammar-checker and paraphraser pages say you can start without signing up. The plans page lists the free limits as paraphrasing up to 100 words and summarizing up to 1,200 words. Several modes and tools inside the site carry a Premium label, so you will meet those as you click around rather than all at once.",
-    "If you do pay, Premium is currently listed at $8.33 a month, billed annually — meaning you are charged for the year up front. QuillBot's plans page does not publish a month-to-month price. Its FAQ says you can pause a subscription from your Account page instead of cancelling it, and you are not billed while it is paused.",
+    "There is a free plan, and QuillBot's own grammar-checker and paraphraser pages say you can start without signing up. The plans page lists word limits on free paraphrasing and summarizing. Several modes and tools inside the site carry a Premium label, so you will meet those as you click around rather than all at once.",
+    "If you do pay, Premium is currently listed at {{price:quillbot:Premium}}, meaning you are charged for the year up front. QuillBot's plans page does not publish a month-to-month price. Its FAQ says you can pause a subscription from your Account page instead of cancelling it, and you are not billed while it is paused.",
     "Whether you are **allowed** to use it is your school's or employer's call, not QuillBot's. QuillBot's own Humanizer page tells you to disclose AI use according to your institution's or employer's policies, and its help centre says that rewording a source without citing it can still count as plagiarism. Check the rule that applies to you before you hand anything in.",
     "The browser add-on works on nearly all websites without signing in, according to QuillBot's help centre. Google Docs is the exception: there you have to be signed in to a QuillBot account before it switches on.",
   ],

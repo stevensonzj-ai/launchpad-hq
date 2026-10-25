@@ -23,8 +23,8 @@ export const magicschoolTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**It's for educators, free to start.** You sign up as \"An Educator\" with an email and password, or with Google or Microsoft. MagicSchool's terms say educators use it as a professional aid for their work at a school, not for personal use, and must not let students or other minors use their teacher account.",
-    "**Free means 20 generations a week.** MagicSchool's help centre says the free plan includes 20 AI generations per week; every tool output, refinement and Raina reply counts as one, while student use doesn't count. The count resets every Sunday at midnight UTC. Some features, such as Class Writing Feedback, have their own separate limits.",
-    "**Plus removes the weekly cap.** The pricing page lists MagicSchool Plus at $12.99 a month billed monthly, or $99.96 a year (shown as $8.33 a month) billed annually. Plus adds unlimited generations, output history, and the full set of student tools. Schools and districts can request Enterprise pricing, which adds a data privacy agreement, single sign-on and LMS integrations.",
+    "**Free means a weekly cap.** MagicSchool's help centre says the free plan includes a set number of AI generations per week; every tool output, refinement and Raina reply counts as one, while student use doesn't count. The count resets every Sunday at midnight UTC. Some features, such as Class Writing Feedback, have their own separate limits.",
+    "**Plus removes the weekly cap.** Plus is a paid plan billed monthly or, more cheaply, annually; current prices are on its Launchpad page. Plus adds unlimited generations, output history, and the full set of student tools. Schools and districts can request Enterprise pricing, which adds a data privacy agreement, single sign-on and LMS integrations.",
     "**Refunds have a short window.** MagicSchool's FAQ says an annual subscription can be refunded only if you ask within 14 calendar days of your most recent annual payment; after that it's non-refundable. Monthly plans have the same 14-day window from the most recent monthly payment.",
   ],
 
@@ -56,7 +56,7 @@ export const magicschoolTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Accuracy in specialist subjects. Drafts are a starting point; answer keys and facts need checking.",
-      "Heavy daily use on the free plan — 20 generations go quickly once you start refining.",
+      "Heavy daily use on the free plan — the weekly allowance goes quickly once you start refining.",
     ],
     avoid: [
       "Entering real student names or records without a school data agreement.",
@@ -92,7 +92,7 @@ export const magicschoolTutorial: PlatformTutorialData = {
       prompt:
         "Make this easier for students who are still learning English, and add a short word bank at the top.",
       whyHere:
-        "Ask Raina this after any tool gives you a draft. Refining keeps what already works — though on the free plan each refinement counts as one of your 20 weekly generations.",
+        "Ask Raina this after any tool gives you a draft. Refining keeps what already works — though on the free plan each refinement counts against your weekly generation allowance.",
     },
     {
       title: "Test a Student Room yourself first",

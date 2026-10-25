@@ -21,10 +21,10 @@ export const photoroomTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**The free plan is licensed for personal use only.** Photoroom's terms, effective 29 July 2026 and in force today, license free accounts \"for your own personal, non commercial purposes,\" and its help centre puts it plainly: \"You cannot use Photoroom for commercial use.\" If the photo is going on an Etsy, eBay or Depop listing, the free plan is for deciding whether you like the tool.",
-    "Free accounts currently get 25 exports a week and 100 a month, counted across anything that produces a file — downloads, camera-roll saves, shares. Editing is not what runs out; saving is.",
+    "Free accounts currently have weekly and monthly export caps, counted across anything that produces a file — downloads, camera-roll saves, shares. Editing is not what runs out; saving is.",
     "Free export resolution depends on which Photoroom you use: the vendor documents a 750 × 550 pixel ceiling on the iPhone, iPad and Android apps against 2000 × 2000 in the browser. Those figures were last revised in August 2025, so treat them as the published position rather than a guarantee about today.",
     "Generative tools run on **credits** (the platform's unit of spend — each thing you make costs some); background removal, retouch, preset shadows, expand, resize and the image enhancer do not, listed by the vendor as unmetered under fair use. Free accounts get some credits, but Photoroom does not publish how many — its help centre says only \"a low limit,\" and the pricing comparison table has no free column at all.",
-    "Paying starts at Pro, **$7.50 per month billed yearly** on photoroom.com/pricing as of 2026-10-14 (8,000 AI credits and 1,000 exports). Max and Ultra are yearly billed tiers; their dollar amounts did not render on the official page this pass — unverified. You move up for volume and for the commercial licence, not for better background removal — that is the same tool the free plan already gives you.",
+    "Paying starts at Pro, **billed yearly**, with a much larger allowance of AI credits and exports. Max and Ultra are higher yearly billed tiers. You move up for volume and for the commercial licence, not for better background removal — that is the same tool the free plan already gives you.",
   ],
 
   security: [

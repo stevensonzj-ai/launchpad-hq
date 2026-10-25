@@ -21,8 +21,8 @@ export const pikaTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Pika's pricing compare table (pika.art/pricing, as of 2026-10-14) lists Free at $0 with **0 monthly credits** (credit packs only) and no watermark on downloads.",
-    "Paid monthly credits reset; unused ones vanish and only purchased top-ups carry over. Starter is currently $10/month ($8 billed annually) with 900 credits; Creator $35 ($28 annual); Fancy from $95.",
+    "Pika's pricing compare table (pika.art/pricing, as of 2026-10-14) lists the Free plan with **no monthly credits** included (you buy credit packs instead) and no watermark on downloads.",
+    "Paid monthly credits reset; unused ones vanish and only purchased top-ups carry over. Starter, Creator and Fancy are monthly plans with growing credit allowances, cheaper billed annually; current prices are on its Launchpad page.",
     "Free is a look, not a workflow — you buy a pack or subscribe before you make anything regularly. Bring an email or Google sign-in and a photo; image-to-video is where Pika is strongest. First step: sign up at pika.art, upload a clear photo of one object on a plain background, open Pikaffects, pick an effect.",
   ],
 
@@ -54,7 +54,7 @@ export const pikaTutorial: PlatformTutorialData = {
     bestAt: [
       "One-photo party tricks: Pikaffects on a single clear subject — melting, squishing, cake-ifying",
       "Short social clips where the effect is the idea",
-      "Swapping one object inside footage you already have, via Pikadditions and Pikaswaps — free at 480p for around 20 credits",
+      "Swapping one object inside footage you already have, via Pikadditions and Pikaswaps — free at 480p, for a modest credit cost",
     ],
     okayAt: [
       "Stitching a first frame to a last frame with Pikaframes, currently around 20–25 seconds",
@@ -72,7 +72,7 @@ export const pikaTutorial: PlatformTutorialData = {
       whatItDoes:
         "Uploads a photo of one object on a plain background, opens Pikaffects, picks Melt, and generates.",
       whyHere:
-        "Pikaffects is on the free plan for image-to-video at around 15 credits, your cheapest finished result and no writing at all. Use one clear subject on a plain background — clutter confuses the effect.",
+        "Pikaffects is on the free plan for image-to-video at a low credit cost, your cheapest finished result and no writing at all. Use one clear subject on a plain background — clutter confuses the effect.",
     },
     {
       title: "Add a camera move to a still photo",

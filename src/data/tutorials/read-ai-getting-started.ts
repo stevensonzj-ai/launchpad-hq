@@ -22,8 +22,8 @@ export const readAiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Sign-up sets up auto-join.** You can sign in with Google, Microsoft, Zoom, Slack or email. Read's step-by-step setup guide says the default is to join **all** meetings on your calendar and to send recaps to everyone with access — its own help centre warns people skim this step and are surprised when Read starts joining every meeting.",
-    "**Free is small.** As of 24 October 2026, Read's pricing page lists Free at $0 with 5 meeting reports a month and a 1-hour maximum meeting length. Its help centre adds that reports other people share with you count toward your 5, and that Readouts on Free last only 14 days. New users start on a free trial of a paid plan, then drop to Free.",
-    "**Paid plans are per user.** Read's pricing page lists Pro at $15 per user per month billed annually or $19.75 billed monthly, Enterprise at $22.50 or $29.75, and Enterprise+ (5-licence minimum) at $29.75 or $39.75. The pricing page also says Read doesn't offer refunds.",
+    "**Free is small.** Read's free plan caps how many meeting transcripts you get each month and how long a meeting can run. Its help centre adds that reports other people share with you count toward that allowance, and that Readouts on Free last only 14 days. New users start on a free trial of a paid plan, then drop to Free.",
+    "**Paid plans are per user.** Pro is {{price:read-ai:Pro}} billed annually, more if you pay month to month, and the two Enterprise plans cost more per user. The pricing page also says Read doesn't offer refunds.",
   ],
 
   gettingSetUpSafely: {
@@ -62,7 +62,7 @@ export const readAiTutorial: PlatformTutorialData = {
       "Private feedback on how you come across in meetings.",
     ],
     okayAt: [
-      "Heavy use on the free plan — 5 reports a month, including ones shared with you, goes quickly.",
+      "Heavy use on the free plan — its small monthly allowance, including reports shared with you, goes quickly.",
       "Platforms beyond the big three. Webex, GoTo and RingCentral need the desktop app or a file upload, and uploads are paid.",
     ],
     avoid: [
@@ -104,7 +104,7 @@ export const readAiTutorial: PlatformTutorialData = {
   pitfalls: [
     "**Other people's Read still joins.** Turning Read off for yourself doesn't stop an attendee's own Read account from joining; Read's help centre says a private meeting setting stops others adding it.",
     "**\"Read Stop\" isn't \"Opt Out\".** \"Read Stop\" ends recording but keeps a report; \"Opt Out\" deletes everything.",
-    "**Shared reports eat your free allowance.** Reports others share with you count toward your 5 a month on Free.",
+    "**Shared reports eat your free allowance.** Reports others share with you count toward your monthly allowance on Free.",
     "**Custom vocabulary is paid.** If names keep coming out wrong, the fix — a custom word list — needs a paid plan.",
   ],
 

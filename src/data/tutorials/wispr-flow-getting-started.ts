@@ -22,8 +22,8 @@ export const wisprFlowTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The free plan is a weekly word allowance.** Wispr's plans page lists Free at $0 with 2,000 words a week on Mac and Windows. Phones get a smaller allowance — the docs list 1,000 words on Android and 550 on iPhone — and say individual accounts may differ.",
-    "**Pro removes the limit.** In the US, Wispr's plans page lists Pro at $15 per user per month, or $144 a year (about $12 a month). Prices on the pricing page are localised, so outside the US you will see your own currency. Wispr's docs say new accounts get a 14-day Pro trial, and its pricing page offers students and educators with an education email 50% off Pro.",
+    "**The free plan is a weekly word allowance.** Wispr's plans page lists a free plan with a weekly word cap on Mac and Windows. Phones get a smaller allowance, and the docs say individual accounts may differ.",
+    "**Pro removes the limit.** Pro is priced per user, costs less per month if you pay for the year, and Wispr's pricing page shows prices in your own currency; current prices are on its Launchpad page. Wispr's docs say new accounts get a 14-day Pro trial, and its pricing page offers students and educators with an education email a discount on Pro.",
     "**Check your setup is supported.** Remote desktops, virtual machines and Windows on ARM laptops are not supported, and on a Mac you will need to grant both Microphone and Accessibility permissions so Flow can paste text into other apps.",
   ],
 

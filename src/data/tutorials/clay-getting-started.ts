@@ -21,9 +21,9 @@ export const clayTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Two meters, not one.** Clay's credits guide splits usage into **Actions** (each enrichment, AI run or export) and **Data Credits** (paying for data from providers and AI models). A fully enriched record typically costs 6–20 Data Credits, per that guide. Exporting to CSV costs neither.",
-    "**Free is for learning.** As of 24 October 2026, Clay's pricing page lists Free at $0 with 500 Actions and 100 Data Credits a month and up to 200 rows per table, with no phone-number lookups. New accounts also get a 14-day trial with 1,000 Data Credits, per Clay's plans guide; no credit card is needed to start.",
-    "**Paid plans are expensive by beginner standards.** The pricing page lists Launch from $185 a month and Growth from $495 a month on monthly billing, or $167 and $446 a month billed annually (\"save 10%\"), with higher tiers for more credits. Actions don't roll over; Data Credits partly do, with rules that differ for monthly and annual plans.",
+    "**Two meters, not one.** Clay's credits guide splits usage into **Actions** (each enrichment, AI run or export) and **Data Credits** (paying for data from providers and AI models). A fully enriched record typically costs several Data Credits, per that guide. Exporting to CSV costs neither.",
+    "**Free is for learning.** As of 24 October 2026, Clay's pricing page lists a Free plan with small monthly allowances of Actions and Data Credits, a cap on rows per table, and no phone-number lookups. New accounts also get a 14-day trial with extra Data Credits, per Clay's plans guide; no credit card is needed to start.",
+    "**Paid plans are expensive by beginner standards.** The pricing page lists Launch at {{price:clay:Launch}} and Growth at {{price:clay:Growth}}, more if you pay month to month, with higher tiers for more credits. Actions don't roll over; Data Credits partly do, with rules that differ for monthly and annual plans.",
     "**Using your own provider keys** skips Data Credits for those lookups (the provider bills you instead), but each run still uses an Action.",
   ],
 

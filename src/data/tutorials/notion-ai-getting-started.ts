@@ -19,7 +19,7 @@ export const notionAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The big change to know:** Notion **removed the standalone AI add-on.** Full Notion AI (Ask Notion, agents, AI meeting notes) now comes only with the **Business plan (~$20/user/month)**. The **Free and Plus plans include just a small trial** of AI (around 20 responses) — not a usable free tier. So while Notion-the-workspace has a great free plan, Notion-**AI** is effectively a paid feature.",
+    "**The big change to know:** Notion **removed the standalone AI add-on.** Full Notion AI (Ask Notion, agents, AI meeting notes) now comes only with the **Business plan**, priced per user. The **Free and Plus plans include just a small trial** of AI — not a usable free tier. So while Notion-the-workspace has a great free plan, Notion-**AI** is effectively a paid feature.",
     "If you don't already live in Notion, the AI's main advantage (grounding in your own workspace) only shows up once you've got content in there.",
     "Try the free trial responses first to see if it fits before committing to Business.",
   ],

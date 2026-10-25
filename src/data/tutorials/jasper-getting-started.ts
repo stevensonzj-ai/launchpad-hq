@@ -20,7 +20,7 @@ export const jasperTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**There is no free tier.** The only self-serve plan is Pro, currently around $69/month for one login, or around $59/month on an annual commitment. Above that is the Business plan, quote-only — Jasper publishes no price, so if Pro does not cover you your next step is a sales conversation, not a checkout page.",
+    "**There is no free tier.** The only self-serve plan is Pro ({{price:jasper:Pro}}), for one login. Above that is the Business plan, quote-only — Jasper publishes no price, so if Pro does not cover you your next step is a sales conversation, not a checkout page.",
     "The 7-day trial is not a look-around. Jasper's help centre is explicit: \"We do require a credit card during our trial sign-ups right now,\" and \"Once the 7-day free trial has ended, you will be moved to and charged for the plan you selected when starting your trial.\" Cancelling during the trial is self-serve in the app, per the same page.",
     "Refunds are documented two ways by Jasper itself. The terms (section 5b) say flatly: \"You may cancel your Customer Account at any time; however, there are no refunds for cancellation.\" The help centre says you can get one by emailing within seven days of the charge. The terms bind; treat the help centre route as a courtesy you may or may not get.",
     "The annual price is a year-long commitment billed upfront, not a discount you can walk away from: Jasper's help centre says annual plans \"are one-year commitments and cannot be canceled at any time within the year,\" with a 7-day window at the start and no refunds for unused time after. Start monthly.",

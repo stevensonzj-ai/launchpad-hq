@@ -25,7 +25,7 @@ export const recraftTutorial: PlatformTutorialData = {
     "**There is a free plan, it is genuinely usable for learning, and you do not own what you make on it.** Recraft's documentation is blunt: free-plan images belong to Recraft, appear publicly in the community gallery, and aren't licensed for commercial use.",
     "A browser and an email address is the whole requirement.",
     "Everything costs **credits**, the platform's unit of spend: a small free allowance that refills daily, or a monthly paid pot that resets without rolling over. Vector generations currently cost more than plain images — a few credits each, more if you pick one of the higher-quality vector **models** (the AI \"brains\" doing the work) — so a vector-heavy afternoon empties an allowance fast.",
-    "If you want to use what you make, you'll be paying. The entry plan currently sits around 10-12 USD a month, the next tier around 16-20, with roughly 20% off annually. Paying flips your images to private and hands you ownership and commercial rights for anything generated while subscribed — and those stay yours if you later cancel.",
+    "If you want to use what you make, you'll be paying. Paid plans are monthly, with a discount for paying annually. Paying flips your images to private and hands you ownership and commercial rights for anything generated while subscribed — and those stay yours if you later cancel.",
   ],
 
   security: [

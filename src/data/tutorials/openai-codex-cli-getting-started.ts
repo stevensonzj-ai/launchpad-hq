@@ -22,7 +22,7 @@ export const openaiCodexCliTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "The entry requirement is code already on your disk and comfort opening a command line. Never used one? A browser-based coding assistant is the better first step; this will still be here.",
-    "You do not buy Codex; you sign in with a ChatGPT account and your plan pays for it. OpenAI's pricing page lists it on every plan including the free one, while its own CLI documentation still says Plus or above — so expect to need a paid plan (Go around $8/month, Plus around $20). Billing your own OpenAI developer account per use is the other route.",
+    "You do not buy Codex; you sign in with a ChatGPT account and your plan pays for it. OpenAI's pricing page lists it on every plan including the free one, while its own CLI documentation still says Plus or above — so expect to need a paid plan (Go at {{price:chatgpt:Go}}, or Plus at {{price:chatgpt:Plus}}). Billing your own OpenAI developer account per use is the other route.",
     "Usage runs as rolling five-hour and weekly windows rather than a balance you can watch, and Plus and Pro can buy extra credits instead of upgrading.",
   ],
 

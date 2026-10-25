@@ -23,7 +23,7 @@ export const googleAntigravityTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**You must be 18 or over.** Google says Antigravity is currently unavailable to under-18 users, and checks the age on your Google account. It is a hard stop, and it rules the tool out as a school or family starting point.",
     "Sign in with a personal @gmail.com address — Google's own FAQ points people there when a work or school (Workspace) account misbehaves. Eligibility also follows the country on your Google account: most of the world, not everywhere.",
-    "It costs nothing and asks for no card; the paid tiers are Google's general AI subscriptions, AI Pro and AI Ultra at $100 a month, and they buy headroom rather than features. The shape matters more than the price. The free allowance refreshes weekly, while paid plans also get a top-up roughly every five hours, so running dry on the free plan can cost you days rather than an evening.",
+    "It costs nothing and asks for no card; the paid tiers are Google's general AI subscriptions, AI Pro and AI Ultra, and they buy headroom rather than features. How the allowance refills matters more than the price. The free allowance refreshes weekly, while paid plans also get a top-up roughly every five hours, so running dry on the free plan can cost you days rather than an evening.",
     "You need a folder of code to point it at. To build something without that background, Lovable in this same category works from a written description in a browser. Installs on macOS 12+, Windows 10 (64-bit)+ and Linux.",
   ],
 

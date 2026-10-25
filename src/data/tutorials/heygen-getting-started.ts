@@ -19,7 +19,7 @@ export const heygenTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free plan (no card) gives a handful of short, **watermarked** videos a month plus one custom avatar — enough to see the quality, not to produce real content. **Creator is around $29/month** (watermark off, 1080p).",
+    "The free plan (no card) gives a handful of short, **watermarked** videos a month plus one custom avatar — enough to see the quality, not to produce real content. **Creator**, the first paid plan, turns the watermark off and exports in 1080p.",
     "Before you make an avatar of anyone — including yourself — read the consent section below. It's the thing that separates responsible use from a real problem.",
     "Scripts are where the cost lives: every re-render burns credits, so write and polish the script before you generate.",
   ],

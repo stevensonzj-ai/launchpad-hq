@@ -21,7 +21,7 @@ export const clarifaiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**As of 19 September 2026 the API host does not resolve.** api.clarifai.com has no DNS record, so nothing on this page — the browser Playground, the code snippet, a Local Runner's cloud address — can currently be reached. Treat what follows as a record of how the platform worked, and check whether the host answers again before you plan around it.",
-    "Before the hosts went dark, signup asked for no credit card and the Community plan included around 1,000 operations a month — a monthly allowance that refilled, not a trial credit, but one shared meter that predictions, training and stored files all drew on. None of that can currently be reached, and whether it returns is unknown.",
+    "Before the hosts went dark, signup asked for no credit card and the Community plan included a small monthly allowance of operations — one that refilled, not a trial credit, but one shared meter that predictions, training and stored files all drew on. None of that can currently be reached, and whether it returns is unknown.",
     "There is nothing to install to begin. Your first hour is a browser tab. A command-line tool only enters the picture if you decide to try Local Runners, which is the last step on this page and entirely optional.",
     "Clarifai is a developer platform, not a chatbot. There is no assistant that remembers you, no conversation history, no mobile app worth having. If what you want is something to ask questions of, start in Text & Conversational AI and come back here when you want to see how models actually get served.",
   ],
@@ -50,11 +50,11 @@ export const clarifaiTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Being someone's first AI tool. The browser Playground genuinely works without code, but everything surrounding it is built for engineers and reads that way.",
-      "Free-tier headroom. The Community plan's roughly 1,000 operations a month at one request per second was enough to evaluate the platform and not enough to run anything on — and, as of September 2026, cannot be reached at all.",
+      "Free-tier headroom. The Community plan's small monthly operations allowance, at one request per second, was enough to evaluate the platform and not enough to run anything on — and, as of September 2026, cannot be reached at all.",
     ],
     avoid: [
       "Publishing anything to the Community before reading the licence you grant by doing it. Public content is licensed to every other user and, perpetually, to Clarifai.",
-      "Treating the $1/month Developer price as the standing rate. The pricing page labels it a promotion, and the plan has no published non-promotional price.",
+      "Treating the Developer plan's promotional price as the standing rate. The pricing page labels it a promotion, and the plan has no published non-promotional price.",
     ],
   },
 
@@ -82,7 +82,7 @@ export const clarifaiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Installs Clarifai's command-line tool and runs a single local-runner command, which gives a model running on your laptop a working Clarifai web address.",
       whyHere:
-        "This inverts the usual arrangement. The model and the data stay on your hardware and Clarifai supplies only the address and the authentication in front of them — hosted services like Replicate cannot do this at all, because running everything on their own machines is what they are. The free plan includes one runner with about two hours of runtime, which is enough to watch it work; the $1/month Developer promotion is what removes the hour limit.",
+        "This inverts the usual arrangement. The model and the data stay on your hardware and Clarifai supplies only the address and the authentication in front of them — hosted services like Replicate cannot do this at all, because running everything on their own machines is what they are. The free plan includes one runner with a short runtime limit, which is enough to watch it work; the paid Developer promotion is what removes the time limit.",
       tweak:
         "This is the only step that needs a terminal, and nothing else on the page depends on it, so skipping it costs you nothing.",
     },

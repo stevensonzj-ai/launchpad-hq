@@ -102,7 +102,7 @@ const RESEARCH_UPDATES: { slugs: string[]; data: MobilePayload }[] = [
     },
   },
   {
-    slugs: [slugify("Mistral AI (Le Chat)"), "le-chat", "mistral-le-chat", "mistral-ai-le-chat"],
+    slugs: [slugify("Mistral AI (Le Chat)"), "le-chat", "mistral-le-chat", "mistral-ai-le-chat", "mistral-vibe"],
     data: {
       hasMobileApp: true,
       iosAppUrl: "https://apps.apple.com/us/app/le-chat-by-mistral-ai/id6740410176",

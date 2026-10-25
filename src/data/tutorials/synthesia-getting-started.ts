@@ -21,9 +21,9 @@ export const synthesiaTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "There is a genuinely free plan, not a time-limited trial: the Basic tier is currently $0, takes no card, and doesn't expire.",
-    "Free is small but real: currently around 10 minutes of video a month, a limited set of stock presenters, and a Synthesia **watermark** (a mark identifying output as AI-made) on what you export.",
-    "**The mechanism to learn is a monthly allowance that resets and doesn't roll over.** Length is what spends it, and anything unused at period end is gone. If you want the watermark gone or more than a few minutes monthly, paid self-serve currently starts around $18–$30 a month, with the next tier near $90 depending on billing period. Prices move.",
+    "There is a genuinely free plan, not a time-limited trial: the Basic tier is currently free, takes no card, and doesn't expire.",
+    "Free is small but real: a small monthly allowance of video minutes, a limited set of stock presenters, and a Synthesia **watermark** (a mark identifying output as AI-made) on what you export.",
+    "**The mechanism to learn is a monthly allowance that resets and doesn't roll over.** Length is what spends it, and anything unused at period end is gone. If you want the watermark gone or more video each month, you need a paid self-serve plan; prices depend on the billing period, and current plans are on the tool page.",
     "First step: sign up free, open a template rather than a blank project, and paste 60 seconds of your own words over the sample script.",
   ],
 

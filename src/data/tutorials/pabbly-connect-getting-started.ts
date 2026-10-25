@@ -20,9 +20,9 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Start on the free plan, which is genuinely free and not a trial.** You get around 100 tasks a month, no card required, and unlimited separate workflows — but each one is limited to two steps (a trigger plus a single action). Sign up, connect one app you already use, and build something from the list below before you think about money.",
+    "**Start on the free plan, which is genuinely free and not a trial.** You get a small monthly task allowance, no card required, and unlimited separate workflows — but each one is limited to two steps (a trigger plus a single action). Sign up, connect one app you already use, and build something from the list below before you think about money.",
     'A "task" is Pabbly\'s unit of spend, and it is narrower than you\'d guess: only successful actions that touch an outside app count. The trigger is free, and so are Pabbly\'s own internal steps — filters, routers, formatting — so a workflow that looks like four steps may bill as one. Every plan is priced by that number.',
-    'The one-time offer is the real decision. Pabbly currently sells three one-time Connect plans — around $349 for 3,000 tasks a month and ten workflows, around $799 for 10,000 tasks and unlimited multi-step workflows, and around $1,298 for 20,000 tasks. Prices display in your local currency, so you may see a rupee figure instead. The sales page promises all future integrations and updates at no extra cost. But "lifetime" covers the software, not the help: Pabbly\'s terms say lifetime plans include one year of support from purchase, after which you renew support by paying **one third of the original purchase price**. Treat it as a large payment now plus a possible recurring one later.',
+    'The one-time offer is the real decision. Pabbly currently sells three one-time Connect plans, priced by the monthly task allowance; the cheapest also caps how many workflows you can build, while the higher two allow unlimited multi-step workflows. Prices display in your local currency, so you may see a rupee figure instead. The sales page promises all future integrations and updates at no extra cost. But "lifetime" covers the software, not the help: Pabbly\'s terms say lifetime plans include one year of support from purchase, after which you renew support by paying **one third of the original purchase price**. Treat it as a large payment now plus a possible recurring one later.',
     "There is a 30-day money-back guarantee, worded on the sales page as a full refund, no questions asked — which is the real safety net on a four-figure decision.",
   ],
 
@@ -57,7 +57,7 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
     ],
     avoid: [
       "Buying a one-time plan expecting to stack it, resell it or move it. Pabbly's terms state you can't buy multiple one-time plans or transfer one between accounts — it is tied to the account that bought it.",
-      "Assuming the largest one-time plan is safe ground. Pabbly's terms say a one-time plan is capped at a maximum of 10,000 tasks, while the sales page advertises a 20,000-task one-time tier. Those two vendor documents disagree, and the terms are the binding one. Ask support in writing which governs before you buy the top plan.",
+      "Assuming the largest one-time plan is safe ground. Pabbly's terms cap one-time plans at a lower task count than the largest one-time tier its sales page advertises. Those two vendor documents disagree, and the terms are the binding one. Ask support in writing which governs before you buy the top plan.",
       "Assuming a dispute would be simple. The terms are governed by Indian law with any action filed in the courts of Bhopal, and the terms page carries no effective date or version.",
     ],
   },

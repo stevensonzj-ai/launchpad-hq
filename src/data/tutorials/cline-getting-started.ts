@@ -21,7 +21,7 @@ export const clineTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The tool is free; the AI isn't.** Cline's pricing page says it is completely free for individual developers, and you pay only for AI usage. You choose how: Cline's own provider (sign in, buy credits, no API key needed), ClinePass — an optional $9.99-a-month subscription for extra usage on selected open coding models, per Cline's docs as of 24 October 2026 — or your own key from a provider such as Anthropic, OpenAI or OpenRouter, billed at that provider's rates.",
+    "**The tool is free; the AI isn't.** Cline's pricing page says it is completely free for individual developers, and you pay only for AI usage. You choose how: Cline's own provider (sign in, buy credits, no API key needed), ClinePass — an optional monthly subscription for extra usage on selected open coding models, per Cline's docs as of 24 October 2026 — or your own key from a provider such as Anthropic, OpenAI or OpenRouter, billed at that provider's rates.",
     "**Some free models exist, with conditions.** Cline's docs describe rotating, time-limited free models for anyone with a Cline account, up to a quota, and note that free-model usage may be used to help improve those models. Don't use them for private code.",
     "**Running a model on your own computer is possible but demanding.** Cline works with Ollama and LM Studio; its docs suggest 16–32 GB of memory for small models and 64 GB or more for larger ones, and warn local models are much slower.",
     "**You should be comfortable reading code.** Cline asks you to approve each change and command. If you can't tell whether a change is safe, start with a chat assistant instead.",

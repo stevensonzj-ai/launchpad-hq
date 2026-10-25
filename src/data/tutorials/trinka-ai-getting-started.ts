@@ -21,9 +21,9 @@ export const trinkaAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Signing up is free and needs no card. The free Basic plan gives you 5,000 words of language checking a month, a separate allowance for the paraphraser that Trinka's feature page describes as roughly the same size again but does not itemise in its plan table, and 5 AI-writing requests. When you reach a limit Trinka stops rather than quietly giving you something weaker — its own wording is that you \"cannot continue using Trinka\", which suggests it halts rather than warns you first. The counter resets a month from the date you registered, not on the first of the month.",
-    "The free plan also drops 4 **credits** (the platform's unit of spend — each report costs some) into your account every 30 days. Unused free credits expire at the end of each 30-day period. Credits you buy never expire.",
-    "Paying is worth it for specific things rather than in general. Premium — currently around $10 a month, or around $100 for a year, though Trinka renders prices by region, so check the figure on its pricing page before you buy — unlocks the deeper \"Power\" grammar mode, the journal style guides (APA, AMA, ACS, AGU, IEEE), the full set of paraphrase modes and the Microsoft Word add-in. It does not include plagiarism reports, which still come out of credits. The browser extension, the consistency check and the journal finder are already on the free plan.",
+    "Signing up is free and needs no card. The free Basic plan gives you a monthly allowance of language checking, a separate allowance for the paraphraser that Trinka's feature page describes as roughly the same size again but does not itemise in its plan table, and a handful of AI-writing requests. When you reach a limit Trinka stops rather than quietly giving you something weaker — its own wording is that you \"cannot continue using Trinka\", which suggests it halts rather than warns you first. The counter resets a month from the date you registered, not on the first of the month.",
+    "The free plan also drops a few **credits** (the platform's unit of spend — each report costs some) into your account every 30 days. Unused free credits expire at the end of each 30-day period. Credits you buy never expire.",
+    "Paying is worth it for specific things rather than in general. Premium — billed monthly or yearly, with prices shown by region, so check the figure on its pricing page before you buy — unlocks the deeper \"Power\" grammar mode, the journal style guides (APA, AMA, ACS, AGU, IEEE), the full set of paraphrase modes and the Microsoft Word add-in. It does not include plagiarism reports, which still come out of credits. The browser extension, the consistency check and the journal finder are already on the free plan.",
   ],
 
   security: [
@@ -58,8 +58,8 @@ export const trinkaAiTutorial: PlatformTutorialData = {
       "Spanish, which is supported for checking, though the academic machinery around the editor appears to be built for English — if Spanish is your writing language it is worth confirming which of the extras apply to it.",
     ],
     avoid: [
-      "Treating the free plagiarism check as a plagiarism report. The one free check a month gives you a similarity number; the report that shows which sources matched costs 24 credits, or 36 for the version that also searches paid journals.",
-      "Assuming \"unlimited\" paid checking is unlimited. Trinka's terms set a fair-use ceiling of 150,000 words of language check and 120 plagiarism scans a month.",
+      "Treating the free plagiarism check as a plagiarism report. The free check gives you a similarity number; the report that shows which sources matched costs credits, and the version that also searches paid journals costs more.",
+      "Assuming \"unlimited\" paid checking is unlimited. Trinka's terms set a monthly fair-use ceiling on both language checking and plagiarism scans.",
       "Reading the journal finder's result as a verdict on your paper. It matches your abstract against journal scope, which produces a shortlist — not an assessment of whether the work is strong enough for any journal on it.",
     ],
   },
@@ -102,11 +102,11 @@ export const trinkaAiTutorial: PlatformTutorialData = {
         "Free requests are few, so spend one on the sentence you have already rewritten four times yourself.",
     },
     {
-      title: "Spend one credit on a publication readiness check before you submit",
+      title: "Run a publication readiness check before you submit",
       whatItDoes:
         "Import your manuscript file and run the technical checks — more than 25 of them, covering ethics approval and consent statements, conflict-of-interest and funding declarations, author names and affiliations, figure and table captions, clinical trial IDs, and references that are obsolete or retracted.",
       whyHere:
-        "A paper bounced before review for a missing declaration is not a writing problem, and no grammar checker looks for one. The report costs a single credit out of the monthly free allowance.",
+        "A paper bounced before review for a missing declaration is not a writing problem, and no grammar checker looks for one. The report costs a single credit from the free monthly allowance.",
       tweak:
         "Run it before the final proofread, so there is still time to go and get the declarations you are missing.",
     },
@@ -115,7 +115,7 @@ export const trinkaAiTutorial: PlatformTutorialData = {
   pitfalls: [
     "**AI editing can trigger a disclosure requirement, and the line is not where most people assume.** Elsevier's generative-AI policy for journals (June 2026) states that basic checks of grammar, spelling and punctuation need no declaration, but that substantive changes to sentence structure or to how the text is organised must be disclosed — which is precisely what the paraphraser and /Ask do. The ICMJE recommendations go further, asking authors to disclose AI-assisted technologies used in producing a submission and to describe writing assistance in the acknowledgements. Check your target journal's own policy; they are not identical.",
     "**The free plan runs the shallow mode.** Basic gets Lite mode grammar checking, so trying the free tier tells you whether you like the tool, not what it does at its best.",
-    "**Trinka's own pages disagree about the AI detector, in two different ways.** Its feature page presents AI content detection as free, while the plan-comparison table meters it at 1 credit per 5,000 words. The same two pages also disagree on the included allowance — the feature page cites 120 pages for Premium Plus, the plan table 240 pages a year. A separate free web version exists, capped at 500 words a session and 10 sessions a day. Trinka has not reconciled either figure, so assume the plan table governs your account and verify both once you are signed in.",
+    "**Trinka's own pages disagree about the AI detector, in two different ways.** Its feature page presents AI content detection as free, while the plan-comparison table meters it in credits per block of words. The same two pages also disagree on the included allowance for Premium Plus. A separate free web version exists, capped per session and per day. Trinka has not reconciled either point, so assume the plan table governs your account and verify both once you are signed in.",
     "**It will still argue with your field.** Specialist notation, gene names and unit formats do get flagged. Build up the personal dictionary early rather than overriding the same term fifty times. Whether that dictionary carries across the web editor, the browser extension and the Word add-in is not stated publicly, so that is another thing to check once you are signed in.",
     "**There are no refunds.** Trinka's terms state that refunds are not allowed on purchased subscriptions; you can cancel to stop the renewal, but the period you have paid for is spent.",
   ],

@@ -19,7 +19,7 @@ export const sunoTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **free plan** gives you a bucket of credits that **refills daily** (enough for a handful of songs a day); credits don't roll over. Paid plans (**Pro around $10/month**, Premier higher) add far more credits, faster generation, and — crucially — commercial rights.",
+    "The **free plan** gives you a bucket of credits that **refills daily** (enough for a handful of songs a day); credits don't roll over. Paid plans (**Pro**, and Premier above it) add far more credits, faster generation, and — crucially — commercial rights.",
     "**The rights situation is the thing to understand before you make anything you care about** (below). In short: free-tier songs are for personal use only, and that can't be undone later by upgrading.",
     "Expect to generate several versions before one lands — that's normal, and it's what the credits are for.",
   ],

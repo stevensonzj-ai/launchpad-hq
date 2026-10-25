@@ -19,7 +19,7 @@ export const canvaAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free plan is a real design tool (huge template library, collaboration) with **limited** AI — enough to try Magic Studio, not to lean on it. **Pro is around $15/month** with a monthly AI credit pool.",
+    "The free plan is a real design tool (huge template library, collaboration) with **limited** AI — enough to try Magic Studio, not to lean on it. **Pro** is a paid monthly plan with a much bigger monthly AI credit pool.",
     "Credits are shared across all AI features and **don't top up a la carte** — heavy image + copy + editing use burns them fast, then you wait for the reset or upgrade.",
     "One setting to check on day one: your AI training preference (see security).",
   ],

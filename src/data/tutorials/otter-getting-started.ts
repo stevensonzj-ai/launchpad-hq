@@ -19,7 +19,7 @@ export const otterTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **free Basic plan** gives you 300 transcription minutes a month, capped at 30 minutes per conversation, and only **three file uploads ever** (lifetime, not monthly). It's enough to test the quality and the meeting integration, but a couple of long meetings will exhaust it. **Pro** (around $17/month, or roughly half that billed annually) lifts the cap to 1,200 minutes.",
+    "The **free Basic plan** gives you a limited monthly allowance of transcription minutes, a cap on how long any one conversation can be, and only a **handful of file uploads ever** (lifetime, not monthly). It's enough to test the quality and the meeting integration, but a couple of long meetings will exhaust it. **Pro**, a paid monthly plan that is cheaper billed annually, gives you a much larger allowance.",
     "The single most important thing: **an AI bot joining a call to record it affects everyone on the call, not just you.** Handle consent before you turn it on (more below).",
     "Set up the calendar and meeting-tool connection first — that's the \"recipe\" that makes Otter run on its own.",
   ],
@@ -91,7 +91,7 @@ export const otterTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**The free tier's caps bite fast.** 300 minutes a month, 30 minutes per conversation, and only three lifetime file uploads — a single all-hands can blow the per-meeting cap.",
+    "**The free tier's caps bite fast.** The monthly minutes, the per-conversation limit and the lifetime upload limit all run out quickly — a single all-hands can blow the per-meeting cap.",
     "**Minutes don't roll over and there's no pay-as-you-go.** Hit the cap and Otter simply stops until the cycle resets or you upgrade.",
     "**The bot is visible to everyone.** That's a feature for consent, but plan for the reaction on external calls.",
   ],

@@ -22,7 +22,7 @@ export const replicateTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**The account gate is the first surprise.** Replicate's sign-in page currently offers only \"Sign in with GitHub\" — there is no email-and-password option, so signing up means creating a free GitHub developer account if you don't have one. It takes a couple of minutes, and it stops more non-developers than anything else on the site. You also need to be 18.",
     "\"Free\" here is a fixed number of runs, not a monthly allowance. A \"Try for free\" collection lets you run a small set of selected models a limited number of times once you have an account; after that you're asked to set up billing.",
-    "You pay by the run out of a balance you top up, so there's no subscription to cancel — but budget a little real money if you want to explore properly. Official models publish a flat price on the page (FLUX Pro is currently about $0.04 per image); community models bill for however long the hardware runs, which is harder to predict. Worth knowing up front: Replicate removed its self-serve monthly spend limit in July 2025, so there's no toggle to cap yourself.",
+    "You pay by the run out of a balance you top up, so there's no subscription to cancel — but budget a little real money if you want to explore properly. Official models publish a flat per-run price on their page; community models bill for however long the hardware runs, which is harder to predict. Worth knowing up front: Replicate removed its self-serve monthly spend limit in July 2025, so there's no toggle to cap yourself.",
     "You do not need to write code. The code path is there when you want it; nothing on day one requires it.",
   ],
 

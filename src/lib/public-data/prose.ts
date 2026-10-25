@@ -2,11 +2,10 @@
  * Editorial prose for the /data/v1 content records (guides, workflows,
  * models) and llms-full.txt.
  *
- * Guides and workflows were written with prices typed into the text. The
- * feed must not republish a typed price: every tool price it carries comes
- * from the serializer (row + fact overlay), so a sentence that quotes a
- * currency amount is dropped here and the record points at the tool's own
- * data instead. Inline **bold** / `code` markers are removed too, and so
+ * Guides and workflows never type a price: they use catalog price tokens
+ * (price-tokens.ts), filled in after this cleaner runs. As a backstop, a
+ * sentence that still quotes a currency amount is dropped here, so the feed
+ * can never republish a hand-typed price. Inline **bold** / `code` markers are removed too, and so
  * are email addresses (the feed publishes none; the HTML page keeps them).
  */
 import { stripInlineMarkup } from "@/lib/seo-metadata";
@@ -23,7 +22,7 @@ export function redactEmails(text: string): string {
 }
 
 export const PRICING_NOTE =
-  "Sentences that quoted a price were removed from this text. Current prices are in each tool's record (tool.starting_price, tool.lowest_paid, and plans in /data/v1/tools/{slug}.json), from the same data as the tool's page.";
+  "Prices in this text come from the catalog, the same data as each tool's page and its record (tool.starting_price, tool.lowest_paid, and plans in /data/v1/tools/{slug}.json). Any sentence that typed a price by hand is removed; prices_removed counts them.";
 
 export function hasPriceText(text: string): boolean {
   return PRICE_RE.test(text);

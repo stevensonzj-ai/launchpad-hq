@@ -21,7 +21,7 @@ export const assemblyaiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "You do not need to write code for the first hour. Signing up gets you a browser playground where you upload a recording, flip features on and off, and read the transcript on screen. Anything past that — a batch of files, an app of your own — means code. If you only want your own meetings transcribed, a meeting-notes tool does that with no code at all.",
-    "New accounts get **$50 in credit** with no card asked for — a one-off grant rather than a monthly allowance, which AssemblyAI's FAQ says does not expire. Everything after that is billed by the hour of audio rather than by subscription, currently around $0.21 for the flagship model and roughly double for live transcription as someone speaks. Playground runs bill the same way.",
+    "New accounts get **a free credit grant** with no card asked for — a one-off grant rather than a monthly allowance, which AssemblyAI's FAQ says does not expire. Everything after that is billed by the hour of audio rather than by subscription, with live transcription as someone speaks costing roughly double the flagship model's rate. Current rates are on its Launchpad page. Playground runs bill the same way.",
     "**Free accounts cannot opt out of model training.** The setting that stops AssemblyAI using your files to improve its models is, by its own docs, a paid-plan feature. Evaluate with audio you would not mind a stranger reading.",
   ],
 
@@ -62,7 +62,7 @@ export const assemblyaiTutorial: PlatformTutorialData = {
       title: "Run one of your own recordings through the playground",
       whatItDoes: "Uploads a file in the browser and shows the transcript, speaker by speaker.",
       whyHere:
-        "Playground runs draw down the same $50 credit as production and appear in the dashboard's cost tab, so what you spend evaluating is a number you can multiply — not a free demo priced differently from the real thing.",
+        "Playground runs draw down the same credit as production and appear in the dashboard's cost tab, so what you spend evaluating is a number you can multiply — not a free demo priced differently from the real thing.",
       tweak:
         "Use a difficult recording: crosstalk, an accent, background noise. A clean file only confirms what you assumed.",
     },
@@ -77,7 +77,7 @@ export const assemblyaiTutorial: PlatformTutorialData = {
       title: "Decide between the cheaper model and the accurate one",
       whatItDoes: "Runs the same audio through Universal-2 and Universal-3.5 Pro and compares both.",
       whyHere:
-        "About $0.15 an hour against about $0.21 — invisible on one file, decisive at volume, and a quality gap only your own audio can settle. The free credit covers both runs; rebuilding on the other one later will not be free.",
+        "Universal-2 costs noticeably less per hour than Universal-3.5 Pro — invisible on one file, decisive at volume, and a quality gap only your own audio can settle. The free credit covers both runs; rebuilding on the other one later will not be free.",
     },
     {
       title: "Turn on redaction of personal details before uploading anything sensitive",
