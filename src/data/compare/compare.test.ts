@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import type { ToolFacts } from "@/data/facts/types";
+import { AUDIT_5_PATCHES } from "@/data/catalog-audits/audit-5";
+import { stripInlineCitations } from "@/lib/platform-display";
 import { SITE_URL } from "@/lib/site";
 import {
   COMPARE_HUB,
@@ -26,6 +28,7 @@ import {
   compareSitemapPaths,
   comparePageLoadSlugs,
   defaultCompareContext,
+  displayCatalogText,
   listedComparePages,
   toolSources,
   type CompareContext,
@@ -176,7 +179,7 @@ describe("compare view model", () => {
     facts: (slug) => (slug === "fixture-tool" ? FACT_FIXTURE : undefined),
   };
 
-  it("shows exactly the overlay strings, not registry text", () => {
+  it("shows the overlay strings with notes stripped as on the platform page, not registry text", () => {
     const fixtureRow = row("fixture-tool", {
       currentPricing: "Row pricing that the fact file overrides",
       freeTierFeatures: "Row free plan that the fact file overrides",
@@ -190,14 +193,20 @@ describe("compare view model", () => {
       [view.tools[0], overlayPlatformWithFacts(fixtureRow, FACT_FIXTURE)],
       [view.tools[1], overlayPlatformWithFacts(otherRow, undefined)],
     ] as const) {
-      assert.equal(tool.currentPricing, source.currentPricing);
-      assert.equal(tool.freeTierFeatures, source.freeTierFeatures);
-      assert.equal(tool.usageLimits, source.usageLimits);
+      assert.equal(tool.currentPricing, displayCatalogText(source.currentPricing));
+      assert.equal(tool.freeTierFeatures, displayCatalogText(source.freeTierFeatures));
+      assert.equal(tool.usageLimits, displayCatalogText(source.usageLimits));
     }
     assert.equal(view.tools[0].freeTierFeatures, "Fact-file free plan summary");
     assert.equal(view.tools[0].currentPricing, "Free: $0/month; Pro: $12/month (more)");
     assert.equal(view.tools[0].usageLimits, null);
-    assert.equal(view.tools[1].usageLimits, "Ten exports a day (official, as of 2026-10-01)");
+    assert.equal(view.tools[1].usageLimits, "Ten exports a day");
+    assert.equal(view.tools[1].currentPricing, "Free; Pro other-tool plan");
+    for (const tool of view.tools) {
+      for (const value of [tool.currentPricing, tool.freeTierFeatures, tool.usageLimits]) {
+        if (value) assert.doesNotMatch(value, /as of|official|https?:/i, value);
+      }
+    }
 
     const registryCopy = new Set(comparePageCopyStrings(HEAD_FIXTURE));
     for (const tool of view.tools) {
@@ -223,6 +232,79 @@ describe("compare view model", () => {
     // Page-level as-of is the oldest per-tool date.
     assert.equal(view.asOf, "2026-10-12");
     assert.deepEqual(view.undatedTools, []);
+  });
+
+  it("strips with the platform page's helper and keeps the date for Sources", () => {
+    const text = "Free $0; Pro $9/mo (official, as of 2026-10-25) https://vendor.example/pricing";
+    assert.equal(displayCatalogText(text), stripInlineCitations(text));
+    assert.equal(displayCatalogText(text), "Free $0; Pro $9/mo");
+    assert.equal(displayCatalogText("(official, as of 2026-10-25)"), null);
+    assert.equal(displayCatalogText("   "), null);
+    const view = buildCompareView(
+      HEAD_FIXTURE,
+      [row("fixture-tool"), row("other-tool", { usageLimits: text })],
+      ctx,
+    );
+    const limits = view?.tools[1].sources.find((s) => s.field === "Usage limits");
+    assert.deepEqual(limits, {
+      field: "Usage limits",
+      url: "https://vendor.example/pricing",
+      asOf: "2026-10-25",
+      origin: "catalog",
+    });
+  });
+
+  it("cites the audit-5 official source for text that audit wrote", () => {
+    const patch = AUDIT_5_PATCHES.find((p) => p.slug === "cursor")!;
+    const auditCtx: CompareContext = { ...ctx, audit: (slug) => (slug === "other-tool" ? patch : undefined) };
+    const audited = row("other-tool", {
+      currentPricing: patch.fields.currentPricing!,
+      freeTierFeatures: "Older free text https://guess.example/free (official, as of 2026-09-01)",
+      usageLimits: patch.fields.usageLimits!,
+    });
+    const view = buildCompareView(HEAD_FIXTURE, [row("fixture-tool"), audited], auditCtx);
+    assert.ok(view);
+    assert.deepEqual(view.tools[1].sources, [
+      { field: "Pricing", url: patch.sources[0], asOf: patch.checkedAt, origin: "catalog-audit" },
+      // Text without the audit's date keeps its own date but cites the audit's official page.
+      { field: "Free plan", url: patch.sources[0], asOf: "2026-09-01", origin: "catalog" },
+      { field: "Usage limits", url: patch.sources[0], asOf: patch.checkedAt, origin: "catalog-audit" },
+    ]);
+    // Fact files still win over the audit.
+    const factView = buildCompareView(
+      HEAD_FIXTURE,
+      [row("fixture-tool"), row("other-tool")],
+      { ...ctx, audit: () => patch },
+    );
+    assert.equal(factView?.tools[0].sources[0].origin, "fact-file");
+  });
+
+  it("uses audit-5 sources for every audit-5 tool on the real pages", () => {
+    for (const page of COMPARE_PAGES) {
+      const byAudit = new Map(AUDIT_5_PATCHES.map((p) => [p.slug, p]));
+      const rows = comparePageLoadSlugs(page).map((slug) => {
+        const fields = byAudit.get(slug)?.fields ?? {};
+        return row(slug, {
+          ...(fields.currentPricing ? { currentPricing: fields.currentPricing } : {}),
+          ...(fields.freeTierFeatures ? { freeTierFeatures: fields.freeTierFeatures } : {}),
+          ...(fields.usageLimits ? { usageLimits: fields.usageLimits } : {}),
+        });
+      });
+      const view = buildCompareView(page, rows, realCtx);
+      assert.ok(view, page.slug);
+      for (const tool of view.tools) {
+        const patch = byAudit.get(tool.slug);
+        if (!patch) continue;
+        for (const source of tool.sources) {
+          if (source.origin === "fact-file") continue;
+          assert.equal(source.url, patch.sources[0], `${tool.slug} ${source.field}`);
+          const field = { Pricing: "currentPricing", "Free plan": "freeTierFeatures", "Usage limits": "usageLimits" } as const;
+          if (patch.fields[field[source.field]] === undefined) continue;
+          assert.equal(source.origin, "catalog-audit", `${tool.slug} ${source.field}`);
+          assert.equal(source.asOf, patch.checkedAt);
+        }
+      }
+    }
   });
 
   it("parses catalog dates and URLs, and reports undated text", () => {

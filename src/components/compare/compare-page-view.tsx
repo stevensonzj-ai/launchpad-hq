@@ -4,8 +4,9 @@ import type { CompareTool, CompareView } from "@/data/compare/view";
 import { formatVerifiedDate } from "@/lib/model-facts";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 
-// Prices, free plans and limits below are the overlay strings, rendered as
-// stored (dated catalog text included). Copy comes from the registry.
+// Prices, free plans and limits below are the overlay strings with inline
+// "(official, as of …)" notes stripped, as on /platform/[slug]; the dates and
+// links show in the as-of line and Sources. Copy comes from the registry.
 
 function FieldText({ value }: { value: string | null }) {
   if (!value?.trim()) return <span className="text-gray-500">Not listed</span>;

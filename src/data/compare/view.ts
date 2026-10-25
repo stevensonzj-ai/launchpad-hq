@@ -2,15 +2,18 @@
  * Pure view models for the comparison pages. No Prisma: the route loads
  * Platform rows and hands them in, so this runs under `npm test`.
  *
- * Prices, free-plan text and limits are exactly what `overlayPlatformWithFacts`
- * returns for the row + fact file — the same strings /platform/[slug] starts
- * from. Nothing here (or in the registry) types a number.
+ * Prices, free-plan text and limits start from what `overlayPlatformWithFacts`
+ * returns for the row + fact file, then go through `stripInlineCitations`,
+ * the helper /platform/[slug] uses, so "(official, as of …)" notes and URLs
+ * show up as Sources rather than inline. Dates and URLs are read from the
+ * text before it is stripped. Nothing here (or in the registry) types a number.
  */
 import { overlayPlatformWithFacts, type PlatformFactFields } from "@/data/facts/overlay";
 import type { ToolFacts } from "@/data/facts/types";
 import { getToolFacts } from "@/data/facts/registry";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
-import { extractUrls } from "@/lib/platform-display";
+import { AUDIT_5_PATCHES, type Audit5Patch, type Audit5TextField } from "@/data/catalog-audits/audit-5";
+import { extractUrls, stripInlineCitations } from "@/lib/platform-display";
 import {
   COMPARE_HUB_PATH,
   COMPARE_PAGES,
@@ -31,21 +34,32 @@ export type CompareRow = PlatformFactFields & {
 export type CompareContext = {
   hidden: ReadonlySet<string>;
   facts: (slug: string) => ToolFacts | undefined;
+  /** Catalog-audit patch whose official sources back this row's text. */
+  audit?: (slug: string) => Audit5Patch | undefined;
 };
 
+const AUDIT_5_BY_SLUG = new Map(AUDIT_5_PATCHES.map((patch) => [patch.slug, patch]));
+
 export function defaultCompareContext(): CompareContext {
-  return { hidden: new Set(hiddenPlatformSlugs()), facts: getToolFacts };
+  return {
+    hidden: new Set(hiddenPlatformSlugs()),
+    facts: getToolFacts,
+    audit: (slug) => AUDIT_5_BY_SLUG.get(slug),
+  };
 }
 
 export type ToolSourceField = "Pricing" | "Free plan" | "Usage limits";
 
 export type ToolSource = {
   field: ToolSourceField;
-  /** Fact-file sourceUrl, else a URL in the catalog text, else the official site. */
+  /**
+   * Fact-file sourceUrl, else the catalog audit's official source, else a
+   * URL in the catalog text, else the official site.
+   */
   url: string | null;
   /** YYYY-MM-DD, or null when neither the fact file nor the text states one. */
   asOf: string | null;
-  origin: "fact-file" | "catalog";
+  origin: "fact-file" | "catalog-audit" | "catalog";
 };
 
 export type CompareTool = {
@@ -94,29 +108,43 @@ export function asOfFromText(text: string): string | null {
   return oldestDate([...text.matchAll(AS_OF_RE)].map((m) => m[1]));
 }
 
+type ShownFields = Pick<CompareTool, "currentPricing" | "freeTierFeatures" | "usageLimits">;
+
+/** Catalog text as /platform/[slug] shows it: no inline "(official, as of …)" notes or URLs. */
+export function displayCatalogText(text: string | null): string | null {
+  if (!text?.trim()) return null;
+  return stripInlineCitations(text) || null;
+}
+
 /**
- * Where each displayed field came from, and when it was checked. A field
- * the fact file supplies cites the fact; otherwise it cites the date in the
- * catalog text and a URL in that text or the official site.
+ * Where each displayed field came from, and when it was checked. Takes the
+ * overlay text *before* stripping, since the dates and URLs live in the
+ * notes. A field the fact file supplies cites the fact. For a tool in the
+ * catalog audit, other fields cite the audit's official source, dated with
+ * the audit's checkedAt when the text carries that "as of" date (the row has
+ * the audit applied) and with the text's own date otherwise. Remaining
+ * fields cite the date in the text and a URL in it or the official site.
  */
 export function toolSources(
-  shown: Pick<CompareTool, "currentPricing" | "freeTierFeatures" | "usageLimits">,
+  raw: ShownFields,
   facts: ToolFacts | undefined,
   website: string | null | undefined,
+  audit?: Audit5Patch,
 ): ToolSource[] {
   const fields: Array<{
     field: ToolSourceField;
-    text: string | null;
+    key: Audit5TextField;
     fact?: { sourceUrl: string; checkedAt: string };
   }> = [
-    { field: "Pricing", text: shown.currentPricing, fact: facts?.plans },
-    { field: "Free plan", text: shown.freeTierFeatures, fact: facts?.freeTier },
+    { field: "Pricing", key: "currentPricing", fact: facts?.plans },
+    { field: "Free plan", key: "freeTierFeatures", fact: facts?.freeTier },
     // The overlay never fills usageLimits from a fact file.
-    { field: "Usage limits", text: shown.usageLimits },
+    { field: "Usage limits", key: "usageLimits" },
   ];
   const sources: ToolSource[] = [];
-  for (const { field, text, fact } of fields) {
-    if (!text?.trim()) continue;
+  for (const { field, key, fact } of fields) {
+    const text = raw[key];
+    if (!text || !displayCatalogText(text)) continue;
     if (fact) {
       sources.push({
         field,
@@ -126,9 +154,20 @@ export function toolSources(
       });
       continue;
     }
+    const auditUrl = audit?.sources[0];
+    if (auditUrl && text.toLowerCase().includes(`as of ${audit.checkedAt}`)) {
+      sources.push({
+        field,
+        url: auditUrl,
+        asOf: realDate(audit.checkedAt),
+        origin: "catalog-audit",
+      });
+      continue;
+    }
     sources.push({
       field,
-      url: extractUrls(text)[0] ?? website ?? null,
+      // The audit's official page beats a URL guessed from older text.
+      url: auditUrl ?? extractUrls(text)[0] ?? website ?? null,
       asOf: asOfFromText(text),
       origin: "catalog",
     });
@@ -157,12 +196,17 @@ function toTool(
 ): CompareTool {
   const facts = ctx.facts(row.slug);
   const view = overlayPlatformWithFacts(row, facts);
-  const shown = {
+  const raw = {
     currentPricing: view.currentPricing,
     freeTierFeatures: view.freeTierFeatures,
     usageLimits: view.usageLimits,
   };
-  const sources = toolSources(shown, facts, view.website);
+  const shown = {
+    currentPricing: displayCatalogText(raw.currentPricing),
+    freeTierFeatures: displayCatalogText(raw.freeTierFeatures),
+    usageLimits: displayCatalogText(raw.usageLimits),
+  };
+  const sources = toolSources(raw, facts, view.website, ctx.audit?.(row.slug));
   return {
     slug: row.slug,
     name: view.name ?? row.name,
