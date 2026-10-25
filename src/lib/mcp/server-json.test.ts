@@ -9,6 +9,8 @@ describe("server.json (MCP Registry metadata)", () => {
     name: string;
     description: string;
     version: string;
+    websiteUrl: string;
+    icons: { src: string; mimeType: string; sizes: string[] }[];
     remotes: { type: string; url: string }[];
   };
 
@@ -21,8 +23,22 @@ describe("server.json (MCP Registry metadata)", () => {
     assert.equal(json.version, MCP_SERVER_VERSION);
   });
 
-  it("keeps the deliberately unpublishable placeholder name", () => {
-    assert.equal(json.name, "PLACEHOLDER/launchpad-hq");
+  it("uses the approved registry name in reverse-DNS form", () => {
+    assert.equal(json.name, "io.launchpadhq/launchpad-hq");
+    assert.match(json.name, /^[a-zA-Z0-9.-]+\/[a-zA-Z0-9._-]+$/);
+  });
+
+  it("links the public connector docs page", () => {
+    assert.equal(json.websiteUrl, "https://www.launchpadhq.io/connector");
+  });
+
+  it("serves every icon over https from www.launchpadhq.io with an allowed mime type", () => {
+    const allowed = new Set(["image/png", "image/jpeg", "image/jpg", "image/svg+xml", "image/webp"]);
+    assert.ok(json.icons.length > 0);
+    for (const icon of json.icons) {
+      assert.ok(icon.src.startsWith("https://www.launchpadhq.io/"), icon.src);
+      assert.ok(allowed.has(icon.mimeType), icon.mimeType);
+    }
   });
 
   it("uses the 2025-12-11 schema and fits its 100-character description limit", () => {

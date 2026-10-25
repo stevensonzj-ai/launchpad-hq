@@ -6,6 +6,7 @@ A free, anonymous, **read-only** [Model Context Protocol](https://modelcontextpr
 - **Transport:** Streamable HTTP (stateless), served by `mcp-handler` 2.1.1 on `@modelcontextprotocol/server` 2.4.0. Modern clients get the 2026-07-28 protocol (`server/discover` advertises it). Older clients that send an `initialize` handshake are negotiated to a 2025 version (2025-11-25 or 2025-06-18). `src/lib/mcp/server.test.ts` checks both.
 - **Auth:** none. No accounts, and no writes.
 - **Support:** launchpadhq.admin@gmail.com
+- **Docs:** [launchpadhq.io/connector](https://www.launchpadhq.io/connector) (plain-English setup guide)
 
 ## Tools
 
@@ -50,10 +51,10 @@ Each tool call writes one log line with these fields only:
 | `ok` | Whether the call succeeded |
 | `client` | The MCP client's self-reported name and version, if sent |
 
-It does **not** log IP addresses, headers, user agents, cookies or request bodies. See the [privacy policy](https://www.launchpadhq.io/privacy).
+It does **not** log IP addresses, headers, user agents, cookies or request bodies. See the [privacy policy](https://www.launchpadhq.io/privacy#mcp).
 
 ## Code
 
 - `src/app/mcp/route.ts`: the endpoint
 - `src/lib/mcp/`: the server, the pure tool logic, schemas, the catalog loader and logging
-- `server.json`: MCP Registry metadata. The name is a placeholder and it is **not published**.
+- `server.json`: MCP Registry metadata. Registry name: `io.launchpadhq/launchpad-hq` (publishing pending).
