@@ -6,6 +6,7 @@ import {
   MCP_SERVER_VERSION,
   registerLaunchpadTools,
 } from "@/lib/mcp/server";
+import { withMcpErrorHints } from "@/lib/mcp/http-errors";
 
 /**
  * Launchpad HQ read-only MCP connector (v0.1): https://www.launchpadhq.io/mcp
@@ -27,7 +28,8 @@ const mcpHandler = createMcpHandler(
 );
 
 async function handler(request: Request): Promise<Response> {
-  const response = await mcpHandler(request);
+  // Transport errors (405, 400, 406) gain a resolution hint in error.data.
+  const response = await withMcpErrorHints(await mcpHandler(request));
   const headers = new Headers(response.headers);
   headers.set("X-Robots-Tag", "noindex, nofollow");
   return new Response(response.body, {
@@ -37,4 +39,6 @@ async function handler(request: Request): Promise<Response> {
   });
 }
 
-export { handler as GET, handler as POST, handler as DELETE };
+// PUT and PATCH reach mcp-handler too, so they get its JSON-RPC 405 rather
+// than Next's empty one.
+export { handler as GET, handler as POST, handler as DELETE, handler as PUT, handler as PATCH };

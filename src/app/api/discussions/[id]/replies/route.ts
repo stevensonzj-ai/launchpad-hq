@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
 import { sendModerationNotification } from "@/lib/email";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export async function POST(
   request: NextRequest,
@@ -11,7 +12,7 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const { id } = await params;
@@ -19,19 +20,16 @@ export async function POST(
     where: { id, status: ModerationStatus.APPROVED },
   });
   if (!discussion) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return apiError("not_found", { message: "Not found" });
   }
 
   const body = await request.json();
   const text = String(body.body || "").trim();
   if (!text) {
-    return NextResponse.json({ error: "Body required" }, { status: 400 });
+    return apiError("bad_request", { message: "Body required" });
   }
   if (text.length > 2000) {
-    return NextResponse.json(
-      { error: "body must be 2000 characters or fewer", field: "body" },
-      { status: 400 },
-    );
+    return apiError("bad_request", { message: "body must be 2000 characters or fewer", field: "body" });
   }
 
   const reply = await prisma.discussionReply.create({
@@ -60,3 +58,5 @@ export async function POST(
 
   return NextResponse.json({ id: reply.id });
 }
+
+export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);

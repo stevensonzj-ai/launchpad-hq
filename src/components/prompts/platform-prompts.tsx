@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { apiErrorMessage } from "@/lib/api-error";
 import { useAuth } from "@clerk/nextjs";
 import { Loader2, Star, Flag } from "lucide-react";
 
@@ -71,7 +72,7 @@ export function PlatformPrompts({
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
-        throw new Error(d.error || "Could not submit");
+        throw new Error(apiErrorMessage(d, "Could not submit"));
       }
       setTitle("");
       setPrompt("");

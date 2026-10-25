@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { apiErrorMessage } from "@/lib/api-error";
 import { Check, Loader2 } from "lucide-react";
 
 /** Kept for a possible future re-enable of PRO_PLAN_ENABLED. Not linked while the flag is off. */
@@ -17,7 +18,7 @@ export function PricingCheckout() {
     try {
       const res = await fetch("/api/stripe/checkout", { method: "POST" });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Checkout failed");
+      if (!res.ok) throw new Error(apiErrorMessage(data, "Checkout failed"));
       if (data.url) window.location.href = data.url;
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error");

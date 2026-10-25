@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { absoluteUrl } from "@/lib/site";
+import { FEED_CHANGELOG } from "./changelog";
 
 /**
  * Public JSON feed contract (/data/v1). Bump SCHEMA_VERSION whenever the
@@ -130,13 +131,25 @@ export const PublicIndex = z.object({
     models_compare: z.string(),
     quiz: z.string(),
     llms_full: z.string().describe("Plain-text export of the catalog, comparisons, guides, workflows and models."),
+    developers: z.string().describe("Human-readable docs for the feed, MCP connector and Markdown pages."),
   }),
   cache: z.string(),
+  changelog: z
+    .array(z.object({ date, summary: z.string() }))
+    .describe("Public changes to the feed, newest first."),
   attribution: z.string(),
   license: z.string(),
 });
 
-export const PublicError = z.object({ error: z.string() });
+/** The shared error envelope (src/lib/api-error.ts). */
+export const PublicError = z.object({
+  error: z.object({
+    code: z.enum(["bad_request", "unauthorized", "not_found", "method_not_allowed", "unavailable", "internal_error"]),
+    message: z.string(),
+    resolution: z.string().describe("What to do next."),
+    field: z.string().optional(),
+  }),
+});
 
 /**
  * A subset of PublicTool, picked from the serializer's output for the same
@@ -468,66 +481,166 @@ export function toolJsonSchema(): Record<string, unknown> {
   };
 }
 
-/** OpenAPI 3.1 for the feed routes. */
+type OpenApiOp = { operationId: string; summary: string; description: string; schema: string };
+
+/** OpenAPI 3.1 for the feed routes. Every operation has a unique operationId and a description. */
 export function openApiDocument(): Record<string, unknown> {
   const json = (schema: string) => ({
     "application/json": { schema: { $ref: `#/components/schemas/${schema}` } },
   });
   const ok = (description: string, schema: string) => ({ description, content: json(schema) });
-  const notFound = { description: "Unknown or unlisted tool", content: json("Error") };
-  const slugParam = { name: "slug", in: "path", required: true, schema: { type: "string" } };
-  const one = (summary: string, schema: string, missing: string, moved?: string) => ({
+  const anyJson = (description: string) => ({
+    description,
+    content: { "application/json": { schema: { type: "object" } } },
+  });
+  const slugParam = (description: string) => ({
+    name: "slug",
+    in: "path",
+    required: true,
+    description,
+    schema: { type: "string" },
+  });
+  const list = (op: OpenApiOp) => ({
     get: {
-      summary,
-      parameters: [slugParam],
+      operationId: op.operationId,
+      summary: op.summary,
+      description: op.description,
+      responses: { "200": ok(op.summary, op.schema) },
+    },
+  });
+  const one = (op: OpenApiOp & { slug: string; missing: string; moved?: string }) => ({
+    get: {
+      operationId: op.operationId,
+      summary: op.summary,
+      description: op.description,
+      parameters: [slugParam(op.slug)],
       responses: {
-        "200": ok(summary, schema),
-        ...(moved ? { "301": { description: moved } } : {}),
-        "404": { description: missing, content: json("Error") },
+        "200": ok(op.summary, op.schema),
+        ...(op.moved ? { "301": { description: op.moved } } : {}),
+        "404": { description: op.missing, content: json("Error") },
       },
     },
   });
-  const list = (summary: string, schema: string) => ({ get: { summary, responses: { "200": ok(summary, schema) } } });
+  const changes = FEED_CHANGELOG.map((c) => `- ${c.date}: ${c.summary}`).join("\n");
   return {
     openapi: "3.1.0",
     info: {
       title: "Launchpad HQ data feed",
       version: SCHEMA_VERSION,
-      description:
-        "Free, read-only JSON for the Launchpad HQ AI tool catalog, comparison pages, guides, workflows, models and quiz. The same dated, sourced facts as the website and the MCP connector. Every tool price comes from the tool's own record. Cached hourly. Please credit Launchpad HQ and link to the tool's page.",
+      description: [
+        "Free, read-only JSON for the Launchpad HQ AI tool catalog, comparison pages, guides, workflows, models and quiz. The same dated, sourced facts as the website and the MCP connector. Every tool price comes from the tool's own record. No API key or sign-in. Cached at the CDN for up to an hour. Please credit Launchpad HQ and link to the tool's page.",
+        `Every route is GET/HEAD only; other methods return 405. Errors share one JSON shape: { "error": { "code", "message", "resolution" } }. Docs: ${absoluteUrl("/developers")}.`,
+        `Changes:\n${changes}`,
+      ].join("\n\n"),
     },
     servers: [{ url: absoluteUrl(DATA_BASE) }],
     paths: {
-      "/index.json": { get: { summary: "Feed index", responses: { "200": ok("Index", "PublicIndex") } } },
-      "/catalog.json": { get: { summary: "Every listed tool", responses: { "200": ok("Catalog", "PublicCatalog") } } },
-      "/tools/{slug}.json": {
+      "/index.json": list({
+        operationId: "getFeedIndex",
+        summary: "Feed index",
+        description: "Counts, links to every collection and URL template, the cache policy, attribution and the feed changelog. Start here.",
+        schema: "PublicIndex",
+      }),
+      "/catalog.json": list({
+        operationId: "getCatalog",
+        summary: "Every listed tool",
+        description: "Every listed tool's full record in one file, with category counts and retired-slug aliases. Hidden and duplicate rows are left out.",
+        schema: "PublicCatalog",
+      }),
+      "/tools/{slug}.json": one({
+        operationId: "getTool",
+        summary: "One listed tool",
+        description: "One tool's full record: plans and prices, free tier, lifecycle and status, alternatives, guide link, dated sources and changelog. Identical to the tool's entry in catalog.json.",
+        schema: "PublicTool",
+        slug: "The tool's slug, as in https://www.launchpadhq.io/platform/{slug}.",
+        moved: "Retired slug; Location points at the current one",
+        missing: "Unknown or unlisted tool",
+      }),
+      "/schema/tool.json": {
         get: {
-          summary: "One listed tool",
-          parameters: [{ name: "slug", in: "path", required: true, schema: { type: "string" } }],
-          responses: {
-            "200": ok("Tool", "PublicTool"),
-            "301": { description: "Retired slug; Location points at the current one" },
-            "404": notFound,
-          },
+          operationId: "getToolJsonSchema",
+          summary: "JSON Schema for one tool",
+          description: "JSON Schema (draft 2020-12) for the record that getTool returns.",
+          responses: { "200": anyJson("JSON Schema") },
         },
       },
-      "/schema/tool.json": { get: { summary: "JSON Schema for one tool", responses: { "200": { description: "JSON Schema" } } } },
-      "/openapi.json": { get: { summary: "This document", responses: { "200": { description: "OpenAPI 3.1" } } } },
-      "/compare/index.json": list("Every listed comparison page", "PublicCompareIndex"),
-      "/compare/{slug}.json": one(
-        "One comparison or free-alternatives page",
-        "PublicComparePage",
-        "Unknown or unlisted page",
-        "Reverse-order head-to-head slug; Location points at the canonical one",
-      ),
-      "/guides/index.json": list("Every listed getting-started guide", "PublicGuideIndex"),
-      "/guides/{slug}.json": one("One getting-started guide, by tool slug", "PublicGuide", "No listed guide for this tool"),
-      "/workflows/index.json": list("Every workflow template", "PublicWorkflowIndex"),
-      "/workflows/{slug}.json": one("One workflow template", "PublicWorkflow", "Unknown workflow"),
-      "/models/index.json": list("Every model family", "PublicModelsIndex"),
-      "/models/{slug}.json": one("One model family", "PublicModelFamily", "Unknown model family"),
-      "/models/compare/claude-vs-gpt.json": list("Claude vs GPT models", "PublicModelCompare"),
-      "/quiz.json": list("Quiz questions, options and scoring map (no answers)", "PublicQuiz"),
+      "/openapi.json": {
+        get: {
+          operationId: "getOpenApi",
+          summary: "This document",
+          description: "This OpenAPI 3.1 description of the feed.",
+          responses: { "200": anyJson("OpenAPI 3.1") },
+        },
+      },
+      "/compare/index.json": list({
+        operationId: "listComparePages",
+        summary: "Every listed comparison page",
+        description: "Every listed head-to-head and free-alternatives page, plus the model comparison pages, with page and data URLs.",
+        schema: "PublicCompareIndex",
+      }),
+      "/compare/{slug}.json": one({
+        operationId: "getComparePage",
+        summary: "One comparison or free-alternatives page",
+        description: "One comparison page: its copy and FAQ, and each tool's full record with per-field sources and dates.",
+        schema: "PublicComparePage",
+        slug: "The page slug, such as heygen-vs-synthesia.",
+        missing: "Unknown or unlisted page",
+        moved: "Reverse-order head-to-head slug; Location points at the canonical one",
+      }),
+      "/guides/index.json": list({
+        operationId: "listGuides",
+        summary: "Every listed getting-started guide",
+        description: "Every listed getting-started guide with its tool, category and last-reviewed date.",
+        schema: "PublicGuideIndex",
+      }),
+      "/guides/{slug}.json": one({
+        operationId: "getGuide",
+        summary: "One getting-started guide, by tool slug",
+        description: "One guide: setup and safety notes, what the tool is best and worst at, starter prompts and pitfalls. Prices in the text are filled in from the catalog.",
+        schema: "PublicGuide",
+        slug: "The tool's slug.",
+        missing: "No listed guide for this tool",
+      }),
+      "/workflows/index.json": list({
+        operationId: "listWorkflows",
+        summary: "Every workflow template",
+        description: "Every multi-tool workflow template, with tags and links.",
+        schema: "PublicWorkflowIndex",
+      }),
+      "/workflows/{slug}.json": one({
+        operationId: "getWorkflow",
+        summary: "One workflow template",
+        description: "One workflow: its optimal, hybrid and budget tiers, each with its tools, current prices and steps.",
+        schema: "PublicWorkflow",
+        slug: "The workflow slug, such as blog-post-generator.",
+        missing: "Unknown workflow",
+      }),
+      "/models/index.json": list({
+        operationId: "listModelFamilies",
+        summary: "Every model family",
+        description: "Every AI model family on /models, with its vendor and last-verified date.",
+        schema: "PublicModelsIndex",
+      }),
+      "/models/{slug}.json": one({
+        operationId: "getModelFamily",
+        summary: "One model family",
+        description: "One model family: which version to use, each version's context window, output limit and API prices (null unless verified), and the catalog tools built on it.",
+        schema: "PublicModelFamily",
+        slug: "The model family slug, such as claude.",
+        missing: "Unknown model family",
+      }),
+      "/models/compare/claude-vs-gpt.json": list({
+        operationId: "getClaudeVsGpt",
+        summary: "Claude vs GPT models",
+        description: "Flagship and budget Claude and GPT versions side by side, from official vendor docs.",
+        schema: "PublicModelCompare",
+      }),
+      "/quiz.json": list({
+        operationId: "getQuiz",
+        summary: "Quiz questions, options and scoring map (no answers)",
+        description: "The matching quiz's questions and options, and how each answer maps to recommendation inputs. Contains no user answers.",
+        schema: "PublicQuiz",
+      }),
     },
     components: {
       schemas: {

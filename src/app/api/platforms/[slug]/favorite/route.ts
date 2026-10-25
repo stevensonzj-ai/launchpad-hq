@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 // TODO: add rate limiting before public launch
 export async function POST(
@@ -9,7 +10,7 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const { slug } = await params;
@@ -18,7 +19,7 @@ export async function POST(
     select: { id: true },
   });
   if (!platform) {
-    return NextResponse.json({ error: "Platform not found" }, { status: 404 });
+    return apiError("not_found", { message: "Platform not found" });
   }
 
   // Idempotent: repeated POSTs are a no-op once the row exists.
@@ -40,7 +41,7 @@ export async function DELETE(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const { slug } = await params;
@@ -49,7 +50,7 @@ export async function DELETE(
     select: { id: true },
   });
   if (!platform) {
-    return NextResponse.json({ error: "Platform not found" }, { status: 404 });
+    return apiError("not_found", { message: "Platform not found" });
   }
 
   // Idempotent: deleteMany returns count=0 when no row exists instead of
@@ -60,3 +61,5 @@ export async function DELETE(
 
   return NextResponse.json({ favorited: false });
 }
+
+export const { GET, PUT, PATCH } = methodsNotAllowed(["POST", "DELETE"]);
