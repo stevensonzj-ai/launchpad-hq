@@ -316,3 +316,46 @@ export function normalizePlans(plans: DisplayPlan[]): NormalizedPricing {
     lowest_paid: lowest ? normalizePlan(lowest) : null,
   };
 }
+
+// ---------- check dates and card badge (page, cards, JSON-LD) ----------
+
+/** "as of YYYY-MM-DD" dates written into catalog prose. */
+export function proseCheckDates(fields: (string | null | undefined)[]): string[] {
+  return fields.flatMap((field) =>
+    field ? [...field.matchAll(/as of (\d{4}-\d{2}-\d{2})/gi)].map((m) => m[1]) : [],
+  );
+}
+
+/**
+ * Date behind the pricing table: the plans fact's checkedAt, or for
+ * catalog-only rows the newest "as of" date in the pricing prose. Null when
+ * unknown (never invented) and for discontinued tools (no pricing shown).
+ */
+export function pricesCheckedAt(
+  facts: Pick<ToolFacts, "lifecycle" | "plans"> | undefined,
+  pricingProse: (string | null | undefined)[],
+): string | null {
+  if (facts?.lifecycle === "discontinued") return null;
+  if (facts?.plans?.value.length) return facts.plans.checkedAt;
+  return proseCheckDates(pricingProse).sort().at(-1) ?? null;
+}
+
+export type CostBadge = { label: string; tone: string; tooltip: string | null };
+
+/**
+ * The card's cost pill. Same rules as the feed's `lifecycle` / `free_tier`:
+ * a discontinued tool never shows "Free" or "Freemium".
+ */
+export function costBadge(
+  costTier: string,
+  facts: Partial<Pick<ToolFacts, "lifecycle" | "freeTier">> | undefined,
+): CostBadge {
+  if (facts?.lifecycle === "discontinued") {
+    return { label: "Discontinued", tone: "DISCONTINUED", tooltip: "No longer available" };
+  }
+  if (facts?.freeTier) {
+    const { available, summary } = facts.freeTier.value;
+    return { label: available ? "Free plan" : "No free plan", tone: costTier, tooltip: summary };
+  }
+  return { label: COST_TIER_LABEL[costTier] ?? costTier, tone: costTier, tooltip: null };
+}

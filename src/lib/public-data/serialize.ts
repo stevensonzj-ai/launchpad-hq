@@ -15,6 +15,7 @@ import {
   applyUsageLimitsToFreePlan,
   normalizePlans,
   plansFromFactsOrProse,
+  proseCheckDates,
   stripInlineCitations,
   type DisplayPlan,
 } from "./pricing";
@@ -157,10 +158,15 @@ function shownFacts(facts: ToolFacts | undefined): Fact<unknown>[] {
   });
 }
 
-function proseDates(fields: (string | null | undefined)[]): string[] {
-  return fields.flatMap((field) =>
-    field ? [...field.matchAll(/as of (\d{4}-\d{2}-\d{2})/gi)].map((m) => m[1]) : [],
-  );
+/** Prose fields the page renders; their "as of" dates count as check dates. */
+function shownProse(row: CatalogRow, view: ReturnType<typeof overlayRow>) {
+  return [view.description, view.currentPricing, view.freeTierFeatures, view.usageLimits, row.primaryUse];
+}
+
+/** Newest check date behind what the page shows (facts first, then prose). */
+export function dataAsOf(row: CatalogRow, facts: ToolFacts | undefined): string | null {
+  const factsAsOf = newest(shownFacts(facts).map((f) => f.checkedAt));
+  return factsAsOf ?? newest(proseCheckDates(shownProse(row, overlayRow(row, facts))));
 }
 
 function resolveRefs(
@@ -186,8 +192,7 @@ export function toPublicTool(
   const core = publicToolCore(row, facts);
   const view = overlayRow(row, facts);
   const retired = core.lifecycle === "discontinued";
-  const prose = [view.description, view.currentPricing, view.freeTierFeatures, view.usageLimits, row.primaryUse];
-  const { sources, notes } = collectDisplaySources(facts, prose);
+  const { sources, notes } = collectDisplaySources(facts, shownProse(row, view));
   const shown = shownFacts(facts);
   const factsAsOf = newest(shown.map((f) => f.checkedAt));
   const status = facts?.status;
@@ -264,7 +269,7 @@ export function toPublicTool(
       status: shown.length === 0 ? "catalog_only" : shown.every(isPublishedVerified) ? "verified" : "unverified",
       checked_at: factsAsOf,
     },
-    data_as_of: factsAsOf ?? newest(proseDates(prose)),
+    data_as_of: dataAsOf(row, facts),
     record_updated_at: isoDate(row.updatedAt),
     generated_at: ctx.generatedAt,
     sponsored: false,

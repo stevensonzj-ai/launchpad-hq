@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import test from "node:test";
+import { getToolFacts } from "@/data/facts";
 import { PlatformCard } from "./platform-card";
 
 const platform = {
@@ -54,4 +55,16 @@ test("Paid options keep their own citation when no free-tier fact is available",
   assert.ok(html.includes("Paid options:"));
   assert.ok(html.includes('href="https://example.com/pricing"'));
   assert.ok(html.includes("Pricing source · checked 2026-10-15"));
+});
+
+test("Discontinued cards never show a free or Freemium badge, free-plan copy or prices", () => {
+  const html = renderToStaticMarkup(createElement(PlatformCard, {
+    ...platform,
+    slug: "play-ht",
+    name: "PlayHT",
+    facts: getToolFacts("play-ht"),
+    isSignedIn: false,
+  }));
+  assert.ok(html.includes("Discontinued"));
+  assert.ok(!/Freemium|Free plan|legacy catalog limits|Paid options/.test(html));
 });

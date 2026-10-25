@@ -4,13 +4,14 @@ import { OutboundLink } from "@/components/analytics/outbound-link";
 import { PlatformLogo } from "@/components/platforms/platform-logo";
 import type { ToolFacts } from "@/data/facts/types";
 import { paidStartingPrice } from "@/lib/platform-display";
+import { costBadge } from "@/lib/public-data/pricing";
 import { cn } from "@/lib/utils";
-import { COST_TIER_LABEL, COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
+import { COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
 import { Tooltip } from "@/components/ui/tooltip";
 
 interface PlatformCardProps {
-  facts?: Pick<ToolFacts, "freeTier" | "plans">;
+  facts?: Pick<ToolFacts, "freeTier" | "plans"> & Partial<Pick<ToolFacts, "lifecycle">>;
   slug: string;
   name: string;
   logoUrl?: string | null;
@@ -34,6 +35,8 @@ const tierColors: Record<string, string> = {
   FREEMIUM: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   PAID: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   ENTERPRISE: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  // Same treatment as the page's discontinued notice.
+  DISCONTINUED: "bg-amber-500/10 text-amber-100 border-amber-500/40",
 };
 
 const diffColors: Record<string, string> = {
@@ -62,9 +65,12 @@ export function PlatformCard({
   isSignedIn,
 }: PlatformCardProps) {
   const showFavorite = isSignedIn !== undefined;
-  const freeDetails = facts?.freeTier?.value.summary ?? freeTierFeatures;
-  const source = facts?.freeTier;
-  const price = facts?.plans ? paidStartingPrice(facts.plans.value) : undefined;
+  const badge = costBadge(costTier, facts);
+  // A discontinued tool shows no free-plan details or prices (same as its page).
+  const retired = facts?.lifecycle === "discontinued";
+  const freeDetails = retired ? null : (facts?.freeTier?.value.summary ?? freeTierFeatures);
+  const source = retired ? undefined : facts?.freeTier;
+  const price = !retired && facts?.plans ? paidStartingPrice(facts.plans.value) : undefined;
   const pricingSource = price && facts?.plans && (!source || source.sourceUrl !== facts.plans.sourceUrl || source.checkedAt !== facts.plans.checkedAt || source.status !== facts.plans.status) ? facts.plans : undefined;
   const categoryLabel: Record<string, string> = {
     "text-conversational-ai": "writing & conversation",
@@ -114,14 +120,14 @@ export function PlatformCard({
       )}
 
       <div className="mb-3 flex flex-wrap gap-2">
-        <Tooltip content={facts?.freeTier ? facts.freeTier.value.summary : COST_TIER_TOOLTIP[costTier] ?? ""}>
+        <Tooltip content={badge.tooltip ?? COST_TIER_TOOLTIP[costTier] ?? ""}>
           <span
             className={cn(
               "relative z-10 rounded-md border px-2 py-0.5 text-xs font-medium",
-              tierColors[costTier] || tierColors.FREEMIUM,
+              tierColors[badge.tone] || tierColors.FREEMIUM,
             )}
           >
-            {facts?.freeTier ? (facts.freeTier.value.available ? "Free plan" : "No free plan") : COST_TIER_LABEL[costTier] ?? costTier}
+            {badge.label}
           </span>
         </Tooltip>
         <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>

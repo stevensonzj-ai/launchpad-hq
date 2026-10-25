@@ -1,13 +1,16 @@
 import { FactCite } from "@/components/platforms/fact-cite";
+import { PricesChecked } from "@/components/platforms/prices-checked";
 import type { DisplayPlan } from "@/lib/platform-display";
 import type { Fact, ToolPlan } from "@/data/facts/types";
 
 type PlatformPricingTableProps = {
   plans: DisplayPlan[];
   plansFact?: Fact<ToolPlan[]>;
+  /** From `pricesCheckedAt`; omitted when unknown. */
+  checkedAt?: string | null;
 };
 
-export function PlatformPricingTable({ plans, plansFact }: PlatformPricingTableProps) {
+export function PlatformPricingTable({ plans, plansFact, checkedAt }: PlatformPricingTableProps) {
   if (plans.length === 0) return null;
   const showLimits = plans.some((plan) => plan.limits.trim());
 
@@ -43,6 +46,7 @@ export function PlatformPricingTable({ plans, plansFact }: PlatformPricingTableP
           </tbody>
         </table>
       </div>
+      <PricesChecked date={checkedAt} />
     </section>
   );
 }

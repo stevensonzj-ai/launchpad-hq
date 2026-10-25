@@ -16,6 +16,7 @@ import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorial
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildPlatformMetadata } from "@/lib/seo-metadata";
 import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
+import { dataAsOf, publicToolCore } from "@/lib/public-data/serialize";
 import { JsonLd } from "@/components/seo/json-ld";
 import { GroupedCatalogLinks } from "@/components/seo/catalog-link-list";
 import {
@@ -140,6 +141,8 @@ export default async function PlatformPage({
   });
   const displayName = view.name ?? platform.name;
   const officialHref = officialSiteHref(view.website);
+  // Same values as /data/v1/tools/{slug}.json, so JSON-LD prices match the feed.
+  const feedCore = publicToolCore(platform, facts);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
@@ -150,6 +153,9 @@ export default async function PlatformPage({
           categoryName: platform.category.name,
           categorySlug: platform.category.slug,
           website: view.website,
+          description: feedCore.description,
+          dateModified: dataAsOf(platform, facts),
+          plans: feedCore.plans,
         })}
       />
       <div className="mb-7 flex flex-wrap items-center gap-2 text-xs text-gray-300">

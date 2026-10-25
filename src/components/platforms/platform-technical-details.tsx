@@ -37,7 +37,7 @@ export function buildTechnicalDetailRows(
   const rows: TechnicalDetailRow[] = [
     { label: "Offline", value: props.offlineCapable ? "Yes" : "No" },
     { label: "API", value: props.apiAvailable ? "Yes" : "No" },
-    { label: "Languages", value: props.languageSupport?.trim() || "English" },
+    { label: "Languages", value: props.languageSupport?.trim() || "Not listed" },
     {
       label: "Difficulty",
       value: DIFFICULTY_LABEL[props.difficultyLevel] ?? props.difficultyLevel,
