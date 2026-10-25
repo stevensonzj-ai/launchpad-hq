@@ -39,7 +39,7 @@ function section(title: string, canonical: string, body: string[]): string[] {
   return [`## ${title}`, "", `Canonical: ${canonical}`, "", ...body, ""];
 }
 
-function priceLine(tool: Pick<PublicToolT, "free_tier" | "starting_price" | "lowest_paid" | "lifecycle">): string[] {
+export function priceLine(tool: Pick<PublicToolT, "free_tier" | "starting_price" | "lowest_paid" | "lifecycle">): string[] {
   if (tool.lifecycle === "discontinued") return ["Status: discontinued (no current pricing)"];
   const out = [`Free tier: ${tool.free_tier.available ? "yes" : "no"}${tool.free_tier.summary ? ` (${tool.free_tier.summary})` : ""}`];
   if (tool.starting_price) out.push(`Starting price: ${tool.starting_price}`);
@@ -75,7 +75,7 @@ function toolBlock(tool: PublicToolT): string[] {
   return lines;
 }
 
-const summaryLine = (tool: PublicToolSummaryT) =>
+export const summaryLine = (tool: PublicToolSummaryT) =>
   `${tool.name} (${tool.url}): ${tool.starting_price ? `starting price ${tool.starting_price}` : "no listed price"}; free tier ${tool.free_tier.available ? "yes" : "no"}; data as of ${tool.data_as_of ?? "not dated"}`;
 
 function compareBlock(page: PublicComparePageT): string[] {

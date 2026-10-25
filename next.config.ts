@@ -2,10 +2,21 @@ import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import { catalogRedirects } from "./src/lib/catalog-redirects";
 import { compareRedirects } from "./src/data/compare/pages";
+import { HTML_VARY_WITH_ACCEPT, MARKDOWN_VARY_SOURCES } from "./src/lib/markdown/negotiate";
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   poweredByHeader: false,
+  async headers() {
+    // Pages with a Markdown version (src/lib/markdown/negotiate.ts): tell
+    // shared caches the response depends on Accept. The value repeats the
+    // Vary Next sets on app pages, so whichever header wins on the platform
+    // the RSC variants stay keyed; Markdown itself is a separate /md route.
+    return MARKDOWN_VARY_SOURCES.map((source) => ({
+      source,
+      headers: [{ key: "Vary", value: HTML_VARY_WITH_ACCEPT }],
+    }));
+  },
   async redirects() {
     return [
       // 1-to-1 rename: fix the truncated "Softwar" slug from the original import.
