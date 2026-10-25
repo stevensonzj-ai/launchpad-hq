@@ -55,11 +55,11 @@ describe("API error envelope", () => {
   it("turns a throw into a 500 that leaks nothing internal", async (t) => {
     const logged = t.mock.method(console, "error", () => {});
     const res = await withApiErrors("test", async () => {
-      throw new Error("connect ECONNREFUSED postgres://user:secret@db.internal:5432");
+      throw new Error("internal-driver-detail: relation platforms_x does not exist");
     });
     assert.equal(res.status, 500);
     const text = await res.text();
-    assert.doesNotMatch(text, /secret|postgres|ECONNREFUSED|stack|at \w+ \(/);
+    assert.doesNotMatch(text, /internal-driver-detail|platforms_x|stack|at \w+ \(/);
     assert.equal(JSON.parse(text).error.code, "internal_error");
     assert.equal(logged.mock.callCount(), 1);
   });

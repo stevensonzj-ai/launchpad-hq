@@ -80,11 +80,11 @@ describe("feed response helpers", () => {
   it("turns a throwing route body into a 503 with no internals", async (t) => {
     const logged = t.mock.method(console, "error", () => {});
     const res = await withFeedErrors(async () => {
-      throw new Error("db down at postgres://u:p@host");
+      throw new Error("internal-driver-detail: db down");
     });
     assert.equal(res.status, 503);
     assert.equal(res.headers.get("Cache-Control"), "no-store");
-    assert.doesNotMatch(await res.text(), /postgres|db down/);
+    assert.doesNotMatch(await res.text(), /internal-driver-detail|db down/);
     assert.equal(logged.mock.callCount(), 1);
     const ok = await withFeedErrors(async () => feedJson({ ok: true }));
     assert.equal(ok.status, 200);
