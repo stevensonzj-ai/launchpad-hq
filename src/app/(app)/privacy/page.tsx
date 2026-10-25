@@ -13,7 +13,7 @@ export const metadata: Metadata = publicPageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy">
+    <LegalPage title="Privacy Policy" lastUpdated="25 October 2026">
       <section>
         <h2>Who we are</h2>
         <p>
@@ -91,6 +91,32 @@ export default function PrivacyPage() {
         <p>
           We do not use ad networks. We found no third-party embeds (no iframes, YouTube,
           Google Tag Manager, or ad scripts). Links to other sites leave Launchpad HQ.
+        </p>
+      </section>
+
+      <section id="mcp">
+        <h2>AI assistant connector (MCP)</h2>
+        <p>
+          Launchpad HQ runs a free, read-only connector at https://www.launchpadhq.io/mcp
+          that AI assistants such as Claude or ChatGPT can use to look up our catalog. It
+          needs no account and can’t change any data. See the{" "}
+          <Link href="/connector">connector guide</Link>.
+        </p>
+        <p>
+          For each request we log: the time, the tool used, the text sent to it (the task
+          or AI tool names, up to 200 characters), the number of results, the response
+          time, whether it succeeded, and the assistant app’s self-reported name and
+          version, if it sends one. These log lines don’t include IP addresses, headers,
+          user agents, cookies or request bodies, and we don’t receive your conversation,
+          only what the assistant sends to the tool. Our host’s own request logs include
+          IP addresses by default (see Hosting logs above).
+        </p>
+        <p>
+          Connector logs are kept about 90 days, like our other logs (see How long we keep
+          it). They aren’t linked to an account, so we can only find a log line from what
+          was sent; email us the request and we will delete matching lines within 30 days.
+          Please don’t include personal information in requests. The AI assistant you use
+          has its own privacy policy.
         </p>
       </section>
 
