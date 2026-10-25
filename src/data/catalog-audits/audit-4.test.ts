@@ -94,13 +94,15 @@ describe("catalog audit 4 patches", () => {
     assert.match(text, /in compliance with HIPAA/);
     assert.match(text, /standard Business Associate Agreement/);
     assert.doesNotMatch(text, /not (?:HIPAA|covered)|aren't (?:HIPAA|covered)|BAA[^.]*unverified/i);
+    // Discover cards show freeTierFeatures alone, so it must say who the free tier is for.
+    assert.match(patchFor("openevidence").fields.freeTierFeatures ?? "", /^Free for verified US healthcare professionals/);
   });
 
   it("describes Stability AI's current products without API video or Stable Assistant as live", () => {
     const { fields } = patchFor("stability-ai");
     assert.match(fields.description ?? "", /no video/);
     assert.match(fields.description ?? "", /Stable Assistant, is no longer on Stability's site/);
-    assert.match(fields.currentPricing ?? "", /1 credit = \$0\.01/);
+    assert.match(fields.currentPricing ?? "", /US\$0\.01 per credit/);
     assert.match(fields.freeTierFeatures ?? "", /25 free credits/);
     assert.equal(fields.outputFormats?.includes("video"), false);
   });
@@ -115,7 +117,7 @@ describe("catalog audit 4 patches", () => {
       }
     }
     const stability = parsePricingProse(patchFor("stability-ai").fields.currentPricing ?? "");
-    assert.equal(startingPriceLabel(stability), "Free, from 1 credit = $0.01, pay as you go");
+    assert.equal(startingPriceLabel(stability), "Free, from US$0.01 per credit, pay as you go");
   });
 });
 

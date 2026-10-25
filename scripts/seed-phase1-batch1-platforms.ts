@@ -257,7 +257,7 @@ const ROWS: SeedRow[] = [
     description:
       "Publisher of Stable Diffusion and the Stable Audio models. There are three ways in: download the open models and run them yourself (for example with ComfyUI), which keeps your inputs on your machine; call them from code through the Developer Platform API, which offers image, audio and 3D models but no video (Stability's video models are download-only); or make music and sound effects in the Stable Audio web app at stableaudio.com, its remaining consumer app. Its consumer image app, Stable Assistant, is no longer on Stability's site (as of 2026-10-25).",
     currentPricing:
-      "Open models (Community License): $0 for individuals and organizations under US$1M annual revenue, commercial users must register; Developer Platform API: 1 credit = $0.01, pay as you go; Enterprise License (over US$1M annual revenue): custom; Stable Audio web app: separate plans at stableaudio.com/pricing (official, as of 2026-10-25)",
+      "Open models (Community License): $0 for individuals and organizations under US$1M annual revenue, commercial users must register; Developer Platform API: US$0.01 per credit, pay as you go; Enterprise License (over US$1M annual revenue): custom; Stable Audio web app: separate plans at stableaudio.com/pricing (official, as of 2026-10-25)",
     freeTierFeatures: "New Developer Platform accounts get 25 free credits (official, as of 2026-10-25)",
     costTier: "FREE",
     difficultyLevel: "ADVANCED",

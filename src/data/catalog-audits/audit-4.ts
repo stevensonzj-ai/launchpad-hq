@@ -123,7 +123,7 @@ export const AUDIT_4_PATCHES: Audit4Patch[] = [
       description:
         "Publisher of Stable Diffusion and the Stable Audio models. There are three ways in: download the open models and run them yourself (for example with ComfyUI), which keeps your inputs on your machine; call them from code through the Developer Platform API, which offers image, audio and 3D models but no video (Stability's video models are download-only); or make music and sound effects in the Stable Audio web app at stableaudio.com, its remaining consumer app. Its consumer image app, Stable Assistant, is no longer on Stability's site (as of 2026-10-25).",
       currentPricing:
-        "Open models (Community License): $0 for individuals and organizations under US$1M annual revenue, commercial users must register; Developer Platform API: 1 credit = $0.01, pay as you go; Enterprise License (over US$1M annual revenue): custom; Stable Audio web app: separate plans at stableaudio.com/pricing (official, as of 2026-10-25)",
+        "Open models (Community License): $0 for individuals and organizations under US$1M annual revenue, commercial users must register; Developer Platform API: US$0.01 per credit, pay as you go; Enterprise License (over US$1M annual revenue): custom; Stable Audio web app: separate plans at stableaudio.com/pricing (official, as of 2026-10-25)",
       freeTierFeatures: "New Developer Platform accounts get 25 free credits (official, as of 2026-10-25)",
       outputFormats: ["images", "audio", "3D models"],
       verified: true,
@@ -138,7 +138,7 @@ export const AUDIT_4_PATCHES: Audit4Patch[] = [
       description:
         "Cited clinical Q&A, free for verified US healthcare professionals. Access is gated to licensed clinicians: it is not for patients or self-diagnosis and is not a consumer symptom checker. Its privacy policy (updated September 17, 2026) says it secures protected health information (PHI) in compliance with HIPAA and does not train AI models on PHI. Its security page says HIPAA covered entities may send PHI under its standard Business Associate Agreement (official, as of 2026-10-25). Availability outside the US was not confirmed on the official site.",
       currentPricing: "Free: $0, no paid plans listed (official, as of 2026-10-25)",
-      freeTierFeatures: "Yes (official, as of 2026-10-25)",
+      freeTierFeatures: "Free for verified US healthcare professionals (official, as of 2026-10-25)",
       verified: true,
     },
   },
