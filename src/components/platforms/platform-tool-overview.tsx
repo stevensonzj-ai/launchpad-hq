@@ -21,6 +21,7 @@ import {
   plansFromFactsOrProse,
   startingPriceLabel,
 } from "@/lib/platform-display";
+import { pricesCheckedAt } from "@/lib/public-data/pricing";
 
 export type ToolOverviewPlatform = OverlayPlatform<
   PlatformFactFields & {
@@ -134,7 +135,11 @@ export function PlatformToolOverview({
           </Link>}
 
           <div className="grid min-w-0 items-start gap-x-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-            <PlatformPricingTable plans={plans} plansFact={facts?.plans} />
+            <PlatformPricingTable
+              plans={plans}
+              plansFact={facts?.plans}
+              checkedAt={pricesCheckedAt(facts, [platform.currentPricing, platform.usageLimits])}
+            />
             <PlatformOverviewSections platform={platform} />
           </div>
 

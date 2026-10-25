@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { isPublishedVerified } from "@/data/facts/walk";
 import type { ToolFacts } from "@/data/facts/types";
+import { isHiddenPlatform } from "@/lib/catalog-visibility";
 import { absoluteUrl, SITE_IS_PUBLIC } from "@/lib/site";
 
 export const META_DESCRIPTION_MAX = 160;
@@ -113,6 +114,21 @@ export function stripInlineMarkup(text: string): string {
   return text.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/`([^`]+)`/g, "$1");
 }
 
+/**
+ * `<link rel="alternate" type="application/json">` to the tool's /data/v1
+ * record. Hidden tools have no feed record (404), so no link.
+ */
+export function withToolFeedAlternate(metadata: Metadata, slug: string): Metadata {
+  if (isHiddenPlatform(slug)) return metadata;
+  return {
+    ...metadata,
+    alternates: {
+      ...metadata.alternates,
+      types: { "application/json": absoluteUrl(`/data/v1/tools/${slug}.json`) },
+    },
+  };
+}
+
 export function buildTutorialMetadata(input: {
   platformSlug: string;
   name: string;
@@ -127,10 +143,13 @@ export function buildTutorialMetadata(input: {
     path: `/platform/${input.platformSlug}/guide`,
     index: input.index,
   });
-  return {
-    ...base,
-    openGraph: { ...base.openGraph, type: "article", modifiedTime: input.lastReviewedAt },
-  };
+  return withToolFeedAlternate(
+    {
+      ...base,
+      openGraph: { ...base.openGraph, type: "article", modifiedTime: input.lastReviewedAt },
+    },
+    input.platformSlug,
+  );
 }
 
 export function buildPlatformMetadata(input: {
@@ -148,23 +167,29 @@ export function buildPlatformMetadata(input: {
   const index = facts?.visibility === "hidden" ? false : undefined;
   const status = facts?.status && isPublishedVerified(facts.status) ? facts.status.value : undefined;
   if (facts?.lifecycle === "discontinued" && status) {
-    return publicPageMetadata({
-      title: composeDiscontinuedTitle(name),
-      description: status.headline,
+    return withToolFeedAlternate(
+      publicPageMetadata({
+        title: composeDiscontinuedTitle(name),
+        description: status.headline,
+        path: `/platform/${input.slug}`,
+        index,
+      }),
+      input.slug,
+    );
+  }
+  return withToolFeedAlternate(
+    publicPageMetadata({
+      title: composePlatformTitle(name, input.categoryName),
+      description: composePlatformDescription({
+        name,
+        categoryName: input.categoryName,
+        primaryUse: input.primaryUse,
+        description: input.description,
+        verdict: verifiedVerdict(input.facts),
+      }),
       path: `/platform/${input.slug}`,
       index,
-    });
-  }
-  return publicPageMetadata({
-    title: composePlatformTitle(name, input.categoryName),
-    description: composePlatformDescription({
-      name,
-      categoryName: input.categoryName,
-      primaryUse: input.primaryUse,
-      description: input.description,
-      verdict: verifiedVerdict(input.facts),
     }),
-    path: `/platform/${input.slug}`,
-    index,
-  });
+    input.slug,
+  );
 }
