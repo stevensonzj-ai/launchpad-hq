@@ -27,7 +27,7 @@ export const HOME_ABOUT: CopySection[] = [
   {
     heading: "How tools are checked",
     paragraphs: [
-      "Prices, free tiers and plan limits come from each vendor's own pages. Checked facts carry the date they were checked and a link to the source, and anything we could not confirm is labelled instead of guessed. Sponsors buy a labelled placement only: never rankings, quiz results or data.",
+      "We check prices, free tiers and plan limits against each vendor's own pages. Checked facts carry the date they were checked and a link to the source; anything not yet confirmed is labelled instead of guessed. Sponsors buy a labelled placement only: never rankings, quiz results or data.",
     ],
   },
   {
@@ -74,8 +74,8 @@ export const ABOUT_SECTIONS: CopySection[] = [
   {
     heading: "How facts are checked",
     paragraphs: [
-      "Prices, free tiers and plan limits come from each vendor's own pages. A checked fact carries the date it was checked and a link to its source. Facts we have not confirmed are labelled unverified or catalog-only, and no source is invented for them.",
-      "Prices in guides and workflows are filled in from the tool's catalog record rather than typed by hand, so they match the tool's page. Each guide shows the date its facts were last reviewed. When a product shuts down it stays listed, marked as discontinued, with what happened and what to use instead.",
+      "We check prices, free tiers and plan limits against each vendor's own pages. A checked fact carries the date it was checked and a link to its source. Facts we have not confirmed are labelled unverified or catalog-only, and no source is invented for them.",
+      "Prices in guides and workflows are filled in from the tool's catalog record rather than typed by hand, so they match the tool's page. Each guide shows the date its facts were last reviewed. When a well-known product shuts down, its page stays up, marked as discontinued, with what happened and what to use instead.",
     ],
   },
   {
