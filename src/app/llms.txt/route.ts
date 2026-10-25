@@ -32,6 +32,8 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 - [Quiz results](${SITE_URL}/quiz/results): Public results page (signed-out path)
 - [Workflows](${SITE_URL}/workflows): Curated multi-tool workflow templates
 - [Tutorials](${SITE_URL}/tutorials): Every getting-started guide, grouped by category
+- [Models](${SITE_URL}/models): Current and prior versions of major LLM families, from official vendor docs
+- [Claude vs GPT](${SITE_URL}/models/compare/claude-vs-gpt): Flagship and budget Claude and GPT versions, from official docs
 - [How we make money](${SITE_URL}/how-we-make-money): How Launchpad stays free, labeled sponsor placements, and affiliates
 - [Advertise](${SITE_URL}/advertise): Sponsor rate card, weekly availability, rates and how to book by email${
     getActivePlacement("ai-of-the-week")
@@ -47,6 +49,16 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 - Tools: search_tools, compare, get_pricing_facts, find_free_alternatives
 - Results are dated and sourced; sponsorship never affects them.
 - [Privacy policy](${SITE_URL}/privacy#mcp)
+
+## Data (JSON, free, read-only)
+
+The same dated, sourced facts as the site and the MCP connector. No sign-in; cached hourly. Please credit Launchpad HQ and link to the tool's page.
+
+- [Index](${SITE_URL}/data/v1/index.json): Counts and links
+- [Catalog](${SITE_URL}/data/v1/catalog.json): Every listed tool in one file
+- One tool: ${SITE_URL}/data/v1/tools/{slug}.json
+- [OpenAPI](${SITE_URL}/data/v1/openapi.json): OpenAPI 3.1 description
+- [JSON Schema](${SITE_URL}/data/v1/schema/tool.json): Schema for one tool
 
 ## Workflows
 

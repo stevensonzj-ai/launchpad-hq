@@ -28,6 +28,9 @@ const isPublicRoute = createRouteMatcher([
   // Read-only MCP connector: anonymous by design (no auth in v0.1).
   // Without this, auth.protect() would block signed-out MCP clients.
   "/mcp",
+  // Public JSON feed. Also excluded from the matcher below, so Clerk never
+  // adds cookies or private cache headers to it.
+  "/data(.*)",
 ]);
 
 /**
@@ -62,7 +65,7 @@ export default clerkMiddleware(async (auth, request) => {
 
 export const config = {
   matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
+    "/((?!_next|data/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };

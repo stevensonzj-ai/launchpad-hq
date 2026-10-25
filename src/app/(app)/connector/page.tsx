@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { TOOL_SPECS } from "@/lib/mcp/server";
+import { SCHEMA_VERSION } from "@/lib/public-data/schema";
 import { publicPageMetadata } from "@/lib/seo-metadata";
 import { absoluteUrl } from "@/lib/site";
 
@@ -13,6 +14,7 @@ export const metadata: Metadata = publicPageMetadata({
 });
 
 const MCP_URL = absoluteUrl("/mcp");
+const FEED_URL = absoluteUrl("/data/v1/index.json");
 
 type ToolName = (typeof TOOL_SPECS)[number]["name"];
 
@@ -174,7 +176,21 @@ export default function ConnectorPage() {
         </li>
 
         <li>
-          <h2 className="text-xl font-semibold text-white">9. Help</h2>
+          <h2 className="text-xl font-semibold text-white">9. Plain JSON feed</h2>
+          <p className="mt-2 text-sm text-gray-400">
+            Prefer plain files? The same facts are published as free, read-only JSON with no
+            sign-in, starting at{" "}
+            <a href={FEED_URL} className="text-orange-400 hover:underline">
+              {FEED_URL}
+            </a>
+            . It has one file for the whole catalog, one per tool, an OpenAPI description and
+            a JSON Schema (schema version {SCHEMA_VERSION}). Files are cached for up to an hour.
+            Please credit Launchpad HQ and link to the tool&apos;s page.
+          </p>
+        </li>
+
+        <li>
+          <h2 className="text-xl font-semibold text-white">10. Help</h2>
           <p className="mt-2 text-sm text-gray-400">
             Questions or a wrong fact? Email{" "}
             <a

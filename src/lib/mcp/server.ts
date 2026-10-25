@@ -23,7 +23,7 @@ import {
 } from "./tools";
 
 export const MCP_SERVER_NAME = "launchpad-hq";
-export const MCP_SERVER_VERSION = "0.1.0";
+export const MCP_SERVER_VERSION = "0.1.1";
 
 /** At most 512 characters, describing the data (ChatGPT reads the first 512). */
 export const MCP_SERVER_INSTRUCTIONS = [

@@ -4,10 +4,13 @@
  * Every function takes (input, catalogRows, factsLookup) and returns plain
  * JSON. No Prisma, no network, no sponsor data: ranking, inclusion and
  * ordering depend only on the catalog row and its verified facts, and every
- * item carries `sponsored: false`.
+ * item carries `sponsored: false`. Names, prices and free tiers come from
+ * `publicToolCore`, the same serializer as the /data/v1 JSON feed.
  */
 import type { Fact, ToolFacts, ToolPlan } from "@/data/facts/types";
-import { isPublishedVerified } from "@/data/facts/walk";
+import { isPublishedVerified, publishedUsageLimits } from "@/data/facts/walk";
+import { stripInlineCitations } from "@/lib/public-data/pricing";
+import { publicToolCore } from "@/lib/public-data/serialize";
 import { costTiersForBudget } from "@/lib/recommendations-score";
 import { absoluteUrl } from "@/lib/site";
 import {
@@ -27,7 +30,11 @@ import {
 
 export const ATTRIBUTION = "Launchpad HQ (https://www.launchpadhq.io)";
 
-/** The select-only catalog shape loaded by catalog.ts. Nothing user-related. */
+/**
+ * The select-only catalog shape loaded by catalog.ts. Nothing user-related.
+ * Shared with the public JSON feed, so it carries every public column the
+ * platform page shows.
+ */
 export type CatalogRow = {
   slug: string;
   name: string;
@@ -47,6 +54,20 @@ export type CatalogRow = {
   budgetAlternativeTo: string[];
   updatedAt: Date | string;
   category: { name: string; slug: string } | null;
+  idealUserTypes: string[];
+  contentTypes: string[];
+  outputFormats: string[];
+  privacyLevel: string;
+  timeToProductivity: string | null;
+  learningCurve: string | null;
+  offlineCapable: boolean;
+  languageSupport: string | null;
+  keyIntegrations: string | null;
+  upgradeTriggers: string | null;
+  complementaryTools: string[];
+  hasMobileApp: boolean;
+  iosAppUrl: string | null;
+  androidAppUrl: string | null;
 };
 
 export type FactsLookup = (slug: string) => ToolFacts | undefined;
@@ -107,14 +128,14 @@ function clampLimit(limit: number | undefined): number {
 }
 
 /**
- * Free tier per §3 field rules: facts first, catalog cost tier as fallback.
- * A discontinued tool has no free tier, whatever its stored cost tier says.
+ * Free-tier provenance per §3 field rules: facts first, catalog cost tier as
+ * fallback. The value itself comes from `publicToolCore`. A discontinued tool
+ * has no free tier, whatever its stored cost tier says.
  */
 function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
   if (isDiscontinued(facts)) {
     const status = facts?.status;
     return {
-      free_tier: { available: false, summary: status?.value.headline ?? "Discontinued" },
       verification: status ? factVerification(status) : ("catalog_only" as const),
       as_of: status?.checkedAt ?? isoDate(row.updatedAt),
       source_url: status?.sourceUrl ?? null,
@@ -123,18 +144,12 @@ function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
   const fact = facts?.freeTier;
   if (fact) {
     return {
-      free_tier: { available: fact.value.available, summary: fact.value.summary },
       verification: factVerification(fact),
       as_of: fact.checkedAt,
       source_url: fact.sourceUrl,
     } as const;
   }
-  const tier = row.costTier.toUpperCase();
   return {
-    free_tier: {
-      available: tier === "FREE" || tier === "FREEMIUM",
-      summary: row.freeTierFeatures,
-    },
     verification: "catalog_only" as const,
     as_of: isoDate(row.updatedAt),
     source_url: null,
@@ -143,15 +158,19 @@ function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
 
 export function toPlatformRef(row: CatalogRow, facts: ToolFacts | undefined): PlatformRef {
   const free = freeTierOf(row, facts);
+  const core = publicToolCore(row, facts);
   return {
     slug: row.slug,
-    name: facts?.displayName?.value ?? row.name,
+    name: core.name,
     category: row.category?.name ?? null,
     launchpad_url: absoluteUrl(`/platform/${row.slug}`),
-    website: facts?.officialUrl?.value ?? row.website,
+    website: core.website,
     cost_tier: row.costTier,
     difficulty: row.difficultyLevel,
-    free_tier: free.free_tier,
+    free_tier: core.free_tier,
+    company: core.company,
+    description: core.description,
+    starting_price: core.starting_price,
     verification: free.verification,
     as_of: free.as_of,
     source_url: free.source_url,
@@ -304,7 +323,7 @@ export function compare(
       ...toPlatformRef(row, f),
       plans: sourced<ToolPlan[]>(f?.plans),
       api_pricing: sourced(f?.apiPricing),
-      usage_limits: sourced(f?.usageLimits as Fact<Record<string, unknown>> | undefined),
+      usage_limits: sourced(publishedUsageLimits(f) as Fact<Record<string, unknown>> | undefined),
       platforms_supported: f?.platforms?.value ?? row.platformType,
       api_available: row.apiAvailable,
       lifecycle: f?.lifecycle ?? "active",
@@ -331,9 +350,13 @@ export function getPricingFacts(
   if (!row) throw notInCatalog(input.platform);
   const f = facts(row.slug);
   const plans = sourced<ToolPlan[]>(f?.plans);
-  const freeTier = sourced(f?.freeTier);
+  const freeTierFact = sourced(f?.freeTier);
+  const freeTier = freeTierFact && {
+    ...freeTierFact,
+    value: { ...freeTierFact.value, summary: stripInlineCitations(freeTierFact.value.summary) },
+  };
   const apiPricing = sourced(f?.apiPricing);
-  const usageLimits = sourced(f?.usageLimits as Fact<Record<string, unknown>> | undefined);
+  const usageLimits = sourced(publishedUsageLimits(f) as Fact<Record<string, unknown>> | undefined);
   const priceFacts = ([f?.plans, f?.freeTier, f?.apiPricing] as (Fact<unknown> | undefined)[]).filter(
     (x): x is Fact<unknown> => Boolean(x),
   );
@@ -412,7 +435,7 @@ export function findFreeAlternatives(
       const ref = toPlatformRef(c.row, f);
       const why =
         c.free === 2 && f?.freeTier
-          ? `verified free tier: ${f.freeTier.value.summary}; ${c.reason}`
+          ? `verified free tier: ${stripInlineCitations(f.freeTier.value.summary)}; ${c.reason}`
           : `catalog lists a ${c.row.costTier.toLowerCase()} cost tier (unverified); ${c.reason}`;
       // No sourced tradeoff field exists yet (pros/cons carry no source), so
       // per the brief this stays null rather than inventing marketing text.
