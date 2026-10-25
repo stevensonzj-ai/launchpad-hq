@@ -142,7 +142,7 @@ export default async function PlatformGuidePage({
         platformName={displayName}
         platformSlug={platform.slug}
         tutorial={guide.tutorial}
-        startingPrice={guide.tool?.starting_price ?? null}
+        startingPrice={guide.headerPrice}
         titleAs="h1"
       />
 

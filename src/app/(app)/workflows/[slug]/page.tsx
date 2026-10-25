@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { getAllWorkflows, getWorkflowBySlug } from "@/data/workflows";
+import { getWorkflowBySlug } from "@/data/workflows";
 import { WorkflowTierComparison } from "@/components/workflows/workflow-tier-comparison";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
 import { listRegisteredTutorials } from "@/data/tutorials";
@@ -11,12 +11,11 @@ import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { toWorkflowView } from "@/lib/public-data/content-view";
 import { loadFeed } from "@/lib/public-data/load";
 
-// Tool prices come from the catalog: refresh at most hourly.
-export const revalidate = 3600;
-
-export function generateStaticParams() {
-  return getAllWorkflows().map((w) => ({ slug: w.slug }));
-}
+// Rendered per request, like the guide and platform pages: tool prices
+// come from the catalog DB, and the build must not depend on DB access
+// (no prerender, so a build can't fail on Neon or bake in stale prices).
+// The catalog read is cached in memory for 10 minutes (loadCatalog).
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

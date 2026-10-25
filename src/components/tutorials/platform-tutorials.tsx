@@ -124,7 +124,10 @@ type PlatformTutorialsProps = {
   platformSlug: string;
   /** The tutorial with price tokens already filled in (content-view.ts), or null. */
   tutorial: PlatformTutorialData | null;
-  /** The tool's catalog starting price (same value as its page and JSON), or null. */
+  /**
+   * The tool's catalog starting price when it is a concise price
+   * (conciseStartingPrice); null hides the "Current prices" line.
+   */
   startingPrice?: string | null;
   /** /platform/[slug]/guide passes "h1": the tutorial title is that page's main heading. */
   titleAs?: "h1" | "h2";

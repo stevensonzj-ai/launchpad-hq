@@ -13,8 +13,8 @@
  * Tokens may only name a listed, non-discontinued tool whose fact file has
  * `plans` (so the value never depends on an unseen DB row), and a `price`
  * token's plan must exist there. `price-tokens.test.ts` checks every token
- * in every guide and workflow; a token that still fails at runtime renders
- * as UNRESOLVED_PRICE_TEXT, never as raw `{{...}}`.
+ * in every guide and workflow; a token that still fails at runtime drops
+ * its sentence (resolvePriceTokens), and is never shown as raw `{{...}}`.
  *
  * Pure: no Prisma, no sponsor data.
  */
@@ -30,8 +30,11 @@ const TOKEN_RE = /\{\{\s*(price|from)\s*:\s*([a-z0-9-]+)\s*(?::\s*([^{}]+?)\s*)?
 /** Anything that looks like a token, valid or not (used to catch typos). */
 const ANY_TOKEN_RE = /\{\{[^}]*\}\}/g;
 
-/** Shown in place of a token that cannot be resolved. Never the raw token. */
-export const UNRESOLVED_PRICE_TEXT = "the price on its Launchpad page";
+/**
+ * Stands in for a text whose only sentences held unresolvable tokens (see
+ * resolvePriceTokens). A full sentence, so it reads correctly on its own.
+ */
+export const UNRESOLVED_PRICE_TEXT = "Current prices are listed on its Launchpad page.";
 
 export function parsePriceTokens(text: string): PriceToken[] {
   const out: PriceToken[] = [];
@@ -87,7 +90,20 @@ export function priceResolver(plansFor: PlansLookup): PriceResolver {
   };
 }
 
-/** Replace every token; unresolved ones become UNRESOLVED_PRICE_TEXT. */
+/** Marks a token that could not be filled in (never shown). */
+const UNRESOLVED_MARK = "\u0000unresolved\u0000";
+
+/** Sentence ends, allowing a closing ** after the stop ("**Lead.** Next"). */
+const SENTENCE_SPLIT_RE = /(?<=[.!?](?:\*\*)?)\s+(?=[A-Z0-9("“'*])/;
+
+/**
+ * Replace every token with its catalog price. A token that cannot be filled
+ * in is never shown and never patched with a stand-in phrase (no phrase
+ * reads well in every slot: "Pro at …", "starts at …", "(Plus, currently …)").
+ * Instead the whole sentence holding it is dropped; if that empties the
+ * text, it becomes UNRESOLVED_PRICE_TEXT, a complete sentence of its own.
+ * Multi-line text (prompts) is handled line by line to keep its layout.
+ */
 export function resolvePriceTokens(
   text: string,
   resolve: PriceResolver,
@@ -97,10 +113,22 @@ export function resolvePriceTokens(
   for (const token of parsePriceTokens(text)) {
     const value = resolve(token);
     if (value === null) onUnresolved?.(token);
-    out = out.split(token.raw).join(value ?? UNRESOLVED_PRICE_TEXT);
+    out = out.split(token.raw).join(value ?? UNRESOLVED_MARK);
   }
   // A malformed token must never reach a reader either.
-  return out.replace(ANY_TOKEN_RE, UNRESOLVED_PRICE_TEXT);
+  out = out.replace(ANY_TOKEN_RE, UNRESOLVED_MARK);
+  if (!out.includes(UNRESOLVED_MARK)) return out;
+  const kept = out
+    .split("\n")
+    .map((line) =>
+      line
+        .split(SENTENCE_SPLIT_RE)
+        .filter((sentence) => !sentence.includes(UNRESOLVED_MARK))
+        .join(" "),
+    )
+    .join("\n")
+    .trim();
+  return kept || UNRESOLVED_PRICE_TEXT;
 }
 
 /**

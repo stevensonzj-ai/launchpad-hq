@@ -58,19 +58,44 @@ export function tokenText(feed: FeedTools): TextResolver {
   return (text) => resolvePriceTokens(text, resolve);
 }
 
+// ----------------------------------------------------------- price lines
+
+/** Longest starting price the guide header or a workflow tier will print. */
+export const CONCISE_PRICE_MAX = 60;
+
+/**
+ * A starting price fit for a one-line "Current prices" label, or null to
+ * omit the line. Kept: "Free", and short strings with a real currency
+ * amount ("Free, from $8/month", "€20/month"). Dropped: "See pricing" /
+ * "See site", prose fallbacks, "custom" or "talk to sales" prices, and
+ * anything long or multi-part. The JSON keeps the full value either way.
+ */
+export function conciseStartingPrice(text: string | null | undefined): string | null {
+  const value = text?.trim();
+  if (!value) return null;
+  if (/^free$/i.test(value)) return "Free";
+  if (value.length > CONCISE_PRICE_MAX || /[;\n]/.test(value)) return null;
+  if (/\b(?:see|contact|sales|custom|unverified|pricing)\b/i.test(value)) return null;
+  return /(?:US\$|[$€£])\s?\d/.test(value) ? value : null;
+}
+
 // ---------------------------------------------------------------- guides
 
 export type GuideView = {
   tutorial: PlatformTutorialData;
   /** The tool's price summary (null when it may not be cited). */
   tool: PublicToolSummaryT | null;
+  /** The header's "Current prices" value: tool.starting_price when concise, else null. */
+  headerPrice: string | null;
 };
 
 /** A tutorial with every price token filled in, plus its tool's prices. */
 export function toGuideView(tutorial: PlatformTutorialData, feed: FeedTools): GuideView {
+  const tool = citedToolSummary(tutorial.platformSlug, feed);
   return {
     tutorial: mapContentStrings(tutorial, tokenText(feed), NON_PROSE_KEYS),
-    tool: citedToolSummary(tutorial.platformSlug, feed),
+    tool,
+    headerPrice: conciseStartingPrice(tool?.starting_price),
   };
 }
 
@@ -79,7 +104,8 @@ export function toGuideView(tutorial: PlatformTutorialData, feed: FeedTools): Gu
 export type WorkflowToolPrice = {
   slug: string;
   name: string;
-  starting_price: string | null;
+  /** Always concise (conciseStartingPrice); tools without one are left off the list. */
+  starting_price: string;
   free: boolean;
 };
 
@@ -94,19 +120,17 @@ function tierSlugs(tier: WorkflowTier): string[] {
   return [...new Set(slugs.filter((s): s is string => Boolean(s)))];
 }
 
-export function toWorkflowToolPrice(tool: PublicToolSummaryT): WorkflowToolPrice {
-  return {
-    slug: tool.slug,
-    name: tool.name,
-    starting_price: tool.starting_price,
-    free: tool.free_tier.available,
-  };
+/** A tier's price-list entry, or null when the tool has no concise starting price. */
+export function toWorkflowToolPrice(tool: PublicToolSummaryT): WorkflowToolPrice | null {
+  const price = conciseStartingPrice(tool.starting_price);
+  return price ? { slug: tool.slug, name: tool.name, starting_price: price, free: tool.free_tier.available } : null;
 }
 
 export function tierPrices(tier: WorkflowTier, feed: FeedTools): WorkflowToolPrice[] {
   return tierSlugs(tier).flatMap((slug) => {
     const tool = citedToolSummary(slug, feed);
-    return tool ? [toWorkflowToolPrice(tool)] : [];
+    const entry = tool ? toWorkflowToolPrice(tool) : null;
+    return entry ? [entry] : [];
   });
 }
 

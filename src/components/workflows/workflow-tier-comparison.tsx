@@ -146,7 +146,7 @@ export function WorkflowTierComparison({
                     <Link href={`/platform/${tool.slug}`} className="text-orange-400 hover:text-orange-300 hover:underline">
                       {tool.name}
                     </Link>
-                    : {tool.starting_price ?? "See the tool page"}
+                    : {tool.starting_price}
                   </li>
                 ))}
               </ul>

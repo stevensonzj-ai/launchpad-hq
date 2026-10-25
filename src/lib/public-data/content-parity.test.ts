@@ -6,7 +6,7 @@ import { discontinuedPlatformSlugs, hiddenPlatformSlugs } from "@/lib/catalog-vi
 import { row } from "@/lib/mcp/fixtures";
 import type { CatalogRow } from "@/lib/mcp/tools";
 import { toPublicGuide, toPublicWorkflow } from "./content";
-import { toGuideView, toWorkflowView } from "./content-view";
+import { conciseStartingPrice, toGuideView, toWorkflowView } from "./content-view";
 import { FEED_ROWS, GENERATED_AT, feedFacts } from "./fixtures";
 import { NON_PROSE_KEYS, contentStrings, parsePriceTokens, planByName, prosePlanPrice } from "./price-tokens";
 import { findPriceText } from "./price-guard";
@@ -93,6 +93,9 @@ describe("guide prices: HTML view = JSON = serializer", () => {
       assert.deepEqual(json.tool, view.tool);
       const own = serializerPrices(tutorial.platformSlug);
       assert.equal(view.tool.starting_price, own.starting_price);
+      // The header shows exactly that value when it is concise, and nothing otherwise.
+      assert.equal(view.headerPrice, conciseStartingPrice(own.starting_price));
+      if (view.headerPrice !== null) assert.equal(view.headerPrice, json.tool.starting_price);
       assert.deepEqual(view.tool.lowest_paid, own.lowest_paid);
 
       // Every token prints the catalog's price in both views; nothing typed is dropped.
@@ -119,7 +122,9 @@ describe("workflow prices: HTML view = JSON = serializer", () => {
       for (const tier of json.tiers) {
         const fromJson = new Map<string, string | null>();
         for (const tool of [...tier.tools.map((t) => t.tool), ...tier.steps.map((s) => s.tool)]) {
-          if (tool && !fromJson.has(tool.slug)) fromJson.set(tool.slug, tool.starting_price);
+          // The tier list shows the JSON's starting price, only when concise.
+          const concise = tool ? conciseStartingPrice(tool.starting_price) : null;
+          if (tool && concise && !fromJson.has(tool.slug)) fromJson.set(tool.slug, concise);
         }
         const fromHtml = view.prices[tier.id as keyof typeof view.prices];
         assert.deepEqual(
