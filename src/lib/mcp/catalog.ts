@@ -3,7 +3,7 @@ import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import type { CatalogRow } from "./tools";
 
 /**
- * Read-only catalog loader for the MCP connector.
+ * Read-only catalog loader for the MCP connector and the /data/v1 feed.
  *
  * ONE select-only `findMany` per warm instance, cached in memory for 10
  * minutes; all searching happens in memory. Nothing user-related is
@@ -37,6 +37,21 @@ export async function loadCatalog(now = Date.now()): Promise<CatalogRow[]> {
       budgetAlternativeTo: true,
       updatedAt: true,
       category: { select: { name: true, slug: true } },
+      // Public page columns, also read by the /data/v1 JSON feed.
+      idealUserTypes: true,
+      contentTypes: true,
+      outputFormats: true,
+      privacyLevel: true,
+      timeToProductivity: true,
+      learningCurve: true,
+      offlineCapable: true,
+      languageSupport: true,
+      keyIntegrations: true,
+      upgradeTriggers: true,
+      complementaryTools: true,
+      hasMobileApp: true,
+      iosAppUrl: true,
+      androidAppUrl: true,
     },
     orderBy: { slug: "asc" },
   });

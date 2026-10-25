@@ -72,6 +72,10 @@ export const platformRef = z.object({
   as_of: z.string().nullable(),
   source_url: z.string().nullable(),
   sponsored: z.literal(false),
+  // v0.1.1, additive: same values as the /data/v1 JSON feed.
+  company: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
+  starting_price: z.string().nullable().optional(),
 });
 
 const sourcedFact = <T extends z.ZodType>(value: T) =>

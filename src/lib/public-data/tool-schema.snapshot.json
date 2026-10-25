@@ -1,0 +1,722 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.launchpadhq.io/data/v1/schema/tool.json",
+  "title": "Launchpad HQ tool",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "former_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "company": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "website": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "category": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "slug",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primary_use": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "use_cases": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "best_for": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "works_with": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "apps": {
+      "type": "object",
+      "properties": {
+        "ios": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "android": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "macos": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "windows": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "linux": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "ios",
+        "android",
+        "macos",
+        "windows",
+        "linux"
+      ],
+      "additionalProperties": false
+    },
+    "cost_tier": {
+      "type": "string"
+    },
+    "difficulty": {
+      "type": "string"
+    },
+    "technical": {
+      "type": "object",
+      "properties": {
+        "privacy_level": {
+          "type": "string"
+        },
+        "time_to_productivity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "learning_curve": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "offline": {
+          "type": "boolean"
+        },
+        "api_available": {
+          "type": "boolean"
+        },
+        "languages": {
+          "description": "null when the catalog does not list languages.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "integrations": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upgrade_triggers": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "privacy_level",
+        "time_to_productivity",
+        "learning_curve",
+        "offline",
+        "api_available",
+        "languages",
+        "integrations",
+        "upgrade_triggers"
+      ],
+      "additionalProperties": false
+    },
+    "lifecycle": {
+      "type": "string",
+      "enum": [
+        "active",
+        "beta",
+        "discontinued",
+        "acquired",
+        "renamed"
+      ]
+    },
+    "status": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "headline": {
+              "type": "string"
+            },
+            "details": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "what_to_do": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "alternatives": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "slug": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "slug",
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "source_kind": {
+              "type": "string",
+              "enum": [
+                "official",
+                "secondary"
+              ]
+            },
+            "source_url": {
+              "type": "string"
+            },
+            "checked_at": {
+              "type": "string",
+              "description": "YYYY-MM-DD"
+            }
+          },
+          "required": [
+            "headline",
+            "details",
+            "what_to_do",
+            "alternatives",
+            "source_kind",
+            "source_url",
+            "checked_at"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "free_tier": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "available",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price_text": {
+            "type": "string",
+            "description": "Exactly what the page's pricing table shows."
+          },
+          "amount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "USD",
+                  "EUR",
+                  "GBP"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "month",
+                  "year",
+                  "one_time",
+                  "usage",
+                  "seat_month"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "limits": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "is_free": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "price_text",
+          "amount",
+          "currency",
+          "period",
+          "limits",
+          "is_free"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "starting_price": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lowest_paid": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "price_text": {
+              "type": "string",
+              "description": "Exactly what the page's pricing table shows."
+            },
+            "amount": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "currency": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "USD",
+                    "EUR",
+                    "GBP"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "period": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "month",
+                    "year",
+                    "one_time",
+                    "usage",
+                    "seat_month"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "limits": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "is_free": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "price_text",
+            "amount",
+            "currency",
+            "period",
+            "limits",
+            "is_free"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "api_pricing": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "usage_limits": {
+      "anyOf": [
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "models": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "works_well_with": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "guide_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "changelog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "field": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "field",
+          "summary"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "YYYY-MM-DD"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "verified",
+                  "unverified",
+                  "disputed"
+                ]
+              },
+              {
+                "type": "string",
+                "const": "catalog_only"
+              }
+            ]
+          }
+        },
+        "required": [
+          "label",
+          "url",
+          "checked_at",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "unverified",
+            "catalog_only"
+          ]
+        },
+        "checked_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "YYYY-MM-DD"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "checked_at"
+      ],
+      "additionalProperties": false
+    },
+    "data_as_of": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "YYYY-MM-DD"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Newest date a shown fact was checked; not a DB timestamp."
+    },
+    "record_updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "YYYY-MM-DD"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Last database edit of the catalog row."
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "sponsored": {
+      "type": "boolean",
+      "const": false
+    },
+    "attribution": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "slug",
+    "url",
+    "name",
+    "former_names",
+    "company",
+    "website",
+    "category",
+    "description",
+    "primary_use",
+    "use_cases",
+    "best_for",
+    "works_with",
+    "outputs",
+    "platforms",
+    "apps",
+    "cost_tier",
+    "difficulty",
+    "technical",
+    "lifecycle",
+    "status",
+    "free_tier",
+    "plans",
+    "starting_price",
+    "lowest_paid",
+    "api_pricing",
+    "usage_limits",
+    "models",
+    "alternatives",
+    "works_well_with",
+    "guide_url",
+    "changelog",
+    "sources",
+    "notes",
+    "verification",
+    "data_as_of",
+    "record_updated_at",
+    "generated_at",
+    "sponsored",
+    "attribution"
+  ],
+  "additionalProperties": false
+}

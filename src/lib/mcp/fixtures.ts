@@ -3,7 +3,7 @@ import type { CatalogRow, FactsLookup } from "./tools";
 
 /** Test fixtures only: a small catalog and a few fact files. No DB, no network. */
 
-function row(partial: Partial<CatalogRow> & Pick<CatalogRow, "slug" | "name">): CatalogRow {
+export function row(partial: Partial<CatalogRow> & Pick<CatalogRow, "slug" | "name">): CatalogRow {
   return {
     company: null,
     website: `https://${partial.slug}.example.com`,
@@ -21,6 +21,20 @@ function row(partial: Partial<CatalogRow> & Pick<CatalogRow, "slug" | "name">): 
     budgetAlternativeTo: [],
     updatedAt: "2026-10-01T00:00:00.000Z",
     category: { name: "Meetings & Notes", slug: "meetings-notes" },
+    idealUserTypes: [],
+    contentTypes: [],
+    outputFormats: [],
+    privacyLevel: "MEDIUM",
+    timeToProductivity: null,
+    learningCurve: null,
+    offlineCapable: false,
+    languageSupport: null,
+    keyIntegrations: null,
+    upgradeTriggers: null,
+    complementaryTools: [],
+    hasMobileApp: false,
+    iosAppUrl: null,
+    androidAppUrl: null,
     ...partial,
   };
 }
