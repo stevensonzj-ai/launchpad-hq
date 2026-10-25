@@ -25,14 +25,14 @@ import {
 export const MCP_SERVER_NAME = "launchpad-hq";
 export const MCP_SERVER_VERSION = "0.1.0";
 
-/** First 512 characters are self-contained (ChatGPT reads this field). */
+/** At most 512 characters, describing the data (ChatGPT reads the first 512). */
 export const MCP_SERVER_INSTRUCTIONS = [
   "Launchpad HQ is a curated directory of AI tools for beginners and budget-conscious users.",
   "These read-only tools search, compare and price tools in its catalog.",
   "Facts are dated and sourced: verified items carry as_of and source_url from the vendor's own pages;",
-  "items marked catalog_only are unverified catalog text, so say so when you use them.",
+  "unverified catalog text is labeled catalog_only.",
   "Every result links to its Launchpad HQ page on launchpadhq.io. Sponsorship never affects results.",
-  "Prices change often; tell users to confirm on the vendor's site before buying.",
+  "Prices change often and should be confirmed on the vendor's site before buying.",
 ].join(" ");
 
 const READ_ONLY = {

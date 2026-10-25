@@ -54,6 +54,13 @@ export type FactsLookup = (slug: string) => ToolFacts | undefined;
 /** A bad or unknown input. The server turns it into an `isError` result. */
 export class ToolInputError extends Error {}
 
+/** Echoes the input (JSON-escaped, capped at 200 chars) and points at search_tools. */
+function notInCatalog(input: string): ToolInputError {
+  return new ToolInputError(
+    `Not in the Launchpad HQ catalog: ${JSON.stringify(input.trim().slice(0, 200))}. Try search_tools to find the right name or slug.`,
+  );
+}
+
 // ---------- helpers ----------
 
 const DIFFICULTY_RANK: Record<string, number> = {
@@ -309,7 +316,7 @@ export function getPricingFacts(
   facts: FactsLookup,
 ): GetPricingFactsOutput {
   const row = findRow(input.platform, rows, facts);
-  if (!row) throw new ToolInputError("Not in the Launchpad HQ catalog");
+  if (!row) throw notInCatalog(input.platform);
   const f = facts(row.slug);
   const plans = sourced<ToolPlan[]>(f?.plans);
   const freeTier = sourced(f?.freeTier);
@@ -359,7 +366,7 @@ export function findFreeAlternatives(
   facts: FactsLookup,
 ): FindFreeAlternativesOutput {
   const target = findRow(input.platform, rows, facts);
-  if (!target) throw new ToolInputError("Not in the Launchpad HQ catalog");
+  if (!target) throw notInCatalog(input.platform);
 
   const targetNames = new Set(
     [target.name, facts(target.slug)?.displayName?.value].filter(Boolean).map((n) => norm(n!)),

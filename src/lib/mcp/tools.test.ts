@@ -116,7 +116,7 @@ describe("get_pricing_facts", () => {
   it("errors for platforms not in the catalog", () => {
     assert.throws(
       () => getPricingFacts({ platform: "not-a-tool" }, FIXTURE_ROWS, fixtureFacts),
-      /Not in the Launchpad HQ catalog/,
+      /Not in the Launchpad HQ catalog: "not-a-tool"\. Try search_tools to find the right name or slug\.$/,
     );
   });
 
