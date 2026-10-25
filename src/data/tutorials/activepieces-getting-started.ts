@@ -17,12 +17,12 @@ export const activepiecesTutorial: PlatformTutorialData = {
   whatItIs: [
     "An automation tool: you build flows that connect apps you already use — Gmail, Slack, Sheets, Notion and around 760 others. Activepieces calls each of those integrations a **piece**, and the code for every one of them is published for anyone to read.",
     "The thing that separates it from Zapier or Make is its licence. The main body of Activepieces is released under the MIT licence, about as permissive as software gets: you may run it, change it and build on it. One \"enterprise\" folder inside the same code is carved out of that and governed by a commercial licence instead. So self-hosting it (running it on your own computer or server rather than the company's) is genuinely free, but not every part of the product comes with you.",
-    "Cloud billing counts runs, not steps: each time a flow fires it is charged as a single run, paid in **credits** (the platform's unit of spend), however many steps it contains. AI steps are the exception and cost extra on top.",
+    "Cloud billing counts runs, not steps: one flow firing is one credit — the platform's unit of spend — however many steps it contains. AI steps are the exception and cost extra on top.",
     "It has grown past plumbing. The same workspace now carries AI agents, spreadsheet-style tables, and a chat box that drafts a flow from a plain description, which the docs still mark Beta.",
   ],
 
   beforeYouStart: [
-    "**The free cloud plan is a plan, not a trial.** No card, unlimited flows, one user, and a daily credit allowance — a fresh batch each morning rather than a monthly bucket, so a steady number of flow runs every day before anything stops.",
+    "**The free cloud plan is a plan, not a trial.** No card, unlimited flows, one user, and a daily credit allowance — a fresh batch each morning rather than a monthly bucket, so running out today never eats into tomorrow.",
     "Run out and nothing breaks. The pricing page says your flows stay switched on and runs past the quota simply don't go through until credits refresh the next day. A mistake on this platform costs you a day, not a month.",
     "You would start paying when the free daily allowance stops being enough, or when a second person needs to be in the workspace. Plus and Team are flat monthly plans with much larger credit allowances, and runs beyond the allowance are billed per credit. AI steps cost more credits the more capable the model is, and a paid plan lets you plug in your own AI account to bring every AI step back down to the cost of an ordinary run.",
     "Worth checking before you commit anything real: the Activepieces cloud currently runs in one data region, Germany. If your work has to sit somewhere else, running it yourself is the answer rather than the cloud.",
@@ -69,7 +69,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
       whatItDoes:
         "Activepieces hosts the form itself, drops each response into a table or a spreadsheet, and sends you a message about it.",
       whyHere:
-        "Three steps, charged as one run. On Zapier that same flow spends a separate task per step out of a small monthly allowance; n8n prices by the run too, but has no permanent free cloud plan to do it on.",
+        "Three steps, one credit. On Zapier that same flow spends a separate task per step out of a small monthly allowance; n8n prices by the run too, but has no permanent free cloud plan to do it on.",
       tweak:
         "Point it at a test spreadsheet and fire it by hand a few times first. The run view shows what each step received.",
     },

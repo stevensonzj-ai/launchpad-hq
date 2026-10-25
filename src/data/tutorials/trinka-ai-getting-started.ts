@@ -106,7 +106,7 @@ export const trinkaAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Import your manuscript file and run the technical checks — more than 25 of them, covering ethics approval and consent statements, conflict-of-interest and funding declarations, author names and affiliations, figure and table captions, clinical trial IDs, and references that are obsolete or retracted.",
       whyHere:
-        "A paper bounced before review for a missing declaration is not a writing problem, and no grammar checker looks for one. The report costs very little from the free credit allowance.",
+        "A paper bounced before review for a missing declaration is not a writing problem, and no grammar checker looks for one. The report costs a single credit from the free monthly allowance.",
       tweak:
         "Run it before the final proofread, so there is still time to go and get the declarations you are missing.",
     },

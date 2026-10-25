@@ -36,7 +36,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Best for polishing. Catches mistakes and improves clarity so your final draft reads professional.",
           },
         ],
-        note: "All three tools have free plans. ChatGPT Plus, Perplexity Pro and Grammarly Pro add more use; each tool's current price is listed above.",
+        note: "All three tools have free plans. ChatGPT Plus, Perplexity Pro and Grammarly Pro add more use; each tool's current price is on its Launchpad page.",
         timeEstimate: "About 45–90 minutes for a 1,000-word post",
         result: "A cited outline plus a publish-ready draft with a grammar pass",
         steps: [
@@ -316,7 +316,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Templates and AI-assisted assembly in one product—pairs with Runway for gen-to-edit without a legacy NLE.",
           },
         ],
-        note: "Runway's Free plan comes with a one-time batch of credits; paid plans such as Standard add a monthly allowance. InVideo's paid plans are priced per seat. Current prices for both are listed above.",
+        note: "Runway's Free plan comes with a one-time batch of credits; paid plans such as Standard add a monthly allowance. InVideo's paid plans are priced per seat. Current prices for both are on their Launchpad pages.",
         timeEstimate: "About 1–3 hours for a 30–60s short",
         result: "A social-ready short with AI B-roll and captions from a template editor",
         steps: [
@@ -736,7 +736,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Automate pushing notes into CRMs and PM tools. Best when workflows must be hands-off after each call.",
           },
         ],
-        note: "Tell every attendee before you record. Granola Business and Otter Pro are priced per user; Zapier's Free plan has a small monthly task allowance and paid plans add more. Current prices are listed above.",
+        note: "Tell every attendee before you record. Granola Business and Otter Pro are priced per user; Zapier's Free plan has a small monthly task allowance and paid plans add more. Current prices are on each tool's Launchpad page.",
         timeEstimate: "Live capture; about 10–20 minutes after the call to file actions",
         result: "Searchable notes plus tasks in the tools you already use",
         steps: [
@@ -786,7 +786,7 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Link summaries to project pages your team already uses. Balanced ops: notes plus light AI assists.",
           },
         ],
-        note: "Fireflies has a free plan and per-seat paid plans. Notion's AI Meeting Notes come with its Business plan. Current prices are listed above.",
+        note: "Fireflies has a free plan and per-seat paid plans. Notion's AI Meeting Notes come with its Business plan. Current prices are on each tool's Launchpad page.",
         timeEstimate: "Live capture; about 10–15 minutes to file the recap",
         result: "A searchable recap sitting on the right Notion page",
         steps: [
