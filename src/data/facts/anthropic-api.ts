@@ -28,13 +28,13 @@ export default {
   },
   plans: {
     value: [
-      { name: "Claude Haiku 5.5", price: "$0.10 input / $0.50 output per million tokens", period: "", limits: "Prompts up to 100K tokens; $0.50 / $2.50 above 100K" },
+      { name: "Claude Haiku 5.5", price: "$0.10 input / $0.50 output per million tokens", period: "", limits: "For prompts up to 100,000 tokens. Prompts over 100,000 tokens: $0.50 input / $2.50 output per million tokens" },
       { name: "Claude Sonnet 5.5", price: "$2 input / $10 output per million tokens", period: "", limits: "" },
       { name: "Claude Opus 5.5", price: "$4 input / $20 output per million tokens", period: "", limits: "Fast mode is 2x standard pricing" },
       { name: "Claude Fable 5.1", price: "$10 input / $50 output per million tokens", period: "", limits: "" },
     ],
-    note: "Usage-based API prices from the API section of claude.com/pricing (USD). Batch processing saves 50%; US-only inference is 1.1x. Legacy models are listed on the same page. Consumer Claude plans (Pro, Max, Team) belong to the Claude listing, not this one.",
-    sourceUrl: "https://claude.com/pricing",
+    note: "Base input and output token prices (USD) from the model pricing table in Anthropic's detailed pricing docs, linked from claude.com/pricing. Cache writes and hits are priced separately. Batch API: 50% off input and output; US-only inference: 1.1x. Legacy models are listed on the same page. Consumer Claude plans (Pro, Max, Team) belong to the Claude listing, not this one.",
+    sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
     verifiedBy: "claude",
@@ -43,9 +43,9 @@ export default {
   },
   apiPricing: {
     value:
-      "USD per million tokens, input / output. Claude Fable 5.1: $10 / $50. Claude Opus 5.5: $4 / $20. Claude Sonnet 5.5: $2 / $10. Claude Haiku 5.5: $0.10 / $0.50 for prompts up to 100K tokens; $0.50 / $2.50 above 100K.",
-    note: "Batch processing: 50% off. US-only inference: 1.1x. Opus 5.5 fast mode: 2x. Prompt-caching rates are listed per model on the same page.",
-    sourceUrl: "https://claude.com/pricing",
+      "USD per million tokens, input / output. Claude Fable 5.1: $10 / $50. Claude Opus 5.5: $4 / $20. Claude Sonnet 5.5: $2 / $10. Claude Haiku 5.5: $0.10 / $0.50 for prompts up to 100,000 tokens; $0.50 / $2.50 for prompts over 100,000 tokens.",
+    note: "Base input / output prices from the model pricing table. Batch API: 50% off. US-only inference: 1.1x (on Haiku 5.5 also applied to the over-100,000-token prices). Opus 5.5 fast mode: 2x. Cache-write and cache-hit rates are listed per model on the same page.",
+    sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
     verifiedBy: "claude",
@@ -78,6 +78,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-25",
+      field: "plans",
+      summary: "Re-checked every API price against the model pricing table on platform.claude.com/docs/en/about-claude/pricing; values unchanged, Haiku 5.5 tier wording now matches the docs (prompts up to / over 100,000 tokens).",
+    },
     {
       date: "2026-10-25",
       field: "plans",
