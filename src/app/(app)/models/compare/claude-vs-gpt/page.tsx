@@ -4,16 +4,19 @@ import { getModelFamilyBySlug } from "@/data/models";
 import type { ModelVersion } from "@/data/models";
 import { formatPriceFact, formatTokenFact, formatVerifiedDate } from "@/lib/model-facts";
 import { notFound } from "next/navigation";
-import { publicPageMetadata } from "@/lib/seo-metadata";
+import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
+import { CLAUDE_VS_GPT, CLAUDE_VS_GPT_PATH } from "@/data/models/claude-vs-gpt";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { platformCatalogLinks } from "@/lib/catalog-names";
 
-export const metadata = publicPageMetadata({
-  title: "Claude vs GPT models | Launchpad HQ",
-  description:
-    "Flagship and budget Claude and GPT versions, from official Anthropic and OpenAI docs. Consumer plans are not the same as API list prices.",
-  path: "/models/compare/claude-vs-gpt",
-});
+export const metadata = withFeedAlternate(
+  publicPageMetadata({
+    title: `${CLAUDE_VS_GPT.title} | Launchpad HQ`,
+    description: CLAUDE_VS_GPT.description,
+    path: CLAUDE_VS_GPT_PATH,
+  }),
+  `/models/compare/${CLAUDE_VS_GPT.slug}.json`,
+);
 
 function pick(versions: ModelVersion[], id: string): ModelVersion | undefined {
   return versions.find((v) => v.id === id);
@@ -56,14 +59,11 @@ function Cell({ version, field }: { version: ModelVersion; field: "context" | "m
 }
 
 export default async function ClaudeVsGptPage() {
-  const claude = getModelFamilyBySlug("claude");
-  const gpt = getModelFamilyBySlug("gpt");
+  const claude = getModelFamilyBySlug(CLAUDE_VS_GPT.families.claude);
+  const gpt = getModelFamilyBySlug(CLAUDE_VS_GPT.families.gpt);
   if (!claude || !gpt) notFound();
 
-  const rows: { label: string; claudeId: string; gptId: string }[] = [
-    { label: "Flagship (API default / hardest work)", claudeId: "claude-opus-5-5", gptId: "gpt-6-astra" },
-    { label: "Budget (cheap, fast, high volume)", claudeId: "claude-haiku-5-5", gptId: "gpt-6-luna" },
-  ];
+  const rows = CLAUDE_VS_GPT.rows;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">

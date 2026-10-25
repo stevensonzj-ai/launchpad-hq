@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { isPublishedVerified } from "@/data/facts/walk";
 import type { ToolFacts } from "@/data/facts/types";
+import { getToolFacts } from "@/data/facts/registry";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
 import { absoluteUrl, SITE_IS_PUBLIC } from "@/lib/site";
 
@@ -115,18 +116,28 @@ export function stripInlineMarkup(text: string): string {
 }
 
 /**
- * `<link rel="alternate" type="application/json">` to the tool's /data/v1
- * record. Hidden tools have no feed record (404), so no link.
+ * `<link rel="alternate" type="application/json">` to /data/v1 records.
+ * `paths` are relative to /data/v1; the first is the page's own record.
  */
-export function withToolFeedAlternate(metadata: Metadata, slug: string): Metadata {
-  if (isHiddenPlatform(slug)) return metadata;
+export function withFeedAlternate(metadata: Metadata, ...paths: string[]): Metadata {
+  if (paths.length === 0) return metadata;
+  const urls = paths.map((path) => absoluteUrl(`/data/v1${path}`));
   return {
     ...metadata,
     alternates: {
       ...metadata.alternates,
-      types: { "application/json": absoluteUrl(`/data/v1/tools/${slug}.json`) },
+      types: { "application/json": urls.length === 1 ? urls[0] : urls.map((url) => ({ url })) },
     },
   };
+}
+
+/**
+ * Alternate link to the tool's /data/v1 record. Hidden tools have no feed
+ * record (404), so no link.
+ */
+export function withToolFeedAlternate(metadata: Metadata, slug: string): Metadata {
+  if (isHiddenPlatform(slug)) return metadata;
+  return withFeedAlternate(metadata, `/tools/${slug}.json`);
 }
 
 export function buildTutorialMetadata(input: {
@@ -143,13 +154,18 @@ export function buildTutorialMetadata(input: {
     path: `/platform/${input.platformSlug}/guide`,
     index: input.index,
   });
-  return withToolFeedAlternate(
-    {
-      ...base,
-      openGraph: { ...base.openGraph, type: "article", modifiedTime: input.lastReviewedAt },
-    },
-    input.platformSlug,
-  );
+  const metadata: Metadata = {
+    ...base,
+    openGraph: { ...base.openGraph, type: "article", modifiedTime: input.lastReviewedAt },
+  };
+  // Hidden tools have no feed records; discontinued ones keep the tool
+  // record but have no guide record (the feed drops their guide_url).
+  if (isHiddenPlatform(input.platformSlug)) return metadata;
+  const tool = `/tools/${input.platformSlug}.json`;
+  if (getToolFacts(input.platformSlug)?.lifecycle === "discontinued") {
+    return withFeedAlternate(metadata, tool);
+  }
+  return withFeedAlternate(metadata, `/guides/${input.platformSlug}.json`, tool);
 }
 
 export function buildPlatformMetadata(input: {

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getModelFamilyBySlug, listModelFamilySlugs } from "@/data/models";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
-import { publicPageMetadata } from "@/lib/seo-metadata";
+import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { platformCatalogLinks } from "@/lib/catalog-names";
 
@@ -15,11 +15,14 @@ export async function generateMetadata({ params }: { params: Promise<{ family: s
   const { family: familySlug } = await params;
   const family = getModelFamilyBySlug(familySlug);
   if (!family) return { title: "Models | Launchpad HQ" };
-  return publicPageMetadata({
-    title: `${family.displayName} models | Launchpad HQ`,
-    description: `Current and prior ${family.displayName} versions from official ${family.vendor} docs, including which one to pick and API notes we could verify.`,
-    path: `/models/${family.familySlug}`,
-  });
+  return withFeedAlternate(
+    publicPageMetadata({
+      title: `${family.displayName} models | Launchpad HQ`,
+      description: `Current and prior ${family.displayName} versions from official ${family.vendor} docs, including which one to pick and API notes we could verify.`,
+      path: `/models/${family.familySlug}`,
+    }),
+    `/models/${family.familySlug}.json`,
+  );
 }
 
 export default async function ModelFamilyPage({ params }: { params: Promise<{ family: string }> }) {

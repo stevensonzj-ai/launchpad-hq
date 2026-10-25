@@ -2,6 +2,7 @@ import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { WORKFLOWS } from "@/data/workflows";
 import { SITE_URL } from "@/lib/site";
 import { getActivePlacement } from "@/data/sponsors";
+import { compareLlmsLines, listedComparePages } from "@/data/compare/view";
 
 export function GET() {
   const tutorials = [...listRegisteredTutorials()].sort((a, b) =>
@@ -18,9 +19,12 @@ export function GET() {
     (workflow) => `- [${workflow.title}](${SITE_URL}/workflows/${workflow.slug}): ${workflow.description}`,
   ).join("\n");
 
+  // No DB here: hidden or discontinued tools drop a page; rows are assumed.
+  const compareLinks = compareLlmsLines(SITE_URL, listedComparePages()).join("\n");
+
   const body = `# LaunchpadHQ
 
-> LaunchpadHQ is a curated AI-platform discovery site for beginners and budget-conscious users. It helps people find real alternatives beyond ChatGPT and Claude — writing, image, video, audio, code, research, and automation tools, including free tiers and local/open-source options.
+> LaunchpadHQ is a curated AI-platform discovery site for beginners and budget-conscious users. It helps people find real alternatives beyond ChatGPT and Claude â€” writing, image, video, audio, code, research, and automation tools, including free tiers and local/open-source options.
 
 Browsing the directory, quiz, platform overviews, prompt library, and discussions is intended to stay free. Auth, account, and admin routes are omitted here.
 
@@ -50,6 +54,10 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 - Results are dated and sourced; sponsorship never affects them.
 - [Privacy policy](${SITE_URL}/privacy#mcp)
 
+## Comparisons
+
+${compareLinks}
+
 ## Data (JSON, free, read-only)
 
 The same dated, sourced facts as the site and the MCP connector. No sign-in; cached hourly. Please credit Launchpad HQ and link to the tool's page.
@@ -57,8 +65,15 @@ The same dated, sourced facts as the site and the MCP connector. No sign-in; cac
 - [Index](${SITE_URL}/data/v1/index.json): Counts and links
 - [Catalog](${SITE_URL}/data/v1/catalog.json): Every listed tool in one file
 - One tool: ${SITE_URL}/data/v1/tools/{slug}.json
+- [Comparisons](${SITE_URL}/data/v1/compare/index.json): Every comparison page; one page at ${SITE_URL}/data/v1/compare/{slug}.json
+- [Guides](${SITE_URL}/data/v1/guides/index.json): Every getting-started guide; one guide at ${SITE_URL}/data/v1/guides/{slug}.json
+- [Workflows](${SITE_URL}/data/v1/workflows/index.json): Every workflow template; one workflow at ${SITE_URL}/data/v1/workflows/{slug}.json
+- [Models](${SITE_URL}/data/v1/models/index.json): Every model family; one family at ${SITE_URL}/data/v1/models/{slug}.json
+- [Claude vs GPT](${SITE_URL}/data/v1/models/compare/claude-vs-gpt.json): The Claude vs GPT models page
+- [Quiz](${SITE_URL}/data/v1/quiz.json): Quiz questions, options and scoring map
 - [OpenAPI](${SITE_URL}/data/v1/openapi.json): OpenAPI 3.1 description
 - [JSON Schema](${SITE_URL}/data/v1/schema/tool.json): Schema for one tool
+- [Full text export](${SITE_URL}/llms-full.txt): The catalog, comparisons, guides, workflows and models in one plain-text file
 
 ## Workflows
 

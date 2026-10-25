@@ -119,6 +119,17 @@ export const PublicIndex = z.object({
     tool: z.string().describe("URL template; replace {slug}."),
     openapi: z.string(),
     schema: z.string(),
+    compare: z.string(),
+    compare_page: z.string().describe("URL template; replace {slug}."),
+    guides: z.string(),
+    guide: z.string().describe("URL template; replace {slug} with the tool slug."),
+    workflows: z.string(),
+    workflow: z.string().describe("URL template; replace {slug}."),
+    models: z.string(),
+    model_family: z.string().describe("URL template; replace {slug} with the family slug."),
+    models_compare: z.string(),
+    quiz: z.string(),
+    llms_full: z.string().describe("Plain-text export of the catalog, comparisons, guides, workflows and models."),
   }),
   cache: z.string(),
   attribution: z.string(),
@@ -127,9 +138,316 @@ export const PublicIndex = z.object({
 
 export const PublicError = z.object({ error: z.string() });
 
+/**
+ * A subset of PublicTool, picked from the serializer's output for the same
+ * slug, so its prices always equal /data/v1/tools/{slug}.json.
+ */
+export const PublicToolSummary = z.object({
+  slug: z.string(),
+  name: z.string(),
+  url: z.string(),
+  data_url: z.string().describe("The full record: /data/v1/tools/{slug}.json."),
+  category: ref.nullable(),
+  cost_tier: z.string(),
+  lifecycle: PublicTool.shape.lifecycle,
+  free_tier: PublicTool.shape.free_tier,
+  starting_price: z.string().nullable(),
+  lowest_paid: PublicPlan.nullable(),
+  data_as_of: date.nullable(),
+});
+
+const contentFooter = {
+  generated_at: z.string(),
+  sponsored: z.literal(false),
+  attribution: z.string(),
+};
+
+const pricedProse = {
+  prices_removed: z.number().int().describe("Sentences dropped because they quoted a price."),
+  pricing_note: z.string(),
+};
+
+const link = z.object({ label: z.string(), url: z.string() });
+
+export const PublicComparePage = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  kind: z.enum(["head-to-head", "free-alternatives"]),
+  slug: z.string(),
+  url: z.string().describe("Canonical page URL."),
+  data_url: z.string(),
+  title: z.string(),
+  description: z.string(),
+  intro: z.array(z.string()),
+  hit_first: z.array(z.string()),
+  faq: z.array(z.object({ question: z.string(), answer: z.string() })),
+  related: z.array(link),
+  tools: z.array(
+    z.object({
+      role: z.enum(["baseline", "alternative", "contender"]),
+      pick: z.string().nullable(),
+      free_option_label: z.string().nullable(),
+      sources: z.array(
+        z.object({
+          field: z.enum(["Pricing", "Free plan", "Usage limits"]),
+          url: z.string().nullable(),
+          as_of: date.nullable(),
+          origin: z.enum(["fact-file", "catalog-audit", "catalog"]),
+        }),
+      ),
+      as_of: date.nullable(),
+      tool: PublicTool.describe("Identical to /data/v1/tools/{slug}.json."),
+    }),
+  ),
+  also_consider: z.array(PublicToolSummary),
+  as_of: date.nullable().describe("Oldest per-tool date shown on the page."),
+  undated_tools: z.array(z.string()),
+  ...contentFooter,
+});
+
+const pageEntry = z.object({
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  url: z.string(),
+  data_url: z.string(),
+});
+
+export const PublicCompareIndex = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  generated_at: z.string(),
+  url: z.string(),
+  pages: z.array(pageEntry.extend({ kind: z.enum(["head-to-head", "free-alternatives"]) })),
+  models: z.array(pageEntry),
+  attribution: z.string(),
+  license: z.string(),
+});
+
+const securityBlock = z.union([
+  z.object({ kind: z.literal("text"), text: z.string() }),
+  z.object({ kind: z.literal("list"), label: z.string(), items: z.array(z.string()) }),
+]);
+
+export const PublicGuide = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  slug: z.string().describe("The tool's slug."),
+  url: z.string(),
+  data_url: z.string(),
+  title: z.string(),
+  tagline: z.string(),
+  archetype: z.enum(["prompts", "recipes", "pick-and-setup"]),
+  last_reviewed_at: date,
+  changelog_url: z.string().nullable(),
+  how_it_works: z.string().nullable(),
+  what_it_is: z.array(z.string()),
+  before_you_start: z.array(z.string()),
+  getting_set_up_safely: z
+    .object({ official_source: z.string(), body: z.array(z.string()), vendor_docs_url: z.string().nullable() })
+    .nullable(),
+  security: z.array(securityBlock),
+  triad: z.object({ best_at: z.array(z.string()), okay_at: z.array(z.string()), avoid: z.array(z.string()) }),
+  starter_actions: z.array(
+    z.object({
+      title: z.string(),
+      what_it_does: z.string().nullable(),
+      why_here: z.string().nullable(),
+      tweak: z.string().nullable(),
+      prompt: z.string().nullable(),
+    }),
+  ),
+  pitfalls: z.array(z.string()),
+  where_to_next: z.array(link),
+  tool: PublicToolSummary,
+  ...pricedProse,
+  ...contentFooter,
+});
+
+export const PublicGuideIndex = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  generated_at: z.string(),
+  url: z.string(),
+  count: z.number().int(),
+  guides: z.array(
+    z.object({
+      slug: z.string(),
+      title: z.string(),
+      tool_name: z.string(),
+      category: ref.nullable(),
+      last_reviewed_at: date,
+      url: z.string(),
+      data_url: z.string(),
+    }),
+  ),
+  attribution: z.string(),
+  license: z.string(),
+});
+
+const workflowTool = z.object({
+  name: z.string(),
+  rationale: z.string().nullable(),
+  tool: PublicToolSummary.nullable().describe("null when the tool has no catalog page."),
+});
+
+export const PublicWorkflow = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  slug: z.string(),
+  url: z.string(),
+  data_url: z.string(),
+  title: z.string(),
+  description: z.string(),
+  tags: z.array(z.string()),
+  tiers: z.array(
+    z.object({
+      id: z.enum(["optimal", "hybrid", "budget"]),
+      name: z.string(),
+      tagline: z.string(),
+      time_estimate: z.string().nullable(),
+      result: z.string().nullable(),
+      tools: z.array(workflowTool),
+      steps: z.array(
+        z.object({
+          order: z.number().int(),
+          label: z.string(),
+          name: z.string().nullable(),
+          action: z.string().nullable(),
+          prompt: z.string().nullable(),
+          tool: PublicToolSummary.nullable(),
+        }),
+      ),
+    }),
+  ),
+  ...pricedProse,
+  ...contentFooter,
+});
+
+export const PublicWorkflowIndex = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  generated_at: z.string(),
+  url: z.string(),
+  count: z.number().int(),
+  workflows: z.array(pageEntry.extend({ tags: z.array(z.string()) })),
+  attribution: z.string(),
+  license: z.string(),
+});
+
+const tokenFact = z.object({ tokens: z.number().nullable(), verified: z.boolean(), note: z.string().nullable() });
+const priceFact = z.object({
+  usd_per_million: z.number().nullable().describe("null unless verified."),
+  price_text: z.string().describe("Exactly what the models page shows."),
+  verified: z.boolean(),
+  note: z.string().nullable(),
+});
+
+export const PublicModelVersion = z.object({
+  id: z.string(),
+  name: z.string(),
+  api_id: z.string().nullable(),
+  release_date: date.nullable(),
+  release_date_verified: z.boolean(),
+  status: z.enum(["current", "legacy"]),
+  role: z.enum(["flagship", "balanced", "budget", "prior"]),
+  context_window: tokenFact,
+  max_output: tokenFact,
+  api_price_input: priceFact,
+  api_price_output: priceFact,
+  consumer_access: z.object({ summary: z.string().nullable(), verified: z.boolean() }),
+  strengths: z.array(z.string()),
+  best_for: z.string().nullable(),
+  caveats: z.array(z.string()),
+  sources: z.array(link),
+});
+
+export const PublicModelFamily = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  slug: z.string(),
+  url: z.string(),
+  data_url: z.string(),
+  name: z.string(),
+  vendor: z.string(),
+  last_verified_at: date,
+  which_to_use: z.array(z.string()),
+  versions: z.array(PublicModelVersion),
+  sources: z.array(link),
+  tools: z.array(PublicToolSummary).describe("Catalog tools built on this family."),
+  ...pricedProse,
+  ...contentFooter,
+});
+
+export const PublicModelsIndex = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  generated_at: z.string(),
+  url: z.string(),
+  families: z.array(
+    z.object({
+      slug: z.string(),
+      name: z.string(),
+      vendor: z.string(),
+      last_verified_at: date,
+      url: z.string(),
+      data_url: z.string(),
+    }),
+  ),
+  compare: z.array(pageEntry),
+  attribution: z.string(),
+  license: z.string(),
+});
+
+export const PublicModelCompare = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  slug: z.string(),
+  url: z.string(),
+  data_url: z.string(),
+  title: z.string(),
+  description: z.string(),
+  last_verified_at: z.object({ claude: date, gpt: date }),
+  rows: z.array(z.object({ label: z.string(), claude: PublicModelVersion, gpt: PublicModelVersion })),
+  families: z.array(z.object({ slug: z.string(), name: z.string(), url: z.string(), data_url: z.string() })),
+  tools: z.array(PublicToolSummary),
+  ...pricedProse,
+  ...contentFooter,
+});
+
+export const PublicQuiz = z.object({
+  schema_version: z.literal(SCHEMA_VERSION),
+  url: z.string(),
+  data_url: z.string(),
+  results_url: z.string(),
+  question_count: z.number().int(),
+  max_goals: z.number().int(),
+  questions: z.array(
+    z.object({
+      id: z.enum(["goals", "experience", "budget", "runtime"]),
+      prompt: z.string(),
+      hint: z.string().nullable(),
+      multiple: z.boolean(),
+      options: z.array(z.object({ id: z.string(), label: z.string() })),
+    }),
+  ),
+  mapping: z.object({
+    note: z.string(),
+    goals: z.record(z.string(), z.object({ keywords: z.array(z.string()) })),
+    experience: z.record(z.string(), z.object({ priorities: z.array(z.string()) })),
+    budget: z.record(z.string(), z.object({ cost_tiers: z.array(z.string()), priorities: z.array(z.string()) })),
+    runtime: z.record(z.string(), z.object({ priorities: z.array(z.string()) })),
+  }),
+  sponsored: z.literal(false),
+  attribution: z.string(),
+});
+
 export type PublicToolT = z.infer<typeof PublicTool>;
 export type PublicCatalogT = z.infer<typeof PublicCatalog>;
 export type PublicIndexT = z.infer<typeof PublicIndex>;
+export type PublicToolSummaryT = z.infer<typeof PublicToolSummary>;
+export type PublicComparePageT = z.infer<typeof PublicComparePage>;
+export type PublicCompareIndexT = z.infer<typeof PublicCompareIndex>;
+export type PublicGuideT = z.infer<typeof PublicGuide>;
+export type PublicGuideIndexT = z.infer<typeof PublicGuideIndex>;
+export type PublicWorkflowT = z.infer<typeof PublicWorkflow>;
+export type PublicWorkflowIndexT = z.infer<typeof PublicWorkflowIndex>;
+export type PublicModelVersionT = z.infer<typeof PublicModelVersion>;
+export type PublicModelFamilyT = z.infer<typeof PublicModelFamily>;
+export type PublicModelsIndexT = z.infer<typeof PublicModelsIndex>;
+export type PublicModelCompareT = z.infer<typeof PublicModelCompare>;
+export type PublicQuizT = z.infer<typeof PublicQuiz>;
 
 export const DATA_BASE = "/data/v1";
 export const TOOL_SCHEMA_ID = absoluteUrl(`${DATA_BASE}/schema/tool.json`);
@@ -157,13 +475,26 @@ export function openApiDocument(): Record<string, unknown> {
   });
   const ok = (description: string, schema: string) => ({ description, content: json(schema) });
   const notFound = { description: "Unknown or unlisted tool", content: json("Error") };
+  const slugParam = { name: "slug", in: "path", required: true, schema: { type: "string" } };
+  const one = (summary: string, schema: string, missing: string, moved?: string) => ({
+    get: {
+      summary,
+      parameters: [slugParam],
+      responses: {
+        "200": ok(summary, schema),
+        ...(moved ? { "301": { description: moved } } : {}),
+        "404": { description: missing, content: json("Error") },
+      },
+    },
+  });
+  const list = (summary: string, schema: string) => ({ get: { summary, responses: { "200": ok(summary, schema) } } });
   return {
     openapi: "3.1.0",
     info: {
       title: "Launchpad HQ data feed",
       version: SCHEMA_VERSION,
       description:
-        "Free, read-only JSON for the Launchpad HQ AI tool catalog. The same dated, sourced facts as the website and the MCP connector. Cached hourly. Please credit Launchpad HQ and link to the tool's page.",
+        "Free, read-only JSON for the Launchpad HQ AI tool catalog, comparison pages, guides, workflows, models and quiz. The same dated, sourced facts as the website and the MCP connector. Every tool price comes from the tool's own record. Cached hourly. Please credit Launchpad HQ and link to the tool's page.",
     },
     servers: [{ url: absoluteUrl(DATA_BASE) }],
     paths: {
@@ -182,12 +513,38 @@ export function openApiDocument(): Record<string, unknown> {
       },
       "/schema/tool.json": { get: { summary: "JSON Schema for one tool", responses: { "200": { description: "JSON Schema" } } } },
       "/openapi.json": { get: { summary: "This document", responses: { "200": { description: "OpenAPI 3.1" } } } },
+      "/compare/index.json": list("Every listed comparison page", "PublicCompareIndex"),
+      "/compare/{slug}.json": one(
+        "One comparison or free-alternatives page",
+        "PublicComparePage",
+        "Unknown or unlisted page",
+        "Reverse-order head-to-head slug; Location points at the canonical one",
+      ),
+      "/guides/index.json": list("Every listed getting-started guide", "PublicGuideIndex"),
+      "/guides/{slug}.json": one("One getting-started guide, by tool slug", "PublicGuide", "No listed guide for this tool"),
+      "/workflows/index.json": list("Every workflow template", "PublicWorkflowIndex"),
+      "/workflows/{slug}.json": one("One workflow template", "PublicWorkflow", "Unknown workflow"),
+      "/models/index.json": list("Every model family", "PublicModelsIndex"),
+      "/models/{slug}.json": one("One model family", "PublicModelFamily", "Unknown model family"),
+      "/models/compare/claude-vs-gpt.json": list("Claude vs GPT models", "PublicModelCompare"),
+      "/quiz.json": list("Quiz questions, options and scoring map (no answers)", "PublicQuiz"),
     },
     components: {
       schemas: {
         PublicTool: jsonSchema(PublicTool),
         PublicCatalog: jsonSchema(PublicCatalog),
         PublicIndex: jsonSchema(PublicIndex),
+        PublicToolSummary: jsonSchema(PublicToolSummary),
+        PublicComparePage: jsonSchema(PublicComparePage),
+        PublicCompareIndex: jsonSchema(PublicCompareIndex),
+        PublicGuide: jsonSchema(PublicGuide),
+        PublicGuideIndex: jsonSchema(PublicGuideIndex),
+        PublicWorkflow: jsonSchema(PublicWorkflow),
+        PublicWorkflowIndex: jsonSchema(PublicWorkflowIndex),
+        PublicModelFamily: jsonSchema(PublicModelFamily),
+        PublicModelsIndex: jsonSchema(PublicModelsIndex),
+        PublicModelCompare: jsonSchema(PublicModelCompare),
+        PublicQuiz: jsonSchema(PublicQuiz),
         Error: jsonSchema(PublicError),
       },
     },

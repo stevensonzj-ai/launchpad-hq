@@ -24,6 +24,7 @@ import {
   SCHEMA_VERSION,
   type PublicCatalogT,
   type PublicIndexT,
+  type PublicToolSummaryT,
   type PublicToolT,
 } from "./schema";
 
@@ -296,6 +297,61 @@ export function toPublicTool(
   };
 }
 
+/** The tool's /data/v1 record URL. */
+export function toolDataUrl(slug: string): string {
+  return absoluteUrl(`${DATA_BASE}/tools/${slug}.json`);
+}
+
+/**
+ * The fields of `toPublicTool` that content records (guides, workflows,
+ * models, also-consider links) carry. Picked from the full record, so the
+ * prices are the ones /data/v1/tools/{slug}.json serves.
+ */
+export function toPublicToolSummary(tool: PublicToolT): PublicToolSummaryT {
+  return {
+    slug: tool.slug,
+    name: tool.name,
+    url: tool.url,
+    data_url: toolDataUrl(tool.slug),
+    category: tool.category,
+    cost_tier: tool.cost_tier,
+    lifecycle: tool.lifecycle,
+    free_tier: tool.free_tier,
+    starting_price: tool.starting_price,
+    lowest_paid: tool.lowest_paid,
+    data_as_of: tool.data_as_of,
+  };
+}
+
+/** Rows + facts + context: everything a content record needs to cite a tool. */
+export type FeedTools = {
+  rows: CatalogRow[];
+  facts: FactsLookup;
+  ctx: FeedContext;
+};
+
+/**
+ * A tool content records may cite: listed (not hidden or a duplicate), not
+ * discontinued, and with a catalog row. Same rule as `alternatives`.
+ */
+export function citableRow(slug: string | undefined, feed: FeedTools): CatalogRow | undefined {
+  if (!slug || !feed.ctx.listedSlugs.has(slug) || feed.ctx.isDiscontinued(slug)) return undefined;
+  return feed.rows.find((row) => row.slug === slug);
+}
+
+/**
+ * Hidden or discontinued: content records drop the mention entirely. (A
+ * slug with no row is not excluded; it is cited by name only.)
+ */
+export function isExcludedSlug(slug: string, feed: FeedTools): boolean {
+  return isHiddenPlatform(slug) || feed.ctx.isDiscontinued(slug);
+}
+
+export function citedToolSummary(slug: string | undefined, feed: FeedTools): PublicToolSummaryT | null {
+  const row = citableRow(slug, feed);
+  return row ? toPublicToolSummary(toPublicTool(row, feed.facts(row.slug), feed.ctx)) : null;
+}
+
 export function toPublicCatalog(
   rows: CatalogRow[],
   facts: FactsLookup,
@@ -334,6 +390,17 @@ export function toPublicIndex(catalog: Pick<PublicCatalogT, "generated_at" | "co
       tool: absoluteUrl(`${DATA_BASE}/tools/{slug}.json`),
       openapi: absoluteUrl(`${DATA_BASE}/openapi.json`),
       schema: absoluteUrl(`${DATA_BASE}/schema/tool.json`),
+      compare: absoluteUrl(`${DATA_BASE}/compare/index.json`),
+      compare_page: absoluteUrl(`${DATA_BASE}/compare/{slug}.json`),
+      guides: absoluteUrl(`${DATA_BASE}/guides/index.json`),
+      guide: absoluteUrl(`${DATA_BASE}/guides/{slug}.json`),
+      workflows: absoluteUrl(`${DATA_BASE}/workflows/index.json`),
+      workflow: absoluteUrl(`${DATA_BASE}/workflows/{slug}.json`),
+      models: absoluteUrl(`${DATA_BASE}/models/index.json`),
+      model_family: absoluteUrl(`${DATA_BASE}/models/{slug}.json`),
+      models_compare: absoluteUrl(`${DATA_BASE}/models/compare/claude-vs-gpt.json`),
+      quiz: absoluteUrl(`${DATA_BASE}/quiz.json`),
+      llms_full: absoluteUrl("/llms-full.txt"),
     },
     cache: FEED_CACHE_NOTE,
     attribution: FEED_ATTRIBUTION,
@@ -345,6 +412,11 @@ export type ToolFileResolution =
   | { kind: "tool"; row: CatalogRow }
   | { kind: "redirect"; slug: string }
   | { kind: "not_found" };
+
+/** The slug in a `{slug}.json` route segment, or null. */
+export function jsonFileSlug(file: string): string | null {
+  return /^([^/]+)\.json$/.exec(file)?.[1] ?? null;
+}
 
 /** `/data/v1/tools/{file}`: needs a `.json` suffix and a listed slug. */
 export function resolveToolFile(file: string, rows: CatalogRow[]): ToolFileResolution {

@@ -6,15 +6,18 @@ import { prisma } from "@/lib/db";
 import { JsonLd } from "@/components/seo/json-ld";
 import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import type { PlatformTutorialData } from "@/data/tutorials";
-import { publicPageMetadata } from "@/lib/seo-metadata";
+import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 import { buildTutorialIndexStructuredData } from "@/lib/seo-jsonld";
 
-export const metadata = publicPageMetadata({
-  title: "AI Tool Tutorials: Free Beginner's Guides | Launchpad HQ",
-  description:
-    "Free, honest getting-started guides for AI tools, grouped by category: what each tool is good at, what to avoid, what to know before you start, and first things to try.",
-  path: "/tutorials",
-});
+export const metadata = withFeedAlternate(
+  publicPageMetadata({
+    title: "AI Tool Tutorials: Free Beginner's Guides | Launchpad HQ",
+    description:
+      "Free, honest getting-started guides for AI tools, grouped by category: what each tool is good at, what to avoid, what to know before you start, and first things to try.",
+    path: "/tutorials",
+  }),
+  "/guides/index.json",
+);
 
 type CategoryGroup = {
   name: string;

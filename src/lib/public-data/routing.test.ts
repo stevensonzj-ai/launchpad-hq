@@ -20,9 +20,65 @@ const runsMiddleware = (path: string) => matcherPatterns().some((re) => re.test(
 
 describe("middleware matcher", () => {
   it("never runs Clerk on the JSON feed", () => {
-    for (const path of ["/data/v1/catalog.json", "/data/v1/index.json", "/data/v1/tools/chatgpt.json"]) {
+    for (const path of [
+      "/data/v1/catalog.json",
+      "/data/v1/index.json",
+      "/data/v1/tools/chatgpt.json",
+      "/data/v1/compare/index.json",
+      "/data/v1/compare/heygen-vs-synthesia.json",
+      "/data/v1/compare/synthesia-vs-heygen.json",
+      "/data/v1/guides/index.json",
+      "/data/v1/guides/chatgpt.json",
+      "/data/v1/workflows/index.json",
+      "/data/v1/workflows/blog-post-generator.json",
+      "/data/v1/models/index.json",
+      "/data/v1/models/claude.json",
+      "/data/v1/models/compare/claude-vs-gpt.json",
+      "/data/v1/quiz.json",
+    ]) {
       assert.equal(runsMiddleware(path), false, path);
     }
+  });
+
+  it("never runs Clerk on llms.txt or llms-full.txt, and lists both as public", () => {
+    for (const path of ["/llms.txt", "/llms-full.txt"]) {
+      assert.equal(runsMiddleware(path), false, path);
+      assert.ok(proxySource.includes(`"${path}",`), path);
+    }
+  });
+
+  it("makes nothing else public: the public list is exactly the expected routes", () => {
+    const block = /createRouteMatcher\(\[([\s\S]*?)\]\)/.exec(proxySource)?.[1] ?? "";
+    const routes = [...block.matchAll(/^\s*"([^"]+)",/gm)].map((m) => m[1]);
+    assert.deepEqual(routes, [
+      "/",
+      "/discover(.*)",
+      "/platform(.*)",
+      "/tutorials(.*)",
+      "/workflows(.*)",
+      "/models(.*)",
+      "/compare(.*)",
+      "/alternatives(.*)",
+      "/quiz(.*)",
+      "/for-you(.*)",
+      "/pricing(.*)",
+      "/privacy(.*)",
+      "/terms(.*)",
+      "/how-we-make-money(.*)",
+      "/sponsor-guidelines(.*)",
+      "/advertise(.*)",
+      "/ai-of-the-week(.*)",
+      "/connector(.*)",
+      "/sign-in(.*)",
+      "/sign-up(.*)",
+      "/api(.*)",
+      "/sitemap.xml",
+      "/robots.txt",
+      "/llms.txt",
+      "/llms-full.txt",
+      "/mcp",
+      "/data(.*)",
+    ]);
   });
 
   it("still runs on pages and API routes", () => {

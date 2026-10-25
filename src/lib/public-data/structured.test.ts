@@ -170,9 +170,10 @@ describe("JSON feed alternate link", () => {
   it("points tool and guide pages at the tool's /data/v1 record, never for hidden tools", () => {
     const url = "https://www.launchpadhq.io/data/v1/tools/chatgpt.json";
     assert.equal(json(buildPlatformMetadata({ slug: "chatgpt", name: "ChatGPT", facts: getToolFacts("chatgpt") })), url);
-    assert.equal(
+    // Guide pages link their own guide record first, then the tool record.
+    assert.deepEqual(
       json(buildTutorialMetadata({ platformSlug: "chatgpt", name: "ChatGPT", tagline: "t", lastReviewedAt: "2026-10-01" })),
-      url,
+      [{ url: "https://www.launchpadhq.io/data/v1/guides/chatgpt.json" }, { url }],
     );
     assert.ok(json(buildPlatformMetadata({ slug: "play-ht", name: "PlayHT", facts: getToolFacts("play-ht") })));
     for (const slug of hiddenPlatformSlugs()) {

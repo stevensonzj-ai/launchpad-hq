@@ -156,8 +156,12 @@ async function main() {
     name: "Claude",
     categoryId: textCat.id,
     primaryUse: "Coding, analysis, writing assistant",
-    currentPricing: "Free tier; $20/mo Pro",
-    freeTierFeatures: "Free tier with usage limits; Pro for higher limits",
+    currentPricing:
+      "Free $0; Pro $20/mo billed monthly or $17/mo billed annually ($200 up front); Max from $100/mo (5x or 20x Pro usage); Team 2-150 seats; Enterprise $20/seat plus usage at API rates (official, as of 2026-10-25)",
+    freeTierFeatures:
+      "Free $0: chat on web, desktop and mobile, web search, file and code tools, memory, connectors, Artifacts, up to 5 Projects (official, as of 2026-10-25)",
+    usageLimits:
+      "Free: usage limits reset on a rolling 5-hour window; Pro: at least 5x Free usage, includes Claude Code; Max: 5x or 20x Pro (official, as of 2026-10-25)",
     difficultyLevel: "INTERMEDIATE" as const,
     description:
       "Anthropic’s assistant for long-context writing, coding, analysis, and reasoning across web and API.",
@@ -172,6 +176,7 @@ async function main() {
         primaryUse: claudePayload.primaryUse,
         currentPricing: claudePayload.currentPricing,
         freeTierFeatures: claudePayload.freeTierFeatures,
+        usageLimits: claudePayload.usageLimits,
         difficultyLevel: claudePayload.difficultyLevel,
         description: claudePayload.description,
         verified: true,

@@ -1,6 +1,7 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import { catalogRedirects } from "./src/lib/catalog-redirects";
+import { compareRedirects } from "./src/data/compare/pages";
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
@@ -33,6 +34,10 @@ const nextConfig: NextConfig = {
       // Duplicate catalog rows and retired guides (301, not 308).
       // Data and rationale: src/lib/catalog-redirects.ts.
       ...catalogRedirects(),
+
+      // /compare/<b>-vs-<a> -> alphabetical /compare/<a>-vs-<b> (301).
+      // Data: src/data/compare/pages.ts.
+      ...compareRedirects(),
     ];
   },
 };

@@ -18,7 +18,8 @@ import { buildPlatformMetadata } from "@/lib/seo-metadata";
 import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
 import { dataAsOf, listedRelatedRows, publicToolCore } from "@/lib/public-data/serialize";
 import { JsonLd } from "@/components/seo/json-ld";
-import { GroupedCatalogLinks } from "@/components/seo/catalog-link-list";
+import { CatalogLinkList, GroupedCatalogLinks } from "@/components/seo/catalog-link-list";
+import { compareLinksForSlug } from "@/data/compare/view";
 import {
   pickRelatedPlatforms,
   relatedCatalogLinksForPlatform,
@@ -283,6 +284,7 @@ export default async function PlatformPage({
         </section>
       )}
       </PlatformDetailTabs>
+      <CatalogLinkList title="Compare" items={compareLinksForSlug(platform.slug)} />
       <GroupedCatalogLinks items={catalogLinks} />
     </div>
   );

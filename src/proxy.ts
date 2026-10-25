@@ -9,6 +9,8 @@ const isPublicRoute = createRouteMatcher([
   "/tutorials(.*)",
   "/workflows(.*)",
   "/models(.*)",
+  "/compare(.*)",
+  "/alternatives(.*)",
   "/quiz(.*)",
   "/for-you(.*)",
   "/pricing(.*)",
@@ -25,6 +27,7 @@ const isPublicRoute = createRouteMatcher([
   "/sitemap.xml",
   "/robots.txt",
   "/llms.txt",
+  "/llms-full.txt",
   // Read-only MCP connector: anonymous by design (no auth in v0.1).
   // Without this, auth.protect() would block signed-out MCP clients.
   "/mcp",

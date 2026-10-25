@@ -31,12 +31,40 @@ describe("PublicTool JSON Schema", () => {
     assert.equal(doc.openapi, "3.1.0");
     assert.deepEqual(Object.keys(doc.paths).sort(), [
       "/catalog.json",
+      "/compare/index.json",
+      "/compare/{slug}.json",
+      "/guides/index.json",
+      "/guides/{slug}.json",
       "/index.json",
+      "/models/compare/claude-vs-gpt.json",
+      "/models/index.json",
+      "/models/{slug}.json",
       "/openapi.json",
+      "/quiz.json",
       "/schema/tool.json",
       "/tools/{slug}.json",
+      "/workflows/index.json",
+      "/workflows/{slug}.json",
     ]);
-    for (const name of ["PublicTool", "PublicCatalog", "PublicIndex", "Error"]) {
+    const compare = (doc.paths["/compare/{slug}.json"] as { get: { responses: Record<string, unknown> } }).get;
+    assert.deepEqual(Object.keys(compare.responses).sort(), ["200", "301", "404"]);
+    for (const name of [
+      "PublicTool",
+      "PublicCatalog",
+      "PublicIndex",
+      "PublicToolSummary",
+      "PublicComparePage",
+      "PublicCompareIndex",
+      "PublicGuide",
+      "PublicGuideIndex",
+      "PublicWorkflow",
+      "PublicWorkflowIndex",
+      "PublicModelFamily",
+      "PublicModelsIndex",
+      "PublicModelCompare",
+      "PublicQuiz",
+      "Error",
+    ]) {
       assert.ok(doc.components.schemas[name], name);
     }
   });

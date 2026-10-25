@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
+import { COMPARE_HUB_PATH } from "@/data/compare/pages";
+import { compareSitemapPaths, listedComparePages } from "@/data/compare/view";
 import { prisma } from "@/lib/db";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { SITE_URL } from "@/lib/site";
@@ -41,6 +43,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let platformEntries: MetadataRoute.Sitemap = [];
   let guideEntries: MetadataRoute.Sitemap = [];
+  // The hub needs no DB; its pages are listed only once their rows are known.
+  let compareEntries: MetadataRoute.Sitemap = [{ url: sitemapUrl(SITE_URL, COMPARE_HUB_PATH) }];
 
   try {
     // Same catalog visibility as Discover: every Platform row is public
@@ -75,6 +79,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           parseRealDate(tutorial.lastReviewedAt),
         ),
       );
+
+    // Comparison pages whose required tools are listed, live and have rows.
+    compareEntries = compareSitemapPaths(listedComparePages(undefined, platformSlugs)).map(
+      (path) => ({ url: sitemapUrl(SITE_URL, path) }),
+    );
   } catch {
     // DB unavailable (local build without DATABASE_URL, Neon blip): keep
     // only the static, workflow and model URLs. Platform and guide URLs
@@ -89,5 +98,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...modelFamilyEntries,
     ...platformEntries,
     ...guideEntries,
+    ...compareEntries,
   ];
 }
