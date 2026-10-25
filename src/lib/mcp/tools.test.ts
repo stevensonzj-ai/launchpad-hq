@@ -127,7 +127,8 @@ describe("get_pricing_facts", () => {
 
   it("never reports a free tier for a discontinued tool, whatever its cost tier", () => {
     const out = getPricingFacts({ platform: "deadnote" }, FIXTURE_ROWS, fixtureFacts);
-    assert.equal(out.platform.cost_tier, "FREE");
+    // The row says FREE; the public tier says what the card badge says.
+    assert.equal(out.platform.cost_tier, "DISCONTINUED");
     assert.equal(out.platform.free_tier.available, false);
   });
 });

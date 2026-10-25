@@ -262,3 +262,22 @@ function resolveImport(from: string, spec: string): string | null {
   }
   return null;
 }
+
+describe("cost tier of discontinued tools", () => {
+  it("feed, summary and MCP say DISCONTINUED, never the stored FREEMIUM", async () => {
+    const { toPlatformRef } = await import("@/lib/mcp/tools");
+    const { citedToolSummary, publicCostTier, toPublicToolSummary } = await import("./serialize");
+    const row = FEED_ROWS.find((r) => r.slug === "play-ht");
+    assert.ok(row);
+    assert.equal(row.costTier, "FREEMIUM");
+    const out = tool("play-ht");
+    assert.equal(out.cost_tier, "DISCONTINUED");
+    assert.equal(toPublicToolSummary(out).cost_tier, "DISCONTINUED");
+    assert.equal(toPlatformRef(row, feedFacts("play-ht")).cost_tier, "DISCONTINUED");
+    // Content records never cite it at all.
+    assert.equal(citedToolSummary("play-ht", { rows: FEED_ROWS, facts: feedFacts, ctx }), null);
+    // Live tools keep their stored tier.
+    assert.equal(publicCostTier("FREEMIUM", feedFacts("chatgpt")), "FREEMIUM");
+    assert.equal(tool("chatgpt").cost_tier, FEED_ROWS.find((r) => r.slug === "chatgpt")!.costTier);
+  });
+});

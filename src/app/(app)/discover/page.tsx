@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
-import { listedPlatformWhere } from "@/lib/catalog-visibility";
+import { listedPlatformWhere, recommendablePlatformWhere } from "@/lib/catalog-visibility";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
@@ -69,6 +69,9 @@ export default async function DiscoverPage({
   if (params.category) {
     where.category = { slug: params.category };
   }
+  // A cost filter never lists a discontinued tool: its stored tier (the enum
+  // has no "discontinued" value) is not something you can buy.
+  if (costQs) Object.assign(where, recommendablePlatformWhere());
   if (costQs === "free-tier") {
     // "Has free tier" = anything usable without paying.
     where.costTier = { in: ["FREE", "FREEMIUM"] };

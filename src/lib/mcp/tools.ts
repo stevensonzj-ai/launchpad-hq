@@ -165,7 +165,7 @@ export function toPlatformRef(row: CatalogRow, facts: ToolFacts | undefined): Pl
     category: row.category?.name ?? null,
     launchpad_url: absoluteUrl(`/platform/${row.slug}`),
     website: core.website,
-    cost_tier: row.costTier,
+    cost_tier: core.cost_tier,
     difficulty: row.difficultyLevel,
     free_tier: core.free_tier,
     company: core.company,
