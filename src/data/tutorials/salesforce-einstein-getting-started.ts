@@ -21,10 +21,10 @@ export const salesforceEinsteinTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**You can get in without talking to a salesperson.** Salesforce's **Free Suite** is $0 for up to two people, and Salesforce says it is \"completely free with no expiration date, as long as you log in at least once every 60 days\". It includes the click-based AI that summarises a record and drafts an email. That is a real starting point, not a demo.",
+    "**You can get in without talking to a salesperson.** Salesforce's **Free Suite** is free for up to two people, and Salesforce says it is \"completely free with no expiration date, as long as you log in at least once every 60 days\". It includes the click-based AI that summarises a record and drafts an email. That is a real starting point, not a demo.",
     "The Einstein-branded predictive features are the expensive half. Sales Cloud Einstein — lead scoring, opportunity scoring, Einstein Forecasting — is documented as available in Performance and Unlimited Editions and \"for an extra cost in Enterprise Edition\". Those need a paid plan and usually a sales conversation. Nothing in the starter list below depends on them.",
     "There are two other free doors: a 30-day trial of the full paid product, and a free developer account that Salesforce says \"doesn't expire as long as you keep using it\" and that now includes Agentforce. The developer account is a practice space rather than somewhere to run a business, but it is currently the cheapest way to see the agent builder.",
-    "If you do end up paying, plans currently run from about $25 per user per month for Starter Suite to around $550 at the top, and the agent side is metered separately in Flex Credits — **credits** are the platform's unit of spend, each thing you do costs some — currently around $500 per 100,000 credits, or about $2 per customer conversation.",
+    "If you do end up paying, plans are priced per user per month, rising steeply from Starter Suite to the top editions, and the agent side is metered separately in Flex Credits — **credits** are the platform's unit of spend, each thing you do costs some — bought in blocks, so every customer conversation an agent handles has a cost. Current prices are on its Launchpad page.",
     "In a company Salesforce, the licence is not the hard part; learning Salesforce is. Trailhead, which Salesforce calls \"the free online learning platform from Salesforce\", is where the vendor itself sends beginners, and it hands you a free practice environment to click around in.",
   ],
 

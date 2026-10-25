@@ -21,7 +21,7 @@ export const tabnineTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**There is no free tier, no trial, and no way to buy a single seat.** The two plans run around $39 and $59 per user per month, billed annually, and both buttons say \"Get a quote\" rather than taking a card. You get Tabnine because an employer bought it.",
+    "**There is no free tier, no trial, and no way to buy a single seat.** Both plans are priced per user and billed annually, and both buttons say \"Get a quote\" rather than taking a card. You get Tabnine because an employer bought it.",
     "If your workplace already has it, ask whoever runs developer tooling for a sign-in or a private Tabnine server address — that address, not the download, is what unlocks it. It installs into Visual Studio Code, JetBrains editors, Visual Studio or Eclipse.",
     "If you are learning to code on your own, the blocker is not your skill level; Tabnine does not sell to individuals. Our AI coding tools category lists assistants with free tiers you can install today.",
   ],

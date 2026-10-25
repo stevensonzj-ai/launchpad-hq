@@ -23,7 +23,7 @@ export const slackAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**There is no free tier.** Conversation and thread summaries plus huddle notes currently come with every paid plan; the rest needs **Business+** or higher — search answers, daily recaps, file summaries, translations, message explanations, canvas generation and the full Slackbot assistant.",
     "You almost certainly can't switch it on yourself: AI is controlled by workspace and organisation Admins, so an ordinary member's first step is asking whoever administers the workspace whether it's on.",
-    `You won't be paying personally; your employer does. Slack has withdrawn the old per-seat AI add-on — it "is no longer available to purchase on the Slack website" — and moved existing customers onto plan tiers at their first renewal after August 2025. It also notes that the price "won't change if you turn all AI features off." Prices currently run around **$7-9 per user/month for Pro** and **$15-18 for Business+** (the lower figure is annual), Enterprise+ by sales.`,
+    `You won't be paying personally; your employer does. Slack has withdrawn the old per-seat AI add-on — it "is no longer available to purchase on the Slack website" — and moved existing customers onto plan tiers at their first renewal after August 2025. It also notes that the price "won't change if you turn all AI features off." **Pro** and **Business+** are priced per user per month and cost less on annual billing; Enterprise+ is priced by sales.`,
     "First step once it's on: open a busy channel, click the three-dots icon at the top, choose **Summarize channel**. Not there? Your plan or your admin hasn't enabled it.",
   ],
 

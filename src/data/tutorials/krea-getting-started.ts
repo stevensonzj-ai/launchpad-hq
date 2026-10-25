@@ -21,10 +21,10 @@ export const kreaTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Signing up is free. The free plan gives you 100 units a day, refilled daily — Krea's help pages say there is a daily free allowance but do not say what time it resets — so a free account is for trying things out a little each day rather than for a big project in one sitting.",
+    "Signing up is free. The free plan gives you a small allowance of units that refills every day — Krea's help pages confirm the daily allowance but do not say what time it resets — so a free account is for trying things out a little each day rather than for a big project in one sitting.",
     "**Read this before you use anything you make on the free plan for work.** As of 15 October 2026, Krea's pricing page marks \"Commercial license\" as **not** included on the free plan, and its own FAQ names Pro, Max and Business among the plans that include the commercial licence. That means a logo, product shot or client image made on a free account is not covered for commercial use. The FAQ does not mention the Basic plan either way, so if commercial use is your reason for paying, confirm it on the pricing page before choosing Basic over Pro. Krea's terms (last updated 20 May 2024) also say it can change its commercial-use terms \"at any time\".",
     "Who owns what you make depends on your plan. Krea's general terms (last updated 20 May 2024) give you a licence to \"use (and in certain instances download, display, and re-share)\" what you generate, and never say in plain words that you own it. Only the separate Business terms (last updated 1 January 2026) say \"You retain all ownership rights in your Inputs and Outputs\" — and even those warn that AI output may not be protected by copyright in some countries and that someone else may get a similar result.",
-    "If you do pay, it runs from Basic at $9 a month (or $5.25 a month billed yearly, 5,000 units a month) through Pro at $35 ($21 yearly, 20,000 units) and Max at $105 ($63 yearly, 60,000 units), up to a Business plan for teams at $200 ($160 yearly, 80,000 units). Subscriptions renew automatically until you cancel.",
+    "If you do pay, Basic is {{price:krea:Basic}}, and Pro, Max and a Business plan for teams step up from there, each with a larger monthly allowance of units and a discount for paying yearly. Subscriptions renew automatically until you cancel.",
   ],
 
   security: [

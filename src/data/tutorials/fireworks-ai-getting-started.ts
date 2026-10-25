@@ -20,7 +20,7 @@ export const fireworksAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Understand the money before anything else.** Fireworks runs on prepaid **credits** (the platform's unit of spend — each thing you make costs some), not a subscription. A new account currently gets about $1 in free credits — a one-off welcome grant, not an allowance that refills. The documentation is explicit: when it runs out with no card on file, the account is suspended until you add one.",
+    "**Understand the money before anything else.** Fireworks runs on prepaid **credits** (the platform's unit of spend — each thing you make costs some), not a subscription. A new account currently gets a small amount of free credit — a one-off welcome grant, not an allowance that refills. The documentation is explicit: when it runs out with no card on file, the account is suspended until you add one.",
     "It goes further than it sounds. The cheapest text models currently list at cents per million chunks of text handled (a chunk is roughly a short word); only the flagships cost dollars. An afternoon in the browser spends a fraction of the grant.",
     "Until a card is on file the account is capped at roughly ten requests a minute — ample for typing questions by hand, far too little to run anything real.",
     "Nothing to install. Sign in with Google, GitHub, LinkedIn or an email address; Fireworks' own onboarding puts experimenting in the model playground before anything else, so the model list and chat box are where to head first.",
@@ -62,7 +62,7 @@ export const fireworksAiTutorial: PlatformTutorialData = {
       prompt:
         "A shop sells pens at 3 for $4 and notebooks at $2.50 each. I spend exactly $21 and buy twice as many pens as notebooks. How many of each? Show your working.",
       whyHere:
-        "Every Fireworks model page prints three prices, not one — text going in, text coming back, and a much lower third rate for input the system has already seen. GLM 5.2 currently shows $1.40, $4.40 and $0.14 per million chunks. Read that beside a model listed at five cents and you learn both things that matter here: whether the cheap model was good enough, and why repeating a long standing instruction costs far less than the headline rate.",
+        "Every Fireworks model page prints three prices, not one — text going in, text coming back, and a much lower third rate for input the system has already seen. Read those beside a model priced at a small fraction of them and you learn both things that matter here: whether the cheap model was good enough, and why repeating a long standing instruction costs far less than the headline rate.",
       tweak:
         "Use a question with a right answer you can check. Open-ended writing makes every model look fine.",
     },

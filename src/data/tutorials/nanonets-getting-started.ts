@@ -21,8 +21,8 @@ export const nanonetsTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Every account currently starts with about $50 in **credits** (the platform's unit of spend — each thing you run costs some) and no card, and Nanonets says credits never expire. That is enough to put real documents through before you decide anything.",
-    "The prices are published, which is unusual in this category: currently around $0.02 for a simple step, $0.10 for a standard AI step, and $0.30 for a data-extraction run. The self-serve paid plan is currently $100 a month for 100 credits; above that the buttons read **Talk to sales** and **Book a demo**.",
+    "Every account currently starts with free **credits** (the platform's unit of spend — each thing you run costs some) and no card, and Nanonets says credits never expire. That is enough to put real documents through before you decide anything.",
+    "The prices are published, which is unusual in this category: each step has a listed rate, with a standard AI step costing more than a simple one and a data-extraction run more again. There is one self-serve paid plan; above that the buttons read **Talk to sales** and **Book a demo**.",
     "Bring a stack, not a file. Nanonets' own documentation describes a new extraction starting at 0% confidence and rising only as you correct and approve documents, with 90% named as the point it is ready to run unattended. One document cannot move that number.",
     "You do not need accounting or ERP software connected to try it. The free plan currently includes importing from an email address and from cloud folders such as Google Drive, Dropbox, OneDrive and SharePoint, and results can come back out as a spreadsheet.",
     "The free plan is currently capped at three users with community support, so it is a working trial rather than a small-team licence.",
@@ -77,7 +77,7 @@ export const nanonetsTutorial: PlatformTutorialData = {
       "Taking the accuracy figures on the marketing pages as your own. Percentages like 93% touchless processing and 95% extraction accuracy are presented as customer outcomes, while your own extraction starts at 0%. Both are true and they describe different months.",
       "Uploading identity documents or regulated records before you have asked which outside model providers see them — the privacy policy says data may go to them and the published list of subprocessors does not name any.",
       "Assuming that because Nanonets says a personalised extraction only serves you, your data is off-limits for product improvement. The Derived Data clause in the terms is the sentence that governs that, and it points the other way.",
-      "Planning around private-cloud deployment, data residency or single sign-on on the free or $100 plan — Enterprise is a conversation, not a checkout.",
+      "Planning around private-cloud deployment, data residency or single sign-on on the free or self-serve paid plan — Enterprise is a conversation, not a checkout.",
     ],
   },
 
@@ -129,7 +129,7 @@ export const nanonetsTutorial: PlatformTutorialData = {
     "**The correcting is the real cost.** For the first few weeks the human hours spent fixing fields before approval are larger than what the tool saves. Budget the attention, not just the credits.",
     "**Accuracy claims assume a clean scan.** The training guidance asks for images larger than 1000x1000 pixels and states plainly that blurry images hinder text recognition. A phone photograph of a crumpled delivery note is a different tool's problem.",
     "**A supplier's redesign can quietly undo months of progress.** A workflow that ran unattended can start needing human eyes again with no announcement, so watch the confidence figure, not just the output.",
-    "**Self-serve stops at $100 a month.** The capabilities a regulated or larger team is most likely to need — private-cloud or on-premises deployment, data residency options, single sign-on, role-based access — are in that sales conversation rather than on the price list.",
+    "**Self-serve stops at one paid plan.** The capabilities a regulated or larger team is most likely to need — private-cloud or on-premises deployment, data residency options, single sign-on, role-based access — are in that sales conversation rather than on the price list.",
   ],
 
   whereToNext: [

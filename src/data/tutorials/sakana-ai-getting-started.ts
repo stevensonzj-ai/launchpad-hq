@@ -25,7 +25,7 @@ export const sakanaAiTutorial: PlatformTutorialData = {
     "The interface is Japanese and the answers come back in Japanese. You can type English at it, but this is a tool built for Japanese first, and treating it as an English chatbot wastes the only thing it does better than the alternatives.",
     "You will not need to pay for the chatbot. It is free, and unusually there is no paid plan to upgrade to — the pricing page states plainly that Sakana Chat has no subscription and that buying a developer plan does not raise its limits. The FAQ says it is free \"currently\" and that any change would be announced first.",
     "Sakana's FAQ says you do not strictly need an account to send a message, but registering — with a Google account or an email sign-in link — is what saves your conversation history and raises the cap on how many requests you can make in a given period.",
-    "The two paid products are separate purchases with separate signups. Fugu, the developer service, currently starts around $20/month or is billed per use; Marlin, the long-running research agent, is sold only to businesses at roughly ¥98 per credit with about 100 credits per report. Neither is currently sold in the EU or EEA.",
+    "The two paid products are separate purchases with separate signups. Fugu, the developer service, has a monthly plan or is billed per use; Marlin, the long-running research agent, is sold only to businesses and billed in credits, with each report using a large batch of them. Neither is currently sold in the EU or EEA.",
   ],
 
   security: [
@@ -100,12 +100,12 @@ export const sakanaAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Fugu reaches programmers through an **API** (a way for programs to talk to each other without a person clicking) that is deliberately shaped like OpenAI's so existing code needs only the address and key changed. There is no chat box; the console is for keys and monitoring.",
       whyHere:
-        "Fugu is an orchestration layer sold as if it were a model — currently around $2 in / $6 out per million tokens for Fugu Max against $5 / $30 for Fugu Ultra, priced by how hard you want it to work rather than by which model you picked.",
+        "Fugu is an orchestration layer sold as if it were a model — billed per token, with Fugu Ultra costing several times as much as Fugu Max, priced by how hard you want it to work rather than by which model you picked.",
     },
     {
       title: "Marlin, the eight-hour report machine you will read about",
       whatItDoes:
-        "Marlin takes a strategic research question and works on it autonomously for up to eight hours before returning a long structured report, and it is sold only to companies, organisations and sole traders — not to individuals. Around ¥150,000 a month for the Pro plan. It is worth knowing what it is because it is the Sakana product that shows up in business coverage.",
+        "Marlin takes a strategic research question and works on it autonomously for up to eight hours before returning a long structured report, and it is sold only to companies, organisations and sole traders — not to individuals. It is worth knowing what it is because it is the Sakana product that shows up in business coverage.",
       whyHere:
         "Marlin bills by the report rather than by the seat, which is a different purchase shape from a monthly assistant subscription.",
     },

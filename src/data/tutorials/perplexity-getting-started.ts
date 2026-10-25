@@ -20,7 +20,7 @@ export const perplexityTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "The free tier is genuinely capable: **unlimited basic cited searches**, all the focus modes, saved research spaces, on any device. The deeper Pro-search mode is capped on free (a handful every few hours).",
-    "**Pro is $20/month** (cheaper annually; students can get a discounted rate) for unlimited deep searches, file uploads, and switching between frontier models.",
+    "**Pro** is a paid monthly plan (cheaper annually; students can get a discounted rate) for unlimited deep searches, file uploads, and switching between frontier models.",
     "The one habit to build from day one: **click the citations.** More on why below.",
   ],
 

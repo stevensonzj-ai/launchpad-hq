@@ -22,15 +22,15 @@ export const firefliesAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**Sign-up connects your calendar.** You sign in with Google or Microsoft (Outlook) — the only options — and grant calendar access. Fireflies supports one calendar per account. During setup it asks two important questions: which meetings Fred should join, and who should get the recap emails.",
     "**Change the defaults before your first meeting.** Fireflies' account-setup guide says the defaults are to join every calendar meeting with a video link and to send recaps to everyone on the invite — including outside guests. Most beginners want \"Only meetings that I own\" or \"Only when I invite fred@fireflies.ai\", and recaps sent only to themselves at first.",
-    "**Free has catches.** Fireflies' pricing page lists Free at $0 with 400 minutes of storage, a 2-hour limit per recording and 20 one-time AI credits. Its help centre says unlimited transcription on Free only applies with auto-join turned on; with auto-join off or set to invite-only, accounts created since September 1, 2026 get 3 meeting transcriptions. Downloading transcripts needs a paid plan.",
-    "**Paid plans are per seat.** The pricing page lists Pro at $18 per seat per month ($10 billed annually), Business at $29 ($19 annually) and Enterprise at $39 per seat per month, billed annually. Separately, **AI credits** pay for extra AI features; Fireflies' credits guide says paid plans are automatically subscribed to a small credit pack when they run out.",
+    "**Free has catches.** Fireflies' free plan has limited storage, a length limit per recording and a one-time batch of AI credits. Its help centre says unlimited transcription on Free only applies with auto-join turned on; with auto-join off or set to invite-only, accounts created since September 1, 2026 get only a few meeting transcriptions. Downloading transcripts needs a paid plan.",
+    "**Paid plans are per seat.** Pro is {{price:fireflies-ai:Pro}}, with Business and Enterprise above it, and annual billing costs less. Separately, **AI credits** pay for extra AI features; Fireflies' credits guide says paid plans are automatically subscribed to a small credit pack when they run out.",
   ],
 
   gettingSetUpSafely: {
     officialSource:
       "Sign up at fireflies.ai and install the desktop app, mobile apps or Chrome extension only from links on fireflies.ai or the official app stores. Fireflies asks for calendar access, so review the permission screen to make sure it's the real thing.",
     body: [
-      "**Set who Fred records.** In Settings → Recording & Privacy, choose your auto-join option. \"Only when I invite fred@fireflies.ai\" gives you the most control; on the Free plan, Fireflies' help centre says it also limits you to 3 transcriptions.",
+      "**Set who Fred records.** In Settings → Recording & Privacy, choose your auto-join option. \"Only when I invite fred@fireflies.ai\" gives you the most control; on the Free plan, Fireflies' help centre says it also caps how many meetings get transcribed.",
       "**Set who gets the notes.** In the same area, change recap emails from \"Everyone on the invite\" to just you, or only teammates, until you're sure what a recap contains.",
       "**Check sharing.** Fireflies' help centre says meeting privacy defaults to \"Teammates & Anyone with Link\", meaning anyone with a forwarded link can view it. Tighten it if your meetings are sensitive; Fireflies offers to apply the change to past meetings too.",
     ],
@@ -112,7 +112,7 @@ export const firefliesAiTutorial: PlatformTutorialData = {
   pitfalls: [
     "**Fred turning up uninvited.** If it joins a meeting it shouldn't, check your auto-join setting — and remember it follows your calendar, not your intentions.",
     "**Outsiders getting your recaps.** Recap emails go to everyone on the invite by default, including people without a Fireflies account.",
-    "**Running out of Free storage.** The 400-minute cap doesn't reset monthly; you'll need to delete old meetings to open new ones.",
+    "**Running out of Free storage.** The free plan's storage cap doesn't reset monthly; you'll need to delete old meetings to open new ones.",
     "**Surprise AI-credit charges.** Fireflies says its Daily Digest and Meeting Prep features are on by default and use AI credits; turn them off if you don't use them.",
   ],
 

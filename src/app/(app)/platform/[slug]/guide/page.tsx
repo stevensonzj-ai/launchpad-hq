@@ -15,6 +15,8 @@ import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildTutorialMetadata, stripInlineMarkup, verifiedDisplayName } from "@/lib/seo-metadata";
 import { buildTutorialStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
+import { toGuideView } from "@/lib/public-data/content-view";
+import { loadFeed } from "@/lib/public-data/load";
 
 /**
  * The tutorial's own indexable page: unique title, description and
@@ -66,6 +68,8 @@ export default async function PlatformGuidePage({
   const facts = getToolFacts(platform.slug);
   const view = overlayPlatformWithFacts(platform, facts);
   const displayName = view.name ?? platform.name;
+  // Price tokens and the header price come from the same view as /data/v1/guides.
+  const guide = toGuideView(tutorial, (await loadFeed()).tools);
   const user = await getOrCreateDbUser();
   const favorite = user
     ? await prisma.userFavorite.findUnique({
@@ -134,7 +138,13 @@ export default async function PlatformGuidePage({
         </div>
       ) : null}
 
-      <PlatformTutorials platformName={displayName} platformSlug={platform.slug} titleAs="h1" />
+      <PlatformTutorials
+        platformName={displayName}
+        platformSlug={platform.slug}
+        tutorial={guide.tutorial}
+        startingPrice={guide.tool?.starting_price ?? null}
+        titleAs="h1"
+      />
 
       <p className="mt-10 border-t border-gray-800 pt-6 text-sm text-gray-400">
         Want the full picture first?{" "}

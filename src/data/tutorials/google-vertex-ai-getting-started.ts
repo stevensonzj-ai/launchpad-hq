@@ -23,7 +23,7 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**The name changed and the internet has not caught up.** Google announced on 22 April 2026 that Vertex AI's services now ship as Gemini Enterprise Agent Platform, and the old documentation carries a banner saying it is no longer updated. Guides you find elsewhere — and some of Google's own pages — still say Vertex AI, and usually still describe the right thing.",
     "There is a free way in that most write-ups skip: express mode signs you up with nothing but a Google account, and Google's FAQ states that no payment information is required for 90 days, within set usage limits. A window, not an ongoing free plan.",
-    "The better-known offer wants a card: $300 in Welcome credit across a 90-day trial, spendable on all of Google Cloud, so anything else you leave running draws down the same pot. After both windows close it is metered by the amount of text going in and coming back, with no permanent free allowance.",
+    "The better-known offer wants a card: a Welcome credit across a 90-day trial, spendable on all of Google Cloud, so anything else you leave running draws down the same pot. After both windows close it is metered by the amount of text going in and coming back, with no permanent free allowance.",
   ],
 
   security: [
@@ -44,7 +44,7 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
   triad: {
     bestAt: [
       "Reaching many companies' models from one account — Model Garden advertises 200+, from Google's own Gemini to Meta's Llama and Anthropic's Claude",
-      "Letting a model check Google Search before it answers, currently 5,000 checks a month at no charge",
+      "Letting a model check Google Search before it answers, with a monthly allowance of checks at no charge",
       "Keeping company data out of model training, stated in writing rather than implied",
     ],
     okayAt: [
@@ -64,7 +64,7 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Signs in with an ordinary Google account and chooses express mode, which skips the billing setup for 90 days.",
       whyHere:
-        "Google's FAQ states that no payment information is required to try express mode for 90 days. Amazon Bedrock, the closest equivalent, has no such door — an AWS account with a payment method comes first. It also leaves the $300 trial credit unspent until you need it.",
+        "Google's FAQ states that no payment information is required to try express mode for 90 days. Amazon Bedrock, the closest equivalent, has no such door — an AWS account with a payment method comes first. It also leaves the trial credit unspent until you need it.",
       tweak:
         "Write down the date. Express projects stop at 90 days; deletion follows 30 days later.",
     },
@@ -73,7 +73,7 @@ export const googleVertexAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Turns on the setting that lets the model check Google Search, then asks it about an event from the past few days and reads the sources it returns.",
       whyHere:
-        "Google is selling the one asset its rivals cannot license: the pricing page currently includes 5,000 such checks a month at no charge, then about $14 per 1,000. Azure AI Foundry can check Bing, not Google Search.",
+        "Google is selling the one asset its rivals cannot license: the pricing page currently includes a monthly allowance of such checks at no charge, then bills for the rest. Azure AI Foundry can check Bing, not Google Search.",
       tweak:
         "Ask again with the check switched off. The gap between the answers is what you pay for.",
     },

@@ -21,7 +21,7 @@ export const tldvTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**Free to start, no card:** sign up, connect Google Calendar or Outlook, and choose which meetings get recorded. The calendar connection is the one to think about.",
     "**The free tier's shape matters more than its numbers.** Recording and transcription are generous; what is rationed is the *AI*: your first handful of meetings get full AI notes, then automatic notes cover only the opening minutes, and cross-meeting questions have a small allowance. Recordings age out — archived after days, deleted after months.",
-    "Record a couple of calls a week and want only the notes, and you won't pay. You hit the wall wanting full AI notes on *every* meeting, recordings kept long-term, or them pushed into a **CRM**, the system a sales team keeps its customer records in. Paid plans currently start around $18 per person per month annually, roughly $29 monthly.",
+    "Record a couple of calls a week and want only the notes, and you won't pay. You hit the wall wanting full AI notes on *every* meeting, recordings kept long-term, or them pushed into a **CRM**, the system a sales team keeps its customer records in. Paid plans are priced per person and are cheaper billed annually; current prices are on its Launchpad page.",
     "**First step:** connect your calendar, set auto-record to internal only, and record one with your own team. Don't point a bot at a customer on day one.",
   ],
 

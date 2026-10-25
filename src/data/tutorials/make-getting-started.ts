@@ -21,8 +21,8 @@ export const makeTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    `The free plan gives 1,000 credits a month, two active scenarios, and a fifteen-minute minimum gap between runs. Enough to learn on; not enough to depend on.`,
-    `Paid plans begin around $9 a month for 10,000 credits, which also removes the scenario cap and drops the minimum interval to one minute.`,
+    `The free plan gives a small monthly credit allowance, caps how many scenarios can be active, and enforces a long minimum gap between runs. Enough to learn on; not enough to depend on.`,
+    `Paid plans start low and give a much larger credit allowance, which also removes the scenario cap and shortens the minimum gap between runs.`,
     `**Every module execution costs one credit, not every workflow run.** A ten-step scenario running a hundred times spends a thousand credits.`,
     `Since 2025-08-27 the meter has been called credits rather than operations, and AI features and code execution consume more per use than ordinary modules.`,
     `Sketch your workflow on paper first. Counting the modules before you build tells you the monthly cost before you commit.`,

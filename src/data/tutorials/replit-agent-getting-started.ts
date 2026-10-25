@@ -22,8 +22,8 @@ export const replitAgentTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "Sign up at replit.com and you land on the free Starter plan: Agent **credits** — the platform's unit of spend — that refresh daily up to a monthly cap, plus one published app, all in the browser.",
-    "Starter's ceiling is features as much as spending. It runs only Replit's \"Lite build\" mode, for quick, focused changes; the fuller build, Plan Mode, outside connections and anything that isn't a web or mobile app need Core, currently around $20 a month.",
-    "Publishing is billed separately, from about $2 a month plus small per-request charges, and Starter's one free published app expires after 30 days unless you re-publish it.",
+    "Starter's ceiling is features as much as spending. It runs only Replit's \"Lite build\" mode, for quick, focused changes; the fuller build, Plan Mode, outside connections and anything that isn't a web or mobile app need Core, Replit's main paid plan.",
+    "Publishing is billed separately, as a small monthly charge plus per-request fees, and Starter's one free published app expires after 30 days unless you re-publish it.",
     "Set a spending limit before your first real build, under Settings → Account → Usage → \"Manage limits\". Nothing caps you by default, and auto-reload buys another credit pack on its own when you run low.",
   ],
 

@@ -23,8 +23,8 @@ export const cohereTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "Signing up is free and self-serve: go to `dashboard.cohere.com`, create an account with Google, GitHub, or an email and password, and Cohere's pricing FAQ says a trial **API key** (a password that identifies your app, and that spends your money) is created for you automatically and shown in the dashboard's \"API Keys\" section. You need to have reached the age of majority where you live to accept the terms.",
-    "**You will almost certainly not need to pay while you are learning.** Cohere's pricing table currently lists Command A+ at $0 for both \"API key\" and \"Model download,\" and Cohere's model documentation says that \"for both trial keys and production keys, Command A+ is free until rate limits are reached.\" The models that do cost money are the smaller and narrower ones — Command R at around $0.15 per million **tokens** (a chunk of text, roughly a short word — how AI usage gets counted) of input — and you have to choose them on purpose.",
-    "Free here has a contract attached, not just a ceiling. Cohere's pricing page states that trial keys \"are rate limited and are not permitted to be used for production or commercial purposes,\" and its rate-limit docs currently put chat on a trial key at around 20 requests a minute and 1,000 calls a month. So the free key covers learning and prototypes; the moment something you build takes money, it needs a production key, which bills pay-as-you-go and is requested from the Billing and Usage page by an account owner.",
+    "**You will almost certainly not need to pay while you are learning.** Cohere's pricing table currently lists Command A+ as free for both \"API key\" and \"Model download,\" and Cohere's model documentation says that \"for both trial keys and production keys, Command A+ is free until rate limits are reached.\" The models that do cost money are the smaller and narrower ones — such as Command R, billed per million **tokens** (a chunk of text, roughly a short word — how AI usage gets counted) of input — and you have to choose them on purpose.",
+    "Free here has a contract attached, not just a ceiling. Cohere's pricing page states that trial keys \"are rate limited and are not permitted to be used for production or commercial purposes,\" and its rate-limit docs currently put chat on a trial key under both a per-minute and a monthly call cap. So the free key covers learning and prototypes; the moment something you build takes money, it needs a production key, which bills pay-as-you-go and is requested from the Billing and Usage page by an account owner.",
     "Cohere is built for people putting AI inside software, and most of it is reached from code. The part you can reach in a browser is the Playground, which Cohere's docs describe as a message box with a model picker — you may need to check what it actually offers once you are signed in. If you have never used an AI tool at all, an hour with a chatbot from Text & Conversational AI first will make everything here land better, and Cohere will still be waiting.",
   ],
 
@@ -97,7 +97,7 @@ export const cohereTutorial: PlatformTutorialData = {
     {
       title: "Read the Rerank row on the pricing page and work out what it is for",
       whatItDoes:
-        "Look at the retrieval models on cohere.com/pricing — Rerank 4 Fast at around $2 per million tokens, Rerank 4 Pro at around $2.50.",
+        "Look at the retrieval models on cohere.com/pricing — Rerank 4 Fast and Rerank 4 Pro are both priced per million tokens, with Pro costing a little more.",
       whyHere:
         "Reranking is sold here as a model in its own right, with its own price, doing nothing else. Neither Anthropic nor OpenAI sells a standalone reranking model, so a team with a bad search box has to improvise one out of a chat model.",
     },
@@ -112,7 +112,7 @@ export const cohereTutorial: PlatformTutorialData = {
 
   pitfalls: [
     "Landing on cohere.com, seeing \"Request a demo\" and \"Sign in,\" and concluding there is no way in. The free self-serve signup lives at `dashboard.cohere.com` and is not advertised on the front page at all.",
-    "Reading the \"$0\" next to Command A+ as \"unlimited.\" It is a price, not a quota — the rate limits sit on top of it and are what you will actually run into.",
+    "Reading \"free\" next to Command A+ as \"unlimited.\" It is a price, not a quota — the rate limits sit on top of it and are what you will actually run into.",
     "Confusing the two different frees. The Apache 2.0 licence on the downloaded Command A+ file permits commercial use; the free trial key explicitly does not. Same model, two different permissions, and it is the key that carries the restriction.",
     "Expecting the Playground to cover the product. Cohere's docs describe it as supporting Chat and Embed — so Rerank, Parse and Transcribe, the models that most distinguish Cohere from a chat company, are the ones you cannot click your way into.",
     "Trying to add a colleague and finding you can't. Cohere's FAQ states that \"every account begins as a personal account,\" and that you \"will not be able to add other members until you become part of an organization.\"",

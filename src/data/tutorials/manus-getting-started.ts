@@ -21,9 +21,9 @@ export const manusTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Everything runs on credits.** Manus's credits page says a task's cost depends on how complex and long it is — the AI's reading and writing, the cloud computer's time, and any outside services used. Its examples range from about 200 credits for a 15-minute chart to 900 for an 80-minute web app. Its help centre says there's currently no way to see the cost before a task starts.",
-    "**The free plan is daily.** Manus's help centre lists a Free plan at $0 with 300 credits refreshed daily (reset at midnight UTC, no rollover), one task at a time and two scheduled tasks. It says free users can use at most 1,500 daily credits a month. Those daily credits can only be used with the lighter Manus 2.0 Lite model.",
-    "**Paid plans start at $20 a month.** Manus's pricing help article lists paid tiers starting at $20 a month (4,000 monthly credits), $40 a month (8,000 credits, with a 7-day free trial) and higher, with 17% off for annual billing. Monthly credits reset each billing date, and Manus says leftover monthly credits are wiped if you cancel.",
+    "**Everything runs on credits.** Manus's credits page says a task's cost depends on how complex and long it is — the AI's reading and writing, the cloud computer's time, and any outside services used. Its examples show a long web-app build costing several times what a short chart does. Its help centre says there's currently no way to see the cost before a task starts.",
+    "**The free plan is daily.** Manus's help centre lists a Free plan with a daily credit allowance (reset at midnight UTC, no rollover), one task at a time and two scheduled tasks. It also caps how much of that daily allowance a free user can spend in a month. Those daily credits can only be used with the lighter Manus 2.0 Lite model.",
+    "**Paid plans are monthly credit allowances.** Manus's pricing help article lists several paid tiers, each with a bigger monthly credit allowance than the last (the second comes with a 7-day free trial), and a discount for annual billing. Monthly credits reset each billing date, and Manus says leftover monthly credits are wiped if you cancel.",
     "**Refunds are limited.** Manus's terms say payments are non-refundable except where the law requires. Its help centre says credits are refunded when a task fails because of a technical problem on Manus's side — not if you simply don't like the result.",
   ],
 

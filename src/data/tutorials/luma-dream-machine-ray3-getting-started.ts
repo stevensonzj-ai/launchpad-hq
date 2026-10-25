@@ -22,8 +22,8 @@ export const lumaDreamMachineRay3Tutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `Search results, app stores and tutorials will point you at "Dream Machine"; the company's own site now calls the product Luma, at lumalabs.ai. Both land in the same place. Sign-in on the web is with Google or Apple.`,
-    `Luma's pricing page currently lists three individual plans — Plus at around $30/month, Pro at around $90, Ultra at around $300, each cheaper billed yearly. There is no free plan on that page. Luma does say you can try the platform free before picking one, and the homepage offers a "Try Free" button, but the size of that free allowance is not published anywhere we could find, and the terms cap evaluation trials at 14 days. Treat the free route as a look, not a workflow.`,
-    "Everything is metered in **credits** (the platform's unit of spend — each thing you make costs some). Luma publishes the rate card, and it is worth reading once because resolution dominates it: five seconds of video currently costs about 20 credits at 360p draft quality, about 100 at 720p, and about 400 at 1080p. The Plus plan's roughly 10,000 credits a month is therefore around a hundred 720p clips, or around twenty-five at 1080p. Credits also fund image, audio and assistant work — Luma never says outright that it is one shared pot, but the plan structure implies it — so video is not the only thing drawing them down.",
+    `Luma's pricing page currently lists three individual plans — Plus, Pro and Ultra, each cheaper billed yearly. There is no free plan on that page. Luma does say you can try the platform free before picking one, and the homepage offers a "Try Free" button, but the size of that free allowance is not published anywhere we could find, and the terms cap evaluation trials at 14 days. Treat the free route as a look, not a workflow.`,
+    "Everything is metered in **credits** (the platform's unit of spend — each thing you make costs some). Luma publishes the rate card, and it is worth reading once because resolution dominates it: five seconds of video costs roughly five times as much at 720p as at 360p draft quality, and about four times as much again at 1080p. A month on any plan therefore buys far fewer 1080p clips than 720p ones. Credits also fund image, audio and assistant work — Luma never says outright that it is one shared pot, but the plan structure implies it — so video is not the only thing drawing them down.",
     "If you do not pay, you cannot sell or publish what you make. Luma's terms of service (last updated 14 May 2026) permit commercial use only of output produced under a paid subscription, and its licensing page states that free-tier output carries a **watermark** (a mark on generated output identifying it as AI-made) that stays even if you upgrade later. A clip you love, made before you paid, is a clip you cannot reuse.",
     `It runs in a browser and in an official iOS app. Luma's own reference page lists iOS only, and there is no official Android app — the apps you find on Google Play under "Luma Dream Machine" are published by other companies, not by Luma AI. On Android, use the website.`,
   ],
@@ -71,7 +71,7 @@ export const lumaDreamMachineRay3Tutorial: PlatformTutorialData = {
     ],
     avoid: [
       `Following any step-by-step you find for "Dream Machine," including Luma's own. The Learning Hub pages are dated 14 November 2024 and describe boards, buttons and a sign-in flow from the app that was replaced in March 2026 — the vendor has not updated its own instructions across two product generations.`,
-      "Turning HDR or EXR export on because it sounds like the better setting. Luma's published table charges 2× credits for HDR and 3× for HDR plus EXR, on top of the resolution price — a five-second 1080p clip at 3× is around 1,200 credits, roughly a ninth of a month on the entry plan for one take.",
+      "Turning HDR or EXR export on because it sounds like the better setting. Luma's published table charges 2× credits for HDR and 3× for HDR plus EXR, on top of the resolution price — a five-second 1080p clip at 3× eats a sizeable share of a month on the entry plan for one take.",
       "Asking for a long or multi-shot piece in one go. Native generations are five and ten seconds; restyling your own footage tops out around twenty seconds depending on frame rate. Anything longer is several clips and an edit.",
     ],
   },
@@ -99,7 +99,7 @@ export const lumaDreamMachineRay3Tutorial: PlatformTutorialData = {
       prompt:
         "Keep the motion and timing exactly as they are. Restyle the scene as an overcast winter afternoon — bare trees, grey sky, muted colour, soft flat light. Do not change how the person moves.",
       whyHere:
-        "Upload a short clip of your own first, then paste this as the instruction. Restyling is a separate line on Luma's table — about 360 credits for five seconds at 720p, roughly three and a half times the cost of generating the same length from nothing.",
+        "Upload a short clip of your own first, then paste this as the instruction. Restyling is a separate line on Luma's table — roughly three and a half times the cost of generating the same length at 720p from nothing.",
       tweak: "Shoot ten seconds on a phone with one clear movement in it. Busy footage restyles badly.",
     },
     {
@@ -107,14 +107,14 @@ export const lumaDreamMachineRay3Tutorial: PlatformTutorialData = {
       whatItDoes:
         "Take a finished landscape clip and reframe it vertically, positioning the subject inside the new frame rather than cropping the centre.",
       whyHere:
-        "Reframe is the one thing on Luma's rate card billed per second rather than per clip — currently around 40 credits a second at 720p — so a twelve-second reframe costs more than generating a fresh five-second shot.",
+        "Reframe is the one thing on Luma's rate card billed per second rather than per clip, so a twelve-second reframe costs more than generating a fresh five-second shot.",
       tweak: "Reframe the take you were going to re-render anyway, and compare the two costs.",
     },
   ],
 
   pitfalls: [
     "The video comes back silent. Luma's own Ray3.2 page describes preserved audio only for restyling and reframing, and says nothing about audio when you generate from a description or a still — so expect to add sound in a separate tool.",
-    "The plan names on Luma's own surfaces do not agree with each other. The web pricing page currently lists Plus, Pro and Ultra at roughly $30, $90 and $300; Luma's own March 2026 FAQ lists the same three prices with Plus and Pro swapped; and the iOS App Store listing still offers in-app purchases named Lite, Plus and Unlimited at different prices again. Read what you are actually buying at the point of purchase rather than trusting any one page.",
+    "The plan names on Luma's own surfaces do not agree with each other. The web pricing page currently lists Plus, Pro and Ultra in rising order of price; Luma's own March 2026 FAQ lists the same three prices with Plus and Pro swapped; and the iOS App Store listing still offers in-app purchases named Lite, Plus and Unlimited at different prices again. Read what you are actually buying at the point of purchase rather than trusting any one page.",
     "The first take rarely holds — re-run at draft resolution and change the wording rather than paying for the same failure at higher quality.",
   ],
 

@@ -21,8 +21,8 @@ export const semrushAiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Start with the free checker, not the pricing page.** Semrush's AI Search Visibility Checker takes a website address and gives you a report three times a day, with no account and no card — the vendor states this in the tool's own FAQ. That is enough to learn whether this category tells you anything you did not already know.",
-    "What you pay for after that is a quota and a schedule, not access. The AI Visibility Toolkit alone is currently $99 a month billed annually, covering one website address. Bundled with the search tools it starts at Starter, around $199 a month, or $165.17 a month on an annual commitment. Prices are in US dollars.",
-    "A free Semrush account (no card required) gets you one demo project, 10 reports a day across the main tools, and what Semrush's knowledge base calls \"a limited set of AI Visibility features.\" It does not say which features, and we did not sign in to find out — expect to discover the edges yourself.",
+    "What you pay for after that is a quota and a schedule, not access. The AI Visibility Toolkit is sold on its own, covering one website address, or bundled with the search tools from the Starter plan up, cheaper on an annual commitment. Current prices are on its Launchpad page.",
+    "A free Semrush account (no card required) gets you one demo project, a small daily number of reports across the main tools, and what Semrush's knowledge base calls \"a limited set of AI Visibility features.\" It does not say which features, and we did not sign in to find out — expect to discover the edges yourself.",
     "You need a website or a brand name already out in the world for any of this to return something; there is nothing here to poke at with a made-up question. To see what AI can actually do, a text tool is the better first stop — this one measures a business rather than teaching you.",
   ],
 
@@ -51,7 +51,7 @@ export const semrushAiTutorial: PlatformTutorialData = {
     avoid: [
       "Feeding Semrush's output into another AI tool. Its Terms of Service (25 August 2026), §3.3(r), forbid using Semrush outputs \"as inputs/prompts into, or for the purposes of developing, training, improving, fine-tuning, testing, or otherwise enhancing\" any AI or machine-learning system, carved out only for Semrush's own official integrations. Pasting a Semrush report into a chatbot to summarise it is the exact move the clause names.",
       "Treating what comes back as accurate because you paid for it. The AI Functionality Terms disclaim, in capitals, all warranties that outputs will be \"FREE FROM ERRORS, BIAS, OR OMISSIONS, OR THAT THE OUTPUTS WILL BE UNIQUE, ACCURATE, RELIABLE, OR FIT FOR ANY PARTICULAR PURPOSE,\" and license output to you \"only to the extent Semrush has such rights.\"",
-      "Buying the $139 SEO plan because its card lists \"Monitor custom prompts.\" Semrush's own knowledge base says that plan \"doesn't include the full AI visibility feature set — no dedicated prompt-tracking quota, AI-ready Site Audit, or per-domain AI brand performance.\" Card and knowledge base contradict each other; the knowledge base is the more specific, and prompt tracking with a stated quota starts one tier up.",
+      "Buying the entry SEO plan because its card lists \"Monitor custom prompts.\" Semrush's own knowledge base says that plan \"doesn't include the full AI visibility feature set — no dedicated prompt-tracking quota, AI-ready Site Audit, or per-domain AI brand performance.\" Card and knowledge base contradict each other; the knowledge base is the more specific, and prompt tracking with a stated quota starts one tier up.",
     ],
   },
 
@@ -80,7 +80,7 @@ is [your brand] good for a five-person team`,
       title: "Find out what people actually ask before you guess",
       prompt: "standing desk",
       whyHere:
-        "Prompt Research takes a bare phrase and returns hundreds of real prompts sorted by intent, against what Semrush describes as a database of 317M+ AI queries, capped at 1,000 prompts a day. Tested against a keyword tool, Semrush's own free Keyword Tool included: those return search terms people type into Google, not the sentences people type into an assistant.",
+        "Prompt Research takes a bare phrase and returns hundreds of real prompts sorted by intent, against what Semrush describes as a database of 317M+ AI queries, with a daily cap on how many prompts you can pull. Tested against a keyword tool, Semrush's own free Keyword Tool included: those return search terms people type into Google, not the sentences people type into an assistant.",
       tweak:
         "Feed the best five straight into your Prompt Tracking list — that is the intended handoff between the two reports.",
     },
@@ -98,7 +98,7 @@ is [your brand] good for a five-person team`,
     "Adobe's acquisition came with a customer FAQ of the same date: \"no immediate changes to your current services, agreements, or points of contact\" — a statement about that moment, not a commitment about next year. Treat the current pricing as current, not settled.",
     "Your own spot-check will not match the report, and that is expected: Semrush's FAQ says answers \"change based on factors such as model updates, shifts in training data, or differences in how the same query is phrased,\" and that it runs prompts \"in a controlled environment\" so its numbers stay comparable. Do not open ChatGPT, get a different answer, and conclude the tool is broken.",
     "Which AI platforms are covered depends on which Semrush page you read. The AI Visibility pricing page lists ChatGPT, Google AI, Gemini and Perplexity; the Prompt Tracking documentation lists ChatGPT Search, Google's AI Mode and Gemini, no Perplexity; the free checker's FAQ lists ChatGPT and AI Overviews as live with Gemini and AI Mode \"coming soon,\" under a headline claiming both are covered. Three vendor pages, three lists — check the page for the tool you are buying.",
-    "The toolkits bill separately and it adds up fast. A Semrush plan covers search and AI visibility; Content, Local, Social, Advertising and AI PR are each their own subscription on top — the Content Toolkit, where the AI writing lives, currently starts at $60 a month billed annually.",
+    "The toolkits bill separately and it adds up fast. A Semrush plan covers search and AI visibility; Content, Local, Social, Advertising and AI PR are each their own subscription on top — including the Content Toolkit, where the AI writing lives.",
   ],
 
   whereToNext: [

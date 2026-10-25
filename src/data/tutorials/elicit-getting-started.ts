@@ -22,7 +22,7 @@ export const elicitTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `There is a genuinely usable free tier that needs no card. Its exact limits are described inconsistently across third-party sources — **check the current allowances in the product** rather than trusting a comparison article, including this one.`,
-    `Paid tiers start around $10 to $12 a month for individuals, with a substantially more expensive tier adding large-scale screening and systematic-review workflows.`,
+    `Paid tiers for individuals are a modest monthly subscription, with a substantially more expensive tier adding large-scale screening and systematic-review workflows.`,
     `It searches published literature. If your question is about the last six months of anything, this is the wrong tool.`,
     `**It is an accelerator, not a replacement for a proper search.** See the security section — this is the single most important thing on this page.`,
   ],

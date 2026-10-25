@@ -21,7 +21,7 @@ export const pineconeTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free Starter plan is a standing allowance, not a trial — Pinecone's docs say it \"has no monthly minimum,\" and it does not expire. It currently covers around 2 GB of stored data, one project and two people. Paid: Builder **$20/month** flat, then Standard at a **$50/month** usage minimum, then Enterprise at a **$500/month** minimum (pinecone.io/pricing, as of 2026-10-14).",
+    "The free Starter plan is a standing allowance, not a trial — Pinecone's docs say it \"has no monthly minimum,\" and it does not expire. It covers a modest amount of stored data, one project and two people. Paid plans step up from Builder, a flat monthly fee, to Standard, which has a monthly usage minimum, to Enterprise, with a much higher minimum — current prices are on its Launchpad page.",
     "It blocks rather than bills. On the flat-fee plans, using up a monthly allowance returns an error and an upgrade prompt instead of an overage charge.",
     "Nothing installs. Everything runs on Pinecone's servers, in a browser at app.pinecone.io — which also means your uploaded material lives on their infrastructure.",
     "If you only want to ask questions about your own files, a consumer AI assistant with file upload gets you there faster. Pinecone earns its place when the material is bigger than that, or when something you are building must search it for other people.",

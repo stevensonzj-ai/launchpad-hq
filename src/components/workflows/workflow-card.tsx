@@ -26,9 +26,6 @@ export function WorkflowCard({
       <p className={`text-sm text-gray-400 ${compact ? "line-clamp-2" : "line-clamp-3"}`}>
         {workflow.description}
       </p>
-      {workflow.costRange ? (
-        <p className="mt-3 text-xs leading-relaxed text-gray-500">{workflow.costRange}</p>
-      ) : null}
       <div className="mt-3 flex flex-wrap gap-1.5">
         {workflow.tags.map((tag) => (
           <span key={tag} className="rounded-md bg-gray-800 px-2 py-0.5 text-[11px] text-gray-400">

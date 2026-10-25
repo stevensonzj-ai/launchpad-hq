@@ -8,6 +8,11 @@ import { listRegisteredTutorials } from "@/data/tutorials";
 import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 import { workflowPlatformSlugs, workflowToolDisplayName } from "@/lib/related-links";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
+import { toWorkflowView } from "@/lib/public-data/content-view";
+import { loadFeed } from "@/lib/public-data/load";
+
+// Tool prices come from the catalog: refresh at most hourly.
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return getAllWorkflows().map((w) => ({ slug: w.slug }));
@@ -34,6 +39,8 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
 
   const validSlugs = await getPlatformSlugSet();
   const tutorialSlugs = listRegisteredTutorials().map((t) => t.platformSlug);
+  // Same view as /data/v1/workflows/{slug}.json: tokens filled, prices from the catalog.
+  const view = toWorkflowView(workflow, (await loadFeed()).tools);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -62,7 +69,8 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
       </header>
 
       <WorkflowTierComparison
-        workflow={workflow}
+        workflow={view.workflow}
+        prices={view.prices}
         validSlugs={[...validSlugs]}
         tutorialSlugs={tutorialSlugs}
       />

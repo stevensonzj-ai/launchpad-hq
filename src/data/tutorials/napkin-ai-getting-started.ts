@@ -22,8 +22,8 @@ export const napkinAiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "Sign up at app.napkin.ai with a Google account or an email and password. You can sign in from a phone or tablet, but Napkin's help centre says generating visuals needs a computer — on mobile you can only view your work and work on presentations.",
-    "There is a free plan, \"Free Forever\": $0, with 500 AI credits (the platform's unit of spend — each visual you generate costs some) every week, and Napkin's branding on your visuals. The credits refresh weekly and do not roll over. Napkin's pricing page says generation is charged by the words you highlight, so the free allowance goes much further on a short paragraph than on a whole document. Editing a visual by hand costs nothing.",
-    "If you outgrow that, the paid plans are priced per person. Plus is $12 a month billed monthly, or $9 a month billed yearly, with 10,000 credits a month. Pro is $30 a month billed monthly, or $22 billed yearly, with 30,000 credits a month. For occasional diagrams in your own documents, the free plan is the realistic starting point.",
+    "There is a free plan, \"Free Forever\", with a weekly allowance of AI credits (the platform's unit of spend — each visual you generate costs some), and Napkin's branding on your visuals. The credits refresh weekly and do not roll over. Napkin's pricing page says generation is charged by the words you highlight, so the free allowance goes much further on a short paragraph than on a whole document. Editing a visual by hand costs nothing.",
+    "If you outgrow that, the paid plans, Plus and Pro, are priced per person, each with a much larger monthly credit allowance and a discount for paying yearly. For occasional diagrams in your own documents, the free plan is the realistic starting point.",
     "Bring your own words. Napkin is built to draw text, not to write it — you can paste text in or import a document. Its first-run tutorial can write some sample text for you from a short prompt so you have something to practise on, but the useful habit is starting from your own notes.",
   ],
 

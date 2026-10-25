@@ -23,7 +23,7 @@ export const granolaTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Free gets you started; history is the limit.** Granola's free Basic plan lets you see only your last 30 days of notes, and chat and AI connections only look at those 30 days too. Older notes are kept, not deleted — they reappear if you upgrade.",
-    "**The paid step is a team plan.** Granola's pricing page lists Business at $14 per user per month, which removes the history limit and adds integrations with tools like Notion and HubSpot, and Enterprise at $35 per user per month. Its help centre says Business is billed monthly; annual billing is offered only on Enterprise contracts.",
+    "**The paid step is a team plan.** Granola's pricing page lists Business at {{price:granola:Business}} per user per month, which removes the history limit and adds integrations with tools like Notion and HubSpot, and Enterprise at {{price:granola:Enterprise}} per user per month. Its help centre says Business is billed monthly; annual billing is offered only on Enterprise contracts.",
     "**You sign in with Google or Microsoft.** Those are the only two sign-in options, and Granola works best with the account that holds your work calendar, because it reads your calendar to know which meeting you are in. Microsoft works with cloud Microsoft 365 calendars, not on-premises Exchange.",
     "**On a Mac, allow both audio permissions.** Setup asks for the microphone and for system audio. If you skip system audio, Granola's troubleshooting guide says it will hear you but not the other people on the call.",
   ],
@@ -59,7 +59,7 @@ export const granolaTutorial: PlatformTutorialData = {
       "Noisy setups. It hears everything your computer plays, so music or videos in another window can end up in the transcript.",
     ],
     avoid: [
-      "Using it on a free plan as your permanent record — you only see 30 days.",
+      "Using it on a free plan as your permanent record — you only see recent meetings.",
       "Leaving people unaware they are being transcribed.",
     ],
   },
@@ -70,7 +70,7 @@ export const granolaTutorial: PlatformTutorialData = {
       prompt: "What did I promise to do in my meetings this week? List each item with who it's for and any deadline mentioned.",
       whyHere:
         "This is Granola's own headline example. Asked from the home screen, chat searches across all your recent meetings, which is the thing a stack of separate notes can't do.",
-      tweak: "On the free plan, chat only looks back 30 days — ask about recent weeks.",
+      tweak: "On the free plan, chat only looks back over recent meetings — ask about recent weeks.",
     },
     {
       title: "Check a summary against the source",

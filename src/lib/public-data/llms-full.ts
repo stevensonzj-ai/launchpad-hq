@@ -178,7 +178,7 @@ export function renderLlmsFull(input: LlmsFullInput): string {
     `JSON: ${SITE_URL}/data/v1/index.json`,
     `Generated: ${input.generatedAt}`,
     "",
-    "Every tool price comes from the tool's own record (the same data as its page and /data/v1/tools/{slug}.json). Sentences in guides and workflows that quoted a price were removed. Model API prices come from the model registry behind /models. Sponsorship never changes inclusion or order.",
+    "Every tool price comes from the tool's own record (the same data as its page and /data/v1/tools/{slug}.json). Prices in guides and workflows are filled in from the same catalog data; none are typed by hand. Model API prices come from the model registry behind /models. Sponsorship never changes inclusion or order.",
     "",
     `Attribution: ${FEED_ATTRIBUTION}`,
     `License: ${FEED_LICENSE}`,

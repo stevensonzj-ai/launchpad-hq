@@ -20,7 +20,7 @@ export const amazonBedrockTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**The barrier here is AWS, not Bedrock.** There's no Bedrock signup — you open an AWS account, which needs a real credit or debit card even on the free plan, and you meet AWS's permissions and regions before you meet a model.",
-    "Cost is per use, with no subscription. A new AWS account gets $100 of credit at signup and can earn $100 more by trying services, Bedrock among them — but the free plan ends six months in, or when the credit runs out. A trial, not an allowance.",
+    "Cost is per use, with no subscription. A new AWS account gets a starting credit at signup and can earn more by trying services, Bedrock among them — but the free plan ends six months in, or when the credit runs out. A trial, not an allowance.",
     "Anthropic's models need a one-time use-case form per AWS account before your first call. Other providers' models subscribe themselves on first use.",
     "Which models you can reach depends on the AWS region you pick, and newer ones are called through a geographic profile — the same name with `us.` or `eu.` in front.",
   ],

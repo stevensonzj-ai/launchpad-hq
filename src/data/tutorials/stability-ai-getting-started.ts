@@ -21,7 +21,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**API credits are a penny each.** Stability's pricing page says 1 credit is $0.01 and new accounts get 25 free credits; its getting-started guide describes them for accounts created with Google sign-in. An image from Stable Image Core costs 3 credits and from Stable Image Ultra 8 credits. Its terms say credits are non-refundable and expire a year after purchase.",
+    "**API credits are pay-as-you-go.** Stability's pricing page sells credits individually and gives new accounts a small free allowance; its getting-started guide describes it for accounts created with Google sign-in. An image from Stable Image Ultra costs more than twice as much as one from Stable Image Core. Its terms say credits are non-refundable and expire a year after purchase.",
     "**Stable Audio has its own plans.** The web app uses a separate credit system from the API, with a free plan and paid monthly plans listed at stableaudio.com/pricing. Its credits don't carry over between months.",
     "**Running models yourself takes real hardware.** Stability's own figure for running its largest Stable Diffusion model is about 19 GB of graphics memory (VRAM), or about 11 GB with an optimised version on recent NVIDIA cards. Smaller models need less, but plan on a dedicated graphics card.",
     "**Check the licence if you'll earn money.** Stability's Community License lets individuals and organisations with under US $1 million in annual revenue use its open models commercially, but commercial users must register with Stability. If you distribute the models, or a product or service built on them, you must also include the licence and display \"Powered by Stability AI\". Above $1 million you need an Enterprise licence.",
@@ -33,7 +33,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
     body: [
       "**Protect your API key.** The Developer Platform gives you a secret key that spends your credits. Keep it in your code's environment settings, never in a shared document or public code.",
       "**Decide about training before you upload.** Stability's privacy policy says it may use your inputs and outputs to train its models, and that you can opt out in Account Settings. Do that first if you'll upload your own images or audio.",
-      "**Confirm it works cheaply.** Generate one image with Stable Image Core (3 credits) from the free allowance before trying the more expensive services.",
+      "**Confirm it works cheaply.** Generate one image with Stable Image Core, the cheaper option, from the free allowance before trying the more expensive services.",
     ],
     vendorDocsUrl: "https://platform.stability.ai/docs/getting-started",
   },
@@ -81,7 +81,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
     {
       title: "Price-test two image services",
       whatItDoes:
-        "In the Developer Platform, spend your free credits generating the same prompt with Stable Image Core (3 credits) and Stable Image Ultra (8 credits), and compare.",
+        "In the Developer Platform, spend your free credits generating the same prompt with Stable Image Core and the pricier Stable Image Ultra, and compare.",
       whyHere:
         "Costs vary a lot between Stability's services. Seeing the quality gap yourself tells you which one your project can afford to use at scale.",
     },
@@ -103,7 +103,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
 
   pitfalls: [
     "**Two separate credit systems.** API credits and Stable Audio credits aren't interchangeable.",
-    "**Expensive extras.** Stability's pricing lists its Creative Upscaler at 60 credits per image — far more than generating the image.",
+    "**Expensive extras.** Stability's pricing lists its Creative Upscaler at many times the credit cost of generating the image.",
     "**Forgetting the licence conditions.** Commercial use of the open models needs registration with Stability even under the revenue threshold, and distributing the models or a product built on them adds the licence copy and the \"Powered by Stability AI\" notice.",
     "**Out-of-date guides.** Many older tutorials point to Stable Assistant or Stability's retired video API; check against Stability's own docs.",
   ],

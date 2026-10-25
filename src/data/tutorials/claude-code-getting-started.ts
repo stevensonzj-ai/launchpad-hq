@@ -22,8 +22,8 @@ export const claudeCodeTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "This is a developer tool, and the entry requirement is a project of code on your own disk that you already work on. Never used a terminal or version control? A browser assistant like ChatGPT writes and explains code with nothing to install, and is the better place to begin.",
-    "You need a paid Claude plan — currently Pro, Max, Team or Enterprise — or an Anthropic Console account billed for what you use. Pro currently runs about $20/month ($17 billed annually) and Max from about $100/month; these move.",
-    "Usage runs on rolling windows rather than a credit balance: a limit resetting roughly every five hours, plus a weekly ceiling. Anthropic describes Pro as light work on small repositories, roughly 10-40 prompts per five-hour window. Hit the ceiling and you wait, or turn on paid usage credits. `/usage` shows where you are, and long sessions cost more, because each turn resends the whole conversation.",
+    "You need a paid Claude plan — currently Pro, Max, Team or Enterprise — or an Anthropic Console account billed for what you use. Pro is the entry plan and Max costs more for more usage; current prices are on its Launchpad page.",
+    "Usage runs on rolling windows rather than a credit balance: a limit resetting roughly every five hours, plus a weekly ceiling. Anthropic describes Pro as suited to light work on small repositories. Hit the ceiling and you wait, or turn on paid usage credits. `/usage` shows where you are, and long sessions cost more, because each turn resends the whole conversation.",
   ],
 
   gettingSetUpSafely: {

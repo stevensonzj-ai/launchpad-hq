@@ -21,8 +21,8 @@ export const wordpressAiJetpackAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "You need a WordPress site you can edit as an administrator, and you need to be writing in WordPress's standard post editor — the one that builds a post out of stacked blocks. Jetpack's docs list that editor as a requirement.",
     "On a self-hosted site you install Jetpack and connect it to a WordPress.com account. Automattic's documentation is explicit that Jetpack AI only works once Jetpack is properly connected to WordPress.com, so the account is not optional even though the site is yours.",
-    "**The free allowance is smaller than it sounds, and it does not come back.** Jetpack's support docs describe 20 free requests as a per-site limit that does not renew. A request is one action — a rewrite, a generated image. Twenty is an evening of experimenting, not a month of writing.",
-    "After that it is currently around $9.95 a month for the standalone AI plan, billed yearly and advertised at about half that for a first year.",
+    "**The free allowance is smaller than it sounds, and it does not come back.** Jetpack's support docs describe the free requests as a small per-site allowance that does not renew. A request is one action — a rewrite, a generated image. The allowance is an evening of experimenting, not a month of writing.",
+    "After that the standalone AI plan is a paid subscription, billed yearly and usually discounted for the first year; current prices are on its Launchpad page.",
   ],
 
   gettingSetUpSafely: {
@@ -74,7 +74,7 @@ export const wordpressAiJetpackAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "On a post you have already written, open the AI panel in the sidebar and use the title and summary generation, then choose from what comes back.",
       whyHere:
-        "Jetpack AI reads the post from inside the editor, so its suggestions come from your actual saved text. It also spends one request instead of the several a full draft burns, which makes it the sensible first thing to try on a 20-request allowance.",
+        "Jetpack AI reads the post from inside the editor, so its suggestions come from your actual saved text. It also spends one request instead of the several a full draft burns, which makes it the sensible first thing to try on the small free allowance.",
       tweak:
         "Jetpack's product page describes a one-click optimisation of post title and featured image at publishing time — the same idea with fewer clicks, worth finding before you do this by hand twice.",
     },

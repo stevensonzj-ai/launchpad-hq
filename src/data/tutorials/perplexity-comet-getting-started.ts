@@ -20,7 +20,7 @@ export const perplexityCometTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "You can start for nothing. Perplexity says it will always provide a free version, and that the free version includes Comet. It also sells paid plans — Pro at $17 a month and Max at $167 a month, both billed annually — but Perplexity's public pages, as checked for this guide, don't spell out what either adds inside the browser, so download the free version and see whether you hit a wall before paying for anything.",
+    "You can start for nothing. Perplexity says it will always provide a free version, and that the free version includes Comet. It also sells paid plans — Pro at {{price:perplexity-comet:Pro}} and Max at {{price:perplexity-comet:Max}} — but Perplexity's public pages, as checked for this guide, don't spell out what either adds inside the browser, so download the free version and see whether you hit a wall before paying for anything.",
     "Comet is something you install, not a website. Perplexity lists it for Mac, Windows, iPhone and Android; Linux isn't on that list. Perplexity's setup guide has you sign in to a Perplexity account the first time you open it, so expect to create one if you don't have one.",
     "Moving over is quick. Comet can bring in your bookmarks, history and saved passwords from the browser you use now (Settings → import bookmarks and settings), and you don't have to make it your default browser to try it — running it alongside your current one is a sensible way to start.",
     "The assistant becomes most powerful, and most risky, on sites where you're already logged in — your email, calendar, shopping accounts. Read the security section below before you connect any of those.",

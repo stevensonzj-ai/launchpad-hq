@@ -22,7 +22,7 @@ export const zapierTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Free to start**, no card. You connect your existing accounts — your real Gmail, your real Slack — so Zapier acts on your behalf inside them. Keep that in mind from the very first click. First step: sign up at zapier.com, connect one app you already use, and try a starter automation below.",
-    "**Will you need to pay?** Free is fine for a couple of simple automations. The free plan currently gives you about **100 \"tasks\" a month** (one task = one automated action that runs) and limits you to **two-step Zaps** (one trigger plus one action — it's called \"two steps\" because the trigger counts as the other step). A busy automation can burn through 100 tasks fast, sometimes in a week. You'd move to a paid plan (roughly the low tens of dollars a month) for multi-step flows or more volume.",
+    "**Will you need to pay?** Free is fine for a couple of simple automations. The free plan gives you a small monthly allowance of **\"tasks\"** (one task = one automated action that runs) and limits you to **two-step Zaps** (one trigger plus one action — it's called \"two steps\" because the trigger counts as the other step). A busy automation can burn through the free allowance fast, sometimes in a week. You'd move to a paid plan for multi-step flows or more volume.",
     "Run out of tasks and your automations pause rather than vanish — they're held and re-run after the monthly reset.",
   ],
 
@@ -50,7 +50,7 @@ export const zapierTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Complicated multi-branch logic — possible on paid plans, but fiddly; Make and n8n handle complex flows more cleanly.",
-      "Instant reactions — the free tier checks for changes on a schedule (about every 15 minutes), so \"real-time\" can really mean several minutes.",
+      "Instant reactions — the free tier checks for changes on a schedule rather than instantly, so \"real-time\" can really mean several minutes.",
     ],
     avoid: [
       "High-volume automation — the per-task pricing climbs fast.",

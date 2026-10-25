@@ -21,8 +21,8 @@ export const apolloIoTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Sign up with a work email if you have one.** Apollo's pricing page says free accounts on a verified company email domain have a limit of 10,000 credits a month (an anti-abuse cap), while free accounts without one — such as a personal Gmail address — are limited to 100 credits a month. Apollo recommends using an email with a valid company domain.",
-    "**Credits don't roll over.** Apollo's pricing page says unused credits expire at the end of each billing cycle, including add-on credits you bought. Its credits page says an email never costs more than one credit per contact; phone numbers cost more, and Apollo doesn't refund credits for mobile numbers.",
+    "**Sign up with a work email if you have one.** Apollo's pricing page says free accounts on a verified company email domain get a much higher monthly credit cap (an anti-abuse limit) than free accounts without one, such as a personal Gmail address, which get only a small allowance. Apollo recommends using an email with a valid company domain.",
+    "**Credits don't roll over.** Apollo's pricing page says unused credits expire at the end of each billing cycle, including add-on credits you bought. Its credits page says an email is the cheapest thing to reveal per contact; phone numbers cost more, and Apollo doesn't refund credits for mobile numbers.",
     "**Paid plans and trials.** The pricing page lists Free, Basic, Professional and a custom tier, and offers a 14-day trial of a paid plan; after a trial you can stay on Free with no time limit. Plan prices load dynamically on that page and we couldn't confirm them from an official source on review day, so check apollo.io/pricing for current figures. Free plans can connect Gmail mailboxes only.",
     "**Read the contract terms before paying.** Apollo's terms carry an automatic-renewal notice and say fees are non-cancellable and non-refundable; its pricing FAQ says cancellations take effect at the end of the term and downgrades take effect immediately with no refund.",
   ],
@@ -95,7 +95,7 @@ export const apolloIoTutorial: PlatformTutorialData = {
       whatItDoes:
         "Pick ten people from your search, access their emails only, and add them to a new list. Then check Settings → Credit usage to see what it cost.",
       whyHere:
-        "Emails cost at most one credit each; phone numbers cost more and aren't refundable. Starting with ten shows you the real cost of your workflow before you scale it.",
+        "Emails are the cheapest reveal; phone numbers cost more and aren't refundable. Starting with ten shows you the real cost of your workflow before you scale it.",
     },
     {
       title: "Build a short first sequence",
@@ -114,7 +114,7 @@ export const apolloIoTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**Signing up with a personal email.** The 100-credit monthly limit makes the free plan hard to judge fairly.",
+    "**Signing up with a personal email.** The small monthly credit limit on personal-email accounts makes the free plan hard to judge fairly.",
     "**Letting credits expire.** They don't carry over between billing cycles, so plan what you'll reveal each month.",
     "**Turning on every AI and enrichment feature.** Waterfall enrichment, AI research and the dialer all draw from the same credit pool.",
     "**Ignoring spam reports.** Apollo's deliverability guidance notes unsubscribes don't hurt your sending reputation, but spam reports do — write to fewer, better-matched people.",

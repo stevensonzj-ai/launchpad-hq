@@ -22,8 +22,8 @@ export const fathomTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**You need a Google or Microsoft account.** Fathom's help centre says it only supports Google- or Microsoft-based email addresses. Signing up with a personal address like Gmail has an extra hurdle: Fathom's quick-start guide says you need a Zoom, Meet or Teams meeting on your calendar in the next seven days to finish sign-up.",
-    "**The free plan is genuinely useful.** Fathom's help centre lists unlimited recordings, storage and transcription on Free, with its advanced AI summaries for your first 5 calls each month and a simpler summary after that. New accounts also get a 30-day free preview of the paid Premium features.",
-    "**Paid plans are per person.** As of 24 October 2026, the structured data on Fathom's pricing page lists Premium at $20 per user per month billed monthly or $16 billed annually, Team at $19 or $15, and Business at $34 or $25. Team and Business need at least two users. The visible page shows both prices as \"/month\", so check the Monthly/Annually toggle before you buy.",
+    "**The free plan is genuinely useful.** Fathom's help centre lists unlimited recordings, storage and transcription on Free, with its advanced AI summaries for a limited number of calls each month and a simpler summary after that. New accounts also get a 30-day free preview of the paid Premium features.",
+    "**Paid plans are per person.** Premium, Team and Business are each billed per user, with a discount for paying annually; current prices are on its Launchpad page. Team and Business need at least two users. Fathom's pricing page shows both monthly and annual prices as \"/month\", so check the Monthly/Annually toggle before you buy.",
   ],
 
   gettingSetUpSafely: {
@@ -103,7 +103,7 @@ export const fathomTutorial: PlatformTutorialData = {
   pitfalls: [
     "**The Meet link has to be in the right place.** Fathom's help centre says Google Meet links must be in the event's Location field, on your primary calendar.",
     "**The bot gets stuck in the lobby.** On Zoom and Teams you may need to admit Fathom from the waiting room, and Teams meetings with end-to-end encryption can't be recorded.",
-    "**Free summaries step down after 5 calls.** The advanced summaries cover your first 5 calls each month.",
+    "**Free summaries step down after a monthly allowance.** The advanced summaries cover only your first few calls each month.",
     "**A blocked Gmail sign-up is final.** If sign-up with a personal email is blocked, Fathom says you can't make another free account with that email.",
   ],
 

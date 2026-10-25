@@ -23,7 +23,7 @@ export const unriddleTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "The free plan needs no card, and its allowance refreshes **daily** rather than monthly — the help centre says free limits reset on a rolling daily basis. That makes the free tier genuinely usable for a reading week rather than a one-time trial.",
     "**One cap will decide whether this works for you: a single upload on the free plan is limited to 20MB or 120 pages.** A journal article fits with room to spare. A thesis, a textbook chapter set, or a scanned course reader often will not, and the limit is per file rather than per month, so it does not go away by waiting.",
-    "Free connects to Zotero and Mendeley — the reference managers most students already keep their PDFs in — so an existing library can come across without re-uploading anything. The academic-database connectors start on the Plus plan, currently around $10 a month, and cloud-storage connectors on Pro, around $20. Most people reading this will not need either.",
+    "Free connects to Zotero and Mendeley — the reference managers most students already keep their PDFs in — so an existing library can come across without re-uploading anything. The academic-database connectors start on the Plus plan, and cloud-storage connectors on the higher Pro plan. Most people reading this will not need either.",
     "When you run out, the tool stops rather than getting quietly worse: new questions, AI edits and file imports pause, while reading, annotating and every answer you have already received keep working. Buying extra credits (the platform's unit of spend) is a paid-plan option only, and the help centre says support cannot raise a free limit.",
   ],
 

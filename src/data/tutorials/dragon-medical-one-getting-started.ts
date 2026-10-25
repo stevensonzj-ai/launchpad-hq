@@ -21,7 +21,7 @@ export const dragonMedicalOneTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Your employer buys this; you can't.** Microsoft's product page carries no price and no trial — the main button reads \"Buy additional licenses\", the other route is \"contact us\". An administrator creates your account in the console Microsoft calls Nuance Management Center and assigns your licence. So the first step is asking your IT team whether your organisation has a seat free.",
-    "Because it is quoted rather than listed, there is no honest sticker price. For scale only: one reseller's UK public-sector procurement listing advertises it at around £25–50 per licence a month — the reseller's figure, not Microsoft's, and normally none of it comes out of your pocket.",
+    "Because it is quoted rather than listed, there is no honest sticker price — and normally none of it comes out of your pocket.",
     "It is a Windows program: Microsoft's requirements page lists Windows 10, Windows 11 and Windows Server, and names no Mac or iPad version. Your phone can stand in as the wireless microphone through a companion app called PowerMic Mobile, but recognition still happens on a Windows PC.",
     "It types into named systems, not anywhere: Epic (including Haiku, Canto and Rover), Oracle Cerner PowerChart Touch, MEDITECH Expanse and MConnect, plus athenaClinicals and Allscripts on the vendor's version-comparison page, alongside Word, Outlook and Edge. Ask about anything outside that list before your organisation signs.",
     "Not a clinician whose employer will license this? The dictation tools in our voice and speech section (Otter is the usual start) do the same job, minus the clinical vocabulary and record-system integration.",

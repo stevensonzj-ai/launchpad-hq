@@ -22,10 +22,10 @@ export const boltNewTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Free, and no card: sign in with Google, GitHub or email. The free plan gives 300,000 tokens a day under a ceiling of 1 million a month, and unused daily tokens never carry over.",
+    "Free, and no card: sign in with Google, GitHub or email. The free plan gives a daily token allowance under a monthly ceiling, and unused daily tokens never carry over.",
     "That is enough for one small app and a few rounds of changes, not a full day of building.",
-    "Pro currently runs about $25 a month for roughly 10 million tokens, with no daily cap and unused tokens rolling over. Bolt states that subscriptions are non-refundable, so do your deciding on the free plan.",
-    "Publishing is included, but free hosting is capped at what Bolt estimates as 10,000–15,000 visits a month, and free sites carry a \"Made in Bolt\" badge. Past the cap the site goes offline until the month resets.",
+    "Pro is a monthly plan with a much larger token allowance, no daily cap and unused tokens rolling over. Bolt states that subscriptions are non-refundable, so do your deciding on the free plan.",
+    "Publishing is included, but free hosting is capped at a monthly visit limit Bolt sets, and free sites carry a \"Made in Bolt\" badge. Past the cap the site goes offline until the month resets.",
   ],
 
   security: [
@@ -72,7 +72,7 @@ export const boltNewTutorial: PlatformTutorialData = {
       prompt:
         "Build a simple reading log: one page where I can add a book, mark it reading or finished, rate it out of five, and see what I finished this month.",
       whyHere:
-        "Bolt spends tokens reading and syncing your project files, so the first build on an empty project is the cheapest one you will ever run. Something small but complete leaves most of the day's 300,000 tokens for changes.",
+        "Bolt spends tokens reading and syncing your project files, so the first build on an empty project is the cheapest one you will ever run. Something small but complete leaves most of the day's token allowance for changes.",
       tweak: "Keep version one to a single screen.",
     },
     {

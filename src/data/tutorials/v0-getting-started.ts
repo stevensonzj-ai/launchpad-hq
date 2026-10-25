@@ -22,10 +22,10 @@ export const v0Tutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "v0 lives at v0.app; the older v0.dev address redirects there. Signing in uses a Vercel account. The free plan is listed at $0 a month, though no public page says whether a card is requested during sign-up — worth watching for at that step.",
-    "**The free plan's shape is the thing to understand before you start: currently around $5 of credits a month (credits are the platform's unit of spend — each thing you make costs some) and a cap of 7 messages a day.** A single small project usually takes more than seven rounds of \"no, change that,\" so plan on spreading work across days, or on paying.",
+    "v0 lives at v0.app; the older v0.dev address redirects there. Signing in uses a Vercel account. The free plan costs nothing, though no public page says whether a card is requested during sign-up — worth watching for at that step.",
+    "**The free plan's shape is the thing to understand before you start: a small monthly allowance of credits (credits are the platform's unit of spend — each thing you make costs some) and a low daily cap on messages.** A single small project usually takes more rounds of \"no, change that\" than one day allows, so plan on spreading work across days, or on paying.",
     "How fast credits drain depends on which **model** (the AI \"brain\" doing the work) handled the message. v0 publishes four model tiers whose rates differ by more than twentyfold. v0's pricing docs say unused monthly credits roll over and expire after 65 days; when the balance reaches zero, generation stops.",
-    "Paid plans currently start at $30 per user per month, which raises the monthly credit allowance to $30, adds $2 of free credits on each day you log in, and opens access to all models. v0's own FAQ also lists an older $20 Premium plan it describes as being sunsetted — don't plan around it.",
+    "Paid plans are priced per user per month; they raise the monthly credit allowance, add a small bonus of free credits on each day you log in, and open access to all models. v0's own FAQ also lists an older Premium plan it describes as being sunsetted — don't plan around it.",
     "You don't need to know how to code to get something running. What you do need is patience for the moment something breaks and the fix isn't obvious — the code is real, and real code has real bugs.",
   ],
 

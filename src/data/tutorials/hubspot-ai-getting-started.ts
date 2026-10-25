@@ -22,9 +22,9 @@ export const hubspotAiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "HubSpot's free plan is a real product rather than a trial: up to two users, 1,000 contacts, no card, no expiry date. Open that account first even if the AI is what you came for — the assistant is close to useless until there is something in the records for it to read.",
-    "The AI layer is priced apart from the plan, in **credits** — the platform's unit of spend, currently $0.010 each. HubSpot's product catalogue lists included monthly credits only from the paid tiers upward: around 500 a month on Starter, 3,000 on Professional, 5,000 on Enterprise. They reset monthly and unused ones expire. Starter is currently promoted at around $7 per user per month for new customers against a list price nearer $20.",
+    "The AI layer is priced apart from the plan, in **credits** — the platform's unit of spend. HubSpot's product catalogue lists included monthly credits only from the paid tiers upward, with more on each higher tier from Starter to Professional to Enterprise. They reset monthly and unused ones expire. Starter is often discounted for new customers; current prices are on its Launchpad page.",
     "HubSpot's own pages disagree about whether Breeze Assistant is on the free plan. Its free-tools page lists the assistant among the free features and the assistant's product page says \"get started free\"; the pricing comparison and the legal product catalogue place it in the paid editions, while the help centre says \"all products and plans\". Sign up free, look for the star icon, and be ready for Starter to be the honest answer.",
-    "**Building your own agent is not a free-tier activity.** Agent Hub and its agent builder entered public beta in July 2026 for Professional and Enterprise customers only — Marketing Hub Professional currently starts around $800 a month, and HubSpot lists a one-time $3,000 onboarding fee as a condition of purchase. Read the sections below as: assistant now, agents later or never.",
+    "**Building your own agent is not a free-tier activity.** Agent Hub and its agent builder entered public beta in July 2026 for Professional and Enterprise customers only — tiers that cost many times more than Starter, and HubSpot lists a one-time onboarding fee as a condition of purchase. Read the sections below as: assistant now, agents later or never.",
   ],
 
   security: [
@@ -55,7 +55,7 @@ export const hubspotAiTutorial: PlatformTutorialData = {
     ],
     avoid: [
       "Judging HubSpot's AI by what the free plan does. With no included credits below Starter, the parts that act on their own are precisely the parts you would not be trying.",
-      "Turning an agent loose on a list you have not read. HubSpot moved the prospecting agent to outcome pricing in April 2026 at \"$1.00 per lead recommended for outreach\" — 100 credits — and a careless enrolment list is a bill rather than a mistake.",
+      "Turning an agent loose on a list you have not read. HubSpot moved the prospecting agent to outcome pricing in April 2026, so you pay for each lead it recommends for outreach, and a careless enrolment list is a bill rather than a mistake.",
       "Assuming an agent you built is cheap to leave running. HubSpot's answer to that is a **monthly agent run limit**, documented as a toggle you switch on per agent rather than something configured for you.",
     ],
   },
@@ -101,7 +101,7 @@ export const hubspotAiTutorial: PlatformTutorialData = {
 
   pitfalls: [
     "**Credits do not roll over.** Hoarding a quiet month to fund a busy one does not work.",
-    "**Running out has two different endings.** By default, usage-based features pause until your next reset or until you buy a capacity pack — 1,000 credits for $10. Switch on Pay-as-You-Go and they keep running past your limit instead. Know which of those two your account is set to before an agent is doing anything at volume.",
+    "**Running out has two different endings.** By default, usage-based features pause until your next reset or until you buy a capacity pack of extra credits. Switch on Pay-as-You-Go and they keep running past your limit instead. Know which of those two your account is set to before an agent is doing anything at volume.",
     "**The naming will trip up your own research.** Most tutorials and screenshots you find will be describing an interface one or two names old.",
     "**The beta labels are doing real work here.** Agent Hub, the agent builder and connected-app search all carry one — worth knowing before you build a process on top of one, given that the agent pricing itself was rewritten in April 2026.",
   ],

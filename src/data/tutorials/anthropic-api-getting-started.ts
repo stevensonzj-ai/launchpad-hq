@@ -22,7 +22,7 @@ export const anthropicApiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `You need to write or run code. There is no interface here — the console has a testing workbench, but the product is the endpoint.`,
-    `Pricing is per million tokens and differs sharply by model. As of 2026-10-14 on claude.com/pricing: Haiku 5.5 around $0.50 in / $2.50 out, Sonnet 5.5 $2 / $10, Opus 5.5 $4 / $20, and Fable 5.1 $10 / $50. Legacy rows on the same page still list older Opus/Sonnet/Haiku rates.`,
+    `Pricing is per million tokens and differs sharply by model: the largest models cost many times what the smallest do, and the text a model writes back costs more than the text you send it. Anthropic's pricing page lists the current rate for each model, including older ones.`,
     `Batch processing halves the cost in both directions for work that does not need an immediate answer. If your job can wait, this is the single largest saving available.`,
     `Set a spending limit in the console before your first real run. Runaway loops are the most common way beginners get an unpleasant bill.`,
   ],

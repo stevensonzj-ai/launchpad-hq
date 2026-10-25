@@ -22,7 +22,7 @@ export const ideogramTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**Sign in with Google, Apple or Microsoft — not with a plain email address.** Ideogram's pricing page states that free weekly credits go to accounts using one of those three; an email-only signup gets none. Both your login method and your username are permanent, so decide before you click. It's otherwise free to start, no card, at ideogram.ai.",
     "You get a pool of **credits** — the unit of spend, each image costing some — refilling weekly. Free credits are \"slow\" credits: your job runs in the lower-priority queue, one generation at a time. Ideogram doesn't publish the exact number and says it may vary.",
-    "To try it and make the odd graphic, you won't pay. You'd want a paid plan if you generate regularly, or if you need images kept private — private generation is a paid feature. Personal plans currently start around $15–20/month, larger tiers around $42–60/month; prices move, check the pricing page.",
+    "To try it and make the odd graphic, you won't pay. You'd want a paid plan if you generate regularly, or if you need images kept private — private generation is a paid feature. Paid plans run from personal tiers up to larger ones for heavier use; current prices are on its Launchpad page.",
   ],
 
   security: [

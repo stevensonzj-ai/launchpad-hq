@@ -22,8 +22,8 @@ export const gensparkTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**Choose your sign-in carefully.** You can sign in with Google, Apple or email. Genspark's help centre says the sign-in method can't be changed later, the account email can't be changed, and signing in a different way creates a separate, empty account that support can't merge.",
-    "**Free is a small daily allowance.** Genspark's membership page lists the Free plan at 100 credits a day, up to a lifetime limit, after which the daily refill stops. It doesn't say how big that lifetime limit is. Free users can present and share slides but need a paid plan to export them.",
-    "**Plus is the usual paid step.** The membership page lists Plus at $24.99 a month, or $239.99 a year ($19.99 a month), starting at 10,000 credits a month, with commercial use of what you make. Pro is $249.99 a month. Credits reset each billing period and don't carry over.",
+    "**Free is a small daily allowance.** Genspark's membership page lists the Free plan as a daily credit refill that stops once you reach a lifetime limit. It doesn't say how big that lifetime limit is. Free users can present and share slides but need a paid plan to export them.",
+    "**Plus is the usual paid step.** Plus is sold monthly or, for less per month, yearly, and comes with a far larger monthly credit allowance and commercial use of what you make. Pro is a much more expensive tier above it. Credits reset each billing period and don't carry over.",
     "**Refund rules are strict.** Genspark's help centre says refunds are possible within 72 hours of a charge for most customers (longer in the EU, UK, Turkey and Korea), only if you've used less than half the subscription, and only once per customer.",
   ],
 
@@ -93,7 +93,7 @@ export const gensparkTutorial: PlatformTutorialData = {
 
   pitfalls: [
     "**Regenerating costs the full price again.** Genspark's credits guide says each regeneration costs the same as the original; edit instead where you can.",
-    "**Ultra mode is much more expensive.** Genspark's help centre puts standard slides at about 10 credits a page and Ultra at about 100.",
+    "**Ultra mode is much more expensive.** Genspark's help centre puts an Ultra slide at roughly ten times the credits of a standard one.",
     "**Two subscriptions by accident.** Subscriptions bought in the iPhone or Android app are managed and cancelled in the app store, not on the website — and deleting your account doesn't cancel them.",
     "**Credits that don't last.** Plan credits reset every billing period; Genspark says separately purchased top-ups last three months.",
     "**Signing in the wrong way.** Using a different Google account or method later creates a new, empty account rather than opening your existing one — and support can't merge them.",

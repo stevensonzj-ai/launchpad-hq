@@ -17,14 +17,14 @@ export const leonardoAiTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "A browser tool at `app.leonardo.ai` — nothing to install, no card to start.",
-    "The free plan is why beginners land here: currently around 150 credits a day (Leonardo calls them tokens), a standard image costing roughly one. Midjourney has no free tier; Firefly and Ideogram give a monthly allowance that runs dry and makes you wait. Leonardo's tomorrow brings more.",
+    "The free plan is why beginners land here: a daily allowance of credits (Leonardo calls them tokens), with a standard image among the cheapest things to make. Midjourney has no free tier; Firefly and Ideogram give a monthly allowance that runs dry and makes you wait. Leonardo's tomorrow brings more.",
     "It leans toward game art and character work, and the controls show it — reference-image slots, character consistency, trainable styles. There are also **Blueprints**: prebuilt setups where you fill in a field or two instead of writing a prompt.",
   ],
 
   beforeYouStart: [
     "You need an email address and a browser, plus a reference image if you already have a character in mind.",
     "**Free credits reset every 24 hours and do not carry over**, so you cannot save up for something big. Paid plans swap that for a monthly allowance that banks what you don't spend. Costs vary by feature and are shown before you commit.",
-    "Learning costs nothing. What pushes people to pay is privacy — free work is public — and video, where one clip can eat a day's allowance. Paid plans currently begin around $12/month, rising to roughly $30 and $60, cheaper annually; prices move.",
+    "Learning costs nothing. What pushes people to pay is privacy — free work is public — and video, where one clip can eat a day's allowance. Paid plans come in several monthly tiers, cheaper billed annually; current prices are on its Launchpad page.",
     "First step: sign up, open the image generator, type one plain sentence describing a scene, and generate. Don't touch a setting yet.",
   ],
 
@@ -71,7 +71,7 @@ export const leonardoAiTutorial: PlatformTutorialData = {
       prompt:
         "A weathered brass diving helmet on a wooden dock at sunrise, salt crust on the metal, background softly out of focus, low warm light from one side",
       whyHere:
-        "Leonardo picks a **model** — the AI \"brain\" doing the drawing — when you don't, so you get a competent result before you know what a model is. At roughly one credit an image against a daily allowance in the low hundreds, you can run it dozens of times for nothing.",
+        "Leonardo picks a **model** — the AI \"brain\" doing the drawing — when you don't, so you get a competent result before you know what a model is. A plain image costs very little of a daily allowance that refills, so you can run it dozens of times for nothing.",
       tweak:
         "Change only the last clause — swap the warm side light for flat overcast light. One variable at a time is how you learn which words do work.",
     },
@@ -101,7 +101,7 @@ export const leonardoAiTutorial: PlatformTutorialData = {
   pitfalls: [
     "**Free generations are public — that is the actual price.** Others can view and remix them, and free content feeds model training.",
     "**Free credits don't roll over.** Unused ones vanish at reset, so a little most days beats planning a marathon.",
-    "**Costs vary enormously by feature.** A plain image is about one credit; video and heavy workflows many times that. Read the number first.",
+    "**Costs vary enormously by feature.** A plain image costs very little; video and heavy workflows many times that. Read the number first.",
     "**Much of the advice online points at legacy features.** Alchemy, PhotoReal and Elements still work but are no longer core — if a guide leads with those, check its date.",
   ],
 

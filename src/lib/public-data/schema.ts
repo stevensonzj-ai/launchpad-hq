@@ -163,7 +163,7 @@ const contentFooter = {
 };
 
 const pricedProse = {
-  prices_removed: z.number().int().describe("Sentences dropped because they quoted a price."),
+  prices_removed: z.number().int().describe("Sentences dropped because they typed a price by hand (expected 0; prices in the text come from the catalog)."),
   pricing_note: z.string(),
 };
 

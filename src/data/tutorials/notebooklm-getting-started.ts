@@ -19,7 +19,7 @@ export const notebooklmTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "Free with a Google account, no time limit: up to 100 notebooks, 50 sources each, and a daily chat allowance that covers a real study session, plus a few Audio Overviews a day. Most people never need to pay.",
-    "**Paid tiers** (bundled into Google's AI plans, starting under $10/month) mainly raise those limits and add heavier features.",
+    "**Paid tiers** (bundled into Google's AI plans, which start at a low monthly price) mainly raise those limits and add heavier features.",
     "One structural thing to know: it's **cloud-only** (no offline mode), and every source caps at a large but real size limit — a single enormous file may not import.",
   ],
 

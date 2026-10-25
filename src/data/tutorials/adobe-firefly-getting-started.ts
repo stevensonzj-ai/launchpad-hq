@@ -20,7 +20,7 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "The free plan needs only a free Adobe ID (no card) and gives a small monthly batch of credits — enough to try it. Outputs have **no watermark** and are licensed for commercial use, but the free tier is **not** covered by Adobe's legal indemnity (see security).",
-    "**Paid plans start around $10/month** (standalone), and if you already pay for Creative Cloud, Firefly credits are usually bundled in.",
+    "**Standalone paid plans add more monthly credits**, and if you already pay for Creative Cloud, Firefly credits are usually bundled in.",
     "The headline reason to choose Firefly over a flashier generator is the commercial-safety story below — understand exactly what it does and doesn't cover before you rely on it.",
   ],
 

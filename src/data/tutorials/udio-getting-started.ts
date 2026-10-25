@@ -21,9 +21,9 @@ export const udioTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Free to start, and the free tier is real: no card, around 10 credits a day plus a separate monthly pool of around 100, and free accounts capped at 3 full-length (about 2 minutes 10 seconds) generations a day. Sign up at udio.com and put one sentence in the **prompt** box — the message you type.",
-    "**How credits work.** Credits are the platform's unit of spend, and Udio generates in pairs: two 32-second clips currently cost 2 credits, two 130-second songs cost 4. Monthly credits don't roll over; separately purchased packs don't expire.",
-    "You won't need to pay to try it. You'll hit the ceiling wanting longer songs, more per day, or the upload and voice-editing features, which are paid-only. Entry plans currently run around $10/month (roughly $8 prepaid annually) and the top tier around $30, with a free trial on the entry plan — prices and credit amounts change, so check the pricing page.",
+    "Free to start, and the free tier is real: no card, a small daily credit allowance plus a separate monthly pool, and a daily cap on full-length (about 2 minutes 10 seconds) generations. Sign up at udio.com and put one sentence in the **prompt** box — the message you type.",
+    "**How credits work.** Credits are the platform's unit of spend, and Udio generates in pairs, and a pair of 130-second songs costs twice what a pair of 32-second clips does. Monthly credits don't roll over; separately purchased packs don't expire.",
+    "You won't need to pay to try it. You'll hit the ceiling wanting longer songs, more per day, or the upload and voice-editing features, which are paid-only. Paid plans are monthly (cheaper prepaid annually), from an entry plan with a free trial up to a pricier top tier — prices and credit amounts change, so check the pricing page.",
   ],
 
   security: [
@@ -82,7 +82,7 @@ export const udioTutorial: PlatformTutorialData = {
       whatItDoes:
         "Takes a 32-second clip you like and uses Extend to add the next section, repeating until it is a full-length track.",
       whyHere:
-        "Udio composes in pieces rather than one shot — the core of how it differs from tools that hand you a fixed track. Longer generations cost more credits and free accounts get 3 full-length ones a day, so extend deliberately.",
+        "Udio composes in pieces rather than one shot — the core of how it differs from tools that hand you a fixed track. Longer generations cost more credits and free accounts have a daily cap on full-length ones, so extend deliberately.",
       tweak: "Describe what happens next — a break, a key change, a stripped-back final chorus.",
     },
     {
@@ -96,7 +96,7 @@ export const udioTutorial: PlatformTutorialData = {
   pitfalls: [
     "**Almost every guide online is out of date.** The rules reversed after Udio settled with Universal Music Group in late 2025, but reviews and videos still describe output you own and can use commercially — and some of Udio's own help pages haven't been updated either. The Terms of Service govern.",
     "**People still arrive expecting an MP3.** There was a brief window after the settlement when downloads reopened so users could save existing work, and it closed. Confirm any platform's export terms before spending a week on it.",
-    "**Burning your allowance on long songs.** Full-length generations cost roughly double a short one per track, and free accounts get about three a day. Prototype at 32 seconds until the style prompt is right, then commit credits to length — unused ones are gone at the reset.",
+    "**Burning your allowance on long songs.** Full-length generations cost roughly double a short one per track, and free accounts can only make a handful each day. Prototype at 32 seconds until the style prompt is right, then commit credits to length — unused ones are gone at the reset.",
   ],
 
   whereToNext: [

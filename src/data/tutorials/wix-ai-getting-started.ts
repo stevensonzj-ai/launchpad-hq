@@ -20,8 +20,8 @@ export const wixAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**You can build and publish a Wix site without paying anything, and there is no card at signup.** A free site lives at an address like `yourname.wixsite.com/yoursite`, carries a Wix ad banner across the top and a Wix icon in the browser tab, and comes with 500MB of storage and a 1GB traffic allowance. Paying is what buys your own domain name and removes that branding — currently around $18 a month on the cheapest Light plan billed annually, with the ability to take card payments on your site starting one tier up on Core, around $30. Wix says prices differ by country, so check what yours shows.",
-    "Most of the AI is free to use as much as you like: Wix states plainly that chatting with Aria costs nothing and does not consume **AI credits** (the platform's unit of spend — each thing you make costs some). Credits cover the heavier tools instead — the visitor chat, the marketing and phone agents, the Wixel design app — and a free account currently gets up to 30 credits a day, capped at 120 in a month. Premium plans include a monthly allowance that resets.",
+    "**You can build and publish a Wix site without paying anything, and there is no card at signup.** A free site lives at an address like `yourname.wixsite.com/yoursite`, carries a Wix ad banner across the top and a Wix icon in the browser tab, and comes with 500MB of storage and a 1GB traffic allowance. Paying is what buys your own domain name and removes that branding — from the cheapest Light plan upward, with the ability to take card payments on your site starting one tier up on Core. Wix says prices differ by country, so check what yours shows.",
+    "Most of the AI is free to use as much as you like: Wix states plainly that chatting with Aria costs nothing and does not consume **AI credits** (the platform's unit of spend — each thing you make costs some). Credits cover the heavier tools instead — the visitor chat, the marketing and phone agents, the Wixel design app — and a free account currently gets a small daily credit allowance, with a monthly cap on top. Premium plans include a monthly allowance that resets.",
     "Wix has more than one editor, and which one you land in decides which AI you get. Aria lives in the newer **Wix Harmony** editor; the classic Wix Editor has AI tools behind an icon but no free-flowing chat, and there is a third, newer entry point called Wix Vibe with its own limits. Wix's docs don't say which one a brand-new signup gets today, so look at what's on your screen before following any tutorial.",
     "If you meet Wix ADI in an old article, it's gone. Wix stopped supporting sites built with it on 10 November 2024; surviving ADI sites now open in the Wix Editor, and Wix names the AI Website Builder as its replacement.",
   ],
@@ -111,7 +111,7 @@ export const wixAiTutorial: PlatformTutorialData = {
     "**The free site announces itself.** Perfectly fine for a hobby page — check how the ad banner actually looks on a phone before you send the link to a customer.",
     "**The mobile view is the part you build by hand.** The generator works desktop-first and Aria doesn't follow you into the phone view — which is the version most of your visitors will see.",
     "**Free storage and traffic run out quietly.** The allowance goes further on a text page than on a site full of AI-generated photos, which are full-size images.",
-    "**The meters differ between surfaces.** Wix Vibe gives a free site 6 chat requests a day and a paid site 50, with nothing rolling over to the next day — a different meter from the AI credits elsewhere in the product.",
+    "**The meters differ between surfaces.** Wix Vibe gives a free site a small daily allowance of chat requests and a paid site a much larger one, with nothing rolling over to the next day — a different meter from the AI credits elsewhere in the product.",
   ],
 
   whereToNext: [

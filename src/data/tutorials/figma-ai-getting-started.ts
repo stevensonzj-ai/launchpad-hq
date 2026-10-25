@@ -22,7 +22,7 @@ export const figmaAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "You need a Figma account and a file open in your browser; there is nothing to install. If you have never used Figma at all, learn to draw a frame and move a layer first.",
     "The honest money answer: a free Starter account does not unlock most of what people mean by \"Figma AI\". Full use of Figma Make needs a paid Full seat. A free account can still build unlimited Figma Make files in its own drafts, which is where the tour below starts.",
-    "Figma currently gives a Starter Full seat around **500 credits a month with a 150-a-day ceiling**, and a Professional Full seat around 3,000 — roughly 50 to 70 Figma Make prompts, by Figma's own estimate. Credits expire at the monthly reset rather than rolling over, and Figma's documentation puts buying more in the admin dashboard, so if you are not the admin you wait.",
+    "Figma gives each Full seat a **monthly credit allowance** — smaller on Starter, which also has a daily ceiling, and larger on Professional, though by Figma's own estimate even that covers only a few dozen Figma Make prompts. Credits expire at the monthly reset rather than rolling over, and Figma's documentation puts buying more in the admin dashboard, so if you are not the admin you wait.",
     "**Switching AI on for a Starter account is a one-way door.** Figma's settings documentation says that once AI features are turned on, they are \"permanently enabled on your account\". Decide before you flip it.",
   ],
 

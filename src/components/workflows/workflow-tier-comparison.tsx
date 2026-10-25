@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import Link from "next/link";
 import type { WorkflowTemplate, WorkflowTierId } from "@/data/workflows";
+import type { WorkflowToolPrice } from "@/lib/public-data/content-view";
 import { WorkflowToolName } from "./workflow-tool-name";
 import { CopyPromptButton } from "./copy-prompt-button";
 
@@ -46,10 +47,14 @@ function panelId(key: WorkflowTierId) {
 
 export function WorkflowTierComparison({
   workflow,
+  prices,
   validSlugs,
   tutorialSlugs,
 }: {
+  /** Price tokens already filled in (content-view.ts). */
   workflow: WorkflowTemplate;
+  /** Each tier's tools with their current catalog starting price (same values as the JSON). */
+  prices: Record<WorkflowTierId, WorkflowToolPrice[]>;
   /** Serialized for the client boundary (Set is not passable). */
   validSlugs: string[];
   tutorialSlugs: string[];
@@ -61,6 +66,7 @@ export function WorkflowTierComparison({
   const t = workflow.tiers[active];
   const meta = tierMeta[active];
   const steps = t.steps?.slice().sort((a, b) => a.order - b.order) ?? [];
+  const tierPrices = prices[active];
 
   function selectTier(key: WorkflowTierId) {
     setActive(key);
@@ -130,15 +136,22 @@ export function WorkflowTierComparison({
           <h2 className="text-lg font-bold text-white">{meta.label}</h2>
           <p className="text-xs text-gray-300">{meta.subtitle}</p>
           <p className="mt-1 text-sm text-gray-400">{t.tagline}</p>
-          {(t.estMonthlyCost || t.timeEstimate) && (
-            <p className="mt-3 text-sm leading-relaxed text-gray-300">
-              {t.estMonthlyCost ? <span>{t.estMonthlyCost}</span> : null}
-              {t.estMonthlyCost && t.timeEstimate ? (
-                <span className="text-gray-400"> · </span>
-              ) : null}
-              {t.timeEstimate ? <span>{t.timeEstimate}</span> : null}
-            </p>
-          )}
+          {t.timeEstimate ? <p className="mt-3 text-sm leading-relaxed text-gray-300">{t.timeEstimate}</p> : null}
+          {tierPrices.length > 0 ? (
+            <div className="mt-3">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">Current prices</p>
+              <ul className="mt-1 space-y-0.5 text-sm text-gray-300">
+                {tierPrices.map((tool) => (
+                  <li key={tool.slug}>
+                    <Link href={`/platform/${tool.slug}`} className="text-orange-400 hover:text-orange-300 hover:underline">
+                      {tool.name}
+                    </Link>
+                    : {tool.starting_price ?? "See the tool page"}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
           {t.result ? (
             <p className="mt-2 text-sm leading-relaxed text-gray-400">
               <span className="font-medium text-gray-300">Result: </span>

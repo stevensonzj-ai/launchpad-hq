@@ -22,7 +22,7 @@ export const claudeTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     `The free plan covers web, iOS, Android, and desktop, and includes web search, file uploads, memory across conversations, and the ability to create files and run code. It is not a stripped demo.`,
-    `Paid plans start at $20 a month billed monthly, or $17 a month if you pay for a year up front. Higher tiers exist at $100 and $200 a month and buy usage headroom, not new capabilities.`,
+    `Paid plans are billed monthly, and cost less per month if you pay for a year up front. The higher tiers buy usage headroom, not new capabilities.`,
     `Usage resets on a rolling five-hour window, and paid plans add a weekly ceiling on top. There is no published message count — how far you get depends on conversation length, model, and which features you use.`,
     `**Set your training preference before your first real conversation.** On free and paid personal plans, training is on by default. See the security section.`,
   ],
