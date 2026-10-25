@@ -43,9 +43,10 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 ## Agent access
 
 - MCP (Streamable HTTP, no auth, read-only): ${SITE_URL}/mcp
+- [Connector docs](${SITE_URL}/connector): What the connector does, how to add it, and how to read results
 - Tools: search_tools, compare, get_pricing_facts, find_free_alternatives
 - Results are dated and sourced; sponsorship never affects them.
-- [Privacy policy](${SITE_URL}/privacy)
+- [Privacy policy](${SITE_URL}/privacy#mcp)
 
 ## Workflows
 

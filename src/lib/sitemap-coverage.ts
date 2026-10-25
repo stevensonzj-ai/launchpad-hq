@@ -15,6 +15,7 @@ export const SITEMAP_STATIC_PUBLIC_PATHS = [
   "/models/compare/claude-vs-gpt",
   "/how-we-make-money",
   "/advertise",
+  "/connector",
 ] as const;
 
 export const SITEMAP_PRIVATE_PATHS = [
