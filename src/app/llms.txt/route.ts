@@ -2,6 +2,7 @@ import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { WORKFLOWS } from "@/data/workflows";
 import { SITE_URL } from "@/lib/site";
 import { getActivePlacement } from "@/data/sponsors";
+import { compareLlmsLines, listedComparePages } from "@/data/compare/view";
 
 export function GET() {
   const tutorials = [...listRegisteredTutorials()].sort((a, b) =>
@@ -17,6 +18,9 @@ export function GET() {
   const workflowLinks = WORKFLOWS.map(
     (workflow) => `- [${workflow.title}](${SITE_URL}/workflows/${workflow.slug}): ${workflow.description}`,
   ).join("\n");
+
+  // No DB here: hidden or discontinued tools drop a page; rows are assumed.
+  const compareLinks = compareLlmsLines(SITE_URL, listedComparePages()).join("\n");
 
   const body = `# LaunchpadHQ
 
@@ -47,6 +51,10 @@ Browsing the directory, quiz, platform overviews, prompt library, and discussion
 - Tools: search_tools, compare, get_pricing_facts, find_free_alternatives
 - Results are dated and sourced; sponsorship never affects them.
 - [Privacy policy](${SITE_URL}/privacy#mcp)
+
+## Comparisons
+
+${compareLinks}
 
 ## Workflows
 
