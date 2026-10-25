@@ -252,13 +252,13 @@ const ROWS: SeedRow[] = [
     company: "Stability AI",
     website: "https://stability.ai",
     categorySlug: "local-open-source-ai",
-    primaryUse: "Open image, video, and audio models under a Community License",
+    primaryUse: "Open image, audio and 3D models, a pay-per-use API, and the Stable Audio web app",
     primaryUseCases: "Local/open-source image work, usually through ComfyUI or another app; self-host keeps data local",
     description:
-      "Publisher of Stable Diffusion and related Core Models. As of 2026-10-13, the Community License makes Core Models (including SD 3.5, SDXL Turbo, Stable Audio) free for research, personal use, and commercial use under $1M annual revenue. Enterprise pricing is custom. Self-hosting keeps inputs on your machine. Hosted-platform credit pricing was not checked (unverified).",
+      "Publisher of Stable Diffusion and the Stable Audio models. There are three ways in: download the open models and run them yourself (for example with ComfyUI), which keeps your inputs on your machine; call them from code through the Developer Platform API, which offers image, audio and 3D models but no video (Stability's video models are download-only); or make music and sound effects in the Stable Audio web app at stableaudio.com, its remaining consumer app. Its consumer image app, Stable Assistant, is no longer on Stability's site (as of 2026-10-25).",
     currentPricing:
-      "Community License free under $1M annual revenue; Enterprise custom; hosted credit pricing unverified",
-    freeTierFeatures: "Core Models free under the Community License (research, personal, commercial under $1M revenue)",
+      "Open models (Community License): $0 for individuals and organizations under US$1M annual revenue, commercial users must register; Developer Platform API: 1 credit = $0.01, pay as you go; Enterprise License (over US$1M annual revenue): custom; Stable Audio web app: separate plans at stableaudio.com/pricing (official, as of 2026-10-25)",
+    freeTierFeatures: "New Developer Platform accounts get 25 free credits (official, as of 2026-10-25)",
     costTier: "FREE",
     difficultyLevel: "ADVANCED",
     privacyLevel: "HIGH",
@@ -267,7 +267,7 @@ const ROWS: SeedRow[] = [
     offlineCapable: true,
     idealUserTypes: ["local image users", "open-source users"],
     contentTypes: ["text", "images"],
-    outputFormats: ["images", "audio"],
+    outputFormats: ["images", "audio", "3D models"],
   },
   {
     slug: "comfyui",

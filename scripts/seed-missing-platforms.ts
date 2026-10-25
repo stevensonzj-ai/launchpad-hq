@@ -106,11 +106,14 @@ async function main() {
       slug: "play-ht",
       name: "PlayHT",
       categoryId: voiceSpeechCat.id,
-      primaryUse: "AI voice generation, TTS",
-      currentPricing: "Free tier; $29/mo",
-      freeTierFeatures: "Free tier with limited characters per month",
+      // Discontinued; copy matches scripts/update-catalog-audit-4.ts (2026-10-25).
+      primaryUse: "Discontinued: former AI text-to-speech and voice-cloning service",
+      currentPricing:
+        "Discontinued, no longer sold. Bloomberg reported in July 2025 that Meta acquired PlayAI, the company behind PlayHT. We found no official shutdown notice from PlayHT or Meta, and the play.ht website no longer loads (as of 2026-10-25).",
+      freeTierFeatures: "None: PlayHT is no longer available",
       difficultyLevel: "BEGINNER",
-      description: "Text-to-speech and AI voices for content, podcasts, and product experiences.",
+      description:
+        "PlayHT was an AI text-to-speech and voice-cloning service for voiceovers, podcasts, e-learning and apps.",
     },
   ];
 

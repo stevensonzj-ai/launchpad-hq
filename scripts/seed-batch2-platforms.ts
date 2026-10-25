@@ -206,9 +206,9 @@ const ROWS: SeedRow[] = [
     primaryUse: "Cited clinical answers for verified US clinicians",
     primaryUseCases: "Licensed US clinicians looking up evidence-backed answers; not for patients or self-diagnosis",
     description:
-      "Cited clinical Q&A. Official site (as of 2026-10-13): free for verified U.S. healthcare professionals. Access is gated to licensed clinicians — this is not medical advice for patients and is not a consumer symptom checker. No consumer paid tier is listed. Whether the service is offered in the EU/UK/EEA, whether a BAA is available for PHI, and ad-funding details are unverified (third-party reports, not confirmed on the official page).",
-    currentPricing: "Free for verified US clinicians; no public paid consumer tier (official, as of 2026-10-13)",
-    freeTierFeatures: "Free for verified U.S. healthcare professionals (official); EU/UK availability unverified",
+      "Cited clinical Q&A, free for verified US healthcare professionals. Access is gated to licensed clinicians: it is not for patients or self-diagnosis and is not a consumer symptom checker. Its privacy policy (updated September 17, 2026) says it secures protected health information (PHI) in compliance with HIPAA and does not train AI models on PHI. Its security page says HIPAA covered entities may send PHI under its standard Business Associate Agreement (official, as of 2026-10-25). Availability outside the US was not confirmed on the official site.",
+    currentPricing: "Free: $0, no paid plans listed (official, as of 2026-10-25)",
+    freeTierFeatures: "Yes (official, as of 2026-10-25)",
     costTier: "FREE",
     difficultyLevel: "INTERMEDIATE",
     privacyLevel: "MEDIUM",
@@ -335,7 +335,8 @@ const ROWS: SeedRow[] = [
   },
   {
     slug: "lexis-plus-ai",
-    name: "Lexis+ AI",
+    // Renamed February 2026 (src/data/facts/lexis-plus-ai.ts); slug unchanged.
+    name: "Lexis+ with Protégé",
     company: "LexisNexis",
     website: "https://www.lexisnexis.com/en-us/products/lexis-plus-ai.page",
     categorySlug: "legal-ai",
