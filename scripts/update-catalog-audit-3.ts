@@ -13,7 +13,16 @@
  *
  * OPERATOR ONLY. This script writes to whichever database DATABASE_URL
  * points at. Do not run it from an agent session. Neon branch first.
- * Never creates or deletes rows. Only touches name, website, company.
+ * Never creates or deletes rows. Only touches name, website, company, and
+ * (step 2) the four name-reference arrays below.
+ *
+ * Step 2, same run: renaming a row orphans every other row that points at
+ * it by name in directAlternatives, complementaryTools, budgetAlternativeTo
+ * or privacyAlternativeTo (platform pages resolve those by name, not slug).
+ * Using the reviewed old-name map in src/data/catalog-audits/audit-3-refs.ts,
+ * every existing row's arrays get old names swapped for the fact-file
+ * displayName, order preserved, de-duplicated. UPDATE only; a second run
+ * plans 0 changes. Summary reports refFixes (entries) and refRows (rows).
  *
  * Usage (default is dry-run; writes require --apply):
  *   npx tsx scripts/update-catalog-audit-3.ts
@@ -24,14 +33,35 @@
  * `ep-odd-mud-ajdk8f99` (production compute or pooler). Prints the target
  * host only. Never prints credentials.
  *
+ * Production override (deliberate, both required): pass --confirm-production
+ * AND set CONFIRM_PROD_HOST=ep-odd-mud-ajdk8f99. Either alone, or a wrong
+ * value, still refuses. The confirmation binds to the endpoint prefix, not
+ * the Neon branch id (br-purple-band-ajks38xk), because a connection URL's
+ * hostname carries only the endpoint id. Dry-run stays the default; writes
+ * still need --apply and still get the 5-second countdown. The decision is
+ * made in src/lib/prod-guard.ts before any PrismaClient is constructed.
+ * PowerShell (then `Remove-Item Env:CONFIRM_PROD_HOST`, per gate G14):
+ *   $env:CONFIRM_PROD_HOST='ep-odd-mud-ajdk8f99'
+ *   npx tsx scripts/update-catalog-audit-3.ts --confirm-production
+ *   npx tsx scripts/update-catalog-audit-3.ts --confirm-production --apply
+ *
  * Gate G3: written for the operator to run. Agents must not execute it.
  */
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import {
+  CONFIRM_PROD_HOST_ENV,
+  CONFIRM_PRODUCTION_FLAG,
+  checkTargetHost,
+} from "../src/lib/prod-guard";
 import { REGISTERED_TOOL_FACTS } from "../src/data/facts/registry";
-
-const PRODUCTION_ENDPOINT_ID = "ep-odd-mud-ajdk8f99";
+import {
+  REF_FIELDS,
+  audit3NameRenames,
+  rewriteNameRefs,
+  type RefField,
+} from "../src/data/catalog-audits/audit-3-refs";
 
 /** Rows renamed, re-homed or re-linked in the 2026-10-20 cleanup. */
 const CLEANUP_SLUGS = [
@@ -123,15 +153,22 @@ async function main() {
   console.log(`Target database hostname: ${host}`);
   console.log(`Mode: ${dryRun ? "dry-run (no writes)" : "LIVE writes (--apply)"}`);
 
-  if (host.startsWith(PRODUCTION_ENDPOINT_ID)) {
-    console.error(
-      `Refusing to run: hostname ${host} starts with ${PRODUCTION_ENDPOINT_ID} (production compute or pooler). Point DATABASE_URL at a Neon branch first.`,
-    );
+  const target = checkTargetHost(host, process.argv, process.env);
+  if (!target.ok) {
+    console.error(target.reason);
     process.exit(1);
+  }
+  if (target.note) console.log(`Note: ${target.note}`);
+  if (target.production) {
+    console.log(
+      `PRODUCTION confirmed via ${CONFIRM_PRODUCTION_FLAG} + ${CONFIRM_PROD_HOST_ENV} (host ${host}).`,
+    );
   }
 
   const patches = patchesFromFacts();
+  const renames = audit3NameRenames();
   console.log(`Patches: ${patches.length}`);
+  console.log(`Name-reference renames: ${renames.map((r) => `"${r.from}" -> "${r.to}"`).join(", ")}`);
 
   if (!dryRun) {
     console.log(`About to write. Full target host: ${host}`);
@@ -174,11 +211,44 @@ async function main() {
       });
       updated += 1;
     }
+
+    // Step 2: rewrite name references orphaned by the renames above.
+    let refFixes = 0;
+    let refRows = 0;
+    const rows = await prisma.platform.findMany({
+      select: {
+        slug: true,
+        directAlternatives: true,
+        complementaryTools: true,
+        budgetAlternativeTo: true,
+        privacyAlternativeTo: true,
+      },
+      orderBy: { slug: "asc" },
+    });
+    for (const row of rows) {
+      const data: Partial<Record<RefField, string[]>> = {};
+      for (const field of REF_FIELDS) {
+        const { next, changes } = rewriteNameRefs(row[field], renames);
+        if (changes.length === 0) continue;
+        data[field] = next;
+        refFixes += changes.length;
+        for (const change of changes) {
+          console.log(
+            `${dryRun ? "~ would fix refs" : "~ fixing refs"} ${row.slug}.${field}: ${JSON.stringify(change.from)} -> ${JSON.stringify(change.to)}${change.dropped ? " (dropped: new name already present)" : ""}`,
+          );
+        }
+      }
+      if (Object.keys(data).length === 0) continue;
+      refRows += 1;
+      if (dryRun) continue;
+      await prisma.platform.update({ where: { slug: row.slug }, data });
+    }
+
     console.log("---");
     console.log(
       dryRun
-        ? `Dry-run complete. No rows written. wouldChange=${wouldChange} alreadyMatched=${unchanged} missing=${missing}`
-        : `Done. updated=${updated} alreadyMatched=${unchanged} missing=${missing}`,
+        ? `Dry-run complete. No rows written. wouldChange=${wouldChange} alreadyMatched=${unchanged} missing=${missing} refFixes=${refFixes} refRows=${refRows}`
+        : `Done. updated=${updated} alreadyMatched=${unchanged} missing=${missing} refFixes=${refFixes} refRows=${refRows}`,
     );
   } finally {
     await prisma.$disconnect();

@@ -29,6 +29,18 @@
  * FQDN). Prints the target host only. Never prints credentials. Exits if
  * no hostname parses.
  *
+ * Production override (deliberate, both required): pass --confirm-production
+ * AND set CONFIRM_PROD_HOST=ep-odd-mud-ajdk8f99. Either alone, or a wrong
+ * value, still refuses. The confirmation binds to the endpoint prefix, not
+ * the Neon branch id (br-purple-band-ajks38xk), because a connection URL's
+ * hostname carries only the endpoint id. Dry-run stays the default; writes
+ * still need --apply and still get the 5-second countdown. The decision is
+ * made in src/lib/prod-guard.ts before any PrismaClient is constructed.
+ * PowerShell (then `Remove-Item Env:CONFIRM_PROD_HOST`, per gate G14):
+ *   $env:CONFIRM_PROD_HOST='ep-odd-mud-ajdk8f99'
+ *   npx tsx scripts/update-catalog-audit-4.ts --confirm-production
+ *   npx tsx scripts/update-catalog-audit-4.ts --confirm-production --apply
+ *
  * Gate G3: this file is written for the operator to run. Agents must not
  * execute it.
  */
@@ -36,12 +48,15 @@ import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import {
+  CONFIRM_PROD_HOST_ENV,
+  CONFIRM_PRODUCTION_FLAG,
+  checkTargetHost,
+} from "../src/lib/prod-guard";
+import {
   AUDIT_4_PATCHES,
   audit4UpdateData,
   diffAudit4Patch,
 } from "../src/data/catalog-audits/audit-4";
-
-const PRODUCTION_ENDPOINT_ID = "ep-odd-mud-ajdk8f99";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";
@@ -96,11 +111,16 @@ async function main() {
   console.log(`Mode: ${dryRun ? "dry-run (no writes)" : "LIVE writes (--apply)"}`);
   console.log(`Patches: ${AUDIT_4_PATCHES.length}`);
 
-  if (host.startsWith(PRODUCTION_ENDPOINT_ID)) {
-    console.error(
-      `Refusing to run: hostname ${host} starts with ${PRODUCTION_ENDPOINT_ID} (production compute or pooler). Point DATABASE_URL at a Neon branch first.`,
-    );
+  const target = checkTargetHost(host, process.argv, process.env);
+  if (!target.ok) {
+    console.error(target.reason);
     process.exit(1);
+  }
+  if (target.note) console.log(`Note: ${target.note}`);
+  if (target.production) {
+    console.log(
+      `PRODUCTION confirmed via ${CONFIRM_PRODUCTION_FLAG} + ${CONFIRM_PROD_HOST_ENV} (host ${host}).`,
+    );
   }
 
   if (!dryRun) {
