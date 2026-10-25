@@ -57,7 +57,7 @@ import { n8nTutorial } from "./n8n-getting-started";
 import { tldvTutorial } from "./tldv-getting-started";
 import { janTutorial } from "./jan-getting-started";
 import { microsoftCopilotTutorial } from "./microsoft-copilot-getting-started";
-import { mistralAiLeChatTutorial } from "./mistral-ai-le-chat-getting-started";
+import { mistralVibeTutorial } from "./mistral-vibe-getting-started";
 import { leonardoAiTutorial } from "./leonardo-ai-getting-started";
 import { fluxTutorial } from "./flux-getting-started";
 import { recraftTutorial } from "./recraft-getting-started";
@@ -240,7 +240,7 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [replitAgentTutorial.platformSlug]: replitAgentTutorial,
   [tabnineTutorial.platformSlug]: tabnineTutorial,
   [microsoftCopilotTutorial.platformSlug]: microsoftCopilotTutorial,
-  [mistralAiLeChatTutorial.platformSlug]: mistralAiLeChatTutorial,
+  [mistralVibeTutorial.platformSlug]: mistralVibeTutorial,
   [leonardoAiTutorial.platformSlug]: leonardoAiTutorial,
   [fluxTutorial.platformSlug]: fluxTutorial,
   [recraftTutorial.platformSlug]: recraftTutorial,

@@ -66,6 +66,11 @@ import kiraSystemsFacts from "./kira-systems";
 import casetextCocounselFacts from "./casetext-cocounsel";
 import lexisPlusAiFacts from "./lexis-plus-ai";
 import alephAlphaLuminousFacts from "./aleph-alpha-luminous";
+// Guide prices pass, 2026-10-25.
+import inworldAiFacts from "./inworld-ai";
+import readAiFacts from "./read-ai";
+import n8nFacts from "./n8n";
+import mistralVibeFacts from "./mistral-vibe";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -138,6 +143,11 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [casetextCocounselFacts.slug]: casetextCocounselFacts,
   [lexisPlusAiFacts.slug]: lexisPlusAiFacts,
   [alephAlphaLuminousFacts.slug]: alephAlphaLuminousFacts,
+  // Guide prices pass, 2026-10-25: catalog homes for prices guides cite, and the Le Chat -> Vibe rename.
+  [inworldAiFacts.slug]: inworldAiFacts,
+  [readAiFacts.slug]: readAiFacts,
+  [n8nFacts.slug]: n8nFacts,
+  [mistralVibeFacts.slug]: mistralVibeFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

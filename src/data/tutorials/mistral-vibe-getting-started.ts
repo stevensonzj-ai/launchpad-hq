@@ -1,8 +1,8 @@
 import type { PlatformTutorialData } from "./types";
 
-export const mistralAiLeChatTutorial: PlatformTutorialData = {
-  slug: "mistral-ai-le-chat-getting-started",
-  platformSlug: "mistral-ai-le-chat",
+export const mistralVibeTutorial: PlatformTutorialData = {
+  slug: "mistral-vibe-getting-started",
+  platformSlug: "mistral-vibe",
   title: "Getting Started with Mistral Vibe (formerly Le Chat)",
   tagline:
     "The French-built assistant that also works through multi-step jobs — from a company that publishes its AI for anyone to run.",

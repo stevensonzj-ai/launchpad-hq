@@ -1,10 +1,11 @@
 /**
  * Catalog URL moves, kept dependency-free so `next.config.ts` can import it.
  *
- * - PLATFORM_REDIRECTS: duplicate catalog rows. Every /platform/<from>/...
- *   URL 301s to the same path under /platform/<to>. The <from> rows still
- *   exist in the database, so they are also hidden from listings (see
- *   `src/lib/catalog-visibility.ts`).
+ * - PLATFORM_REDIRECTS: duplicate catalog rows and renamed slugs. Every
+ *   /platform/<from>/... URL 301s to the same path under /platform/<to>.
+ *   Duplicate <from> rows still exist in the database, so they are also
+ *   hidden from listings (see `src/lib/catalog-visibility.ts`); a renamed
+ *   slug has no row left once its audit runs.
  * - RETIRED_GUIDE_SLUGS: platforms whose how-to guide was removed because
  *   the product no longer works. /platform/<slug>/guide 301s to the
  *   platform page, which carries the "what happened" notice.
@@ -19,6 +20,11 @@ export const PLATFORM_REDIRECTS: Readonly<Record<string, string>> = {
   // (https://business.adobe.com/products/sensei.html, checked 2026-10-20);
   // the guided Firefly entry covers the product readers are looking for.
   "adobe-sensei-firefly-in-cc": "adobe-firefly",
+  // Slug rename, not a duplicate: Mistral renamed Le Chat to Vibe
+  // (https://mistral.ai/products/le-chat, checked 2026-10-25).
+  // scripts/update-catalog-audit-6.ts moves the row to the new slug, so no
+  // row is left under the old one. Deploy and run audit 6 together.
+  "mistral-ai-le-chat": "mistral-vibe",
 };
 
 export const RETIRED_GUIDE_SLUGS: readonly string[] = ["kakao-brain-karlo"];
