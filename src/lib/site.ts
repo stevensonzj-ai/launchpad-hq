@@ -8,6 +8,14 @@ export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${normalized}`;
 }
 
+/** Site-wide share image (the brand mark); pages that set their own keep it. */
+export const DEFAULT_OG_IMAGE = {
+  url: absoluteUrl("/brand/launchpad-hq-512.png"),
+  width: 512,
+  height: 512,
+  alt: "Launchpad HQ",
+} as const;
+
 /**
  * Public-search guard.
  * Controls both robots.txt (Disallow: / vs public allow list) and site-wide

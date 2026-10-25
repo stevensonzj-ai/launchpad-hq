@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms"
-import { SITE_IS_PUBLIC, SITE_URL } from "@/lib/site"
+import { DEFAULT_OG_IMAGE, SITE_IS_PUBLIC, SITE_URL } from "@/lib/site"
 import { BackToTop } from "@/components/layout/back-to-top"
 import { Footer } from "@/components/layout/footer"
 
@@ -26,6 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title: "Launchpad HQ - Your AI Mission Control",
     description: `Your AI mission control center. ${count}+ vetted tools across ${categoryCount} categories.`,
+    // Defaults for pages without their own openGraph (publicPageMetadata sets the same).
+    openGraph: { type: "website", siteName: "Launchpad HQ", images: [DEFAULT_OG_IMAGE] },
     ...(!SITE_IS_PUBLIC ? { robots: { index: false, follow: false } } : {}),
   }
 }
