@@ -99,8 +99,20 @@ function clampLimit(limit: number | undefined): number {
   return Math.min(limit, MAX_LIMIT);
 }
 
-/** Free tier per §3 field rules: facts first, catalog cost tier as fallback. */
+/**
+ * Free tier per §3 field rules: facts first, catalog cost tier as fallback.
+ * A discontinued tool has no free tier, whatever its stored cost tier says.
+ */
 function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
+  if (isDiscontinued(facts)) {
+    const status = facts?.status;
+    return {
+      free_tier: { available: false, summary: status?.value.headline ?? "Discontinued" },
+      verification: status ? factVerification(status) : ("catalog_only" as const),
+      as_of: status?.checkedAt ?? isoDate(row.updatedAt),
+      source_url: status?.sourceUrl ?? null,
+    } as const;
+  }
   const fact = facts?.freeTier;
   if (fact) {
     return {

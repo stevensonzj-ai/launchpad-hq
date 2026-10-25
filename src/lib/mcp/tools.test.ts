@@ -124,6 +124,12 @@ describe("get_pricing_facts", () => {
     const out = getPricingFacts({ platform: "deadnote" }, FIXTURE_ROWS, fixtureFacts);
     assert.equal(out.lifecycle, "discontinued");
   });
+
+  it("never reports a free tier for a discontinued tool, whatever its cost tier", () => {
+    const out = getPricingFacts({ platform: "deadnote" }, FIXTURE_ROWS, fixtureFacts);
+    assert.equal(out.platform.cost_tier, "FREE");
+    assert.equal(out.platform.free_tier.available, false);
+  });
 });
 
 describe("find_free_alternatives", () => {
