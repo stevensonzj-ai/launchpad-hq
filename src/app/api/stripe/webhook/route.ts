@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
 import { PRO_PLAN_ENABLED } from "@/lib/site";
 import { processStripeEvent, type StripeRefs, type WebhookDeps } from "@/lib/stripe-webhook";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export const dynamic = "force-dynamic";
 
@@ -68,13 +69,13 @@ const deps: WebhookDeps = {
 export async function POST(request: NextRequest) {
   const whSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!whSecret) {
-    return NextResponse.json({ error: "Webhook not configured" }, { status: 503 });
+    return apiError("unavailable", { message: "Webhook not configured" });
   }
 
   const body = await request.text();
   const sig = request.headers.get("stripe-signature");
   if (!sig) {
-    return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+    return apiError("bad_request", { message: "Missing signature" });
   }
 
   let event: Stripe.Event;
@@ -82,7 +83,7 @@ export async function POST(request: NextRequest) {
     const stripe = getStripe();
     event = stripe.webhooks.constructEvent(body, sig, whSecret);
   } catch {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    return apiError("bad_request", { message: "Invalid signature" });
   }
 
   // Pro is switched off: acknowledge so Stripe stops retrying, change nothing.
@@ -97,8 +98,10 @@ export async function POST(request: NextRequest) {
     }
   } catch (e) {
     console.error("Stripe webhook handler error", e);
-    return NextResponse.json({ received: true, error: "handler" }, { status: 500 });
+    return apiError("internal_error", { message: "The webhook handler failed; Stripe will retry." });
   }
 
   return NextResponse.json({ received: true });
 }
+
+export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);

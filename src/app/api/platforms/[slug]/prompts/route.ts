@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
 import { sendModerationNotification } from "@/lib/email";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 // TODO: reconsider default sort once rating data exists
 export async function GET(
@@ -24,7 +25,7 @@ export async function GET(
     select: { id: true },
   });
   if (!platform) {
-    return NextResponse.json({ error: "Platform not found" }, { status: 404 });
+    return apiError("not_found", { message: "Platform not found" });
   }
 
   const where = { platformId: platform.id, status: ModerationStatus.APPROVED };
@@ -63,57 +64,39 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== "object") {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return apiError("bad_request", { message: "Invalid JSON body" });
   }
 
   const title = typeof body.title === "string" ? body.title.trim() : "";
   if (!title) {
-    return NextResponse.json(
-      { error: "title is required", field: "title" },
-      { status: 400 },
-    );
+    return apiError("bad_request", { message: "title is required", field: "title" });
   }
   if (title.length > 200) {
-    return NextResponse.json(
-      { error: "title must be 200 characters or fewer", field: "title" },
-      { status: 400 },
-    );
+    return apiError("bad_request", { message: "title must be 200 characters or fewer", field: "title" });
   }
 
   const promptText =
     typeof body.promptText === "string" ? body.promptText.trim() : "";
   if (!promptText) {
-    return NextResponse.json(
-      { error: "promptText is required", field: "promptText" },
-      { status: 400 },
-    );
+    return apiError("bad_request", { message: "promptText is required", field: "promptText" });
   }
   if (promptText.length > 10000) {
-    return NextResponse.json(
-      { error: "promptText must be 10000 characters or fewer", field: "promptText" },
-      { status: 400 },
-    );
+    return apiError("bad_request", { message: "promptText must be 10000 characters or fewer", field: "promptText" });
   }
 
   let outputUrl: string | null = null;
   if (body.outputUrl != null && body.outputUrl !== "") {
     if (typeof body.outputUrl !== "string") {
-      return NextResponse.json(
-        { error: "outputUrl must be a string", field: "outputUrl" },
-        { status: 400 },
-      );
+      return apiError("bad_request", { message: "outputUrl must be a string", field: "outputUrl" });
     }
     const trimmed = body.outputUrl.trim();
     if (trimmed.length > 500) {
-      return NextResponse.json(
-        { error: "outputUrl must be 500 characters or fewer", field: "outputUrl" },
-        { status: 400 },
-      );
+      return apiError("bad_request", { message: "outputUrl must be 500 characters or fewer", field: "outputUrl" });
     }
     outputUrl = trimmed || null;
   }
@@ -124,7 +107,7 @@ export async function POST(
     select: { id: true, name: true },
   });
   if (!platform) {
-    return NextResponse.json({ error: "Platform not found" }, { status: 404 });
+    return apiError("not_found", { message: "Platform not found" });
   }
 
   // status defaults to PENDING per schema — submissions wait for manual approval.
@@ -157,3 +140,5 @@ export async function POST(
 
   return NextResponse.json(created);
 }
+
+export const { PUT, PATCH, DELETE } = methodsNotAllowed(["GET", "POST"]);

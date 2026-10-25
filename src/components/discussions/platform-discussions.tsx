@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { apiErrorMessage } from "@/lib/api-error";
 import { useAuth } from "@clerk/nextjs";
 import { ChevronUp, Flag, Loader2, MessageCircle } from "lucide-react";
 
@@ -77,7 +78,7 @@ export function PlatformDiscussions({
     });
     if (!res.ok) {
       const d = await res.json().catch(() => ({}));
-      setError(d.error || "Failed");
+      setError(apiErrorMessage(d, "Failed"));
       return;
     }
     setTitle("");

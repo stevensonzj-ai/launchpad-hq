@@ -3,15 +3,16 @@ import { getOrCreateDbUser } from "@/lib/auth-db";
 import { getStripe } from "@/lib/stripe";
 import { PRO_PLAN_ENABLED } from "@/lib/site";
 import { getAppBaseUrl } from "@/lib/app-url";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export async function POST() {
   if (!PRO_PLAN_ENABLED) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return apiError("not_found", { message: "Not found" });
   }
 
   const user = await getOrCreateDbUser();
   if (!user?.stripeCustomerId) {
-    return NextResponse.json({ error: "No billing account" }, { status: 400 });
+    return apiError("bad_request", { message: "No billing account" });
   }
 
   const origin = getAppBaseUrl();
@@ -23,3 +24,5 @@ export async function POST() {
 
   return NextResponse.json({ url: session.url });
 }
+
+export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);

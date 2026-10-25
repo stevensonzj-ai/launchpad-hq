@@ -69,6 +69,9 @@ describe("middleware matcher", () => {
       "/advertise(.*)",
       "/ai-of-the-week(.*)",
       "/connector(.*)",
+      "/about(.*)",
+      "/contact(.*)",
+      "/developers(.*)",
       "/sign-in(.*)",
       "/sign-up(.*)",
       "/api(.*)",
@@ -78,6 +81,7 @@ describe("middleware matcher", () => {
       "/llms-full.txt",
       "/mcp",
       "/data(.*)",
+      "/md(.*)",
     ]);
   });
 

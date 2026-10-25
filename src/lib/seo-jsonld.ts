@@ -185,3 +185,40 @@ export function buildTutorialIndexStructuredData(
     })),
   };
 }
+
+/**
+ * Homepage identity: Organization + WebSite. contactPoint is email only and
+ * there is deliberately no address of any kind. No sameAs: the site links
+ * no official social profiles. The SearchAction targets Discover's real `q`
+ * search parameter.
+ */
+export function buildSiteStructuredData(input: { email: string; description: string }): JsonLdNode {
+  const orgId = absoluteUrl("/#organization");
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": orgId,
+        name: "Launchpad HQ",
+        url: absoluteUrl("/"),
+        logo: absoluteUrl("/brand/launchpad-hq-512.png"),
+        description: input.description,
+        contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: input.email },
+      },
+      {
+        "@type": "WebSite",
+        "@id": absoluteUrl("/#website"),
+        name: "Launchpad HQ",
+        url: absoluteUrl("/"),
+        inLanguage: "en",
+        publisher: { "@id": orgId },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: { "@type": "EntryPoint", urlTemplate: `${absoluteUrl("/discover")}?q={search_term_string}` },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  };
+}

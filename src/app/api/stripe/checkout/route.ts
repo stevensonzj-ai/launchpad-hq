@@ -4,23 +4,21 @@ import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 import { PRO_PLAN_ENABLED } from "@/lib/site";
 import { getAppBaseUrl } from "@/lib/app-url";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export async function POST() {
   if (!PRO_PLAN_ENABLED) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return apiError("not_found", { message: "Not found" });
   }
 
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const priceId = process.env.STRIPE_PRICE_ID;
   if (!priceId) {
-    return NextResponse.json(
-      { error: "Subscription is not configured (STRIPE_PRICE_ID)" },
-      { status: 503 },
-    );
+    return apiError("unavailable", { message: "Subscriptions are not available right now." });
   }
 
   const origin = getAppBaseUrl();
@@ -55,3 +53,5 @@ export async function POST() {
 
   return NextResponse.json({ url: session.url });
 }
+
+export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);

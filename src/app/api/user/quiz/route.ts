@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export async function GET() {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const prefs = await prisma.userPreferences.findUnique({
@@ -21,13 +22,13 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const body = await request.json();
   const answers = body.answers;
   if (!answers || typeof answers !== "object") {
-    return NextResponse.json({ error: "Invalid answers" }, { status: 400 });
+    return apiError("bad_request", { message: "Invalid answers" });
   }
 
   await prisma.userPreferences.upsert({
@@ -48,3 +49,5 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ ok: true });
 }
+
+export const { PUT, PATCH, DELETE } = methodsNotAllowed(["GET", "POST"]);

@@ -7,6 +7,9 @@ import { Header } from "@/components/layout/header";
 import { LaunchpadArt } from "@/components/brand/launchpad-art";
 import { GoalEmblem } from "@/components/brand/goal-emblem";
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { buildSiteStructuredData } from "@/lib/seo-jsonld";
+import { CONTACT_EMAIL, HOME_ABOUT, HOME_DEVELOPERS, HOME_FEATURED_WORKFLOWS } from "@/lib/site-copy";
 
 export const revalidate = 3600;
 
@@ -29,9 +32,10 @@ const goals = [
 
 export default async function HomePage() {
   const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
-  const featuredWorkflows = getAllWorkflows().filter((w) => ["blog-post-generator", "image-generation"].includes(w.slug));
+  const featuredWorkflows = getAllWorkflows().filter((w) => HOME_FEATURED_WORKFLOWS.includes(w.slug));
   return (
     <>
+      <JsonLd data={buildSiteStructuredData({ email: CONTACT_EMAIL, description: HOME_ABOUT[0].paragraphs[0] })} />
       <Header />
       <main className="lp-stars lp-home-sky relative isolate overflow-hidden bg-gray-950">
         <section className="relative mx-auto max-w-7xl px-5 pb-20 pt-12 text-center sm:px-8 sm:pb-24 sm:pt-16 lg:pt-14">
@@ -86,6 +90,27 @@ export default async function HomePage() {
             <span>{platformCount} tools across {categoryCount} categories</span>
             <Link href="/discover" className="inline-flex min-h-11 items-center gap-2 text-gray-200 hover:text-orange-300">Browse the directory <ArrowRight className="h-4 w-4" /></Link>
             <Link href="/workflows" className="inline-flex min-h-11 items-center gap-2 text-gray-200 hover:text-orange-300">All workflows <ArrowRight className="h-4 w-4" /></Link>
+          </div>
+        </section>
+        <section aria-labelledby="about-heading" className="relative mx-auto max-w-7xl border-t border-gray-800 px-5 pb-16 pt-12 sm:px-8">
+          <h2 id="about-heading" className="sr-only">About Launchpad HQ</h2>
+          <div className="grid gap-8 text-sm leading-relaxed text-gray-300 md:grid-cols-3">
+            {HOME_ABOUT.map((block) => (
+              <div key={block.heading}>
+                <h3 className="mb-2 text-base font-semibold text-white">{block.heading}</h3>
+                {block.paragraphs.map((p) => <p key={p}>{p}</p>)}
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-sm text-gray-400">
+            <Link href="/about" className="text-orange-400 hover:underline">More about how we work</Link>
+          </p>
+          <div className="mt-10 rounded-2xl border border-gray-800 p-5 text-sm text-gray-300">
+            <h3 className="mb-2 text-base font-semibold text-white">{HOME_DEVELOPERS.heading}</h3>
+            <p>{HOME_DEVELOPERS.paragraphs[0]}</p>
+            <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+              {HOME_DEVELOPERS.links?.map((l) => <li key={l.href}><a href={l.href} className="text-orange-400 hover:underline">{l.label}</a></li>)}
+            </ul>
           </div>
         </section>
       </main>

@@ -16,6 +16,9 @@ export const SITEMAP_STATIC_PUBLIC_PATHS = [
   "/how-we-make-money",
   "/advertise",
   "/connector",
+  "/about",
+  "/contact",
+  "/developers",
 ] as const;
 
 export const SITEMAP_PRIVATE_PATHS = [

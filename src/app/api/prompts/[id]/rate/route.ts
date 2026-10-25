@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export async function POST(
   request: NextRequest,
@@ -9,21 +10,21 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const { id } = await params;
   const body = await request.json();
   const stars = Math.min(5, Math.max(1, parseInt(String(body.stars), 10) || 0));
   if (!stars) {
-    return NextResponse.json({ error: "Stars 1-5 required" }, { status: 400 });
+    return apiError("bad_request", { message: "Stars 1-5 required" });
   }
 
   const prompt = await prisma.prompt.findFirst({
     where: { id, status: ModerationStatus.APPROVED },
   });
   if (!prompt) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return apiError("not_found", { message: "Not found" });
   }
 
   const existing = await prisma.promptRating.findFirst({
@@ -65,3 +66,5 @@ export async function POST(
     ratingCount: updated?.ratingCount ?? 0,
   });
 }
+
+export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);

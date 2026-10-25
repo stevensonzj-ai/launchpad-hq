@@ -2,6 +2,7 @@ import { getToolFacts } from "@/data/facts";
 import { feedJson, feedNotFound, feedRedirect, withFeedErrors } from "@/lib/public-data/http";
 import { loadFeed } from "@/lib/public-data/load";
 import { resolveToolFile, toPublicTool } from "@/lib/public-data/serialize";
+import { FEED_READ_ONLY } from "@/lib/public-data/read-only";
 
 // Next 16 has no `[slug].json` segments, so the file name carries ".json".
 export const dynamic = "force-dynamic";
@@ -20,3 +21,4 @@ export function GET(request: Request, { params }: { params: Promise<{ file: stri
 }
 
 export const HEAD = GET;
+export const { POST, PUT, PATCH, DELETE } = FEED_READ_ONLY;

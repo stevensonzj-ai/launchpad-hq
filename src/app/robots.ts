@@ -46,6 +46,8 @@ export default function robots(): MetadataRoute.Robots {
         "/for-you",
         "/quiz/results",
         "/mcp",
+        // Markdown twins of public pages; the HTML URLs are canonical.
+        "/md",
       ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,

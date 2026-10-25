@@ -3,7 +3,7 @@ import { isPublishedVerified } from "@/data/facts/walk";
 import type { ToolFacts } from "@/data/facts/types";
 import { getToolFacts } from "@/data/facts/registry";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
-import { absoluteUrl, SITE_IS_PUBLIC } from "@/lib/site";
+import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_IS_PUBLIC } from "@/lib/site";
 
 export const META_DESCRIPTION_MAX = 160;
 export const META_DESCRIPTION_TARGET_MIN = 150;
@@ -36,9 +36,12 @@ export function publicPageMetadata(input: {
     description,
     alternates: { canonical: url },
     openGraph: {
+      type: "website",
+      siteName: "Launchpad HQ",
       title: input.title,
       description,
       url,
+      images: [DEFAULT_OG_IMAGE],
     },
     twitter: {
       title: input.title,

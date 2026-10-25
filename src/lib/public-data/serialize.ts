@@ -19,6 +19,7 @@ import {
   stripInlineCitations,
   type DisplayPlan,
 } from "./pricing";
+import { FEED_CHANGELOG } from "./changelog";
 import {
   DATA_BASE,
   SCHEMA_VERSION,
@@ -414,8 +415,10 @@ export function toPublicIndex(catalog: Pick<PublicCatalogT, "generated_at" | "co
       models_compare: absoluteUrl(`${DATA_BASE}/models/compare/claude-vs-gpt.json`),
       quiz: absoluteUrl(`${DATA_BASE}/quiz.json`),
       llms_full: absoluteUrl("/llms-full.txt"),
+      developers: absoluteUrl("/developers"),
     },
     cache: FEED_CACHE_NOTE,
+    changelog: FEED_CHANGELOG.map((entry) => ({ ...entry })),
     attribution: FEED_ATTRIBUTION,
     license: FEED_LICENSE,
   };

@@ -1,5 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
+import { markdownRewriteTarget, RSC_REQUEST_HEADERS } from "@/lib/markdown/negotiate";
 
 /** Browse-first: most routes stay public; only gated areas require auth. */
 const isPublicRoute = createRouteMatcher([
@@ -21,6 +22,9 @@ const isPublicRoute = createRouteMatcher([
   "/advertise(.*)",
   "/ai-of-the-week(.*)",
   "/connector(.*)",
+  "/about(.*)",
+  "/contact(.*)",
+  "/developers(.*)",
   "/sign-in(.*)",
   "/sign-up(.*)",
   "/api(.*)",
@@ -34,6 +38,10 @@ const isPublicRoute = createRouteMatcher([
   // Public JSON feed. Also excluded from the matcher below, so Clerk never
   // adds cookies or private cache headers to it.
   "/data(.*)",
+  // Markdown versions of public pages (src/app/md). Normally reached by the
+  // Accept: text/markdown rewrite below, which skips Clerk; listed so a
+  // direct request is not sent to sign-in.
+  "/md(.*)",
 ]);
 
 /**
@@ -50,7 +58,7 @@ const isPublicRoute = createRouteMatcher([
  */
 const STRIPPED_CATEGORY_SLUGS = new Set(["industry-specific-ai", "audio-music-voice-ai"]);
 
-export default clerkMiddleware(async (auth, request) => {
+const clerk = clerkMiddleware(async (auth, request) => {
   // Run the category-strip redirect before auth — fires for signed-out users too.
   if (request.nextUrl.pathname === "/discover") {
     const category = request.nextUrl.searchParams.get("category");
@@ -65,6 +73,29 @@ export default clerkMiddleware(async (auth, request) => {
     await auth.protect();
   }
 });
+
+/**
+ * Markdown negotiation runs first and, when it applies, returns before Clerk:
+ * only GET/HEAD, never RSC or prefetch requests, only when Accept names
+ * text/markdown and prefers it to text/html, and only for pages with a
+ * Markdown version (or certain 404s). The rewrite target is a separate
+ * internal path (/md/...), so the CDN never stores Markdown under the HTML
+ * page's cache entry. Everything else goes to Clerk exactly as before.
+ */
+export default function proxy(request: NextRequest, event: NextFetchEvent) {
+  const target = markdownRewriteTarget({
+    method: request.method,
+    pathname: request.nextUrl.pathname,
+    accept: request.headers.get("accept"),
+    isRscRequest: RSC_REQUEST_HEADERS.some((name) => request.headers.has(name)),
+  });
+  if (target) {
+    const url = request.nextUrl.clone();
+    url.pathname = target;
+    return NextResponse.rewrite(url);
+  }
+  return clerk(request, event);
+}
 
 export const config = {
   matcher: [

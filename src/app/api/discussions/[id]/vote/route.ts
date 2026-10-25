@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
+import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 export async function POST(
   _request: NextRequest,
@@ -9,7 +10,7 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return apiError("unauthorized");
   }
 
   const { id } = await params;
@@ -17,7 +18,7 @@ export async function POST(
     where: { id, status: ModerationStatus.APPROVED },
   });
   if (!discussion) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return apiError("not_found", { message: "Not found" });
   }
 
   const existing = await prisma.discussionVote.findFirst({
@@ -49,3 +50,5 @@ export async function POST(
   const d = await prisma.discussion.findUnique({ where: { id } });
   return NextResponse.json({ upvotes: d?.upvotes ?? 0, voted: true });
 }
+
+export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);
