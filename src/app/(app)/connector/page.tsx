@@ -56,21 +56,24 @@ export default function ConnectorPage() {
         <li>
           <h2 className="text-xl font-semibold text-white">2. Add it to Claude</h2>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-gray-400">
-            <li>In Claude, open the Connectors settings.</li>
+            <li>
+              In Claude, go to <strong className="text-gray-200">Customize &gt; Connectors</strong>.
+            </li>
             <li>
               Choose <strong className="text-gray-200">Add custom connector</strong>.
             </li>
             <li>Give it a name, such as Launchpad HQ, and paste the URL from step 1.</li>
             <li>
-              If Claude asks about signing in, pick the option for no sign-in, then add the
-              connector.
+              Leave the OAuth fields empty (no sign-in is needed), then click{" "}
+              <strong className="text-gray-200">Add</strong>. On the Free plan you can add one
+              custom connector.
             </li>
             <li>In a chat, turn the connector on from the chat&apos;s tools or connectors menu.</li>
           </ol>
           <p className="mt-2 text-sm text-gray-400">
             Menu names vary between Claude apps and plans. See{" "}
             <a
-              href="https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp"
+              href="https://claude.com/docs/connectors/custom/add-unlisted"
               className="text-orange-400 hover:underline"
             >
               Claude&apos;s guide to custom connectors
@@ -160,7 +163,8 @@ export default function ConnectorPage() {
           <p className="mt-2 text-sm text-gray-400">
             Each request logs one line: the tool used, the text sent to it (up to 200
             characters), the result count, timing, success, and the assistant app&apos;s
-            self-reported name. It doesn&apos;t log IP addresses, cookies or your conversation.
+            self-reported name. These lines don&apos;t include IP addresses, cookies or your
+            conversation, though our host&apos;s own request logs record IP addresses.
             Details are in the{" "}
             <Link href="/privacy#mcp" className="text-orange-400 hover:underline">
               privacy policy
