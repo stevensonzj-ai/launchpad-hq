@@ -19,6 +19,17 @@ const BILLING_DURATION: Partial<Record<NonNullable<NormalizedPlan["period"]>, st
 };
 
 /**
+ * A free plan written as just "Free" has no currency of its own. Borrow the
+ * one every other priced plan uses; if they disagree or there are none,
+ * return null and the free Offer is left out (Google flags a missing one).
+ */
+function freePlanCurrency(plans: NormalizedPlan[]): NormalizedPlan["currency"] {
+  const others = plans.filter((p) => !p.is_free && p.amount !== null).map((p) => p.currency);
+  const [first] = others;
+  return first && others.every((c) => c === first) ? first : null;
+}
+
+/**
  * One Offer per priced plan, from the feed's normalized plans so the
  * JSON-LD price always equals `plans[].amount`. Plans without a numeric
  * amount ("Custom", "See pricing") are skipped; currency only when known.
@@ -26,8 +37,10 @@ const BILLING_DURATION: Partial<Record<NonNullable<NormalizedPlan["period"]>, st
 export function planOffers(plans: NormalizedPlan[]): JsonLdNode[] {
   return plans.flatMap((plan) => {
     if (plan.amount === null) return [];
+    const known = plan.currency ?? (plan.is_free ? freePlanCurrency(plans) : null);
+    if (plan.is_free && !known) return [];
     const price = String(plan.amount);
-    const currency = plan.currency ? { priceCurrency: plan.currency } : {};
+    const currency = known ? { priceCurrency: known } : {};
     const offer: JsonLdNode = { "@type": "Offer", name: plan.name, price, ...currency };
     const duration = plan.period ? BILLING_DURATION[plan.period] : undefined;
     if (duration) {

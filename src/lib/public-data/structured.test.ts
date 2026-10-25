@@ -34,9 +34,16 @@ describe("JSON-LD offers match the feed", () => {
       const { out, software } = softwareNode(row.slug);
       const offers = (software.offers ?? []) as Array<Record<string, unknown>>;
       const priced = out.plans.filter((p) => p.amount !== null);
+      // A currency-less free plan borrows the paid plans' single currency, or is dropped.
+      const paid = new Set(priced.filter((p) => !p.is_free).map((p) => p.currency));
+      const borrowed = paid.size === 1 ? [...paid][0] : null;
+      const expected = priced
+        .map((p) => [p.name, p.amount, p.currency ?? (p.is_free ? borrowed : null), p.is_free] as const)
+        .filter(([, , currency, isFree]) => !isFree || currency !== null)
+        .map(([name, amount, currency]) => [name, amount, currency]);
       assert.deepEqual(
         offers.map((o) => [o.name, Number(o.price), o.priceCurrency ?? null]),
-        priced.map((p) => [p.name, p.amount, p.currency]),
+        expected,
         row.slug,
       );
       for (const offer of offers) assert.equal(typeof offer.price, "string", row.slug);
@@ -67,6 +74,58 @@ describe("JSON-LD offers match the feed", () => {
         ["Pro", "20", "USD", "P1M"],
         ["Annual", "200", "EUR", "P1Y"],
         ["Images", "0.048", "USD", undefined],
+      ],
+    );
+  });
+});
+
+describe("JSON-LD free plan currency", () => {
+  const offersFor = (plans: { name: string; price: string; period: string }[]) =>
+    planOffers(normalizePlans(plans.map((p) => ({ ...p, limits: "" }))).plans).map((o) => [
+      o.name,
+      o.price,
+      o.priceCurrency,
+    ]);
+
+  it("borrows the paid plans' currency when they all agree", () => {
+    assert.deepEqual(
+      offersFor([
+        { name: "Free", price: "Free", period: "" },
+        { name: "Pro", price: "$20", period: "month" },
+        { name: "Team", price: "$30", period: "month" },
+      ]),
+      [
+        ["Free", "0", "USD"],
+        ["Pro", "20", "USD"],
+        ["Team", "30", "USD"],
+      ],
+    );
+  });
+
+  it("omits the free Offer when currencies disagree or there is no paid plan", () => {
+    assert.deepEqual(
+      offersFor([
+        { name: "Free", price: "Free", period: "" },
+        { name: "Pro", price: "$20", period: "month" },
+        { name: "EU", price: "€18", period: "month" },
+      ]),
+      [
+        ["Pro", "20", "USD"],
+        ["EU", "18", "EUR"],
+      ],
+    );
+    assert.deepEqual(offersFor([{ name: "Free", price: "Free", period: "" }]), []);
+  });
+
+  it("keeps a free plan's own currency", () => {
+    assert.deepEqual(
+      offersFor([
+        { name: "Free", price: "€0", period: "month" },
+        { name: "Pro", price: "$20", period: "month" },
+      ]),
+      [
+        ["Free", "0", "EUR"],
+        ["Pro", "20", "USD"],
       ],
     );
   });

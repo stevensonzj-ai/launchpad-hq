@@ -18,7 +18,7 @@ import {
 import { FEED_ROWS, GENERATED_AT, HIDDEN_NAME, feedContext, feedFacts } from "./fixtures";
 import { tablePriceText } from "./pricing";
 import { PublicCatalog, PublicIndex, PublicTool } from "./schema";
-import { resolveToolFile, toPublicCatalog, toPublicIndex, toPublicTool } from "./serialize";
+import { listedRelatedRows, resolveToolFile, toPublicCatalog, toPublicIndex, toPublicTool } from "./serialize";
 
 const ctx = feedContext();
 const tool = (slug: string) => {
@@ -149,6 +149,26 @@ describe("visibility", () => {
     }
   });
 
+  it("page Alternatives / Works Well With cards match the feed", () => {
+    // Emulates the page query: case-insensitive name match plus listedPlatformWhere().
+    const hidden = new Set(hiddenPlatformSlugs());
+    const pageCards = (names: string[], self: string) => {
+      const wanted = new Set(names.map((n) => n.toLowerCase()));
+      const rows = FEED_ROWS.filter((r) => wanted.has(r.name.toLowerCase()) && !hidden.has(r.slug));
+      return listedRelatedRows(rows, self, feedFacts).map((r) => r.slug).sort();
+    };
+    const slugs = (refs: { slug: string }[]) => refs.map((r) => r.slug).sort();
+    assert.deepEqual(pageCards(FEED_ROWS.find((r) => r.slug === "pricey")!.directAlternatives, "pricey"), [
+      "freenote",
+      "notey",
+    ]);
+    for (const row of FEED_ROWS) {
+      const t = tool(row.slug);
+      assert.deepEqual(pageCards(row.directAlternatives, row.slug), slugs(t.alternatives), row.slug);
+      assert.deepEqual(pageCards(row.complementaryTools, row.slug), slugs(t.works_well_with), row.slug);
+    }
+  });
+
   it("resolves tool files: .json required, hidden 404, aliases redirect", () => {
     assert.equal(resolveToolFile("notey.json", FEED_ROWS).kind, "tool");
     assert.equal(resolveToolFile("notey", FEED_ROWS).kind, "not_found");
@@ -187,7 +207,8 @@ describe("denylist", () => {
     assert.deepEqual(deniedKeys(cat), []);
     assert.deepEqual(deniedKeys(index), []);
     for (const t of cat.tools) assert.equal(t.sponsored, false);
-    assert.ok(!/launchpadhq\.admin|@gmail\.com/i.test(JSON.stringify([cat, index])));
+    // Any address at all (x@y.tld), not just the ones we know about.
+    assert.doesNotMatch(JSON.stringify([cat, index]), /[\w.+-]+@[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}/i);
   });
 });
 

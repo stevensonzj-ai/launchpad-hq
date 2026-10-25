@@ -16,7 +16,7 @@ import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorial
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildPlatformMetadata } from "@/lib/seo-metadata";
 import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
-import { dataAsOf, publicToolCore } from "@/lib/public-data/serialize";
+import { dataAsOf, listedRelatedRows, publicToolCore } from "@/lib/public-data/serialize";
 import { JsonLd } from "@/components/seo/json-ld";
 import { GroupedCatalogLinks } from "@/components/seo/catalog-link-list";
 import {
@@ -90,19 +90,25 @@ export default async function PlatformPage({
   const user = await getOrCreateDbUser();
   const isSignedIn = user !== null;
 
-  const [alternatives, complementary, favoriteRows, sameCategory] = await Promise.all([
+  // Same rule as the JSON feed's alternatives: hidden tools are dropped in
+  // the query, discontinued ones and self by listedRelatedRows (max four).
+  const [alternativeRows, complementaryRows, favoriteRows, sameCategory] = await Promise.all([
     platform.directAlternatives.length
       ? prisma.platform.findMany({
-          where: { name: { in: platform.directAlternatives, mode: "insensitive" } },
+          where: {
+            name: { in: platform.directAlternatives, mode: "insensitive" },
+            ...listedPlatformWhere(),
+          },
           include: { category: true },
-          take: 4,
         })
       : Promise.resolve([]),
     platform.complementaryTools.length
       ? prisma.platform.findMany({
-          where: { name: { in: platform.complementaryTools, mode: "insensitive" } },
+          where: {
+            name: { in: platform.complementaryTools, mode: "insensitive" },
+            ...listedPlatformWhere(),
+          },
           include: { category: true },
-          take: 4,
         })
       : Promise.resolve([]),
     user
@@ -122,6 +128,8 @@ export default async function PlatformPage({
       take: 12,
     }),
   ]);
+  const alternatives = listedRelatedRows(alternativeRows, platform.slug, getToolFacts);
+  const complementary = listedRelatedRows(complementaryRows, platform.slug, getToolFacts);
   const favoriteIds = new Set(favoriteRows.map((f) => f.platformId));
   const isFavorited = favoriteIds.has(platform.id);
   const relatedCandidates = sameCategory.map((row) => ({

@@ -60,6 +60,25 @@ function cleanOrNull(text: string | null | undefined): string | null {
   return text?.trim() ? stripInlineCitations(text) || null : null;
 }
 
+/** The feed's discontinued rule: the fact file's lifecycle, nothing else. */
+export function isDiscontinuedTool(facts: ToolFacts | undefined): boolean {
+  return facts?.lifecycle === "discontinued";
+}
+
+/**
+ * The page's Alternatives / Works Well With rows, filtered by the same rule
+ * as the feed's `alternatives`: no hidden, discontinued or self, up to four.
+ */
+export function listedRelatedRows<T extends { slug: string }>(
+  rows: T[],
+  self: string,
+  facts: FactsLookup,
+): T[] {
+  return rows
+    .filter((r) => r.slug !== self && !isHiddenPlatform(r.slug) && !isDiscontinuedTool(facts(r.slug)))
+    .slice(0, 4);
+}
+
 export function buildFeedContext(
   rows: CatalogRow[],
   facts: FactsLookup,
@@ -77,7 +96,7 @@ export function buildFeedContext(
   return {
     generatedAt: opts.generatedAt,
     listedSlugs: new Set(listed.map((row) => row.slug)),
-    isDiscontinued: (slug) => facts(slug)?.lifecycle === "discontinued",
+    isDiscontinued: (slug) => isDiscontinuedTool(facts(slug)),
     resolveName: (name) => byName.get(norm(name)),
     hasGuide: opts.hasGuide ?? (() => false),
   };
@@ -120,7 +139,7 @@ export function publicToolCore(row: CatalogRow, facts: ToolFacts | undefined) {
   const view = overlayRow(row, facts);
   // A discontinued product keeps its description and sources, but not
   // pricing, apps or limits that no longer apply (same as the page).
-  const retired = facts?.lifecycle === "discontinued";
+  const retired = isDiscontinuedTool(facts);
   const pricing = retired ? null : normalizePlans(pagePlans(row, facts));
   const summary = freeTierSummary(facts, view.freeTierFeatures);
   const tier = row.costTier.toUpperCase();
