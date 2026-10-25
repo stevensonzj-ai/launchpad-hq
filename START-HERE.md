@@ -496,6 +496,7 @@ src/
 | **Sentry** — org `launchpad-hq`, project `javascript-nextjs` | Error monitoring and tracing. DSN hardcoded (correctly). | Owner |
 | **Google Workspace** | `zach@launchpadhq.io`. Owned by a dedicated Google account, not the personal one, for reasons documented in the Session 9 archive. | Owner |
 | **Google Search Console** | Domain property, Cloudflare-DNS verified. **Shows zero query data and will continue to** until pages index. `SITE_IS_PUBLIC` in `src/lib/site.ts` is now `true` (4.25), so data can start to accrue — expect weeks to months before it is meaningful. | Owner |
+| **IndexNow** (Bing, Yandex, Seznam, Naver, …) | Free public ping, no account or credentials. Key `dfc92150…` lives in `src/lib/indexnow.ts` and in the static key file `public/dfc92150f97e7a592dd3592b61d09450.txt` (content is exactly the key; a unit test keeps them equal). The proxy matcher skips `*.txt`, so Clerk never touches the file, and the sitemap does not list it. `scripts/indexnow-submit.ts` reads the live sitemap, diffs against a state file outside the repo (default `/workspace/launchpad-indexnow/state.json`; pass `--state` on Windows) and POSTs new/changed URLs. Dry run by default. On the box: `cd <box checkout> && npx tsx scripts/indexnow-submit.ts --submit` (changed URLs) or `--all --submit` (everything). | Owner |
 | **Claude project "LaunchPad HQ"** | Where all 24 archived documents came from. **You cannot see it.** It may still be receiving updates that never reach this repository. | Owner |
 
 ### What is explicitly NOT in this repository
