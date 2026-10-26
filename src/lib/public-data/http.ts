@@ -2,7 +2,9 @@
 import { apiErrorBody, apiErrorStatus, type ApiErrorCode, type ApiErrorOptions } from "@/lib/api-error";
 import { absoluteUrl } from "@/lib/site";
 
-const HOURLY = "public, s-maxage=3600, stale-while-revalidate=86400";
+/** CDN caching for public, visitor-independent reads (/data/v1, public /api GETs). */
+export const PUBLIC_HOURLY_CACHE = "public, s-maxage=3600, stale-while-revalidate=86400";
+const HOURLY = PUBLIC_HOURLY_CACHE;
 // Short so a newly added tool stops 404ing within a minute or two.
 const NOT_FOUND_CACHE = "public, s-maxage=60, stale-while-revalidate=60";
 

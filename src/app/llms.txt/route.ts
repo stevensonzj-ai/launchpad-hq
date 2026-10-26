@@ -3,6 +3,7 @@ import { WORKFLOWS } from "@/data/workflows";
 import { SITE_URL } from "@/lib/site";
 import { getActivePlacement } from "@/data/sponsors";
 import { compareLlmsLines, listedComparePages } from "@/data/compare/view";
+import { PUBLIC_HOURLY_CACHE } from "@/lib/public-data/http";
 
 export function GET() {
   const tutorials = [...listRegisteredTutorials()].sort((a, b) =>
@@ -110,6 +111,8 @@ ${tutorialLinks}
   return new Response(body, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
+      // No DB here, but crawlers fetch it often; let the CDN answer.
+      "Cache-Control": PUBLIC_HOURLY_CACHE,
     },
   });
 }
