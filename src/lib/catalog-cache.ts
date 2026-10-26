@@ -64,7 +64,7 @@ export function reviveDates<T>(value: T): T {
  * selects change). Keying by deployment means a deploy starts from a cold
  * cache instead of serving the previous build's rows for up to an hour.
  */
-export function cacheGeneration(env: NodeJS.ProcessEnv = process.env): string {
+export function cacheGeneration(env: Record<string, string | undefined> = process.env): string {
   return env.VERCEL_DEPLOYMENT_ID || env.VERCEL_GIT_COMMIT_SHA || "local";
 }
 
@@ -88,12 +88,14 @@ export function cachedCatalogRead<A extends unknown[], R>(
       tags: catalogTags(slugTags(...args)),
       revalidate: CATALOG_REVALIDATE_SECONDS,
     });
+    let result: R;
     try {
-      return reviveDates(await cached(...args));
+      result = await cached(...args);
     } catch (error) {
-      if (isMissingIncrementalCache(error)) return read(...args);
-      throw error;
+      if (!isMissingIncrementalCache(error)) throw error;
+      result = await read(...args);
     }
+    return reviveDates(result);
   };
 }
 
