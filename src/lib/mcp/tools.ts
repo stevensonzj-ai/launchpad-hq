@@ -673,7 +673,8 @@ export function findFreeAlternatives(
       const ref = toPlatformRef(c.row, f);
       const why =
         c.free === 2 && f?.freeTier
-          ? `verified free tier: ${stripInlineCitations(f.freeTier.value.summary)}; ${c.reason}`
+          ? // Say "verified" only when it is: gathered-but-unchecked facts are labelled as such.
+            `${factVerification(f.freeTier) === "verified" ? "verified free tier" : "sourced free tier (unverified)"}: ${stripInlineCitations(f.freeTier.value.summary)}; ${c.reason}`
           : `catalog lists a ${c.row.costTier.toLowerCase()} cost tier (unverified); ${c.reason}`;
       // No sourced tradeoff field exists yet (pros/cons carry no source), so
       // per the brief this stays null rather than inventing marketing text.

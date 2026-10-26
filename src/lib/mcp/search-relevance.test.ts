@@ -240,6 +240,12 @@ describe("find_free_alternatives uses task tags", () => {
     for (const a of out.alternatives.filter((x) => ["quillbot", "trinka-ai", "paperpal"].includes(x.slug))) {
       assert.match(a.why, /same tasks as Grammarly/);
     }
+    // A gathered-but-unchecked free-tier fact is never called verified.
+    for (const a of out.alternatives) {
+      const fact = facts(a.slug)?.freeTier;
+      if (fact?.status === "unverified") assert.match(a.why, /^sourced free tier \(unverified\): /, a.slug);
+      if (a.why.startsWith("verified free tier")) assert.equal(fact?.status, "verified", a.slug);
+    }
   });
 });
 
