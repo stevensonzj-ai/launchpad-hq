@@ -156,6 +156,20 @@ export function PlatformToolOverview({
             </section>
           ) : null}
 
+          {facts?.features?.value.length ? (
+            <section className="lp-overview-panel">
+              <div className="mb-2 flex items-center gap-1">
+                <h2 className="text-lg font-semibold text-white">{facts.features.label ?? "Features"}</h2>
+                <FactCite fact={facts.features} />
+              </div>
+              <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed text-gray-200">
+                {facts.features.value.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
           <PlatformUsageLimits fact={usageLimitsFact} />
 
           <PlatformMobileSection

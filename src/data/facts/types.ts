@@ -123,6 +123,12 @@ export type ToolFacts = {
   platforms?: Fact<string[]>;
   apps?: Fact<ToolApps>;
   models?: Fact<string[]>;
+  /**
+   * Notable features and dated product changes from one official page (for
+   * example a new model on the API, or a changed default). One sentence per
+   * entry; write forward-looking items as the vendor's stated plan with a date.
+   */
+  features?: Fact<string[]>;
   privacy?: Fact<ToolPrivacy>;
   usageLimits?: Fact<ToolUsageLimits>;
   pros?: string[];
@@ -142,6 +148,7 @@ export const FACT_VALUE_KEYS = [
   "platforms",
   "apps",
   "models",
+  "features",
   "privacy",
   "usageLimits",
 ] as const;
