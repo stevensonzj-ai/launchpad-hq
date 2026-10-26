@@ -1,22 +1,23 @@
 import { prisma } from "@/lib/db";
+import { cachedCatalogRead, withMemoryLayer } from "@/lib/catalog-cache";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import type { CatalogRow } from "./tools";
 
 /**
  * Read-only catalog loader for the MCP connector and the /data/v1 feed.
  *
- * ONE select-only `findMany` per warm instance, cached in memory for 10
- * minutes; all searching happens in memory. Nothing user-related is
- * selected (no reviews, prompts, discussions, favorites or users), and
- * hidden/duplicate platforms are excluded the same way Discover does.
+ * ONE select-only `findMany`, cached in two layers: Next's shared data
+ * cache (tag `catalog`, 1 hour, src/lib/catalog-cache.ts) and, in front of
+ * it, 5 minutes of per-instance memory. All searching happens in memory.
+ * /mcp and every /data/v1 route read this same loader, so they cannot drift
+ * by more than the memory TTL. Nothing user-related is selected (no
+ * reviews, prompts, discussions, favorites or users), and hidden/duplicate
+ * platforms are excluded the same way Discover does.
  */
-export const CATALOG_TTL_MS = 10 * 60 * 1000;
+export const CATALOG_MEMORY_TTL_MS = 5 * 60 * 1000;
 
-let cache: { rows: CatalogRow[]; loadedAt: number } | null = null;
-
-export async function loadCatalog(now = Date.now()): Promise<CatalogRow[]> {
-  if (cache && now - cache.loadedAt < CATALOG_TTL_MS) return cache.rows;
-  const rows = await prisma.platform.findMany({
+const readCatalog = cachedCatalogRead("mcp-catalog", (): Promise<CatalogRow[]> =>
+  prisma.platform.findMany({
     where: listedPlatformWhere(),
     select: {
       slug: true,
@@ -54,7 +55,7 @@ export async function loadCatalog(now = Date.now()): Promise<CatalogRow[]> {
       androidAppUrl: true,
     },
     orderBy: { slug: "asc" },
-  });
-  cache = { rows, loadedAt: now };
-  return rows;
-}
+  }),
+);
+
+export const loadCatalog: () => Promise<CatalogRow[]> = withMemoryLayer(readCatalog, CATALOG_MEMORY_TTL_MS);
