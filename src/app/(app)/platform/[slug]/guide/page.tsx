@@ -3,13 +3,13 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ModerationStatus } from "@prisma/client";
 import { PlatformDetailHeader } from "@/components/platforms/platform-detail-header";
 import { PlatformTabNav } from "@/components/platforms/platform-detail-tabs";
 import { PlatformTutorials } from "@/components/tutorials/platform-tutorials";
 import { JsonLd } from "@/components/seo/json-ld";
 import { PlatformStatusNotice } from "@/components/platforms/platform-status-notice";
 import { getOrCreateDbUser } from "@/lib/auth-db";
+import { getPlatformPageRow } from "@/lib/catalog-queries";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
@@ -28,10 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const tutorial = getStaticTutorialForPlatform(slug);
   if (!tutorial) return { title: "Not Found" };
-  const platform = await prisma.platform.findUnique({
-    where: { slug },
-    select: { name: true },
-  });
+  const platform = await getPlatformPageRow(slug);
   if (!platform) return { title: "Not Found" };
   return buildTutorialMetadata({
     platformSlug: slug,
@@ -51,18 +48,9 @@ export default async function PlatformGuidePage({
   const tutorial = getStaticTutorialForPlatform(slug);
   if (!tutorial) notFound();
 
-  const platform = await prisma.platform.findUnique({
-    where: { slug },
-    include: {
-      category: true,
-      _count: {
-        select: {
-          prompts: { where: { status: ModerationStatus.APPROVED } },
-          discussions: { where: { status: ModerationStatus.APPROVED } },
-        },
-      },
-    },
-  });
+  // Shared catalog cache, same entry as the overview page. Only the
+  // favorite lookup below is per visitor, and it stays uncached.
+  const platform = await getPlatformPageRow(slug);
   if (!platform) notFound();
 
   const facts = getToolFacts(platform.slug);

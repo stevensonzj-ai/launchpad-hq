@@ -4,8 +4,7 @@ import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
 import { COMPARE_HUB_PATH } from "@/data/compare/pages";
 import { compareSitemapPaths, listedComparePages } from "@/data/compare/view";
-import { prisma } from "@/lib/db";
-import { listedPlatformWhere } from "@/lib/catalog-visibility";
+import { getSitemapPlatforms } from "@/lib/catalog-queries";
 import { SITE_URL } from "@/lib/site";
 import { sitemapStaticPublicPathsForNow, sitemapUrl } from "@/lib/sitemap-coverage";
 
@@ -52,11 +51,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // No published/active/verified gate exists. Do not invent one.
     // Hidden platforms (dead-and-obscure, or duplicates that 301) stay
     // reachable by URL but are noindexed, so they are left out here.
-    const platforms = await prisma.platform.findMany({
-      where: listedPlatformWhere(),
-      select: { slug: true, updatedAt: true },
-      orderBy: { slug: "asc" },
-    });
+    // Shared catalog cache: crawlers re-fetch this often, Postgres need not wake.
+    const platforms = await getSitemapPlatforms();
 
     // Tutorial content now lives at /guide, so the overview's lastmod is
     // the row's own updatedAt — a tutorial review no longer changes it.

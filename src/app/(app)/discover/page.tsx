@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
+import { getCategoriesWithCounts, getDiscoverPlatforms } from "@/lib/catalog-queries";
 import { listedPlatformWhere, recommendablePlatformWhere } from "@/lib/catalog-visibility";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
@@ -105,16 +106,10 @@ export default async function DiscoverPage({
   const user = await getOrCreateDbUser();
 
   const [platforms, categories, favorites] = await Promise.all([
-    prisma.platform.findMany({
-      where,
-      include: { category: true },
-      orderBy,
-      take: 200,
-    }),
-    prisma.category.findMany({
-      orderBy: { sortOrder: "asc" },
-      include: { _count: { select: { platforms: true } } },
-    }),
+    // Shared catalog cache (src/lib/catalog-queries.ts), keyed by the URL
+    // filters. Favorites are per visitor and stay uncached.
+    getDiscoverPlatforms(where, orderBy),
+    getCategoriesWithCounts(),
     // TODO: bound this query if favorites-per-user grows significantly.
     // Today we pull every row and build a Set for O(1) lookup per card —
     // trivial at ~170 platforms, worth revisiting if favorites counts get large.

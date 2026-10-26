@@ -58,6 +58,16 @@ export function reviveDates<T>(value: T): T {
   return out as T;
 }
 
+/**
+ * Part of every cache key. Next's data cache outlives deployments, but these
+ * reads also depend on code (listedPlatformWhere() comes from fact files, and
+ * selects change). Keying by deployment means a deploy starts from a cold
+ * cache instead of serving the previous build's rows for up to an hour.
+ */
+export function cacheGeneration(env: NodeJS.ProcessEnv = process.env): string {
+  return env.VERCEL_DEPLOYMENT_ID || env.VERCEL_GIT_COMMIT_SHA || "local";
+}
+
 // Thrown when unstable_cache runs outside a Next server (tsx tests, scripts).
 function isMissingIncrementalCache(error: unknown): boolean {
   return error instanceof Error && error.message.startsWith("Invariant: incrementalCache missing");
@@ -74,7 +84,7 @@ export function cachedCatalogRead<A extends unknown[], R>(
   slugTags: (...args: A) => readonly string[] = () => [],
 ): (...args: A) => Promise<R> {
   return async (...args: A) => {
-    const cached = unstable_cache(read, ["catalog", name], {
+    const cached = unstable_cache(read, ["catalog", name, cacheGeneration()], {
       tags: catalogTags(slugTags(...args)),
       revalidate: CATALOG_REVALIDATE_SECONDS,
     });
