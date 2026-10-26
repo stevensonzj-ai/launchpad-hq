@@ -5,6 +5,7 @@
  */
 import { overlayPlatformWithFacts } from "@/data/facts/overlay";
 import { FACT_VALUE_KEYS, type Fact, type ToolFacts } from "@/data/facts/types";
+import { taskTagsFor } from "@/data/task-tags";
 import { isPublishedVerified, publishedUsageLimits } from "@/data/facts/walk";
 import { PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
@@ -178,6 +179,8 @@ export function publicToolCore(row: CatalogRow, facts: ToolFacts | undefined) {
     usage_limits: retired
       ? null
       : ((publishedUsageLimits(facts)?.value as Record<string, unknown> | undefined) ?? null),
+    // Curated task tags (src/data/task-tags.ts); same value in feed and MCP.
+    tasks: retired ? null : taskTagsFor(row.slug),
   };
 }
 
@@ -288,6 +291,7 @@ export function toPublicTool(
     usage_limits: core.usage_limits,
     models: retired ? null : (facts?.models?.value ?? null),
     features: retired ? null : (facts?.features?.value ?? null),
+    tasks: core.tasks,
     alternatives: resolveRefs(row.directAlternatives, row.slug, ctx),
     works_well_with: resolveRefs(row.complementaryTools, row.slug, ctx),
     guide_url:

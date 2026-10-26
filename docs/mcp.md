@@ -29,6 +29,18 @@ All four tools are annotated `readOnlyHint: true`, `destructiveHint: false`, `id
 - **`sponsored`:** always `false`. Sponsorship never affects ranking, inclusion or ordering. The MCP code does not read sponsor data, and tests enforce this.
 - **Excluded:** tools marked discontinued are left out of search and alternatives. `get_pricing_facts` still returns them, with `lifecycle: "discontinued"`.
 - **Links:** results link to `https://www.launchpadhq.io/platform/<slug>`.
+- **`tasks`:** curated task tags (for example `cover-letter`, `resume`, `grammar-check`, `logo-design`), the same value as the feed's `tasks` field (schema 1.2). `null` when a tool has none.
+
+## How search_tools ranks
+
+Pure and deterministic (`src/lib/mcp/tools.ts`, `searchTools`); every point shows up in `match_reasons`.
+
+- **Task tags** (`src/data/task-tags.ts`): the search's words are mapped to tasks ("cover letter", "job application" and "CV" mean cover-letter / resume; "logo" means logo-design). A tool tagged for a task scores 20 per task (6 for broad ones such as "writing"), so a task match always outranks a stray word match. Tags are curated per tool from its catalog row or official site; clinician-only, legal-only and research-paper tools carry no writing or career tags.
+- **Phrases and words:** whole words only ("cover" does not match "discover"), with plural and accent folding ("résumés" = "resume"). A phrase from the search found as a phrase scores 3x the field weight (name 3, category 2, primary use 2, use cases 1, description 1); single words score the field weight. Filler words ("what", "help", "tool") are ignored; ambiguous words ("write", "letter", "free", "alternative") count only when nothing stronger matched, and the note then says the matches are loose.
+- **Free and cheap wording:** "free", "for free", "no cost", "without paying" or "$0" in the task (with no `budget`) moves tools with a free plan up and paid-only tools down (±5); "cheap", "budget" or "low cost" favors free and freemium tools. Only `budget: "free"` filters.
+- **Named tools:** "free alternative to Grammarly", "like X", "instead of X" and "X alternatives" return alternatives to X, never X: listed direct alternatives (+30), budget alternatives (+25), tools sharing X's tasks (12 per shared task, double for X's main task) and, for untagged tools, the same category (+3).
+- **Names** (`compare`, `get_pricing_facts`, `find_free_alternatives`): slug, retired slug (the feed's `aliases`), exact name or display name, then a conservative key that ignores case, punctuation and one trailing "AI"/"app" ("Perplexity" finds Perplexity AI). If that key fits more than one tool, or none, the tool is reported as not found; there is no fuzzy matching.
+- **`find_free_alternatives`:** free tier first (verified, then catalog), then relation: direct alternative, budget alternative, shared task, same category. Same-category tools whose tasks share nothing specific with the target are left out (paper finders are not Grammarly alternatives).
 
 ## Limits
 

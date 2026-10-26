@@ -6,7 +6,7 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "const": "1.1"
+      "const": "1.2"
     },
     "slug": {
       "type": "string"
@@ -505,6 +505,20 @@
       ],
       "description": "Notable features and dated product changes, from the official page in sources (label Features)."
     },
+    "tasks": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Curated task tags (since 1.2), e.g. cover-letter, resume, grammar-check, logo-design, transcription. Editorial labels for what the tool is for, used by MCP search; null when the tool has none."
+    },
     "alternatives": {
       "type": "array",
       "items": {
@@ -720,6 +734,7 @@
     "usage_limits",
     "models",
     "features",
+    "tasks",
     "alternatives",
     "works_well_with",
     "guide_url",

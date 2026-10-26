@@ -9,10 +9,26 @@
  */
 import type { Fact, ToolFacts, ToolPlan } from "@/data/facts/types";
 import { isPublishedVerified, publishedUsageLimits } from "@/data/facts/walk";
+import { TASKS, taskLabel, taskTagsFor, type TaskId } from "@/data/task-tags";
+import { PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { stripInlineCitations } from "@/lib/public-data/pricing";
 import { publicToolCore } from "@/lib/public-data/serialize";
 import { costTiersForBudget } from "@/lib/recommendations-score";
 import { absoluteUrl } from "@/lib/site";
+import {
+  detectPriceIntent,
+  detectTasks,
+  hasPhrase,
+  matchText,
+  nameKey,
+  nameKeys,
+  namedToolCandidates,
+  stem,
+  STOPWORDS,
+  WEAK_WORDS,
+  words,
+  type MatchText,
+} from "./search-text";
 import {
   DEFAULT_LIMIT,
   MAX_LIMIT,
@@ -92,12 +108,6 @@ const DIFFICULTY_RANK: Record<string, number> = {
 };
 const SKILL_RANK: Record<string, number> = { beginner: 0, intermediate: 1, advanced: 2 };
 
-const STOPWORDS = new Set([
-  "a", "an", "the", "and", "or", "for", "to", "of", "in", "on", "with", "my", "me", "i",
-  "want", "need", "tool", "tools", "ai", "app", "apps", "help", "something", "that", "can",
-  "some", "best", "good", "free", "cheap", "use", "using", "make", "do",
-]);
-
 function isoDate(value: Date | string | null | undefined): string | null {
   if (!value) return null;
   const d = value instanceof Date ? value : new Date(value);
@@ -171,6 +181,7 @@ export function toPlatformRef(row: CatalogRow, facts: ToolFacts | undefined): Pl
     company: core.company,
     description: core.description,
     starting_price: core.starting_price,
+    tasks: core.tasks,
     verification: free.verification,
     as_of: free.as_of,
     source_url: free.source_url,
@@ -188,29 +199,240 @@ function sourced<T>(fact: Fact<T> | undefined) {
   };
 }
 
-/** Exact slug match first, then case-insensitive name or display-name match. */
+/**
+ * Name resolution for compare / get_pricing_facts / find_free_alternatives,
+ * in order: exact slug; a retired slug from the feed's `aliases`; exact
+ * (case-insensitive) catalog or display name; then the conservative
+ * `nameKey` (punctuation and one trailing " ai"/" app" folded, "(...)"
+ * dropped, either side of "A / B"), which must match exactly ONE tool.
+ * Ambiguous or unknown input returns undefined: never a fuzzy guess.
+ */
 export function findRow(
   query: string,
   rows: CatalogRow[],
   facts: FactsLookup,
 ): CatalogRow | undefined {
   const q = norm(query);
-  return (
-    rows.find((r) => r.slug === q) ??
+  const bySlug = (slug: string) => rows.find((r) => r.slug === slug);
+  const exact =
+    bySlug(q) ??
+    (PLATFORM_REDIRECTS[q] ? bySlug(PLATFORM_REDIRECTS[q]) : undefined) ??
     rows.find((r) => norm(r.name) === q) ??
     rows.find((r) => {
       const display = facts(r.slug)?.displayName?.value;
       return display ? norm(display) === q : false;
-    })
+    });
+  if (exact) return exact;
+
+  const key = nameKey(query);
+  if (!key) return undefined;
+  const hits = rows.filter((r) => {
+    const names = [r.name, facts(r.slug)?.displayName?.value].filter((n): n is string => Boolean(n));
+    return nameKey(r.slug.replace(/-/g, " ")) === key || names.some((n) => nameKeys(n).includes(key));
+  });
+  return hits.length === 1 ? hits[0] : undefined;
+}
+
+// ---------- task tags and relations (shared by search_tools and find_free_alternatives) ----------
+
+const TASK_WEIGHT = 20;
+const GENERIC_TASK_WEIGHT = 6;
+
+function isGenericTask(task: TaskId): boolean {
+  return Boolean(TASKS[task].generic);
+}
+
+function tagsOf(row: CatalogRow): TaskId[] {
+  return (taskTagsFor(row.slug) ?? []) as TaskId[];
+}
+
+type Relation = { level: number; score: number; reason: string };
+
+/**
+ * How `row` relates to `target`, strongest first: listed as a direct
+ * alternative (3), listed as a budget alternative (2), shares a specific
+ * curated task (1.5), same category (1). A same-category tool whose curated
+ * tasks share nothing specific with the target's is NOT related (Grammarly
+ * sits in Research & Academic Tools, but paper finders are not grammar
+ * checkers). `score` ranks within a level: shared tasks count 12 each (4 if
+ * broad, double for the target's main task).
+ */
+export function relationTo(
+  target: CatalogRow,
+  row: CatalogRow,
+  facts: FactsLookup,
+): Relation | null {
+  if (row.slug === target.slug) return null;
+  const targetName = facts(target.slug)?.displayName?.value ?? target.name;
+  const targetNames = new Set(
+    [target.name, facts(target.slug)?.displayName?.value, target.slug].filter(Boolean).map((n) => norm(n!)),
   );
+  const rowNames = [row.name, facts(row.slug)?.displayName?.value].filter(Boolean).map((n) => norm(n!));
+  const direct = new Set(target.directAlternatives.map(norm));
+
+  const targetTags = tagsOf(target);
+  const rowTags = new Set(tagsOf(row));
+  const shared = targetTags.filter((t) => rowTags.has(t));
+  const specific = shared.filter((t) => !isGenericTask(t));
+  const sharedScore = shared.reduce(
+    (sum, t) => sum + (isGenericTask(t) ? 4 : 12) * (t === targetTags[0] ? 2 : 1),
+    0,
+  );
+  const sharedText = shared.map(taskLabel).join(", ");
+
+  if (rowNames.some((n) => direct.has(n))) {
+    return { level: 3, score: sharedScore, reason: `listed as a direct alternative to ${targetName}` };
+  }
+  if (row.budgetAlternativeTo.some((n) => targetNames.has(norm(n)))) {
+    return { level: 2, score: sharedScore, reason: `listed as a budget alternative to ${targetName}` };
+  }
+  if (specific.length > 0) {
+    return { level: 1.5, score: sharedScore, reason: `same tasks as ${targetName}: ${sharedText}` };
+  }
+  const sameCategory = row.category && target.category && row.category.slug === target.category.slug;
+  if (sameCategory && (targetTags.length === 0 || rowTags.size === 0)) {
+    return { level: 1, score: 0, reason: `same category (${row.category!.name})` };
+  }
+  return null;
+}
+
+/** "alternative to X" / "like X" / "instead of X": the catalog tool X, if the name resolves exactly. */
+function namedTarget(task: string, rows: CatalogRow[], facts: FactsLookup): CatalogRow | undefined {
+  for (const candidate of namedToolCandidates(task)) {
+    // "something like make a CV": a candidate made only of filler words is not a tool name.
+    if (words(candidate).every((w) => STOP.has(w) || WEAK.has(w))) continue;
+    const hit = findRow(candidate, rows, facts);
+    if (hit) return hit;
+  }
+  return undefined;
 }
 
 // ---------- search_tools ----------
 
-function tokens(text: string): string[] {
-  return norm(text)
-    .split(/[^a-z0-9+#.]+/)
-    .filter((t) => t.length > 1 && !STOPWORDS.has(t));
+/*
+ * Ranking (pure, deterministic; every point has a match reason):
+ *   task tag      +20 per task the search names that the tool is tagged for
+ *                 (+6 for broad tasks such as "writing"), from task-tags.ts
+ *   phrase        +3 x field weight for a multi-word phrase found as a phrase
+ *   word          +field weight per strong word found as a whole word
+ *   named tool    "alternative to X" / "like X": relationTo(X) adds 30
+ *                 (direct alternative), 25 (budget alternative), the
+ *                 shared-task score (12 per specific task, x2 for X's main
+ *                 task), or 3 (same category); X itself is excluded
+ *   price words   +/-5 free plan when the text says "free" and no budget was
+ *                 passed; +3 free/freemium, -5 enterprise for "cheap"
+ *   skill         -2 per difficulty level above the user's
+ * Field weights: name 3, category 2, primary use 2, use cases 1,
+ * description 1. Weak words (WEAK_WORDS: "write", "letter", "free",
+ * "alternative", ...) score only when nothing stronger matched anywhere.
+ */
+const FIELD_WEIGHTS = [
+  ["name", 3],
+  ["category", 2],
+  ["primary use", 2],
+  ["use cases", 1],
+  ["description", 1],
+] as const;
+const PHRASE_MULTIPLIER = 3;
+const FREE_INTENT_BONUS = 5;
+const CHEAP_INTENT_BONUS = 3;
+const NAMED_DIRECT = 30;
+const NAMED_BUDGET = 25;
+const NAMED_CATEGORY = 3;
+
+const STOP = new Set([...STOPWORDS].map(stem));
+const WEAK = new Set([...WEAK_WORDS].map(stem));
+
+type ParsedQuery = {
+  text: MatchText;
+  strong: string[];
+  weak: string[];
+  /** Adjacent topic words ("cover letter", "meeting transcription"). */
+  phrases: string[];
+};
+
+function parseQuery(task: string, exclude: Set<string>): ParsedQuery {
+  const all = words(task).filter((w) => w.length > 1 || /[+#]/.test(w));
+  const kept = all.filter((w) => !STOP.has(w) && !exclude.has(w));
+  const strong = [...new Set(kept.filter((w) => !WEAK.has(w)))];
+  const weak = [...new Set(kept.filter((w) => WEAK.has(w)))];
+  const phrases = new Set<string>();
+  for (let i = 0; i + 1 < kept.length; i++) {
+    const pair = [kept[i], kept[i + 1]];
+    // A pair of weak words ("free alternative") is not a topic; task phrases
+    // such as "cover letter" come from detectTasks instead.
+    if (pair[0] !== pair[1] && pair.some((w) => !WEAK.has(w))) phrases.add(pair.join(" "));
+  }
+  return { text: matchText(kept.join(" ")), strong, weak, phrases: [...phrases] };
+}
+
+type Scored = { row: CatalogRow; score: number; reasons: Set<string> };
+
+function scoreRow(
+  row: CatalogRow,
+  facts: FactsLookup,
+  query: ParsedQuery,
+  queryTasks: ReturnType<typeof detectTasks>,
+  target: CatalogRow | undefined,
+  useWeak: boolean,
+): Scored {
+  let score = 0;
+  const reasons = new Set<string>();
+
+  const tags = new Set(tagsOf(row));
+  for (const { task } of queryTasks) {
+    if (!tags.has(task)) continue;
+    score += isGenericTask(task) ? GENERIC_TASK_WEIGHT : TASK_WEIGHT;
+    reasons.add(`task: ${taskLabel(task)} (curated tag)`);
+  }
+
+  if (target) {
+    const rel = relationTo(target, row, facts);
+    if (rel) {
+      score +=
+        rel.level === 3 ? NAMED_DIRECT + rel.score
+        : rel.level === 2 ? NAMED_BUDGET + rel.score
+        : rel.level === 1.5 ? rel.score
+        : NAMED_CATEGORY;
+      reasons.add(rel.reason);
+    }
+  }
+
+  const fields: [string, MatchText, number][] = FIELD_WEIGHTS.map(([label, weight]) => [
+    label,
+    matchText(
+      label === "name" ? (facts(row.slug)?.displayName?.value ?? row.name)
+      : label === "category" ? row.category?.name
+      : label === "primary use" ? row.primaryUse
+      : label === "use cases" ? row.primaryUseCases
+      : row.description,
+    ),
+    weight,
+  ]);
+
+  const phrases = new Set([
+    ...query.phrases,
+    ...queryTasks.map((t) => t.phrase).filter((p) => p.includes(" ")),
+  ]);
+  for (const phrase of phrases) {
+    for (const [label, text, weight] of fields) {
+      if (hasPhrase(text, phrase)) {
+        score += weight * PHRASE_MULTIPLIER;
+        reasons.add(`"${phrase}" in ${label}`);
+      }
+    }
+  }
+
+  for (const word of useWeak ? [...query.strong, ...query.weak] : query.strong) {
+    for (const [label, text, weight] of fields) {
+      if (text.set.has(word)) {
+        score += weight;
+        reasons.add(`"${word}" in ${label}${WEAK.has(word) ? " (loose match)" : ""}`);
+      }
+    }
+  }
+
+  return { row, score, reasons };
 }
 
 function budgetTiers(budget: SearchToolsInput["budget"]): string[] | null {
@@ -233,37 +455,58 @@ export function searchTools(
   rows: CatalogRow[],
   facts: FactsLookup,
 ): SearchToolsOutput {
-  const words = tokens(input.task);
   const tiers = budgetTiers(input.budget);
   const skill = input.skill_level ? SKILL_RANK[input.skill_level] : undefined;
+  // Price words in the text count only when no budget was passed; they
+  // re-rank, they never filter (only budget:"free" filters).
+  const priceIntent = input.budget === undefined ? detectPriceIntent(input.task) : null;
 
-  const scored = rows
+  const target = namedTarget(input.task, rows, facts);
+  const targetWords = new Set(
+    target ? [target.name, facts(target.slug)?.displayName?.value].flatMap((n) => words(n)) : [],
+  );
+  const query = parseQuery(input.task, targetWords);
+  // Task phrases may contain filler words ("find a job"), so match the full text.
+  const queryTasks = detectTasks(matchText(input.task));
+
+  const eligible = rows
     .filter((row) => !isDiscontinued(facts(row.slug)))
+    .filter((row) => row.slug !== target?.slug) // "alternative to X" never returns X
     .filter((row) => !tiers || tiers.includes(row.costTier.toUpperCase()))
     .filter(
       (row) =>
         !input.platform_type ||
         row.platformType.some((p) => norm(p) === input.platform_type),
-    )
-    .map((row) => {
-      const fields: [string, string | null | undefined, number][] = [
-        ["name", facts(row.slug)?.displayName?.value ?? row.name, 3],
-        ["category", row.category?.name, 2],
-        ["primary use", row.primaryUse, 2],
-        ["use cases", row.primaryUseCases, 1],
-        ["description", row.description, 1],
-      ];
-      let score = 0;
-      const reasons = new Set<string>();
-      for (const word of words) {
-        for (const [label, text, weight] of fields) {
-          if (text && norm(text).includes(word)) {
-            score += weight;
-            reasons.add(`"${word}" in ${label}`);
-          }
+    );
+
+  const relevance = (useWeak: boolean) =>
+    eligible.map((row) => scoreRow(row, facts, query, queryTasks, target, useWeak));
+  let matched = relevance(false).filter((s) => s.score > 0);
+  // Only filler-ish words matched anywhere: fall back to them, and say so.
+  const looseOnly = matched.length === 0 && query.weak.length > 0;
+  if (looseOnly) matched = relevance(true).filter((s) => s.score > 0);
+
+  const scored = matched
+    .map(({ row, score, reasons }) => {
+      if (priceIntent === "free") {
+        if (hasFreeTier(row, facts(row.slug)) > 0) {
+          score += FREE_INTENT_BONUS;
+          reasons.add('has a free plan ("free" in your request)');
+        } else {
+          score -= FREE_INTENT_BONUS;
+          reasons.add('no free plan listed ("free" in your request)');
+        }
+      } else if (priceIntent === "cheap") {
+        const tier = row.costTier.toUpperCase();
+        if (tier === "FREE" || tier === "FREEMIUM") {
+          score += CHEAP_INTENT_BONUS;
+          reasons.add(`${tier.toLowerCase()} cost tier (you asked for low cost)`);
+        } else if (tier === "ENTERPRISE") {
+          score -= FREE_INTENT_BONUS;
+          reasons.add("enterprise pricing (you asked for low cost)");
         }
       }
-      if (score > 0 && skill !== undefined) {
+      if (skill !== undefined) {
         const level = DIFFICULTY_RANK[row.difficultyLevel.toUpperCase()] ?? 0;
         const above = level - skill;
         if (above > 0) {
@@ -273,10 +516,9 @@ export function searchTools(
           reasons.add(`difficulty fits ${input.skill_level}`);
         }
       }
-      if (score > 0 && tiers) reasons.add(`cost tier ${row.costTier.toLowerCase()} fits budget`);
+      if (tiers) reasons.add(`cost tier ${row.costTier.toLowerCase()} fits budget`);
       return { row, score, reasons: [...reasons] };
     })
-    .filter((s) => s.reasons.some((r) => r.startsWith('"')))
     .sort((a, b) => b.score - a.score || a.row.slug.localeCompare(b.row.slug));
 
   const results = scored.slice(0, clampLimit(input.limit)).map((s) => ({
@@ -291,7 +533,9 @@ export function searchTools(
     note:
       results.length === 0
         ? "No Launchpad HQ tools matched; try a broader task or remove filters."
-        : null,
+        : looseOnly
+          ? "Only loose word matches; name the task (for example 'cover letter' or 'logo') for better results."
+          : null,
     data_as_of: newest(results.map((r) => r.as_of)),
     attribution: ATTRIBUTION,
   };
@@ -403,23 +647,14 @@ export function findFreeAlternatives(
   const target = findRow(input.platform, rows, facts);
   if (!target) throw notInCatalog(input.platform);
 
-  const targetNames = new Set(
-    [target.name, facts(target.slug)?.displayName?.value].filter(Boolean).map((n) => norm(n!)),
-  );
-  const direct = new Set(target.directAlternatives.map(norm));
-
-  type Candidate = { row: CatalogRow; relation: number; reason: string };
+  // Relations, strongest first: direct alternative, budget alternative,
+  // shared curated task, same category (see relationTo).
+  type Candidate = { row: CatalogRow; relation: number; shared: number; reason: string };
   const candidates: Candidate[] = [];
   for (const row of rows) {
-    if (row.slug === target.slug) continue;
     if (isDiscontinued(facts(row.slug))) continue;
-    if (direct.has(norm(row.name))) {
-      candidates.push({ row, relation: 3, reason: `listed as a direct alternative to ${target.name}` });
-    } else if (row.budgetAlternativeTo.some((n) => targetNames.has(norm(n)))) {
-      candidates.push({ row, relation: 2, reason: `listed as a budget alternative to ${target.name}` });
-    } else if (row.category && target.category && row.category.slug === target.category.slug) {
-      candidates.push({ row, relation: 1, reason: `same category (${row.category.name})` });
-    }
+    const rel = relationTo(target, row, facts);
+    if (rel) candidates.push({ row, relation: rel.level, shared: rel.score, reason: rel.reason });
   }
 
   const alternatives = candidates
@@ -427,7 +662,10 @@ export function findFreeAlternatives(
     .filter((c) => c.free > 0)
     .sort(
       (a, b) =>
-        b.free - a.free || b.relation - a.relation || a.row.slug.localeCompare(b.row.slug),
+        b.free - a.free ||
+        b.relation - a.relation ||
+        b.shared - a.shared ||
+        a.row.slug.localeCompare(b.row.slug),
     )
     .slice(0, clampLimit(input.limit))
     .map((c) => {

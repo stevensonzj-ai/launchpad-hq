@@ -6,7 +6,7 @@ import { FEED_CHANGELOG } from "./changelog";
  * Public JSON feed contract (/data/v1). Bump SCHEMA_VERSION whenever the
  * shape changes; schema.test.ts compares against a committed snapshot.
  */
-export const SCHEMA_VERSION = "1.1";
+export const SCHEMA_VERSION = "1.2";
 
 const date = z.string().describe("YYYY-MM-DD");
 const ref = z.object({ slug: z.string(), name: z.string() });
@@ -80,6 +80,12 @@ export const PublicTool = z.object({
     .array(z.string())
     .nullable()
     .describe("Notable features and dated product changes, from the official page in sources (label Features)."),
+  tasks: z
+    .array(z.string())
+    .nullable()
+    .describe(
+      "Curated task tags (since 1.2), e.g. cover-letter, resume, grammar-check, logo-design, transcription. Editorial labels for what the tool is for, used by MCP search; null when the tool has none.",
+    ),
   alternatives: z.array(ref),
   works_well_with: z.array(ref),
   guide_url: z.string().nullable(),

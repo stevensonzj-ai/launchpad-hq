@@ -76,6 +76,8 @@ export const platformRef = z.object({
   company: z.string().nullable().optional(),
   description: z.string().nullable().optional(),
   starting_price: z.string().nullable().optional(),
+  // Additive (feed schema 1.2): the feed's curated task tags, from publicToolCore.
+  tasks: z.array(z.string()).nullable().optional(),
 });
 
 const sourcedFact = <T extends z.ZodType>(value: T) =>

@@ -171,7 +171,8 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
   });
 
   it("the feed changelog dates this batch and mentions the new features field", () => {
-    const entry = FEED_CHANGELOG.find((c) => c.date === BATCH_DATE);
+    // Two 2026-10-26 entries exist (this batch, then the 1.2 search entry); pick this batch's.
+    const entry = FEED_CHANGELOG.find((c) => c.date === BATCH_DATE && /schema_version 1.1/.test(c.summary));
     assert.ok(entry);
     assert.match(entry.summary, /features/);
     assert.match(entry.summary, /Decisions API/);
