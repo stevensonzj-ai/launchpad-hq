@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { prisma } from "@/lib/db";
+import { getPlatformPageRow } from "@/lib/catalog-queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PlatformDiscussions } from "@/components/discussions/platform-discussions";
@@ -9,7 +9,7 @@ import { publicPageMetadata } from "@/lib/seo-metadata";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const p = await prisma.platform.findUnique({ where: { slug }, select: { name: true } });
+  const p = await getPlatformPageRow(slug);
   if (!p) return { title: "Not found" };
   return publicPageMetadata({
     title: `${p.name} discussions | Launchpad HQ`,
@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PlatformDiscussionsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const platform = await prisma.platform.findUnique({ where: { slug } });
+  // Shared catalog cache; the list itself is fetched client-side, uncached.
+  const platform = await getPlatformPageRow(slug);
   if (!platform) notFound();
 
   return (

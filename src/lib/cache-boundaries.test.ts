@@ -88,6 +88,8 @@ describe("what goes through the shared catalog cache", () => {
     for (const rel of [
       "src/app/(app)/platform/[slug]/page.tsx",
       "src/app/(app)/platform/[slug]/guide/page.tsx",
+      "src/app/(app)/platform/[slug]/prompts/page.tsx",
+      "src/app/(app)/platform/[slug]/discussions/page.tsx",
       "src/app/(app)/discover/page.tsx",
       "src/app/(app)/tutorials/page.tsx",
       "src/app/sitemap.ts",
