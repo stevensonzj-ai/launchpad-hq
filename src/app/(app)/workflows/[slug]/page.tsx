@@ -14,7 +14,7 @@ import { loadFeed } from "@/lib/public-data/load";
 // Rendered per request, like the guide and platform pages: tool prices
 // come from the catalog DB, and the build must not depend on DB access
 // (no prerender, so a build can't fail on Neon or bake in stale prices).
-// The catalog read is cached in memory for 10 minutes (loadCatalog).
+// Catalog reads come from the shared catalog cache (loadCatalog, getPlatformSlugSet).
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
