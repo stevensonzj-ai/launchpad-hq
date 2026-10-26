@@ -76,6 +76,18 @@ import claudeFacts from "./claude";
 import claudeCodeFacts from "./claude-code";
 import ideogramFacts from "./ideogram";
 import minimaxFacts from "./minimax";
+// Search relevance + career tools, 2026-10-26 (catalog audit 9).
+import tealFacts from "./teal";
+import kickresumeFacts from "./kickresume";
+import reziFacts from "./rezi";
+// Search relevance second-check pass, 2026-10-26: most-queried catalog_only tools.
+import grammarlyFacts from "./grammarly";
+import notionAiFacts from "./notion-ai";
+import perplexityAiFacts from "./perplexity-ai";
+import geminiFacts from "./gemini";
+import microsoftCopilotFacts from "./microsoft-copilot";
+import canvaAiMagicStudioFacts from "./canva-ai-magic-studio";
+import recraftFacts from "./recraft";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -158,6 +170,18 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [claudeCodeFacts.slug]: claudeCodeFacts,
   [ideogramFacts.slug]: ideogramFacts,
   [minimaxFacts.slug]: minimaxFacts,
+  // Search relevance + career tools, 2026-10-26: new Career & Job Search rows (audit 9).
+  [tealFacts.slug]: tealFacts,
+  [kickresumeFacts.slug]: kickresumeFacts,
+  [reziFacts.slug]: reziFacts,
+  // Search relevance second-check pass, 2026-10-26 (gathered, unverified).
+  [grammarlyFacts.slug]: grammarlyFacts,
+  [notionAiFacts.slug]: notionAiFacts,
+  [perplexityAiFacts.slug]: perplexityAiFacts,
+  [geminiFacts.slug]: geminiFacts,
+  [microsoftCopilotFacts.slug]: microsoftCopilotFacts,
+  [canvaAiMagicStudioFacts.slug]: canvaAiMagicStudioFacts,
+  [recraftFacts.slug]: recraftFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
-import { MCP_SERVER_VERSION } from "./server";
+import { MCP_SERVER_ICONS, MCP_SERVER_VERSION } from "./server";
 
 describe("server.json (MCP Registry metadata)", () => {
   const json = JSON.parse(readFileSync("server.json", "utf8")) as {
@@ -45,7 +45,18 @@ describe("server.json (MCP Registry metadata)", () => {
     assert.ok(json.icons.length > 0);
     for (const icon of json.icons) {
       assert.ok(icon.src.startsWith("https://www.launchpadhq.io/"), icon.src);
+      assert.ok(icon.src.length <= 255, icon.src);
       assert.ok(allowed.has(icon.mimeType), icon.mimeType);
+      for (const size of icon.sizes) assert.match(size, /^(\d+x\d+|any)$/);
+    }
+  });
+
+  it("lists every serverInfo icon the initialize result advertises", () => {
+    for (const icon of MCP_SERVER_ICONS) {
+      assert.ok(
+        json.icons.some((i) => i.src === icon.src && i.mimeType === icon.mimeType),
+        icon.src,
+      );
     }
   });
 

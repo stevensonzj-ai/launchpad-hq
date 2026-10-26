@@ -210,6 +210,7 @@ export function renderToolMarkdown(tool: PublicToolT): string {
     tool.works_with.length ? `Works with: ${tool.works_with.join(", ")}` : null,
     tool.outputs.length ? `Outputs: ${tool.outputs.join(", ")}` : null,
     tool.models?.length ? `Models: ${tool.models.join(", ")}` : null,
+    tool.tasks?.length ? `Tasks: ${tool.tasks.join(", ")}` : null,
     tool.technical.languages ? `Languages: ${tool.technical.languages}` : null,
     tool.technical.integrations ? `Integrations: ${tool.technical.integrations}` : null,
     `Offline use: ${tool.technical.offline ? "yes" : "no"}; API: ${tool.technical.api_available ? "yes" : "no"}`,

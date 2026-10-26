@@ -9,22 +9,21 @@ export default {
     sourceUrl: "https://claude.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   freeTier: {
     value: {
       available: false,
-      summary: "No free API tier: you pay per token used. The free Claude chat plan is a separate product (see the Claude listing).",
+      summary:
+        "No ongoing free API tier: you pay per token used. Anthropic's pricing docs say new users receive a small amount of free credits to test the API. The free Claude chat plan is a separate product (see the Claude listing).",
     },
-    note: "The API section of claude.com/pricing lists no free API tier or credits; the Free consumer plan lists no monthly API credits.",
-    sourceUrl: "https://claude.com/pricing",
-    checkedAt: "2026-10-25",
-    gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
-    status: "verified",
+    note: "Free-credits line from the pricing FAQ (\"Are there free tiers or trials?\") on platform.claude.com, as of 2026-10-26. claude.com/pricing lists no monthly API credits on the Free consumer plan.",
+    sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude-recheck",
+    status: "unverified",
   },
   plans: {
     value: [
@@ -37,8 +36,8 @@ export default {
     sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   apiPricing: {
@@ -48,8 +47,8 @@ export default {
     sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   platforms: {
@@ -58,8 +57,8 @@ export default {
     sourceUrl: "https://claude.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   models: {
@@ -73,8 +72,8 @@ export default {
     sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   features: {
@@ -84,11 +83,16 @@ export default {
     sourceUrl: "https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    verifiedBy: "claude",
+    verifiedBy: "claude-recheck",
     verifiedAt: "2026-10-26",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-26",
+      field: "freeTier",
+      summary: "Free tier now notes the small amount of free credits new API users receive, per Anthropic's pricing docs.",
+    },
     {
       date: "2026-10-26",
       field: "features",

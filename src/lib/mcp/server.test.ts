@@ -5,6 +5,7 @@ import { z } from "zod";
 import { FIXTURE_ROWS, fixtureFacts } from "./fixtures";
 import type { McpCallLog } from "./log";
 import {
+  MCP_SERVER_INFO,
   MCP_SERVER_INSTRUCTIONS,
   MCP_SERVER_NAME,
   MCP_SERVER_VERSION,
@@ -23,7 +24,7 @@ function deps(logs: McpCallLog[] = []) {
 
 function buildHandler(logs: McpCallLog[] = []) {
   return createMcpHandler((server) => registerLaunchpadTools(server, deps(logs)), {
-    serverInfo: { name: MCP_SERVER_NAME, version: MCP_SERVER_VERSION },
+    serverInfo: MCP_SERVER_INFO,
     instructions: MCP_SERVER_INSTRUCTIONS,
   });
 }
@@ -132,9 +133,17 @@ describe("MCP handler (in-process, no network)", () => {
       clientInfo: { name: "test-client", version: "1.0.0" },
     });
     assert.equal(init.status, 200);
-    const serverInfo = (init.body.result as { serverInfo?: { name: string; version: string } }).serverInfo;
+    const serverInfo = (
+      init.body.result as {
+        serverInfo?: { name: string; version: string; icons?: { src: string; mimeType?: string; sizes?: string[] }[] };
+      }
+    ).serverInfo;
     assert.equal(serverInfo?.name, MCP_SERVER_NAME);
     assert.equal(serverInfo?.version, MCP_SERVER_VERSION);
+    // Brand icon for client UIs (Claude's connector list), same PNG as server.json.
+    assert.deepEqual(serverInfo?.icons, [
+      { src: "https://www.launchpadhq.io/brand/launchpad-hq-512.png", mimeType: "image/png", sizes: ["512x512"] },
+    ]);
 
     const list = await rpc(handler, "tools/list", {}, 2);
     const tools = (list.body.result as { tools: Record<string, unknown>[] }).tools;

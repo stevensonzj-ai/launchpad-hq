@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { PlatformToolOverview } from "@/components/platforms/platform-tool-overview";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import type { Fact, ToolFacts } from "@/data/facts/types";
+import { isPublishedVerified } from "@/data/facts/walk";
 import { renderToolMarkdown } from "@/lib/markdown/render";
 import { getPricingFacts } from "@/lib/mcp/tools";
 import { FEED_CHANGELOG } from "./changelog";
@@ -69,7 +70,16 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
       for (const fact of changed) {
         assert.match(fact.sourceUrl, /^https:\/\//, slug);
         assert.doesNotMatch(fact.sourceUrl, /(twitter|x)\.com\//, slug);
-        assert.equal(fact.verifiedAt, BATCH_DATE, slug);
+        // A separate second-check session re-read every same-day fact against
+        // the live page. All passed except the one it corrected itself, which
+        // stays unverified until someone else checks it.
+        if (slug === "anthropic-api" && fact === facts(slug).freeTier) {
+          assert.deepEqual([fact.status, fact.gatheredBy, fact.verifiedBy, fact.verifiedAt], ["unverified", "claude-recheck", undefined, undefined], slug);
+          assert.equal(isPublishedVerified(fact), false, slug);
+        } else {
+          assert.deepEqual([fact.status, fact.verifiedBy, fact.verifiedAt], ["verified", "claude-recheck", BATCH_DATE], slug);
+          assert.ok(isPublishedVerified(fact), slug);
+        }
       }
       assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), `${slug} changelog`);
     }
@@ -171,7 +181,8 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
   });
 
   it("the feed changelog dates this batch and mentions the new features field", () => {
-    const entry = FEED_CHANGELOG.find((c) => c.date === BATCH_DATE);
+    // Two 2026-10-26 entries exist (this batch, then the 1.2 search entry); pick this batch's.
+    const entry = FEED_CHANGELOG.find((c) => c.date === BATCH_DATE && /schema_version 1.1/.test(c.summary));
     assert.ok(entry);
     assert.match(entry.summary, /features/);
     assert.match(entry.summary, /Decisions API/);

@@ -13,8 +13,8 @@ export default {
     sourceUrl: "https://inworld.ai/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   plans: {
@@ -30,8 +30,8 @@ export default {
     sourceUrl: "https://inworld.ai/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   changelog: [

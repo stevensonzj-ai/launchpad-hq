@@ -4,11 +4,11 @@ import { describe, it } from "node:test";
 import { createMcpHandler } from "mcp-handler";
 import { FIXTURE_ROWS, fixtureFacts } from "./fixtures";
 import { withMcpErrorHints } from "./http-errors";
-import { MCP_SERVER_INSTRUCTIONS, MCP_SERVER_NAME, MCP_SERVER_VERSION, registerLaunchpadTools } from "./server";
+import { MCP_SERVER_INFO, MCP_SERVER_INSTRUCTIONS, registerLaunchpadTools } from "./server";
 
 const inner = createMcpHandler(
   (server) => registerLaunchpadTools(server, { loadCatalog: async () => FIXTURE_ROWS, facts: fixtureFacts, log: () => {} }),
-  { serverInfo: { name: MCP_SERVER_NAME, version: MCP_SERVER_VERSION }, instructions: MCP_SERVER_INSTRUCTIONS },
+  { serverInfo: MCP_SERVER_INFO, instructions: MCP_SERVER_INSTRUCTIONS },
 );
 const handler = async (request: Request) => withMcpErrorHints(await inner(request));
 

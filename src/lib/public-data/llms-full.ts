@@ -56,6 +56,7 @@ function toolBlock(tool: PublicToolT): string[] {
   if (tool.status) lines.push(`Status: ${tool.status.headline}`);
   if (tool.description) lines.push(`Description: ${tool.description}`);
   if (tool.primary_use) lines.push(`Primary use: ${tool.primary_use}`);
+  if (tool.tasks?.length) lines.push(`Tasks: ${tool.tasks.join(", ")}`);
   lines.push(...priceLine(tool));
   if (tool.plans.length) {
     lines.push("Plans:");

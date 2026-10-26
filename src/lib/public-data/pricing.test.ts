@@ -80,4 +80,12 @@ describe("normalizePlans", () => {
       ["GBP", "year"],
     ]);
   });
+
+  it("leaves day-based billing without a period instead of calling it usage", () => {
+    const out = normalizePlans([plan("$13", "Teal+ 7-day", "7 days"), plan("$29", "Teal+ 30-day", "30 days")]);
+    assert.deepEqual(out.plans.map((p) => [p.amount, p.period]), [
+      [13, null],
+      [29, null],
+    ]);
+  });
 });

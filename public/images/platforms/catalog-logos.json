@@ -773,6 +773,14 @@
     "note": "Higher-resolution official-site icon; replaced small favicon"
   },
   {
+    "slug": "minimax",
+    "name": "MiniMax",
+    "file": "minimax-hq.png",
+    "website": "https://www.minimax.io",
+    "source": "https://filecdn.minimax.chat/public/58eca777-e31f-448a-9823-e2220e49b426.png",
+    "note": "Official og:image declared on https://www.minimax.io (2026-10-26), served from MiniMax's file CDN; 300px source downsized to 128px without recoloring. The site favicon (https://www.minimax.io/favicon.ico) is only 32px."
+  },
+  {
     "slug": "mistral-ai-le-chat",
     "name": "Mistral AI (Le Chat)",
     "file": "mistral-ai-le-chat.png",

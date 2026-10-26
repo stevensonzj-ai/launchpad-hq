@@ -16,8 +16,8 @@ export default {
     sourceUrl: "https://docs.n8n.io/hosting/community-edition-features/",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   plans: {
@@ -32,8 +32,8 @@ export default {
     sourceUrl: "https://n8n.io/pricing/",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   changelog: [

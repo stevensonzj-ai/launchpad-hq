@@ -18,8 +18,8 @@ export default {
     sourceUrl: "https://mistral.ai/products/le-chat",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   displayName: {
@@ -27,8 +27,8 @@ export default {
     sourceUrl: "https://mistral.ai/products/le-chat",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   freeTier: {
@@ -39,8 +39,8 @@ export default {
     sourceUrl: "https://mistral.ai/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   plans: {
@@ -54,8 +54,8 @@ export default {
     sourceUrl: "https://mistral.ai/pricing",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   changelog: [

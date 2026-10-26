@@ -19,8 +19,8 @@ export default {
     sourceUrl: EDUCATORS_URL,
     checkedAt: "2026-10-20",
     gatheredBy: "claude-subagent",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-20",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   verdict: {
@@ -29,8 +29,8 @@ export default {
     sourceUrl: EDUCATORS_URL,
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   freeTier: {
@@ -41,8 +41,8 @@ export default {
     sourceUrl: EDUCATORS_URL,
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   plans: {
@@ -63,8 +63,8 @@ export default {
     sourceUrl: EDUCATORS_URL,
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-25",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   changelog: [
