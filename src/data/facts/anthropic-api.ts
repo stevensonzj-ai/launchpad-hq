@@ -77,7 +77,23 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  features: {
+    value: [
+      "Claude Models on Google Cloud (Anthropic managed) is generally available as of 2026-10-22: Anthropic operates the service and acts as the data processor, billing goes on a single Google Cloud invoice, and usage draws down an existing Google Cloud commitment.",
+    ],
+    sourceUrl: "https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed",
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-26",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-10-26",
+      field: "features",
+      summary: "Added Claude Models on Google Cloud (Anthropic managed), generally available 2026-10-22, as a place to run Claude.",
+    },
     {
       date: "2026-10-25",
       field: "plans",

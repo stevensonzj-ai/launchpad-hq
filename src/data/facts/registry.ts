@@ -71,6 +71,11 @@ import inworldAiFacts from "./inworld-ai";
 import readAiFacts from "./read-ai";
 import n8nFacts from "./n8n";
 import mistralVibeFacts from "./mistral-vibe";
+// Catalog batch 2026-10-26.
+import claudeFacts from "./claude";
+import claudeCodeFacts from "./claude-code";
+import ideogramFacts from "./ideogram";
+import minimaxFacts from "./minimax";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -148,6 +153,11 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [readAiFacts.slug]: readAiFacts,
   [n8nFacts.slug]: n8nFacts,
   [mistralVibeFacts.slug]: mistralVibeFacts,
+  // Catalog batch 2026-10-26: Kimi K3.1 Pro, MiniMax M3.1 Flash, Ideogram Vector, Claude auto mode, Claude on Google Cloud.
+  [claudeFacts.slug]: claudeFacts,
+  [claudeCodeFacts.slug]: claudeCodeFacts,
+  [ideogramFacts.slug]: ideogramFacts,
+  [minimaxFacts.slug]: minimaxFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {
