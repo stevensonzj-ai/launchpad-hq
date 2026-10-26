@@ -180,6 +180,10 @@ async function main() {
     console.log(
       `audit8: ${created} rows created, ${rows} rows / ${fieldChanges} field changes (${dryRun ? "dry-run" : "applied"})`,
     );
+    if (!dryRun) {
+      // The site caches catalog reads for up to an hour (docs/caching.md).
+      console.log("Next: npm run cache:revalidate  (expires the site cache so the change shows now)");
+    }
   } finally {
     await prisma.$disconnect();
   }

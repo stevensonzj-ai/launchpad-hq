@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import { ArrowRight, BookOpen, Rocket } from "lucide-react";
-import { prisma } from "@/lib/db";
+import { getPlatformCategories } from "@/lib/catalog-queries";
 import { JsonLd } from "@/components/seo/json-ld";
 import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import type { PlatformTutorialData } from "@/data/tutorials";
@@ -32,10 +32,7 @@ type CategoryGroup = {
  */
 async function loadGroups(): Promise<CategoryGroup[]> {
   const tutorials = listRegisteredTutorials();
-  const platforms = await prisma.platform.findMany({
-    where: { slug: { in: tutorials.map((t) => t.platformSlug) } },
-    select: { slug: true, category: { select: { name: true, slug: true } } },
-  });
+  const platforms = await getPlatformCategories(tutorials.map((t) => t.platformSlug));
   const categoryBySlug = new Map(platforms.map((p) => [p.slug, p.category]));
 
   const groups = new Map<string, CategoryGroup>();

@@ -3,6 +3,26 @@ import { prisma } from "@/lib/db";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { Prisma } from "@prisma/client";
 import { methodsNotAllowed, withApiErrors } from "@/lib/api-error";
+import { cachedCatalogRead } from "@/lib/catalog-cache";
+import { PUBLIC_HOURLY_CACHE } from "@/lib/public-data/http";
+
+// Public and visitor-independent: keyed by the query-string filters.
+const readPlatformsPage = cachedCatalogRead(
+  "api-platforms",
+  async (where: Prisma.PlatformWhereInput, skip: number, take: number) => {
+    const [platforms, total] = await Promise.all([
+      prisma.platform.findMany({
+        where,
+        include: { category: true },
+        orderBy: [{ featured: "desc" }, { name: "asc" }],
+        skip,
+        take,
+      }),
+      prisma.platform.count({ where }),
+    ]);
+    return { platforms, total };
+  },
+);
 
 export function GET(request: NextRequest) {
   return withApiErrors("api/platforms", async () => {
@@ -54,26 +74,20 @@ export function GET(request: NextRequest) {
       ];
     }
 
-    const [platforms, total] = await Promise.all([
-      prisma.platform.findMany({
-        where,
-        include: { category: true },
-        orderBy: [{ featured: "desc" }, { name: "asc" }],
-        skip: (page - 1) * limit,
-        take: limit,
-      }),
-      prisma.platform.count({ where }),
-    ]);
+    const { platforms, total } = await readPlatformsPage(where, (page - 1) * limit, limit);
 
-    return NextResponse.json({
-      platforms,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
+    return NextResponse.json(
+      {
+        platforms,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        },
       },
-    });
+      { headers: { "Cache-Control": PUBLIC_HOURLY_CACHE } },
+    );
   });
 }
 

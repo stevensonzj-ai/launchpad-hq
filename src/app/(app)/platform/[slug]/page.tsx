@@ -3,7 +3,6 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db";
 import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
-import { ModerationStatus } from "@prisma/client";
 import { PlatformCard } from "@/components/platforms/platform-card";
 import { PlatformDetailHeader } from "@/components/platforms/platform-detail-header";
 import { PlatformDetailTabs } from "@/components/platforms/platform-detail-tabs";
@@ -26,19 +25,15 @@ import {
   sponsorExcludedSlugs,
 } from "@/lib/related-links";
 import { PLACEMENTS } from "@/data/sponsors";
-import { listedPlatformWhere } from "@/lib/catalog-visibility";
+import {
+  getListedPlatformsByName,
+  getPlatformPageRow,
+  getSameCategoryPlatforms,
+} from "@/lib/catalog-queries";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const platform = await prisma.platform.findUnique({
-    where: { slug },
-    select: {
-      name: true,
-      primaryUse: true,
-      description: true,
-      category: { select: { name: true } },
-    },
-  });
+  const platform = await getPlatformPageRow(slug);
   if (!platform) return { title: "Not Found" };
   return buildPlatformMetadata({
     slug,
@@ -67,18 +62,9 @@ export default async function PlatformPage({
     permanentRedirect(tutorialGuidePath(slug));
   }
 
-  const platform = await prisma.platform.findUnique({
-    where: { slug },
-    include: {
-      category: true,
-      _count: {
-        select: {
-          prompts: { where: { status: ModerationStatus.APPROVED } },
-          discussions: { where: { status: ModerationStatus.APPROVED } },
-        },
-      },
-    },
-  });
+  // Shared catalog cache (src/lib/catalog-queries.ts). Only the favorites
+  // read below is per visitor, and it stays uncached.
+  const platform = await getPlatformPageRow(slug);
 
   if (!platform) notFound();
 
@@ -95,22 +81,10 @@ export default async function PlatformPage({
   // the query, discontinued ones and self by listedRelatedRows (max four).
   const [alternativeRows, complementaryRows, favoriteRows, sameCategory] = await Promise.all([
     platform.directAlternatives.length
-      ? prisma.platform.findMany({
-          where: {
-            name: { in: platform.directAlternatives, mode: "insensitive" },
-            ...listedPlatformWhere(),
-          },
-          include: { category: true },
-        })
+      ? getListedPlatformsByName(platform.directAlternatives)
       : Promise.resolve([]),
     platform.complementaryTools.length
-      ? prisma.platform.findMany({
-          where: {
-            name: { in: platform.complementaryTools, mode: "insensitive" },
-            ...listedPlatformWhere(),
-          },
-          include: { category: true },
-        })
+      ? getListedPlatformsByName(platform.complementaryTools)
       : Promise.resolve([]),
     user
       ? prisma.userFavorite.findMany({
@@ -118,16 +92,7 @@ export default async function PlatformPage({
           select: { platformId: true },
         })
       : Promise.resolve([]),
-    prisma.platform.findMany({
-      where: {
-        categoryId: platform.categoryId,
-        AND: [{ slug: { not: platform.slug } }, listedPlatformWhere()],
-      },
-      select: { slug: true, name: true, category: { select: { slug: true } } },
-      // v1: first same-category platforms alphabetically, not relevance-ranked.
-      orderBy: { name: "asc" },
-      take: 12,
-    }),
+    getSameCategoryPlatforms(platform.categoryId, platform.slug),
   ]);
   const alternatives = listedRelatedRows(alternativeRows, platform.slug, getToolFacts);
   const complementary = listedRelatedRows(complementaryRows, platform.slug, getToolFacts);

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { cachedCatalogRead } from "@/lib/catalog-cache";
 import { recommendablePlatformWhere } from "@/lib/catalog-visibility";
 import {
   costTiersForBudget,
@@ -18,16 +19,24 @@ export type {
   ScoreablePlatform,
 } from "./recommendations-score";
 
+// Keyed by the cost tiers only: the candidate pool is the same public rows
+// for every quiz taker. Scoring against the answers happens after, uncached.
+const readCandidates = cachedCatalogRead(
+  "recommendation-candidates",
+  (costFilter: ReturnType<typeof costTiersForBudget>) =>
+    prisma.platform.findMany({
+      where: {
+        ...recommendablePlatformWhere(),
+        costTier: { in: costFilter },
+      },
+      include: { category: true },
+    }),
+);
+
 export async function computeRecommendations(body: RecommendationInput) {
   const costFilter = costTiersForBudget(body.budget);
 
-  const candidates = await prisma.platform.findMany({
-    where: {
-      ...recommendablePlatformWhere(),
-      costTier: { in: costFilter },
-    },
-    include: { category: true },
-  });
+  const candidates = await readCandidates(costFilter);
 
   const recommendations = rankScoredPlatforms(candidates, body);
 
