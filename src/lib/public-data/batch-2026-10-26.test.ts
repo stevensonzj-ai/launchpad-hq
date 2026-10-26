@@ -21,7 +21,7 @@ import { toPublicCatalog, toPublicTool } from "./serialize";
  * because all of them read the one fact file. Fixtures only (no database).
  */
 
-const TOUCHED = ["kimi", "minimax", "ideogram", "claude", "claude-code", "anthropic-api"] as const;
+const TOUCHED = ["kimi", "minimax", "ideogram", "claude", "claude-code", "anthropic-api", "openai-api"] as const;
 const BATCH_DATE = "2026-10-26";
 
 const ctx = feedContext();
@@ -154,6 +154,16 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
     assert.match(out.api_pricing ?? "", /end of December 2026 \(stated plan, as of 2026-10-26\)/);
   });
 
+  it("OpenAI Decisions API: GA date, GPT-6 Luna, input-only prices, never 'only' Luna", () => {
+    const out = feedTool("openai-api");
+    assert.match(out.api_pricing ?? "", /\$0\.10 input, \$0\.01 cached input/);
+    assert.match(out.api_pricing ?? "", /no output-token charges/);
+    const feature = (out.features ?? []).join(" ");
+    assert.match(feature, /generally available 2026-10-22, runs on GPT-6 Luna via its own Decisions endpoint/);
+    assert.doesNotMatch(JSON.stringify(facts("openai-api")), /\bonly (on|with|runs)|Luna only/i);
+    assert.equal(facts("openai-api").apiPricing?.sourceUrl, "https://openai.com/index/decisions-api");
+  });
+
   it("MiniMax weights are open weights under a custom license, never open source", () => {
     const text = JSON.stringify(facts("minimax"));
     assert.doesNotMatch(text, /open[- ]source(?! one)/i);
@@ -164,6 +174,8 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
     const entry = FEED_CHANGELOG.find((c) => c.date === BATCH_DATE);
     assert.ok(entry);
     assert.match(entry.summary, /features/);
+    assert.match(entry.summary, /Decisions API/);
+    assert.doesNotMatch(entry.summary, /once its catalog row/);
   });
 
   it("excluded watch items and unverifiable claims stay out of the batch files", () => {
@@ -181,7 +193,7 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
     ];
     for (const file of files) {
       const text = readFileSync(join(process.cwd(), file), "utf8");
-      for (const banned of [/Nemotron 3\.5/i, /Model Vault/i, /quota reset/i, /\bIPO\b/, /Decisions API/i, /AI (Pro|Ultra)[^.]*Cloud credits/i]) {
+      for (const banned of [/Nemotron 3\.5/i, /Model Vault/i, /quota reset/i, /\bIPO\b/, /AI (Pro|Ultra)[^.]*Cloud credits/i]) {
         assert.doesNotMatch(text, banned, `${file}: ${banned}`);
       }
     }

@@ -68,6 +68,10 @@ describe("catalog audit 8 data", () => {
     // No postal address or email in catalog copy.
     assert.doesNotMatch(JSON.stringify(row), /@|Beach Road|#\d/);
     assert.equal(getToolFacts("minimax")?.slug, "minimax");
+    // CLAUDE.md rubric, strictly: a policy silent on training with API inputs is vague -> LOW.
+    // offlineCapable matches the other API + open-weights rows (deepseek, qwen).
+    assert.equal(row.privacyLevel, "LOW");
+    assert.equal(row.offlineCapable, true);
     assert.match(getToolFacts("minimax")?.apiPricing?.value ?? "", /\$0\.15 input, \$0\.60 output/);
     assert.match(row.currentPricing, /\$0\.15\/\$0\.60/);
 

@@ -89,7 +89,7 @@ export const AUDIT_8_CREATES: Audit8Create[] = [
         "No free API tier listed with M3.1 Flash; the open weights download free under MiniMax's community license (official, as of 2026-10-26)",
       costTier: "PAID",
       difficultyLevel: "INTERMEDIATE",
-      privacyLevel: "MEDIUM",
+      privacyLevel: "LOW",
       platformType: ["api"],
       apiAvailable: true,
       offlineCapable: true,
