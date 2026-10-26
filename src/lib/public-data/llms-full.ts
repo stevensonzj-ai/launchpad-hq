@@ -64,6 +64,7 @@ function toolBlock(tool: PublicToolT): string[] {
     }
   }
   if (tool.api_pricing) lines.push(`API pricing: ${tool.api_pricing}`);
+  if (tool.features?.length) lines.push("Features:", ...bullets(tool.features));
   if (tool.alternatives.length) lines.push(`Alternatives: ${tool.alternatives.map((a) => a.name).join(", ")}`);
   if (tool.guide_url) lines.push(`Guide: ${tool.guide_url}`);
   lines.push(`Data as of: ${tool.data_as_of ?? "not dated"}`);

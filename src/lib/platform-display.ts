@@ -41,6 +41,7 @@ const FACT_LABEL: Record<(typeof FACT_VALUE_KEYS)[number], string> = {
   platforms: "Platforms",
   apps: "Apps",
   models: "Models",
+  features: "Features",
   privacy: "Privacy",
   usageLimits: "Usage limits",
 };

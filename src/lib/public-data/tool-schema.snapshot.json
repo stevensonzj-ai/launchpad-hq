@@ -6,7 +6,7 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "const": "1.0"
+      "const": "1.1"
     },
     "slug": {
       "type": "string"
@@ -491,6 +491,20 @@
         }
       ]
     },
+    "features": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Notable features and dated product changes, from the official page in sources (label Features)."
+    },
     "alternatives": {
       "type": "array",
       "items": {
@@ -705,6 +719,7 @@
     "api_pricing",
     "usage_limits",
     "models",
+    "features",
     "alternatives",
     "works_well_with",
     "guide_url",

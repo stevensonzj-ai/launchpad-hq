@@ -287,6 +287,7 @@ export function toPublicTool(
     api_pricing: core.api_pricing,
     usage_limits: core.usage_limits,
     models: retired ? null : (facts?.models?.value ?? null),
+    features: retired ? null : (facts?.features?.value ?? null),
     alternatives: resolveRefs(row.directAlternatives, row.slug, ctx),
     works_well_with: resolveRefs(row.complementaryTools, row.slug, ctx),
     guide_url:

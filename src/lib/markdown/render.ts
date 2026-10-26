@@ -215,6 +215,7 @@ export function renderToolMarkdown(tool: PublicToolT): string {
     `Offline use: ${tool.technical.offline ? "yes" : "no"}; API: ${tool.technical.api_available ? "yes" : "no"}`,
   ].filter((x): x is string => Boolean(x));
   out.push("## What it is for", "", ...bullets(uses), "");
+  if (tool.features?.length) out.push("## Features", "", ...bullets(tool.features), "");
   if (tool.guide_url) out.push(`Getting-started guide: ${tool.guide_url}`, "");
   if (tool.alternatives.length) {
     out.push("## Alternatives", "", ...bullets(tool.alternatives.map((a) => link(a.name, absoluteUrl(`/platform/${a.slug}`)))), "");
