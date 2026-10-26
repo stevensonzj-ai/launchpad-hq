@@ -173,7 +173,76 @@ export type Audit9Patch = {
   addDirectAlternatives?: string[];
 };
 
-export const AUDIT_9_PATCHES: Audit9Patch[] = [];
+const GRAMMARLY_PLANS = "https://www.grammarly.com/plans";
+const GRAMMARLY_PRO = "https://www.grammarly.com/pro";
+const PPLX_COMPARE =
+  "https://www.perplexity.ai/help-center/en/articles/11187416-which-perplexity-subscription-plan-is-right-for-you";
+const PPLX_PRICES = "https://www.perplexity.ai/help-center/en/articles/12167980-using-the-connector-for-slack";
+const IDEOGRAM_PLANS = "https://docs.ideogram.ai/plans-and-billing/available-plans";
+const NOTION_PRICING = "https://www.notion.com/pricing";
+const RECRAFT_PRICING = "https://www.recraft.ai/pricing";
+
+/**
+ * Part 3 (row text that contradicts the vendor's page on 2026-10-26; the fact
+ * files already override these on every surface, so this keeps the rows
+ * themselves from going stale). Minimal: only the contradicted fields.
+ */
+const PART_3_PATCHES: Audit9Patch[] = [
+  {
+    slug: "grammarly",
+    finding: "Premium and Business are no longer sold; Pro is $12/member/mo billed annually ($30 monthly); Free has 100 AI prompts a month",
+    sources: [GRAMMARLY_PLANS, GRAMMARLY_PRO],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "Free $0 (100 AI prompts a month); Pro $12/member/mo billed annually, $30 billed monthly (2,000 AI prompts a month); Enterprise: contact sales (official, as of 2026-10-26)",
+    },
+  },
+  {
+    slug: "perplexity-ai",
+    finding: "Free plan has 3 Pro Searches a day (row said 5); Max and Enterprise plans exist",
+    sources: [PPLX_COMPARE, PPLX_PRICES],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "Free $0; Pro $20/mo or $200/yr; Max $200/mo or $2,000/yr; Enterprise Pro $40/seat/mo; Enterprise Max $325/seat/mo (official, as of 2026-10-26)",
+      freeTierFeatures:
+        "Practically unlimited basic searches; 3 Pro Searches a day; 1 Research query a month; limited basic file uploads (official, as of 2026-10-26)",
+    },
+  },
+  {
+    slug: "ideogram",
+    finding: "Free is 30 credits a week (row said 40 images/day and 10 generations/day); Plus $20, Pro $60 monthly",
+    sources: [IDEOGRAM_PLANS],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "Free $0 (30 credits a week); Plus $20/mo or $15/mo billed yearly; Pro $60/mo or $42/mo billed yearly; Team $30/user/mo or $20/user/mo billed yearly, 2+ users; Enterprise custom (official, as of 2026-10-26)",
+      freeTierFeatures:
+        "30 credits a week for accounts that sign in with Google, Apple or Microsoft; everything made on the free plan is public (official, as of 2026-10-26)",
+    },
+  },
+  {
+    slug: "notion-ai",
+    finding: "Notion AI is no longer a paid add-on: Free and Plus get a trial, Business includes it; notion.so redirects to www.notion.com",
+    sources: [NOTION_PRICING],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "Free $0/seat/mo (trial of Notion AI); Plus $10/seat/mo (trial of Notion AI); Business $20/seat/mo (Notion Agent and AI Meeting Notes included); Enterprise custom; prices with yearly billing (official, as of 2026-10-26)",
+    },
+    guarded: { website: { from: "https://notion.so", to: "https://www.notion.com" } },
+  },
+  {
+    slug: "recraft",
+    finding: "Paid Basic, Pro and Teams plans exist alongside the free plan, so the tier is FREEMIUM, not FREE",
+    sources: [RECRAFT_PRICING],
+    checkedAt: CHECKED_AT,
+    guarded: { costTier: { from: "FREE", to: "FREEMIUM" } },
+  },
+];
+
+export const AUDIT_9_PATCHES: Audit9Patch[] = [...PART_3_PATCHES];
 
 // ---------- pure logic ----------
 

@@ -78,9 +78,9 @@ describe("catalog audit 9: new career rows", () => {
       const facts = getToolFacts(row.slug);
       assert.ok(facts, `${row.slug} fact file`);
       for (const key of ["company", "freeTier", "plans", "features"] as const) {
-        const fact = facts[key];
-        assert.ok(fact, `${row.slug} ${key}`);
-        assert.equal(host(fact.sourceUrl), host(row.website), `${row.slug} ${key}`);
+        const url: string | undefined = facts[key]?.sourceUrl;
+        assert.ok(url, `${row.slug} ${key}`);
+        assert.equal(host(url), host(row.website), `${row.slug} ${key}`);
       }
       assert.equal(facts.company?.value, row.company);
       assert.equal(row.costTier, "FREEMIUM");
@@ -117,11 +117,65 @@ describe("catalog audit 9: new career rows", () => {
     const input = quizToRecommendationInput({ goal: "content_creation", experience: "beginner", budget: "free", runtime: "cloud" });
     for (const { row } of AUDIT_9_CREATES) {
       const scored = scorePlatform(
-        { ...row, mobileWebFriendly: true, hasMobileApp: row.platformType.includes("mobile") } as Parameters<typeof scorePlatform>[0],
+        { ...audit9CreateData({ row } as (typeof AUDIT_9_CREATES)[number], "cat-id"), mobileWebFriendly: true, hasMobileApp: row.platformType.includes("mobile") },
         input,
       );
       assert.ok(scored.goalScore > 0, row.slug);
     }
+  });
+});
+
+const patchFor = (slug: string) => {
+  const patch = AUDIT_9_PATCHES.find((p) => p.slug === slug);
+  assert.ok(patch, slug);
+  return patch;
+};
+
+describe("catalog audit 9: row fixes from the official pages", () => {
+  it("patches only rows with a fact file sourced from the same page, and every price matches the facts", () => {
+    for (const patch of AUDIT_9_PATCHES) {
+      const facts = getToolFacts(patch.slug);
+      assert.ok(facts, patch.slug);
+      const factUrls = (["freeTier", "plans", "features", "usageLimits", "company", "officialUrl"] as const)
+        .map((k) => facts[k]?.sourceUrl)
+        .filter(Boolean);
+      assert.ok(patch.sources.some((u) => factUrls.includes(u)), `${patch.slug} cites its fact source`);
+      const plans = facts.plans?.value ?? [];
+      for (const price of patch.fields?.currentPricing?.match(/\$\d+(\.\d+)?(?!,)/g) ?? []) {
+        const inFacts =
+          (price === "$0" && facts.freeTier?.value.available === true) ||
+          plans.some((p) => `${p.price} ${p.limits}`.includes(price));
+        assert.ok(inFacts, `${patch.slug} ${price}`);
+      }
+      assert.doesNotMatch(JSON.stringify(patch), /unverified|sponsor|affiliate|@/i);
+    }
+  });
+
+  it("fixes the contradicted Part 3 fields and nothing else", () => {
+    assert.deepEqual(Object.keys(patchFor("grammarly").fields ?? {}), ["currentPricing"]);
+    assert.match(patchFor("perplexity-ai").fields?.freeTierFeatures ?? "", /3 Pro Searches a day/);
+    assert.match(patchFor("ideogram").fields?.freeTierFeatures ?? "", /30 credits a week/);
+    assert.doesNotMatch(patchFor("notion-ai").fields?.currentPricing ?? "", /add-on/);
+    assert.deepEqual(patchFor("notion-ai").guarded?.website, { from: "https://notion.so", to: "https://www.notion.com" });
+    assert.deepEqual(patchFor("recraft").guarded?.costTier, { from: "FREE", to: "FREEMIUM" });
+    assert.equal(patchFor("recraft").fields, undefined);
+  });
+
+  it("applies to the seeded rows, then is a no-op on re-run", () => {
+    const seeded: Audit9Row = {
+      description: null,
+      currentPricing: "Free: basic corrections only; Premium: $12/mo advanced rewrites + tone; Business: $15/user/mo",
+      freeTierFeatures: "Free: basic grammar/spelling/punctuation; tone detection; limited AI suggestions",
+      primaryUse: "AI writing assistant for grammar, tone, and clarity",
+      website: "https://grammarly.com",
+      costTier: "FREEMIUM",
+      directAlternatives: [],
+    };
+    const diffs = diffAudit9(seeded, patchFor("grammarly"));
+    assert.deepEqual(diffs.map((d) => d.field), ["currentPricing"]);
+    assert.deepEqual(diffAudit9({ ...seeded, ...audit9UpdateData(diffs) } as Audit9Row, patchFor("grammarly")), []);
+    const recraft: Audit9Row = { ...seeded, website: "https://recraft.ai", costTier: "FREE" };
+    assert.deepEqual(audit9UpdateData(diffAudit9(recraft, patchFor("recraft"))), { costTier: "FREEMIUM" });
   });
 });
 

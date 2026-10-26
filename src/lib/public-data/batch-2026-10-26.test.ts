@@ -69,7 +69,10 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
       for (const fact of changed) {
         assert.match(fact.sourceUrl, /^https:\/\//, slug);
         assert.doesNotMatch(fact.sourceUrl, /(twitter|x)\.com\//, slug);
-        assert.equal(fact.verifiedAt, BATCH_DATE, slug);
+        // Same-day facts gathered by the search-relevance pass wait for a
+        // separate second check: unverified, with no verifier recorded.
+        if (fact.status === "verified") assert.equal(fact.verifiedAt, BATCH_DATE, slug);
+        else assert.deepEqual([fact.status, fact.gatheredBy, fact.verifiedBy, fact.verifiedAt], ["unverified", "claude", undefined, undefined], slug);
       }
       assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), `${slug} changelog`);
     }

@@ -80,6 +80,14 @@ import minimaxFacts from "./minimax";
 import tealFacts from "./teal";
 import kickresumeFacts from "./kickresume";
 import reziFacts from "./rezi";
+// Search relevance second-check pass, 2026-10-26: most-queried catalog_only tools.
+import grammarlyFacts from "./grammarly";
+import notionAiFacts from "./notion-ai";
+import perplexityAiFacts from "./perplexity-ai";
+import geminiFacts from "./gemini";
+import microsoftCopilotFacts from "./microsoft-copilot";
+import canvaAiMagicStudioFacts from "./canva-ai-magic-studio";
+import recraftFacts from "./recraft";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -166,6 +174,14 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [tealFacts.slug]: tealFacts,
   [kickresumeFacts.slug]: kickresumeFacts,
   [reziFacts.slug]: reziFacts,
+  // Search relevance second-check pass, 2026-10-26 (gathered, unverified).
+  [grammarlyFacts.slug]: grammarlyFacts,
+  [notionAiFacts.slug]: notionAiFacts,
+  [perplexityAiFacts.slug]: perplexityAiFacts,
+  [geminiFacts.slug]: geminiFacts,
+  [microsoftCopilotFacts.slug]: microsoftCopilotFacts,
+  [canvaAiMagicStudioFacts.slug]: canvaAiMagicStudioFacts,
+  [recraftFacts.slug]: recraftFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {
