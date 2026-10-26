@@ -12,7 +12,9 @@ export default {
     sourceUrl: "https://www.tealhq.com/privacy-policy",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -23,7 +25,9 @@ export default {
     sourceUrl: TEAL_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   plans: {
     value: [
@@ -36,7 +40,9 @@ export default {
     sourceUrl: TEAL_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   platforms: {
     value: ["Web", "Chrome extension"],
@@ -44,7 +50,9 @@ export default {
     sourceUrl: "https://www.tealhq.com/",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   features: {
     value: [
@@ -58,7 +66,9 @@ export default {
     sourceUrl: TEAL_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   changelog: [
     {

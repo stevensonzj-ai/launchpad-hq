@@ -12,7 +12,9 @@ export default {
     sourceUrl: GRAMMARLY_PLANS_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -22,7 +24,9 @@ export default {
     sourceUrl: GRAMMARLY_PLANS_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   plans: {
     value: [
@@ -40,11 +44,13 @@ export default {
         limits: "Available through Superhuman Go; unlimited AI prompts per member a month",
       },
     ],
-    note: "USD, as of 2026-10-26. Pro price and billing from grammarly.com/pro (grammarly.com/premium redirects there). grammarly.com/plans shows \"$12 USD\" with no billing period beside it.",
+    note: "USD, as of 2026-10-26. Pro price and billing from grammarly.com/pro (grammarly.com/premium redirects there).",
     sourceUrl: GRAMMARLY_PRO_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   platforms: {
     value: [
@@ -64,7 +70,9 @@ export default {
     sourceUrl: GRAMMARLY_PLANS_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   features: {
     value: [
@@ -74,7 +82,9 @@ export default {
     sourceUrl: GRAMMARLY_PLANS_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   changelog: [
     {

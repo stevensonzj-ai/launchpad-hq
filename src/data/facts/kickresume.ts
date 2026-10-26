@@ -9,11 +9,13 @@ export default {
   lifecycle: "active",
   company: {
     value: "Kickresume s.r.o.",
-    note: "Terms of Use: the site \"is owned by Kickresume s.r.o.\". Based in Slovakia (EU) per the privacy policy.",
+    note: "Terms of Use: the site \"is owned by Kickresume s.r.o.\".",
     sourceUrl: "https://www.kickresume.com/terms/",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -24,7 +26,9 @@ export default {
     sourceUrl: KICKRESUME_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   plans: {
     value: [
@@ -36,14 +40,18 @@ export default {
     sourceUrl: KICKRESUME_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   platforms: {
     value: ["Web", "iOS", "Android"],
     sourceUrl: KICKRESUME_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   apps: {
     value: {
@@ -54,7 +62,9 @@ export default {
     sourceUrl: KICKRESUME_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   features: {
     value: [
@@ -68,7 +78,9 @@ export default {
     sourceUrl: KICKRESUME_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   changelog: [
     {

@@ -12,7 +12,9 @@ export default {
     sourceUrl: "https://www.rezi.ai/legal",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   freeTier: {
     value: {
@@ -23,7 +25,9 @@ export default {
     sourceUrl: REZI_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   plans: {
     value: [
@@ -36,7 +40,9 @@ export default {
     sourceUrl: REZI_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   platforms: {
     value: ["Web", "Chrome extension", "iOS"],
@@ -44,7 +50,9 @@ export default {
     sourceUrl: "https://www.rezi.ai/rezi-chrome-extension",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   apps: {
     value: {
@@ -54,7 +62,9 @@ export default {
     sourceUrl: "https://www.rezi.ai/",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   features: {
     value: [
@@ -68,7 +78,9 @@ export default {
     sourceUrl: REZI_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   changelog: [
     {

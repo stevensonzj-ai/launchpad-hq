@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { PlatformToolOverview } from "@/components/platforms/platform-tool-overview";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import type { Fact, ToolFacts } from "@/data/facts/types";
+import { isPublishedVerified } from "@/data/facts/walk";
 import { renderToolMarkdown } from "@/lib/markdown/render";
 import { getPricingFacts } from "@/lib/mcp/tools";
 import { FEED_CHANGELOG } from "./changelog";
@@ -69,10 +70,16 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
       for (const fact of changed) {
         assert.match(fact.sourceUrl, /^https:\/\//, slug);
         assert.doesNotMatch(fact.sourceUrl, /(twitter|x)\.com\//, slug);
-        // Same-day facts gathered by the search-relevance pass wait for a
-        // separate second check: unverified, with no verifier recorded.
-        if (fact.status === "verified") assert.equal(fact.verifiedAt, BATCH_DATE, slug);
-        else assert.deepEqual([fact.status, fact.gatheredBy, fact.verifiedBy, fact.verifiedAt], ["unverified", "claude", undefined, undefined], slug);
+        // A separate second-check session re-read every same-day fact against
+        // the live page. All passed except the one it corrected itself, which
+        // stays unverified until someone else checks it.
+        if (slug === "anthropic-api" && fact === facts(slug).freeTier) {
+          assert.deepEqual([fact.status, fact.gatheredBy, fact.verifiedBy, fact.verifiedAt], ["unverified", "claude-recheck", undefined, undefined], slug);
+          assert.equal(isPublishedVerified(fact), false, slug);
+        } else {
+          assert.deepEqual([fact.status, fact.verifiedBy, fact.verifiedAt], ["verified", "claude-recheck", BATCH_DATE], slug);
+          assert.ok(isPublishedVerified(fact), slug);
+        }
       }
       assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), `${slug} changelog`);
     }

@@ -19,7 +19,9 @@ export default {
     sourceUrl: RECRAFT_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   usageLimits: {
     value: {
@@ -32,7 +34,9 @@ export default {
     sourceUrl: RECRAFT_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   features: {
     value: [
@@ -43,7 +47,9 @@ export default {
     sourceUrl: RECRAFT_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-26",
+    status: "verified",
   },
   changelog: [
     {

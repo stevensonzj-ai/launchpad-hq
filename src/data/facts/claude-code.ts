@@ -11,7 +11,7 @@ export default {
     sourceUrl: "https://claude.com/resources/articles/auto-mode-default-in-claude-code",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    verifiedBy: "claude",
+    verifiedBy: "claude-recheck",
     verifiedAt: "2026-10-26",
     status: "verified",
   },

@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { PlatformToolOverview } from "@/components/platforms/platform-tool-overview";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { FACT_VALUE_KEYS, type Fact, type ToolFacts } from "@/data/facts/types";
+import { isPublishedVerified } from "@/data/facts/walk";
 import { renderToolMarkdown } from "@/lib/markdown/render";
 import { CAREER_FIXTURE_ROWS, SEARCH_FIXTURE_ROWS } from "@/lib/mcp/search-fixtures";
 import { getPricingFacts } from "@/lib/mcp/tools";
@@ -56,7 +57,7 @@ const facts = (slug: string): ToolFacts => {
 const feedTool = (slug: string) => PublicTool.parse(JSON.parse(JSON.stringify(toPublicTool(rowOf(slug), facts(slug), ctx))));
 const gathered = (f: ToolFacts) =>
   FACT_VALUE_KEYS.map((k) => f[k] as Fact<unknown> | undefined).filter(
-    (x): x is Fact<unknown> => Boolean(x && x.checkedAt === DATE && x.gatheredBy === "claude" && x.status === "unverified"),
+    (x): x is Fact<unknown> => Boolean(x && x.checkedAt === DATE && x.gatheredBy === "claude"),
   );
 const html = (text: string) =>
   text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
@@ -75,25 +76,28 @@ function pageHtml(slug: string): string {
 }
 
 describe("search-relevance fact pass (2026-10-26)", () => {
-  it("every gathered fact is unverified, by claude, with no verifier, from the vendor's own domain", () => {
+  it("every gathered fact passed the separate second check, from the vendor's own domain", () => {
     for (const [slug, domains] of Object.entries(OFFICIAL)) {
       const list = gathered(facts(slug));
       assert.ok(list.length > 0, slug);
       for (const fact of list) {
-        assert.equal(fact.verifiedBy, undefined, slug);
-        assert.equal(fact.verifiedAt, undefined, slug);
+        // Gathered by "claude", re-checked against the live page by a different
+        // session ("claude-recheck") on the same day.
+        assert.deepEqual([fact.status, fact.verifiedBy, fact.verifiedAt], ["verified", "claude-recheck", DATE], slug);
+        assert.ok(isPublishedVerified(fact), slug);
         const host = new URL(fact.sourceUrl).hostname;
         assert.ok(domains.some((d) => host === d || host.endsWith(`.${d}`)), `${slug}: ${fact.sourceUrl}`);
       }
       assert.ok(facts(slug).changelog?.some((c) => c.date === DATE), `${slug} changelog`);
     }
-    // The new files hold nothing else: no verified facts mixed in.
+    // Every fact in the new files passed the second check; none is still pending.
     for (const slug of NEW_FILES) {
       const f = facts(slug);
       for (const k of FACT_VALUE_KEYS) {
         const fact = f[k] as Fact<unknown> | undefined;
-        if (fact) assert.equal(fact.status, "unverified", `${slug}.${k}`);
+        if (fact) assert.ok(isPublishedVerified(fact), `${slug}.${k}`);
       }
+      assert.equal(feedTool(slug).verification.status, "verified", slug);
     }
   });
 
@@ -150,7 +154,7 @@ describe("search-relevance fact pass (2026-10-26)", () => {
         assert.ok(full.includes(item), `${slug} llms-full feature`);
       }
       for (const fact of gathered(f)) {
-        assert.ok(out.sources.some((s) => s.url === fact.sourceUrl && s.checked_at === DATE && s.status === "unverified"), `${slug} cites ${fact.sourceUrl}`);
+        assert.ok(out.sources.some((s) => s.url === fact.sourceUrl && s.checked_at === DATE && s.status === "verified"), `${slug} cites ${fact.sourceUrl}`);
       }
       assert.equal(out.sponsored, false, slug);
     }
@@ -177,6 +181,7 @@ describe("search-relevance fact pass (2026-10-26)", () => {
     assert.ok(entry);
     assert.match(entry.summary, /Career & Job Search/);
     assert.match(entry.summary, /Teal, Kickresume and Rezi/);
-    assert.match(entry.summary, /unverified/);
+    assert.match(entry.summary, /second check/);
+    assert.doesNotMatch(entry.summary, /marked unverified until/);
   });
 });
