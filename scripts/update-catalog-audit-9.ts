@@ -4,8 +4,10 @@
  *     while the slug is missing; an existing category is never changed;
  *   - creates `teal`, `kickresume`, `rezi` in it, each only while the slug
  *     is missing; an existing row is never overwritten;
- *   - patches rows whose text contradicts the official page today, plus the
- *     #99 follow-ups (see AUDIT_9_PATCHES).
+ *   - patches rows whose text contradicts the official page today
+ *     (grammarly, perplexity-ai, ideogram, notion-ai, recraft), plus the #99
+ *     follow-ups: minimax directAlternatives and the kimi website (see
+ *     AUDIT_9_PATCHES).
  *
  * Patch values live in src/data/catalog-audits/audit-9.ts with their
  * official sources. Independent of audits 1-8.

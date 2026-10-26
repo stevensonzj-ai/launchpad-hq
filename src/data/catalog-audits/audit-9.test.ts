@@ -136,7 +136,7 @@ describe("catalog audit 9: row fixes from the official pages", () => {
     for (const patch of AUDIT_9_PATCHES) {
       const facts = getToolFacts(patch.slug);
       assert.ok(facts, patch.slug);
-      const factUrls = (["freeTier", "plans", "features", "usageLimits", "company", "officialUrl"] as const)
+      const factUrls = (["freeTier", "plans", "apiPricing", "models", "features", "usageLimits", "company", "officialUrl"] as const)
         .map((k) => facts[k]?.sourceUrl)
         .filter(Boolean);
       assert.ok(patch.sources.some((u) => factUrls.includes(u)), `${patch.slug} cites its fact source`);
@@ -176,6 +176,39 @@ describe("catalog audit 9: row fixes from the official pages", () => {
     assert.deepEqual(diffAudit9({ ...seeded, ...audit9UpdateData(diffs) } as Audit9Row, patchFor("grammarly")), []);
     const recraft: Audit9Row = { ...seeded, website: "https://recraft.ai", costTier: "FREE" };
     assert.deepEqual(audit9UpdateData(diffAudit9(recraft, patchFor("recraft"))), { costTier: "FREEMIUM" });
+  });
+});
+
+describe("catalog audit 9: #99 follow-ups", () => {
+  it("gives MiniMax real catalog tools as alternatives, add-only", () => {
+    const patch = patchFor("minimax");
+    assert.deepEqual(patch.addDirectAlternatives, ["DeepSeek", "Qwen", "Kimi", "OpenRouter"]);
+    for (const name of patch.addDirectAlternatives ?? []) assert.ok(getToolFacts(name.toLowerCase()), `${name} is a catalog tool`);
+    assert.equal(patch.fields, undefined);
+    const minimax: Audit9Row = { ...baseRow, directAlternatives: [] };
+    assert.deepEqual(audit9UpdateData(diffAudit9(minimax, patch)), { directAlternatives: ["DeepSeek", "Qwen", "Kimi", "OpenRouter"] });
+    assert.deepEqual(diffAudit9({ ...minimax, directAlternatives: ["DeepSeek", "Qwen", "Kimi", "OpenRouter"] }, patch), []);
+  });
+
+  it("points Kimi's website at www.kimi.ai only while it is still www.kimi.com", () => {
+    const patch = patchFor("kimi");
+    assert.deepEqual(patch.guarded?.website, { from: "https://www.kimi.com", to: "https://www.kimi.ai" });
+    assert.ok(patch.sources.includes("https://www.moonshot.ai/"));
+    assert.deepEqual(audit9UpdateData(diffAudit9({ ...baseRow, website: "https://www.kimi.com" }, patch)), { website: "https://www.kimi.ai" });
+    assert.deepEqual(diffAudit9({ ...baseRow, website: "https://www.kimi.ai" }, patch), []);
+    // Real official source pages stay where they are.
+    assert.equal(getToolFacts("kimi")?.company?.sourceUrl, "https://www.kimi.com/");
+  });
+
+  it("registers MiniMax's logo from its official og:image", () => {
+    const assets = JSON.parse(readFileSync(join(process.cwd(), "src/lib/platform-logo-assets.json"), "utf8"));
+    assert.equal(assets.minimax, "minimax-hq.png");
+    const logos = JSON.parse(readFileSync(join(process.cwd(), "public/images/platforms/catalog-logos.json"), "utf8"));
+    const entry = logos.find((l: { slug: string }) => l.slug === "minimax");
+    assert.equal(entry?.file, "minimax-hq.png");
+    assert.match(entry?.source ?? "", /^https:\/\/filecdn\.minimax\.chat\//);
+    const png = readFileSync(join(process.cwd(), "public/images/platforms/minimax-hq.png"));
+    assert.equal(png.subarray(1, 4).toString(), "PNG");
   });
 });
 

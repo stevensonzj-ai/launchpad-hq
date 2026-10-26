@@ -9,8 +9,11 @@
  *     the slug is missing. Required fields follow audit 8 / the phase-1 seed
  *     (toCreateData), including empty curated arrays. Fact files:
  *     src/data/facts/{teal,kickresume,rezi}.ts. Task tags: task-tags.ts.
- *   - PATCH rows whose text now contradicts the official page (Part 3) and
- *     the #99 follow-ups (Part 4). See AUDIT_9_PATCHES.
+ *   - PATCH rows whose text now contradicts the official page (Part 3):
+ *     grammarly, perplexity-ai, ideogram (text), notion-ai (text + website
+ *     notion.so -> www.notion.com), recraft (costTier FREE -> FREEMIUM).
+ *   - #99 follow-ups (Part 4): minimax gains directAlternatives DeepSeek,
+ *     Qwen, Kimi, OpenRouter; kimi website www.kimi.com -> www.kimi.ai.
  *
  * Never deletes rows; never changes slug, name or categoryId of an existing
  * row. Text fields change only where they differ; guarded fields (`website`,
@@ -242,7 +245,35 @@ const PART_3_PATCHES: Audit9Patch[] = [
   },
 ];
 
-export const AUDIT_9_PATCHES: Audit9Patch[] = [...PART_3_PATCHES];
+const MINIMAX_SITE = "https://www.minimax.io";
+const MINIMAX_BLOG = "https://www.minimax.io/blog/minimax-m31f";
+const MOONSHOT_SITE = "https://www.moonshot.ai/";
+const KIMI_INTL_SITE = "https://www.kimi.ai/";
+const KIMI_PLANS = "https://www.kimi.ai/resources/kimi-k3-1-pro-pricing";
+
+/** Part 4: #99 follow-ups. */
+const PART_4_PATCHES: Audit9Patch[] = [
+  {
+    slug: "minimax",
+    finding: "Created by audit 8 with no alternatives; the other low-cost model APIs with open weights or model routing in the catalog",
+    sources: [MINIMAX_SITE, MINIMAX_BLOG],
+    checkedAt: CHECKED_AT,
+    addDirectAlternatives: ["DeepSeek", "Qwen", "Kimi", "OpenRouter"],
+  },
+  {
+    // Both domains serve Kimi (each 200, self-canonical), but Moonshot's own
+    // site links only www.kimi.ai, and kimi.com is the mainland-China service
+    // (see src/data/tutorials/kimi-getting-started.ts). Source URLs on
+    // kimi.com that are real official pages are left alone.
+    slug: "kimi",
+    finding: "Moonshot's site (moonshot.ai) links Kimi at www.kimi.ai, the international service; the row's website is www.kimi.com",
+    sources: [MOONSHOT_SITE, KIMI_INTL_SITE, KIMI_PLANS],
+    checkedAt: CHECKED_AT,
+    guarded: { website: { from: "https://www.kimi.com", to: "https://www.kimi.ai" } },
+  },
+];
+
+export const AUDIT_9_PATCHES: Audit9Patch[] = [...PART_3_PATCHES, ...PART_4_PATCHES];
 
 // ---------- pure logic ----------
 
