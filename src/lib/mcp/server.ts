@@ -23,7 +23,7 @@ import {
 } from "./tools";
 
 export const MCP_SERVER_NAME = "launchpad-hq";
-export const MCP_SERVER_VERSION = "0.1.1";
+export const MCP_SERVER_VERSION = "0.1.2";
 
 /** Brand mark shown by clients (e.g. Claude's custom connector), same PNG as server.json. */
 export const MCP_SERVER_ICONS: Icon[] = [
