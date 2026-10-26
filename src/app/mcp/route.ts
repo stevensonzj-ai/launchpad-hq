@@ -1,11 +1,6 @@
 import { createMcpHandler } from "mcp-handler";
 import { loadCatalog } from "@/lib/mcp/catalog";
-import {
-  MCP_SERVER_INSTRUCTIONS,
-  MCP_SERVER_NAME,
-  MCP_SERVER_VERSION,
-  registerLaunchpadTools,
-} from "@/lib/mcp/server";
+import { MCP_SERVER_INFO, MCP_SERVER_INSTRUCTIONS, registerLaunchpadTools } from "@/lib/mcp/server";
 import { withMcpErrorHints } from "@/lib/mcp/http-errors";
 
 /**
@@ -22,7 +17,7 @@ const mcpHandler = createMcpHandler(
     registerLaunchpadTools(server, { loadCatalog });
   },
   {
-    serverInfo: { name: MCP_SERVER_NAME, version: MCP_SERVER_VERSION },
+    serverInfo: MCP_SERVER_INFO,
     instructions: MCP_SERVER_INSTRUCTIONS,
   },
 );

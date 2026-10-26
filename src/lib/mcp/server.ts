@@ -1,4 +1,4 @@
-import type { McpServer } from "@modelcontextprotocol/server";
+import type { Icon, Implementation, McpServer } from "@modelcontextprotocol/server";
 import type { z } from "zod";
 import { getToolFacts } from "@/data/facts";
 import { buildCallLog, logCall, type McpCallLog } from "./log";
@@ -24,6 +24,21 @@ import {
 
 export const MCP_SERVER_NAME = "launchpad-hq";
 export const MCP_SERVER_VERSION = "0.1.1";
+
+/** Brand mark shown by clients (e.g. Claude's custom connector), same PNG as server.json. */
+export const MCP_SERVER_ICONS: Icon[] = [
+  { src: "https://www.launchpadhq.io/brand/launchpad-hq-512.png", mimeType: "image/png", sizes: ["512x512"] },
+];
+
+/**
+ * serverInfo returned by initialize. mcp-handler types this as {name, version}
+ * but passes it unchanged to `new McpServer(...)`, whose Implementation accepts icons.
+ */
+export const MCP_SERVER_INFO: Implementation = {
+  name: MCP_SERVER_NAME,
+  version: MCP_SERVER_VERSION,
+  icons: MCP_SERVER_ICONS,
+};
 
 /** At most 512 characters, describing the data (ChatGPT reads the first 512). */
 export const MCP_SERVER_INSTRUCTIONS = [
