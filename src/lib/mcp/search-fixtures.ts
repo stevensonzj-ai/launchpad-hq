@@ -1,3 +1,4 @@
+import { AUDIT_9_CREATES, CAREER_CATEGORY } from "@/data/catalog-audits/audit-9";
 import type { CatalogRow } from "./tools";
 import { row } from "./fixtures";
 
@@ -807,3 +808,18 @@ export const SEARCH_FIXTURE_ROWS: CatalogRow[] = [
     privacyLevel: "HIGH",
   }),
 ];
+
+/**
+ * The Career & Job Search rows catalog audit 9 creates (not in prod until the
+ * operator runs it), built from the audit's own create data so the tests rank
+ * exactly the text the DB will hold.
+ */
+export const CAREER_FIXTURE_ROWS: CatalogRow[] = AUDIT_9_CREATES.map(({ row: r, directAlternatives }) =>
+  real({
+    ...r,
+    directAlternatives: directAlternatives ?? [],
+    updatedAt: "2026-10-26",
+    category: { slug: CAREER_CATEGORY.slug, name: CAREER_CATEGORY.name },
+    hasMobileApp: r.platformType.includes("mobile"),
+  }),
+);

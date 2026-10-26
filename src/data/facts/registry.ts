@@ -76,6 +76,10 @@ import claudeFacts from "./claude";
 import claudeCodeFacts from "./claude-code";
 import ideogramFacts from "./ideogram";
 import minimaxFacts from "./minimax";
+// Search relevance + career tools, 2026-10-26 (catalog audit 9).
+import tealFacts from "./teal";
+import kickresumeFacts from "./kickresume";
+import reziFacts from "./rezi";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -158,6 +162,10 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [claudeCodeFacts.slug]: claudeCodeFacts,
   [ideogramFacts.slug]: ideogramFacts,
   [minimaxFacts.slug]: minimaxFacts,
+  // Search relevance + career tools, 2026-10-26: new Career & Job Search rows (audit 9).
+  [tealFacts.slug]: tealFacts,
+  [kickresumeFacts.slug]: kickresumeFacts,
+  [reziFacts.slug]: reziFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

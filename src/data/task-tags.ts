@@ -167,6 +167,12 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
  * of known slugs).
  */
 export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
+  // Career & Job Search (catalog audit 9, 2026-10-26). Each from the vendor's
+  // own pricing / product page (src/data/facts/<slug>.ts features).
+  teal: ["resume", "cover-letter", "job-search", "linkedin-profile"], // resume builder, job tracker, cover letter generator, LinkedIn profile review
+  kickresume: ["resume", "cover-letter", "job-search"], // AI resume writer, cover letter writer, ATS checker, career map
+  rezi: ["resume", "cover-letter", "interview-prep", "job-search"], // resume builder, cover letter writer, AI interview practice, application auto-fill
+
   // General assistants. Rows: "writing drafts", "complex writing", "email
   // drafting", "M365 document drafting". Cover letters and resumes are
   // ordinary drafting jobs for these (brief, 2026-10-26).

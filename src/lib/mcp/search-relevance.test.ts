@@ -7,7 +7,7 @@ import { renderLlmsFull } from "@/lib/public-data/llms-full";
 import { PublicTool } from "@/lib/public-data/schema";
 import { buildFeedContext, toPublicCatalog, toPublicTool } from "@/lib/public-data/serialize";
 import { row } from "./fixtures";
-import { SEARCH_FIXTURE_ROWS } from "./search-fixtures";
+import { CAREER_FIXTURE_ROWS, SEARCH_FIXTURE_ROWS } from "./search-fixtures";
 import { detectPriceIntent, matchText, nameKey, namedToolCandidates, stem, words } from "./search-text";
 import { findFreeAlternatives, findRow, getPricingFacts, searchTools, type CatalogRow } from "./tools";
 
@@ -168,6 +168,39 @@ describe("search_tools relevance regressions", () => {
 
   it("stays deterministic", () => {
     assert.deepEqual(search("cover letter for free"), search("cover letter for free"));
+  });
+});
+
+describe("search_tools with the new Career & Job Search rows (catalog audit 9)", () => {
+  const WITH_CAREER = [...ROWS, ...CAREER_FIXTURE_ROWS];
+  const CAREER = new Set(CAREER_FIXTURE_ROWS.map((r) => r.slug));
+  const searchAll = (task: string, extra: Partial<Parameters<typeof searchTools>[0]> = {}) =>
+    searchTools({ task, ...extra }, WITH_CAREER, facts);
+
+  it('"resume" puts the three resume builders first', () => {
+    const out = searchAll("resume");
+    assertNoStray(out);
+    assert.deepEqual(new Set(slugs(out).slice(0, 3)), CAREER);
+  });
+
+  it("cover-letter and job-application searches keep career and writing tools on top, never stray matches", () => {
+    for (const [task, extra] of [
+      ["cover letter", {}],
+      ["write a cover letter", { budget: "free" as const }],
+      ["what AI tools help me write a cover letter for free", {}],
+      ["job application writing", {}],
+    ] as const) {
+      const out = searchAll(task, extra);
+      assertNoStray(out);
+      const top5 = slugs(out).slice(0, 5);
+      for (const slug of top5) assert.ok(CAREER.has(slug) || WRITERS.has(slug), `${task}: ${slug}`);
+      assert.ok(top5.some((s) => CAREER.has(s)), `${task}: ${top5.join(", ")}`);
+    }
+  });
+
+  it("resume builder alternatives are the other career tools", () => {
+    const alts = findFreeAlternatives({ platform: "Teal", limit: 5 }, WITH_CAREER, facts).alternatives.map((a) => a.slug);
+    assert.deepEqual(new Set(alts.slice(0, 2)), new Set(["kickresume", "rezi"]));
   });
 });
 

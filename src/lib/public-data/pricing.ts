@@ -281,6 +281,8 @@ function currencyOf(text: string): Currency | null {
 
 function periodOf(text: string): PlanPeriod | null {
   const t = text.toLowerCase();
+  // Day-based billing ("$29 / 30 days", Teal+) has no matching period; say nothing rather than "usage".
+  if (/\b\d+\s*days?\b/.test(t)) return null;
   if (/\b(seat|user|member|person)\b/.test(t)) return "seat_month";
   if (/\b(one[- ]time|lifetime|once)\b/.test(t)) return "one_time";
   if (/\/\s*(mo|month)\b|\bper month\b|\bmonthly\b|\/month/.test(t)) return "month";

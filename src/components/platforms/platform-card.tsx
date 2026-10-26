@@ -81,6 +81,7 @@ export function PlatformCard({
     "voice-speech": "voice & speech",
     "video-creation-editing": "video",
     "local-open-source-ai": "local AI",
+    "career-job-search": "resumes & job search",
   };
 
   return (

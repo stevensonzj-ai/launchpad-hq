@@ -1,0 +1,80 @@
+import type { ToolFacts } from "./types";
+
+/** www.kickresume.com/en/pricing/ 302-redirected here on 2026-10-26 (a 20%-off sale page). */
+const KICKRESUME_PRICING_URL = "https://www.kickresume.com/en/pricing/sale/";
+
+/** New catalog row. Facts gathered 2026-10-26 from kickresume.com only. */
+export default {
+  slug: "kickresume",
+  lifecycle: "active",
+  company: {
+    value: "Kickresume s.r.o.",
+    note: "Terms of Use: the site \"is owned by Kickresume s.r.o.\". Based in Slovakia (EU) per the privacy policy.",
+    sourceUrl: "https://www.kickresume.com/terms/",
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    status: "unverified",
+  },
+  freeTier: {
+    value: {
+      available: true,
+      summary:
+        "Free while you use only free customization options: 4 free resume templates, unlimited downloads. Free for students verified through ISIC, ITIC or UNiDAYS.",
+    },
+    sourceUrl: KICKRESUME_PRICING_URL,
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    status: "unverified",
+  },
+  plans: {
+    value: [
+      { name: "Yearly", price: "$8", period: "month, billed every 12 months", limits: "Includes vouchers for 5 friends" },
+      { name: "Quarterly", price: "$18", period: "month, billed every 3 months", limits: "Includes vouchers for 3 friends" },
+      { name: "Monthly", price: "$24", period: "month", limits: "" },
+    ],
+    note: "USD regular prices (shown struck through) on 2026-10-26, when the page ran a limited-time 20% discount: Yearly $6.40/month (\"Pay $76.80 for the first 12 months\"), Quarterly $14.40/month (\"Pay $43.20 for the first 3 months\"), Monthly $19.20 for the first month. Undiscounted per-term totals are not shown. All paid plans list a 14-day money-back guarantee.",
+    sourceUrl: KICKRESUME_PRICING_URL,
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    status: "unverified",
+  },
+  platforms: {
+    value: ["Web", "iOS", "Android"],
+    sourceUrl: KICKRESUME_PRICING_URL,
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    status: "unverified",
+  },
+  apps: {
+    value: {
+      ios: "https://apps.apple.com/app/resume-builder-by-kickresume/id1523618695/",
+      android: "https://play.google.com/store/apps/details?id=com.kickresume",
+    },
+    note: "Store links as linked from kickresume.com.",
+    sourceUrl: KICKRESUME_PRICING_URL,
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    status: "unverified",
+  },
+  features: {
+    value: [
+      "AI Writer that generates a resume from your job title and the job ad.",
+      "AI cover letter writer and 40+ cover letter templates matching the resume templates.",
+      "ATS Resume Checker that scores your resume for applicant tracking systems.",
+      "Career Map that suggests career paths from your resume.",
+      "LinkedIn and PDF import.",
+      "Personal website builder with 7 templates on paid plans.",
+    ],
+    sourceUrl: KICKRESUME_PRICING_URL,
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    status: "unverified",
+  },
+  changelog: [
+    {
+      date: "2026-10-26",
+      field: "plans",
+      summary: "New listing: Kickresume free use and Yearly, Quarterly and Monthly regular prices from the official pricing page.",
+    },
+  ],
+} satisfies ToolFacts;
