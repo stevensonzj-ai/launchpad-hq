@@ -611,9 +611,9 @@
    "task": "write code"
   },
   "top5": [
+   "github-copilot",
    "claude-code",
    "cline",
-   "github-copilot",
    "tabnine",
    "aider"
   ]
@@ -624,8 +624,8 @@
    "skill_level": "intermediate"
   },
   "top5": [
-   "cline",
    "github-copilot",
+   "cline",
    "tabnine",
    "bolt-new",
    "cursor"

@@ -22,15 +22,63 @@
  *       pricing, plans, billing or limits, and that carries no `sourceKind`
  *       saying what kind of page it is (Perplexity's plans once cited a
  *       Slack-connector help article).
+ *   card-vs-pricing-verification  (P1.3c) The platform card's `verification`
+ *       must equal get_pricing_facts' top-level `verification`, and a card
+ *       may say `verified` only when the tool has price facts and every one
+ *       (plans, free tier, API pricing) is verified. QuillBot's card once said
+ *       verified from its free-tier fact while its plans were unverified.
+ *   free-tier-says-trial  (P1.3c) free_tier.available true, or cost tier
+ *       FREE/FREEMIUM, next to free-tier or pricing text that says there is
+ *       no free plan, only a trial (Krisp: "a 7-day trial, not a permanent
+ *       free plan" under FREEMIUM / available: true).
+ *   free-tier-vs-cost-tier  (P1.3c) free_tier.available false under a FREE
+ *       or FREEMIUM cost tier, or a $0 plan row next to available: false
+ *       (that row makes starting_price read "Free, from ...").
  */
 import type { Fact, ToolFacts } from "@/data/facts/types";
+import { isPublishedVerified } from "@/data/facts/walk";
+import { isFreeDisplayPlan } from "@/lib/public-data/pricing";
 import { buildFeedContext, toPublicTool } from "@/lib/public-data/serialize";
 import { claimsOfficial } from "./official-claim";
-import { getPricingFacts, type CatalogRow, type FactsLookup } from "./tools";
+import { getPricingFacts, priceFactsOf, type CatalogRow, type FactsLookup } from "./tools";
 
 export { claimsOfficial };
 
-export type LabelRule = "verified-says-unverified" | "catalog-only-says-official" | "pricing-source-path";
+export type LabelRule =
+  | "verified-says-unverified"
+  | "catalog-only-says-official"
+  | "pricing-source-path"
+  | "card-vs-pricing-verification"
+  | "free-tier-says-trial"
+  | "free-tier-vs-cost-tier";
+
+/**
+ * Text saying a tool has no (permanent) free plan, only a trial. A bare
+ * "no free plan" counts only as a blanket statement (start of the text or of
+ * a clause): "n8n Cloud has no free plan" sits next to a free self-hosted
+ * edition and is about one product, not the tool.
+ */
+const TRIAL_ONLY =
+  /\bnot a permanent free (?:plan|tier)\b|\bno permanent free (?:plan|tier)\b|(?:^|[.;:(]\s*)no free (?:plan|tier)\b(?!\s+(?:for|on|with|in)\b)|\bfree[- ]trial[- ]only\b|\btrial[- ]only\b|(?:^|[.;:(]\s*)only (?:a|an) (?:\d+-day )?(?:free )?trial\b/i;
+
+export function saysTrialOnly(text: string): boolean {
+  return TRIAL_ONLY.test(text);
+}
+
+const FREE_TIERS = new Set(["FREE", "FREEMIUM"]);
+
+/**
+ * Rule card-vs-pricing-verification for one tool: why the card's label is
+ * wrong, or null. `card` is the platform card's verification, `pricing`
+ * get_pricing_facts' top-level one.
+ */
+export function cardLabelProblem(card: string, pricing: string, f: ToolFacts | undefined): string | null {
+  if (card !== pricing) return `card ${card}, pricing ${pricing}`;
+  if (card !== "verified") return null;
+  if (priceFactsOf(f).length === 0) return "card verified with no price facts";
+  const weak = (["plans", "freeTier", "apiPricing"] as const).filter((k) => f?.[k] && !isPublishedVerified(f[k] as Fact<unknown>));
+  return weak.length ? `card verified, unverified: ${weak.join(", ")}` : null;
+}
 
 export type LabelOffender = { slug: string; rule: LabelRule; field: string; text: string };
 
@@ -105,6 +153,36 @@ export function checkLabels(rows: CatalogRow[], facts: FactsLookup): LabelOffend
 
     for (const [key, fact] of priceFacts(f)) {
       if (!fact.sourceKind && !isPricingSourceUrl(fact.sourceUrl)) push("pricing-source-path", `${key}.sourceUrl`, fact.sourceUrl);
+    }
+
+    // (a) card label vs pricing label.
+    const cardProblem = cardLabelProblem(mcp.platform.verification, mcp.verification, f);
+    if (cardProblem) push("card-vs-pricing-verification", "platform.verification", cardProblem);
+
+    // (b) free label vs trial-only text; (c) free label vs cost tier.
+    const tier = mcp.platform.cost_tier.toUpperCase();
+    const available = mcp.platform.free_tier.available;
+    if (available === true || FREE_TIERS.has(tier)) {
+      const label = available === true ? "free_tier.available=true" : `cost_tier=${tier}`;
+      const texts: [string, string | null | undefined][] = [
+        ["free_tier.summary", mcp.platform.free_tier.summary],
+        ["facts.freeTier.summary", f?.freeTier?.value.summary],
+        ["catalog_pricing_text", mcp.catalog_pricing_text],
+        ["row.freeTierFeatures", row.freeTierFeatures],
+        ["row.currentPricing", row.currentPricing],
+      ];
+      const seen = new Set<string>();
+      for (const [field, text] of texts) {
+        if (!text || seen.has(text) || !saysTrialOnly(text)) continue;
+        seen.add(text);
+        push("free-tier-says-trial", field, `${label}: ${text}`);
+      }
+    }
+    if (available === false && FREE_TIERS.has(tier)) {
+      push("free-tier-vs-cost-tier", "cost_tier", `free_tier.available=false under cost_tier=${tier}`);
+    }
+    if (available === false && (f?.plans?.value ?? []).some(isFreeDisplayPlan)) {
+      push("free-tier-vs-cost-tier", "plans", "a $0 plan row next to free_tier.available=false");
     }
   }
   return out;

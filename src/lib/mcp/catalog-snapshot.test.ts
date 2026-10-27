@@ -22,6 +22,12 @@ const P13_FACT_FILES = [
   "otter-ai", "midjourney", "github-copilot", "zoom-ai-companion", "julius-ai", "elicit", "opus-clip", "suno",
   "canva-ai-magic-studio", "perplexity-ai", "quillbot", "gemini", "read-ai", "microsoft-copilot",
 ];
+/**
+ * Fix P1.3c (2026-10-26): Krisp's owner-checked facts and audit 11, and the
+ * card label now taken from every price fact (pricingVerification), which
+ * turns plans- or API-only fact files from catalog_only into verified.
+ */
+const P13C_CHANGED = ["krisp", "deepseek", "invideo-ai", "jasper", "openai-api"];
 const P13_FIELDS = new Set([
   "name", "description", "cost_tier", "free_tier", "starting_price", "tasks", "verification", "as_of", "source_url", "stale", "freshness_note",
 ]);
@@ -43,7 +49,7 @@ describe("catalog snapshot", () => {
     ) as Record<string, unknown>[];
     assert.ok(observed.length >= 75);
     const bySlug = new Map(snap.rows.map((r) => [r.slug, r]));
-    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES]);
+    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED]);
     const diffs: string[] = [];
     for (const o of observed) {
       const row = bySlug.get(o.slug as string);

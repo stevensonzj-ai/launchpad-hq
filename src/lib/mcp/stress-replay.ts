@@ -163,3 +163,38 @@ export async function replayAll(rows: CatalogRow[]) {
   }
   return out;
 }
+
+/**
+ * Contradicting labels across the replayed responses, by the stress rerun's
+ * counted rules (sessions/2026-10-26-mcp-stress-rerun-p1b.md): a platform
+ * card whose verification differs from its get_pricing_facts response; a
+ * free label (free_tier.available true, or cost tier FREE/FREEMIUM) next to
+ * trial-only text, or available false under FREE/FREEMIUM; a catalog_only
+ * record calling its text official; and the same tool showing different
+ * labels in two responses.
+ */
+export async function replayLabelContradictions(rows: CatalogRow[]): Promise<string[]> {
+  const { saysTrialOnly, claimsOfficial } = await import("./label-consistency");
+  type Rec = Item & { cost_tier: string; free_tier: { available: boolean | null; summary: string | null }; description?: string | null; starting_price?: string | null };
+  const seen = new Map<string, { id: string; key: string }>();
+  const out = new Set<string>();
+  for (const c of stressCases()) {
+    const r = await replayCall(c, rows);
+    if (!r.data) continue;
+    const d = r.data;
+    const recs = [...((d.results ?? d.items ?? d.alternatives ?? []) as Rec[]), ...(d.for ? [d.for as Rec] : []), ...(d.platform ? [d.platform as Rec] : [])];
+    if (d.platform && d.platform.verification !== d.verification) out.add(`${d.platform.slug}: card ${d.platform.verification} vs pricing ${d.verification} (${c.id})`);
+    if (d.platform && d.verification === "catalog_only" && claimsOfficial(d.catalog_pricing_text ?? "")) out.add(`${d.platform.slug}: catalog_only text says official (${c.id})`);
+    for (const x of recs) {
+      const free = x.free_tier.available === true || ["FREE", "FREEMIUM"].includes(x.cost_tier);
+      if (free && saysTrialOnly(x.free_tier.summary ?? "")) out.add(`${x.slug}: free label next to trial-only text (${c.id})`);
+      if (x.free_tier.available === false && ["FREE", "FREEMIUM"].includes(x.cost_tier)) out.add(`${x.slug}: no free tier under ${x.cost_tier} (${c.id})`);
+      if (x.verification === "catalog_only" && claimsOfficial(`${x.description ?? ""} ${x.free_tier.summary ?? ""}`)) out.add(`${x.slug}: catalog_only text says official (${c.id})`);
+      const key = JSON.stringify([x.verification, x.cost_tier, x.free_tier, x.starting_price ?? null]);
+      const prev = seen.get(x.slug);
+      if (prev && prev.key !== key) out.add(`${x.slug}: labels differ between ${prev.id} and ${c.id}`);
+      else if (!prev) seen.set(x.slug, { id: c.id, key });
+    }
+  }
+  return [...out];
+}
