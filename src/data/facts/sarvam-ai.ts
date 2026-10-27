@@ -19,6 +19,7 @@ export default {
       summary: "Start with free credits (amount unpublished). Credits never expire, with no monthly commitment.",
     },
     sourceUrl: "https://www.sarvam.ai/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

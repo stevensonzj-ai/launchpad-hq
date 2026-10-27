@@ -13,6 +13,7 @@ import { TASK_TAGS, TASKS, taskLabel, taskTagsFor, type TaskId } from "@/data/ta
 import { PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { stripInlineCitations } from "@/lib/public-data/pricing";
 import { publicToolCore } from "@/lib/public-data/serialize";
+import { isStale } from "@/lib/public-data/staleness";
 import { costTiersForBudget } from "@/lib/recommendations-score";
 import { absoluteUrl } from "@/lib/site";
 import { correctWord, matchName, type NamedRow, type Suggestion } from "./names";
@@ -175,19 +176,7 @@ function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
   };
 }
 
-/** A tool's as_of older than this many days is labelled stale. */
-export const STALE_AFTER_DAYS = 90;
-
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
-/** True when `asOf` is more than STALE_AFTER_DAYS before `today` (both YYYY-MM-DD). */
-export function isStale(asOf: string | null, today: string = todayIso()): boolean {
-  if (!asOf) return false;
-  const age = (Date.parse(`${today}T00:00:00Z`) - Date.parse(`${asOf}T00:00:00Z`)) / 86_400_000;
-  return age > STALE_AFTER_DAYS;
-}
+export { isStale, STALE_AFTER_DAYS } from "@/lib/public-data/staleness";
 
 /**
  * The honesty label for an old record: labelling beats hiding, so stale
@@ -447,8 +436,9 @@ function namedTarget(
  * cannot take the top 3 while one that has such a match is left.
  * Fallback: a search with no topic gets a starter set (verified chatbot-tagged
  * tools), and fewer than 3 direct matches are topped up with verified tools
- * from the top match's category that share a curated task with the search or
- * that match. Fallback items are
+ * tagged for the broad task the search's filler words name ("write" ->
+ * writing; P1.3), then from the top match's category when they share a
+ * curated task with the search or that match. Fallback items are
  * always labelled (`fallback: true`, a "fallback:" reason, the output's
  * `fallback` and `note`) and never counted in `total_matches`.
  */
@@ -755,6 +745,22 @@ function gateTopSlots(sorted: Ranked[]): Ranked[] {
   return [...out, ...rest];
 }
 
+/**
+ * Broad tasks named only by filler words, used for the labelled top-up and
+ * never for scoring: "write" alone is too loose to rank on (WEAK_WORDS), but
+ * a thin "write ..." search still means writing help.
+ */
+const WEAK_WORD_TASKS: Readonly<Record<string, TaskId>> = {
+  write: "writing",
+  writing: "writing",
+  written: "writing",
+  writer: "writing",
+};
+
+function hintedTasks(task: string): TaskId[] {
+  return [...new Set(words(task).flatMap((w) => (WEAK_WORD_TASKS[w] ? [WEAK_WORD_TASKS[w]] : [])))];
+}
+
 /** Slugs in TASK_TAGS order for a task (the curated order is the starter order). */
 function taggedInOrder(task: TaskId): string[] {
   return Object.entries(TASK_TAGS)
@@ -904,12 +910,32 @@ export function searchTools(
     const category = lead.category;
     const have = new Set(ranked.map((r) => r.row.slug));
     const jobs = new Set<string>([...queryTasks.map((t) => t.task), ...tagsOf(lead)]);
+    const need = THIN_RESULTS - ranked.length;
+    const add = (pool: Ranked[]) => {
+      const taken = new Set([...have, ...fallbackItems.map((f) => f.row.slug)]);
+      fallbackItems.push(...pool.filter((f) => !taken.has(f.row.slug)).slice(0, need - fallbackItems.length));
+    };
+    // First the broad task the search's own filler words name ("write" ->
+    // general writing help): verified tools tagged for it, in curated order.
+    // The user's verb says more than a category inferred from one loose
+    // match, so "write blog posts" (one match, a WordPress plugin) and
+    // "write a book" get ChatGPT and Claude, labelled and never counted.
+    for (const hint of hintedTasks(searched)) {
+      const order = taggedInOrder(hint);
+      add(
+        verifiedEligible
+          .filter((r) => order.includes(r.slug))
+          .map((r) => asFallback(r, `fallback: popular verified tool for ${taskLabel(hint)}, not a direct match`))
+          .sort((a, b) => a.misfits - b.misfits || order.indexOf(a.row.slug) - order.indexOf(b.row.slug)),
+      );
+    }
     if (category) {
-      fallbackItems = verifiedEligible
-        .filter((r) => r.category?.slug === category.slug && !have.has(r.slug) && tagsOf(r).some((t) => jobs.has(t)))
-        .map((r) => asFallback(r, `fallback: popular verified tool in ${category.name}, not a direct match`))
-        .sort((a, b) => a.misfits - b.misfits || a.row.slug.localeCompare(b.row.slug))
-        .slice(0, THIN_RESULTS - ranked.length);
+      add(
+        verifiedEligible
+          .filter((r) => r.category?.slug === category.slug && tagsOf(r).some((t) => jobs.has(t)))
+          .map((r) => asFallback(r, `fallback: popular verified tool in ${category.name}, not a direct match`))
+          .sort((a, b) => a.misfits - b.misfits || a.row.slug.localeCompare(b.row.slug)),
+      );
     }
     if (fallbackItems.length) fallback = "top_up";
   }
@@ -929,7 +955,7 @@ export function searchTools(
   } else {
     if (looseOnly) notes.push("Only loose word matches; name the task (for example 'cover letter' or 'logo') for better results.");
     if (fallback === "top_up") {
-      notes.push(`Only ${ranked.length} direct match${ranked.length === 1 ? "" : "es"}; the rest are popular verified tools from the same category, labelled fallback, not direct matches.`);
+      notes.push(`Only ${ranked.length} direct match${ranked.length === 1 ? "" : "es"}; the rest are popular verified tools from the same category or for the same kind of task, labelled fallback, not direct matches.`);
     }
   }
   if (results.some((r) => r.stale)) notes.push("Some prices are older than 90 days; confirm on the vendor's site.");

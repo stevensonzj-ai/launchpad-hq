@@ -6,7 +6,7 @@ import { FEED_CHANGELOG } from "./changelog";
  * Public JSON feed contract (/data/v1). Bump SCHEMA_VERSION whenever the
  * shape changes; schema.test.ts compares against a committed snapshot.
  */
-export const SCHEMA_VERSION = "1.2";
+export const SCHEMA_VERSION = "1.3";
 
 const date = z.string().describe("YYYY-MM-DD");
 const ref = z.object({ slug: z.string(), name: z.string() });
@@ -104,6 +104,10 @@ export const PublicTool = z.object({
     checked_at: date.nullable(),
   }),
   data_as_of: date.nullable().describe("Newest date a shown fact was checked; not a DB timestamp."),
+  stale: z
+    .boolean()
+    .optional()
+    .describe("Since 1.3: true when data_as_of (or, without one, record_updated_at) is more than 90 days before generated_at. Stale records stay listed; confirm their prices on the vendor's site."),
   record_updated_at: date.nullable().describe("Last database edit of the catalog row."),
   generated_at: z.string(),
   sponsored: z.literal(false),

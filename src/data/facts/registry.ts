@@ -88,6 +88,15 @@ import geminiFacts from "./gemini";
 import microsoftCopilotFacts from "./microsoft-copilot";
 import canvaAiMagicStudioFacts from "./canva-ai-magic-studio";
 import recraftFacts from "./recraft";
+// MCP phase 1b, 2026-10-26: RA fact check (catalog audit 10).
+import otterAiFacts from "./otter-ai";
+import midjourneyFacts from "./midjourney";
+import githubCopilotFacts from "./github-copilot";
+import zoomAiCompanionFacts from "./zoom-ai-companion";
+import juliusAiFacts from "./julius-ai";
+import elicitFacts from "./elicit";
+import opusClipFacts from "./opus-clip";
+import sunoFacts from "./suno";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -182,6 +191,15 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [microsoftCopilotFacts.slug]: microsoftCopilotFacts,
   [canvaAiMagicStudioFacts.slug]: canvaAiMagicStudioFacts,
   [recraftFacts.slug]: recraftFacts,
+  // MCP phase 1b, 2026-10-26: RA fact check (catalog audit 10).
+  [otterAiFacts.slug]: otterAiFacts,
+  [midjourneyFacts.slug]: midjourneyFacts,
+  [githubCopilotFacts.slug]: githubCopilotFacts,
+  [zoomAiCompanionFacts.slug]: zoomAiCompanionFacts,
+  [juliusAiFacts.slug]: juliusAiFacts,
+  [elicitFacts.slug]: elicitFacts,
+  [opusClipFacts.slug]: opusClipFacts,
+  [sunoFacts.slug]: sunoFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

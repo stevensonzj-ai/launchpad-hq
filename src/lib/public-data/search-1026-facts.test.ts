@@ -82,8 +82,10 @@ describe("search-relevance fact pass (2026-10-26)", () => {
       assert.ok(list.length > 0, slug);
       for (const fact of list) {
         // Gathered by "claude", re-checked against the live page by a different
-        // session ("claude-recheck") on the same day.
-        assert.deepEqual([fact.status, fact.verifiedBy, fact.verifiedAt], ["verified", "claude-recheck", DATE], slug);
+        // session ("claude-recheck") on the same day, or re-checked by the RA in
+        // the MCP stress fact check (fix plan P1.3, same day).
+        assert.deepEqual([fact.status, fact.verifiedAt], ["verified", DATE], slug);
+        assert.ok(["claude-recheck", "ra"].includes(fact.verifiedBy ?? ""), `${slug}: ${fact.verifiedBy}`);
         assert.ok(isPublishedVerified(fact), slug);
         const host = new URL(fact.sourceUrl).hostname;
         assert.ok(domains.some((d) => host === d || host.endsWith(`.${d}`)), `${slug}: ${fact.sourceUrl}`);
@@ -109,7 +111,12 @@ describe("search-relevance fact pass (2026-10-26)", () => {
   });
 
   it("no fact file prices a plan the page did not show (JavaScript-rendered pricing pages)", () => {
-    assert.equal(facts("canva-ai-magic-studio").plans, undefined);
+    // Canva's plan cards are JavaScript-rendered; the RA read the plans from the
+    // page's embedded plan data (P1.3) and left out Pro's annual price, which
+    // differs between copies of the page.
+    const canva = facts("canva-ai-magic-studio").plans;
+    assert.equal(canva?.verifiedBy, "ra");
+    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /Annual price not confirmed/);
     assert.equal(facts("recraft").plans, undefined);
     // Notion's monthly-billing prices were not in the rendered page; only the yearly view is recorded.
     assert.match(facts("notion-ai").plans?.note ?? "", /not recorded/);

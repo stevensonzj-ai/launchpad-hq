@@ -14,6 +14,7 @@ export default {
         "Free only if you run it yourself: the self-hosted Community edition is free with almost the full feature set. n8n Cloud has no free plan, only a trial with no card required.",
     },
     sourceUrl: "https://docs.n8n.io/hosting/community-edition-features/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-25",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",

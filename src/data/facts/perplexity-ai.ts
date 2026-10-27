@@ -2,13 +2,15 @@ import type { ToolFacts } from "./types";
 
 const PPLX_PLAN_COMPARE_URL =
   "https://www.perplexity.ai/help-center/en/articles/11187416-which-perplexity-subscription-plan-is-right-for-you";
-const PPLX_PLAN_PRICES_URL =
-  "https://www.perplexity.ai/help-center/en/articles/12167980-using-the-connector-for-slack";
+const PPLX_PRICING_URL = "https://www.perplexity.ai/hub/pricing";
 
 /**
- * Perplexity's own pricing pages (perplexity.ai/pro, /enterprise/pricing)
- * return 403 to scripted fetches or render no price text, so prices come from
- * Perplexity's Help Center. Comet browser facts live in perplexity-comet.ts.
+ * Plans: Perplexity's pricing hub, re-checked by the RA on 2026-10-26
+ * (mcp-stress-factcheck-2026-10-26.md, item 7 and follow-up 3). Perplexity's
+ * pages block scripted fetches, so the RA read them as returned by a search
+ * index. Pro is stated only as "$17/month when billed annually"; no official
+ * page states a monthly-billing Pro price, so none is listed. Comet browser
+ * facts live in perplexity-comet.ts.
  */
 export default {
   slug: "perplexity-ai",
@@ -29,21 +31,22 @@ export default {
   },
   plans: {
     value: [
-      { name: "Pro", price: "$20", period: "month", limits: "Or $200/year" },
+      { name: "Pro", price: "$17", period: "month", limits: "Billed annually; a monthly-billing price is not stated on Perplexity's pricing pages" },
       {
         name: "Max",
         price: "$200",
         period: "month",
-        limits: "Or $2,000/year; annual billing only on the perplexity.ai web app",
+        limits: "Or $2,000/year ($167/month billed annually); annual billing only on the perplexity.ai web app",
       },
+      { name: "Education Pro", price: "$10", period: "month", limits: "With student verification (SheerID)" },
       { name: "Enterprise Pro", price: "$40", period: "seat/month", limits: "Or $400/year per seat" },
       { name: "Enterprise Max", price: "$325", period: "seat/month", limits: "Or $3,250/year per seat" },
     ],
-    note: "USD, as of 2026-10-26. Prices as listed in Perplexity's Help Center (\"Our plans start at\"). The Max annual-billing limit is from https://www.perplexity.ai/help-center/en/articles/11680686-perplexity-max. Education Pro is listed at $10/mo with SheerID verification on the plan-comparison article.",
-    sourceUrl: PPLX_PLAN_PRICES_URL,
+    note: "USD, as of 2026-10-26. Max prices: https://www.perplexity.ai/help-center/en/articles/11680686-perplexity-max. Enterprise prices: https://www.perplexity.ai/help-center/en/articles/10352986-enterprise-pricing-and-billing-frequently-asked-questions. Education Pro: the plan-comparison article.",
+    sourceUrl: PPLX_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "ra",
     verifiedAt: "2026-10-26",
     status: "verified",
   },
@@ -60,6 +63,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-26",
+      field: "plans",
+      summary: "Plans source moved from a Slack-connector help article to the official pricing hub. Pro is $17/month billed annually; the unstated $20 monthly figure was removed. Added Education Pro and Max's $167/month annual equivalent.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

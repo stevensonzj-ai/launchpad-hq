@@ -23,6 +23,7 @@ export default {
       "Decisions API (GPT-6 Luna), USD per 1M tokens: $0.10 input, $0.01 cached input. You only pay for input tokens; there are no output-token charges.",
     note: "Decisions API only. Other OpenAI API models are priced on OpenAI's pricing page.",
     sourceUrl: DECISIONS_API_URL,
+    sourceKind: "announcement",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",

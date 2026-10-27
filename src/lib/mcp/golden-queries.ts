@@ -100,4 +100,9 @@ export const GOLDEN_QUERIES: { id: string; input: SearchToolsInput }[] = [
   { id: "G58", input: { task: "social media posts" } },
   { id: "G59", input: { task: "website builder", budget: "low" } },
   { id: "G60", input: { task: "help me with my homework" } },
+
+  // Fix plan P1.3 (2026-10-26).
+  // Labelled top-up: one direct match (Jetpack), then ChatGPT and Claude as fallback (search-p13.test.ts FALLBACK_QUERY).
+  { id: "G61", input: { task: "write a blog post for my bakery", budget: "low" } },
+  { id: "G62", input: { task: "plan my wedding toast" } },
 ];

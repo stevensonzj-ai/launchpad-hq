@@ -55,7 +55,9 @@ export type TaskId =
   | "website-builder"
   | "small-business"
   // Review follow-up (2026-10-26): support bots for a business's own site.
-  | "customer-support";
+  | "customer-support"
+  // Fix plan P1.3 (2026-10-26): "plan my wedding toast" matched lesson plans.
+  | "speech-writing";
 
 export type TaskDef = {
   /** Reader-facing label (Markdown, llms-full.txt, match reasons). */
@@ -221,6 +223,11 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
     label: "customer support bots",
     phrases: ["customer support", "customer service", "support chatbot", "support bot", "help desk", "helpdesk", "support tickets", "atención al cliente", "kundenservice", "service client"],
   },
+  "speech-writing": {
+    label: "speeches and toasts",
+    // Never bare "speech": "speech to text" and "text to speech" are other tasks.
+    phrases: ["toast", "wedding toast", "wedding speech", "best man speech", "maid of honor speech", "eulogy", "write a speech", "speech writing", "speechwriting", "graduation speech", "retirement speech", "brindis", "discurso de boda", "hochzeitsrede", "discours de mariage"],
+  },
 };
 
 /**
@@ -243,10 +250,12 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   // "Conversational AI assistant", "Conversational AI", "Multimodal AI",
   // "AI assistant in Microsoft 365". ChatGPT's row lists "tutoring";
   // Gemini's "spreadsheet formulas"; Copilot's "Excel analysis".
-  chatgpt: ["chatbot", "writing", "cover-letter", "resume", "email-writing", "coding", "image-generation", "summarization", "study-help"],
-  claude: ["chatbot", "writing", "cover-letter", "resume", "coding", "summarization"],
-  gemini: ["chatbot", "writing", "cover-letter", "resume", "email-writing", "image-generation", "data-analysis"],
-  "microsoft-copilot": ["chatbot", "writing", "cover-letter", "resume", "email-writing", "meeting-notes", "data-analysis"],
+  // A wedding toast or eulogy is the same kind of drafting job (P1.3), so
+  // "speech-writing" goes to these four and to no special-purpose tool.
+  chatgpt: ["chatbot", "writing", "cover-letter", "resume", "email-writing", "coding", "image-generation", "summarization", "study-help", "speech-writing"],
+  claude: ["chatbot", "writing", "cover-letter", "resume", "coding", "summarization", "speech-writing"],
+  gemini: ["chatbot", "writing", "cover-letter", "resume", "email-writing", "image-generation", "data-analysis", "speech-writing"],
+  "microsoft-copilot": ["chatbot", "writing", "cover-letter", "resume", "email-writing", "meeting-notes", "data-analysis", "speech-writing"],
   "notion-ai": ["writing", "meeting-notes", "summarization"], // row: "writing assistance within docs", "meeting notes summarization"
 
   // Writing and grammar.
@@ -283,7 +292,7 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   "tl-dv": ["meeting-notes", "transcription"],
   tactiq: ["meeting-notes", "transcription"],
   granola: ["meeting-notes"],
-  "read-ai": ["meeting-notes"],
+  "read-ai": ["meeting-notes", "transcription"], // RA 2026-10-26: read.ai/transcription -> /meeting-reports, "a complete transcription of your meeting"
   krisp: ["meeting-notes"], // row: "optional AI notetaker"
   "zoom-ai-companion": ["meeting-notes"],
   descript: ["transcription", "podcast", "video-editing"], // row: "podcast editing", "Text-based video editing"

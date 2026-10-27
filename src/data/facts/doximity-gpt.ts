@@ -28,6 +28,7 @@ export default {
       summary: "Free for verified US clinicians",
     },
     sourceUrl: "https://www.doximity.com/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

@@ -105,7 +105,7 @@ export const RULES: Record<string, (r: CallResult) => Verdict> = {
   B01: (r) => pass(r.data?.platform?.slug === "chatgpt" && r.data?.verification === "verified", "verified ChatGPT plans"),
   B02: (r) => pass(r.data?.platform?.slug === "claude" && r.data?.verification === "verified", "verified Claude plans"),
   B03: (r) => pass(r.data?.platform?.slug === "gemini" && r.data?.verification === "verified", "verified Gemini plans"),
-  // Data rules (fix plan P1.3/P1.4): code in P1.1/P1.2 does not change these.
+  // Data rules (fix plan P1.3): fact files and catalog audit 10.
   B04: (r) => pass(Boolean(r.data?.plans), "Canva plans fact (P1.3)", "FAIL"),
   B05: (r) => pass(r.data?.platform?.slug === "grammarly" && r.data?.verification === "verified", "verified Grammarly"),
   B06: (r) => pass(r.data?.platform?.slug === "notion-ai" && r.data?.verification === "verified", "verified Notion AI"),

@@ -56,6 +56,7 @@ export const NAME_ALIASES: Readonly<Record<string, string | readonly string[]>> 
   jetpackai: "wordpress-ai-jetpack-ai",
   firefly: "adobe-firefly",
   otter: "otter-ai",
+  zoommate: "zoom-ai-companion", // Zoom's current name for AI Companion (facts/zoom-ai-companion.ts)
   fireflies: "fireflies-ai",
   tldv: "tl-dv",
   make: "make-integromat",

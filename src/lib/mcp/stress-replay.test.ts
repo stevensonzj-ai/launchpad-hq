@@ -7,8 +7,9 @@ const RANK: Record<Grade, number> = { FAIL: 0, WEAK: 1, PASS: 2 };
 
 /**
  * Offline replay of the 67 live stress calls (fix plan P1.0 / section 7).
- * Hard gates: no case grades below its live grade, and FAILs are limited to
- * the data cases P1.3 owns. The summary line is what the review reports.
+ * Hard gates: no case grades below its live grade, no FAIL (P1.3 fixed the
+ * B04/B09 data cases) and at least 55 PASS (fix plan target). The summary
+ * line is what the review reports.
  */
 describe("stress-1026 offline replay", () => {
   it("no case regresses below its live grade", async () => {
@@ -23,6 +24,7 @@ describe("stress-1026 offline replay", () => {
     for (const g of graded) if (g.grade !== "PASS") console.log(`  ${g.id} ${g.grade}: ${g.why} [${g.top.join(", ")}]`);
     const regressions = graded.filter((g) => RANK[g.grade] < RANK[g.live]).map((g) => `${g.id}: ${g.live} -> ${g.grade} (${g.why}) [${g.top.join(", ")}]`);
     assert.deepEqual(regressions, []);
-    assert.deepEqual(graded.filter((g) => g.grade === "FAIL").map((g) => g.id).filter((id) => !["B04", "B09"].includes(id)), []);
+    assert.deepEqual(graded.filter((g) => g.grade === "FAIL").map((g) => g.id), []);
+    assert.ok(counts.PASS >= 55, `${counts.PASS} PASS`);
   });
 });

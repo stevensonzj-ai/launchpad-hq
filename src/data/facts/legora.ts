@@ -23,6 +23,7 @@ export default {
       },
     ],
     sourceUrl: "https://legora.com/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

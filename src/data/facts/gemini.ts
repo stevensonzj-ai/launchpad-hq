@@ -24,12 +24,8 @@ export default {
       { name: "Free", price: "$0", period: "month", limits: "With a Google Account" },
       { name: "Google AI Plus", price: "$4.99", period: "month", limits: "2x higher usage limits than Free; 400 GB storage" },
       { name: "Google AI Pro", price: "$19.99", period: "month", limits: "4x higher usage limits than Free; 5 TB storage" },
-      {
-        name: "Google AI Ultra",
-        price: "$99.99",
-        period: "month",
-        limits: "Starting price: 5x higher usage limits vs. AI Pro; $199.99/month for 20x",
-      },
+      { name: "Google AI Ultra 5x", price: "$99.99", period: "month", limits: "Google AI Ultra's starting price: 5x higher usage limits than AI Pro" },
+      { name: "Google AI Ultra 20x", price: "$199.99", period: "month", limits: "Google AI Ultra at 20x higher usage limits than AI Pro" },
       {
         name: "Gemini Enterprise Business edition",
         price: "$21",
@@ -58,6 +54,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-26",
+      field: "plans",
+      summary: "RA: Google AI Ultra is one plan at two price levels; listed as separate Ultra 5x ($99.99/month) and Ultra 20x ($199.99/month) rows, the names the page's footnotes use.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

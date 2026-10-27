@@ -56,6 +56,7 @@ export default {
       "USD. Developer free: 1M characters, one-time. Growth: $26/mo billed annually plus usage ($27.50 per 1M extra characters). Enterprise: custom.",
     note: "deepl.com/en/pro-api redirects to /pro in fetch and curl. USD Growth $26/mo, $27.50 per 1M: browser-verified 2026-10-14.",
     sourceUrl: "https://www.deepl.com/en/pro-api",
+    sourceKind: "plans-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

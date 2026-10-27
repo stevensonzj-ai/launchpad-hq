@@ -16,14 +16,14 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Paraphrase up to 100 words, summarize up to 1,200 words.",
+      summary: "Paraphrase up to 125 words and summarize up to 1,200 words per input, with the Standard and Fluency paraphrasing modes and a limited number of AI Chat queries a day.",
     },
-    note: "Browser-verified 2026-10-14. FAQ also states Premium works on up to 10 devices; limits may vary across platforms.",
-    sourceUrl: "https://quillbot.com/premium",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
+    note: "Help Center, as of 2026-10-26 (article updated 2026-10-14). The summarizer FAQ (https://help.quillbot.com/hc/en-us/articles/35700052994071) also gives 1,200 words per input on Free and 6,000 on Premium; an older 600-word table is no longer in the article.",
+    sourceUrl: "https://help.quillbot.com/hc/en-us/articles/360058341753-What-s-the-difference-between-a-free-and-a-premium-account",
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedAt: "2026-10-26",
     status: "verified",
   },
   plans: {
@@ -35,13 +35,11 @@ export default {
         limits: "",
       },
     ],
-    note: "Browser-verified 2026-10-14. Monthly-billed price unpublished. Team price not shown. No derived monthly figure.",
+    note: "Browser-verified 2026-10-14. On 2026-10-26 the RA could not confirm it on a vendor page that renders prices to a fetch: quillbot.com/premium is bot-protected, and the Help Center says the price depends on your region without giving figures. Monthly-billed price unpublished. No derived monthly figure.",
     sourceUrl: "https://quillbot.com/premium",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   platforms: {
     value: ["Chrome", "Edge", "Safari", "Android", "iOS", "Windows", "macOS", "Word"],
@@ -68,6 +66,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-26",
+      field: "freeTier",
+      summary: "RA: free paraphrasing is 125 words (was 100) and summarizing 1,200 words per input (the 600-word conflict is resolved). Premium price marked unverified: it is not confirmed on a non-blog official page today.",
+    },
     {
       date: "2026-10-14",
       field: "plans",
