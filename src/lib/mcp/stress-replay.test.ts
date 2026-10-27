@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { snapshotRows } from "./snapshot";
-import { HEAD_TO_HEAD, replayAll, type Grade } from "./stress-replay";
+import { HEAD_TO_HEAD, replayAll, replayLabelContradictions, type Grade } from "./stress-replay";
 
 const RANK: Record<Grade, number> = { FAIL: 0, WEAK: 1, PASS: 2 };
 
@@ -26,5 +26,11 @@ describe("stress-1026 offline replay", () => {
     assert.deepEqual(regressions, []);
     assert.deepEqual(graded.filter((g) => g.grade === "FAIL").map((g) => g.id), []);
     assert.ok(counts.PASS >= 55, `${counts.PASS} PASS`);
+  });
+
+  it("has 0 contradicting labels across the replayed responses (P1.3c)", async () => {
+    const found = await replayLabelContradictions(snapshotRows());
+    console.log(`replay contradicting labels: ${found.length}`);
+    assert.deepEqual(found, []);
   });
 });

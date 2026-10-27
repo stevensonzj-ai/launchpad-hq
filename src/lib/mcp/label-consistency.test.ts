@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { getToolFacts } from "@/data/facts";
 import type { ToolFacts } from "@/data/facts/types";
-import { checkLabels, claimsOfficial, isPricingSourceUrl, summarizeOffenders } from "./label-consistency";
+import { cardLabelProblem, checkLabels, claimsOfficial, isPricingSourceUrl, saysTrialOnly, summarizeOffenders } from "./label-consistency";
 import { snapshotRows } from "./snapshot";
 import type { CatalogRow } from "./tools";
 
@@ -35,7 +35,7 @@ const lookup = (f: ToolFacts | undefined) => (slug: string) => (slug === "sample
 const rules = (r: CatalogRow, f: ToolFacts | undefined) => checkLabels([r], lookup(f)).map((o) => `${o.rule} ${o.field}`);
 
 describe("label consistency on the catalog snapshot", () => {
-  it("has 0 offenders after audit 10", () => {
+  it("has 0 offenders after audits 10 and 11", () => {
     const offenders = checkLabels(snapshotRows(), getToolFacts);
     assert.equal(offenders.length, 0, summarizeOffenders(offenders));
   });
@@ -117,5 +117,94 @@ describe("rule: pricing-source-path", () => {
     assert.deepEqual(rules(row({}), bad), ["pricing-source-path plans.sourceUrl"]);
     const labelled: ToolFacts = { ...verifiedFacts, freeTier: fact({ available: true, summary: "Free." }, { sourceUrl: "https://sample.example/", sourceKind: "product-page" }) };
     assert.deepEqual(rules(row({}), labelled), []);
+  });
+});
+
+describe("rule: card-vs-pricing-verification (P1.3c)", () => {
+  it("passes when every price fact is verified, and a catalog-only card", () => {
+    assert.deepEqual(rules(row({}), verifiedFacts), []);
+    assert.deepEqual(rules(row({}), undefined), []);
+  });
+
+  it("a verified free tier next to unverified plans makes the card unverified, so nothing contradicts", () => {
+    // QuillBot's shape: the card used to say verified from the free tier alone.
+    const f: ToolFacts = { ...verifiedFacts, plans: fact([{ name: "Premium", price: "$8.33/mo", period: "billed annually", limits: "" }], { status: "unverified" }) };
+    assert.deepEqual(rules(row({}), f), []);
+    const quill = checkLabels(snapshotRows().filter((r) => r.slug === "quillbot"), getToolFacts);
+    assert.deepEqual(quill, []);
+  });
+
+  it("flags a card label that disagrees with the pricing label, or a verified card over unverified or missing price facts", () => {
+    const unverifiedPlans: ToolFacts = { ...verifiedFacts, plans: fact([{ name: "Pro", price: "$10", period: "month", limits: "" }], { status: "unverified" }) };
+    assert.equal(cardLabelProblem("verified", "unverified", unverifiedPlans), "card verified, pricing unverified");
+    assert.equal(cardLabelProblem("verified", "verified", unverifiedPlans), "card verified, unverified: plans");
+    assert.equal(cardLabelProblem("verified", "verified", undefined), "card verified with no price facts");
+    assert.equal(cardLabelProblem("verified", "verified", verifiedFacts), null);
+    assert.equal(cardLabelProblem("unverified", "unverified", unverifiedPlans), null);
+    assert.equal(cardLabelProblem("catalog_only", "catalog_only", undefined), null);
+  });
+});
+
+describe("rule: free-tier-says-trial (P1.3c)", () => {
+  it("recognises trial-only wording, case-insensitive", () => {
+    for (const text of [
+      "Free Trial, $0, Free for 7 days. This is a 7-day trial, not a permanent free plan.",
+      "No permanent free plan; 7-day free trial, no credit card required",
+      "no free plan; 14-day trial (3 video projects)",
+      "Pro $20/mo. No free tier.",
+      "Free trial only",
+      "TRIAL-ONLY access for new accounts",
+      "Only a 7-day free trial",
+      "7-day free trial; no permanent free tier",
+    ]) {
+      assert.equal(saysTrialOnly(text), true, text);
+    }
+  });
+
+  it("does not flag a free plan, a scoped 'no free plan', or a trial next to a free plan", () => {
+    for (const text of [
+      "Free plan with 10 uses a day; 7-day Pro trial",
+      "Free only if you self-host: the Community edition is free. n8n Cloud has no free plan, only a trial with no card required",
+      "No free plan for teams; individuals get Basic free",
+      "Free forever: 300 minutes a month",
+    ]) {
+      assert.equal(saysTrialOnly(text), false, text);
+    }
+  });
+
+  it("flags available: true next to trial-only free-tier text (Krisp before P1.3c)", () => {
+    const f: ToolFacts = { ...verifiedFacts, freeTier: fact({ available: true, summary: "Free Trial, $0, Free for 7 days. This is a 7-day trial, not a permanent free plan." }) };
+    assert.ok(rules(row({ costTier: "PAID" }), f).includes("free-tier-says-trial free_tier.summary"));
+  });
+
+  it("flags a FREEMIUM row whose own text says no permanent free tier (catalog only)", () => {
+    const r = row({ costTier: "FREEMIUM", freeTierFeatures: "7-day free trial; no permanent free tier", currentPricing: "From $49/user/mo" });
+    assert.deepEqual(rules(r, undefined), ["free-tier-says-trial free_tier.summary"]);
+  });
+
+  it("passes the same text under PAID with available: false", () => {
+    const f: ToolFacts = { ...verifiedFacts, freeTier: fact({ available: false, summary: "No permanent free plan; 7-day free trial" }) };
+    assert.deepEqual(rules(row({ costTier: "PAID", freeTierFeatures: "No permanent free plan; 7-day free trial" }), f), []);
+  });
+});
+
+describe("rule: free-tier-vs-cost-tier (P1.3c)", () => {
+  const noFree: ToolFacts = { ...verifiedFacts, freeTier: fact({ available: false, summary: "Paid only." }) };
+
+  it("flags available: false under FREE or FREEMIUM", () => {
+    assert.deepEqual(rules(row({ costTier: "FREEMIUM" }), noFree), ["free-tier-vs-cost-tier cost_tier"]);
+    assert.deepEqual(rules(row({ costTier: "FREE" }), noFree), ["free-tier-vs-cost-tier cost_tier"]);
+  });
+
+  it("passes available: false under PAID or ENTERPRISE", () => {
+    assert.deepEqual(rules(row({ costTier: "PAID" }), noFree), []);
+    assert.deepEqual(rules(row({ costTier: "ENTERPRISE" }), noFree), []);
+  });
+
+  it("flags a $0 plan row next to available: false (starting price would read Free)", () => {
+    const f: ToolFacts = { ...noFree, plans: fact([{ name: "Trial", price: "$0", period: "", limits: "7 days" }, { name: "Pro", price: "$10", period: "month", limits: "" }]) };
+    assert.deepEqual(rules(row({ costTier: "PAID" }), f), ["free-tier-vs-cost-tier plans"]);
+    const ok: ToolFacts = { ...noFree, plans: fact([{ name: "Free Trial", price: "7-day trial", period: "", limits: "$0 for 7 days" }, { name: "Pro", price: "$10", period: "month", limits: "" }]) };
+    assert.deepEqual(rules(row({ costTier: "PAID" }), ok), []);
   });
 });
