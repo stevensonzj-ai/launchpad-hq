@@ -78,7 +78,7 @@ export const TOOL_SPECS = [
     name: "search_tools",
     title: "Search AI tools",
     description:
-      "Use this when the user wants to find AI tools for a task, optionally within a budget, skill level or platform. Returns Launchpad HQ catalog matches with dated, sourced free-tier facts where available.",
+      "Use this when the user wants to find AI tools for a task, optionally within a budget, skill level or platform. Returns Launchpad HQ catalog matches with dated, sourced free-tier facts where available. Items with fallback: true are popular tools, not direct matches; stale: true means the facts are over 90 days old.",
     inputSchema: searchToolsInput,
     outputSchema: searchToolsOutput,
     queryOf: (i) => i.task,

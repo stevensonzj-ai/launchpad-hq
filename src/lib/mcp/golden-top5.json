@@ -1,0 +1,1051 @@
+{
+ "A01": {
+  "input": {
+   "task": "fix grammar in my essays",
+   "budget": "free",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "grammarly",
+   "jenni-ai",
+   "quillbot",
+   "trinka-ai",
+   "paperpal"
+  ]
+ },
+ "A02": {
+  "input": {
+   "task": "write blog posts",
+   "budget": "low"
+  },
+  "top5": [
+   "wordpress-ai-jetpack-ai"
+  ]
+ },
+ "A03": {
+  "input": {
+   "task": "write a resume and cover letter",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "kickresume",
+   "rezi",
+   "teal",
+   "chatgpt",
+   "gemini"
+  ]
+ },
+ "A04": {
+  "input": {
+   "task": "job search and interview prep",
+   "budget": "free"
+  },
+  "top5": [
+   "rezi",
+   "teal",
+   "kickresume"
+  ]
+ },
+ "A05": {
+  "input": {
+   "task": "make a logo",
+   "budget": "free",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "ideogram",
+   "recraft",
+   "canva-ai-magic-studio"
+  ]
+ },
+ "A06": {
+  "input": {
+   "task": "generate images from text"
+  },
+  "top5": [
+   "gpt-image-1-5-dall-e-successor",
+   "google-imagen-3",
+   "adobe-firefly",
+   "krea",
+   "flux"
+  ]
+ },
+ "A07": {
+  "input": {
+   "task": "edit short videos for social media",
+   "platform_type": "mobile"
+  },
+  "top5": [
+   "captions",
+   "capcut",
+   "runway",
+   "heygen",
+   "invideo-ai"
+  ]
+ },
+ "A08": {
+  "input": {
+   "task": "create AI avatar videos from a script"
+  },
+  "top5": [
+   "hedra",
+   "heygen",
+   "synthesia",
+   "captions",
+   "invideo-ai"
+  ]
+ },
+ "A09": {
+  "input": {
+   "task": "record and edit a podcast",
+   "budget": "low"
+  },
+  "top5": [
+   "beatoven-ai",
+   "descript",
+   "elevenlabs",
+   "opus-clip"
+  ]
+ },
+ "A10": {
+  "input": {
+   "task": "transcribe audio",
+   "budget": "free"
+  },
+  "top5": [
+   "descript",
+   "assemblyai",
+   "deepgram",
+   "fireflies-ai",
+   "fathom"
+  ]
+ },
+ "A11": {
+  "input": {
+   "task": "take meeting notes automatically"
+  },
+  "top5": [
+   "read-ai",
+   "granola",
+   "krisp",
+   "otter-ai",
+   "fireflies-ai"
+  ]
+ },
+ "A12": {
+  "input": {
+   "task": "learn to code",
+   "skill_level": "beginner",
+   "budget": "free"
+  },
+  "top5": [
+   "bolt-new",
+   "replit-agent",
+   "v0",
+   "lovable",
+   "chatgpt"
+  ]
+ },
+ "A13": {
+  "input": {
+   "task": "AI coding assistant for VS Code",
+   "platform_type": "desktop"
+  },
+  "top5": [
+   "cline",
+   "windsurf",
+   "cursor",
+   "jetbrains-ai",
+   "claude"
+  ]
+ },
+ "A14": {
+  "input": {
+   "task": "homework help and studying",
+   "budget": "free",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "khan-academy-khanmigo",
+   "notebooklm",
+   "quizlet-q-chat",
+   "chatgpt",
+   "chatpdf"
+  ]
+ },
+ "A15": {
+  "input": {
+   "task": "research with citations"
+  },
+  "top5": [
+   "research-rabbit",
+   "scite",
+   "connected-papers",
+   "elicit",
+   "litmaps"
+  ]
+ },
+ "A16": {
+  "input": {
+   "task": "make slides",
+   "budget": "free"
+  },
+  "top5": [
+   "gamma",
+   "genspark",
+   "canva-ai-magic-studio",
+   "napkin-ai"
+  ]
+ },
+ "A17": {
+  "input": {
+   "task": "analyze spreadsheet data",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "gemini",
+   "microsoft-copilot",
+   "julius-ai"
+  ]
+ },
+ "A18": {
+  "input": {
+   "task": "write social media marketing posts",
+   "budget": "low"
+  },
+  "top5": [
+   "hubspot-ai",
+   "wordpress-ai-jetpack-ai",
+   "microsoft-designer",
+   "canva-ai-magic-studio",
+   "pika"
+  ]
+ },
+ "A19": {
+  "input": {
+   "task": "translate documents",
+   "budget": "free"
+  },
+  "top5": [
+   "deepl"
+  ]
+ },
+ "A20": {
+  "input": {
+   "task": "AI chatbot assistant",
+   "budget": "free",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "meta-ai",
+   "chatgpt",
+   "gemini",
+   "grok",
+   "microsoft-copilot"
+  ]
+ },
+ "A21": {
+  "input": {
+   "task": "run a small business",
+   "budget": "low"
+  },
+  "top5": [
+   "shopify-magic-sidekick",
+   "hubspot-ai",
+   "mailchimp-ai",
+   "squarespace-ai",
+   "wix-ai"
+  ]
+ },
+ "A22": {
+  "input": {
+   "task": "write emails faster",
+   "budget": "free"
+  },
+  "top5": [
+   "mailchimp-ai",
+   "gemini",
+   "grammarly",
+   "microsoft-copilot",
+   "chatgpt"
+  ]
+ },
+ "A23": {
+  "input": {
+   "task": "make music"
+  },
+  "top5": [
+   "beatoven-ai",
+   "google-lyria-3",
+   "mubert",
+   "soundraw",
+   "udio"
+  ]
+ },
+ "A24": {
+  "input": {
+   "task": "build a website without coding",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "squarespace-ai",
+   "wix-ai",
+   "bolt-new",
+   "lovable"
+  ]
+ },
+ "A25": {
+  "input": {
+   "task": "text to speech voiceover",
+   "budget": "free"
+  },
+  "top5": [
+   "speechify",
+   "elevenlabs",
+   "murf-ai",
+   "deepgram",
+   "openai-api"
+  ]
+ },
+ "E01": {
+  "input": {
+   "task": "grammer cheker"
+  },
+  "top5": [
+   "trinka-ai",
+   "grammarly",
+   "paperpal",
+   "quillbot"
+  ]
+ },
+ "E06": {
+  "input": {
+   "task": "help"
+  },
+  "top5": [
+   "chatgpt",
+   "claude",
+   "gemini",
+   "microsoft-copilot",
+   "meta-ai"
+  ]
+ },
+ "E07": {
+  "input": {
+   "task": "ai"
+  },
+  "top5": [
+   "chatgpt",
+   "claude",
+   "gemini",
+   "microsoft-copilot",
+   "meta-ai"
+  ]
+ },
+ "E10": {
+  "input": {
+   "task": "🎨 crear logotipos gratis für mein Geschäft ✨"
+  },
+  "top5": [
+   "canva-ai-magic-studio",
+   "ideogram",
+   "recraft",
+   "shopify-magic-sidekick",
+   "hubspot-ai"
+  ]
+ },
+ "E11": {
+  "input": {
+   "task": "'; DROP TABLE platforms; -- logo"
+  },
+  "top5": [
+   "ideogram",
+   "recraft",
+   "canva-ai-magic-studio"
+  ]
+ },
+ "G01": {
+  "input": {
+   "task": "meeting transcription"
+  },
+  "top5": [
+   "otter-ai",
+   "tactiq",
+   "fireflies-ai",
+   "fathom",
+   "tl-dv"
+  ]
+ },
+ "G02": {
+  "input": {
+   "task": "transcribe meetings"
+  },
+  "top5": [
+   "fathom",
+   "fireflies-ai",
+   "otter-ai",
+   "tactiq",
+   "tl-dv"
+  ]
+ },
+ "G03": {
+  "input": {
+   "task": "cover letter"
+  },
+  "top5": [
+   "kickresume",
+   "rezi",
+   "teal",
+   "chatgpt",
+   "claude"
+  ]
+ },
+ "G04": {
+  "input": {
+   "task": "write a cover letter for free"
+  },
+  "top5": [
+   "kickresume",
+   "rezi",
+   "teal",
+   "chatgpt",
+   "claude"
+  ]
+ },
+ "G05": {
+  "input": {
+   "task": "resume builder"
+  },
+  "top5": [
+   "rezi",
+   "teal",
+   "kickresume",
+   "chatgpt",
+   "claude"
+  ]
+ },
+ "G06": {
+  "input": {
+   "task": "paraphrase an essay"
+  },
+  "top5": [
+   "jenni-ai",
+   "quillbot",
+   "grammarly",
+   "paperpal",
+   "trinka-ai"
+  ]
+ },
+ "G07": {
+  "input": {
+   "task": "proofread my thesis"
+  },
+  "top5": [
+   "grammarly",
+   "paperpal",
+   "trinka-ai",
+   "jenni-ai",
+   "quillbot"
+  ]
+ },
+ "G08": {
+  "input": {
+   "task": "summarize a long pdf"
+  },
+  "top5": [
+   "chatpdf",
+   "claude",
+   "chatgpt",
+   "notion-ai",
+   "quillbot"
+  ]
+ },
+ "G09": {
+  "input": {
+   "task": "chat with a pdf"
+  },
+  "top5": [
+   "chatpdf",
+   "wondershare-pdfelement-ai",
+   "jenni-ai"
+  ]
+ },
+ "G10": {
+  "input": {
+   "task": "make a presentation"
+  },
+  "top5": [
+   "gamma",
+   "genspark",
+   "canva-ai-magic-studio",
+   "microsoft-designer"
+  ]
+ },
+ "G11": {
+  "input": {
+   "task": "pitch deck for a startup"
+  },
+  "top5": [
+   "gamma",
+   "genspark",
+   "canva-ai-magic-studio"
+  ]
+ },
+ "G12": {
+  "input": {
+   "task": "design a poster"
+  },
+  "top5": [
+   "canva-ai-magic-studio",
+   "microsoft-designer",
+   "recraft",
+   "ideogram",
+   "adobe-firefly"
+  ]
+ },
+ "G13": {
+  "input": {
+   "task": "remove image background"
+  },
+  "top5": [
+   "photoroom"
+  ]
+ },
+ "G14": {
+  "input": {
+   "task": "ai art from text prompts",
+   "budget": "free"
+  },
+  "top5": [
+   "gpt-image-1-5-dall-e-successor",
+   "google-imagen-3",
+   "adobe-firefly",
+   "flux",
+   "leonardo-ai"
+  ]
+ },
+ "G15": {
+  "input": {
+   "task": "make a short video from text"
+  },
+  "top5": [
+   "pika",
+   "krea",
+   "capcut",
+   "kling-ai",
+   "higgsfield"
+  ]
+ },
+ "G16": {
+  "input": {
+   "task": "edit videos"
+  },
+  "top5": [
+   "captions",
+   "capcut",
+   "runway",
+   "veed",
+   "opus-clip"
+  ]
+ },
+ "G17": {
+  "input": {
+   "task": "youtube video editing",
+   "budget": "low"
+  },
+  "top5": [
+   "descript",
+   "runway",
+   "capcut",
+   "veed",
+   "captions"
+  ]
+ },
+ "G18": {
+  "input": {
+   "task": "turn long videos into short clips"
+  },
+  "top5": [
+   "opus-clip",
+   "pictory-ai",
+   "capcut",
+   "kling-ai",
+   "pika"
+  ]
+ },
+ "G19": {
+  "input": {
+   "task": "voice cloning"
+  },
+  "top5": [
+   "elevenlabs",
+   "speechify"
+  ]
+ },
+ "G20": {
+  "input": {
+   "task": "dictation"
+  },
+  "top5": [
+   "wispr-flow",
+   "dragon-medical-one"
+  ]
+ },
+ "G21": {
+  "input": {
+   "task": "speech to text",
+   "budget": "free"
+  },
+  "top5": [
+   "deepgram",
+   "assemblyai",
+   "descript",
+   "fathom",
+   "fireflies-ai"
+  ]
+ },
+ "G22": {
+  "input": {
+   "task": "write code"
+  },
+  "top5": [
+   "claude-code",
+   "cline",
+   "github-copilot",
+   "tabnine",
+   "aider"
+  ]
+ },
+ "G23": {
+  "input": {
+   "task": "debug python code",
+   "skill_level": "intermediate"
+  },
+  "top5": [
+   "cline",
+   "github-copilot",
+   "tabnine",
+   "bolt-new",
+   "cursor"
+  ]
+ },
+ "G24": {
+  "input": {
+   "task": "build an app without coding",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "squarespace-ai",
+   "wix-ai",
+   "bolt-new",
+   "lovable",
+   "replit-agent"
+  ]
+ },
+ "G25": {
+  "input": {
+   "task": "run a model locally on my laptop",
+   "platform_type": "desktop"
+  },
+  "top5": [
+   "qwen",
+   "stability-ai",
+   "comfyui",
+   "deepseek",
+   "replicate"
+  ]
+ },
+ "G26": {
+  "input": {
+   "task": "open source chatbot that runs offline"
+  },
+  "top5": [
+   "gpt4all",
+   "jan",
+   "lm-studio",
+   "qwen",
+   "deepseek"
+  ]
+ },
+ "G27": {
+  "input": {
+   "task": "find academic papers"
+  },
+  "top5": [
+   "semantic-scholar",
+   "connected-papers",
+   "research-rabbit",
+   "scholarcy",
+   "scispace"
+  ]
+ },
+ "G28": {
+  "input": {
+   "task": "literature review"
+  },
+  "top5": [
+   "elicit",
+   "scispace",
+   "scholarcy",
+   "litmaps",
+   "connected-papers"
+  ]
+ },
+ "G29": {
+  "input": {
+   "task": "search the web with sources"
+  },
+  "top5": [
+   "stability-ai",
+   "open-webui",
+   "text-generation-webui-oobabooga",
+   "firecrawl"
+  ]
+ },
+ "G30": {
+  "input": {
+   "task": "fact check a claim"
+  },
+  "top5": [
+   "perplexity-ai",
+   "genspark"
+  ]
+ },
+ "G31": {
+  "input": {
+   "task": "automate my workflow"
+  },
+  "top5": [
+   "microsoft-power-automate",
+   "n8n",
+   "activepieces",
+   "make-integromat",
+   "zapier"
+  ]
+ },
+ "G32": {
+  "input": {
+   "task": "connect apps without code",
+   "budget": "free"
+  },
+  "top5": [
+   "pabbly-connect"
+  ]
+ },
+ "G33": {
+  "input": {
+   "task": "write marketing copy"
+  },
+  "top5": [
+   "jasper",
+   "copy-ai"
+  ]
+ },
+ "G34": {
+  "input": {
+   "task": "seo blog articles"
+  },
+  "top5": [
+   "writesonic-chatsonic",
+   "squarespace-ai",
+   "wordpress-ai-jetpack-ai"
+  ]
+ },
+ "G35": {
+  "input": {
+   "task": "email newsletter"
+  },
+  "top5": [
+   "mailchimp-ai",
+   "gemini",
+   "grammarly",
+   "microsoft-copilot",
+   "copy-ai"
+  ]
+ },
+ "G36": {
+  "input": {
+   "task": "customer support chatbot for my website"
+  },
+  "top5": [
+   "lindy-ai",
+   "relevance-ai",
+   "grok-bot"
+  ]
+ },
+ "G37": {
+  "input": {
+   "task": "learn a language"
+  },
+  "top5": [
+   "sarvam-ai",
+   "speak-language-ai",
+   "duolingo-max",
+   "ai21-labs-jamba",
+   "aleph-alpha-luminous"
+  ]
+ },
+ "G38": {
+  "input": {
+   "task": "study flashcards"
+  },
+  "top5": [
+   "quizlet-q-chat",
+   "notebooklm",
+   "khan-academy-khanmigo",
+   "chatpdf",
+   "chatgpt"
+  ]
+ },
+ "G39": {
+  "input": {
+   "task": "lesson plans for teachers"
+  },
+  "top5": [
+   "magicschool",
+   "brisk-teaching",
+   "khan-academy-khanmigo"
+  ]
+ },
+ "G40": {
+  "input": {
+   "task": "spreadsheet formulas"
+  },
+  "top5": [
+   "gemini",
+   "julius-ai",
+   "microsoft-copilot"
+  ]
+ },
+ "G41": {
+  "input": {
+   "task": "budgeting and personal finance"
+  },
+  "top5": [
+   "cleo",
+   "monarch"
+  ]
+ },
+ "G42": {
+  "input": {
+   "task": "legal contract review"
+  },
+  "top5": [
+   "spellbook",
+   "luminance",
+   "casetext-cocounsel",
+   "harvey-ai",
+   "kira-systems"
+  ]
+ },
+ "G43": {
+  "input": {
+   "task": "medical notes for doctors"
+  },
+  "top5": [
+   "dragon-medical-one",
+   "doximity-gpt"
+  ]
+ },
+ "G44": {
+  "input": {
+   "task": "3d models for games"
+  },
+  "top5": [
+   "meshy",
+   "stability-ai",
+   "leonardo-ai"
+  ]
+ },
+ "G45": {
+  "input": {
+   "task": "generate music for videos",
+   "budget": "free"
+  },
+  "top5": [
+   "beatoven-ai",
+   "soundraw",
+   "google-lyria-3",
+   "mubert",
+   "udio"
+  ]
+ },
+ "G46": {
+  "input": {
+   "task": "song lyrics and vocals"
+  },
+  "top5": [
+   "suno",
+   "udio",
+   "aiva",
+   "beatoven-ai",
+   "google-lyria-3"
+  ]
+ },
+ "G47": {
+  "input": {
+   "task": "podcast editing"
+  },
+  "top5": [
+   "descript",
+   "beatoven-ai",
+   "elevenlabs",
+   "opus-clip"
+  ]
+ },
+ "G48": {
+  "input": {
+   "task": "alternative to ChatGPT"
+  },
+  "top5": [
+   "claude",
+   "gemini",
+   "microsoft-copilot",
+   "grok",
+   "perplexity-ai"
+  ]
+ },
+ "G49": {
+  "input": {
+   "task": "free alternative to Grammarly"
+  },
+  "top5": [
+   "quillbot",
+   "paperpal",
+   "trinka-ai",
+   "chatgpt",
+   "gemini"
+  ]
+ },
+ "G50": {
+  "input": {
+   "task": "something like Midjourney but cheaper"
+  },
+  "top5": [
+   "ideogram",
+   "adobe-firefly",
+   "flux",
+   "leonardo-ai",
+   "google-imagen-3"
+  ]
+ },
+ "G51": {
+  "input": {
+   "task": "Canva alternatives"
+  },
+  "top5": [
+   "microsoft-designer",
+   "adobe-firefly",
+   "figma-ai",
+   "ideogram",
+   "recraft"
+  ]
+ },
+ "G52": {
+  "input": {
+   "task": "instead of Otter"
+  },
+  "top5": [
+   "tactiq",
+   "tl-dv",
+   "descript",
+   "fathom",
+   "fireflies-ai"
+  ]
+ },
+ "G53": {
+  "input": {
+   "task": "chatbot",
+   "skill_level": "beginner"
+  },
+  "top5": [
+   "meta-ai",
+   "chatgpt",
+   "gemini",
+   "grok",
+   "microsoft-copilot"
+  ]
+ },
+ "G54": {
+  "input": {
+   "task": "ai assistant",
+   "budget": "free"
+  },
+  "top5": [
+   "chatgpt",
+   "microsoft-copilot",
+   "jan",
+   "claude",
+   "gemini"
+  ]
+ },
+ "G55": {
+  "input": {
+   "task": "image generator",
+   "platform_type": "mobile"
+  },
+  "top5": [
+   "krea",
+   "adobe-firefly",
+   "leonardo-ai",
+   "midjourney",
+   "freepik-ai"
+  ]
+ },
+ "G56": {
+  "input": {
+   "task": "note taking app",
+   "budget": "free"
+  },
+  "top5": [
+   "glasp",
+   "unriddle"
+  ]
+ },
+ "G57": {
+  "input": {
+   "task": "write a book"
+  },
+  "top5": [
+   "legora",
+   "midjourney"
+  ]
+ },
+ "G58": {
+  "input": {
+   "task": "social media posts"
+  },
+  "top5": [
+   "wordpress-ai-jetpack-ai",
+   "copy-ai",
+   "microsoft-designer",
+   "hubspot-ai",
+   "jasper"
+  ]
+ },
+ "G59": {
+  "input": {
+   "task": "website builder",
+   "budget": "low"
+  },
+  "top5": [
+   "wix-ai",
+   "squarespace-ai",
+   "bolt-new",
+   "lovable",
+   "kickresume"
+  ]
+ },
+ "G60": {
+  "input": {
+   "task": "help me with my homework"
+  },
+  "top5": [
+   "khan-academy-khanmigo",
+   "notebooklm",
+   "quizlet-q-chat",
+   "chatgpt",
+   "chatpdf"
+  ]
+ }
+}

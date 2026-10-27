@@ -50,9 +50,11 @@ describe("search_tools", () => {
     assert.ok(!out.results.some((r) => r.slug === "deadnote"));
   });
 
-  it("filters by platform type", () => {
+  it("ranks tools on the requested platform first (tiered, not a filter)", () => {
     const out = searchTools({ task: "generate images", platform_type: "desktop" }, FIXTURE_ROWS, fixtureFacts);
-    assert.deepEqual(out.results.map((r) => r.slug), ["desktopdraw"]);
+    assert.equal(out.results[0].slug, "desktopdraw");
+    assert.ok(out.results[0].match_reasons.includes("available on desktop"));
+    for (const r of out.results.slice(1)) assert.ok(r.match_reasons.includes("no desktop version listed; ranked lower"), r.slug);
   });
 
   it("labels catalog-only items and never invents a source", () => {

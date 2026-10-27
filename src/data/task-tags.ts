@@ -11,6 +11,9 @@
  *   - Tag tens of tools, not all of them. Untagged tools still match on words.
  *   - Clinician-only, legal-only and research-paper tools never carry general
  *     writing or career tasks (see TASK_TAGS_WITHHELD below).
+ *   - Phrases are mostly English; the ~10 most-asked tasks also carry a few
+ *     Spanish, German, French and Portuguese words (accents fold, so
+ *     "música" = "musica").
  *
  * Sponsorship never influences tags. No sponsor data is imported here.
  */
@@ -40,7 +43,19 @@ export type TaskId =
   | "web-research"
   | "translation"
   | "text-to-speech"
-  | "workflow-automation";
+  | "workflow-automation"
+  // Fix plan P1.2 (2026-10-26): plain-language asks that matched nothing.
+  | "study-help"
+  | "chatbot"
+  | "data-analysis"
+  | "podcast"
+  | "music-generation"
+  | "video-editing"
+  | "social-media-posts"
+  | "website-builder"
+  | "small-business"
+  // Review follow-up (2026-10-26): support bots for a business's own site.
+  | "customer-support";
 
 export type TaskDef = {
   /** Reader-facing label (Markdown, llms-full.txt, match reasons). */
@@ -52,16 +67,21 @@ export type TaskDef = {
   phrases: readonly string[];
   /** Broad tasks ("writing") count for less than specific ones ("cover-letter"). */
   generic?: boolean;
+  /**
+   * Narrower tasks that take over when the same search names them: this
+   * task is then ignored (search-text.ts dropYieldingTasks).
+   */
+  yieldsTo?: readonly TaskId[];
 };
 
 export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   "cover-letter": {
     label: "cover letters",
-    phrases: ["cover letter", "motivation letter", "application letter", "letter of application", "job application"],
+    phrases: ["cover letter", "motivation letter", "application letter", "letter of application", "job application", "carta de presentación", "anschreiben", "bewerbungsschreiben", "lettre de motivation", "carta de apresentação"],
   },
   resume: {
     label: "resumes and CVs",
-    phrases: ["resume", "résumé", "cv", "cvs", "curriculum vitae", "job application"],
+    phrases: ["resume", "résumé", "cv", "cvs", "curriculum vitae", "job application", "currículum", "lebenslauf", "currículo"],
   },
   "job-search": {
     label: "job search",
@@ -77,7 +97,7 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   },
   "grammar-check": {
     label: "grammar and spelling checks",
-    phrases: ["grammar", "grammar check", "grammar checker", "proofread", "proofreading", "spell check", "spellcheck", "spelling", "typo"],
+    phrases: ["grammar", "grammar check", "grammar checker", "proofread", "proofreading", "spell check", "spellcheck", "spelling", "typo", "gramática", "ortografía", "grammatik", "rechtschreibung", "grammaire", "orthographe"],
   },
   paraphrase: {
     label: "paraphrasing and rewording",
@@ -103,7 +123,7 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   },
   "logo-design": {
     label: "logo design",
-    phrases: ["logo", "logo design", "logo maker", "brand logo"],
+    phrases: ["logo", "logo design", "logo maker", "brand logo", "logotipo", "logotipos"],
   },
   "graphic-design": {
     label: "graphic design",
@@ -111,15 +131,15 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   },
   slides: {
     label: "slides and presentations",
-    phrases: ["slide", "slide deck", "presentation", "pitch deck", "powerpoint"],
+    phrases: ["slide", "slide deck", "presentation", "pitch deck", "powerpoint", "diapositivas", "presentación", "präsentation", "diaporama", "apresentação"],
   },
   transcription: {
     label: "transcription",
-    phrases: ["transcribe", "transcription", "transcript", "speech to text", "audio to text"],
+    phrases: ["transcribe", "transcription", "transcript", "speech to text", "audio to text", "transcribir", "transcripción", "transkribieren", "transkription", "transcrire", "transcrever"],
   },
   "meeting-notes": {
     label: "meeting notes",
-    phrases: ["meeting notes", "meeting summary", "meeting minutes", "notetaker", "note taker", "meeting recorder", "record meeting", "summarize meeting"],
+    phrases: ["meeting notes", "meeting summary", "meeting minutes", "notetaker", "note taker", "meeting recorder", "record meeting", "summarize meeting", "meeting transcription", "meeting transcript", "transcribe meeting"],
   },
   dictation: {
     label: "dictation",
@@ -127,11 +147,11 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   },
   "image-generation": {
     label: "image generation",
-    phrases: ["image generation", "generate image", "image generator", "ai image", "ai art", "text to image", "picture", "illustration"],
+    phrases: ["image generation", "generate image", "image generator", "ai image", "ai art", "text to image", "picture", "illustration", "generar imagen", "crear imagen", "bild generieren", "générer une image", "gerar imagem"],
   },
   coding: {
     label: "coding",
-    phrases: ["code", "coding", "programming", "programmer", "debug", "debugging", "software development"],
+    phrases: ["code", "coding", "programming", "programmer", "debug", "debugging", "software development", "programar", "programación", "programmieren", "programmation"],
   },
   "research-papers": {
     label: "research papers",
@@ -148,7 +168,7 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   },
   translation: {
     label: "translation",
-    phrases: ["translate", "translation", "translator"],
+    phrases: ["translate", "translation", "translator", "traducir", "traducción", "übersetzen", "übersetzung", "traduire", "traduction", "traduzir", "tradução"],
   },
   "text-to-speech": {
     label: "text to speech",
@@ -157,6 +177,49 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   "workflow-automation": {
     label: "workflow automation",
     phrases: ["automate", "automation", "workflow"],
+  },
+  "study-help": {
+    label: "homework and study help",
+    phrases: ["homework", "study", "studying", "study guide", "tutor", "tutoring", "exam prep", "test prep", "flashcard", "revision", "tarea", "deberes", "estudiar", "hausaufgaben", "devoirs", "réviser", "lição de casa", "estudar"],
+  },
+  chatbot: {
+    label: "general chatbot and assistant",
+    phrases: ["chatbot", "chat bot", "ai assistant", "ai chat", "chat assistant", "virtual assistant", "everyday questions", "ask questions", "asistente", "assistent", "assistant virtuel"],
+    // "chatbot" here means a general assistant; a support bot for a
+    // business's own site is a different product.
+    yieldsTo: ["customer-support"],
+  },
+  "data-analysis": {
+    label: "spreadsheets and data analysis",
+    phrases: ["spreadsheet", "excel", "google sheets", "csv", "data analysis", "analyze data", "analyse data", "pivot table", "formula", "hoja de cálculo", "tabellenkalkulation", "tableur", "planilha"],
+  },
+  podcast: {
+    label: "podcasts",
+    phrases: ["podcast", "podcasting", "podcaster"],
+  },
+  "music-generation": {
+    label: "music generation",
+    phrases: ["music", "make music", "song", "songwriting", "background music", "soundtrack", "jingle", "beat", "música", "musik", "musique", "canción", "chanson"],
+  },
+  "video-editing": {
+    label: "video editing",
+    phrases: ["video editing", "edit video", "video editor", "edit short video", "short form video", "subtitle", "caption video", "editar video", "videobearbeitung", "montage vidéo", "editar vídeo"],
+  },
+  "social-media-posts": {
+    label: "social media posts",
+    phrases: ["social media post", "social media content", "social post", "instagram post", "facebook post", "linkedin post", "tweet", "social media marketing", "social media caption"],
+  },
+  "website-builder": {
+    label: "website and app builders",
+    phrases: ["website builder", "build a website", "make a website", "create a website", "landing page", "online store", "portfolio website", "web design", "app builder", "build an app", "make an app", "create an app", "sitio web", "página web", "webseite", "site web"],
+  },
+  "small-business": {
+    label: "small business",
+    phrases: ["small business", "my business", "own business", "side business", "small shop", "solopreneur", "entrepreneur", "pequeña empresa", "negocio", "kleinunternehmen", "geschäft", "petite entreprise", "pequena empresa"],
+  },
+  "customer-support": {
+    label: "customer support bots",
+    phrases: ["customer support", "customer service", "support chatbot", "support bot", "help desk", "helpdesk", "support tickets", "atención al cliente", "kundenservice", "service client"],
   },
 };
 
@@ -176,10 +239,14 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   // General assistants. Rows: "writing drafts", "complex writing", "email
   // drafting", "M365 document drafting". Cover letters and resumes are
   // ordinary drafting jobs for these (brief, 2026-10-26).
-  chatgpt: ["writing", "cover-letter", "resume", "email-writing", "coding", "image-generation", "summarization"],
-  claude: ["writing", "cover-letter", "resume", "coding", "summarization"],
-  gemini: ["writing", "cover-letter", "resume", "email-writing", "image-generation"],
-  "microsoft-copilot": ["writing", "cover-letter", "resume", "email-writing", "meeting-notes"],
+  // "chatbot" (P1.2) is their main job, so it comes first: rows say
+  // "Conversational AI assistant", "Conversational AI", "Multimodal AI",
+  // "AI assistant in Microsoft 365". ChatGPT's row lists "tutoring";
+  // Gemini's "spreadsheet formulas"; Copilot's "Excel analysis".
+  chatgpt: ["chatbot", "writing", "cover-letter", "resume", "email-writing", "coding", "image-generation", "summarization", "study-help"],
+  claude: ["chatbot", "writing", "cover-letter", "resume", "coding", "summarization"],
+  gemini: ["chatbot", "writing", "cover-letter", "resume", "email-writing", "image-generation", "data-analysis"],
+  "microsoft-copilot": ["chatbot", "writing", "cover-letter", "resume", "email-writing", "meeting-notes", "data-analysis"],
   "notion-ai": ["writing", "meeting-notes", "summarization"], // row: "writing assistance within docs", "meeting notes summarization"
 
   // Writing and grammar.
@@ -188,14 +255,14 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   "trinka-ai": ["grammar-check", "academic-writing"], // row: "AI grammar checker for academic/scientific writing"
   paperpal: ["grammar-check", "academic-writing"], // row: "AI academic writing assistant", "grammar for research papers"
   "jenni-ai": ["academic-writing"], // row: "AI writing assistant for academic papers"
-  "copy-ai": ["marketing-copy", "email-writing"], // row: "AI marketing copy", "email sequences"
-  jasper: ["marketing-copy"], // row: "AI marketing copy and content generation"
+  "copy-ai": ["marketing-copy", "email-writing", "social-media-posts"], // row: "AI marketing copy", "email sequences", "social media posts"
+  jasper: ["marketing-copy", "social-media-posts"], // row: "AI marketing copy and content generation"; use cases "social media"
 
   // Design, logos and images.
   ideogram: ["logo-design", "image-generation", "graphic-design"], // row: "logos; posters; social media graphics"
-  "canva-ai-magic-studio": ["graphic-design", "logo-design", "slides", "image-generation"], // row: "Social media graphics; presentations"; canva.com nav links an "AI logo generator"
+  "canva-ai-magic-studio": ["graphic-design", "logo-design", "slides", "image-generation", "social-media-posts", "small-business"], // row: "Social media graphics; presentations"; canva.com nav links an "AI logo generator"; idealUserTypes "small businesses"
   recraft: ["logo-design", "graphic-design", "image-generation"], // row: "AI images for design and branding", "icon design"; official recraft.ai/generate/logos
-  "microsoft-designer": ["graphic-design", "image-generation"], // row: "Social media posts; invitations; flyers"
+  "microsoft-designer": ["graphic-design", "image-generation", "social-media-posts", "small-business"], // row: "Social media posts; invitations; flyers"; idealUserTypes "Small businesses"
   "adobe-firefly": ["image-generation", "graphic-design"], // row: "image generation/editing", "text effects; product mockups"
   midjourney: ["image-generation"],
   "leonardo-ai": ["image-generation"],
@@ -219,7 +286,7 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   "read-ai": ["meeting-notes"],
   krisp: ["meeting-notes"], // row: "optional AI notetaker"
   "zoom-ai-companion": ["meeting-notes"],
-  descript: ["transcription"],
+  descript: ["transcription", "podcast", "video-editing"], // row: "podcast editing", "Text-based video editing"
   assemblyai: ["transcription"],
   deepgram: ["transcription"],
   "wispr-flow": ["dictation"], // row: "AI dictation that types into any app"
@@ -231,9 +298,6 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   windsurf: ["coding"],
   aider: ["coding"],
   cline: ["coding"],
-  "replit-agent": ["coding"],
-  "bolt-new": ["coding"],
-  lovable: ["coding"],
   v0: ["coding"],
   tabnine: ["coding"],
   "jetbrains-ai": ["coding"],
@@ -254,13 +318,51 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
 
   // Other common tasks.
   deepl: ["translation"],
-  elevenlabs: ["text-to-speech"],
+  elevenlabs: ["text-to-speech", "podcast"], // row use cases list podcasts
   speechify: ["text-to-speech"],
-  zapier: ["workflow-automation"],
+  zapier: ["workflow-automation", "small-business"], // idealUserTypes: "Small businesses", "solopreneurs"
   "make-integromat": ["workflow-automation"],
   n8n: ["workflow-automation"],
   activepieces: ["workflow-automation"],
   "microsoft-power-automate": ["workflow-automation"],
+
+  // Fix plan P1.2 tags (2026-10-26), each from the row's own text.
+  "khan-academy-khanmigo": ["study-help"], // row: "AI tutor for personalized education"
+  "quizlet-q-chat": ["study-help"], // row: "AI study assistant and flashcard generation", "exam prep"
+  notebooklm: ["study-help", "summarization"], // row: "Study guide creation; source-grounded Q&A"
+  chatpdf: ["summarization", "study-help"], // row: "Chat with PDF documents", "textbook study"
+  "meta-ai": ["chatbot"], // row: "Free chatbot and image helper"
+  grok: ["chatbot"], // row: "conversational AI"
+  "mistral-vibe": ["chatbot"], // row: "Conversational AI, multilingual"; "general chat"
+  deepseek: ["chatbot"], // row: "Budget chat app"
+  qwen: ["chatbot"], // row: "Hosted Qwen Chat"; "Free hosted chat"
+  "julius-ai": ["data-analysis"], // row: "AI data analysis", "spreadsheet Q&A"
+  "opus-clip": ["video-editing", "podcast"], // row: "long-video to short-clip repurposing", "podcast clips"
+  "beatoven-ai": ["music-generation", "podcast"], // row: "AI background music for videos/podcasts"
+  soundraw: ["music-generation"], // row: "royalty-free AI background music"
+  suno: ["music-generation"], // row: "AI full-song generation with vocals"
+  udio: ["music-generation"], // row: "AI music with producer-level control"
+  aiva: ["music-generation"], // row: "Orchestral/cinematic AI composition", "Background music for video"
+  mubert: ["music-generation"], // row: "Continuous AI background music streams"
+  "google-lyria-3": ["music-generation"], // row: "AI music generation"
+  capcut: ["video-editing"], // row: "video editor", "Short-form social video"
+  captions: ["video-editing"], // row: "AI video editor for captions"
+  veed: ["video-editing"], // row: "Browser video editor with AI captions"
+  runway: ["video-editing"], // row use cases: "video editing; green screen removal"
+  "wordpress-ai-jetpack-ai": ["social-media-posts"], // row use cases: "social media posts"
+  "hubspot-ai": ["social-media-posts", "small-business"], // row: "social media"; idealUserTypes "SMBs"
+  "wix-ai": ["website-builder", "small-business"], // row: "AI website builder"; idealUserTypes "Small businesses"
+  "squarespace-ai": ["website-builder", "small-business"], // row: "AI content and design for websites"; idealUserTypes "small businesses"
+  lovable: ["coding", "website-builder"], // row: "AI app builder for non-developers", "landing pages"
+  "bolt-new": ["coding", "website-builder"], // row: "AI full-stack web app builder in browser"
+  "replit-agent": ["coding"],
+  jan: ["chatbot"], // row: "Private local AI chat"; offline AI assistant
+  gpt4all: ["chatbot"], // row: "offline AI chat"
+  "lm-studio": ["chatbot"], // row: "private AI chat"; offline AI
+  "lindy-ai": ["customer-support"], // row use cases: "customer support"
+  "relevance-ai": ["customer-support"], // row use cases: "customer support bots"
+  "shopify-magic-sidekick": ["small-business"], // idealUserTypes: "small businesses", "Shopify store owners"
+  "mailchimp-ai": ["email-writing", "small-business"], // row: "AI email marketing assistant"; idealUserTypes "Small businesses"
 };
 
 /**

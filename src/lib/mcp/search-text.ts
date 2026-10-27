@@ -96,18 +96,31 @@ export function hasPhrase(text: MatchText, phrase: string): boolean {
   return phrase.includes(" ") ? text.joined.includes(` ${phrase} `) : text.set.has(phrase);
 }
 
-export type QueryTask = { task: TaskId; phrase: string };
+export type QueryTask = { task: TaskId; phrase: string; matched: string[] };
 
-/** Tasks a search names, with the phrase that named each (first match wins). */
+/**
+ * Tasks a search names, with the phrase that named each (longest wins) and
+ * every phrase of that task the search contains.
+ */
 export function detectTasks(query: MatchText): QueryTask[] {
   const out: QueryTask[] = [];
   for (const [task, def] of Object.entries(TASKS) as [TaskId, (typeof TASKS)[TaskId]][]) {
     // Longest phrase first, so "job application" reports itself rather than "job".
     const phrases = def.phrases.map((p) => words(p).join(" ")).sort((a, b) => b.length - a.length);
-    const hit = phrases.find((p) => p && hasPhrase(query, p));
-    if (hit) out.push({ task, phrase: hit });
+    const matched = phrases.filter((p) => p && hasPhrase(query, p));
+    if (matched.length) out.push({ task, phrase: matched[0], matched });
   }
   return out;
+}
+
+/**
+ * A broad task steps aside when the search also names a narrower task it
+ * declares in `yieldsTo` (task-tags.ts): "customer support chatbot" is a
+ * support-bot ask, not a general-assistant ask.
+ */
+export function dropYieldingTasks(tasks: QueryTask[]): QueryTask[] {
+  const named = new Set(tasks.map((t) => t.task));
+  return tasks.filter((t) => !(TASKS[t.task].yieldsTo ?? []).some((u) => named.has(u)));
 }
 
 export type PriceIntent = "free" | "cheap" | null;
