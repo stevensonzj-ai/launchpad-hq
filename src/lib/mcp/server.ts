@@ -23,7 +23,7 @@ import {
 } from "./tools";
 
 export const MCP_SERVER_NAME = "launchpad-hq";
-export const MCP_SERVER_VERSION = "0.1.2";
+export const MCP_SERVER_VERSION = "0.1.3";
 
 /** Brand mark shown by clients (e.g. Claude's custom connector), same PNG as server.json. */
 export const MCP_SERVER_ICONS: Icon[] = [
@@ -78,7 +78,7 @@ export const TOOL_SPECS = [
     name: "search_tools",
     title: "Search AI tools",
     description:
-      "Use this when the user wants to find AI tools for a task, optionally within a budget, skill level or platform. Returns Launchpad HQ catalog matches with dated, sourced free-tier facts where available.",
+      "Use this when the user wants to find AI tools for a task, optionally within a budget, skill level or platform. Returns Launchpad HQ catalog matches with dated, sourced free-tier facts where available. Items with fallback: true are popular tools, not direct matches; stale: true means the facts are over 90 days old.",
     inputSchema: searchToolsInput,
     outputSchema: searchToolsOutput,
     queryOf: (i) => i.task,
