@@ -53,7 +53,9 @@ export type TaskId =
   | "video-editing"
   | "social-media-posts"
   | "website-builder"
-  | "small-business";
+  | "small-business"
+  // Review follow-up (2026-10-26): support bots for a business's own site.
+  | "customer-support";
 
 export type TaskDef = {
   /** Reader-facing label (Markdown, llms-full.txt, match reasons). */
@@ -65,6 +67,11 @@ export type TaskDef = {
   phrases: readonly string[];
   /** Broad tasks ("writing") count for less than specific ones ("cover-letter"). */
   generic?: boolean;
+  /**
+   * Narrower tasks that take over when the same search names them: this
+   * task is then ignored (search-text.ts dropYieldingTasks).
+   */
+  yieldsTo?: readonly TaskId[];
 };
 
 export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
@@ -178,6 +185,9 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   chatbot: {
     label: "general chatbot and assistant",
     phrases: ["chatbot", "chat bot", "ai assistant", "ai chat", "chat assistant", "virtual assistant", "everyday questions", "ask questions", "asistente", "assistent", "assistant virtuel"],
+    // "chatbot" here means a general assistant; a support bot for a
+    // business's own site is a different product.
+    yieldsTo: ["customer-support"],
   },
   "data-analysis": {
     label: "spreadsheets and data analysis",
@@ -206,6 +216,10 @@ export const TASKS: Readonly<Record<TaskId, TaskDef>> = {
   "small-business": {
     label: "small business",
     phrases: ["small business", "my business", "own business", "side business", "small shop", "solopreneur", "entrepreneur", "pequeña empresa", "negocio", "kleinunternehmen", "geschäft", "petite entreprise", "pequena empresa"],
+  },
+  "customer-support": {
+    label: "customer support bots",
+    phrases: ["customer support", "customer service", "support chatbot", "support bot", "help desk", "helpdesk", "support tickets", "atención al cliente", "kundenservice", "service client"],
   },
 };
 
@@ -345,6 +359,8 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   jan: ["chatbot"], // row: "Private local AI chat"; offline AI assistant
   gpt4all: ["chatbot"], // row: "offline AI chat"
   "lm-studio": ["chatbot"], // row: "private AI chat"; offline AI
+  "lindy-ai": ["customer-support"], // row use cases: "customer support"
+  "relevance-ai": ["customer-support"], // row use cases: "customer support bots"
   "shopify-magic-sidekick": ["small-business"], // idealUserTypes: "small businesses", "Shopify store owners"
   "mailchimp-ai": ["email-writing", "small-business"], // row: "AI email marketing assistant"; idealUserTypes "Small businesses"
 };

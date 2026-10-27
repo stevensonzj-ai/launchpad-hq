@@ -237,3 +237,37 @@ describe("truncation and schema compatibility", () => {
     }
   });
 });
+
+describe("review follow-ups: side mentions and specialised bots", () => {
+  it("a task word only in use cases or description is a side mention, not a match on its own", () => {
+    const rows: CatalogRow[] = [
+      row({ slug: "lingo", name: "Lingo", primaryUse: "AI language learning", primaryUseCases: "Grammar explanations; vocabulary" }),
+      row({ slug: "checker", name: "Checker", primaryUse: "Grammar checker for essays" }),
+      row({ slug: "scribe", name: "Scribe", primaryUse: "Grammar fixes" }),
+    ];
+    const s = slugs(searchTools({ task: "fix grammar in my essays" }, rows, none));
+    assert.ok(!s.includes("lingo"), s.join(", "));
+    assert.ok(s.includes("checker") && s.includes("scribe"));
+    // Alone, the side mention still counts as best effort.
+    assert.deepEqual(slugs(searchTools({ task: "fix grammar in my essays" }, [rows[0]], none)), ["lingo"]);
+  });
+
+  it('snapshot: Duolingo Max is not in the top 5 for "fix grammar in my essays"', () => {
+    const top5 = slugs(search("fix grammar in my essays", { budget: "free", skill_level: "beginner" })).slice(0, 5);
+    assert.ok(!top5.includes("duolingo-max"), top5.join(", "));
+    assert.equal(top5[0], "grammarly");
+  });
+
+  it("the general chatbot task yields to customer support (declared in task-tags yieldsTo)", () => {
+    const out = search("customer support chatbot for my website");
+    const s = slugs(out);
+    assert.deepEqual(s.slice(0, 2).sort(), ["lindy-ai", "relevance-ai"]);
+    for (const general of ["chatgpt", "claude", "gemini", "meta-ai"]) {
+      const i = s.indexOf(general);
+      assert.ok(i === -1 || i > s.indexOf("relevance-ai"), s.join(", "));
+    }
+    for (const r of out.results) assert.ok(!r.match_reasons.includes("task: general chatbot and assistant (curated tag)"), r.slug);
+    // A plain chatbot ask is unchanged.
+    assert.ok(slugs(search("AI chatbot assistant")).slice(0, 3).some((x) => ["chatgpt", "gemini", "claude"].includes(x)));
+  });
+});

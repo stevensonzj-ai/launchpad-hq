@@ -19,6 +19,7 @@ import { correctWord, matchName, type NamedRow, type Suggestion } from "./names"
 import {
   detectPriceIntent,
   detectTasks,
+  dropYieldingTasks,
   hasPhrase,
   matchText,
   nameKey,
@@ -639,23 +640,30 @@ function scoreRow(
   }
 
   const matchedWords = new Set<string>();
+  const jobWords = new Set<string>();
   for (const word of useWeak ? [...query.strong, ...query.weak] : query.strong) {
     for (const [label, text, weight] of fields) {
       if (text.set.has(word)) {
         score += weight;
         reasons.add(`"${word}" in ${label}${WEAK.has(word) ? " (loose match)" : ""}`);
         matchedWords.add(word);
-        if (jobField(label) && !WEAK.has(word)) job = true;
+        if (jobField(label) && !WEAK.has(word)) {
+          job = true;
+          jobWords.add(word);
+        }
       }
     }
   }
   // Two distinct query words, or one word that is itself a task the search
-  // names ("transcription" in "meeting transcription"): the text names the job.
+  // names ("transcription" in "meeting transcription") found in the tool's
+  // name or primary use: the text names the job. The same word only in use
+  // cases or description is a side mention (Duolingo's "grammar
+  // explanations" is not an essay grammar checker), so it alone is not enough.
   const taskWords = queryTasks
     .filter((t) => !isGenericTask(t.task))
     .map((t) => t.phrase)
     .filter((p) => !p.includes(" "));
-  if (matchedWords.size >= 2 || taskWords.some((w) => matchedWords.has(w))) strong = true;
+  if (matchedWords.size >= 2 || taskWords.some((w) => jobWords.has(w))) strong = true;
 
   return { row, score, reasons, relation: rel, strong, job };
 }
@@ -778,8 +786,8 @@ export function searchTools(
   const query = parseQuery(task, new Set([...targetWords, ...negated]));
   // Task phrases may contain filler words ("find a job"), so match the full
   // text; a task named only by negated words ("without coding") is dropped.
-  const queryTasks = detectTasks(matchText(task)).filter(
-    (t) => !t.phrase.split(" ").every((w) => negated.has(w) || STOP.has(w)),
+  const queryTasks = dropYieldingTasks(
+    detectTasks(matchText(task)).filter((t) => !t.phrase.split(" ").every((w) => negated.has(w) || STOP.has(w))),
   );
 
   const eligible = rows
