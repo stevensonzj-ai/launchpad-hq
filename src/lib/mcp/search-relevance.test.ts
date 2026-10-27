@@ -181,7 +181,7 @@ describe("search_tools relevance regressions", () => {
   it("weak words alone fall back to loose matches and say so", () => {
     const out = search("alternative");
     assert.match(out.note ?? "", /loose word matches/);
-    for (const r of out.results) assert.ok(r.match_reasons.some((m) => m.includes("(loose match)")), r.slug);
+    for (const r of out.results.filter((x) => !x.fallback)) assert.ok(r.match_reasons.some((m) => m.includes("(loose match)")), r.slug);
   });
 
   it("stays deterministic", () => {
@@ -257,7 +257,8 @@ describe("search_tools with the new Career & Job Search rows (catalog audit 9)",
       "claude",
     ]);
     assert.deepEqual(new Set(slugs(searchAll("resume")).slice(0, 3)), CAREER);
-    assert.deepEqual(slugs(searchAll("logo")), ["ideogram", "canva-ai-magic-studio", "recraft"]);
+    // P1.2 main-job bonus: logos are Ideogram's and Recraft's first tag, Canva's is graphic design.
+    assert.deepEqual(slugs(searchAll("logo")), ["ideogram", "recraft", "canva-ai-magic-studio"]);
   });
 
   it("resume builder alternatives are the other career tools", () => {

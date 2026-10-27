@@ -7,10 +7,10 @@
   },
   "top5": [
    "grammarly",
-   "trinka-ai",
-   "paperpal",
    "jenni-ai",
-   "quillbot"
+   "quillbot",
+   "duolingo-max",
+   "trinka-ai"
   ]
  },
  "A02": {
@@ -19,9 +19,7 @@
    "budget": "low"
   },
   "top5": [
-   "jasper",
-   "wordpress-ai-jetpack-ai",
-   "copy-ai"
+   "wordpress-ai-jetpack-ai"
   ]
  },
  "A03": {
@@ -56,8 +54,8 @@
   },
   "top5": [
    "ideogram",
-   "canva-ai-magic-studio",
-   "recraft"
+   "recraft",
+   "canva-ai-magic-studio"
   ]
  },
  "A06": {
@@ -66,10 +64,10 @@
   },
   "top5": [
    "gpt-image-1-5-dall-e-successor",
-   "ideogram",
    "google-imagen-3",
    "adobe-firefly",
-   "chatgpt"
+   "krea",
+   "flux"
   ]
  },
  "A07": {
@@ -79,9 +77,10 @@
   },
   "top5": [
    "captions",
-   "canva-ai-magic-studio",
    "capcut",
-   "midjourney"
+   "runway",
+   "heygen",
+   "invideo-ai"
   ]
  },
  "A08": {
@@ -102,7 +101,11 @@
    "budget": "low"
   },
   "top5": [
-   "descript"
+   "beatoven-ai",
+   "descript",
+   "elevenlabs",
+   "opus-clip",
+   "notebooklm"
   ]
  },
  "A10": {
@@ -138,10 +141,10 @@
   },
   "top5": [
    "bolt-new",
-   "chatgpt",
-   "cline",
-   "github-copilot",
-   "replit-agent"
+   "replit-agent",
+   "v0",
+   "lovable",
+   "chatgpt"
   ]
  },
  "A13": {
@@ -151,10 +154,10 @@
   },
   "top5": [
    "cline",
-   "claude",
    "windsurf",
    "cursor",
-   "jetbrains-ai"
+   "jetbrains-ai",
+   "claude"
   ]
  },
  "A14": {
@@ -163,7 +166,13 @@
    "budget": "free",
    "skill_level": "beginner"
   },
-  "top5": []
+  "top5": [
+   "khan-academy-khanmigo",
+   "notebooklm",
+   "quizlet-q-chat",
+   "chatgpt",
+   "chatpdf"
+  ]
  },
  "A15": {
   "input": {
@@ -195,6 +204,8 @@
    "skill_level": "beginner"
   },
   "top5": [
+   "gemini",
+   "microsoft-copilot",
    "julius-ai"
   ]
  },
@@ -204,11 +215,11 @@
    "budget": "low"
   },
   "top5": [
-   "pika",
-   "jasper",
-   "copy-ai",
    "hubspot-ai",
-   "microsoft-designer"
+   "wordpress-ai-jetpack-ai",
+   "microsoft-designer",
+   "canva-ai-magic-studio",
+   "pika"
   ]
  },
  "A19": {
@@ -227,10 +238,11 @@
    "skill_level": "beginner"
   },
   "top5": [
-   "character-ai",
    "meta-ai",
-   "hubspot-ai",
-   "vapi"
+   "chatgpt",
+   "gemini",
+   "grok",
+   "microsoft-copilot"
   ]
  },
  "A21": {
@@ -239,7 +251,11 @@
    "budget": "low"
   },
   "top5": [
-   "deepseek"
+   "shopify-magic-sidekick",
+   "hubspot-ai",
+   "mailchimp-ai",
+   "squarespace-ai",
+   "wix-ai"
   ]
  },
  "A22": {
@@ -248,11 +264,11 @@
    "budget": "free"
   },
   "top5": [
+   "mailchimp-ai",
    "gemini",
    "grammarly",
    "microsoft-copilot",
-   "chatgpt",
-   "mailchimp-ai"
+   "chatgpt"
   ]
  },
  "A23": {
@@ -273,10 +289,9 @@
    "skill_level": "beginner"
   },
   "top5": [
-   "replit-agent",
+   "squarespace-ai",
+   "wix-ai",
    "bolt-new",
-   "claude",
-   "cline",
    "lovable"
   ]
  },
@@ -297,25 +312,48 @@
   "input": {
    "task": "grammer cheker"
   },
-  "top5": []
+  "top5": [
+   "trinka-ai",
+   "grammarly",
+   "paperpal",
+   "quillbot"
+  ]
  },
  "E06": {
   "input": {
    "task": "help"
   },
-  "top5": []
+  "top5": [
+   "chatgpt",
+   "claude",
+   "gemini",
+   "microsoft-copilot",
+   "meta-ai"
+  ]
  },
  "E07": {
   "input": {
    "task": "ai"
   },
-  "top5": []
+  "top5": [
+   "chatgpt",
+   "claude",
+   "gemini",
+   "microsoft-copilot",
+   "meta-ai"
+  ]
  },
  "E10": {
   "input": {
    "task": "🎨 crear logotipos gratis für mein Geschäft ✨"
   },
-  "top5": []
+  "top5": [
+   "canva-ai-magic-studio",
+   "ideogram",
+   "recraft",
+   "shopify-magic-sidekick",
+   "hubspot-ai"
+  ]
  },
  "E11": {
   "input": {
@@ -323,8 +361,8 @@
   },
   "top5": [
    "ideogram",
-   "canva-ai-magic-studio",
-   "recraft"
+   "recraft",
+   "canva-ai-magic-studio"
   ]
  },
  "G01": {
@@ -392,10 +430,10 @@
    "task": "paraphrase an essay"
   },
   "top5": [
-   "grammarly",
    "jenni-ai",
-   "paperpal",
    "quillbot",
+   "grammarly",
+   "paperpal",
    "trinka-ai"
   ]
  },
@@ -416,11 +454,11 @@
    "task": "summarize a long pdf"
   },
   "top5": [
+   "chatpdf",
    "claude",
    "chatgpt",
    "notion-ai",
-   "quillbot",
-   "scholarcy"
+   "quillbot"
   ]
  },
  "G09": {
@@ -439,8 +477,8 @@
   },
   "top5": [
    "gamma",
-   "canva-ai-magic-studio",
    "genspark",
+   "canva-ai-magic-studio",
    "microsoft-designer"
   ]
  },
@@ -449,9 +487,9 @@
    "task": "pitch deck for a startup"
   },
   "top5": [
-   "canva-ai-magic-studio",
    "gamma",
-   "genspark"
+   "genspark",
+   "canva-ai-magic-studio"
   ]
  },
  "G12": {
@@ -459,9 +497,9 @@
    "task": "design a poster"
   },
   "top5": [
-   "recraft",
    "canva-ai-magic-studio",
    "microsoft-designer",
+   "recraft",
    "ideogram",
    "adobe-firefly"
   ]
@@ -481,10 +519,10 @@
   },
   "top5": [
    "gpt-image-1-5-dall-e-successor",
-   "ideogram",
-   "chatgpt",
-   "gemini",
-   "google-imagen-3"
+   "google-imagen-3",
+   "adobe-firefly",
+   "flux",
+   "leonardo-ai"
   ]
  },
  "G15": {
@@ -496,7 +534,7 @@
    "krea",
    "capcut",
    "kling-ai",
-   "descript"
+   "higgsfield"
   ]
  },
  "G16": {
@@ -505,8 +543,10 @@
   },
   "top5": [
    "captions",
-   "descript",
-   "canva-ai-magic-studio"
+   "capcut",
+   "runway",
+   "veed",
+   "opus-clip"
   ]
  },
  "G17": {
@@ -516,10 +556,10 @@
   },
   "top5": [
    "descript",
-   "invideo-ai",
    "runway",
    "capcut",
-   "kling-ai"
+   "veed",
+   "captions"
   ]
  },
  "G18": {
@@ -539,7 +579,8 @@
    "task": "voice cloning"
   },
   "top5": [
-   "elevenlabs"
+   "elevenlabs",
+   "speechify"
   ]
  },
  "G20": {
@@ -586,7 +627,7 @@
    "github-copilot",
    "tabnine",
    "bolt-new",
-   "chatgpt"
+   "cursor"
   ]
  },
  "G24": {
@@ -595,11 +636,11 @@
    "skill_level": "beginner"
   },
   "top5": [
-   "replit-agent",
+   "squarespace-ai",
+   "wix-ai",
    "bolt-new",
-   "claude",
-   "cline",
-   "lovable"
+   "lovable",
+   "replit-agent"
   ]
  },
  "G25": {
@@ -608,8 +649,11 @@
    "platform_type": "desktop"
   },
   "top5": [
+   "qwen",
    "stability-ai",
-   "comfyui"
+   "comfyui",
+   "deepseek",
+   "replicate"
   ]
  },
  "G26": {
@@ -617,11 +661,11 @@
    "task": "open source chatbot that runs offline"
   },
   "top5": [
-   "stability-ai",
-   "replicate",
-   "comfyui",
-   "activepieces",
-   "cline"
+   "gpt4all",
+   "jan",
+   "lm-studio",
+   "qwen",
+   "deepseek"
   ]
  },
  "G27": {
@@ -674,9 +718,9 @@
   },
   "top5": [
    "microsoft-power-automate",
+   "n8n",
    "activepieces",
    "make-integromat",
-   "n8n",
    "zapier"
   ]
  },
@@ -686,11 +730,7 @@
    "budget": "free"
   },
   "top5": [
-   "cline",
-   "github-copilot",
-   "tabnine",
-   "aider",
-   "bolt-new"
+   "pabbly-connect"
   ]
  },
  "G33": {
@@ -717,11 +757,11 @@
    "task": "email newsletter"
   },
   "top5": [
-   "copy-ai",
+   "mailchimp-ai",
    "gemini",
    "grammarly",
    "microsoft-copilot",
-   "chatgpt"
+   "copy-ai"
   ]
  },
  "G36": {
@@ -729,9 +769,11 @@
    "task": "customer support chatbot for my website"
   },
   "top5": [
-   "lindy-ai",
-   "relevance-ai",
-   "grok-bot"
+   "meta-ai",
+   "chatgpt",
+   "claude",
+   "gemini",
+   "grok"
   ]
  },
  "G37": {
@@ -751,7 +793,11 @@
    "task": "study flashcards"
   },
   "top5": [
-   "quizlet-q-chat"
+   "quizlet-q-chat",
+   "notebooklm",
+   "khan-academy-khanmigo",
+   "chatpdf",
+   "chatgpt"
   ]
  },
  "G39": {
@@ -769,7 +815,9 @@
    "task": "spreadsheet formulas"
   },
   "top5": [
-   "gemini"
+   "gemini",
+   "julius-ai",
+   "microsoft-copilot"
   ]
  },
  "G41": {
@@ -820,8 +868,9 @@
   "top5": [
    "beatoven-ai",
    "soundraw",
-   "aiva",
-   "stability-ai"
+   "google-lyria-3",
+   "mubert",
+   "udio"
   ]
  },
  "G46": {
@@ -830,7 +879,10 @@
   },
   "top5": [
    "suno",
-   "udio"
+   "udio",
+   "aiva",
+   "beatoven-ai",
+   "google-lyria-3"
   ]
  },
  "G47": {
@@ -838,7 +890,11 @@
    "task": "podcast editing"
   },
   "top5": [
-   "descript"
+   "descript",
+   "beatoven-ai",
+   "elevenlabs",
+   "opus-clip",
+   "notebooklm"
   ]
  },
  "G48": {
@@ -870,9 +926,9 @@
    "task": "something like Midjourney but cheaper"
   },
   "top5": [
+   "ideogram",
    "adobe-firefly",
    "flux",
-   "ideogram",
    "leonardo-ai",
    "google-imagen-3"
   ]
@@ -882,8 +938,8 @@
    "task": "Canva alternatives"
   },
   "top5": [
-   "adobe-firefly",
    "microsoft-designer",
+   "adobe-firefly",
    "figma-ai",
    "ideogram",
    "recraft"
@@ -907,11 +963,11 @@
    "skill_level": "beginner"
   },
   "top5": [
-   "character-ai",
-   "grok-bot",
    "meta-ai",
-   "hubspot-ai",
-   "writesonic-chatsonic"
+   "chatgpt",
+   "gemini",
+   "grok",
+   "microsoft-copilot"
   ]
  },
  "G54": {
@@ -920,11 +976,11 @@
    "budget": "free"
   },
   "top5": [
-   "adobe-acrobat-ai-assistant",
-   "doximity-gpt",
-   "jenni-ai",
+   "chatgpt",
    "microsoft-copilot",
-   "naver-hyperclova-x-cue"
+   "jan",
+   "claude",
+   "gemini"
   ]
  },
  "G55": {
@@ -933,10 +989,11 @@
    "platform_type": "mobile"
   },
   "top5": [
+   "krea",
+   "adobe-firefly",
+   "leonardo-ai",
    "midjourney",
-   "canva-ai-magic-studio",
-   "chatgpt",
-   "gemini"
+   "freepik-ai"
   ]
  },
  "G56": {
@@ -963,10 +1020,10 @@
    "task": "social media posts"
   },
   "top5": [
-   "pika",
+   "wordpress-ai-jetpack-ai",
    "copy-ai",
    "microsoft-designer",
-   "wordpress-ai-jetpack-ai",
+   "hubspot-ai",
    "jasper"
   ]
  },
@@ -977,6 +1034,9 @@
   },
   "top5": [
    "wix-ai",
+   "squarespace-ai",
+   "bolt-new",
+   "lovable",
    "kickresume"
   ]
  },
@@ -984,6 +1044,12 @@
   "input": {
    "task": "help me with my homework"
   },
-  "top5": []
+  "top5": [
+   "khan-academy-khanmigo",
+   "notebooklm",
+   "quizlet-q-chat",
+   "chatgpt",
+   "chatpdf"
+  ]
  }
 }
