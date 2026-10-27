@@ -128,6 +128,24 @@ describe("search_tools relevance regressions", () => {
     assert.ok(out.results[0].match_reasons.some((r) => r.startsWith("same tasks as Grammarly")));
   });
 
+  it('"free alternative to Grammarly" puts QuillBot first, as find_free_alternatives does', () => {
+    const out = search("free alternative to Grammarly");
+    assert.deepEqual(slugs(out).slice(0, 3), ["quillbot", "paperpal", "trinka-ai"]);
+    const ffa = findFreeAlternatives({ platform: "Grammarly", limit: 10 }, ROWS, facts).alternatives.map((a) => a.slug);
+    assert.equal(ffa[0], slugs(out)[0]);
+    // Same for budget:"free" with the text intent spelled differently.
+    assert.equal(slugs(search("alternative to Grammarly", { budget: "free" }))[0], "quillbot");
+    // The order follows free-tier evidence, not the slug: QuillBot has a sourced
+    // free-tier fact, Paperpal and Trinka only a catalog cost tier.
+    assert.ok(facts("quillbot")?.freeTier);
+    assert.equal(facts("paperpal")?.freeTier, undefined);
+    assert.equal(facts("trinka-ai")?.freeTier, undefined);
+    // Tools sharing Grammarly's main job (grammar checks) stay above general
+    // assistants that share only side tasks.
+    const top5 = slugs(out).slice(0, 5);
+    assert.ok(top5.indexOf("trinka-ai") < top5.indexOf("chatgpt"), top5.join(", "));
+  });
+
   it("free intent in the text favors free and freemium tools without filtering", () => {
     const paidWriter = row({
       slug: "paidwriter",
