@@ -147,10 +147,36 @@ function clampLimit(limit: number | undefined): number {
   return Math.min(limit, MAX_LIMIT);
 }
 
+/** The price facts (plans, free tier, API pricing) a tool's fact file holds. */
+export function priceFactsOf(facts: ToolFacts | undefined): Fact<unknown>[] {
+  return ([facts?.plans, facts?.freeTier, facts?.apiPricing] as (Fact<unknown> | undefined)[]).filter(
+    (x): x is Fact<unknown> => Boolean(x),
+  );
+}
+
 /**
- * Free-tier provenance per §3 field rules: facts first, catalog cost tier as
- * fallback. The value itself comes from `publicToolCore`. A discontinued tool
- * has no free tier, whatever its stored cost tier says.
+ * The one pricing-verification label, used by the platform card (every
+ * tool) and by get_pricing_facts' top-level `verification`, so the two can
+ * never disagree (stress rerun B10: QuillBot's card said "verified" from its
+ * free-tier fact while its plans were unverified).
+ *   verified      every price fact present (plans, free tier, API pricing)
+ *                 is verified
+ *   unverified    some price fact exists and at least one is not verified
+ *                 (a verified free tier never outvotes unverified plans)
+ *   catalog_only  no price fact: catalog text only
+ * The schema has no "partially verified" value, so a mix is "unverified".
+ */
+export function pricingVerification(facts: ToolFacts | undefined): "verified" | "unverified" | "catalog_only" {
+  const price = priceFactsOf(facts);
+  if (price.length === 0) return "catalog_only";
+  return price.every((x) => isPublishedVerified(x)) ? "verified" : "unverified";
+}
+
+/**
+ * Card provenance: the label is pricingVerification; the date and source are
+ * the free-tier fact's (what the card's free_tier shows), else the plans or
+ * API-pricing fact's, else the catalog row's. A discontinued tool has no
+ * pricing, whatever its stored cost tier says: its status fact stands in.
  */
 function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
   if (isDiscontinued(facts)) {
@@ -161,10 +187,10 @@ function freeTierOf(row: CatalogRow, facts: ToolFacts | undefined) {
       source_url: status?.sourceUrl ?? null,
     } as const;
   }
-  const fact = facts?.freeTier;
+  const fact = facts?.freeTier ?? facts?.plans ?? facts?.apiPricing;
   if (fact) {
     return {
-      verification: factVerification(fact),
+      verification: pricingVerification(facts),
       as_of: fact.checkedAt,
       source_url: fact.sourceUrl,
     } as const;
@@ -708,8 +734,15 @@ function platformFit(row: CatalogRow, facts: ToolFacts | undefined, platform: No
 
 const EVIDENCE: Record<string, number> = { verified: 2, unverified: 1, catalog_only: 0 };
 
+/**
+ * Ranking tiebreak only (never shown): how well the free tier is sourced.
+ * Kept on the free-tier fact so the card-label fix (pricingVerification)
+ * does not reorder results.
+ */
 function evidenceOf(row: CatalogRow, facts: FactsLookup): number {
-  return EVIDENCE[freeTierOf(row, facts(row.slug)).verification] ?? 0;
+  const f = facts(row.slug);
+  if (isDiscontinued(f)) return EVIDENCE[freeTierOf(row, f).verification] ?? 0;
+  return f?.freeTier ? EVIDENCE[factVerification(f.freeTier)] : EVIDENCE.catalog_only;
 }
 
 type Ranked = {
@@ -800,6 +833,9 @@ export function searchTools(
     .filter((row) => !isDiscontinued(facts(row.slug)))
     .filter((row) => row.slug !== target?.slug) // "alternative to X" never returns X
     .filter((row) => !tiers || tiers.includes(row.costTier.toUpperCase()))
+    // budget "free": a sourced "no free plan" overrides a FREE/FREEMIUM tier
+    // the catalog row has not caught up with yet (same rule as hasFreeTier).
+    .filter((row) => input.budget !== "free" || facts(row.slug)?.freeTier?.value.available !== false)
     .filter((row) => !priced || !budgetFit(row, facts(row.slug), priced).drop);
 
   const relevance = (useWeak: boolean) =>
@@ -1038,15 +1074,8 @@ export function getPricingFacts(
   };
   const apiPricing = sourced(f?.apiPricing);
   const usageLimits = sourced(publishedUsageLimits(f) as Fact<Record<string, unknown>> | undefined);
-  const priceFacts = ([f?.plans, f?.freeTier, f?.apiPricing] as (Fact<unknown> | undefined)[]).filter(
-    (x): x is Fact<unknown> => Boolean(x),
-  );
-  const hasFactsPrice = priceFacts.length > 0;
-  const verificationLevel = hasFactsPrice
-    ? priceFacts.every((x) => isPublishedVerified(x))
-      ? "verified"
-      : "unverified"
-    : "catalog_only";
+  const hasFactsPrice = priceFactsOf(f).length > 0;
+  const verificationLevel = pricingVerification(f);
   const ref = { ...toPlatformRef(row, f), ...resolvedFields(input.platform, res) };
   return {
     platform: ref,
