@@ -7,7 +7,7 @@ import { renderLlmsFull } from "@/lib/public-data/llms-full";
 import { PublicTool } from "@/lib/public-data/schema";
 import { buildFeedContext, toPublicCatalog, toPublicTool } from "@/lib/public-data/serialize";
 import { row } from "./fixtures";
-import { CAREER_FIXTURE_ROWS, SEARCH_FIXTURE_ROWS } from "./search-fixtures";
+import { CAREER_FIXTURE_ROWS, SEARCH_FIXTURE_ROWS, SEARCH_WORD_ROWS } from "./search-fixtures";
 import { detectPriceIntent, matchText, nameKey, namedToolCandidates, stem, words } from "./search-text";
 import { findFreeAlternatives, findRow, getPricingFacts, searchTools, type CatalogRow } from "./tools";
 
@@ -128,6 +128,24 @@ describe("search_tools relevance regressions", () => {
     assert.ok(out.results[0].match_reasons.some((r) => r.startsWith("same tasks as Grammarly")));
   });
 
+  it('"free alternative to Grammarly" puts QuillBot first, as find_free_alternatives does', () => {
+    const out = search("free alternative to Grammarly");
+    assert.deepEqual(slugs(out).slice(0, 3), ["quillbot", "paperpal", "trinka-ai"]);
+    const ffa = findFreeAlternatives({ platform: "Grammarly", limit: 10 }, ROWS, facts).alternatives.map((a) => a.slug);
+    assert.equal(ffa[0], slugs(out)[0]);
+    // Same for budget:"free" with the text intent spelled differently.
+    assert.equal(slugs(search("alternative to Grammarly", { budget: "free" }))[0], "quillbot");
+    // The order follows free-tier evidence, not the slug: QuillBot has a sourced
+    // free-tier fact, Paperpal and Trinka only a catalog cost tier.
+    assert.ok(facts("quillbot")?.freeTier);
+    assert.equal(facts("paperpal")?.freeTier, undefined);
+    assert.equal(facts("trinka-ai")?.freeTier, undefined);
+    // Tools sharing Grammarly's main job (grammar checks) stay above general
+    // assistants that share only side tasks.
+    const top5 = slugs(out).slice(0, 5);
+    assert.ok(top5.indexOf("trinka-ai") < top5.indexOf("chatgpt"), top5.join(", "));
+  });
+
   it("free intent in the text favors free and freemium tools without filtering", () => {
     const paidWriter = row({
       slug: "paidwriter",
@@ -196,6 +214,50 @@ describe("search_tools with the new Career & Job Search rows (catalog audit 9)",
       for (const slug of top5) assert.ok(CAREER.has(slug) || WRITERS.has(slug), `${task}: ${slug}`);
       assert.ok(top5.some((s) => CAREER.has(s)), `${task}: ${top5.join(", ")}`);
     }
+  });
+
+  it('"job search" returns only the job-search tools, not tools matching "search" alone', () => {
+    const rows = [...WITH_CAREER, ...SEARCH_WORD_ROWS];
+    const out = searchTools({ task: "job search", limit: 10 }, rows, facts);
+    assert.deepEqual(slugs(out), ["teal", "kickresume", "rezi"]);
+    assert.equal(out.total_matches, 3);
+    for (const r of out.results) assert.ok(r.match_reasons.includes("task: job search (curated tag)"), r.slug);
+  });
+
+  it("the threshold keeps single-word hits when nothing matches more strongly", () => {
+    const rows = [...WITH_CAREER, ...SEARCH_WORD_ROWS];
+    // A single-word search is never thresholded.
+    const single = slugs(searchTools({ task: "search", limit: 10 }, rows, facts));
+    for (const slug of ["read-ai", "naver-hyperclova-x-cue"]) assert.ok(single.includes(slug), single.join(", "));
+    // Only one word of "quantum search" matches anything: best effort, not empty.
+    const weakOnly = slugs(searchTools({ task: "quantum search", limit: 10 }, rows, facts));
+    for (const slug of ["read-ai", "naver-hyperclova-x-cue"]) assert.ok(weakOnly.includes(slug), weakOnly.join(", "));
+  });
+
+  it("a single word that is itself the named task still counts as a strong match", () => {
+    // "transcription" is a task phrase: a transcription tool without the curated
+    // tag survives a "meeting transcription" search next to phrase matches.
+    const caller = row({
+      slug: "callscribe",
+      name: "CallScribe",
+      primaryUse: "Transcription of phone calls",
+      category: { name: "Voice & Speech", slug: "voice-speech" },
+    });
+    const out = searchTools({ task: "meeting transcription", limit: 10 }, [...ROWS, caller], facts);
+    assert.ok(slugs(out).includes("callscribe"), slugs(out).join(", "));
+    assert.ok(slugs(out).includes("otter-ai"), slugs(out).join(", "));
+  });
+
+  it("walkthrough queries keep their order", () => {
+    assert.deepEqual(slugs(searchAll("write a cover letter", { budget: "free" })).slice(0, 5), [
+      "kickresume",
+      "rezi",
+      "teal",
+      "chatgpt",
+      "claude",
+    ]);
+    assert.deepEqual(new Set(slugs(searchAll("resume")).slice(0, 3)), CAREER);
+    assert.deepEqual(slugs(searchAll("logo")), ["ideogram", "canva-ai-magic-studio", "recraft"]);
   });
 
   it("resume builder alternatives are the other career tools", () => {

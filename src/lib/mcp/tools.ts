@@ -246,7 +246,13 @@ function tagsOf(row: CatalogRow): TaskId[] {
   return (taskTagsFor(row.slug) ?? []) as TaskId[];
 }
 
-type Relation = { level: number; score: number; reason: string };
+type Relation = {
+  level: number;
+  score: number;
+  reason: string;
+  /** Shares the target's main (first, specific) curated task: its core job. */
+  mainTask: boolean;
+};
 
 /**
  * How `row` relates to `target`, strongest first: listed as a direct
@@ -279,21 +285,38 @@ export function relationTo(
     0,
   );
   const sharedText = shared.map(taskLabel).join(", ");
+  const mainTask = specific.includes(targetTags[0]);
 
   if (rowNames.some((n) => direct.has(n))) {
-    return { level: 3, score: sharedScore, reason: `listed as a direct alternative to ${targetName}` };
+    return { level: 3, score: sharedScore, reason: `listed as a direct alternative to ${targetName}`, mainTask };
   }
   if (row.budgetAlternativeTo.some((n) => targetNames.has(norm(n)))) {
-    return { level: 2, score: sharedScore, reason: `listed as a budget alternative to ${targetName}` };
+    return { level: 2, score: sharedScore, reason: `listed as a budget alternative to ${targetName}`, mainTask };
   }
   if (specific.length > 0) {
-    return { level: 1.5, score: sharedScore, reason: `same tasks as ${targetName}: ${sharedText}` };
+    return { level: 1.5, score: sharedScore, reason: `same tasks as ${targetName}: ${sharedText}`, mainTask };
   }
   const sameCategory = row.category && target.category && row.category.slug === target.category.slug;
   if (sameCategory && (targetTags.length === 0 || rowTags.size === 0)) {
-    return { level: 1, score: 0, reason: `same category (${row.category!.name})` };
+    return { level: 1, score: 0, reason: `same category (${row.category!.name})`, mainTask: false };
   }
   return null;
+}
+
+/**
+ * Ordering key for "alternative to X" searches, built from the same signals
+ * find_free_alternatives sorts on: the relation tier, then whether the tool
+ * shares X's main job, then free-tier evidence (2 sourced fact, 1 catalog
+ * cost tier, 0 none; pass 0 when the search has no free intent).
+ */
+type AlternativeRank = { level: number; main: number; free: number };
+
+function alternativeRank(rel: Relation | null, free: number): AlternativeRank {
+  return { level: rel?.level ?? 0, main: rel?.mainTask ? 1 : 0, free };
+}
+
+function compareAlternativeRank(a: AlternativeRank, b: AlternativeRank): number {
+  return b.level - a.level || b.main - a.main || b.free - a.free;
 }
 
 /** "alternative to X" / "like X" / "instead of X": the catalog tool X, if the name resolves exactly. */
@@ -318,13 +341,21 @@ function namedTarget(task: string, rows: CatalogRow[], facts: FactsLookup): Cata
  *   named tool    "alternative to X" / "like X": relationTo(X) adds 30
  *                 (direct alternative), 25 (budget alternative), the
  *                 shared-task score (12 per specific task, x2 for X's main
- *                 task), or 3 (same category); X itself is excluded
+ *                 task), or 3 (same category); X itself is excluded.
+ *                 Results then sort by relation tier first, tools sharing
+ *                 X's main task first within a tier, and (with free
+ *                 intent) a sourced free-tier fact before a catalog-only
+ *                 free cost tier, as find_free_alternatives does; points
+ *                 break the remaining ties
  *   price words   +/-5 free plan when the text says "free" and no budget was
  *                 passed; +3 free/freemium, -5 enterprise for "cheap"
  *   skill         -2 per difficulty level above the user's
  * Field weights: name 3, category 2, primary use 2, use cases 1,
  * description 1. Weak words (WEAK_WORDS: "write", "letter", "free",
  * "alternative", ...) score only when nothing stronger matched anywhere.
+ * Threshold: in a multi-word search, tools that matched only one query word
+ * (no task tag, phrase or named-tool relation, and the word is not itself a
+ * task the search names) are dropped when any tool matched more strongly.
  */
 const FIELD_WEIGHTS = [
   ["name", 3],
@@ -366,7 +397,19 @@ function parseQuery(task: string, exclude: Set<string>): ParsedQuery {
   return { text: matchText(kept.join(" ")), strong, weak, phrases: [...phrases] };
 }
 
-type Scored = { row: CatalogRow; score: number; reasons: Set<string> };
+type Scored = {
+  row: CatalogRow;
+  score: number;
+  reasons: Set<string>;
+  /** How the row relates to the named tool ("alternative to X"), if any. */
+  relation: Relation | null;
+  /**
+   * Matched on more than one stray query word: a task tag, a phrase, a
+   * relation to the named tool, a word that is itself a named task, or at
+   * least two distinct query words.
+   */
+  strong: boolean;
+};
 
 function scoreRow(
   row: CatalogRow,
@@ -378,24 +421,25 @@ function scoreRow(
 ): Scored {
   let score = 0;
   const reasons = new Set<string>();
+  let strong = false;
 
   const tags = new Set(tagsOf(row));
   for (const { task } of queryTasks) {
     if (!tags.has(task)) continue;
     score += isGenericTask(task) ? GENERIC_TASK_WEIGHT : TASK_WEIGHT;
     reasons.add(`task: ${taskLabel(task)} (curated tag)`);
+    if (!isGenericTask(task)) strong = true;
   }
 
-  if (target) {
-    const rel = relationTo(target, row, facts);
-    if (rel) {
-      score +=
-        rel.level === 3 ? NAMED_DIRECT + rel.score
-        : rel.level === 2 ? NAMED_BUDGET + rel.score
-        : rel.level === 1.5 ? rel.score
-        : NAMED_CATEGORY;
-      reasons.add(rel.reason);
-    }
+  const rel = target ? relationTo(target, row, facts) : null;
+  if (rel) {
+    strong = true;
+    score +=
+      rel.level === 3 ? NAMED_DIRECT + rel.score
+      : rel.level === 2 ? NAMED_BUDGET + rel.score
+      : rel.level === 1.5 ? rel.score
+      : NAMED_CATEGORY;
+    reasons.add(rel.reason);
   }
 
   const fields: [string, MatchText, number][] = FIELD_WEIGHTS.map(([label, weight]) => [
@@ -419,20 +463,30 @@ function scoreRow(
       if (hasPhrase(text, phrase)) {
         score += weight * PHRASE_MULTIPLIER;
         reasons.add(`"${phrase}" in ${label}`);
+        strong = true;
       }
     }
   }
 
+  const matchedWords = new Set<string>();
   for (const word of useWeak ? [...query.strong, ...query.weak] : query.strong) {
     for (const [label, text, weight] of fields) {
       if (text.set.has(word)) {
         score += weight;
         reasons.add(`"${word}" in ${label}${WEAK.has(word) ? " (loose match)" : ""}`);
+        matchedWords.add(word);
       }
     }
   }
+  // Two distinct query words, or one word that is itself a task the search
+  // names ("transcription" in "meeting transcription"): the text names the job.
+  const taskWords = queryTasks
+    .filter((t) => !isGenericTask(t.task))
+    .map((t) => t.phrase)
+    .filter((p) => !p.includes(" "));
+  if (matchedWords.size >= 2 || taskWords.some((w) => matchedWords.has(w))) strong = true;
 
-  return { row, score, reasons };
+  return { row, score, reasons, relation: rel, strong };
 }
 
 function budgetTiers(budget: SearchToolsInput["budget"]): string[] | null {
@@ -485,9 +539,16 @@ export function searchTools(
   // Only filler-ish words matched anywhere: fall back to them, and say so.
   const looseOnly = matched.length === 0 && query.weak.length > 0;
   if (looseOnly) matched = relevance(true).filter((s) => s.score > 0);
+  // Relevance threshold: in a multi-word search, a tool that matched just one
+  // stray word, with no task tag, phrase or named-tool relation, is noise
+  // ("search" alone for "job search") whenever stronger matches exist. When
+  // nothing matched strongly, keep the single-word hits as best effort.
+  const multiWord = query.strong.length + query.weak.length >= 2;
+  if (multiWord && matched.some((s) => s.strong)) matched = matched.filter((s) => s.strong);
 
+  const freeIntent = priceIntent === "free" || input.budget === "free";
   const scored = matched
-    .map(({ row, score, reasons }) => {
+    .map(({ row, score, reasons, relation }) => {
       if (priceIntent === "free") {
         if (hasFreeTier(row, facts(row.slug)) > 0) {
           score += FREE_INTENT_BONUS;
@@ -517,9 +578,19 @@ export function searchTools(
         }
       }
       if (tiers) reasons.add(`cost tier ${row.costTier.toLowerCase()} fits budget`);
-      return { row, score, reasons: [...reasons] };
+      return {
+        row,
+        score,
+        reasons: [...reasons],
+        alt: target ? alternativeRank(relation, freeIntent ? hasFreeTier(row, facts(row.slug)) : 0) : null,
+      };
     })
-    .sort((a, b) => b.score - a.score || a.row.slug.localeCompare(b.row.slug));
+    .sort(
+      (a, b) =>
+        (a.alt && b.alt ? compareAlternativeRank(a.alt, b.alt) : 0) ||
+        b.score - a.score ||
+        a.row.slug.localeCompare(b.row.slug),
+    );
 
   const results = scored.slice(0, clampLimit(input.limit)).map((s) => ({
     ...toPlatformRef(s.row, facts(s.row.slug)),

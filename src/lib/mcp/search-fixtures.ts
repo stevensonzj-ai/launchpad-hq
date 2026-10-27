@@ -810,6 +810,46 @@ export const SEARCH_FIXTURE_ROWS: CatalogRow[] = [
 ];
 
 /**
+ * The two rows that filled the live "job search" top 5 on the single word
+ * "search" (2026-10-26). Read AI's text is its seed row
+ * (scripts/seed-batch2-platforms.ts) with audit 6's free-tier patch. The
+ * Naver row's feed text is not in the repo: its name is the catalog name and
+ * its text is paraphrased from its guide (src/data/tutorials), keeping the
+ * one property under test: "search" appears, "job" does not.
+ */
+export const SEARCH_WORD_ROWS: CatalogRow[] = [
+  real({
+    slug: "read-ai",
+    name: "Read AI",
+    company: "Read AI",
+    website: "https://www.read.ai",
+    description:
+      "Meeting notes and cross-meeting search. As of 2026-10-13, some US states require all-party consent to record — tell every attendee before recording and follow the law where participants are located.",
+    primaryUse: "Meeting notes plus search across past meetings",
+    primaryUseCases: "Individuals and teams who want summaries and a searchable meeting archive",
+    costTier: "FREEMIUM",
+    difficultyLevel: "BEGINNER",
+    freeTierFeatures:
+      "Free, no card: 5 meeting transcripts and 30 measured meetings per month, meetings up to 1 hour, no audio or video uploads (official, as of 2026-10-25)",
+    updatedAt: "2026-10-25",
+    category: { slug: "meetings-notes", name: "Meetings & Notes" },
+  }),
+  real({
+    slug: "naver-hyperclova-x-cue",
+    name: "Naver (HyperCLOVA X / Cue:)",
+    company: "Naver",
+    website: "https://search.naver.com",
+    description: "Naver's HyperCLOVA X models answer questions inside Naver Search, in Korean, from Korean web content.",
+    primaryUse: "Conversational AI answers in Naver Search",
+    primaryUseCases: "Questions about Korean places, shops and services; Korean-language search with follow-ups",
+    costTier: "FREE",
+    difficultyLevel: "BEGINNER",
+    updatedAt: "2026-09-13",
+    category: { slug: "text-conversational-ai", name: "Text & Conversational AI" },
+  }),
+];
+
+/**
  * The Career & Job Search rows catalog audit 9 creates (not in prod until the
  * operator runs it), built from the audit's own create data so the tests rank
  * exactly the text the DB will hold.
