@@ -42,6 +42,7 @@ export function PlatformDiscussions({
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [replyBody, setReplyBody] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [replyError, setReplyError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
@@ -88,12 +89,17 @@ export function PlatformDiscussions({
 
   async function submitReply(discussionId: string) {
     if (!replyBody.trim()) return;
+    setReplyError(null);
     const res = await fetch(`/api/discussions/${discussionId}/replies`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ body: replyBody }),
-    });
-    if (!res.ok) return;
+    }).catch(() => null);
+    if (!res?.ok) {
+      const d = res ? await res.json().catch(() => ({})) : {};
+      setReplyError(apiErrorMessage(d, "Your reply couldn't be posted. Please try again."));
+      return;
+    }
     setReplyBody("");
     setReplyTo(null);
     setSuccess("Thanks! Your reply is awaiting review and will appear once approved.");
@@ -258,6 +264,7 @@ export function PlatformDiscussions({
                           rows={2}
                           className="w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white"
                         />
+                        {replyError && <p className="text-sm text-red-400">{replyError}</p>}
                         <div className="flex gap-2">
                           <button
                             type="button"
@@ -268,7 +275,10 @@ export function PlatformDiscussions({
                           </button>
                           <button
                             type="button"
-                            onClick={() => setReplyTo(null)}
+                            onClick={() => {
+                              setReplyTo(null);
+                              setReplyError(null);
+                            }}
                             className="text-xs text-gray-500"
                           >
                             Cancel
@@ -278,7 +288,10 @@ export function PlatformDiscussions({
                     ) : (
                       <button
                         type="button"
-                        onClick={() => setReplyTo(d.id)}
+                        onClick={() => {
+                          setReplyTo(d.id);
+                          setReplyError(null);
+                        }}
                         className="mt-3 text-xs text-orange-400 hover:underline"
                       >
                         Reply
