@@ -1,0 +1,772 @@
+[
+{
+"slug": "adobe-firefly",
+"name": "Adobe Firefly",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $199.99/mo"
+},
+{
+"slug": "assemblyai",
+"name": "AssemblyAI",
+"category": "AI APIs & Developer Services",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "Universal-2 $0.15/hr"
+},
+{
+"slug": "beatoven-ai",
+"name": "Beatoven.ai",
+"category": "Music Generation",
+"cost_tier": "FREE",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-05-12",
+"starting_price": "Free, from See pricing"
+},
+{
+"slug": "bolt-new",
+"name": "Bolt.new",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $25/mo billed monthly"
+},
+{
+"slug": "canva-ai-magic-studio",
+"name": "Canva AI (Magic Studio)",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $12.99/mo"
+},
+{
+"slug": "capcut",
+"name": "CapCut",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $12.49"
+},
+{
+"slug": "captions",
+"name": "Captions",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $24.99/month"
+},
+{
+"slug": "character-ai",
+"name": "Character.AI",
+"category": "Gaming & Creative AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "$94.99/yr"
+},
+{
+"slug": "chatgpt",
+"name": "ChatGPT",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-24",
+"starting_price": "Free, from $8/month"
+},
+{
+"slug": "claude",
+"name": "Claude",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $17/month"
+},
+{
+"slug": "cline",
+"name": "Cline",
+"category": "AI Coding & Development",
+"cost_tier": "FREE",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "See pricing"
+},
+{
+"slug": "connected-papers",
+"name": "Connected Papers",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $3/mo"
+},
+{
+"slug": "copy-ai",
+"name": "Copy.ai",
+"category": "Text & Conversational AI",
+"cost_tier": "PAID",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "$29/mo billed monthly"
+},
+{
+"slug": "cursor",
+"name": "Cursor",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $8/mo"
+},
+{
+"slug": "deepgram",
+"name": "Deepgram",
+"category": "AI APIs & Developer Services",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "$0.0048/min promotional (strikethrough regular $0.0077/min). $200 credit on signup."
+},
+{
+"slug": "deepl",
+"name": "DeepL",
+"category": "International & Regional AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "€7.49"
+},
+{
+"slug": "deepseek",
+"name": "DeepSeek",
+"category": "International & Regional AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $0.30/$1.20 per 1M tokens in/out"
+},
+{
+"slug": "descript",
+"name": "Descript",
+"category": "Voice & Speech",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $24/person/mo monthly or $16 annual"
+},
+{
+"slug": "elevenlabs",
+"name": "ElevenLabs",
+"category": "Voice & Speech",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $5 equivalent, Creator $18.33, Pro $82.50)"
+},
+{
+"slug": "elicit",
+"name": "Elicit",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $10/mo"
+},
+{
+"slug": "fathom",
+"name": "Fathom",
+"category": "Meetings & Notes",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Talk to sales"
+},
+{
+"slug": "fireflies-ai",
+"name": "Fireflies.ai",
+"category": "Meetings & Notes",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $18"
+},
+{
+"slug": "gamma",
+"name": "Gamma",
+"category": "Document & PDF Processing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $12"
+},
+{
+"slug": "gemini",
+"name": "Gemini",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $4.99/month"
+},
+{
+"slug": "genspark",
+"name": "Genspark",
+"category": "Workflow & Automation",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "See pricing"
+},
+{
+"slug": "github-copilot",
+"name": "GitHub Copilot",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $10/mo"
+},
+{
+"slug": "google-imagen-3",
+"name": "Google Imagen 3",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "See pricing"
+},
+{
+"slug": "google-lyria-3",
+"name": "Google Lyria 3",
+"category": "Music Generation",
+"cost_tier": "FREE",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-05-12",
+"starting_price": "Free, from See pricing"
+},
+{
+"slug": "gpt-image-1-5-dall-e-successor",
+"name": "GPT Image 1.5 (DALL-E successor)",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "$20/mo"
+},
+{
+"slug": "grammarly",
+"name": "Grammarly",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $12"
+},
+{
+"slug": "granola",
+"name": "Granola",
+"category": "Meetings & Notes",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $14"
+},
+{
+"slug": "grok",
+"name": "Grok",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $8/month"
+},
+{
+"slug": "hedra",
+"name": "Hedra",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "$20/month"
+},
+{
+"slug": "heygen",
+"name": "HeyGen",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $29/mo"
+},
+{
+"slug": "hubspot-ai",
+"name": "HubSpot AI",
+"category": "AI Plugins for Business Software",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "See pricing"
+},
+{
+"slug": "ideogram",
+"name": "Ideogram",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $20/month"
+},
+{
+"slug": "invideo-ai",
+"name": "InVideo AI",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "$10 per seat/mo"
+},
+{
+"slug": "jasper",
+"name": "Jasper",
+"category": "Text & Conversational AI",
+"cost_tier": "PAID",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "$59/month billed yearly or $69/month billed monthly"
+},
+{
+"slug": "jenni-ai",
+"name": "Jenni AI",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $12"
+},
+{
+"slug": "jetbrains-ai",
+"name": "JetBrains AI",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $100/user/yr"
+},
+{
+"slug": "julius-ai",
+"name": "Julius AI",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $20/mo"
+},
+{
+"slug": "kickresume",
+"name": "Kickresume",
+"category": "Career & Job Search",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "$8"
+},
+{
+"slug": "krea",
+"name": "Krea",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "$9/month"
+},
+{
+"slug": "krisp",
+"name": "Krisp",
+"category": "Meetings & Notes",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "$15"
+},
+{
+"slug": "leonardo-ai",
+"name": "Leonardo AI",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $28/mo"
+},
+{
+"slug": "litmaps",
+"name": "Litmaps",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $10/mo"
+},
+{
+"slug": "lovable",
+"name": "Lovable",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $25/mo"
+},
+{
+"slug": "mailchimp-ai",
+"name": "Mailchimp AI",
+"category": "AI Plugins for Business Software",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "See pricing"
+},
+{
+"slug": "meta-ai",
+"name": "Meta AI",
+"category": "Text & Conversational AI",
+"cost_tier": "FREE",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from See pricing"
+},
+{
+"slug": "microsoft-copilot",
+"name": "Microsoft Copilot",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "$9.99/month"
+},
+{
+"slug": "microsoft-designer",
+"name": "Microsoft Designer",
+"category": "Image Generation & Editing",
+"cost_tier": "FREE",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free"
+},
+{
+"slug": "midjourney",
+"name": "Midjourney",
+"category": "Image Generation & Editing",
+"cost_tier": "ENTERPRISE",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "$10/mo"
+},
+{
+"slug": "mubert",
+"name": "Mubert",
+"category": "Music Generation",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "$14/mo"
+},
+{
+"slug": "murf-ai",
+"name": "Murf AI",
+"category": "Voice & Speech",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-05-12",
+"starting_price": "Free, from $29/mo"
+},
+{
+"slug": "napkin-ai",
+"name": "Napkin AI",
+"category": "Document & PDF Processing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $12"
+},
+{
+"slug": "notion-ai",
+"name": "Notion AI",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $10"
+},
+{
+"slug": "openai-api",
+"name": "OpenAI API",
+"category": "AI APIs & Developer Services",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "$2.50/$10 per 1M tokens)"
+},
+{
+"slug": "otter-ai",
+"name": "Otter AI",
+"category": "Meetings & Notes",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $16.99/user/mo billed monthly"
+},
+{
+"slug": "paperpal",
+"name": "Paperpal",
+"category": "Research & Academic Tools",
+"cost_tier": "FREE",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from See pricing"
+},
+{
+"slug": "perplexity-ai",
+"name": "Perplexity AI",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "$20/month"
+},
+{
+"slug": "pika",
+"name": "Pika",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "ADVANCED",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $10/mo"
+},
+{
+"slug": "quillbot",
+"name": "QuillBot",
+"category": "Text & Conversational AI",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "$8.33/mo"
+},
+{
+"slug": "recraft",
+"name": "Recraft",
+"category": "Image Generation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from See pricing"
+},
+{
+"slug": "replit-agent",
+"name": "Replit Agent",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-14",
+"starting_price": "$20/mo ($18/mo billed annually) including $20 toward more powerful models"
+},
+{
+"slug": "research-rabbit",
+"name": "Research Rabbit",
+"category": "Research & Academic Tools",
+"cost_tier": "FREE",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free"
+},
+{
+"slug": "rezi",
+"name": "Rezi",
+"category": "Career & Job Search",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $29/month"
+},
+{
+"slug": "scite",
+"name": "Scite",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $20/mo"
+},
+{
+"slug": "soundraw",
+"name": "Soundraw",
+"category": "Music Generation",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-05-12",
+"starting_price": "$16.99/mo"
+},
+{
+"slug": "speechify",
+"name": "Speechify",
+"category": "Voice & Speech",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "$29/Month"
+},
+{
+"slug": "synthesia",
+"name": "Synthesia",
+"category": "Video Creation & Editing",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $29/mo billed monthly"
+},
+{
+"slug": "teal",
+"name": "Teal",
+"category": "Career & Job Search",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "verified",
+"as_of": "2026-10-26",
+"starting_price": "Free, from $13"
+},
+{
+"slug": "trinka-ai",
+"name": "Trinka AI",
+"category": "Research & Academic Tools",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "Free, from $20/mo"
+},
+{
+"slug": "udio",
+"name": "Udio",
+"category": "Music Generation",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-05-12",
+"starting_price": "Free, from $10/mo"
+},
+{
+"slug": "vapi",
+"name": "Vapi",
+"category": "AI APIs & Developer Services",
+"cost_tier": "FREEMIUM",
+"difficulty": "ADVANCED",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $29/month"
+},
+{
+"slug": "warp",
+"name": "Warp",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "verified",
+"as_of": "2026-10-14",
+"starting_price": "Free, from $20/month"
+},
+{
+"slug": "windsurf",
+"name": "Devin Desktop",
+"category": "AI Coding & Development",
+"cost_tier": "FREEMIUM",
+"difficulty": "INTERMEDIATE",
+"verification": "catalog_only",
+"as_of": "2026-10-25",
+"starting_price": "Free, from $15-20/mo"
+},
+{
+"slug": "wordpress-ai-jetpack-ai",
+"name": "WordPress AI (Jetpack AI)",
+"category": "AI Plugins for Business Software",
+"cost_tier": "FREEMIUM",
+"difficulty": "BEGINNER",
+"verification": "catalog_only",
+"as_of": "2026-04-13",
+"starting_price": "See pricing"
+}
+]
