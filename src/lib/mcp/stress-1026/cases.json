@@ -1,0 +1,589 @@
+[
+ {
+  "id": "A01",
+  "prompt": "Free AI to fix my grammar in essays",
+  "tool": "search_tools",
+  "args": {
+   "task": "fix grammar in my essays",
+   "budget": "free",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A02",
+  "prompt": "Help me write blog posts cheaply",
+  "tool": "search_tools",
+  "args": {
+   "task": "write blog posts",
+   "budget": "low"
+  }
+ },
+ {
+  "id": "A03",
+  "prompt": "AI to write my resume and cover letter",
+  "tool": "search_tools",
+  "args": {
+   "task": "write a resume and cover letter",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A04",
+  "prompt": "Job search help with AI",
+  "tool": "search_tools",
+  "args": {
+   "task": "job search and interview prep",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "A05",
+  "prompt": "Make a logo for my small business for free",
+  "tool": "search_tools",
+  "args": {
+   "task": "make a logo",
+   "budget": "free",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A06",
+  "prompt": "Generate images from text",
+  "tool": "search_tools",
+  "args": {
+   "task": "generate images from text"
+  }
+ },
+ {
+  "id": "A07",
+  "prompt": "Edit short videos for TikTok on my phone",
+  "tool": "search_tools",
+  "args": {
+   "task": "edit short videos for social media",
+   "platform_type": "mobile"
+  }
+ },
+ {
+  "id": "A08",
+  "prompt": "Turn a script into a video with an AI avatar",
+  "tool": "search_tools",
+  "args": {
+   "task": "create AI avatar videos from a script"
+  }
+ },
+ {
+  "id": "A09",
+  "prompt": "Record and edit a podcast",
+  "tool": "search_tools",
+  "args": {
+   "task": "record and edit a podcast",
+   "budget": "low"
+  }
+ },
+ {
+  "id": "A10",
+  "prompt": "Transcribe audio interviews",
+  "tool": "search_tools",
+  "args": {
+   "task": "transcribe audio",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "A11",
+  "prompt": "Take notes in Zoom meetings automatically",
+  "tool": "search_tools",
+  "args": {
+   "task": "take meeting notes automatically",
+   "limit": 10
+  }
+ },
+ {
+  "id": "A12",
+  "prompt": "Learn to code as a total beginner",
+  "tool": "search_tools",
+  "args": {
+   "task": "learn to code",
+   "skill_level": "beginner",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "A13",
+  "prompt": "AI coding assistant in my editor",
+  "tool": "search_tools",
+  "args": {
+   "task": "AI coding assistant for VS Code",
+   "platform_type": "desktop"
+  }
+ },
+ {
+  "id": "A14",
+  "prompt": "Help with homework and studying",
+  "tool": "search_tools",
+  "args": {
+   "task": "homework help and studying",
+   "budget": "free",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A15",
+  "prompt": "Research papers with citations",
+  "tool": "search_tools",
+  "args": {
+   "task": "research with citations"
+  }
+ },
+ {
+  "id": "A16",
+  "prompt": "Make presentation slides",
+  "tool": "search_tools",
+  "args": {
+   "task": "make slides",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "A17",
+  "prompt": "Analyze a spreadsheet with AI",
+  "tool": "search_tools",
+  "args": {
+   "task": "analyze spreadsheet data",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A18",
+  "prompt": "Write social media marketing posts",
+  "tool": "search_tools",
+  "args": {
+   "task": "write social media marketing posts",
+   "budget": "low"
+  }
+ },
+ {
+  "id": "A19",
+  "prompt": "Translate documents",
+  "tool": "search_tools",
+  "args": {
+   "task": "translate documents",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "A20",
+  "prompt": "General chatbot for everyday questions",
+  "tool": "search_tools",
+  "args": {
+   "task": "AI chatbot assistant",
+   "budget": "free",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A21",
+  "prompt": "AI tools for running a small business",
+  "tool": "search_tools",
+  "args": {
+   "task": "run a small business",
+   "budget": "low"
+  }
+ },
+ {
+  "id": "A22",
+  "prompt": "Write emails faster",
+  "tool": "search_tools",
+  "args": {
+   "task": "write emails faster",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "A23",
+  "prompt": "Make music with AI",
+  "tool": "search_tools",
+  "args": {
+   "task": "make music"
+  }
+ },
+ {
+  "id": "A24",
+  "prompt": "Build a website without coding",
+  "tool": "search_tools",
+  "args": {
+   "task": "build a website without coding",
+   "skill_level": "beginner"
+  }
+ },
+ {
+  "id": "A25",
+  "prompt": "Text to speech voiceover",
+  "tool": "search_tools",
+  "args": {
+   "task": "text to speech voiceover",
+   "budget": "free"
+  }
+ },
+ {
+  "id": "B01",
+  "prompt": "How much is ChatGPT?",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "ChatGPT"
+  }
+ },
+ {
+  "id": "B02",
+  "prompt": "Claude pricing",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Claude"
+  }
+ },
+ {
+  "id": "B03",
+  "prompt": "Gemini free tier?",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Gemini"
+  }
+ },
+ {
+  "id": "B04",
+  "prompt": "Canva Pro price",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Canva"
+  }
+ },
+ {
+  "id": "B05",
+  "prompt": "Grammarly cost",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Grammarly"
+  }
+ },
+ {
+  "id": "B06",
+  "prompt": "Notion AI price",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Notion AI"
+  }
+ },
+ {
+  "id": "B07",
+  "prompt": "Midjourney plans",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Midjourney"
+  }
+ },
+ {
+  "id": "B08",
+  "prompt": "Perplexity Pro cost",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Perplexity"
+  }
+ },
+ {
+  "id": "B09",
+  "prompt": "Otter.ai pricing",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Otter.ai"
+  }
+ },
+ {
+  "id": "B10",
+  "prompt": "QuillBot premium price",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "QuillBot"
+  }
+ },
+ {
+  "id": "B11",
+  "prompt": "GitHub Copilot price",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "GitHub Copilot"
+  }
+ },
+ {
+  "id": "C01",
+  "prompt": "ChatGPT vs Claude",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "ChatGPT",
+    "Claude"
+   ]
+  }
+ },
+ {
+  "id": "C02",
+  "prompt": "ChatGPT vs Claude vs Gemini",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "ChatGPT",
+    "Claude",
+    "Gemini"
+   ]
+  }
+ },
+ {
+  "id": "C03",
+  "prompt": "Grammarly vs QuillBot",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "Grammarly",
+    "QuillBot"
+   ]
+  }
+ },
+ {
+  "id": "C04",
+  "prompt": "Midjourney vs DALL-E vs Leonardo",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "Midjourney",
+    "DALL-E",
+    "Leonardo AI"
+   ]
+  }
+ },
+ {
+  "id": "C05",
+  "prompt": "Otter vs Fireflies",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "Otter.ai",
+    "Fireflies.ai"
+   ]
+  }
+ },
+ {
+  "id": "D01",
+  "prompt": "Free alternative to Grammarly",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "Grammarly"
+  }
+ },
+ {
+  "id": "D02",
+  "prompt": "Free alternative to Midjourney",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "Midjourney"
+  }
+ },
+ {
+  "id": "D03",
+  "prompt": "Free alternative to Canva",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "Canva",
+   "limit": 3
+  }
+ },
+ {
+  "id": "D04",
+  "prompt": "Free alternative to Otter",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "Otter.ai"
+  }
+ },
+ {
+  "id": "D05",
+  "prompt": "Free alternative to ChatGPT Plus",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "ChatGPT"
+  }
+ },
+ {
+  "id": "D06",
+  "prompt": "Free alternative to GitHub Copilot",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "GitHub Copilot"
+  }
+ },
+ {
+  "id": "E01",
+  "prompt": "typo: grammer cheker",
+  "tool": "search_tools",
+  "args": {
+   "task": "grammer cheker"
+  }
+ },
+ {
+  "id": "E02",
+  "prompt": "typo: chat gpt pricing",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "chat gpt"
+  }
+ },
+ {
+  "id": "E03",
+  "prompt": "typo: midjurney alternatives",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "midjurney"
+  }
+ },
+ {
+  "id": "E04",
+  "prompt": "fake tool alternative",
+  "tool": "find_free_alternatives",
+  "args": {
+   "platform": "FooBarAI"
+  }
+ },
+ {
+  "id": "E05",
+  "prompt": "fake tool pricing",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": "Zyxtrol"
+  }
+ },
+ {
+  "id": "E06",
+  "prompt": "vague: help",
+  "tool": "search_tools",
+  "args": {
+   "task": "help"
+  }
+ },
+ {
+  "id": "E07",
+  "prompt": "vague: ai",
+  "tool": "search_tools",
+  "args": {
+   "task": "ai"
+  }
+ },
+ {
+  "id": "E08",
+  "prompt": "empty string",
+  "tool": "search_tools",
+  "args": {
+   "task": ""
+  }
+ },
+ {
+  "id": "E09",
+  "prompt": "very long input (>200 chars)",
+  "tool": "search_tools",
+  "args": {
+   "task": "I need an AI tool that can help me write and edit long documents for school and work write and edit long documents for school and work write and edit long documents for school and work write and edit long documents for school and work write and edit long documents for school and work write and edit long documents for school and work "
+  }
+ },
+ {
+  "id": "E10",
+  "prompt": "emoji/unicode",
+  "tool": "search_tools",
+  "args": {
+   "task": "🎨 crear logotipos gratis für mein Geschäft ✨"
+  }
+ },
+ {
+  "id": "E11",
+  "prompt": "SQL-ish injection",
+  "tool": "search_tools",
+  "args": {
+   "task": "'; DROP TABLE platforms; -- logo"
+  }
+ },
+ {
+  "id": "E12",
+  "prompt": "limit 0",
+  "tool": "search_tools",
+  "args": {
+   "task": "make slides",
+   "limit": 0
+  }
+ },
+ {
+  "id": "E13",
+  "prompt": "limit huge",
+  "tool": "search_tools",
+  "args": {
+   "task": "make slides",
+   "limit": 1000
+  }
+ },
+ {
+  "id": "E14",
+  "prompt": "wrong type: limit string",
+  "tool": "search_tools",
+  "args": {
+   "task": "make slides",
+   "limit": "five"
+  }
+ },
+ {
+  "id": "E15",
+  "prompt": "wrong type: platform number",
+  "tool": "get_pricing_facts",
+  "args": {
+   "platform": 12345
+  }
+ },
+ {
+  "id": "E16",
+  "prompt": "missing required arg",
+  "tool": "search_tools",
+  "args": {}
+ },
+ {
+  "id": "E17",
+  "prompt": "compare only 1 tool",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "ChatGPT"
+   ]
+  }
+ },
+ {
+  "id": "E18",
+  "prompt": "compare with fake tool",
+  "tool": "compare",
+  "args": {
+   "platforms": [
+    "ChatGPT",
+    "Zyxtrol"
+   ]
+  }
+ },
+ {
+  "id": "E19",
+  "prompt": "bad enum budget",
+  "tool": "search_tools",
+  "args": {
+   "task": "make slides",
+   "budget": "cheap"
+  }
+ },
+ {
+  "id": "E20",
+  "prompt": "unknown tool name",
+  "tool": "nonexistent_tool",
+  "args": {
+   "task": "x"
+  }
+ }
+]
