@@ -21,6 +21,7 @@ import {
   type DisplayPlan,
 } from "./pricing";
 import { FEED_CHANGELOG } from "./changelog";
+import { isStale } from "./staleness";
 import {
   DATA_BASE,
   SCHEMA_VERSION,
@@ -233,6 +234,7 @@ export function toPublicTool(
   const shown = shownFacts(facts);
   const factsAsOf = newest(shown.map((f) => f.checkedAt));
   const status = facts?.status;
+  const asOf = dataAsOf(row, facts);
 
   return {
     schema_version: SCHEMA_VERSION,
@@ -308,7 +310,8 @@ export function toPublicTool(
       status: shown.length === 0 ? "catalog_only" : shown.every(isPublishedVerified) ? "verified" : "unverified",
       checked_at: factsAsOf,
     },
-    data_as_of: dataAsOf(row, facts),
+    data_as_of: asOf,
+    stale: isStale(asOf ?? isoDate(row.updatedAt), ctx.generatedAt.slice(0, 10)),
     record_updated_at: isoDate(row.updatedAt),
     generated_at: ctx.generatedAt,
     sponsored: false,
