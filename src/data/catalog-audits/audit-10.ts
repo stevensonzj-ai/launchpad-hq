@@ -83,12 +83,13 @@ const RA_PATCHES: Audit10Patch[] = [
   },
   {
     slug: "canva-ai-magic-studio",
-    finding: "Plans are Free, Pro $18/mo, Business $25/person/mo or $250/yr, Enterprise; no \"$12.99\" plan; Free has up to 20 AI uses a month. Pro's annual price is not confirmed, so it is left out",
+    finding: "Plans are Free, Pro $18/mo, Business $25/person/mo or $250/yr, Enterprise; no \"$12.99\" plan; Free has up to 20 AI uses a month. Pro's annual price ($144/yr) was added by audit 11",
     sources: [CANVA_PRICING],
     checkedAt: CHECKED_AT,
     fields: {
+      // Updated by audit 11 (owner verified manually in browser 2026-10-26) so a re-run cannot revert it.
       currentPricing:
-        "Free $0; Pro $18/mo; Business $25/person/mo or $250/yr; Enterprise: contact sales (official, as of 2026-10-26)",
+        "Free $0; Pro $18/mo or $144/yr; Business $25/person/mo or $250/person/yr; Enterprise: contact sales (official, as of 2026-10-26)",
       freeTierFeatures:
         "Free: a monthly AI allowance of up to 20 uses of Canva's AI tools, 1 Brand Kit, 5 GB storage (official, as of 2026-10-26)",
       usageLimits:

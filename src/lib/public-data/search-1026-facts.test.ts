@@ -83,9 +83,10 @@ describe("search-relevance fact pass (2026-10-26)", () => {
       for (const fact of list) {
         // Gathered by "claude", re-checked against the live page by a different
         // session ("claude-recheck") on the same day, or re-checked by the RA in
-        // the MCP stress fact check (fix plan P1.3, same day).
+        // the MCP stress fact check (fix plan P1.3, same day), or by the owner
+        // by hand in a browser (Canva plans, P1.3c addendum, same day).
         assert.deepEqual([fact.status, fact.verifiedAt], ["verified", DATE], slug);
-        assert.ok(["claude-recheck", "ra"].includes(fact.verifiedBy ?? ""), `${slug}: ${fact.verifiedBy}`);
+        assert.ok(["claude-recheck", "ra", "owner"].includes(fact.verifiedBy ?? ""), `${slug}: ${fact.verifiedBy}`);
         assert.ok(isPublishedVerified(fact), slug);
         const host = new URL(fact.sourceUrl).hostname;
         assert.ok(domains.some((d) => host === d || host.endsWith(`.${d}`)), `${slug}: ${fact.sourceUrl}`);
@@ -113,10 +114,11 @@ describe("search-relevance fact pass (2026-10-26)", () => {
   it("no fact file prices a plan the page did not show (JavaScript-rendered pricing pages)", () => {
     // Canva's plan cards are JavaScript-rendered; the RA read the plans from the
     // page's embedded plan data (P1.3) and left out Pro's annual price, which
-    // differs between copies of the page.
+    // differed between copies of the page. The owner then checked both billing
+    // toggles by hand in a browser (P1.3c addendum): Pro is $144/year.
     const canva = facts("canva-ai-magic-studio").plans;
-    assert.equal(canva?.verifiedBy, "ra");
-    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /Annual price not confirmed/);
+    assert.equal(canva?.verifiedBy, "owner");
+    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /\$144\/year billed yearly/);
     assert.equal(facts("recraft").plans, undefined);
     // Notion's monthly-billing prices were not in the rendered page; only the yearly view is recorded.
     assert.match(facts("notion-ai").plans?.note ?? "", /not recorded/);

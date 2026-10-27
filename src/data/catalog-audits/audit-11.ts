@@ -9,6 +9,10 @@
  *   - github-copilot: AI credit totals written as total = base + flex
  *     (owner-checked on github.com/features/copilot/plans 2026-10-26).
  *     Matching facts: src/data/facts/github-copilot.ts.
+ *   - canva-ai-magic-studio: Pro $18/month or $144/year, Business $25/month
+ *     or $250/year per person (owner verified manually in browser
+ *     2026-10-26, Monthly and Yearly toggles). Matching facts:
+ *     src/data/facts/canva-ai-magic-studio.ts.
  *   - TRIAL_ONLY_TIERS: rows the extended label check (rules
  *     free-tier-says-trial / free-tier-vs-cost-tier) found under FREE or
  *     FREEMIUM while their own text, or their fact file, says there is no
@@ -46,6 +50,7 @@ export type Audit11Patch = {
 
 const KRISP_PRICING = "https://krisp.ai/pricing/";
 const COPILOT_PLANS = "https://github.com/features/copilot/plans";
+const CANVA_PRICING = "https://www.canva.com/pricing/";
 
 const OWNER_PATCHES: Audit11Patch[] = [
   {
@@ -79,6 +84,18 @@ const OWNER_PATCHES: Audit11Patch[] = [
       freeTierFeatures: "Free plan: limited chat and agent usage; 2,000 inline suggestions a month (as of 2026-10-26)",
       usageLimits:
         "Free: 2,000 inline suggestions/mo plus limited chat and agent usage; Pro, Pro+ and Max: code completions and next-edit suggestions don't use AI credits, other premium usage draws on the monthly AI credits (as of 2026-10-26)",
+    },
+  },
+  {
+    // Owner verified manually in browser 2026-10-26 (Monthly and Yearly toggles).
+    slug: "canva-ai-magic-studio",
+    finding: "Pro is $18/month billed monthly or $144/year billed yearly (one person); Business $25/month or $250/year per person",
+    sources: [CANVA_PRICING],
+    checkedAt: CHECKED_AT,
+    verified: true,
+    fields: {
+      currentPricing:
+        "Free $0; Pro $18/mo or $144/yr; Business $25/person/mo or $250/person/yr; Enterprise: contact sales (official, as of 2026-10-26)",
     },
   },
 ];

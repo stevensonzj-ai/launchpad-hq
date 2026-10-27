@@ -86,13 +86,14 @@ describe("catalog audit 10: RA-verified corrections", () => {
     assert.doesNotMatch(snap("otter-ai").currentPricing ?? "", /\$24\b/);
   });
 
-  it("Canva: Free/Pro/Business/Enterprise from the pricing page, no $12.99, no Pro annual price", () => {
+  it("Canva: Free/Pro/Business/Enterprise from the pricing page, no $12.99; Pro yearly is $144 (audit 11), not $180", () => {
     const f = getToolFacts("canva-ai-magic-studio")!;
     assert.deepEqual(f.plans?.value.map((p) => p.name), ["Free", "Pro", "Business", "Enterprise"]);
     assert.equal(f.plans?.sourceUrl, "https://www.canva.com/pricing/");
     const pro = f.plans!.value.find((p) => p.name === "Pro")!;
     assert.equal(pro.price, "$18");
-    assert.doesNotMatch(pro.limits, /\$1(44|80)/);
+    assert.match(pro.limits, /\$144\/year/);
+    assert.doesNotMatch(pro.limits, /\$180/);
     assert.doesNotMatch(JSON.stringify(f.plans) + (snap("canva-ai-magic-studio").currentPricing ?? ""), /12\.99/);
   });
 

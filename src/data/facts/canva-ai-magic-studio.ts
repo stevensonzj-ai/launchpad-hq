@@ -6,9 +6,10 @@ const CANVA_PRICING_URL = "https://www.canva.com/pricing/";
 /**
  * Plans and free limits: canva.com/pricing (US, USD), read by the RA from the
  * page's embedded plan data on 2026-10-26 (mcp-stress-factcheck-2026-10-26.md,
- * item 2 and follow-up 2). Pro's monthly price ($18) is consistent across
- * Canva's pages; its annual price is not (US$144 in the US page data, US$180
- * on another copy of the page), so no Pro annual price is listed.
+ * item 2 and follow-up 2). Plan prices owner verified manually in browser
+ * 2026-10-26 (Monthly and Yearly toggles): Pro $18/month or $144/year,
+ * Business $25/month or $250/year per person. This settles the earlier
+ * $144-vs-$180 conflict for Pro's yearly price.
  */
 export default {
   slug: "canva-ai-magic-studio",
@@ -29,15 +30,16 @@ export default {
   plans: {
     value: [
       { name: "Free", price: "$0", period: "", limits: "Up to 20 AI uses a month; 5 GB storage" },
-      { name: "Pro", price: "$18", period: "month", limits: "1 person; 10x Free's AI allowance; 100 GB storage. Annual price not confirmed (varies by Canva page)" },
-      { name: "Business", price: "$25", period: "person/month", limits: "Or $250/year per person; 20x Free's AI allowance; 500 GB storage" },
+      { name: "Pro", price: "$18", period: "month", limits: "Billed monthly, or $144/year billed yearly; 1 person; 10x Free's AI allowance; 100 GB storage" },
+      { name: "Business", price: "$25", period: "person/month", limits: "Billed monthly, or $250/year per person billed yearly; 20x Free's AI allowance; 500 GB storage" },
       { name: "Enterprise", price: "Contact sales", period: "", limits: "1 TB storage" },
     ],
     note: "USD, US page, as of 2026-10-26. Canva Teams is no longer available for new sign-ups or upgrades (Business replaces it); existing Teams subscribers keep it.",
     sourceUrl: CANVA_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    verifiedBy: "ra",
+    // Owner verified manually in browser 2026-10-26 (Monthly and Yearly toggles).
+    verifiedBy: "owner",
     verifiedAt: "2026-10-26",
     status: "verified",
   },
@@ -55,6 +57,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-26",
+      field: "plans",
+      summary: "Pro's yearly price confirmed: $18/month or $144/year (one person). Business $25/month or $250/year per person.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

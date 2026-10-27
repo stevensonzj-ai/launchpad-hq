@@ -75,6 +75,23 @@ describe("catalog audit 11: owner-checked Krisp and GitHub Copilot", () => {
     assert.match(plans.value[3].limits, /^\$200 total AI credits\/month/);
   });
 
+  it("Canva: Pro $18/month or $144/year, Business $25/month or $250/year per person; Enterprise unchanged", () => {
+    const pricing = snap("canva-ai-magic-studio").currentPricing ?? "";
+    assert.match(pricing, /Pro \$18\/mo or \$144\/yr/);
+    assert.match(pricing, /Business \$25\/person\/mo or \$250\/person\/yr/);
+    assert.match(pricing, /Enterprise: contact sales/);
+    const f = getToolFacts("canva-ai-magic-studio")!;
+    assert.equal(f.plans?.sourceUrl, "https://www.canva.com/pricing/");
+    assert.equal(f.plans?.status, "verified");
+    const plan = (name: string) => f.plans!.value.find((p) => p.name === name)!;
+    assert.deepEqual([plan("Pro").price, plan("Pro").period], ["$18", "month"]);
+    assert.match(plan("Pro").limits, /\$144\/year billed yearly; 1 person/);
+    assert.deepEqual([plan("Business").price, plan("Business").period], ["$25", "person/month"]);
+    assert.match(plan("Business").limits, /\$250\/year per person/);
+    assert.equal(plan("Enterprise").price, "Contact sales");
+    assert.equal(snap("canva-ai-magic-studio").costTier, "FREEMIUM");
+  });
+
   it("trial-only rows become PAID with no text change and keep their updatedAt", () => {
     for (const patch of AUDIT_11_PATCHES.filter((p) => !p.verified)) {
       assert.equal(patch.fields, undefined, patch.slug);
@@ -101,11 +118,12 @@ describe("catalog audit 11: idempotent, guarded, independent of audit 10", () =>
     }
   });
 
-  it("8 rows / 13 field changes on the pre-audit rows", () => {
+  it("9 rows / 14 field changes on the pre-audit rows", () => {
     // Pre-audit 11 values for the changed fields (catalog snapshot after audit 10).
     const before: Record<string, Partial<Audit11Row>> = {
       krisp: { description: "x", currentPricing: "x", freeTierFeatures: "x", costTier: "FREEMIUM" },
       "github-copilot": { currentPricing: "x", freeTierFeatures: "x", usageLimits: "x" },
+      "canva-ai-magic-studio": { currentPricing: "x" },
     };
     let rows = 0;
     let fields = 0;
@@ -115,7 +133,7 @@ describe("catalog audit 11: idempotent, guarded, independent of audit 10", () =>
       if (diffs.length) rows++;
       fields += diffs.length;
     }
-    assert.deepEqual([rows, fields], [8, 13]);
+    assert.deepEqual([rows, fields], [9, 14]);
   });
 
   it("the runner defaults to dry-run, uses the prod guard, never deletes and prints no values", () => {

@@ -5,6 +5,9 @@
  *     permanent free plan, only a 7-day trial (owner-checked 2026-10-26);
  *   - github-copilot: AI credit totals written as base + flex (owner-checked
  *     2026-10-26);
+ *   - canva-ai-magic-studio: currentPricing with Pro $18/mo or $144/yr and
+ *     Business $25/person/mo or $250/person/yr (owner verified manually in
+ *     browser 2026-10-26);
  *   - anthropic-api, canopy-tax, clio-manage, pictory-ai, spellbook,
  *     squarespace-ai: FREEMIUM -> PAID (guarded) because their own text or
  *     fact file says there is no permanent free plan (label check rules
