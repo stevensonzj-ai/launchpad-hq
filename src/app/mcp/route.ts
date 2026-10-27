@@ -1,7 +1,8 @@
 import { createMcpHandler } from "mcp-handler";
 import { loadCatalog } from "@/lib/mcp/catalog";
-import { MCP_SERVER_INFO, MCP_SERVER_INSTRUCTIONS, registerLaunchpadTools } from "@/lib/mcp/server";
+import { MCP_HANDLER_OPTIONS, registerLaunchpadTools } from "@/lib/mcp/server";
 import { withMcpErrorHints } from "@/lib/mcp/http-errors";
+import { capEventStream } from "@/lib/mcp/stream-cap";
 
 /**
  * Launchpad HQ read-only MCP connector (v0.1): https://www.launchpadhq.io/mcp
@@ -12,19 +13,16 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 10;
 
-const mcpHandler = createMcpHandler(
-  (server) => {
-    registerLaunchpadTools(server, { loadCatalog });
-  },
-  {
-    serverInfo: MCP_SERVER_INFO,
-    instructions: MCP_SERVER_INSTRUCTIONS,
-  },
-);
+/** Any SSE body is ended by then, before maxDuration kills the function. */
+const MCP_STREAM_CAP_MS = 8_000;
+
+const mcpHandler = createMcpHandler((server) => {
+  registerLaunchpadTools(server, { loadCatalog });
+}, MCP_HANDLER_OPTIONS);
 
 async function handler(request: Request): Promise<Response> {
   // Transport errors (405, 400, 406) gain a resolution hint in error.data.
-  const response = await withMcpErrorHints(await mcpHandler(request));
+  const response = capEventStream(await withMcpErrorHints(await mcpHandler(request)), MCP_STREAM_CAP_MS);
   const headers = new Headers(response.headers);
   headers.set("X-Robots-Tag", "noindex, nofollow");
   return new Response(response.body, {
