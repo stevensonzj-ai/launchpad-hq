@@ -13106,7 +13106,7 @@
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "Free: ZoomMate Basic with Zoom Workplace Basic; core AI included with paid Zoom Workplace from $14.16/user/mo billed annually; ZoomMate $20/user/mo or $16.67/user/mo billed annually (official, as of 2026-10-26)",
+   "currentPricing": "Free: ZoomMate Basic with Zoom Workplace Basic; core AI included with paid Zoom Workplace from $14.16/user/mo billed annually; ZoomMate $20/user/mo or $16.67/user/mo billed annually, price not confirmed on a directly fetched Zoom page (as of 2026-10-26)",
    "freeTierFeatures": "ZoomMate Basic with Zoom Workplace Basic: AI summaries for 3 hosted meetings a month, AI notes 3 times a month, 20 AI queries a month; free meetings capped at 40 minutes (official, as of 2026-10-26)",
    "usageLimits": "Free: 20 AI queries a month; ZoomMate: 2,200 AI credits per user a month (official, as of 2026-10-26)",
    "apiAvailable": true,

@@ -88,10 +88,10 @@ export const platformRef = z.object({
   starting_price: z.string().nullable().optional(),
   // Additive (feed schema 1.2): the feed's curated task tags, from publicToolCore.
   tasks: z.array(z.string()).nullable().optional(),
-  // Additive (v0.1.3): as_of older than 90 days, with a plain-language note.
+  // Additive (v0.1.2): as_of older than 90 days, with a plain-language note.
   stale: z.boolean().optional(),
   freshness_note: z.string().nullable().optional(),
-  // Additive (v0.1.3): set only when the name was matched tolerantly, echoing
+  // Additive (v0.1.2): set only when the name was matched tolerantly, echoing
   // the input and how it matched (never a silent swap).
   resolved_from: z.string().nullable().optional(),
   resolution: z.enum(["compact", "alias", "spelling"]).nullable().optional(),
@@ -126,16 +126,16 @@ export const searchToolsOutput = z.object({
   results: z.array(
     platformRef.extend({
       match_reasons: z.array(z.string()),
-      // Additive (v0.1.3): true on a fallback item, which is not a direct match.
+      // Additive (v0.1.2): true on a fallback item, which is not a direct match.
       fallback: z.boolean().optional(),
     }),
   ),
   /** Direct matches only; fallback items are not counted. */
   total_matches: z.number().int(),
   note: z.string().nullable(),
-  // Additive (v0.1.3): why fallback items were added, if any.
+  // Additive (v0.1.2): why fallback items were added, if any.
   fallback: z.enum(["starter", "top_up"]).nullable().optional(),
-  // Additive (v0.1.3): the searched text after spelling fixes, when any applied.
+  // Additive (v0.1.2): the searched text after spelling fixes, when any applied.
   corrected_query: z.string().nullable().optional(),
   ...common,
 });
@@ -152,7 +152,7 @@ export const compareItem = platformRef.extend({
 export const compareOutput = z.object({
   items: z.array(compareItem),
   not_found: z.array(z.string()),
-  // Additive (v0.1.3): suggestions for each not_found input that has any.
+  // Additive (v0.1.2): suggestions for each not_found input that has any.
   did_you_mean: z.array(z.object({ input: z.string(), suggestions: z.array(nameSuggestion) })).optional(),
   ...common,
 });

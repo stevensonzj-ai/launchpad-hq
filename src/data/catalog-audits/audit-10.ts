@@ -143,7 +143,7 @@ const RA_PATCHES: Audit10Patch[] = [
   },
   {
     slug: "zoom-ai-companion",
-    finding: "Zoom now presents the assistant as ZoomMate; free ZoomMate Basic comes with Workplace Basic; paid Workplace includes core AI; ZoomMate is a $20/user/mo upgrade. Cost tier stays FREEMIUM",
+    finding: "Zoom now presents the assistant as ZoomMate; free ZoomMate Basic comes with Workplace Basic; paid Workplace includes core AI; ZoomMate is a paid upgrade (its $20/user/mo price is from a search-index copy, so unverified). Cost tier stays FREEMIUM",
     sources: [ZOOM_AI_PAGE, ZOOM_AIC_PRICING, ZOOM_COMPARE],
     checkedAt: CHECKED_AT,
     fields: {
@@ -151,7 +151,7 @@ const RA_PATCHES: Audit10Patch[] = [
       description:
         "Zoom's AI assistant, now presented as ZoomMate. Free Zoom Workplace Basic accounts get ZoomMate Basic with capped AI (summaries for 3 hosted meetings and 20 AI queries a month); paid Zoom Workplace plans include core AI features at no extra cost, and ZoomMate is an optional paid upgrade (as of 2026-10-26).",
       currentPricing:
-        "Free: ZoomMate Basic with Zoom Workplace Basic; core AI included with paid Zoom Workplace from $14.16/user/mo billed annually; ZoomMate $20/user/mo or $16.67/user/mo billed annually (official, as of 2026-10-26)",
+        "Free: ZoomMate Basic with Zoom Workplace Basic; core AI included with paid Zoom Workplace from $14.16/user/mo billed annually; ZoomMate $20/user/mo or $16.67/user/mo billed annually, price not confirmed on a directly fetched Zoom page (as of 2026-10-26)",
       freeTierFeatures:
         "ZoomMate Basic with Zoom Workplace Basic: AI summaries for 3 hosted meetings a month, AI notes 3 times a month, 20 AI queries a month; free meetings capped at 40 minutes (official, as of 2026-10-26)",
       usageLimits: "Free: 20 AI queries a month; ZoomMate: 2,200 AI credits per user a month (official, as of 2026-10-26)",

@@ -69,7 +69,7 @@ describe("catalog audit 10: RA-verified corrections", () => {
   });
 
   it("every RA-corrected tool now has verified facts with a pricing source dated 2026-10-26", () => {
-    for (const slug of ["otter-ai", "canva-ai-magic-studio", "midjourney", "julius-ai", "elicit", "opus-clip", "suno", "zoom-ai-companion"]) {
+    for (const slug of ["otter-ai", "canva-ai-magic-studio", "midjourney", "julius-ai", "elicit", "opus-clip", "suno"]) {
       const f = getToolFacts(slug);
       assert.equal(f?.plans?.status, "verified", slug);
       assert.equal(f?.plans?.checkedAt, CHECKED_AT, slug);
@@ -143,6 +143,11 @@ describe("catalog audit 10: RA-verified corrections", () => {
     assert.match(f.displayName?.value ?? "", /ZoomMate/);
     assert.equal(f.status?.value.formerName, "Zoom AI Companion");
     assert.equal(snap("zoom-ai-companion").costTier, "FREEMIUM");
+    // The ZoomMate price came from a search-index copy, so plans stay unverified; name and free tier are verified.
+    assert.equal(f.plans?.status, "unverified");
+    assert.equal(f.freeTier?.status, "verified");
+    assert.equal(f.displayName?.status, "verified");
+    assert.doesNotMatch(snap("zoom-ai-companion").currentPricing ?? "", /official/i);
   });
 
   it("no catalog row offers Microsoft's retired Copilot Pro (GitHub's Copilot Pro+ is a different plan)", () => {
