@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getOrCreateDbUser } from "@/lib/auth-db";
+import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
 // TODO: add rate limiting before public launch
@@ -10,7 +10,7 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return apiError("unauthorized");
+    return noDbUserResponse();
   }
 
   const { slug } = await params;
@@ -41,7 +41,7 @@ export async function DELETE(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return apiError("unauthorized");
+    return noDbUserResponse();
   }
 
   const { slug } = await params;

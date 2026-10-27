@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getOrCreateDbUser } from "@/lib/auth-db";
+import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
 
@@ -10,7 +10,7 @@ export async function POST(
 ) {
   const user = await getOrCreateDbUser();
   if (!user) {
-    return apiError("unauthorized");
+    return noDbUserResponse();
   }
 
   const { id } = await params;

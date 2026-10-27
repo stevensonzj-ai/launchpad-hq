@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getOrCreateDbUser } from "@/lib/auth-db";
+import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 import { PRO_PLAN_ENABLED } from "@/lib/site";
@@ -13,7 +13,7 @@ export async function POST() {
 
   const user = await getOrCreateDbUser();
   if (!user) {
-    return apiError("unauthorized");
+    return noDbUserResponse();
   }
 
   const priceId = process.env.STRIPE_PRICE_ID;

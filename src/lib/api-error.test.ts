@@ -30,6 +30,7 @@ describe("API error envelope", () => {
     const statuses = {
       bad_request: 400,
       unauthorized: 401,
+      forbidden: 403,
       not_found: 404,
       method_not_allowed: 405,
       internal_error: 500,

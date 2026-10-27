@@ -15,6 +15,7 @@ import { SITE_URL } from "@/lib/site";
 export type ApiErrorCode =
   | "bad_request"
   | "unauthorized"
+  | "forbidden"
   | "not_found"
   | "method_not_allowed"
   | "unavailable"
@@ -36,6 +37,11 @@ const DEFAULTS: Record<ApiErrorCode, { status: number; message: string; resoluti
     status: 401,
     message: "You need to be signed in to do this.",
     resolution: `Sign in to Launchpad HQ, then retry. Public catalog data needs no sign-in: see ${DEVELOPERS_URL}.`,
+  },
+  forbidden: {
+    status: 403,
+    message: "You don't have access to do this.",
+    resolution: `If you think this is a mistake, contact us via ${SITE_URL}/contact.`,
   },
   not_found: {
     status: 404,
