@@ -3,7 +3,7 @@
   "name": "io.launchpadhq/launchpad-hq",
   "title": "Launchpad HQ",
   "description": "Read-only, sourced and dated facts on AI tools: search, compare, pricing, free alternatives.",
-  "version": "0.1.3",
+  "version": "0.1.2",
   "websiteUrl": "https://www.launchpadhq.io/connector",
   "repository": { "url": "https://github.com/stevensonzj-ai/launchpad-hq", "source": "github" },
   "icons": [
