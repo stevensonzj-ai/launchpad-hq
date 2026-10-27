@@ -14,7 +14,7 @@
  *      2026-10-15 (passed as argv[2]); it supplies the authoritative slug
  *      list, name, company, website, tiers, category and `updatedAt` for
  *      that day. It is not committed (tmp/ is gitignored).
- *   6. catalog audits 3-9 (src/data/catalog-audits/*), each applied with its
+ *   6. catalog audits 3-10 (src/data/catalog-audits/*), each applied with its
  *      own diff function, bumping `updatedAt` to the audit's run date only
  *      when the diff is non-empty, like Prisma's @updatedAt.
  *
@@ -55,6 +55,7 @@ import {
   audit9UpdateData,
   diffAudit9,
 } from "../../src/data/catalog-audits/audit-9";
+import { audit10Slugs, audit10UpdateData, diffAudit10Row } from "../../src/data/catalog-audits/audit-10";
 import { hiddenPlatformSlugs } from "../../src/lib/catalog-visibility";
 import type { CatalogRow } from "../../src/lib/mcp/tools";
 
@@ -296,10 +297,10 @@ function main() {
     out.set(e.slug, row);
   }
 
-  // ---------- 6. audits 3-9 ----------
+  // ---------- 6. audits 3-10 ----------
   const touch = (row: Row, date: string) => (row.updatedAt = date);
   const AUDIT_3_TO_6 = "2026-10-25";
-  const AUDIT_7_TO_9 = "2026-10-26";
+  const AUDIT_7_TO_10 = "2026-10-26";
 
   // Audit 3: name / website / company synced from fact files, then name refs.
   for (const slug of ["google-antigravity", "runway-for-education", "windsurf", "notebooklm", "wonder-dynamics-wonder-studio", "unriddle", "kira-systems", "casetext-cocounsel", "lexis-plus-ai"]) {
@@ -386,7 +387,7 @@ function main() {
     const row = out.get(patch.slug);
     if (row && planAudit7(row.costTier, patch) === "update") {
       row.costTier = patch.costTier.to;
-      touch(row, AUDIT_7_TO_9);
+      touch(row, AUDIT_7_TO_10);
     }
   }
   // Audit 8 and 9: creates, then patches.
@@ -396,7 +397,7 @@ function main() {
     Object.assign(row, create.row, {
       directAlternatives: [...(("directAlternatives" in create && create.directAlternatives) || [])],
       category: { slug: create.categorySlug, name: CATEGORY_NAMES[create.categorySlug] ?? create.categorySlug },
-      updatedAt: AUDIT_7_TO_9,
+      updatedAt: AUDIT_7_TO_10,
     });
     out.set(row.slug, row);
   }
@@ -406,7 +407,7 @@ function main() {
     const diffs = diffAudit8(row as never, patch);
     if (diffs.length) {
       Object.assign(row, audit8UpdateData(diffs));
-      touch(row, AUDIT_7_TO_9);
+      touch(row, AUDIT_7_TO_10);
     }
   }
   for (const patch of AUDIT_9_PATCHES) {
@@ -415,7 +416,18 @@ function main() {
     const diffs = diffAudit9(row as never, patch);
     if (diffs.length) {
       Object.assign(row, audit9UpdateData(diffs));
-      touch(row, AUDIT_7_TO_9);
+      touch(row, AUDIT_7_TO_10);
+    }
+  }
+
+  // Audit 10: field patches and the "official" wording fix (MCP fix plan P1.3).
+  for (const slug of audit10Slugs()) {
+    const row = out.get(slug);
+    if (!row) continue;
+    const diffs = diffAudit10Row(slug, row);
+    if (diffs.length) {
+      Object.assign(row, audit10UpdateData(diffs));
+      touch(row, AUDIT_7_TO_10);
     }
   }
 
@@ -425,7 +437,7 @@ function main() {
     note:
       "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). " +
       "Not a production export; regenerate from a real /data/v1 pull when one is taken.",
-    built_from: "xlsx + seed scripts + catalog audits 1-9 + local export 2026-10-15",
+    built_from: "xlsx + seed scripts + catalog audits 1-10 + local export 2026-10-15",
     db_rows: out.size,
     hidden_rows: [...out.keys()].filter((s) => hidden.has(s)).sort(),
     rows: listed,
