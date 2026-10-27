@@ -19,7 +19,9 @@
    "budget": "low"
   },
   "top5": [
-   "wordpress-ai-jetpack-ai"
+   "wordpress-ai-jetpack-ai",
+   "chatgpt",
+   "claude"
   ]
  },
  "A03": {
@@ -67,7 +69,7 @@
    "google-imagen-3",
    "adobe-firefly",
    "krea",
-   "flux"
+   "midjourney"
   ]
  },
  "A07": {
@@ -103,8 +105,8 @@
   "top5": [
    "beatoven-ai",
    "descript",
-   "elevenlabs",
-   "opus-clip"
+   "opus-clip",
+   "elevenlabs"
   ]
  },
  "A10": {
@@ -153,10 +155,10 @@
   },
   "top5": [
    "cline",
+   "github-copilot",
    "windsurf",
    "cursor",
-   "jetbrains-ai",
-   "claude"
+   "jetbrains-ai"
   ]
  },
  "A14": {
@@ -180,8 +182,8 @@
   "top5": [
    "research-rabbit",
    "scite",
-   "connected-papers",
    "elicit",
+   "connected-papers",
    "litmaps"
   ]
  },
@@ -381,11 +383,11 @@
    "task": "transcribe meetings"
   },
   "top5": [
+   "read-ai",
    "fathom",
    "fireflies-ai",
    "otter-ai",
-   "tactiq",
-   "tl-dv"
+   "tactiq"
   ]
  },
  "G03": {
@@ -429,8 +431,8 @@
    "task": "paraphrase an essay"
   },
   "top5": [
-   "jenni-ai",
    "quillbot",
+   "jenni-ai",
    "grammarly",
    "paperpal",
    "trinka-ai"
@@ -455,9 +457,9 @@
   "top5": [
    "chatpdf",
    "claude",
+   "quillbot",
    "chatgpt",
-   "notion-ai",
-   "quillbot"
+   "notion-ai"
   ]
  },
  "G09": {
@@ -738,7 +740,8 @@
   },
   "top5": [
    "jasper",
-   "copy-ai"
+   "copy-ai",
+   "chatgpt"
   ]
  },
  "G34": {
@@ -889,8 +892,8 @@
   "top5": [
    "descript",
    "beatoven-ai",
-   "elevenlabs",
-   "opus-clip"
+   "opus-clip",
+   "elevenlabs"
   ]
  },
  "G48": {
@@ -988,8 +991,8 @@
    "krea",
    "adobe-firefly",
    "leonardo-ai",
-   "midjourney",
-   "freepik-ai"
+   "freepik-ai",
+   "ideogram"
   ]
  },
  "G56": {
@@ -1007,8 +1010,9 @@
    "task": "write a book"
   },
   "top5": [
+   "midjourney",
    "legora",
-   "midjourney"
+   "chatgpt"
   ]
  },
  "G58": {
@@ -1046,6 +1050,28 @@
    "quizlet-q-chat",
    "chatgpt",
    "chatpdf"
+  ]
+ },
+ "G61": {
+  "input": {
+   "task": "write a blog post for my bakery",
+   "budget": "low"
+  },
+  "top5": [
+   "wordpress-ai-jetpack-ai",
+   "chatgpt",
+   "claude"
+  ]
+ },
+ "G62": {
+  "input": {
+   "task": "plan my wedding toast"
+  },
+  "top5": [
+   "chatgpt",
+   "claude",
+   "gemini",
+   "microsoft-copilot"
   ]
  }
 }
