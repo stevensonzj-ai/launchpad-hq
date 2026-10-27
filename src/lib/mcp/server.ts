@@ -1,4 +1,5 @@
 import type { Icon, Implementation, McpServer } from "@modelcontextprotocol/server";
+import type { McpHandlerOptions } from "mcp-handler";
 import type { z } from "zod";
 import { getToolFacts } from "@/data/facts";
 import { buildCallLog, logCall, type McpCallLog } from "./log";
@@ -49,6 +50,18 @@ export const MCP_SERVER_INSTRUCTIONS = [
   "Every result links to its Launchpad HQ page on launchpadhq.io. Sponsorship never affects results.",
   "Prices change often and should be confirmed on the vendor's site before buying.",
 ].join(" ");
+
+/** Options for mcp-handler's createMcpHandler; the route and the tests share them. */
+export const MCP_HANDLER_OPTIONS = {
+  serverInfo: MCP_SERVER_INFO,
+  instructions: MCP_SERVER_INSTRUCTIONS,
+  // registerTool defaults tools.listChanged to true. A 2026-07-28 client then
+  // opens subscriptions/listen for tool-list changes and the SDK holds that
+  // SSE stream open indefinitely, which a 10 s serverless function cannot
+  // serve. The tool list is fixed per deploy, so say so: the listen request
+  // is then acknowledged and closed at once.
+  capabilities: { tools: { listChanged: false } },
+} satisfies McpHandlerOptions;
 
 const READ_ONLY = {
   readOnlyHint: true,
