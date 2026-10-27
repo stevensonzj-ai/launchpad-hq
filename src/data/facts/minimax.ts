@@ -26,6 +26,7 @@ export default {
       "MiniMax M3.1 Flash, USD per 1M tokens, flat: $0.15 input, $0.60 output, $0.015 cached input.",
     note: "M3.1 Flash only. Other MiniMax models and the M Plan are priced on platform.minimax.io.",
     sourceUrl: MINIMAX_M31F_BLOG_URL,
+    sourceKind: "announcement",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",

@@ -24,6 +24,7 @@ export default {
     ],
     note: "No list prices published. Also listed on https://www.evenuplaw.com/about/.",
     sourceUrl: "https://www.evenuplaw.com/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

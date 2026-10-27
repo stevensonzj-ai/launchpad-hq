@@ -19,6 +19,7 @@ export default {
         "Meta AI is free to use for everyday use. Meta is testing usage limits, and a subscription is available for more.",
     },
     sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

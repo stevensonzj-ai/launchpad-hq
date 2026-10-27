@@ -10,6 +10,7 @@ export default {
     },
     note: "Browser-verified 2026-10-14 on perplexity.ai/comet and perplexity.ai/pro (fetch/curl 403 or timeout).",
     sourceUrl: "https://www.perplexity.ai/comet",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

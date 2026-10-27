@@ -1,12 +1,14 @@
 import type { ToolFacts } from "./types";
 
-// https://www.canva.com/magic/ redirects here; Canva now brands the AI suite "Canva AI".
-const CANVA_AI_URL = "https://www.canva.com/canva-ai/";
 const CANVA_AI_PASS_URL = "https://www.canva.com/help/ai-pass/";
+const CANVA_PRICING_URL = "https://www.canva.com/pricing/";
 
 /**
- * canva.com/pricing renders its plan cards in JavaScript and other plan pages
- * returned 403 on 2026-10-26, so no Canva plan prices are recorded here.
+ * Plans and free limits: canva.com/pricing (US, USD), read by the RA from the
+ * page's embedded plan data on 2026-10-26 (mcp-stress-factcheck-2026-10-26.md,
+ * item 2 and follow-up 2). Pro's monthly price ($18) is consistent across
+ * Canva's pages; its annual price is not (US$144 in the US page data, US$180
+ * on another copy of the page), so no Pro annual price is listed.
  */
 export default {
   slug: "canva-ai-magic-studio",
@@ -15,12 +17,27 @@ export default {
     value: {
       available: true,
       summary:
-        "Canva AI is available to everyone: a range of AI tools works on Canva's Free plan, and paid plans add more usage and more advanced features. The page does not state free usage limits.",
+        "Canva Free includes a monthly AI allowance of up to 20 uses of its AI tools, 1 Brand Kit and 5 GB of storage; paid plans raise the AI allowance.",
     },
-    sourceUrl: CANVA_AI_URL,
+    sourceUrl: CANVA_PRICING_URL,
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-26",
+    status: "verified",
+  },
+  plans: {
+    value: [
+      { name: "Free", price: "$0", period: "", limits: "Up to 20 AI uses a month; 5 GB storage" },
+      { name: "Pro", price: "$18", period: "month", limits: "1 person; 10x Free's AI allowance; 100 GB storage. Annual price not confirmed (varies by Canva page)" },
+      { name: "Business", price: "$25", period: "person/month", limits: "Or $250/year per person; 20x Free's AI allowance; 500 GB storage" },
+      { name: "Enterprise", price: "Contact sales", period: "", limits: "1 TB storage" },
+    ],
+    note: "USD, US page, as of 2026-10-26. Canva Teams is no longer available for new sign-ups or upgrades (Business replaces it); existing Teams subscribers keep it.",
+    sourceUrl: CANVA_PRICING_URL,
+    checkedAt: "2026-10-26",
+    gatheredBy: "claude",
+    verifiedBy: "ra",
     verifiedAt: "2026-10-26",
     status: "verified",
   },
@@ -40,8 +57,14 @@ export default {
   changelog: [
     {
       date: "2026-10-26",
+      field: "plans",
+      summary:
+        "Plans from canva.com/pricing: Free, Pro $18/month, Business $25/person/month or $250/year, Enterprise; free plan up to 20 AI uses a month. Replaces the catalog's \"from $12.99/mo\".",
+    },
+    {
+      date: "2026-10-26",
       field: "freeTier",
-      summary: "First fact file: Canva AI free-plan availability (canva.com/canva-ai) and the AI Pass add-on (Canva Help Center). Plan prices not captured: the pricing page is JavaScript-rendered.",
+      summary: "First fact file: Canva AI free-plan availability (canva.com/canva-ai) and the AI Pass add-on (Canva Help Center).",
     },
   ],
 } satisfies ToolFacts;

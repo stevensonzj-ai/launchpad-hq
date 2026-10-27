@@ -20,6 +20,7 @@ export default {
         "Comfy Desktop itself is free. Cloud: Try Cloud for free, with free new-user credits (amount unpublished).",
     },
     sourceUrl: "https://www.comfy.org/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",

@@ -47,6 +47,7 @@ export default {
       "Ideogram Vector API (ideogram-vector-1), USD per SVG. Text to vector: Low $0.13; Medium $0.16; High $0.20 from a prompt alone, $0.32 with reference images (Low and Medium cost the same with references). Image to vector (vectorize an image): $0.10 per image.",
     note: "Vector prices only, from the Ideogram Vector model page.",
     sourceUrl: IDEOGRAM_VECTOR_URL,
+    sourceKind: "product-page",
     checkedAt: "2026-10-26",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",

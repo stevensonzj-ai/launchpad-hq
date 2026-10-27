@@ -12,6 +12,14 @@ export type Fact<T> = {
   label?: string;
   /** Source or scope note shown with the fact. */
   note?: string;
+  /**
+   * What kind of page `sourceUrl` is, when a price fact (plans, freeTier,
+   * apiPricing) cites a page whose path does not say pricing, plans or help:
+   * a plans page at an unusual path, a product page (free tools with no
+   * pricing page), or the vendor's own announcement post. Checked by
+   * src/lib/mcp/label-consistency.ts.
+   */
+  sourceKind?: "plans-page" | "product-page" | "announcement";
 };
 
 export type ToolPlan = {

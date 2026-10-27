@@ -18,6 +18,7 @@ export default {
       summary: "free to use, open to all",
     },
     sourceUrl: "https://qwen.ai/",
+    sourceKind: "product-page",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
