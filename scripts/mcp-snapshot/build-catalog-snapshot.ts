@@ -14,7 +14,7 @@
  *      2026-10-15 (passed as argv[2]); it supplies the authoritative slug
  *      list, name, company, website, tiers, category and `updatedAt` for
  *      that day. It is not committed (tmp/ is gitignored).
- *   6. catalog audits 3-10 (src/data/catalog-audits/*), each applied with its
+ *   6. catalog audits 3-11 (src/data/catalog-audits/*), each applied with its
  *      own diff function, bumping `updatedAt` to the audit's run date only
  *      when the diff is non-empty, like Prisma's @updatedAt.
  *
@@ -56,6 +56,7 @@ import {
   diffAudit9,
 } from "../../src/data/catalog-audits/audit-9";
 import { audit10Slugs, audit10UpdateData, diffAudit10Row } from "../../src/data/catalog-audits/audit-10";
+import { audit11KeepsUpdatedAt, audit11Slugs, audit11UpdateData, diffAudit11Row } from "../../src/data/catalog-audits/audit-11";
 import { hiddenPlatformSlugs } from "../../src/lib/catalog-visibility";
 import type { CatalogRow } from "../../src/lib/mcp/tools";
 
@@ -301,6 +302,7 @@ function main() {
   const touch = (row: Row, date: string) => (row.updatedAt = date);
   const AUDIT_3_TO_6 = "2026-10-25";
   const AUDIT_7_TO_10 = "2026-10-26";
+  const AUDIT_11 = "2026-10-26";
 
   // Audit 3: name / website / company synced from fact files, then name refs.
   for (const slug of ["google-antigravity", "runway-for-education", "windsurf", "notebooklm", "wonder-dynamics-wonder-studio", "unriddle", "kira-systems", "casetext-cocounsel", "lexis-plus-ai"]) {
@@ -431,13 +433,24 @@ function main() {
     }
   }
 
+  // Audit 11: free labels and Copilot credits (MCP fix plan P1.3c).
+  for (const slug of audit11Slugs()) {
+    const row = out.get(slug);
+    if (!row) continue;
+    const diffs = diffAudit11Row(slug, row);
+    if (diffs.length) {
+      Object.assign(row, audit11UpdateData(diffs));
+      if (!audit11KeepsUpdatedAt(slug)) touch(row, AUDIT_11);
+    }
+  }
+
   const hidden = new Set(hiddenPlatformSlugs());
   const listed = [...out.values()].filter((r) => !hidden.has(r.slug)).sort((a, b) => a.slug.localeCompare(b.slug));
   const snapshot = {
     note:
       "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). " +
       "Not a production export; regenerate from a real /data/v1 pull when one is taken.",
-    built_from: "xlsx + seed scripts + catalog audits 1-10 + local export 2026-10-15",
+    built_from: "xlsx + seed scripts + catalog audits 1-11 + local export 2026-10-15",
     db_rows: out.size,
     hidden_rows: [...out.keys()].filter((s) => hidden.has(s)).sort(),
     rows: listed,

@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-10 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -662,7 +662,7 @@
    "description": null,
    "primaryUse": "Claude models via API",
    "primaryUseCases": "Chat completions; long-context analysis; tool use; computer use; batch processing; embeddings",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
@@ -1147,7 +1147,7 @@
    "description": null,
    "primaryUse": "AI practice management for tax professionals",
    "primaryUseCases": "Tax practice management; IRS transcript analysis; document management; client communication; tax resolution",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "ADVANCED",
    "platformType": [
     "web"
@@ -1965,7 +1965,7 @@
    "description": null,
    "primaryUse": "AI-powered legal practice management",
    "primaryUseCases": "Practice management; time tracking; billing; client intake; document management; legal accounting",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "ADVANCED",
    "platformType": [
     "web",
@@ -3659,9 +3659,9 @@
     "web",
     "desktop"
    ],
-   "currentPricing": "Free $0; Pro $10/mo; Pro+ $39/mo; Max $100/mo. Monthly AI Credit totals: Pro $15, Pro+ $70, Max $200 (1 credit = $0.01) (as of 2026-10-25)",
-   "freeTierFeatures": "Free plan: limited chat and agent usage; up to 2,000 completions plus entry-level models per month (official, as of 2026-10-25)",
-   "usageLimits": "Free: up to 2,000 completions/mo plus limited chat and agent usage; Pro, Pro+ and Max: unlimited completions, premium usage drawn from monthly AI Credits (official, as of 2026-10-25)",
+   "currentPricing": "Free $0; Pro $10/mo; Pro+ $39/mo; Max $100/mo. Total AI credits a month: Pro $15 ($10 base + $5 flex), Pro+ $70 ($39 base + $31 flex), Max $200 ($100 base + flex); flex may change over time; 1 credit = $0.01 (as of 2026-10-26)",
+   "freeTierFeatures": "Free plan: limited chat and agent usage; 2,000 inline suggestions a month (as of 2026-10-26)",
+   "usageLimits": "Free: 2,000 inline suggestions/mo plus limited chat and agent usage; Pro, Pro+ and Max: code completions and next-edit suggestions don't use AI credits, other premium usage draws on the monthly AI credits (as of 2026-10-26)",
    "apiAvailable": false,
    "directAlternatives": [
     "Cursor",
@@ -5881,21 +5881,21 @@
    "name": "Krisp",
    "company": "Krisp",
    "website": "https://krisp.ai",
-   "description": "Noise cancellation (on-device) with an optional AI notetaker. Noise cancellation does not require sending meeting audio to the cloud; the notetaker does capture meeting audio. As of 2026-10-13, some US states require all-party consent to record — tell attendees before using notes features and follow the law where participants are located. Official pricing (krisp.ai/pricing): Free trial, no card (exact trial limits unverified); Core $16/user/mo ($8 annual); Advanced $30 ($15 annual); call-center $15/agent/mo annual.",
+   "description": "Noise cancellation (on-device) with an optional AI notetaker. Noise cancellation does not require sending meeting audio to the cloud; the notetaker does capture meeting audio. As of 2026-10-13, some US states require all-party consent to record — tell attendees before using notes features and follow the law where participants are located. Meeting AI pricing (krisp.ai/pricing, as of 2026-10-26): no permanent free plan, a 7-day free trial with no credit card; Core $16/user/mo ($8 billed annually); Advanced $30/user/mo ($15 billed annually); Enterprise custom.",
    "primaryUse": "On-device noise cancellation plus an optional AI notetaker",
    "primaryUseCases": "Noisy calls; meeting notes when you also enable the notetaker",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "desktop"
    ],
-   "currentPricing": "Core $16/user/mo ($8 annual); Advanced $30/user/mo ($15 annual); call-center $15/agent/mo annual; free trial limits unverified",
-   "freeTierFeatures": "Free trial, no credit card; limits unverified as of 2026-10-13",
+   "currentPricing": "No permanent free plan (7-day free trial, no credit card); Core $16/user/mo billed monthly or $8/user/mo billed annually; Advanced $30/user/mo billed monthly or $15/user/mo billed annually; Enterprise custom (official, as of 2026-10-26)",
+   "freeTierFeatures": "No permanent free plan; 7-day free trial with all premium features, no credit card required (official, as of 2026-10-26)",
    "usageLimits": null,
    "apiAvailable": false,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-14",
+   "updatedAt": "2026-10-26",
    "category": {
     "slug": "meetings-notes",
     "name": "Meetings & Notes"
@@ -8858,7 +8858,7 @@
    "description": null,
    "primaryUse": "Convert blogs/long-form content to video",
    "primaryUseCases": "Blog-to-video conversion; social media clips from long content; training videos; webinar highlights",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web"
@@ -11039,7 +11039,7 @@
    "description": null,
    "primaryUse": "AI contract drafting and review for lawyers",
    "primaryUseCases": "Contract drafting; clause suggestion; contract review; redlining; risk identification; template creation",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
@@ -11098,7 +11098,7 @@
    "description": null,
    "primaryUse": "AI content and design for websites",
    "primaryUseCases": "AI website copy; design suggestions; layout customization; SEO descriptions; blog writing; bio generation",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
