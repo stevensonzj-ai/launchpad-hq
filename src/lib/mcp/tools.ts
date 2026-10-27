@@ -353,6 +353,9 @@ function namedTarget(task: string, rows: CatalogRow[], facts: FactsLookup): Cata
  * Field weights: name 3, category 2, primary use 2, use cases 1,
  * description 1. Weak words (WEAK_WORDS: "write", "letter", "free",
  * "alternative", ...) score only when nothing stronger matched anywhere.
+ * Threshold: in a multi-word search, tools that matched only one query word
+ * (no task tag, phrase or named-tool relation, and the word is not itself a
+ * task the search names) are dropped when any tool matched more strongly.
  */
 const FIELD_WEIGHTS = [
   ["name", 3],
@@ -400,6 +403,12 @@ type Scored = {
   reasons: Set<string>;
   /** How the row relates to the named tool ("alternative to X"), if any. */
   relation: Relation | null;
+  /**
+   * Matched on more than one stray query word: a task tag, a phrase, a
+   * relation to the named tool, a word that is itself a named task, or at
+   * least two distinct query words.
+   */
+  strong: boolean;
 };
 
 function scoreRow(
@@ -412,16 +421,19 @@ function scoreRow(
 ): Scored {
   let score = 0;
   const reasons = new Set<string>();
+  let strong = false;
 
   const tags = new Set(tagsOf(row));
   for (const { task } of queryTasks) {
     if (!tags.has(task)) continue;
     score += isGenericTask(task) ? GENERIC_TASK_WEIGHT : TASK_WEIGHT;
     reasons.add(`task: ${taskLabel(task)} (curated tag)`);
+    if (!isGenericTask(task)) strong = true;
   }
 
   const rel = target ? relationTo(target, row, facts) : null;
   if (rel) {
+    strong = true;
     score +=
       rel.level === 3 ? NAMED_DIRECT + rel.score
       : rel.level === 2 ? NAMED_BUDGET + rel.score
@@ -451,20 +463,30 @@ function scoreRow(
       if (hasPhrase(text, phrase)) {
         score += weight * PHRASE_MULTIPLIER;
         reasons.add(`"${phrase}" in ${label}`);
+        strong = true;
       }
     }
   }
 
+  const matchedWords = new Set<string>();
   for (const word of useWeak ? [...query.strong, ...query.weak] : query.strong) {
     for (const [label, text, weight] of fields) {
       if (text.set.has(word)) {
         score += weight;
         reasons.add(`"${word}" in ${label}${WEAK.has(word) ? " (loose match)" : ""}`);
+        matchedWords.add(word);
       }
     }
   }
+  // Two distinct query words, or one word that is itself a task the search
+  // names ("transcription" in "meeting transcription"): the text names the job.
+  const taskWords = queryTasks
+    .filter((t) => !isGenericTask(t.task))
+    .map((t) => t.phrase)
+    .filter((p) => !p.includes(" "));
+  if (matchedWords.size >= 2 || taskWords.some((w) => matchedWords.has(w))) strong = true;
 
-  return { row, score, reasons, relation: rel };
+  return { row, score, reasons, relation: rel, strong };
 }
 
 function budgetTiers(budget: SearchToolsInput["budget"]): string[] | null {
@@ -517,6 +539,12 @@ export function searchTools(
   // Only filler-ish words matched anywhere: fall back to them, and say so.
   const looseOnly = matched.length === 0 && query.weak.length > 0;
   if (looseOnly) matched = relevance(true).filter((s) => s.score > 0);
+  // Relevance threshold: in a multi-word search, a tool that matched just one
+  // stray word, with no task tag, phrase or named-tool relation, is noise
+  // ("search" alone for "job search") whenever stronger matches exist. When
+  // nothing matched strongly, keep the single-word hits as best effort.
+  const multiWord = query.strong.length + query.weak.length >= 2;
+  if (multiWord && matched.some((s) => s.strong)) matched = matched.filter((s) => s.strong);
 
   const freeIntent = priceIntent === "free" || input.budget === "free";
   const scored = matched
