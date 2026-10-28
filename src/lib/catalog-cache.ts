@@ -24,7 +24,7 @@ import { unstable_cache } from "next/cache";
  * Prisma timestamp fields so callers keep their Prisma types honest.
  */
 export const CATALOG_TAG = "catalog";
-export const CATALOG_REVALIDATE_SECONDS = 3600;
+export const CATALOG_REVALIDATE_SECONDS = 86400;
 
 export function platformTag(slug: string): string {
   return `platform:${slug}`;
@@ -62,7 +62,7 @@ export function reviveDates<T>(value: T): T {
  * Part of every cache key. Next's data cache outlives deployments, but these
  * reads also depend on code (listedPlatformWhere() comes from fact files, and
  * selects change). Keying by deployment means a deploy starts from a cold
- * cache instead of serving the previous build's rows for up to an hour.
+ * cache instead of serving the previous build's rows for up to 24 hours.
  */
 export function cacheGeneration(env: Record<string, string | undefined> = process.env): string {
   return env.VERCEL_DEPLOYMENT_ID || env.VERCEL_GIT_COMMIT_SHA || "local";

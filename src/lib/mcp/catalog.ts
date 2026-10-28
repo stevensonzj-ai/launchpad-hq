@@ -7,7 +7,7 @@ import type { CatalogRow } from "./tools";
  * Read-only catalog loader for the MCP connector and the /data/v1 feed.
  *
  * ONE select-only `findMany`, cached in two layers: Next's shared data
- * cache (tag `catalog`, 1 hour, src/lib/catalog-cache.ts) and, in front of
+ * cache (tag `catalog`, 24 hours, src/lib/catalog-cache.ts) and, in front of
  * it, 5 minutes of per-instance memory. All searching happens in memory.
  * /mcp and every /data/v1 route read this same loader, so they cannot drift
  * by more than the memory TTL. Nothing user-related is selected (no

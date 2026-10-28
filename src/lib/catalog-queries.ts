@@ -5,7 +5,7 @@ import { listedPlatformWhere } from "@/lib/catalog-visibility";
 
 /**
  * Public catalog reads shared by the catalog pages and /api GETs, all in the
- * shared data cache (src/lib/catalog-cache.ts, tag `catalog`, 1 hour).
+ * shared data cache (src/lib/catalog-cache.ts, tag `catalog`, 24 hours).
  * Nothing here may depend on the visitor: favorites and the signed-in user
  * are read by the pages themselves, uncached.
  */
@@ -14,7 +14,7 @@ import { listedPlatformWhere } from "@/lib/catalog-visibility";
  * One platform row with its category and approved prompt/discussion counts.
  * Serves /platform/[slug] and /platform/[slug]/guide, page and metadata, so
  * a slug costs one cache entry. The counts can trail a moderation approval
- * by up to an hour, or until POST /api/revalidate names the slug.
+ * by up to 24 hours, or until POST /api/revalidate names the slug.
  */
 export const getPlatformPageRow = cachedCatalogRead(
   "platform-page-row",

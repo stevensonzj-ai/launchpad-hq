@@ -20,9 +20,9 @@ import { buildFeedContext, toPublicCatalog } from "./public-data/serialize";
 const read = (rel: string) => readFileSync(join(process.cwd(), rel), "utf8");
 
 describe("catalog cache config", () => {
-  it("tags every entry `catalog`, per-platform reads add platform:<slug>, 1 hour TTL", () => {
+  it("tags every entry `catalog`, per-platform reads add platform:<slug>, 24 hour TTL", () => {
     assert.equal(CATALOG_TAG, "catalog");
-    assert.equal(CATALOG_REVALIDATE_SECONDS, 3600);
+    assert.equal(CATALOG_REVALIDATE_SECONDS, 86400);
     assert.equal(platformTag("chatgpt"), "platform:chatgpt");
     assert.deepEqual(catalogTags(), ["catalog"]);
     assert.deepEqual(catalogTags(["a", "b", "a"]), ["catalog", "platform:a", "platform:b"]);
