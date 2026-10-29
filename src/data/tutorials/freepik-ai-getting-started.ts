@@ -6,7 +6,7 @@ export const freepikAiTutorial: PlatformTutorialData = {
   title: "Getting Started with Magnific (formerly Freepik)",
   tagline: "Freepik's library of ready-made stock pictures and its AI tools for making and enlarging images and video, now under a new name — with one licence for downloaded stock and a different one for what the AI makes.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-15",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -21,9 +21,9 @@ export const freepikAiTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "Sign-up is self-serve on magnific.com — you register with an email address, or use a Google login. If you already had a Freepik account, it carries over with the same email and password; you do not need a new one.",
-    "The AI tools run on credits (the platform's unit of spend — each thing you make costs some). Paid plans are currently Premium at {{price:freepik-ai:Premium}}, Premium+ at {{price:freepik-ai:Premium+}} and Pro at {{price:freepik-ai:Pro}}, each cheaper per month if billed annually. Magnific's terms let it change how many credits a tool costs \"at its sole discretion and without prior notice,\" so check the cost shown next to the button before you run something expensive, especially video.",
+    "The AI tools run on credits (the platform's unit of spend — each thing you make costs some). Paid plans are currently Premium at {{price:freepik-ai:Premium}}, Premium+ at {{price:freepik-ai:Premium+}} and Pro Starter at {{price:freepik-ai:Pro Starter}}, each cheaper per month if billed annually. Magnific's terms let it change how many credits a tool costs \"at its sole discretion and without prior notice,\" so check the cost shown next to the button before you run something expensive, especially video.",
     "**The licence on what the AI makes depends on whether you are paying at the moment you make it.** Magnific's AI Products Terms (June 2026) say that a subscriber owns an image or video it generates, provided the subscription \"remains active at the time of generation.\" Without a paid subscription you get only a personal, non-commercial licence to use it, which Magnific can revoke. So anything you might use for a business, a client or a product should be generated while subscribed — upgrading later does not, on the terms' wording, convert things you made earlier.",
-    "Downloaded stock follows a different rule. Magnific's Terms of Use (June 2026) let you use stock content without paying on condition that you credit it; its help centre gives the credit line as \"Designed by Magnific,\" linked to magnific.com, placed next to the image or, failing that, in the footer or credits. A Premium, Premium+ or Pro subscription removes the credit requirement for stock you download while subscribed. Crediting the stock does not change the AI rule above: a credit line is not what makes an AI image usable commercially.",
+    "Downloaded stock follows a different rule. Magnific's Terms of Use (June 2026) let you use stock content without paying on condition that you credit it; its help centre gives the credit line as \"Designed by Magnific,\" linked to magnific.com, placed next to the image or, failing that, in the footer or credits. A paid subscription removes the credit requirement for stock you download while subscribed. Crediting the stock does not change the AI rule above: a credit line is not what makes an AI image usable commercially.",
   ],
 
   security: [

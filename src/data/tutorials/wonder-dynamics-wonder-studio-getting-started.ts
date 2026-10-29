@@ -7,7 +7,7 @@ export const wonderDynamicsWonderStudioTutorial: PlatformTutorialData = {
   tagline:
     "Turn a video of a real person into a scene starring an animated character — no motion-capture suit, no 3D software on your own computer.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://help.wonderdynamics.com/release-notes/",
   accessTier: "FREE",
 
@@ -18,6 +18,7 @@ export const wonderDynamicsWonderStudioTutorial: PlatformTutorialData = {
     "Autodesk Flow Studio takes an ordinary video of a person and replaces them with a 3D character that copies their movement, their position in the frame and, to a point, their expression. It was called Wonder Studio until Autodesk — the company behind AutoCAD and Maya — bought its maker, Wonder Dynamics, and renamed it. The old name is still on the old website, the documentation site and nearly every tutorial video; it is the same product.",
     "It is built for someone who has footage and an idea but no motion-capture stage and no visual-effects artist. What comes back is not only a finished clip but the raw material a 3D program expects.",
     "That output shape is the real fork in the road. Runway's performance-transfer tools hand you a finished video and stop there. Flow Studio hands you parts — a gift if you are heading into Blender, Maya or Unreal afterwards, overkill if you only wanted something to post.",
+    "Since August 2026 it has also grown well beyond that one job. Its release notes add a **Canvas**, where you chain steps that call \"an expanding list of supported image and video generation models\" — from other companies, including Kling, MiniMax, Seedance and Google's Veo — alongside voice and sound models from ElevenLabs and text models from Anthropic, Google and OpenAI. There is also a **3D Editor** for laying out scenes, with 3D assets exportable to Autodesk Fusion. This page sticks to the original character-replacement workflow; if you try the Canvas, note that Autodesk added \"more granular pricing controls per model and configuration\" in August 2026, so check what each model costs before you run it.",
   ],
 
   beforeYouStart: [
