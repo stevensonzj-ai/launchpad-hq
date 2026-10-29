@@ -2,7 +2,7 @@ import { FactCite } from "@/components/platforms/fact-cite";
 import { TruncatedValue } from "@/components/platforms/truncated-value";
 import { DIFFICULTY_LABEL, PRIVACY_LEVEL_LABEL } from "@/lib/labels";
 import { stripInlineCitations } from "@/lib/platform-display";
-import type { Fact } from "@/data/facts/types";
+import type { Fact, ToolPrivacy } from "@/data/facts/types";
 
 export type TechnicalDetailRow = {
   label: string;
@@ -22,6 +22,8 @@ type PlatformTechnicalDetailsProps = {
   languageSupport: string | null;
   keyIntegrations: string | null;
   upgradeTriggers: string | null;
+  /** The reason behind the privacy rating, shown under it with its source. */
+  privacyFact?: Fact<ToolPrivacy>;
   modelsRow?: {
     label: string;
     value: string;
@@ -45,6 +47,7 @@ export function buildTechnicalDetailRows(
     {
       label: "Privacy",
       value: PRIVACY_LEVEL_LABEL[props.privacyLevel] ?? props.privacyLevel,
+      ...(props.privacyFact?.note ? { fact: props.privacyFact, showNote: true } : {}),
     },
   ];
 

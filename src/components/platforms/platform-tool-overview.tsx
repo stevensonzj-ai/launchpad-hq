@@ -195,6 +195,7 @@ export function PlatformToolOverview({
             languageSupport={platform.languageSupport}
             keyIntegrations={platform.keyIntegrations}
             upgradeTriggers={platform.upgradeTriggers}
+            privacyFact={facts?.privacy}
             modelsRow={
               showModelsInTechnical && facts?.models
                 ? {

@@ -60,6 +60,18 @@ export default {
     gatheredBy: "claude",
     status: "unverified",
   },
+  privacy: {
+    value: {
+      policyUrl: KLAP_PRIVACY_URL,
+    },
+    note: "Rated Medium because Klap's privacy policy (last updated 1 October 2026) says \"OpenRouter, the model providers it routes to, and OpenAI receive your transcripts and clipping instructions\" to find and score clips.",
+    sourceUrl: KLAP_PRIVACY_URL,
+    checkedAt: "2026-10-29",
+    gatheredBy: "claude",
+    status: "verified",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-29",
+  },
   features: {
     value: [
       "The app edits and transcribes videos in 52 languages (homepage FAQ, https://klap.app/).",
@@ -75,6 +87,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "privacy",
+      summary: "Privacy reason recorded: the privacy policy says transcripts and clipping instructions go to OpenRouter, the model providers it routes to, and OpenAI. Rating stays Medium.",
+    },
     {
       date: "2026-10-29",
       field: "features",

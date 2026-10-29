@@ -109,7 +109,6 @@ export const klapTutorial: PlatformTutorialData = {
 
   whereToNext: [
     { label: "Video creation and editing", categorySlug: "video-creation-editing" },
-    { label: "Gaming and creative AI", categorySlug: "gaming-creative-ai" },
     { label: "Klap vs OpusClip", href: "/compare/klap-vs-opus-clip" },
   ],
   disclosure: [{ slug: "klap", kinds: ["affiliate"] }],

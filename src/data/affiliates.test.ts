@@ -162,10 +162,15 @@ describe("disclosure wording", () => {
     assert.doesNotMatch(text, /free access/i);
   });
 
-  it("the Klap promo note makes no discount claim the program terms don't confirm", () => {
-    const note = AFFILIATE_LINKS.klap.promoCode?.note ?? "";
-    assert.doesNotMatch(note, /\d|%|off\b|save/i);
+  it("the Klap reader-code line is the owner-confirmed offer, with its dated source", () => {
+    const promo = AFFILIATE_LINKS.klap.promoCode!;
+    // The code itself may only appear in affiliates.ts (see the test above).
+    assert.equal(promo.offer, "30% off your first payment");
+    assert.match(promo.code, /^[A-Z0-9]+$/);
+    assert.equal(promo.source, "Klap affiliate program dashboard (Rewardful), confirmed by Zach on 2026-10-29");
     assert.equal(AFFILIATE_LINKS.klap.freeAccess.granted, false);
+    const view = read("src/components/sponsors/affiliate-disclosure.tsx");
+    assert.match(view, /\{affiliate\.promoCode\.offer\} with code <code[^>]*>\{affiliate\.promoCode\.code\}<\/code>\./);
   });
 
   it("the Klap vs OpusClip page shows a text-only disclosure that says the link isn't used", () => {
