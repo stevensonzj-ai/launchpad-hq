@@ -7,7 +7,7 @@ export const salesforceEinsteinTutorial: PlatformTutorialData = {
   tagline:
     "The AI that already reads your customer records — under a name Salesforce keeps changing.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-09",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.salesforce.com/agentforce/what-is-new/",
   accessTier: "FREE",
 
@@ -15,14 +15,14 @@ export const salesforceEinsteinTutorial: PlatformTutorialData = {
     "You are not opening a separate AI app. You work inside Salesforce as usual — a customer record, a list of leads — and the AI appears as a button on the record or a panel beside it. You click, or type a request in plain English, and an answer or a draft comes back in the same window.",
 
   whatItIs: [
-    "Einstein is the name Salesforce gives the AI built into its **CRM** (the system a sales team keeps its customer records in). It is not one product: it covers older scoring and forecasting features that still carry the Einstein name, the Einstein Trust Layer that governs how your data reaches an outside AI model, and — under a newer name — the generative and **agent** side of the platform (AI that takes actions on its own rather than only answering).",
+    "Einstein is the name Salesforce long gave the AI built into its **CRM** (the system a sales team keeps its customer records in) — though its own Einstein page now carries the heading \"AIforce\" and no longer uses the name. It is not one product: it covers older scoring and forecasting features that still carry the Einstein name, the Einstein Trust Layer that governs how your data reaches an outside AI model, and — under a newer name — the generative and **agent** side of the platform (AI that takes actions on its own rather than only answering).",
     "Since October 2025 Salesforce brands that newer half **Agentforce 360**, having previously called it Einstein GPT and then Einstein Copilot. The rename is not cosmetic for a beginner: much of what is written about \"Einstein\" describes something Salesforce now sells under a different name, and Salesforce's own training material still sits at addresses like `build-ai-assistants-with-einstein-copilot`.",
     "What every part of it has in common is that the AI reads your own account, contact and deal records rather than the open internet — which is the reason a company would let it near a customer's details at all.",
   ],
 
   beforeYouStart: [
     "**You can get in without talking to a salesperson.** Salesforce's **Free Suite** is free for up to two people, and Salesforce says it is \"completely free with no expiration date, as long as you log in at least once every 60 days\". It includes the click-based AI that summarises a record and drafts an email. That is a real starting point, not a demo.",
-    "The Einstein-branded predictive features are the expensive half. Sales Cloud Einstein — lead scoring, opportunity scoring, Einstein Forecasting — is documented as available in Performance and Unlimited Editions and \"for an extra cost in Enterprise Edition\". Those need a paid plan and usually a sales conversation. Nothing in the starter list below depends on them.",
+    "The Einstein-branded predictive features are the expensive half. Sales Cloud Einstein — lead scoring, opportunity scoring, Einstein Forecasting — is still documented under older edition names, but Salesforce's current pricing says AI can be added to Core and above, with the full AI suite included in Max. Those need a paid plan and usually a sales conversation. Nothing in the starter list below depends on them.",
     "There are two other free doors: a 30-day trial of the full paid product, and a free developer account that Salesforce says \"doesn't expire as long as you keep using it\" and that now includes Agentforce. The developer account is a practice space rather than somewhere to run a business, but it is currently the cheapest way to see the agent builder.",
     "If you do end up paying, plans are priced per user per month, rising steeply from Starter Suite to the top editions, and the agent side is metered separately in Flex Credits — **credits** are the platform's unit of spend, each thing you do costs some — bought in blocks, so every customer conversation an agent handles has a cost. Current prices are on its Launchpad page.",
     "In a company Salesforce, the licence is not the hard part; learning Salesforce is. Trailhead, which Salesforce calls \"the free online learning platform from Salesforce\", is where the vendor itself sends beginners, and it hands you a free practice environment to click around in.",

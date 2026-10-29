@@ -7,7 +7,7 @@ export const workatoTutorial: PlatformTutorialData = {
   tagline:
     "Enterprise automation you can finally sign up for on your own — with a free tier licensed for practice, not for real work.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.workato.com/product-hub/changelog/",
   accessTier: "FREE",
 
@@ -59,7 +59,7 @@ export const workatoTutorial: PlatformTutorialData = {
     avoid: [
       "Running anything your work depends on from the free plan — its own addendum licenses that plan for evaluation only.",
       "Any automation whose data must stay outside the United States while you are on a self-serve account, since choosing a region is an enterprise feature.",
-      "Reading the published self-serve prices as what Workato costs. Those are the self-serve tiers. The four contract editions — Standard, Business, Enterprise and Workato One — carry no published figures at all, and that is the version most companies actually buy.",
+      "Reading the published self-serve prices as what Workato costs. Those are the self-serve tiers. The four contract editions — Standard, Business MCP, Enterprise MCP and Workato ONE — carry no published figures at all, and that is the version most companies actually buy.",
     ],
   },
 
@@ -94,7 +94,7 @@ export const workatoTutorial: PlatformTutorialData = {
       whatItDoes:
         "When a recipe fails → then open its job history to see which step stopped and exactly what data it was holding.",
       whyHere:
-        "This record has a shelf life. Workato publishes job-history retention of 30 days on its Standard and Business editions and 90 on Enterprise, and states no figure for self-serve accounts — so assume what you can look back at is limited, and read a run while it is fresh rather than reconstructing it later.",
+        "This record has a shelf life. Workato publishes job-history retention that grows with the edition, and states no figure for self-serve accounts — so assume what you can look back at is limited, and read a run while it is fresh rather than reconstructing it later.",
     },
   ],
 

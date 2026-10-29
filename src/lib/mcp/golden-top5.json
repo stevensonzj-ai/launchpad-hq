@@ -69,7 +69,7 @@
    "nano-banana",
    "adobe-firefly",
    "krea",
-   "midjourney"
+   "leonardo-ai"
   ]
  },
  "A07": {
@@ -252,11 +252,11 @@
    "budget": "low"
   },
   "top5": [
-   "shopify-magic-sidekick",
    "hubspot-ai",
    "mailchimp-ai",
    "squarespace-ai",
-   "wix-ai"
+   "wix-ai",
+   "canva-ai-magic-studio"
   ]
  },
  "A22": {
@@ -352,8 +352,8 @@
    "canva-ai-magic-studio",
    "ideogram",
    "recraft",
-   "shopify-magic-sidekick",
-   "hubspot-ai"
+   "hubspot-ai",
+   "mailchimp-ai"
   ]
  },
  "E11": {
@@ -434,8 +434,8 @@
    "quillbot",
    "jenni-ai",
    "grammarly",
-   "paperpal",
-   "trinka-ai"
+   "trinka-ai",
+   "paperpal"
   ]
  },
  "G07": {
@@ -444,8 +444,8 @@
   },
   "top5": [
    "grammarly",
-   "paperpal",
    "trinka-ai",
+   "paperpal",
    "jenni-ai",
    "quillbot"
   ]
@@ -521,9 +521,9 @@
   "top5": [
    "gpt-image-1-5-dall-e-successor",
    "nano-banana",
+   "leonardo-ai",
    "adobe-firefly",
-   "flux",
-   "leonardo-ai"
+   "flux"
   ]
  },
  "G15": {
@@ -615,7 +615,7 @@
    "claude-code",
    "cline",
    "aider",
-   "bolt-new"
+   "gemini-cli"
   ]
  },
  "G23": {
@@ -785,7 +785,7 @@
    "speak-language-ai",
    "duolingo-max",
    "ai21-labs-jamba",
-   "aleph-alpha-luminous"
+   "trinka-ai"
   ]
  },
  "G38": {
@@ -913,9 +913,9 @@
    "task": "free alternative to Grammarly"
   },
   "top5": [
+   "trinka-ai",
    "quillbot",
    "paperpal",
-   "trinka-ai",
    "chatgpt",
    "gemini"
   ]
@@ -926,9 +926,9 @@
   },
   "top5": [
    "ideogram",
+   "leonardo-ai",
    "adobe-firefly",
    "flux",
-   "leonardo-ai",
    "gpt-image-1-5-dall-e-successor"
   ]
  },
@@ -989,8 +989,8 @@
   },
   "top5": [
    "krea",
-   "adobe-firefly",
    "leonardo-ai",
+   "adobe-firefly",
    "freepik-ai",
    "ideogram"
   ]

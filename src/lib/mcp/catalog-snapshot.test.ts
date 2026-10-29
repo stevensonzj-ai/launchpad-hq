@@ -6,6 +6,7 @@ import { audit10Slugs } from "@/data/catalog-audits/audit-10";
 import { getToolFacts } from "@/data/facts";
 import { AUDIT_15_PATCHES, AUDIT_15_RENAMES } from "@/data/catalog-audits/audit-15";
 import { AUDIT_17_BATCH } from "@/data/catalog-audits/audit-17";
+import { AUDIT_18_BATCH } from "@/data/catalog-audits/audit-18";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
 import { loadSnapshot } from "./snapshot";
 import { toPlatformRef } from "./tools";
@@ -49,7 +50,8 @@ const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "sourc
 /**
  * Stale facts batch 1 (catalog audit 17, 2026-10-29): 28 rows gained fact
  * files and pricing patches, so they may differ on the same fields fix P1.3
- * changed.
+ * changed. Batch 2 (catalog audit 18, 2026-10-29) does the same for 23 more
+ * rows.
  */
 describe("catalog snapshot", () => {
   const snap = loadSnapshot();
@@ -70,7 +72,7 @@ describe("catalog snapshot", () => {
     ) as Record<string, unknown>[];
     assert.ok(observed.length >= 75);
     const bySlug = new Map(snap.rows.map((r) => [r.slug, r]));
-    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED, ...AUDIT_17_BATCH]);
+    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED, ...AUDIT_17_BATCH, ...AUDIT_18_BATCH]);
     const diffs: string[] = [];
     for (const o of observed) {
       const moved = AUDIT_15_MOVES.get(o.slug as string);

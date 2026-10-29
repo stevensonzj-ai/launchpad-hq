@@ -7,7 +7,7 @@ export const geminiCliTutorial: PlatformTutorialData = {
   tagline:
     "Google's terminal coding agent — still shipping, but since June 2026 it no longer opens to a free Google account.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://geminicli.com/docs/changelogs/",
   accessTier: "FREE",
 
@@ -17,13 +17,13 @@ export const geminiCliTutorial: PlatformTutorialData = {
   whatItIs: [
     "Gemini CLI is Google's coding **agent** — AI that takes actions on its own rather than only answering — driven from a **terminal**, the text window where you type instructions instead of clicking. It works on a whole project at once, not one file.",
     "Since 18 June 2026 it no longer serves free personal Google accounts, or Google AI Pro and Ultra subscribers. Google moved individuals to a separate tool, Antigravity CLI, which is where a beginner should now start.",
-    "The software is alive: the code is public and releases ship most weeks. It just answers only to an organisation's Code Assist licence or a paid Gemini **API key** — a password that identifies your app and spends your money.",
+    "The software is alive: the code is public and releases ship most weeks. It just answers only to a paid Gemini **API key** — a password that identifies your app and spends your money — to Google Cloud's Vertex AI, or to an organisation's Gemini Code Assist Standard or Enterprise licence.",
   ],
 
   beforeYouStart: [
-    "Settle access before you install. A personal Google account no longer works; the two live routes are a Gemini Code Assist Standard or Enterprise licence, bought per seat by an organisation, or a paid Gemini API key. Without one it installs fine and then refuses to answer.",
+    "Settle access before you install. A personal Google account no longer works; the live routes are a paid Gemini API key, a Google Cloud project using Vertex AI, or a Gemini Code Assist Standard or Enterprise licence bought per seat by an organisation. Without one it installs fine and then refuses to answer.",
     "There is no monthly price for an individual — a paid key bills you for what you use, so a heavy week has no ceiling until you set a budget yourself.",
-    "Expect Google's documentation to lag Google's product: the quota page still lists a free 1,000-requests-a-day tier, and the sign-in page still recommends a personal account. The banner above them is current; the pages beneath are not.",
+    "Expect Google's documentation to lag Google's product: the quota page still lists a free daily allowance, and the sign-in page still recommends a personal account. The banner above them is current; the pages beneath are not.",
     "You need code on your own disk and enough comfort with a terminal to install a package. If not yet, Google's Gemini assistant in a browser writes and explains code with nothing to install.",
   ],
 
@@ -45,7 +45,7 @@ export const geminiCliTutorial: PlatformTutorialData = {
       kind: "list",
       label: "Which door you came in decides your data terms",
       items: [
-        "On a paid Gemini API key, Google's terms say it does not use your prompts or responses to improve its products. On the unpaid tier the same terms say the opposite, and that human reviewers may read them. The tool never tells you which you are on.",
+        "On a paid Gemini API key, Google's terms say it does not use your prompts or responses to improve its products. The Gemini API's unpaid terms say the opposite, and that human reviewers may read them — so confirm billing is switched on for your key before you point it at real code.",
         "It also sends usage statistics by default — which tools ran, which model, how long, though Google states not the content of your prompts. One setting turns that off: `privacy.usageStatisticsEnabled: false` in `~/.gemini/settings.json`.",
       ],
     },
@@ -71,9 +71,9 @@ export const geminiCliTutorial: PlatformTutorialData = {
     {
       title: "Work out which door is open to you, before you install",
       whatItDoes:
-        "Checks whether you hold a Gemini Code Assist Standard or Enterprise licence, or a Gemini API key with billing switched on; if neither, installs Antigravity CLI instead.",
+        "Checks whether you hold a Gemini API key with billing switched on, Vertex AI access through a Google Cloud project, or a Gemini Code Assist Standard or Enterprise licence; if none of those, installs Antigravity CLI instead.",
       whyHere:
-        "Claude Code's entry check is one question — is your plan paid. Here the sign-in Google's own docs recommend is still there and still fails, so the only check that holds is what you own: a Code Assist licence, or a key with billing on. If it is neither, Antigravity CLI is where Google now sends you.",
+        "Claude Code's entry check is one question — is your plan paid. Here the sign-in Google's own docs recommend is still there and still fails, so the only check that holds is what you own: a key with billing on, Vertex AI access, or a Code Assist licence. If it is neither, Antigravity CLI is where Google now sends you.",
     },
     {
       title: "Hand it a picture instead of a description",

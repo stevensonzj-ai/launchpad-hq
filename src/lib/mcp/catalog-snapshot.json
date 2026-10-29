@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15 and 17 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17 and 18 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -2675,7 +2675,7 @@
    "slug": "dragon-medical-one",
    "name": "Dragon Medical One",
    "company": "Microsoft (Nuance)",
-   "website": "https://nuance.com",
+   "website": "https://www.microsoft.com/en-us/health-solutions/clinical-workflow/dragon-medical-one",
    "description": null,
    "primaryUse": "AI clinical documentation and medical dictation",
    "primaryUseCases": "Clinical dictation; radiology reporting; pathology notes; discharge summaries; real-time documentation",
@@ -2685,9 +2685,9 @@
     "web",
     "desktop"
    ],
-   "currentPricing": "Enterprise/subscription",
-   "freeTierFeatures": "No free tier; subscription via healthcare organization",
-   "usageLimits": "Dictation minutes vary by plan; typical: unlimited for licensed users",
+   "currentPricing": "Enterprise licences through Microsoft; no public prices. Microsoft offers a migration path to Dragon Copilot (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier or trial listed; licences are sold through Microsoft (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Otter AI (general)",
@@ -2696,7 +2696,7 @@
    "budgetAlternativeTo": [
     "Otter AI (general transcription)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "healthcare-ai",
     "name": "Healthcare AI"
@@ -3478,14 +3478,14 @@
    "description": null,
    "primaryUse": "Open-source terminal AI coding agent",
    "primaryUseCases": "Terminal coding assistant; shell automation; file manipulation; Git workflows; code review",
-   "costTier": "FREE",
+   "costTier": "PAID",
    "difficultyLevel": "ADVANCED",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (generous quota)",
-   "freeTierFeatures": "Free and open-source; uses free Gemini API tier (1,000 requests/day)",
-   "usageLimits": "Free Gemini API: 1,000 req/day; 60 req/min; paid tier for higher limits",
+   "currentPricing": "Code is open source (Apache 2.0), but use needs a paid Gemini API key, Vertex AI, or a Gemini Code Assist Standard / Enterprise licence (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier: free individual access moved to Antigravity CLI on 2026-06-18 (as of 2026-10-29)",
+   "usageLimits": "Limits follow your paid Gemini API, Vertex AI or Code Assist plan; the old free quota no longer applies (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Claude Code",
@@ -3497,7 +3497,7 @@
     "Aider (all free with own keys",
     "Gemini CLI free tier is generous)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -4625,7 +4625,7 @@
    "slug": "healthee",
    "name": "Healthee",
    "company": "Healthee",
-   "website": "https://healthee.co",
+   "website": "https://healthee.com",
    "description": null,
    "primaryUse": "AI healthcare benefits navigation",
    "primaryUseCases": "Benefits navigation; insurance Q&A; plan comparison; claims guidance; wellness recommendations",
@@ -4635,16 +4635,16 @@
     "web",
     "api"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No individual free tier; employer-provided benefit",
-   "usageLimits": "Employer contract; unlimited employee queries within plan",
+   "currentPricing": "No public pricing; quoted for employers and benefits partners (as of 2026-10-29)",
+   "freeTierFeatures": "No free or individual plan; provided by employers (as of 2026-10-29)",
+   "usageLimits": "Not published; set by the employer contract (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Nayya",
     "Benify"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "healthcare-ai",
     "name": "Healthcare AI"
@@ -5920,9 +5920,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (150 tokens/day); Pro $28/mo; Professional $56/mo",
-   "freeTierFeatures": "150 tokens/day; basic image generation; community models; limited features",
-   "usageLimits": "Free: 150 tokens/day (about 30 images); paid plans: 8,500-60,000 tokens/mo",
+   "currentPricing": "Free (150 tokens a day); paid plans Essential, Premium and Ultimate, plus Teams; prices not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "150 fast tokens a day, reset daily; unused tokens do not carry over (as of 2026-10-29)",
+   "usageLimits": "Free: 150 tokens a day. Premium adds unlimited relaxed image generation on select models; Ultimate adds relaxed video; monthly token amounts not confirmed (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
@@ -5934,7 +5934,7 @@
    "budgetAlternativeTo": [
     "Midjourney"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -7058,14 +7058,14 @@
    "description": null,
    "primaryUse": "AI design tool with image generation",
    "primaryUseCases": "Social media posts; invitations; flyers; quick marketing materials; presentation graphics",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free with Microsoft account",
-   "freeTierFeatures": "Full access free via Microsoft account; image generation; design templates; social media posts",
-   "usageLimits": "15 boosts/day for AI generation; template usage unlimited; Microsoft account required",
+   "currentPricing": "Free with a Microsoft account; more AI usage with Microsoft 365 Personal, Family, Premium or Pro (as of 2026-10-29)",
+   "freeTierFeatures": "Free with a Microsoft account; AI generation uses a monthly AI credit allowance (the free amount was not confirmed) (as of 2026-10-29)",
+   "usageLimits": "AI use counts against monthly AI credits shared across Microsoft 365 apps; Personal and Family get standard image-generation usage, Premium and Pro extensive (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Canva AI",
@@ -7077,7 +7077,7 @@
     "Canva AI",
     "Adobe Firefly (Microsoft Designer is already free)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -7118,7 +7118,7 @@
    "slug": "microsoft-power-automate",
    "name": "Microsoft Power Automate",
    "company": "Microsoft",
-   "website": "https://powerautomate.microsoft.com",
+   "website": "https://www.microsoft.com/en-us/power-platform/products/power-automate",
    "description": null,
    "primaryUse": "Workflow automation within Microsoft 365 ecosystem",
    "primaryUseCases": "M365 workflow automation; approval flows; document processing; RPA desktop automation; Teams notifications",
@@ -7128,9 +7128,9 @@
     "web",
     "desktop"
    ],
-   "currentPricing": "From $15/user/mo; included in some M365 plans",
-   "freeTierFeatures": "Included in M365 licenses; limited free flows; basic connectors",
-   "usageLimits": "M365 included: limited standard connectors; Premium: $15/user/mo adds premium connectors + AI Builder",
+   "currentPricing": "Free licence for work or school accounts; Premium $15/user/mo, Process $150/bot/mo, Hosted Process $215/bot/mo, all paid yearly; limited rights included in Microsoft 365 (as of 2026-10-29)",
+   "freeTierFeatures": "Free licence (work or school account): cloud flows without sharing, attended desktop flows, standard connectors only; a premium trial is offered (as of 2026-10-29)",
+   "usageLimits": "Free and Microsoft 365: standard connectors only; Premium: premium and custom connectors, 40,000 actions a day, 5,000 AI Builder credits a month (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Zapier",
@@ -7142,7 +7142,7 @@
     "Make",
     "n8n (for non-Microsoft environments)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -7891,15 +7891,15 @@
    "description": null,
    "primaryUse": "CLI to run local LLMs (Docker-like)",
    "primaryUseCases": "Local LLM inference; private AI assistant; development testing; offline AI; privacy-first deployment",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "desktop",
     "local"
    ],
-   "currentPricing": "Free",
-   "freeTierFeatures": "Completely free and open-source; all features included",
-   "usageLimits": "None (hardware-limited only); runs on your machine",
+   "currentPricing": "Local use free. Cloud: pay per token on the $0 plan, or Pro $20/mo ($200/yr), Max $100/mo, Team $500/mo (early access), Enterprise custom, each with monthly usage credits (as of 2026-10-29)",
+   "freeTierFeatures": "Free, open-source (MIT) app: running models on your own hardware is unlimited; cloud models are paid per token (as of 2026-10-29)",
+   "usageLimits": "Local: limited only by your hardware. Cloud: $0 plan 3 concurrent requests; Pro $60 and Max $300 of usage credits a month (Max 10 concurrent) (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "LM Studio",
@@ -7913,7 +7913,7 @@
     "Gemini (cloud alternatives",
     "Ollama is free but needs hardware)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -8091,14 +8091,14 @@
    "description": null,
    "primaryUse": "Open-source terminal coding agent",
    "primaryUseCases": "Terminal-based code generation; shell command help; quick scripts; file manipulation via chat",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "ADVANCED",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (open source)",
-   "freeTierFeatures": "Free and open-source; uses your own OpenAI API key",
-   "usageLimits": "Unlimited (API costs apply); rate limits based on OpenAI API tier",
+   "currentPricing": "Open source (Apache 2.0). Use comes with ChatGPT plans (Free, Go $8, Plus $20, Pro from $100, Business $20/user/mo billed annually) or an API key billed at API rates (as of 2026-10-29)",
+   "freeTierFeatures": "Sign in with ChatGPT; Codex is included in ChatGPT plans from Free up, with usage limits by plan; which plans include the CLI is not confirmed (as of 2026-10-29)",
+   "usageLimits": "With ChatGPT sign-in, limits follow the plan (5-hour windows on Plus; Pro has no five-hour limit); API-key use follows API pricing (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Claude Code",
@@ -8109,7 +8109,7 @@
     "Aider (truly free with own key)",
     "Gemini CLI (free with Google account)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -10059,9 +10059,9 @@
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "Included with Salesforce; Einstein 1 from $500/mo",
-   "freeTierFeatures": "Included in Salesforce editions (Sales Cloud from $25/user/mo); AI features vary by tier",
-   "usageLimits": "AI features and credits vary by Salesforce edition; Enterprise+ for full Einstein",
+   "currentPricing": "Sales Cloud per user/month: Starter $25, Pro $100, Core $195, Advanced $395, Max $550 (above Starter billed annually); Agentforce add-ons $125 per user/month; Flex Credits $500 per 100,000 (as of 2026-10-29)",
+   "freeTierFeatures": "Salesforce Foundations is listed at $0 with Agentforce Builder and Prompt Builder; what it requires and its usage limits are not stated (as of 2026-10-29)",
+   "usageLimits": "AI can be added to Core and above; Max includes the full AI suite and 2.75M Flex Credits per org a year; agent actions are billed in Flex Credits (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "HubSpot AI (smaller scale)",
@@ -10070,7 +10070,7 @@
    "budgetAlternativeTo": [
     "HubSpot AI (free CRM + AI)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -10236,9 +10236,9 @@
     "web",
     "api"
    ],
-   "currentPricing": "Free tier; Pro $29/mo",
-   "freeTierFeatures": "Free: 100 images/month; basic models; community generators",
-   "usageLimits": "Free: 100 images/mo; Pro: 2,000; Team: 10,000; Enterprise: custom",
+   "currentPricing": "Free tier; Starter $15/mo, Pro $45/mo, Max $75/mo (up to 25 users); Enterprise custom; yearly billing saves 33% (as of 2026-10-29)",
+   "freeTierFeatures": "Free: 50 credits, no card (the page says both \"50 free daily credits\" and \"a free tier with 50 credits\"); outputs for personal and evaluation use only (as of 2026-10-29)",
+   "usageLimits": "Credits a month: Starter 1,500, Pro 5,000, Max 10,000; Enterprise consumption-based (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Leonardo AI",
@@ -10249,7 +10249,7 @@
     "Leonardo AI (free tier)",
     "Midjourney"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "gaming-creative-ai",
     "name": "Gaming & Creative AI"
@@ -10487,7 +10487,7 @@
    "slug": "semantic-scholar",
    "name": "Semantic Scholar",
    "company": "Allen Institute for AI",
-   "website": "https://semanticscholar.org",
+   "website": "https://www.semanticscholar.org",
    "description": null,
    "primaryUse": "AI-powered academic paper discovery",
    "primaryUseCases": "Paper discovery; citation analysis; AI-generated TLDRs; literature search; bibliography building",
@@ -10499,7 +10499,7 @@
    ],
    "currentPricing": "Free",
    "freeTierFeatures": "Completely free; unlimited search; TLDR summaries; API access; citation data",
-   "usageLimits": "API: 1 request/second default; authenticated: higher; web: unlimited",
+   "usageLimits": "API: unauthenticated requests share a pool of 1,000 per second across all users; an API key starts at 1 request per second on all endpoints (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Elicit",
@@ -10508,7 +10508,7 @@
     "Connected Papers"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -10619,14 +10619,14 @@
    "description": null,
    "primaryUse": "AI tools for Shopify merchants",
    "primaryUseCases": "Product description writing; customer reply suggestions; store design; email marketing; FAQ generation",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "Included with Shopify plans",
-   "freeTierFeatures": "Included free with all Shopify plans (starting $39/mo)",
-   "usageLimits": "Unlimited AI features within Shopify plan",
+   "currentPricing": "Sidekick is included with Shopify plans: Basic $39/mo ($29 billed yearly), Grow $105 ($79), Advanced $399 ($299), Plus from $2,300/mo (as of 2026-10-29)",
+   "freeTierFeatures": "No free store plan: a 3-day free trial, then $1/month for 3 months; Sidekick is included on paid plans (as of 2026-10-29)",
+   "usageLimits": "AI usage varies by plan (the pricing page lists \"millions of tokens\"); not unlimited (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Wix AI",
@@ -10634,7 +10634,7 @@
     "WooCommerce + WordPress AI"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -10686,9 +10686,9 @@
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "$10/user/mo add-on",
-   "freeTierFeatures": "No free tier for AI features; requires Slack Business+ ($12.50/user/mo) or Enterprise",
-   "usageLimits": "AI features included with Business+ and Enterprise Grid; unlimited AI queries",
+   "currentPricing": "AI included in Slack plans: Free (Basic AI); Pro $8.75/user/mo ($7.25 paid annually); Business+ $18/user/mo ($15 paid annually) with Advanced AI; Enterprise+ quoted; no separate AI add-on (as of 2026-10-29)",
+   "freeTierFeatures": "Free plan includes Basic AI: conversation and file summaries, AI search, daily recaps and workflow generation; Slackbot is a limited trial (as of 2026-10-29)",
+   "usageLimits": "Numeric AI limits are not published; fuller Slackbot use comes with Business+, and higher Slackbot limits are sold as Flex Credits through sales (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Microsoft Teams + Copilot"
@@ -10697,7 +10697,7 @@
     "Otter AI (meeting summaries)",
     "ChatGPT (manual summarization)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -11038,9 +11038,9 @@
     "web",
     "browser_extension"
    ],
-   "currentPricing": "Included with plans from $16/mo",
-   "freeTierFeatures": "14-day free trial; no permanent free tier; plans from $16/mo",
-   "usageLimits": "AI features included in all paid plans; unlimited AI writing; design assistant available",
+   "currentPricing": "AI tools included with plans: Basic $19, Core $29, Plus $49, Advanced $99 a month billed annually ($25 / $39 / $65 / $139 paid monthly) (as of 2026-10-29)",
+   "freeTierFeatures": "14-day free trial with no card; trial sites get 10 AI credits. Paid plans from $19/mo (as of 2026-10-29)",
+   "usageLimits": "AI credits: Basic 10 one-time; Core 20, Plus 40, Advanced 120 a month; Image Studio and AI Visibility use credits, Text AI and the Clarkson chat do not; extra credit packs sold (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Wix AI",
@@ -11051,7 +11051,7 @@
     "Wix AI (free tier)",
     "WordPress (free)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -11767,14 +11767,14 @@
    "description": null,
    "primaryUse": "Enterprise workflow orchestration with AI",
    "primaryUseCases": "Enterprise integration platform; RevOps data sync; complex business process automation; iPaaS",
-   "costTier": "ENTERPRISE",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; demo/trial available on request",
-   "usageLimits": "Pricing custom per organization; based on connectors and execution volume",
+   "currentPricing": "Starts at $50/month; Pro, Team and Enterprise are sized to usage (Tasks and Helix Compute Units), with optional annual commitments (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: a 30-day free trial with 1 million Tasks, no card and no sales call (as of 2026-10-29)",
+   "usageLimits": "Usage-based in Tasks and Helix Compute Units; no per-user or per-connection fees; Pro up to 3 workspaces, Team 20, Enterprise unlimited (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Workato",
@@ -11787,7 +11787,7 @@
     "Make",
     "n8n"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -11838,8 +11838,8 @@
     "web"
    ],
    "currentPricing": "Free tier; Premium $20/mo",
-   "freeTierFeatures": "Free: 5,000 words/month; basic grammar; limited suggestions",
-   "usageLimits": "Free: 5K words/mo; Premium: unlimited; Enterprise: unlimited + API",
+   "freeTierFeatures": "Basic (free, never expires, no card): 5,000 words a month, 5 AI writing requests and 4 credits a month (as of 2026-10-29)",
+   "usageLimits": "Basic: 5,000 words, 5 AI writing requests and 4 credits a month; Premium: full writing access; Confidential Data plan ($41.67/mo billed annually, teams): no data storage and no AI training (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Grammarly",
@@ -11849,7 +11849,7 @@
     "Grammarly (broader use)",
     "Paperpal"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -12019,7 +12019,7 @@
    "slug": "upstage-solar",
    "name": "Upstage (Solar)",
    "company": "Upstage",
-   "website": "https://upstage.ai",
+   "website": "https://www.upstage.ai",
    "description": null,
    "primaryUse": "Document AI and layout analysis API",
    "primaryUseCases": "Document parsing API; layout analysis; OCR; table extraction; key-value extraction",
@@ -12028,9 +12028,9 @@
    "platformType": [
     "api"
    ],
-   "currentPricing": "API pay-per-use",
-   "freeTierFeatures": "Free API credits for testing; Document Parse API trial",
-   "usageLimits": "Free: limited API calls; paid: usage-based pricing per page/call",
+   "currentPricing": "Pay as you go: Solar Pro 4 $0.30 / $1.20 and Solar Mini 4 $0.10 / $0.40 per 1M input / output tokens; Document Parse $0.01-$0.03 a page; prepaid plans from $100/mo with bonus credits; prices exclude 10% VAT (as of 2026-10-29)",
+   "freeTierFeatures": "Every Upstage Studio agent includes 10 free runs, no credit card (as of 2026-10-29)",
+   "usageLimits": "Usage-based per token and per page; prepaid Explore ($100+/mo), Build ($500+) and Scale ($5,000+) add 10-20% bonus credits (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Reducto",
@@ -12042,7 +12042,7 @@
     "Reducto (free tier)",
     "Docsumo (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -12239,7 +12239,7 @@
    "slug": "viz-ai",
    "name": "Viz.ai",
    "company": "Viz.ai",
-   "website": "https://viz.ai",
+   "website": "https://www.viz.ai",
    "description": null,
    "primaryUse": "AI clinical decision support for stroke and disease detection",
    "primaryUseCases": "Stroke detection (LVO); pulmonary embolism detection; aortic disease; ICH detection; clinical triage",
@@ -12257,7 +12257,7 @@
     "RapidAI"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "healthcare-ai",
     "name": "Healthcare AI"
@@ -12295,7 +12295,7 @@
   {
    "slug": "vllm",
    "name": "vLLM",
-   "company": "Open Source (UC Berkeley)",
+   "company": "vLLM project (open source; started at UC Berkeley)",
    "website": "https://vllm.ai",
    "description": null,
    "primaryUse": "High-throughput LLM serving engine",
@@ -12319,7 +12319,7 @@
     "less performant)",
     "llama.cpp (server mode)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -12718,9 +12718,9 @@
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "Included with Jetpack plans",
-   "freeTierFeatures": "Jetpack free plan includes some features; AI Assistant requires Jetpack paid plan or separate AI add-on",
-   "usageLimits": "Free Jetpack: basic features; AI add-on or paid Jetpack: AI content generation",
+   "currentPricing": "Free plan includes 20 AI requests; Jetpack AI $4.95/mo for the first year, then $9.95 (billed yearly); Complete $24.95/mo first year, then $49.95 (as of 2026-10-29)",
+   "freeTierFeatures": "The free Jetpack plan includes Jetpack AI, up to 20 requests (as of 2026-10-29)",
+   "usageLimits": "Free, Security and Growth: 20 AI requests; Jetpack AI and Complete: high request capacity under fair use, plus agent access over MCP (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Wix AI",
@@ -12731,7 +12731,7 @@
     "ChatGPT (generate content",
     "paste into WordPress)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -12779,9 +12779,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; free trial available; enterprise pricing",
-   "usageLimits": "Custom pricing based on recipes (workflows), connectors, and task volume",
+   "currentPricing": "Quote only; editions Standard, Business MCP, Enterprise MCP and Workato ONE (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan; a free trial sign-up is offered, length not stated (as of 2026-10-29)",
+   "usageLimits": "Edition fee plus usage tracked by capability (workflows, API management, event streams); editions differ in Workbots, on-prem agents and concurrency (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Tray.ai",
@@ -12794,7 +12794,7 @@
     "Make",
     "n8n"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
