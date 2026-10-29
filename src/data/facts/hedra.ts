@@ -48,12 +48,22 @@ export default {
         limits: "",
       },
     ],
-    note: "USD/mo, billed monthly. A Hedra API exists; prices unpublished.",
+    note: "USD/mo, billed monthly. These are Hedra Studio subscriptions (the pricing page's own summary, re-read 2026-10-29, says \"Hedra Studio plans from $20/month\"); tier names were not re-read on 2026-10-29 because the Studio tab renders in the browser only. The developer API is billed separately (see apiPricing).",
     sourceUrl: "https://www.hedra.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
     verifiedAt: "2026-10-14",
+    status: "verified",
+  },
+  apiPricing: {
+    value:
+      "Developer API: pay per output and per token from a prepaid dollar balance, with no subscription, seats or minimum; for example video generation from 1.13¢/second, avatar lip-sync from 2.5¢/second, image generation from 0.59¢ per image, speech from 5¢ per 1,000 characters. The API wallet is separate from Studio subscription credits.",
+    sourceUrl: "https://www.hedra.com/pricing",
+    checkedAt: "2026-10-29",
+    gatheredBy: "claude-subagent",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-29",
     status: "verified",
   },
   platforms: {
@@ -81,6 +91,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "apiPricing",
+      summary: "hedra.com/pricing now leads with usage-based API rates (prepaid balance, no subscription); Studio subscriptions continue. Added apiPricing and scoped the plans note to Studio.",
+    },
     {
       date: "2026-10-14",
       field: "plans",
