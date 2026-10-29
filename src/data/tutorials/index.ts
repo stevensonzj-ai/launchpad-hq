@@ -122,6 +122,7 @@ import { inworldAiTutorial } from "./inworld-ai-getting-started";
 import { ludoAiTutorial } from "./ludo-ai-getting-started";
 import { meshyTutorial } from "./meshy-getting-started";
 import { opusClipTutorial } from "./opus-clip-getting-started";
+import { klapTutorial } from "./klap-getting-started";
 import { scenarioTutorial } from "./scenario-getting-started";
 import { topazLabsTutorial } from "./topaz-labs-getting-started";
 import { wonderDynamicsWonderStudioTutorial } from "./wonder-dynamics-wonder-studio-getting-started";
@@ -319,6 +320,7 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [ludoAiTutorial.platformSlug]: ludoAiTutorial,
   [meshyTutorial.platformSlug]: meshyTutorial,
   [opusClipTutorial.platformSlug]: opusClipTutorial,
+  [klapTutorial.platformSlug]: klapTutorial,
   [scenarioTutorial.platformSlug]: scenarioTutorial,
   [topazLabsTutorial.platformSlug]: topazLabsTutorial,
   [wonderDynamicsWonderStudioTutorial.platformSlug]: wonderDynamicsWonderStudioTutorial,

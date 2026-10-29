@@ -18,6 +18,9 @@
  * src/lib/public-data/compare.ts); the reverse-order slug 301s there too.
  */
 
+/** Type-only: the file stays free of runtime "@/" imports for next.config.ts. */
+import type { DisclosureMarker } from "../disclosures";
+
 export type CompareFaq = { question: string; answer: string };
 
 /** "Who should pick which": one line per tool. */
@@ -46,6 +49,13 @@ type ComparePageBase = {
   /** Mentioned as plain links only, and only when the platform page is visible. */
   alsoConsider?: string[];
   related?: CompareRelatedLink[];
+  /**
+   * Platforms on this page with an affiliate link or free access
+   * (src/data/affiliates.ts) and what each disclosure covers. The page shows
+   * comparisonDisclosureText for each; it never uses the affiliate link.
+   * affiliates.test.ts fails if a covered platform is missing here.
+   */
+  disclosure?: DisclosureMarker;
 };
 
 export type HeadToHeadPage = ComparePageBase & {
@@ -290,6 +300,40 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
     ],
     related: [{ href: "/compare/bolt-new-vs-lovable", label: "Bolt.new vs Lovable" }],
     alsoConsider: ["claude-code", "windsurf"],
+  },
+  {
+    kind: "head-to-head",
+    slug: "klap-vs-opus-clip",
+    title: "Klap vs OpusClip: turn one long video into short clips",
+    description:
+      "Klap and OpusClip side by side for turning a long video into short vertical clips: free options, limits and current pricing pulled from our catalog and dated, plus who should pick which.",
+    a: "klap",
+    b: "opus-clip",
+    intro: [
+      "Klap and OpusClip both take one long video, such as a podcast episode, a webinar or a livestream, and cut it into short vertical clips with captions for TikTok, Reels and Shorts. Both pick the moments for you, reframe the shot to keep the speaker in view and score each clip.",
+      "The biggest difference is how you try them. OpusClip has a free plan with a monthly credit allowance, but free clips carry a watermark and can't be edited. Klap has no free plan for downloads: you can test it on one video, and downloading or posting clips needs a paid plan.",
+      "They also count usage differently. Klap plans include a set number of clips a month, while OpusClip plans include a monthly allowance of credits.",
+    ],
+    picks: [
+      { slug: "klap", text: "Pick this if you are ready to pay from the start and want a plan sized by the number of clips, with no Klap branding on paid exports." },
+      { slug: "opus-clip", text: "Pick this if you want to start on a free plan and only pay once the clips prove useful, accepting a watermark and no editing until you upgrade." },
+    ],
+    hitFirst: [
+      "On Klap the paywall comes first: clips from the free test video can be previewed and edited but not downloaded or posted.",
+      "On OpusClip's free plan the watermark and the export window come first. Free clips stop being exportable after a few days, so download what you want straight away.",
+      "Both work best on talking footage. Klap says its clipping relies heavily on speech detection, so music, gameplay or silent footage gives it less to work with.",
+    ],
+    faq: [
+      {
+        question: "Which one handles videos that are not in English",
+        answer: "Both list many languages. Klap says it edits and transcribes videos in dozens of languages, and OpusClip lists animated captions in many languages on its paid plans. Test a short real video in your language before you pay.",
+      },
+      {
+        question: "Will I still need to edit the clips",
+        answer: "Usually a little. Both hand you a first pass to review. OpusClip's free plan has no editing and its paid plans add an editor. Klap says every plan includes its full editor.",
+      },
+    ],
+    disclosure: [{ slug: "klap", kinds: ["affiliate"] }],
   },
 ];
 

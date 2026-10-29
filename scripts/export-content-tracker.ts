@@ -284,7 +284,7 @@ export function addSummarySheet(wb: ExcelJS.Workbook, s: TrackerSummary): ExcelJ
     ["Undated content items (excluded from %)", s.undatedContent],
     ["Platforms with no content beyond overview", s.noContentPlatforms.length],
     ["Platforms with empty description", s.emptyDescriptions.length],
-    ["Affiliate but no disclosure", "n/a: no affiliate or disclosure field (see Notes)"],
+    ["Affiliate but no disclosure", s.disclosureGaps.length],
     ["Stale threshold (days)", STALE_DAYS],
   ];
   for (const m of metrics) ws.addRow(m);
@@ -300,6 +300,9 @@ export function addSummarySheet(wb: ExcelJS.Workbook, s: TrackerSummary): ExcelJ
 
   section("Platforms with empty description", ["Platform", "Slug"]);
   for (const p of s.emptyDescriptions) ws.addRow([p.name, p.slug]);
+
+  section("Affiliate link but no disclosure", ["Page", "Slug", "", "Missing"]);
+  for (const g of s.disclosureGaps) ws.addRow([g.where, g.slug, "", g.missing.join(", ")]);
 
   return ws;
 }

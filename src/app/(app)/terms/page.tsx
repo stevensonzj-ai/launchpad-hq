@@ -84,9 +84,11 @@ export default function TermsPage() {
       <section>
         <h2>Sponsored content and independence</h2>
         <p>
-          Platform pages link straight to the vendor’s website. We found no affiliate-link
-          code in this product. Affiliate links may be used in future and will be
-          disclosed. Paid placements are labelled “Sponsored” and use{" "}
+          Most platform pages link straight to the vendor’s website. A few use an affiliate
+          link instead: the vendor pays us a commission if you subscribe through it, the
+          link uses <code>rel=&quot;sponsored&quot;</code>, and the page says so next to the
+          button. Affiliate links are kept separate from rankings, the quiz, and workflows,
+          and our catalog data and API always give the vendor’s own website. Paid placements are labelled “Sponsored” and use{" "}
           <code>rel=&quot;sponsored&quot;</code>. They are kept separate from rankings, the quiz,
           and workflows.
         </p>

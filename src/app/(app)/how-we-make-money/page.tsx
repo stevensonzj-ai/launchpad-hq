@@ -6,7 +6,7 @@ import { publicPageMetadata } from "@/lib/seo-metadata";
 export const metadata: Metadata = publicPageMetadata({
   title: "How we make money | Launchpad HQ",
   description:
-    "Launchpad is free to browse. We earn money from labeled sponsorships — they never buy a better rating or ranking.",
+    "Launchpad is free to browse. We earn money from labeled sponsorships and disclosed affiliate links — they never buy a better rating or ranking.",
   path: "/how-we-make-money",
 });
 
@@ -22,7 +22,7 @@ export default function HowWeMakeMoneyPage() {
           <h2 className="text-xl font-semibold text-white">1. The short version</h2>
           <p className="mt-2 text-sm text-gray-400">
             Launchpad is free to browse. There is no paid membership. We earn money from
-            labeled sponsorships, and they never buy a better rating.
+            labeled sponsorships and disclosed affiliate links, and neither buys a better rating.
           </p>
           <p className="mt-2 text-sm text-gray-400">
             Paid units are always marked <em>Sponsored</em> — never &quot;Partner&quot; or
@@ -54,27 +54,37 @@ export default function HowWeMakeMoneyPage() {
           </p>
         </li>
         <li>
-          <h2 className="text-xl font-semibold text-white">3. Payments for sponsorships</h2>
+          <h2 className="text-xl font-semibold text-white">3. Affiliate links</h2>
+          <p className="mt-2 text-sm text-gray-400">
+            A few platform pages send the &quot;Open&quot; button through an
+            affiliate link. If you subscribe through it, the vendor pays us a commission. Each
+            one is disclosed next to the button. Affiliate links never change rankings, quiz
+            results, workflow picks or tutorial verdicts, and our data feed and API always list
+            the vendor&apos;s own website.
+          </p>
+        </li>
+        <li>
+          <h2 className="text-xl font-semibold text-white">4. Payments for sponsorships</h2>
           <p className="mt-2 text-sm text-gray-400">
             Stripe is used only for sponsor invoices. It is not used to bill site visitors.
             There is no user subscription.
           </p>
         </li>
         <li>
-          <h2 className="text-xl font-semibold text-white">4. What we don&apos;t do</h2>
+          <h2 className="text-xl font-semibold text-white">5. What we don&apos;t do</h2>
           <p className="mt-2 text-sm text-gray-400">
             No paid reviews, no selling your personal data, no hidden placements.
           </p>
         </li>
         <li>
-          <h2 className="text-xl font-semibold text-white">5. How we check facts</h2>
+          <h2 className="text-xl font-semibold text-white">6. How we check facts</h2>
           <p className="mt-2 text-sm text-gray-400">
             Prices and free tiers are re-checked against official pages on a regular review cycle.
             If we could not confirm a detail, we say so on the page.
           </p>
         </li>
         <li>
-          <h2 className="text-xl font-semibold text-white">6. Questions / report a problem</h2>
+          <h2 className="text-xl font-semibold text-white">7. Questions / report a problem</h2>
           <p className="mt-2 text-sm text-gray-400">
             Contact email:{" "}
             <a
@@ -87,8 +97,8 @@ export default function HowWeMakeMoneyPage() {
           </p>
         </li>
         <li>
-          <h2 className="text-xl font-semibold text-white">7. Last updated</h2>
-          <p className="mt-2 text-sm text-gray-400">14 October 2026</p>
+          <h2 className="text-xl font-semibold text-white">8. Last updated</h2>
+          <p className="mt-2 text-sm text-gray-400">29 October 2026</p>
         </li>
       </ol>
     </div>

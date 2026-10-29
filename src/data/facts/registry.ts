@@ -96,6 +96,7 @@ import zoomAiCompanionFacts from "./zoom-ai-companion";
 import juliusAiFacts from "./julius-ai";
 import elicitFacts from "./elicit";
 import opusClipFacts from "./opus-clip";
+import klapFacts from "./klap";
 import sunoFacts from "./suno";
 import type { ToolFacts } from "./types";
 
@@ -199,6 +200,7 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [juliusAiFacts.slug]: juliusAiFacts,
   [elicitFacts.slug]: elicitFacts,
   [opusClipFacts.slug]: opusClipFacts,
+  [klapFacts.slug]: klapFacts,
   [sunoFacts.slug]: sunoFacts,
 };
 

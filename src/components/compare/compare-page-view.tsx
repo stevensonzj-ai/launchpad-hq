@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import type { CompareTool, CompareView } from "@/data/compare/view";
+import { compareDisclosureLines, type CompareTool, type CompareView } from "@/data/compare/view";
 import { formatVerifiedDate } from "@/lib/model-facts";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 
@@ -164,6 +164,7 @@ function Sources({ tools }: { tools: CompareTool[] }) {
 export function ComparePageView({ view }: { view: CompareView }) {
   const { page, tools } = view;
   const picks = tools.filter((tool) => tool.pick);
+  const disclosures = compareDisclosureLines(page, tools);
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <Link
@@ -181,6 +182,18 @@ export function ComparePageView({ view }: { view: CompareView }) {
         ))}
       </div>
       <AsOfLine view={view} />
+      {disclosures.length > 0 && (
+        <div className="mt-2 max-w-3xl space-y-1 text-xs text-gray-500">
+          {disclosures.map((line) => (
+            <p key={line}>
+              Disclosure: {line}{" "}
+              <Link href="/how-we-make-money" className="text-orange-400 underline-offset-2 hover:underline">
+                How we make money
+              </Link>
+            </p>
+          ))}
+        </div>
+      )}
 
       {page.kind === "head-to-head" ? (
         <>

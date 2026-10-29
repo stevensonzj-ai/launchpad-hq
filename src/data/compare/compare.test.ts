@@ -103,7 +103,7 @@ describe("compare registry", () => {
     }
   });
 
-  it("has the six approved pages at their approved paths", () => {
+  it("has the seven approved pages at their approved paths", () => {
     assert.deepEqual(COMPARE_PAGES.map(comparePagePath).sort(), [
       "/alternatives/free-chatgpt-alternatives",
       "/alternatives/free-otter-ai-alternatives",
@@ -111,6 +111,7 @@ describe("compare registry", () => {
       "/compare/bolt-new-vs-lovable",
       "/compare/cursor-vs-github-copilot",
       "/compare/heygen-vs-synthesia",
+      "/compare/klap-vs-opus-clip",
     ]);
     for (const page of COMPARE_PAGES) {
       if (page.kind === "free-alternatives") {
@@ -416,17 +417,17 @@ describe("compare exclusions", () => {
 describe("compare listing (hub, sitemap, llms.txt, platform links)", () => {
   const listed = listedComparePages(realCtx);
 
-  it("lists all six pages plus the hub in the sitemap", () => {
-    assert.equal(listed.length, 6);
+  it("lists all seven pages plus the hub in the sitemap", () => {
+    assert.equal(listed.length, 7);
     const paths = compareSitemapPaths(listed);
-    assert.equal(paths.length, 7);
+    assert.equal(paths.length, 8);
     assert.ok(paths.includes(COMPARE_HUB_PATH));
     for (const page of COMPARE_PAGES) assert.ok(paths.includes(comparePagePath(page)), page.slug);
   });
 
-  it("lists all six pages plus the hub in llms.txt", () => {
+  it("lists all seven pages plus the hub in llms.txt", () => {
     const lines = compareLlmsLines(SITE_URL, listed);
-    assert.equal(lines.length, 7);
+    assert.equal(lines.length, 8);
     assert.ok(lines.some((l) => l.includes(`${SITE_URL}${COMPARE_HUB_PATH})`)));
     for (const page of COMPARE_PAGES) {
       assert.ok(lines.some((l) => l.includes(`${SITE_URL}${comparePagePath(page)})`)), page.slug);
@@ -438,7 +439,17 @@ describe("compare listing (hub, sitemap, llms.txt, platform links)", () => {
     existing.delete("synthesia");
     const paths = listedComparePages(realCtx, existing).map(comparePagePath);
     assert.equal(paths.includes("/compare/heygen-vs-synthesia"), false);
-    assert.equal(paths.length, 5);
+    assert.equal(paths.length, 6);
+  });
+
+  it("keeps Klap vs OpusClip out of the sitemap until the klap row exists (audit 13 creates it)", () => {
+    const existing = new Set(COMPARE_PAGES.flatMap(comparePageLoadSlugs));
+    existing.delete("klap");
+    const paths = listedComparePages(realCtx, existing).map(comparePagePath);
+    assert.equal(paths.includes("/compare/klap-vs-opus-clip"), false);
+    existing.add("klap");
+    assert.ok(listedComparePages(realCtx, existing).map(comparePagePath).includes("/compare/klap-vs-opus-clip"));
+    assert.deepEqual(compareLinksForSlug("klap", realCtx).map((l) => l.href), ["/compare/klap-vs-opus-clip"]);
   });
 
   it("links each involved platform page to the pages that render it", () => {

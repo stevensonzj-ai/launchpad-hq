@@ -13,6 +13,8 @@ import { FACT_VALUE_KEYS, type ToolFacts } from "@/data/facts/types";
 import type { PlatformTutorialData } from "@/data/tutorials/types";
 import type { ComparePage } from "@/data/compare/pages";
 import type { WorkflowTemplate } from "@/data/workflows/types";
+import { AFFILIATE_LINKS, requiredDisclosure, type AffiliateEntry } from "@/data/affiliates";
+import type { DisclosureKind, DisclosureMarker } from "@/data/disclosures";
 
 /** A platform or content item is stale once its newest dated change is older than this. */
 export const STALE_DAYS = 90;
@@ -57,6 +59,8 @@ export type TrackerInput = {
   /** Normalized audit key → result; null when no --audit file was given. */
   audit: ReadonlyMap<string, string> | null;
   now: Date;
+  /** Affiliate / free-access registry; defaults to src/data/affiliates.ts. */
+  affiliates?: Readonly<Record<string, AffiliateEntry>>;
 };
 
 // ── Column definitions (drive the workbook and the Notes sheet) ─────────
@@ -82,8 +86,8 @@ export const PLATFORM_COLUMNS = [
   { key: "category", header: "Category", kind: "text", width: 22, source: "categories.name via platforms.categoryId" },
   { key: "pricing", header: "Pricing summary", kind: "text", width: 50, source: "Fact file plans (formatted), else platforms.currentPricing" },
   { key: "freePlan", header: "Free plan", kind: "yn", width: 10, source: "Fact file freeTier.available, else platforms.costTier (FREE/FREEMIUM = Y, PAID/ENTERPRISE = N)" },
-  { key: "affiliate", header: "Affiliate", kind: "yn", width: 10, source: "none", blankReason: "No affiliate field exists in prisma/schema.prisma or the fact files." },
-  { key: "sponsor", header: "Sponsor / free access", kind: "yn", width: 12, source: "none", blankReason: "Sponsor placements (src/data/sponsors/placements.ts) are keyed by sponsor name, not platform slug, and no free-access field exists." },
+  { key: "affiliate", header: "Affiliate", kind: "yn", width: 10, source: "Y when src/data/affiliates.ts has an entry for the slug (the only place an affiliate link can come from)" },
+  { key: "sponsor", header: "Sponsor / free access", kind: "yn", width: 12, source: "Free access: src/data/affiliates.ts freeAccess.granted (N when no entry). Sponsor placements (src/data/sponsors/placements.ts) are keyed by sponsor name, not slug, so they are not counted here." },
   { key: "hasApi", header: "Has API", kind: "yn", width: 9, source: "platforms.apiAvailable" },
   { key: "hasMcp", header: "Has MCP", kind: "yn", width: 9, source: "none", blankReason: "No MCP-server field exists in the schema or the fact files." },
   { key: "descriptionPresent", header: "Description", kind: "yn", width: 12, source: "platforms.description is non-blank" },
@@ -115,7 +119,7 @@ export const CONTENT_COLUMNS = [
   { key: "lastUpdated", header: "Last updated", kind: "date", width: 13, source: "Tutorial lastReviewedAt; workflows and compare pages carry no date" },
   { key: "daysSinceUpdate", header: "Days since update", kind: "int", width: 11, source: "Whole days from 'Last updated' to the export time" },
   { key: "stale", header: "Stale", kind: "yn", width: 8, source: `Y when days since update > ${STALE_DAYS}; blank when there is no date` },
-  { key: "disclosure", header: "Disclosure present", kind: "yn", width: 11, source: "none", blankReason: "No content type has a sponsor/affiliate disclosure field." },
+  { key: "disclosure", header: "Disclosure present", kind: "yn", width: 11, source: "Y when the page's disclosure marker (tutorial or compare entry) covers every affiliate / free-access platform it renders, N when one is missing; blank when the page renders none. Workflows carry no marker." },
   { key: "auditResult", header: "Audit result", kind: "text", width: 30, source: "--audit file, matched by slug, platform slug, path or URL" },
 ] as const satisfies readonly ColumnDef<string>[];
 
@@ -384,7 +388,54 @@ export type ContentItem = {
   lastUpdated: Date | null;
   /** Extra audit keys besides the path (slugs). */
   auditKeys: string[];
+  /** The page's disclosure marker (tutorials and compare pages; empty for workflows). */
+  disclosure: DisclosureMarker;
 };
+
+// ── Disclosure check ────────────────────────────────────────
+
+export type DisclosureGap = { where: string; slug: string; missing: DisclosureKind[] };
+
+function missingKinds(required: readonly DisclosureKind[], shown: readonly DisclosureKind[]): DisclosureKind[] {
+  return required.filter((k) => !shown.includes(k));
+}
+
+/** Disclosure each platform needs, by slug (affiliate, plus free-access when granted). */
+export function requiredDisclosures(affiliates: Readonly<Record<string, AffiliateEntry>>): Map<string, DisclosureKind[]> {
+  return new Map(Object.values(affiliates).map((e) => [e.slug, requiredDisclosure(e)]));
+}
+
+/** Gaps on one content item: platforms it renders that need a disclosure its marker lacks. */
+export function contentDisclosureGaps(item: ContentItem, required: ReadonlyMap<string, DisclosureKind[]>): DisclosureGap[] {
+  const gaps: DisclosureGap[] = [];
+  for (const slug of item.platformSlugs) {
+    const need = required.get(slug);
+    if (!need) continue;
+    const shown = item.disclosure.find((m) => m.slug === slug)?.kinds ?? [];
+    const missing = missingKinds(need, shown);
+    if (missing.length) gaps.push({ where: item.path, slug, missing });
+  }
+  return gaps;
+}
+
+/**
+ * "Affiliate link but no disclosure": registry entries whose own disclosure
+ * misses a required kind, and guides / comparisons / workflows that render
+ * such a platform without disclosing it.
+ */
+export function disclosureGaps(
+  affiliates: Readonly<Record<string, AffiliateEntry>>,
+  items: readonly ContentItem[],
+): DisclosureGap[] {
+  const required = requiredDisclosures(affiliates);
+  const gaps: DisclosureGap[] = [];
+  for (const entry of Object.values(affiliates)) {
+    const missing = missingKinds(requiredDisclosure(entry), entry.disclosure);
+    if (missing.length) gaps.push({ where: platformPath(entry.slug), slug: entry.slug, missing });
+  }
+  for (const item of items) gaps.push(...contentDisclosureGaps(item, required));
+  return gaps;
+}
 
 export function workflowSlugs(workflow: WorkflowTemplate): string[] {
   const slugs = new Set<string>();
@@ -405,6 +456,7 @@ export function buildContentItems(input: Pick<TrackerInput, "tutorials" | "compa
       path: `/platform/${t.platformSlug}/guide`,
       lastUpdated: parseIsoDate(t.lastReviewedAt),
       auditKeys: [t.slug, t.platformSlug],
+      disclosure: t.disclosure ?? [],
     });
   }
   for (const w of input.workflows) {
@@ -415,6 +467,7 @@ export function buildContentItems(input: Pick<TrackerInput, "tutorials" | "compa
       path: `/workflows/${w.slug}`,
       lastUpdated: null,
       auditKeys: [w.slug],
+      disclosure: [],
     });
   }
   for (const p of input.comparePages) {
@@ -426,6 +479,7 @@ export function buildContentItems(input: Pick<TrackerInput, "tutorials" | "compa
       path: head ? `/compare/${p.slug}` : `/alternatives/${p.slug}`,
       lastUpdated: null,
       auditKeys: [p.slug],
+      disclosure: p.disclosure ?? [],
     });
   }
   return items;
@@ -449,8 +503,11 @@ export function buildPlatformRows(input: TrackerInput, items: readonly ContentIt
   const countBy = (type: ContentItem["type"], slug: string) =>
     items.filter((i) => i.type === type && i.platformSlugs.includes(slug)).length;
 
+  const affiliates = input.affiliates ?? AFFILIATE_LINKS;
+  const gaps = disclosureGaps(affiliates, items);
   return input.platforms.map((p) => {
     const facts = input.facts.get(p.slug);
+    const affiliate = affiliates[p.slug];
     const fs = summarizeFacts(facts);
     const tutorial = input.tutorials.find((t) => t.platformSlug === p.slug);
     const latest = maxDate([p.updatedAt, parseIsoDate(tutorial?.lastReviewedAt), fs.lastChecked, fs.lastVerified]);
@@ -479,6 +536,8 @@ export function buildPlatformRows(input: TrackerInput, items: readonly ContentIt
     if (p.pendingPrompts) notes.push(`${p.pendingPrompts} pending prompt${p.pendingPrompts === 1 ? "" : "s"}`);
     if (p.pendingDiscussions) notes.push(`${p.pendingDiscussions} pending discussion${p.pendingDiscussions === 1 ? "" : "s"}`);
     if (inSitemap === false && !hidden) notes.push("not in sitemap");
+    const ownGaps = gaps.filter((g) => g.slug === p.slug);
+    if (ownGaps.length) notes.push(`affiliate link but no disclosure: ${ownGaps.map((g) => g.where).join(", ")}`);
 
     const row: PlatformRow = {
       name: p.name,
@@ -488,8 +547,8 @@ export function buildPlatformRows(input: TrackerInput, items: readonly ContentIt
       category: p.categoryName,
       pricing: facts?.plans?.value.length ? formatPlans(facts.plans.value) : (p.currentPricing?.trim() || null),
       freePlan: yn(freePlanFrom(p.costTier, facts)),
-      affiliate: null,
-      sponsor: null,
+      affiliate: yn(affiliate !== undefined),
+      sponsor: yn(affiliate?.freeAccess.granted ?? false),
       hasApi: yn(p.apiAvailable),
       hasMcp: null,
       descriptionPresent: yn(description.length > 0),
@@ -545,7 +604,9 @@ export function lookupAudit(item: ContentItem, audit: ReadonlyMap<string, string
 
 export function buildContentRows(input: TrackerInput, items: readonly ContentItem[]): ContentComputed[] {
   const platformSlugs = new Set(input.platforms.map((p) => p.slug));
+  const required = requiredDisclosures(input.affiliates ?? AFFILIATE_LINKS);
   return items.map((item) => {
+    const needsDisclosure = item.platformSlugs.some((slug) => required.has(slug));
     const days = daysSince(item.lastUpdated, input.now);
     const stale = isContentStale(days);
     return {
@@ -562,7 +623,7 @@ export function buildContentRows(input: TrackerInput, items: readonly ContentIte
         lastUpdated: item.lastUpdated,
         daysSinceUpdate: days,
         stale: yn(stale),
-        disclosure: null,
+        disclosure: needsDisclosure ? yn(contentDisclosureGaps(item, required).length === 0) : null,
         auditResult: lookupAudit(item, input.audit),
       },
     };
@@ -586,13 +647,20 @@ export type TrackerSummary = {
   topStale: { name: string; slug: string; days: number | null; notes: string | null }[];
   noContentPlatforms: { name: string; slug: string; category: string }[];
   emptyDescriptions: { name: string; slug: string }[];
+  /** "Affiliate link but no disclosure" check; empty when every disclosure is in place. */
+  disclosureGaps: DisclosureGap[];
 };
 
 export function pct(part: number, whole: number): number {
   return whole === 0 ? 0 : Math.round((part / whole) * 1000) / 10;
 }
 
-export function buildSummary(platforms: readonly PlatformComputed[], content: readonly ContentComputed[], now: Date): TrackerSummary {
+export function buildSummary(
+  platforms: readonly PlatformComputed[],
+  content: readonly ContentComputed[],
+  now: Date,
+  affiliates: Readonly<Record<string, AffiliateEntry>> = AFFILIATE_LINKS,
+): TrackerSummary {
   const byCategory = new Map<string, [number, number]>();
   for (const p of platforms) {
     const entry = byCategory.get(p.category) ?? [0, 0];
@@ -639,6 +707,7 @@ export function buildSummary(platforms: readonly PlatformComputed[], content: re
       .filter((p) => p.emptyDescription)
       .map((p) => ({ name: p.name, slug: p.slug }))
       .sort((a, b) => a.name.localeCompare(b.name)),
+    disclosureGaps: disclosureGaps(affiliates, content.map((c) => c.item)),
   };
 }
 
