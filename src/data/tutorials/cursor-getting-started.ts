@@ -19,10 +19,10 @@ export const cursorTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The **Free** plan costs nothing and gives limited ongoing use of the editor's AI and agent — enough to decide whether an AI-first editor fits how you work. Paid plans start with **Plus** and step up through **Premium**, **Super** and **Ultra**, each with a bigger shared usage pool; current prices are on its Launchpad page.",
-    "**Download Cursor only from `cursor.com`.** Cursor has no authorized resellers; a \"Cursor subscription\" sold anywhere else may be fraudulent and can get the account suspended.",
-    "The free tier restricts context to the current file (no whole-codebase indexing or the multi-file agent) — enough to try the editor, not to feel its main advantage.",
-    "**Ownership note:** Cursor's maker, Anysphere, agreed in 2026 to be acquired by SpaceX (tying it into the xAI/Grok orbit). As of this review the deal is pending and hasn't changed the product, pricing, or how your data is handled — but if a change of control matters to you, watch for updated terms.",
+    "The **Free** plan costs nothing and gives limited agent and chat requests — enough to decide whether an AI-first editor fits how you work. Paid plans start with **Plus** and step up through **Premium**, **Super** and **Ultra**, each with a bigger usage pool that refreshes weekly; current prices are on its Launchpad page. Read the small print on Plus: Cursor's pricing page says only Grok models are available on it. Models from Anthropic, OpenAI and Google start at Premium.",
+    "**Download and buy Cursor only from `cursor.com`.** Its pricing FAQ says subscriptions are \"only sold directly through X Subscription Corp\", so a \"Cursor subscription\" sold anywhere else is not the real thing.",
+    "**The plans bundle more than an editor.** Every paid tier also includes Grok features (xAI's chatbot — chat, voice, images) and X perks such as a Premium checkmark, and Cursor's pricing FAQ says the usage pool is \"shared across Cursor and Grok.\" Heavy Grok use and heavy coding draw on the same allowance.",
+    "**Ownership note:** Cursor is now owned by SpaceX. Cursor's blog announced on 14 August 2026 that \"Cursor has officially been acquired by SpaceX\", completing a process that began in April with a partnership with SpaceXAI. The plans above are the result — paid tiers sold through X Subscription Corp under SpaceXSI subscription terms, with Grok built in. Cursor's own terms of service (last updated 3 September 2026) still name its maker, Anysphere, as the company you contract with.",
   ],
 
   security: [
@@ -34,7 +34,7 @@ export const cursorTutorial: PlatformTutorialData = {
       kind: "list",
       label: "Privacy Mode is the control worth setting",
       items: [
-        "Cursor has a **Privacy Mode** (in settings, or set by a team admin). With it on, Cursor guarantees your **code is not stored by its model providers or used for training.**",
+        "Cursor has a **Privacy Mode** (in settings, or set by a team admin). Cursor's pricing FAQ says that with it on, \"code data is not used for training by us or our model providers.\" Its terms also say it won't train on your content unless you have explicitly agreed to that.",
         "If your code is sensitive, turn Privacy Mode on **before** you start, not after.",
         "Never paste production secrets, customer data, or private credentials into any AI coding tool, Privacy Mode or not.",
       ],
@@ -54,13 +54,13 @@ export const cursorTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Very large agentic tasks (workable, but review closely and mind the credits)",
-      "Predictable monthly cost (the credit pool can surprise heavy frontier-model users)",
+      "Predictable cost once you use other companies' models (on Premium and up they're billed at API list price from prepaid credit, outside the weekly pool)",
       "Absolute beginners with no coding context (it assumes a real project)",
     ],
     avoid: [
       "Accepting multi-file agent edits without reading them",
       "Pasting secrets or regulated data (turn on Privacy Mode first regardless)",
-      "Assuming Auto mode and frontier-model mode cost the same — they don't",
+      "Assuming every model draws from the same pool — Cursor's own and Grok models do; Anthropic, OpenAI and Google models are billed separately",
     ],
   },
 
@@ -84,7 +84,7 @@ export const cursorTutorial: PlatformTutorialData = {
       whatItDoes:
         "Use the free tier's limited usage to try the agent and codebase chat before paying.",
       whyHere: "You can judge the AI-first workflow at zero cost.",
-      tweak: "Students had a discounted route historically — check current offers before paying.",
+      tweak: "If you upgrade, check which models you need first: Plus runs Grok models only, so Claude, GPT or Gemini means Premium.",
     },
     {
       title: "Ask it to explain, then change something",
@@ -97,8 +97,8 @@ export const cursorTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**Auto mode is unlimited; frontier models aren't.** The credit pool only depletes when you manually pick the most powerful models — that's what causes surprise bills.",
-    "**The free tier hides the main feature.** Whole-codebase context and the multi-file agent are paid; the free tier is for evaluating the editor.",
+    "**Third-party models bill from the first request.** On Premium and up, Anthropic, OpenAI and Google models are charged at API list price from your prepaid credit, not the weekly pool. Cursor's FAQ says you can set spending caps — set one before you pick those models.",
+    "**The pool refreshes weekly, and unused usage doesn't roll over.** One heavy day won't wipe your month, but a quiet week isn't banked for later.",
     "**Buy only from cursor.com.** There are no authorized resellers; anywhere else may be fraudulent.",
   ],
 
