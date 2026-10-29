@@ -326,6 +326,36 @@ describe("pricing table and ramp-up labels", () => {
     assert.equal(html.includes("—"), false);
   });
 
+  it("shows a privacy fact's reason, with its source, under the privacy rating", () => {
+    const base = {
+      difficultyLevel: "BEGINNER",
+      privacyLevel: "MEDIUM",
+      timeToProductivity: null,
+      learningCurve: null,
+      offlineCapable: false,
+      apiAvailable: true,
+      languageSupport: null,
+      keyIntegrations: null,
+      upgradeTriggers: null,
+    };
+    const plain = buildTechnicalDetailRows(base).find((row) => row.label === "Privacy")!;
+    assert.equal(plain.fact, undefined);
+    assert.notEqual(plain.showNote, true);
+    const privacyFact = {
+      value: { policyUrl: "https://example.com/privacy" },
+      note: "Rated Medium because transcripts go to outside AI providers.",
+      sourceUrl: "https://example.com/privacy",
+      checkedAt: "2026-10-29",
+      gatheredBy: "claude",
+      status: "verified" as const,
+    };
+    const row = buildTechnicalDetailRows({ ...base, privacyFact }).find((r) => r.label === "Privacy")!;
+    assert.equal(row.value, "Medium");
+    assert.equal(row.showNote, true);
+    assert.equal(row.fact?.sourceUrl, "https://example.com/privacy");
+    assert.equal(row.fact?.note, privacyFact.note);
+  });
+
   it("does not show a learning-curve speed word beside difficulty when a time is known", () => {
     const rows = buildTechnicalDetailRows({
       difficultyLevel: "INTERMEDIATE",

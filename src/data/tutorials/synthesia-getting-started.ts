@@ -7,7 +7,7 @@ export const synthesiaTutorial: PlatformTutorialData = {
   tagline:
     "Type a script, pick a presenter, get a finished video — no camera, no crew, no being on screen yourself.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.synthesia.io/updates",
   accessTier: "FREE",
 
@@ -81,7 +81,7 @@ export const synthesiaTutorial: PlatformTutorialData = {
       prompt:
         "Welcome to the team. Over the next two weeks you will meet your manager, set up your accounts, and complete three short training modules.",
       whyHere:
-        "Its 1-Click Translation currently spans 160+ languages and translates on-screen text as well as the spoken script, so an existing video becomes a second one in seconds, not a second shoot.",
+        "Its 1-Click Translation currently spans 140+ languages and translates on-screen text as well as the spoken script, so an existing video becomes a second one in seconds, not a second shoot.",
     },
     {
       title: "Write a script that survives being spoken aloud",

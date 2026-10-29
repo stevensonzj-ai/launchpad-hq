@@ -7,7 +7,7 @@ export const glaspTutorial: PlatformTutorialData = {
   tagline:
     "A highlighter for everything you read — and a decision about who gets to see it.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-15",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -21,7 +21,7 @@ export const glaspTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**The first thing to do is not to highlight anything.** Open Settings and find the visibility control for highlights — and the separate one under **AI Clone & Hatch** — before you mark a single passage. Which way those switches start is genuinely unclear from outside Glasp (see Privacy below), and they decide whether your reading is public.",
-    "Free to use with a sign-up and no card. The thing you would pay for here is privacy, not capability: Pro — a monthly plan, cheaper if you pay for a year, with a student discount — is what adds unlimited private highlights. Whether a free account gets any private highlights at all is not something Glasp's own pages settle either way.",
+    "Free to use with a sign-up and no card. The thing you would pay for here is privacy, not capability: Pro — a monthly plan, cheaper if you pay for a year, with a student discount — is what adds unlimited private highlights. Glasp's pricing page now lists private highlights as a paid-plan feature, with the free plan's highlights public by default.",
     "Highlighting itself is unlimited and unmetered, but the AI features are rationed on the free plan: a small monthly allowance of chat **credits** (the platform's unit of spend — each thing you ask costs some), a daily cap on basic YouTube summaries, and a cap on PDF uploads. Chatting with a PDF is metered too, on a separate allowance Glasp's pages do not describe consistently, so check the current limits in the app rather than planning around fixed numbers.",
     "It is a browser add-on, so it lives in a browser: Chrome, Safari, Edge and Firefox have published versions, and Brave and Opera install the Chrome one. Phone browsers cannot run add-ons at all, which is why there are separate iPhone, iPad and Android apps with their own built-in reader.",
     "You are not locked in. Glasp states plainly that export is not a paid feature — \"your highlights are yours, and we would rather you could leave than feel stuck.\"",

@@ -7,7 +7,7 @@ export const harveyAiTutorial: PlatformTutorialData = {
   tagline:
     "The AI most large law firms are buying — sold by contract, not by credit card, and here is the one part you can get for free today.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.harvey.ai/blog",
   accessTier: "PREMIUM",
 
@@ -17,7 +17,7 @@ export const harveyAiTutorial: PlatformTutorialData = {
   whatItIs: [
     "Harvey is legal AI built for the inside of a law firm or a company's legal department: it reads the matter files, drafts and reviews documents, and researches law in the jurisdictions whose sources it has licensed.",
     "It is sold to organisations rather than to individuals, so if you are reading this on your own, Harvey is something you will meet through an employer or a school, not something you can start tonight.",
-    "It is worth understanding anyway, because a large part of the profession is standardising on it: Harvey says more than 200,000 lawyers at 2,400+ organisations across 70 countries use the platform.",
+    "It is worth understanding anyway, because a large part of the profession is standardising on it: Harvey says more than 200,000 professionals at 3,500+ law firms and in-house legal teams across 85+ countries use the platform.",
   ],
 
   beforeYouStart: [

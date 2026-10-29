@@ -7,7 +7,7 @@ export const fluxTutorial: PlatformTutorialData = {
   tagline:
     "The image model that finally gets text right — but you'll reach it through someone else's front door.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-14",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://docs.bfl.ai/release-notes",
   accessTier: "PREMIUM",
 
@@ -15,7 +15,7 @@ export const fluxTutorial: PlatformTutorialData = {
     "FLUX is a **model** — the AI \"brain\" that does the actual work — not a website you log into. Whichever route you reach it through, the motion is the same: describe the picture you want, look at what comes back, change the wording, go again.",
 
   whatItIs: [
-    "An image and editing model family from Black Forest Labs, the German lab founded by the researchers behind Stable Diffusion. The current line is FLUX.2: `[max]`, `[pro]`, `[flex]`, `[dev]` and `[klein]`. Two are **open-weight** — the model file itself is published, so you can run it yourself, which no closed rival allows. The rest sit behind a paid **API**, a way for programs to talk to each other without a person clicking.",
+    "An image and editing model family from Black Forest Labs, the German lab founded by the researchers behind Stable Diffusion. The FLUX.2 line is `[max]`, `[pro]`, `[flex]`, `[dev]` and `[klein]`, and a newer FLUX 3 family (including FLUX 3 Image and a small open-weight Klein model) has started to arrive alongside it. Two are **open-weight** — the model file itself is published, so you can run it yourself, which no closed rival allows. The rest sit behind a paid **API**, a way for programs to talk to each other without a person clicking.",
     "Its pitch against Midjourney: legible text inside images, and tight instruction-following. BFL says typography, infographics and UI mockups \"now work reliably\", and that it holds a character consistent across up to ten reference images.",
   ],
 

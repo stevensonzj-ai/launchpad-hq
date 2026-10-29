@@ -7,7 +7,7 @@ export const vllmTutorial: PlatformTutorialData = {
   tagline:
     "The engine that serves one open AI model to a lot of people at once — free software that expects a serious graphics card and a Linux machine.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://github.com/vllm-project/vllm/releases",
   accessTier: "FREE",
 
@@ -34,7 +34,7 @@ export const vllmTutorial: PlatformTutorialData = {
       "Confirm it worked before you build anything on top. Start a small model and ask the running server to list what it is hosting — getting the model's name back is how you know the install landed.",
     ],
     vendorDocsUrl:
-      "https://docs.vllm.ai/en/stable/getting_started/installation/gpu.html",
+      "https://docs.vllm.ai/en/stable/getting_started/installation/gpu/",
   },
 
   security: [

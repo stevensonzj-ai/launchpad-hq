@@ -6,7 +6,7 @@ export const anthropicApiTutorial: PlatformTutorialData = {
   title: "Getting Started with the Anthropic API",
   tagline: `The same models as the chat assistant, billed per token — and under a contract with the opposite privacy default.`,
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-14",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://platform.claude.com/docs",
   accessTier: "PREMIUM",
 
@@ -110,7 +110,7 @@ export const anthropicApiTutorial: PlatformTutorialData = {
 
   pitfalls: [
     `**A chat subscription does not include API credit.** They are separate products with separate billing. Paying for one buys you nothing on the other.`,
-    `**The promotional rate expires.** The discounted mid-tier price ends on 2026-08-31 and reverts to the standard rate. If your budget assumes the lower number, it breaks that day.`,
+    `**Check the current rate for your exact model.** Prices differ between models and model generations, and Anthropic has changed announced pricing before, so read the pricing page for the exact model name you put in your code rather than budgeting from memory.`,
     `**Loops are how people get surprised bills.** A retry that does not stop, or a batch larger than you thought, runs up cost quickly. Set the spend limit first, not after.`,
     `**Keys in public repositories are found within minutes.** Automated scanners watch for them continuously. Environment variables are not a best practice here, they are the minimum.`,
     `**The most capable model is rarely the right first choice.** Start cheap and move up only when a specific failure justifies it. The price gap between tiers is far larger than the quality gap for most tasks.`,

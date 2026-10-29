@@ -46,13 +46,13 @@ export default {
         limits: "1,400 credits",
       },
       {
-        name: "2x",
+        name: "Frontier 2x",
         price: "$139.99",
         period: "month",
         limits: "2,800 credits",
       },
       {
-        name: "4x",
+        name: "Frontier 4x",
         price: "$279.99",
         period: "month",
         limits: "5,600 credits",

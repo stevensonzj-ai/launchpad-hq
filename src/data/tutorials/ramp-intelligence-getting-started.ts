@@ -7,7 +7,7 @@ export const rampIntelligenceTutorial: PlatformTutorialData = {
   tagline:
     "AI that works on your company's card spending — receipts, policy questions, and whether you're overpaying for software.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://ramp.com/blog",
   accessTier: "FREE",
 
@@ -24,7 +24,7 @@ export const rampIntelligenceTutorial: PlatformTutorialData = {
     "**This is not something an individual can sign up for.** Ramp's application rules require a corporation, limited liability company or LP registered in the United States, a US physical address (no PO box, virtual office or mail-forwarding address), an employer identification number — the federal tax ID a registered business gets, which Ramp says cannot be waived — and at least $25,000 in cash in a US business bank account you link to the application. Ramp is \"not accepting individuals, sole proprietors, and other types of unregistered businesses.\" If that isn't you, a general assistant like ChatGPT is the substitute — it just won't sit on your company's cards.",
     "Outside the US we could not establish whether there is a path at all. The help article we read is titled for US-based applicants, implying a non-US counterpart, and Ramp publishes an international number for texting receipts — yet the qualification text says the business must be registered in the United States. We found no vendor page describing a Canadian, UK or EU entity route, so treat the US-only line as what Ramp's own document says rather than a settled answer.",
     "You are applying for a corporate charge card, not a subscription you cancel: 30-day statement cycles, the full balance due at the end of each one and debited from the bank account you linked, no carried balance and, Ramp says, no interest and no personal guarantee.",
-    "The base plan is genuinely free per user, and everything below on this page sits inside it. The accounting half is where the money is — AI coding of fields, approval recommendations, AI-driven expense reviews and building reports by describing them are all marked excluded from the free plan on Ramp's own comparison table and included on **Plus**, priced per user per month plus a platform fee that scales with team size, with a 30-day trial and a discount for annual billing.",
+    "The base plan is genuinely free per user, and everything below on this page sits inside it. The accounting half is where the money is — AI coding of fields, approval recommendations and AI-driven expense reviews are all marked excluded from the free plan on Ramp's own comparison table and included on **Plus**, priced per user per month plus a platform fee that scales with team size, with a 30-day trial and a discount for annual billing.",
     "Then apply at ramp.com: formation details, a corporate officer's address and the last four digits of their Social Security number, and either a live connection to the business bank account or its three most recent statements as PDFs. That is an approval decision, not a signup, so expect a yes or a no at the end of it.",
   ],
 

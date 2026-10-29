@@ -25,7 +25,7 @@ export const klapTutorial: PlatformTutorialData = {
     "You can try it on one video with no credit card, and Klap's own FAQ is plain about the catch: you can preview and edit those clips, but \"downloading and posting clips needs a paid plan.\" Treat the free video as a test of whether its picks suit your footage, not as a free way to publish.",
     "Paid plans are sold by the number of clips you can make each month, not by minutes of video uploaded: Basic is {{price:klap:Basic}}, Pro {{price:klap:Pro}} and Pro+ (sold for teams) {{price:klap:Pro+}}, each with a bigger monthly clip allowance than the one before. Paying yearly costs roughly half as much a month, and the pricing page shows the yearly figure first, so check which one you are looking at. Klap's FAQ says paid exports carry no Klap branding, and every plan includes AI clipping, unlimited connected social accounts and analytics. The clip allowances are on its Launchpad page.",
     "If you pay and change your mind, the terms of service allow a refund request before the end of your first month; on a yearly plan, a full refund is only available in that first month. You start the refund yourself from your billing page after cancelling.",
-    "Language support is stated two ways on Klap's own site: the homepage FAQ says it edits and transcribes videos in 52 languages, while the API page says captions work in over 100. If your videos are not in English, check yours on the free video before paying.",
+    "Language support is stated two ways on Klap's own site: the homepage FAQ says the app edits and transcribes videos in 52 languages, while the API page says captions added through the API work in over 100. If your videos are not in English, check yours on the free video before paying.",
   ],
 
   security: [
@@ -109,7 +109,6 @@ export const klapTutorial: PlatformTutorialData = {
 
   whereToNext: [
     { label: "Video creation and editing", categorySlug: "video-creation-editing" },
-    { label: "Gaming and creative AI", categorySlug: "gaming-creative-ai" },
     { label: "Klap vs OpusClip", href: "/compare/klap-vs-opus-clip" },
   ],
   disclosure: [{ slug: "klap", kinds: ["affiliate"] }],

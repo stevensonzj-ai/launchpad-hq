@@ -7,8 +7,8 @@ export const runwayTutorial: PlatformTutorialData = {
   tagline:
     "Turn a text prompt or a still image into short AI-generated video — a filmmaking tool you drive by describing what you want.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-14",
-  changelogUrl: "https://runwayml.com/research",
+  lastReviewedAt: "2026-10-29",
+  changelogUrl: "https://runway.com/changelog",
   accessTier: "FREE",
 
   howItWorks:

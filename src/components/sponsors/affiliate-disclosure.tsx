@@ -21,8 +21,7 @@ export function AffiliateDisclosure({
       </p>
       {affiliate.promoCode && (
         <p className="mt-1">
-          Reader code: <code className="text-gray-300">{affiliate.promoCode.code}</code>.{" "}
-          {affiliate.promoCode.note}
+          {affiliate.promoCode.offer} with code <code className="text-gray-300">{affiliate.promoCode.code}</code>.
         </p>
       )}
     </div>

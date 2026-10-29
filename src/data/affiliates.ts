@@ -32,10 +32,11 @@ export type AffiliateEntry = {
   /** The tracked link the "Open" button uses. */
   href: string;
   /**
-   * A promo/reader code from the program, shown under the disclosure. `note`
-   * is all we say about it: only what the program's own terms confirm.
+   * A promo/reader code from the program, shown under the disclosure as
+   * "<offer> with code <code>." `offer` is all we say about it, and `source`
+   * records where that offer was confirmed, dated.
    */
-  promoCode?: { code: string; note: string };
+  promoCode?: { code: string; offer: string; source: string };
   freeAccess: FreeAccess;
   /** The disclosure(s) the platform page and guide show: "affiliate", plus "free-access" when granted. */
   disclosure: DisclosureKind[];
@@ -47,12 +48,16 @@ export type AffiliateLink = AffiliateEntry;
 export const AFFILIATE_LINKS: Record<string, AffiliateEntry> = {
   // Klap affiliate program (Rewardful), joined 2026-10. Terms:
   // https://www.notion.so/ziggapp/Klap-Affiliate-Program-Terms-and-Conditions-56bd7c6ae25744b4aaa9ea92171e8042
-  // The terms don't mention reader codes, so the code's discount is not
-  // stated here (catalog audit 13 review).
+  // The public terms don't mention reader codes; the code's offer is from the
+  // program dashboard, confirmed by Zach (catalog audit 14).
   klap: {
     slug: "klap",
     href: "https://klap.app?via=zach-stevenson",
-    promoCode: { code: "NOTGFXEG", note: "Klap applies any discount at checkout." },
+    promoCode: {
+      code: "NOTGFXEG",
+      offer: "30% off your first payment",
+      source: "Klap affiliate program dashboard (Rewardful), confirmed by Zach on 2026-10-29",
+    },
     freeAccess: {
       granted: false,
       source: "Klap due-diligence notes and affiliate program terms, checked 2026-10-29: no free access documented.",

@@ -326,7 +326,7 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
     faq: [
       {
         question: "Which one handles videos that are not in English",
-        answer: "Both list many languages. Klap says it edits and transcribes videos in dozens of languages, and OpusClip lists animated captions in many languages on its paid plans. Test a short real video in your language before you pay.",
+        answer: "Both list many languages, each with its own scope. Klap's homepage says its app edits and transcribes videos in dozens of languages, and its API page lists captions through the API in even more. OpusClip lists animated captions in many languages from its Starter plan up, and does not give a language count for its free plan. Test a short real video in your language before you pay.",
       },
       {
         question: "Will I still need to edit the clips",

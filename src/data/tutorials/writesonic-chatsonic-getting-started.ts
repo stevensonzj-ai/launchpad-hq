@@ -6,7 +6,7 @@ export const writesonicChatsonicTutorial: PlatformTutorialData = {
   title: "Getting Started with Writesonic",
   tagline: "Find out whether ChatGPT and Gemini mention your business — and what to do when they don't.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-29",
   accessTier: "PREMIUM",
 
   howItWorks:
@@ -14,7 +14,7 @@ export const writesonicChatsonicTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Writesonic started life as an AI writing tool and a lot of the internet still describes it that way. It isn't one anymore: the company has rebuilt around a single question — when someone asks ChatGPT, Gemini, Claude or Perplexity for a recommendation in your line of work, does your name come up?",
-    "It currently says it checks around ten AI assistants — ChatGPT, Claude, Gemini, Google AI Overviews, Perplexity, Grok, DeepSeek, Microsoft Copilot and Meta AI among them — by working through each one's normal web interface the way a customer would, rather than through a back-door connection. That is the company's own claim, and it is why the numbers move day to day.",
+    "It currently says it checks around ten AI assistants — ChatGPT, Claude, Gemini, Google AI Overviews, Perplexity, Grok, DeepSeek, Microsoft Copilot and Meta AI among them — by working through each one's normal web interface the way a customer would, rather than through a back-door connection. That is the company's own claim, and it is why the numbers move day to day. The full list is an Enterprise feature; the lower-priced plans currently track only ChatGPT, Gemini and Google AI Overviews.",
     "Alongside the tracking, the same subscription includes tools to act on what you find: an AI article writer, site audits that crawl your pages and flag what is holding them back, and content scoring.",
     "Chatsonic, the chatbot this product was once best known for, still lives in the left-hand menu of the account. It is no longer what Writesonic sells, and you should not buy this expecting a ChatGPT competitor.",
   ],

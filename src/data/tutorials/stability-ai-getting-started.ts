@@ -7,7 +7,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
   tagline:
     "The company behind Stable Diffusion and Stable Audio — use its models through a music web app, a pay-per-image API, or free downloads you run yourself.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-23",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://docs.stability.ai/release-notes",
   accessTier: "FREE",
 
@@ -35,7 +35,7 @@ export const stabilityAiTutorial: PlatformTutorialData = {
       "**Decide about training before you upload.** Stability's privacy policy says it may use your inputs and outputs to train its models, and that you can opt out in Account Settings. Do that first if you'll upload your own images or audio.",
       "**Confirm it works cheaply.** Generate one image with Stable Image Core, the cheaper option, from the free allowance before trying the more expensive services.",
     ],
-    vendorDocsUrl: "https://platform.stability.ai/docs/getting-started",
+    vendorDocsUrl: "https://docs.stability.ai/getting-started",
   },
 
   security: [

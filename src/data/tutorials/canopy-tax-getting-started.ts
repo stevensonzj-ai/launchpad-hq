@@ -7,8 +7,8 @@ export const canopyTaxTutorial: PlatformTutorialData = {
   tagline:
     "Firm software for US accounting and tax practices — and the AI now doing work inside it.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-12",
-  changelogUrl: "https://www.getcanopy.com/blog/topic/product-updates",
+  lastReviewedAt: "2026-10-29",
+  changelogUrl: "https://www.getcanopy.com/blog/?blog_tag=canopy-updates",
   accessTier: "FREE",
 
   howItWorks:
@@ -24,7 +24,7 @@ export const canopyTaxTutorial: PlatformTutorialData = {
     "It costs money on day one and there is no free tier. Canopy publishes per-user monthly prices for its entry and middle plans, both billed annually; a third plan is marked \"coming soon\", and the largest firms get a custom quote. Canopy's terms of service, last updated 29 May 2026, say fees are non-refundable and that a plan auto-renews unless you cancel before the renewal date. Canopy names solo practitioners among its customers and publishes no minimum seat count, though we could not confirm one either way.",
     "It is built for US firms. Canopy describes itself as built for U.S. accounting, CPA, tax and bookkeeping firms, its data is processed and stored in the United States, and its own feature table lists multi-currency and regional compliance as still to come. If your practice is outside the US, this is not your tool yet.",
     "Some of the AI runs on an allowance, and two allowances that look alike behave differently. In Canopy's plan-comparison table, the AI meeting notetaker shows an hours allowance on each plan, larger on the middle one, footnoted \"Hours per user/per month\" — that one refills. Smart Intake shows a small number of credits on every plan, footnoted \"Trial Credits. More can be added to meet the firms needs\" — those are a one-off sample you buy more of, not a monthly refill. **Credits** are the platform's unit of spend: each thing you run costs some.",
-    "The AI you would sign up for is still being tested, and Canopy's own pages disagree about how plainly to say so. Its plan-comparison table marks both Canopy Coworker and Smart Tax Prep \"Beta\" on every tier, while its AI feature page presents them as part of the platform without using the word. Canopy's Coworker page says Coworker is free to customers during its open beta period — which also means today's price is not necessarily next year's, and Canopy has not published what it costs afterwards. If your firm is weighing Canopy for the AI, get that in writing from the salesperson.",
+    "The AI you would sign up for is still being tested, and Canopy's own pages disagree about how plainly to say so. Its plan-comparison table marks Canopy Coworker \"Beta\" and Smart Tax Prep \"New\", while its AI feature page presents them as part of the platform without using the word. Canopy's Coworker page says Coworker is free to customers during its open beta period — which also means today's price is not necessarily next year's, and Canopy has not published what it costs afterwards. If your firm is weighing Canopy for the AI, get that in writing from the salesperson.",
   ],
 
   security: [

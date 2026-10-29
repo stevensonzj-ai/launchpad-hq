@@ -6,7 +6,7 @@ export const surferSeoTutorial: PlatformTutorialData = {
   title: "Getting Started with Surfer",
   tagline: "The tool that tells you what the pages already ranking cover — and what your draft is missing.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-14",
+  lastReviewedAt: "2026-10-29",
   accessTier: "PREMIUM",
 
   howItWorks:
@@ -16,7 +16,7 @@ export const surferSeoTutorial: PlatformTutorialData = {
     "Surfer is a writing tool for people trying to get found in search: it compares what you are writing against the pages already ranking for your phrase and shows what they cover that you do not.",
     "Since being bought by Positive Group — announced in October 2025 — it describes itself as an \"AI visibility platform\" rather than an SEO tool. Its newer half watches whether ChatGPT, Gemini and Perplexity mention your brand when someone asks them about your field; you supply the prompts (the messages a person would type into those assistants) you want checked.",
     "It will also draft the whole article for you from a phrase and some instructions. Whether you write it yourself or let it draft, the same scoring panel sits beside you.",
-    "One cosmetic note: the parent company's rename shows up in browser tabs as \"Positive Surfer.\" The product is still called Surfer and still lives at surferseo.com.",
+    "One cosmetic note: the parent company's rename shows up in browser tabs as \"Positive Surfer.\" The product is still called Surfer; its website has moved from surferseo.com to surfer.ai, and the old address redirects.",
   ],
 
   beforeYouStart: [

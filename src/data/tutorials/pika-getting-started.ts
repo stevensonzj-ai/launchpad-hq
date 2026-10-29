@@ -5,9 +5,9 @@ export const pikaTutorial: PlatformTutorialData = {
   platformSlug: "pika",
   title: "Getting Started with Pika",
   tagline:
-    "Turn one photo into a five-second video that squishes, melts or explodes — usually in a couple of taps, usually free.",
+    "Turn one photo into a five-second video that squishes, melts or explodes — usually in a couple of taps.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-14",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://pika.art/blog",
   accessTier: "FREE",
 
@@ -16,7 +16,7 @@ export const pikaTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "A short-form AI video generator from Mellis, Inc., on the web and in an iOS app. Pika calls what it makes \"social-first content\" and its homepage offers \"a reality-bending video with just one tap\": the tap is real, the reality-bending is five seconds long and often takes three goes.",
-    "It is built around **Pikaffects**, a menu of pre-made effects: instead of describing what should happen you upload a picture and pick \"melt\", \"squish\" or \"cake-ify\". Runway is the stronger craft tool for building shots; Pika is the faster toy with a real free tier. Veo leads on realism and sound but needs a Google subscription; Pika is cheaper and more fun, not more realistic.",
+    "It is built around **Pikaffects**, a menu of pre-made effects: instead of describing what should happen you upload a picture and pick \"melt\", \"squish\" or \"cake-ify\". Runway is the stronger craft tool for building shots; Pika is the faster toy, with a free plan where you buy credit packs rather than getting monthly credits. Veo leads on realism and sound but needs a Google subscription; Pika is cheaper and more fun, not more realistic.",
     "Its video model is currently at version 2.5; 2026's releases have been audio tools, agents and a storefront reselling other labs' models rather than a new flagship. Alive and shipping, just not racing on raw quality.",
   ],
 
@@ -44,7 +44,7 @@ export const pikaTutorial: PlatformTutorialData = {
       kind: "list",
       label: "Commercial use — check before you rely on it",
       items: [
-        "The pricing page currently lists \"Commercial use\" on every plan, including free Basic. The FAQ contradicts it, limiting that to Pro and Fancy — and is stale elsewhere on the same page, so the pricing page is the better guide. But the terms defer to it, which makes the disagreement matter.",
+        "The pricing page currently lists a commercial license on the paid plans (Starter, Creator and Fancy) but not on Free. Pika's terms defer to that page, so check it again before you rely on it.",
         "If money depends on the answer, email support@pika.art and get it in writing first.",
       ],
     },

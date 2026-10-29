@@ -19,17 +19,24 @@ export default {
   plans: {
     value: [
       { name: "Free", price: "$0", period: "", limits: "60 credits a month; up to 1080p; watermark; no editing; clips exportable for 3 days" },
-      { name: "Starter", price: "$15", period: "month", limits: "Monthly billing only; 150 credits a month; no watermark" },
+      { name: "Starter", price: "$15", period: "month", limits: "Billed monthly; 150 credits a month; no watermark; AI animated captions in 20+ languages" },
       { name: "Pro", price: "$29", period: "month", limits: "Billed monthly; $14.50/month billed yearly ($174 a year); 300 credits a month, unused credits roll over for 2 months; 2 seats; 9:16, 1:1 and 16:9; limited API access" },
       { name: "Business", price: "Custom", period: "", limits: "Custom credits and seats; API and custom integrations" },
     ],
-    note: "USD, as of 2026-10-29. Usage is counted in credits, not upload minutes. Animated captions in 20+ languages (Starter and up).",
+    note: "USD, as of 2026-10-29. Usage is counted in credits, not upload minutes. Animated captions in 20+ languages (Starter and up). Research Analyst verify 2026-10-29 on https://www.opus.pro/pricing: Starter is $15 billed monthly with 150 credits a month and AI animated captions in 20+ languages. The free plan lists multi-language transcription without a language count. The verify covered the Starter row and caption languages only; the Free, Pro and Business rows are the CTO recheck of the same day.",
     sourceUrl: OPUS_PRICING_URL,
     checkedAt: "2026-10-29",
     gatheredBy: "cto",
-    status: "unverified",
+    verifiedBy: "research-analyst",
+    verifiedAt: "2026-10-29",
+    status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary: "Research Analyst verify: Starter $15 billed monthly, 150 credits a month, AI animated captions in 20+ languages; no language count stated for the free plan.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

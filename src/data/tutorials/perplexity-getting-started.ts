@@ -7,7 +7,7 @@ export const perplexityTutorial: PlatformTutorialData = {
   tagline:
     "An answer engine: ask a question, and it searches the live web and replies with a written answer plus clickable citations.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.perplexity.ai/changelog",
   accessTier: "FREE",
 
@@ -19,8 +19,8 @@ export const perplexityTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free tier is genuinely capable: **unlimited basic cited searches**, all the focus modes, saved research spaces, on any device. The deeper Pro-search mode is capped on free (a handful every few hours).",
-    "**Pro** is a paid monthly plan (cheaper annually; students can get a discounted rate) for unlimited deep searches, file uploads, and switching between frontier models.",
+    "The free tier is genuinely capable: **unlimited basic cited searches**, all the focus modes, saved research spaces, on any device. The deeper Pro-search mode is capped on free (a few a day).",
+    "**Pro** is a paid monthly plan (cheaper annually; students can get a discounted rate) for a much larger allowance of deep searches (weekly limits apply), more file uploads, and switching between frontier models.",
     "The one habit to build from day one: **click the citations.** More on why below.",
   ],
 
@@ -40,7 +40,7 @@ export const perplexityTutorial: PlatformTutorialData = {
     },
     {
       kind: "text",
-      text: "On data: Perplexity states it doesn't use free searches to train models, and its enterprise tier adds explicit no-training guarantees. As with any web tool, avoid pasting confidential material into your queries.",
+      text: "On data: paid plans let you opt out of AI training in settings, and the enterprise tiers add explicit no-training guarantees, so check the setting. As with any web tool, avoid pasting confidential material into your queries.",
     },
   ],
 
