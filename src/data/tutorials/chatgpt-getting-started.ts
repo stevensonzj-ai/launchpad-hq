@@ -20,9 +20,9 @@ export const chatgptTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "Free to use with a sign-up (email, Google, or Apple) — no card required. First step: go to chatgpt.com, sign up free, and you're in.",
-    "Will you need to pay? The free tier is plenty for casual use — learning, drafting, brainstorming. You'd only pay (Plus, currently {{price:chatgpt:Plus}}) if you want the best models reliably or hit the limits often. Paying buys better models, not more privacy.",
-    "The free tier has usage limits that reset on a rolling few-hour window. When you hit them, ChatGPT quietly swaps you to a smaller, faster **model** (the AI \"brain\" doing the work — there are smarter-but-slower and faster-but-simpler ones). Answers get noticeably shallower with no big warning; if a reply suddenly feels worse, that's usually why. Limits also tighten when OpenAI is busy.",
-    "Image generation has its own separate, tighter limit than text — often just a couple a day on the free tier, on a rolling window. You can run out of images while text still works fine, which catches people off guard.",
+    "Will you need to pay? The free tier is plenty for casual use — learning, drafting, brainstorming. You'd only pay (Plus, currently {{price:chatgpt:Plus}}) if you want OpenAI's advanced reasoning models or keep running into the limits on uploads, images and other tools. Paying buys better models and bigger allowances, not more privacy.",
+    "Everyday text chat on the free tier is unlimited. OpenAI's pricing page lists \"Unlimited text chats\" on Free, and its help center says that is \"subject to abuse-prevention safeguards\" — so ordinary back-and-forth won't run out. Free uses OpenAI's lighter everyday **model** (the AI \"brain\" doing the work — there are smarter-but-slower and faster-but-simpler ones); the advanced reasoning models are on paid plans, and free replies can be slower when OpenAI is busy.",
+    "What *is* limited is everything around the chat. File and image uploads, making images, voice, data analysis and deep research each have their own allowance, separate from text. You can run out of pictures while chatting still works fine — ChatGPT tells you when you hit a limit and when it resets. OpenAI's help center also says ads may appear on the free tier in some countries.",
   ],
 
   security: [
@@ -50,13 +50,13 @@ export const chatgptTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "Math and precise logic — check the numbers",
-      "Current events — it can search the web, but it's limited on free, so don't assume it knows this week's news",
+      "Current events — it can search the web, but check the sources it shows rather than assuming it knows this week's news",
       "Coding — competent for small tasks and learning, but dedicated tools do better",
     ],
     avoid: [
       "Anything where being wrong has real consequences — legal, medical, financial; it sounds equally confident when wrong",
       "Facts you can't verify, especially sources and citations — it invents plausible ones",
-      "Truly current or niche information on the free tier",
+      "Truly current or niche information you haven't checked against the sources it cites",
     ],
   },
 
@@ -99,7 +99,7 @@ export const chatgptTutorial: PlatformTutorialData = {
   pitfalls: [
     "It sounds confident even when wrong — a made-up answer reads as smoothly as a correct one. Verify anything factual.",
     "It invents sources, quotes, and citations — search for the real thing yourself.",
-    "The free tier downgrades you mid-session — quality quietly drops when you hit the cap; that's the cause, not you.",
+    "Hitting a tool limit isn't running out of ChatGPT. On free, uploads, images and voice each have their own allowance; text chat keeps working when one runs out, and ChatGPT shows when that allowance resets.",
     "It doesn't truly remember — within one chat it follows along, but a new chat is a blank slate, and very long threads \"forget\" the top. One task, one conversation.",
     "Taking the first answer — the whole point is the follow-up: \"shorter,\" \"more casual,\" \"you missed X.\" Tries two and three are where it gets good.",
   ],
