@@ -8,10 +8,29 @@ import type { ToolFacts } from "./types";
  * be read (chatgpt.com/pricing and the help centre returned 403), so the
  * row's ChatGPT text is left as it is and recorded here as unverified.
  * Renaming the row is left to the owner.
+ *
+ * The Research Analyst's browser check the same day (chatgpt.com/pricing,
+ * marked PARTIAL) found the product at https://chatgpt.com (replacing
+ * chat.openai.com) and no numeric image caps on any page checked: Free says
+ * "Limited image creation", Go and Plus "More", Pro "Unlimited", subject to
+ * abuse guardrails. The free tier stays unverified; the row's "3 images/day"
+ * is removed by catalog audit 18, which also moves the website. OpenAI
+ * announced ChatGPT Images 2.5 for all tiers on 2026-09-08
+ * (openai.com/index/introducing-chatgpt-images-2-5/), with no per-plan limits.
  */
 export default {
   slug: "gpt-image-1-5-dall-e-successor",
   lifecycle: "active",
+  officialUrl: {
+    value: "https://chatgpt.com",
+    note: "Browser check, 2026-10-29: the product is at chatgpt.com, which replaces chat.openai.com.",
+    sourceUrl: "https://chatgpt.com/pricing/",
+    checkedAt: "2026-10-29",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-29",
+    status: "verified",
+  },
   company: {
     value: "OpenAI",
     sourceUrl: "https://developers.openai.com/api/docs/models/gpt-image-1.5",
@@ -24,10 +43,10 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Image generation is included on ChatGPT's free plan, with a lower limit than paid plans (exact limits not confirmed).",
+      summary: "Image generation is included on ChatGPT's free plan as \"Limited image creation\"; OpenAI states no numeric image limit.",
     },
-    note: "Carried over from the catalog row; chatgpt.com/pricing and the image FAQ returned 403 on 2026-10-29. On the Browser-check list.",
-    sourceUrl: "https://chatgpt.com/pricing",
+    note: "Browser check, 2026-10-29 (partial): the Free plan card says \"Limited image creation\"; the Free Tier FAQ (help.openai.com/en/articles/9275245) says images have \"usage limits separate from the main chat limit\", with no numbers. Numeric caps are not stated on any page checked.",
+    sourceUrl: "https://chatgpt.com/pricing/",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
     status: "unverified",
@@ -59,6 +78,12 @@ export default {
       field: "apiPricing",
       summary:
         "First fact file: GPT Image 1.5 deprecated, GPT Image 2.5 billed per token ($5 / $8 / $30 per 1M). ChatGPT limits unverified (403).",
+    },
+    {
+      date: "2026-10-29",
+      field: "officialUrl",
+      summary:
+        "Browser check: product URL is https://chatgpt.com; no numeric ChatGPT image caps stated, so the row's \"3 images/day\" is dropped.",
     },
   ],
 } satisfies ToolFacts;

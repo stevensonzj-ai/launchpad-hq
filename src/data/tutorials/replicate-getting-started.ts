@@ -7,7 +7,7 @@ export const replicateTutorial: PlatformTutorialData = {
   tagline:
     "A catalog of thousands of ready-to-run AI models — image, video, audio, text — that you can run from a form in your browser and pay for by the run, with no subscription.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://replicate.com/changelog",
   accessTier: "FREE",
 
@@ -21,7 +21,7 @@ export const replicateTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**The account gate is the first surprise.** Replicate's sign-in page currently offers only \"Sign in with GitHub\" — there is no email-and-password option, so signing up means creating a free GitHub developer account if you don't have one. It takes a couple of minutes, and it stops more non-developers than anything else on the site. You also need to be 18.",
-    "\"Free\" here is a fixed number of runs, not a monthly allowance. A \"Try for free\" collection lets you run a small set of selected models a limited number of times once you have an account; after that you're asked to set up billing.",
+    "\"Free\" here is a limited number of runs, not a monthly allowance. Replicate's billing docs say you can run select models for free, \"but after a bit\" you'll be asked to set up billing; they don't say how many runs that is.",
     "You pay by the run out of a balance you top up, so there's no subscription to cancel — but budget a little real money if you want to explore properly. Official models publish a flat per-run price on their page; community models bill for however long the hardware runs, which is harder to predict. Worth knowing up front: Replicate removed its self-serve monthly spend limit in July 2025, so there's no toggle to cap yourself.",
     "You do not need to write code. The code path is there when you want it; nothing on day one requires it.",
   ],
@@ -95,7 +95,7 @@ export const replicateTutorial: PlatformTutorialData = {
     "Scrolling past the price. It's on the model page — per output, or per second of hardware — and it's the easiest thing to skip on the way to the form.",
     "Judging a model by a slow first run. One that hasn't been used lately has to start up first, which can take minutes. You aren't charged for that wait.",
     "Treating an output link as storage. Files from runs made through code are deleted after an hour — download anything you want to keep.",
-    "Expecting 'free' to come back. The free runs are a one-off allotment on selected models, not a monthly allowance.",
+    "Expecting 'free' to come back. The free runs are limited to selected models, Replicate doesn't say how many you get, and nothing says they refill.",
   ],
 
   whereToNext: [

@@ -7,7 +7,7 @@ export const upstageSolarTutorial: PlatformTutorialData = {
   tagline:
     "Turns messy PDFs and scans into text that software can read — priced by the page, and built for people who write code.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-09",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -15,7 +15,7 @@ export const upstageSolarTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "**Two products share one name here.** Solar is Upstage's family of **models** — the AI \"brains\" that do the actual thinking — and it is not the part of Upstage that reads your documents. That work belongs to separate products called Document Parse, Document OCR and Information Extract, which take a PDF, a photographed form or a slide deck and hand back clean structured text.",
-    "Upstage is a Korean company, now one of Korea's larger AI firms, and it sells both halves the same way: as an **API** — a way for programs to talk to each other without a person clicking — charged per page for documents and per chunk of text for Solar. There is no consumer app and no monthly subscription.",
+    "Upstage is a Korean company, now one of Korea's larger AI firms, and it sells both halves the same way: as an **API** — a way for programs to talk to each other without a person clicking — charged per page for documents and per chunk of text for Solar. There is no consumer app: you pay as you go, or take a prepaid commitment plan if you use it heavily.",
     "It also publishes some of its models as files anyone can download and run on their own hardware, under a licence Upstage wrote itself. The document engines are not published that way; those you rent.",
     "A layer called Upstage Studio sits on top, where you assemble the document steps into a workflow from a template rather than by writing code.",
   ],
@@ -75,7 +75,7 @@ export const upstageSolarTutorial: PlatformTutorialData = {
       prompt:
         "Send a page thick with tables through the standard setting, then the same page through the enhanced setting, and put the two outputs side by side.",
       whyHere:
-        "The tripling from standard to enhanced is one Upstage publishes but never explains in words, so four cents of your own documents buys the answer cheaper than guessing wrong across ten thousand pages.",
+        "The tripling from standard to enhanced is one Upstage publishes but never explains in words, so a few cents spent on your own documents buys the answer cheaper than guessing wrong across ten thousand pages.",
       tweak:
         "Do it again on a plain page of body text. If the two outputs are identical there, you've learned the setting only matters for a subset of your documents.",
     },

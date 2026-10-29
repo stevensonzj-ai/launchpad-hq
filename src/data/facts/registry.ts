@@ -135,6 +135,29 @@ import relevanceAiFacts from "./relevance-ai";
 import replicateFacts from "./replicate";
 import researchRabbitFacts from "./research-rabbit";
 import sakanaAiFacts from "./sakana-ai";
+import salesforceEinsteinFacts from "./salesforce-einstein";
+import scenarioFacts from "./scenario";
+import semanticScholarFacts from "./semantic-scholar";
+import shopifyMagicSidekickFacts from "./shopify-magic-sidekick";
+import slackAiFacts from "./slack-ai";
+import squarespaceAiFacts from "./squarespace-ai";
+import trayAiFacts from "./tray-ai";
+import trinkaAiFacts from "./trinka-ai";
+import upstageSolarFacts from "./upstage-solar";
+import vllmFacts from "./vllm";
+import wixAiFacts from "./wix-ai";
+import wordpressAiJetpackAiFacts from "./wordpress-ai-jetpack-ai";
+import workatoFacts from "./workato";
+import aiderFacts from "./aider";
+import geminiCliFacts from "./gemini-cli";
+import ollamaFacts from "./ollama";
+import openaiCodexCliFacts from "./openai-codex-cli";
+import leonardoAiFacts from "./leonardo-ai";
+import microsoftDesignerFacts from "./microsoft-designer";
+import microsoftPowerAutomateFacts from "./microsoft-power-automate";
+import dragonMedicalOneFacts from "./dragon-medical-one";
+import healtheeFacts from "./healthee";
+import vizAiFacts from "./viz-ai";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -276,6 +299,29 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [replicateFacts.slug]: replicateFacts,
   [researchRabbitFacts.slug]: researchRabbitFacts,
   [sakanaAiFacts.slug]: sakanaAiFacts,
+  [salesforceEinsteinFacts.slug]: salesforceEinsteinFacts,
+  [scenarioFacts.slug]: scenarioFacts,
+  [semanticScholarFacts.slug]: semanticScholarFacts,
+  [shopifyMagicSidekickFacts.slug]: shopifyMagicSidekickFacts,
+  [slackAiFacts.slug]: slackAiFacts,
+  [squarespaceAiFacts.slug]: squarespaceAiFacts,
+  [trayAiFacts.slug]: trayAiFacts,
+  [trinkaAiFacts.slug]: trinkaAiFacts,
+  [upstageSolarFacts.slug]: upstageSolarFacts,
+  [vllmFacts.slug]: vllmFacts,
+  [wixAiFacts.slug]: wixAiFacts,
+  [wordpressAiJetpackAiFacts.slug]: wordpressAiJetpackAiFacts,
+  [workatoFacts.slug]: workatoFacts,
+  [aiderFacts.slug]: aiderFacts,
+  [geminiCliFacts.slug]: geminiCliFacts,
+  [ollamaFacts.slug]: ollamaFacts,
+  [openaiCodexCliFacts.slug]: openaiCodexCliFacts,
+  [leonardoAiFacts.slug]: leonardoAiFacts,
+  [microsoftDesignerFacts.slug]: microsoftDesignerFacts,
+  [microsoftPowerAutomateFacts.slug]: microsoftPowerAutomateFacts,
+  [dragonMedicalOneFacts.slug]: dragonMedicalOneFacts,
+  [healtheeFacts.slug]: healtheeFacts,
+  [vizAiFacts.slug]: vizAiFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

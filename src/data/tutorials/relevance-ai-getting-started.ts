@@ -7,7 +7,7 @@ export const relevanceAiTutorial: PlatformTutorialData = {
   tagline:
     "Describe a job in plain English and get an AI specialist that does it — no flowchart, no code.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://relevanceai.com/changelog",
   accessTier: "PREMIUM",
 
@@ -21,8 +21,8 @@ export const relevanceAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    '**There is no free plan any more, and this is very recent.** Relevance\'s pricing documentation now reads "The Free plan is retired and closed to new signups" — a change merged into the vendor\'s own documentation on 11 September 2026. The cheapest way in is the Pro plan, cheaper paid annually than month to month; current prices are on its Launchpad page. You pay by card and sign up yourself; no demo call is required, despite "Book a demo" being the loudest button on the homepage. Note that Relevance\'s own marketplace site still advertises "Start for free." The pricing docs are the binding source; the marketing has not caught up.',
-    'Two separate meters run while you work, and Relevance\'s word for one of them is confusing. **Actions** are counted each time one of your agent\'s tools runs — so "action" here means a unit of spend, not the "then" half of an automation the way most tools use it. **Vendor Credits** are the AI model bill itself, passed through with no markup. Pro includes a monthly allowance of both; run out of either and you buy top-ups rather than being cut off. Unused Actions from a top-up carry forward; the ones included with your plan reset when it renews.',
+    '**There is no free plan any more, and this is very recent.** Relevance\'s pricing documentation now reads "The Free plan is retired and closed to new signups" — a change merged into the vendor\'s own documentation on 11 September 2026. What you can buy is now unclear from the outside. Relevance\'s public pricing page, checked logged out on 29 October 2026, shows only an Enterprise plan with custom pricing and a "Talk to sales" button; the Pro and Team plans its documentation still describes are not shown there. Expect to go through sales, and confirm with them whether a self-serve plan is still on offer before planning around one. Relevance\'s marketplace site still advertises "Start for free"; the marketing has not caught up.',
+    'Two separate meters run while you work, and Relevance\'s word for one of them is confusing. **Actions** are counted each time one of your agent\'s tools runs — so "action" here means a unit of spend, not the "then" half of an automation the way most tools use it. **Vendor Credits** are the AI model bill itself, passed through with no markup. Plans come with an allowance of both — on Enterprise, a custom one agreed with sales; run out of either and you buy top-ups rather than being cut off. Unused Actions from a top-up carry forward; the ones included with your plan reset when it renews.',
     "You choose where your data physically lives when you sign up — US (N. Virginia), EU (London) or AU (Sydney) — and the docs say that choice cannot be changed afterwards without contacting support. If you have any obligation to keep data in a particular region, decide before you click.",
     "If you already pay for an AI service of your own, you can plug your own key in and skip the Vendor Credits meter entirely. The docs list this as available on every tier. It does not help with Actions, which are charged either way.",
   ],
@@ -59,7 +59,7 @@ export const relevanceAiTutorial: PlatformTutorialData = {
     ],
     avoid: [
       "Anything where you must know in advance exactly what will happen. Non-determinism is the design, not a defect — if a wrong route on one run out of fifty is unacceptable, this is the wrong shape of tool.",
-      "Learning what automation is in general. With the free plan gone, your first afternoon of clicking around and getting it wrong now costs money, and a tool with a standing free tier is a cheaper classroom.",
+      "Learning what automation is in general. With the free plan gone and only a sales-priced Enterprise plan on the public pricing page, your first afternoon of clicking around costs money and a sales call, and a tool with a standing free tier is a cheaper classroom.",
       "Trusting a marketplace agent because it is listed. Some of them depend on third-party services you must supply your own key for, which carry their own separate bills.",
     ],
   },
@@ -88,7 +88,7 @@ export const relevanceAiTutorial: PlatformTutorialData = {
       whatItDoes:
         'When a schedule fires each weekday morning — your **trigger**, the "when" that starts an automation → then the agent searches the web for mentions of a name you give it, and writes one row per find into a spreadsheet.',
       whyHere:
-        "This is the card that makes Relevance's bill visible before it surprises you: one scheduled run that searches, reads two pages and writes a row is four Actions, not one, so a daily agent is roughly eighty Actions a month against Pro's included allowance. Zapier's per-task counter and Lindy's per-task credits meter the job; this one meters every tool the agent chose to pick up.",
+        "This is the card that makes Relevance's bill visible before it surprises you: one scheduled run that searches, reads two pages and writes a row is four Actions, not one, so a daily agent is roughly eighty Actions a month against whatever allowance your plan includes. Zapier's per-task counter and Lindy's per-task credits meter the job; this one meters every tool the agent chose to pick up.",
       tweak:
         "Start it weekly — you can always shorten the interval once you have seen a month of real consumption.",
     },
@@ -106,7 +106,7 @@ export const relevanceAiTutorial: PlatformTutorialData = {
   pitfalls: [
     '**"It worked when I tested it" means less here.** Run anything consequential several times on harmless data before pointing it at the real thing.',
     "**The meter counts tools, not runs.** A loop over twenty items multiplies every Action inside it, and that is where a month's allowance disappears without anyone noticing.",
-    "**Almost every guide and review you find is now out of date on price.** Anything written before September 2026 describes a free tier that no longer accepts signups. Check the pricing page yourself before planning around a number you read elsewhere.",
+    "**Almost every guide and review you find is now out of date on price.** Anything written before September 2026 describes a free tier that no longer accepts signups, and later write-ups may quote Pro or Team prices that the public pricing page no longer shows. Check the pricing page yourself before planning around a number you read elsewhere.",
   ],
 
   whereToNext: [

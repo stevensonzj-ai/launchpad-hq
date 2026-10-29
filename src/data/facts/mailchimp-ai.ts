@@ -2,9 +2,11 @@ import type { ToolFacts } from "./types";
 
 /**
  * Mailchimp AI: first fact file, stale-facts batch 1 (catalog audit 17),
- * 2026-10-29. Plans read twice on mailchimp.com/pricing/marketing/. The
- * prices are shown "for 12 months"; the price after that did not render
- * and is on the Browser-check list.
+ * 2026-10-29. Plans read twice on mailchimp.com/pricing/marketing/. The Research
+ * Analyst's browser check the same day (0-500 contacts) settled the
+ * after-12-months price: Essentials and Standard have 14-day free trials
+ * and then start at $13 and $20; only Premium shows an intro price
+ * ($297.50 a month for 12 months, then $350).
  */
 export default {
   slug: "mailchimp-ai",
@@ -43,22 +45,22 @@ export default {
         name: "Essentials",
         price: "$13",
         period: "month",
-        limits: "Shown \"for 12 months\"; generative AI not included",
+        limits: "\"Free for 14 days. Then, starts at $13/month\"; generative AI not included",
       },
       {
         name: "Standard",
         price: "$20",
         period: "month",
-        limits: "Shown \"for 12 months\"; generative AI at no extra cost; up to 6,000 emails a month",
+        limits: "\"Free for 14 days. Then, starts at $20/month\"; generative AI at no extra cost; up to 6,000 emails a month",
       },
       {
         name: "Premium",
         price: "$350",
         period: "month",
-        limits: "Shown \"for 12 months\"; generative AI at no extra cost; up to 150,000 emails a month",
+        limits: "$297.50 a month for the first 12 months, then $350; generative AI at no extra cost; up to 150,000 emails a month",
       },
     ],
-    note: "USD, as of 2026-10-29, at the page's default contact count. Paid prices are shown \"/mo for 12 months\" (businesses with 10,000+ contacts save 15% for the first 12 months); the price after 12 months did not render. Essentials and Standard have 14-day trials.",
+    note: "USD, as of 2026-10-29, at 0-500 contacts; prices rise with contact count. Browser check: \"See Free Trial Terms. Overages apply if contact or email send limit is exceeded.\" Annual plans are available only for Standard and Premium at 10,000+ contacts, through sales.",
     sourceUrl: "https://mailchimp.com/pricing/marketing/",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -80,6 +82,12 @@ export default {
       field: "freeTier",
       summary:
         "First fact file: Free is 250 contacts and 500 emails/mo with no generative AI (the catalog said 500 contacts, 1,000 emails and basic AI); AI starts at Standard.",
+    },
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary:
+        "Browser check: Essentials $13 and Standard $20 are the regular prices after a 14-day trial; Premium is $297.50 for 12 months, then $350.",
     },
   ],
 } satisfies ToolFacts;

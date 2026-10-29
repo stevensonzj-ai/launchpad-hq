@@ -103,7 +103,8 @@ describe("catalog audit 11: owner-checked Krisp and GitHub Copilot", () => {
       const text = f?.freeTier ? "" : (snap(patch.slug).freeTierFeatures ?? "");
       assert.ok(f?.freeTier?.value.available === false || saysTrialOnly(text), `${patch.slug} says it has no free plan`);
     }
-    assert.equal(snap("squarespace-ai").updatedAt, "2026-04-13");
+    // Audit 11 kept this row's updatedAt; audit 18 (stale facts batch 2) later rewrote its text, which bumps it.
+    assert.equal(snap("squarespace-ai").updatedAt, "2026-10-29");
     assert.equal(audit11KeepsUpdatedAt("krisp"), false);
   });
 });

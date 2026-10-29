@@ -7,7 +7,7 @@ export const shopifyMagicSidekickTutorial: PlatformTutorialData = {
   tagline:
     "Shopify's own AI, already switched on inside your store's dashboard — it writes the product page, fixes the photo, and answers \"how do I do that?\"",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-09",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://changelog.shopify.com/",
   accessTier: "FREE",
 
@@ -21,7 +21,7 @@ export const shopifyMagicSidekickTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The AI is free; the store is not.** Shopify states its AI tools are \"available for free, regardless of your subscription plan\" — no separate signup, no add-on, no credit balance to top up. What you pay for is Shopify itself. It currently advertises a short free trial and then a few months at a token price, after which you move onto a monthly plan — Basic, Grow or Advanced, each cheaper if you pay for a year. Current prices are on its Launchpad page. Let the trial lapse without picking a plan and Shopify's help centre says your store is paused until you choose one: your products and settings are kept, but the admin closes, and every tool on this page is inside the admin.",
+    "**The AI is free; the store is not.** Shopify's AI, now led by Sidekick, is included with every paid plan — no separate signup and no add-on to buy — though how much AI use you get varies by plan, so it is not unlimited. What you pay for is Shopify itself. It currently advertises a short free trial and then a few months at a token price, after which you move onto a monthly plan — Basic, Grow or Advanced, each cheaper if you pay for a year. Current prices are on its Launchpad page. Let the trial lapse without picking a plan and Shopify's help centre says your store is paused until you choose one: your products and settings are kept, but the admin closes, and every tool on this page is inside the admin.",
     "There is nothing to install or switch on: the generate buttons are already sitting in the text boxes, and Shopify's instruction for the assistant is exactly this: \"Open your Shopify admin and click the purple glasses icon. That's it. No setup, no configuration.\"",
     "Some of it is desktop-only, which matters if you run your shop from your phone. Shopify's help centre says text generation \"is not supported on mobile devices,\" and that Sidekick \"isn't currently available on mobile web admin or via the Shopify app on tablet devices, including iPads.\" It does work in the phone app, and has an optional voice mode there.",
     "Shopify says its generally available AI features are available \"to all plans and in all languages,\" and that Sidekick \"adapts to your store's language settings.\" It also warns that language support \"for some features, such as those in early access, might vary\" — so if something described here is missing or English-only for you, that is the likeliest reason.",

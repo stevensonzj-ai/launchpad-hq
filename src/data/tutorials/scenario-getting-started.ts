@@ -7,7 +7,7 @@ export const scenarioTutorial: PlatformTutorialData = {
   tagline:
     "The AI image generator built for game art — where the goal is forty things that match, not one thing that dazzles.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -20,8 +20,8 @@ export const scenarioTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Free to try without a card. Sign up at scenario.com and you get a daily allowance of **credits** — the platform's unit of spend, where each thing you make costs some (Scenario's help pages also call them Compute Units). They reset daily rather than piling up, and what a single image costs depends on the model, so a free day buys a modest number of pictures. On paid plans the allowance renews on your billing date and unused credits do not roll over.",
-    "The custom-style training Scenario is known for is not on the free tier, and not on the cheapest paid tier either. Its plan comparison table currently puts \"Train custom models\" on the Pro plan, while the cheaper Starter plan lists everything except training. By Scenario's own published figures a single training run costs far more credits than an image, so even setting the plan gate aside, a free day's allowance could not pay for one.",
+    "Free to try without a card. Sign up at scenario.com and you get a small free allowance of **credits** — the platform's unit of spend, where each thing you make costs some (Scenario's help pages also call them Compute Units). Scenario's pages don't make clear whether that allowance refills daily or is a one-off, and what a single image costs depends on the model, so it buys a modest number of pictures. On paid plans the allowance renews on your billing date and unused credits do not roll over.",
+    "The custom-style training Scenario is known for is not on the free tier, and not on the cheapest paid tier either. Its plan comparison table currently puts \"Train custom models\" on the Pro plan, while the cheaper Starter plan lists everything except training. By Scenario's own published figures a single training run costs far more credits than an image, so even setting the plan gate aside, the free allowance could not pay for one.",
     "What will actually decide this for you is not which plan to pick but whether you have a consistent body of your own artwork to train on. Without that, Scenario is a capable general image generator that bills you per picture, and there are free ones in the same category on this site.",
   ],
 
@@ -49,7 +49,7 @@ export const scenarioTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "One-off images. The ready-made models are the same families other tools use, but you are spending per picture on machinery built for consistency.",
-      "Video and 3D generation, which the vendor's own cost guide places in a higher credit band than images, so experiments there run down a free day fast.",
+      "Video and 3D generation, which the vendor's own cost guide places in a higher credit band than images, so experiments there run down a free allowance fast.",
     ],
     avoid: [
       "Training a style model on artwork you did not make. Scenario's FAQ puts the responsibility on you to hold \"full rights to the training data you upload,\" the terms bar uploads that infringe someone else's rights, and the indemnity clause leaves any claim with you. Cloning an artist's portfolio is the wrong use of the platform's main feature, and the one it makes easiest.",

@@ -105,10 +105,12 @@ describe("feed: optional stale flag (schema 1.3)", () => {
 
   it("marks a record older than 90 days, and not a fresh one", () => {
     assert.equal(SCHEMA_VERSION, "1.3");
-    assert.equal(tool("leonardo-ai").data_as_of ?? tool("leonardo-ai").record_updated_at, "2026-04-13");
-    assert.equal(tool("leonardo-ai").stale, true);
+    // Leonardo was the example until stale facts batch 2 (2026-10-29) refreshed it; AIVA (batch 3) is still on its May import.
+    assert.equal(tool("aiva").data_as_of ?? tool("aiva").record_updated_at, "2026-05-12");
+    assert.equal(tool("aiva").stale, true);
+    assert.equal(tool("leonardo-ai").stale, false);
     assert.equal(tool("midjourney").stale, false);
-    PublicTool.parse(tool("leonardo-ai"));
+    PublicTool.parse(tool("aiva"));
   });
 
   it("is optional: a 1.2-shaped record without it still validates", () => {

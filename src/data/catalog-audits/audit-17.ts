@@ -21,6 +21,12 @@
  * "official" (audit 10's wording pass rewrites text that does). No affiliate
  * or sponsor links.
  *
+ * Updated in audit 18's PR (2026-10-29): the Research Analyst's browser
+ * check of batch 1 changed some of the text below, and audit 18 writes the
+ * same text to rows this audit already patched. Every field both audits set
+ * now holds the same value (audit-18.test.ts checks), and relevance-ai goes
+ * to ENTERPRISE, so the two audits converge in either order.
+ *
  * Never deletes or creates rows; never changes slug, name or categoryId.
  * Kept free of Prisma and dotenv so it typechecks with the app and can be
  * unit-tested (audit-17.test.ts).
@@ -127,7 +133,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     sources: ["https://www.figma.com/pricing/"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Included with Figma plans. Starter free; Full seat billed annually $16/mo Professional, $55/mo Organization, $90/mo Enterprise, each with monthly AI credits ${AS_OF}`,
+      currentPricing: `Included with Figma plans. Starter free; Full seat: Professional $16/mo billed annually or $20 monthly; Organization $55/mo and Enterprise $90/mo, billed annually only; each with monthly AI credits ${AS_OF}`,
       freeTierFeatures: `Starter (free): 150 AI credits a day, up to 500 a month; one team, one folder, 3 files ${AS_OF}`,
       usageLimits: `AI credits a month per Full seat: Starter 500, Professional 3,000, Organization 3,500, Enterprise 4,250; Dev and Collab seats 500; extra credits can be bought ${AS_OF}`,
     },
@@ -150,7 +156,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     sources: ["https://developers.openai.com/api/docs/models/gpt-image-1.5", "https://developers.openai.com/api/docs/pricing"],
     checkedAt: CHECKED_AT,
     fields: {
-      usageLimits: `ChatGPT: free and paid image limits not re-checked (OpenAI's pricing page did not load); API: GPT Image 1.5 is deprecated, and GPT Image 2.5 is billed per token ($5 text in, $8 image in, $30 image out per 1M) ${AS_OF}`,
+      usageLimits: `ChatGPT: OpenAI publishes no numeric image limits for any plan; API: GPT Image 1.5 is deprecated, and GPT Image 2.5 is billed per token ($5 text in, $8 image in, $30 image out per 1M) ${AS_OF}`,
     },
   },
   {
@@ -198,8 +204,8 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     sources: ["https://www.litmaps.com/pricing"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Free tier; Pro from $10/mo (education rate, billed yearly; academic email required); Team and Enterprise quoted ${AS_OF}`,
-      usageLimits: `Free: 100 articles per map, up to 20 search inputs, monthly alerts; Pro: unlimited maps and articles, advanced search; collaboration is on the Team plan ${AS_OF}`,
+      currentPricing: `Free; Pro Education $12.50/mo or $10/mo billed yearly (academic email required); Pro Commercial $50/mo or $40/mo billed yearly; Team quoted ${AS_OF}`,
+      usageLimits: `Free: 2 Litmaps, 100 articles per map, up to 20 search inputs, monthly alerts; Pro: unlimited maps and articles, advanced search; collaboration is on the Team plan ${AS_OF}`,
     },
   },
   {
@@ -210,7 +216,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     fields: {
       currentPricing: `Free tier; Developer tier pay as you go, priced per 1M tokens by model ${AS_OF}`,
       freeTierFeatures: `Free tier with per-model rate limits on requests and tokens; the paid Developer tier is pay as you go and needs a payment method ${AS_OF}`,
-      usageLimits: `Free: per-model limits on requests and tokens per minute and per day; Developer (pay as you go): higher limits ${AS_OF}`,
+      usageLimits: `Free: per-model limits; GPT OSS 120B, GPT OSS 20B and Qwen3.8-27B each 30 requests a minute, 1,000 a day, 8,000 tokens a minute, 200,000 a day; Developer (pay as you go): higher limits ${AS_OF}`,
     },
     guarded: { costTier: { from: "FREE", to: "FREEMIUM" } },
   },
@@ -233,7 +239,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     checkedAt: CHECKED_AT,
     fields: {
       freeTierFeatures: `Free CRM for up to two users and 1,000 contacts, with no expiry; Breeze Assistant is included ${AS_OF}`,
-      usageLimits: `AI agents use HubSpot credits; paid tiers include a monthly credit allowance and more credits can be bought. Plan prices and credit amounts: see hubspot.com/pricing ${AS_OF}`,
+      usageLimits: `AI agents use HubSpot credits. Included: Marketing Hub Starter 500, Professional 3,000, Enterprise 5,000; more credits can be bought ${AS_OF}`,
     },
   },
   {
@@ -249,13 +255,13 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
   },
   {
     slug: "ludo-ai",
-    finding: "Row listed a free tier with daily ideas, Pro $16/mo and a Teams plan; the pricing page has no free plan (30 sign-up credits), Indie $15, Pro $35 and Studio $300 a month billed yearly",
+    finding: "Row listed a free tier with daily ideas, Pro $16/mo and a Teams plan; the pricing page has no free plan, Indie $20 / Pro $50 / Studio $350 billed monthly ($15 / $35 / $300 a month billed yearly)",
     sources: ["https://ludo.ai/pricing", "https://ludo.ai/"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `No free plan; 30 free credits at sign-up. Billed yearly: Indie $15/mo, Pro $35/mo, Studio $300/mo; Enterprise custom ${AS_OF}`,
-      freeTierFeatures: `No free plan: sign-up gives 30 free credits, no card ${AS_OF}`,
-      usageLimits: `Credits a year: Indie 3,000, Pro 12,000, Studio 120,000; API, MCP and CLI use credits (API from Pro); unused credits roll over while subscribed ${AS_OF}`,
+      currentPricing: `No free plan. Billed monthly: Indie $20, Pro $50, Studio $350; billed yearly: Indie $15/mo, Pro $35/mo, Studio $300/mo; Enterprise custom ${AS_OF}`,
+      freeTierFeatures: `No free plan: the pricing page lists only paid plans; sign-up credits are not stated there ${AS_OF}`,
+      usageLimits: `Credits: Indie 250 a month (3,000 a year billed yearly), Pro 1,000 (12,000), Studio 10,000 (120,000); API, MCP and CLI use credits (API from Pro); unused credits roll over ${AS_OF}`,
     },
     guarded: { costTier: { from: "FREEMIUM", to: "PAID" } },
   },
@@ -265,7 +271,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     sources: ["https://mailchimp.com/pricing/marketing/"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Free $0; Essentials $13/mo; Standard $20/mo; Premium $350/mo (paid prices shown for the first 12 months); generative AI from Standard ${AS_OF}`,
+      currentPricing: `Free $0; Essentials from $13/mo and Standard from $20/mo after a 14-day free trial; Premium $297.50/mo for 12 months, then $350; prices rise with contacts; generative AI from Standard ${AS_OF}`,
       freeTierFeatures: `Free: 250 contacts, 500 emails a month (250 a day); generative AI features not included ${AS_OF}`,
       usageLimits: `Free: 250 contacts, 500 emails/mo; Essentials: no generative AI; Standard: generative AI, up to 6,000 emails/mo; Premium: up to 150,000 emails/mo ${AS_OF}`,
     },
@@ -276,7 +282,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     sources: ["https://www.meshy.ai/pricing"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Free (100 credits/mo); Pro $20/mo; Premium $40/mo; Ultra $100/mo; Studio $70/mo + $10/seat; Enterprise custom; 20% off annual plans ${AS_OF}`,
+      currentPricing: `Free (100 credits/mo); billed monthly: Pro $20, Premium $40, Ultra $100, Studio $70 + $10/seat; Enterprise custom; yearly prices not confirmed (the pricing page conflicts with itself) ${AS_OF}`,
       freeTierFeatures: `Free, no card: 100 credits a month, up to 10 assets, CC BY 4.0 outputs, no API ${AS_OF}`,
       usageLimits: `Credits a month: Free 100, Pro 1,000, Premium 3,000, Ultra 8,000, Studio 5,500 shared; credits reset monthly and do not accumulate ${AS_OF}`,
     },
@@ -298,7 +304,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     sources: ["https://www.pabbly.com/connect/pricing/"],
     checkedAt: CHECKED_AT,
     fields: {
-      freeTierFeatures: `Free plan, no card: 100 tasks, 2 workflows of up to 2 steps ${AS_OF}`,
+      freeTierFeatures: `Free plan, no card: 100 tasks (a monthly reset is not stated), 2 workflows of up to 2 steps ${AS_OF}`,
       usageLimits: `Free: 100 tasks; Standard: 10,000 tasks a month; Unlimited: unlimited tasks; lifetime (one-time) plans with 3,000, 10,000 or 20,000 tasks a month ${AS_OF}`,
     },
   },
@@ -309,22 +315,22 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: `Standard: pay as you go after $150 in free usage (Parse $10, Extract $20, Split $20 per 1,000 pages); Growth and Enterprise custom ${AS_OF}`,
-      freeTierFeatures: `$150 in free usage on the self-serve Standard plan, a one-time balance rather than a monthly allowance ${AS_OF}`,
+      freeTierFeatures: `$150 in free usage on the self-serve Standard plan for first-time users from a new domain; a one-time balance, not a monthly allowance; expiry not stated ${AS_OF}`,
       usageLimits: `Standard: list rates per 1,000 pages after the free $150, up to 5 Studio seats; Growth: unlimited seats, zero data retention and HIPAA BAA; Enterprise: VPC or on-premises ${AS_OF}`,
     },
     guarded: { costTier: { from: "FREE", to: "FREEMIUM" } },
   },
   {
     slug: "relevance-ai",
-    finding: "Row was FREE with 100 credits a day; the Free plan is retired, Pro is $29/mo ($19 yearly) and Team $349/mo ($234 yearly)",
+    finding: "Row was FREE with 100 credits a day; the Free plan is retired, and the public pricing page shows only Enterprise, custom pricing (browser check, 2026-10-29; the docs' Pro and Team plans are not shown there)",
     sources: ["https://relevanceai.com/docs/get-started/pricing"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `No free plan. Pro $29/mo ($19/mo billed yearly); Team $349/mo ($234/mo billed yearly); Enterprise custom ${AS_OF}`,
-      freeTierFeatures: `No free plan: the Free plan is retired for new and existing accounts ${AS_OF}`,
-      usageLimits: `Pro: 2,500 Actions and $20 of Vendor Credits a month; Team: 7,000 Actions and $70 of Vendor Credits a month; Enterprise: custom ${AS_OF}`,
+      currentPricing: `Enterprise only: custom pricing through sales; the public pricing page shows no Pro or Team plan ${AS_OF}`,
+      freeTierFeatures: `No free plan: the Free plan is retired, and the public pricing page lists only Enterprise ${AS_OF}`,
+      usageLimits: `Enterprise: custom Actions and custom Vendor Credits; amounts not stated ${AS_OF}`,
     },
-    guarded: { costTier: { from: "FREE", to: "PAID" } },
+    guarded: { costTier: { from: "FREE", to: "ENTERPRISE" } },
   },
   {
     slug: "replicate",
@@ -358,7 +364,7 @@ export const AUDIT_17_PATCHES: Audit17Patch[] = [
     fields: {
       primaryUse: "Japanese AI lab: Fugu multi-model API and subscriptions, Namazu Japanese LLM API",
       currentPricing: `Fugu subscriptions $20 / $100 / $200 a month; Fugu and Namazu APIs priced per 1M tokens; not available in the EU/EEA ${AS_OF}`,
-      freeTierFeatures: `The Fugu and Namazu pages list paid plans and per-token prices, with no free tier stated; Sakana Chat's pricing was not checked ${AS_OF}`,
+      freeTierFeatures: `The Fugu and Namazu pages list paid plans and per-token prices, with no free tier stated; Sakana Chat's logged-out page states no pricing ${AS_OF}`,
       usageLimits: `Fugu Pro: 10x Standard usage; Fugu Max: 20x; APIs billed per 1M tokens ${AS_OF}`,
     },
     guarded: { apiAvailable: { from: false, to: true } },

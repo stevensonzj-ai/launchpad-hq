@@ -2,11 +2,13 @@ import type { ToolFacts } from "./types";
 
 /**
  * Relevance AI: first fact file, stale-facts batch 1 (catalog audit 17),
- * 2026-10-29. Plans read twice on Relevance's pricing docs. The marketing
- * page relevanceai.com/pricing shows only Enterprise; that is on the
- * Browser-check list. The docs' feature table lists Vendor Credits as
- * 10,000 / 35,000 a month, which does not match the dollar amounts quoted
- * here; the dollar amounts are recorded.
+ * 2026-10-29. The batch-1 readers read Pro ($29) and Team ($349) on
+ * Relevance's pricing docs. The Research Analyst's browser check the same
+ * day found that the public pricing page (relevanceai.com/pricing, logged
+ * out) shows only Enterprise, with "Talk to sales", custom Actions and
+ * custom Vendor Credits; Pro and Team are not shown and no Vendor Credit
+ * amounts are stated. The plans fact now records Enterprise only, and audit
+ * 18 moves the row to ENTERPRISE with custom pricing.
  */
 export default {
   slug: "relevance-ai",
@@ -33,25 +35,13 @@ export default {
   },
   plans: {
     value: [
-      {
-        name: "Pro",
-        price: "$29",
-        period: "month",
-        limits: "Or $19/mo billed yearly; 2,500 Actions a month; $20 a month in Vendor Credits",
-      },
-      {
-        name: "Team",
-        price: "$349",
-        period: "month",
-        limits: "Or $234/mo billed yearly; 7,000 Actions a month; $70 a month in Vendor Credits",
-      },
-      { name: "Enterprise", price: "Custom", period: "", limits: "Custom Actions and Vendor Credits" },
+      { name: "Enterprise", price: "Custom", period: "", limits: "\"Talk to sales\"; custom Actions and custom Vendor Credits" },
     ],
-    note: "USD, as of 2026-10-29, from the pricing docs. Billing is Actions (each tool run) plus Vendor Credits (model usage); a bring-your-own key skips Vendor Credits.",
-    sourceUrl: "https://relevanceai.com/docs/get-started/pricing",
+    note: "As of 2026-10-29, browser-verified: the public pricing page shows only Enterprise, \"For companies looking to decouple growth from headcount via an AI Workforce.\" The pricing docs still describe Pro and Team plans; they are not shown on the public page.",
+    sourceUrl: "https://relevanceai.com/pricing",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "ra",
     verifiedAt: "2026-10-29",
     status: "verified",
   },
@@ -61,6 +51,12 @@ export default {
       field: "freeTier",
       summary:
         "First fact file: the Free plan is retired; Pro $29/mo ($19 yearly) and Team $349/mo ($234 yearly), billed in Actions plus Vendor Credits. Replaces the catalog's free 100 credits/day.",
+    },
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary:
+        "Browser check: the public pricing page shows Enterprise only, custom pricing through sales; Pro and Team are not shown. Row moves to ENTERPRISE (audit 18).",
     },
   ],
 } satisfies ToolFacts;

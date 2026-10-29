@@ -7,7 +7,7 @@ export const slackAiTutorial: PlatformTutorialData = {
   tagline:
     "The AI that already knows what your team said last week — because it lives inside Slack.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://slack.com/release-notes",
   accessTier: "PREMIUM",
 
@@ -21,7 +21,7 @@ export const slackAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**There is no free tier.** Conversation and thread summaries plus huddle notes currently come with every paid plan; the rest needs **Business+** or higher — search answers, daily recaps, file summaries, translations, message explanations, canvas generation and the full Slackbot assistant.",
+    "**Some AI now comes with every plan, Free included.** Slack's Free plan carries basic AI — conversation summaries, AI search, recaps and workflow generation — plus a limited trial of Slackbot. Paid plans add more, and **Business+** and above get Slack's advanced AI features, including the full Slackbot assistant.",
     "You almost certainly can't switch it on yourself: AI is controlled by workspace and organisation Admins, so an ordinary member's first step is asking whoever administers the workspace whether it's on.",
     `You won't be paying personally; your employer does. Slack has withdrawn the old per-seat AI add-on — it "is no longer available to purchase on the Slack website" — and moved existing customers onto plan tiers at their first renewal after August 2025. It also notes that the price "won't change if you turn all AI features off." **Pro** and **Business+** are priced per user per month and cost less on annual billing; Enterprise+ is priced by sales.`,
     "First step once it's on: open a busy channel, click the three-dots icon at the top, choose **Summarize channel**. Not there? Your plan or your admin hasn't enabled it.",
@@ -30,7 +30,7 @@ export const slackAiTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: `Slack states that your messages and files are not used to train **LLMs** (large language models — the kind of AI that reads and writes text), and that the models it uses "are deployed inside Slack's cloud environment, so model providers do not have access to your data." Its security pages are blunter: "Customer data is never used to train third-party LLMs."`,
+      text: `Slack states that your messages and files are not used to train **LLMs** (large language models — the kind of AI that reads and writes text) unless your organisation opts in, and that the models it uses "are deployed inside Slack's cloud environment, so model providers do not have access to your data." Its security pages are blunter: "Customer data is never used to train third-party LLMs."`,
     },
     {
       kind: "list",
@@ -79,7 +79,7 @@ export const slackAiTutorial: PlatformTutorialData = {
       whatItDoes:
         "Type a plain question into the Slack search bar and get an answer in sentences, with the messages it drew from.",
       whyHere:
-        "Search answers sit behind the Business+ gate, so this one feature decides whether the upgrade is worth it. Ordinary search hands you a list; this hands you the answer plus its evidence.",
+        "A basic version now comes with every plan, Free included, so this is the cheapest feature to judge Slack AI on. Ordinary search hands you a list; this hands you the answer plus its evidence.",
       tweak: "Click through to the source messages it cites, every time.",
     },
     {
