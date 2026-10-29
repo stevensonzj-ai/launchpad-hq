@@ -6,7 +6,7 @@ export const lmStudioTutorial: PlatformTutorialData = {
   title: "Getting Started with LM Studio",
   tagline: `Run an AI model entirely on your own computer, through an interface that does not require a terminal.`,
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-07-27",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://lmstudio.ai/blog",
   accessTier: "FREE",
 
@@ -16,7 +16,7 @@ export const lmStudioTutorial: PlatformTutorialData = {
   whatItIs: [
     `A desktop app for Windows, macOS, and Linux that runs open models locally with a graphical interface.`,
     `The point-and-click counterpart to command-line local runners — same underlying capability, no terminal required.`,
-    `Free for personal **and** commercial use, with an optional paid tier for organisations needing central administration.`,
+    `Free for personal **and** work use. Optional paid plans add cloud features — hosted open models and fuller web search — on top of the free local app.`,
     `Completely offline once a model is downloaded, which is the reason most people choose it.`,
   ],
 
@@ -25,7 +25,7 @@ export const lmStudioTutorial: PlatformTutorialData = {
     `Model files are large. Expect several gigabytes per model and plan disk space accordingly.`,
     `Since 2025-07-08 the app has been free for use at work with no licence request, no form, and no fee. Older articles saying otherwise are out of date.`,
     `Local models are genuinely less capable than the best hosted ones. You are trading capability for privacy, offline access, and zero per-use cost.`,
-    `Nothing you type is sent anywhere. That is the feature.`,
+    `With a local model, nothing you type is sent anywhere. That is the feature. The optional cloud features are the exception: they send your requests to LM Studio's servers, which LM Studio says keep no data and do not train on it.`,
   ],
 
   gettingSetUpSafely: {
@@ -42,7 +42,7 @@ export const lmStudioTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: `This is the strongest privacy posture available in this catalogue, and it is structural rather than contractual. Your conversations **never leave your computer**, so there is no retention policy to read, no training toggle to set, and no terms that can change next year and quietly alter what happens to your data.`,
+      text: `This is the strongest privacy posture available in this catalogue, and it is structural rather than contractual. With a local model, your conversations **never leave your computer**, so there is no retention policy to read, no training toggle to set, and no terms that can change next year and quietly alter what happens to your data.`,
     },
     {
       kind: "list",

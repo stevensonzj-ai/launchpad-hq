@@ -106,6 +106,35 @@ import clarifaiFacts from "./clarifai";
 import sciteFacts from "./scite";
 // Catalog audit 16, 2026-10-29: Hermes Agent (new row).
 import hermesAgentFacts from "./hermes-agent";
+// Stale facts batch 1, 2026-10-29 (catalog audit 17).
+import ai21LabsJambaFacts from "./ai21-labs-jamba";
+import connectedPapersFacts from "./connected-papers";
+import consensusFacts from "./consensus";
+import docsumoFacts from "./docsumo";
+import figmaAiFacts from "./figma-ai";
+import fireworksAiFacts from "./fireworks-ai";
+import gptImage15DallESuccessorFacts from "./gpt-image-1-5-dall-e-successor";
+import gpt4allFacts from "./gpt4all";
+import groqFacts from "./groq";
+import gumloopFacts from "./gumloop";
+import hubspotAiFacts from "./hubspot-ai";
+import huggingFaceFacts from "./hugging-face";
+import janFacts from "./jan";
+import litmapsFacts from "./litmaps";
+import llamaCppFacts from "./llama-cpp";
+import lmStudioFacts from "./lm-studio";
+import localaiFacts from "./localai";
+import ludoAiFacts from "./ludo-ai";
+import mailchimpAiFacts from "./mailchimp-ai";
+import meshyFacts from "./meshy";
+import nanonetsFacts from "./nanonets";
+import pabblyConnectFacts from "./pabbly-connect";
+import paperpalFacts from "./paperpal";
+import reductoFacts from "./reducto";
+import relevanceAiFacts from "./relevance-ai";
+import replicateFacts from "./replicate";
+import researchRabbitFacts from "./research-rabbit";
+import sakanaAiFacts from "./sakana-ai";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -218,6 +247,35 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [sciteFacts.slug]: sciteFacts,
   // Catalog audit 16, 2026-10-29: Hermes Agent (new row, provisional pricing).
   [hermesAgentFacts.slug]: hermesAgentFacts,
+  // Stale facts batch 1, 2026-10-29 (catalog audit 17).
+  [ai21LabsJambaFacts.slug]: ai21LabsJambaFacts,
+  [connectedPapersFacts.slug]: connectedPapersFacts,
+  [consensusFacts.slug]: consensusFacts,
+  [docsumoFacts.slug]: docsumoFacts,
+  [figmaAiFacts.slug]: figmaAiFacts,
+  [fireworksAiFacts.slug]: fireworksAiFacts,
+  [gptImage15DallESuccessorFacts.slug]: gptImage15DallESuccessorFacts,
+  [gpt4allFacts.slug]: gpt4allFacts,
+  [groqFacts.slug]: groqFacts,
+  [gumloopFacts.slug]: gumloopFacts,
+  [hubspotAiFacts.slug]: hubspotAiFacts,
+  [huggingFaceFacts.slug]: huggingFaceFacts,
+  [janFacts.slug]: janFacts,
+  [litmapsFacts.slug]: litmapsFacts,
+  [llamaCppFacts.slug]: llamaCppFacts,
+  [lmStudioFacts.slug]: lmStudioFacts,
+  [localaiFacts.slug]: localaiFacts,
+  [ludoAiFacts.slug]: ludoAiFacts,
+  [mailchimpAiFacts.slug]: mailchimpAiFacts,
+  [meshyFacts.slug]: meshyFacts,
+  [nanonetsFacts.slug]: nanonetsFacts,
+  [pabblyConnectFacts.slug]: pabblyConnectFacts,
+  [paperpalFacts.slug]: paperpalFacts,
+  [reductoFacts.slug]: reductoFacts,
+  [relevanceAiFacts.slug]: relevanceAiFacts,
+  [replicateFacts.slug]: replicateFacts,
+  [researchRabbitFacts.slug]: researchRabbitFacts,
+  [sakanaAiFacts.slug]: sakanaAiFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

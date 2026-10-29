@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audit 15 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15 and 17 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -209,19 +209,19 @@
    "slug": "ai21-labs-jamba",
    "name": "AI21 Labs (Jamba)",
    "company": "AI21 Labs",
-   "website": "https://ai21.com",
+   "website": "https://www.ai21.com",
    "description": null,
    "primaryUse": "Enterprise AI writing and language models",
    "primaryUseCases": "Long-context text processing (256K context); enterprise chat; document analysis; multilingual NLP",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
     "api"
    ],
-   "currentPricing": "Free tier; Enterprise custom",
-   "freeTierFeatures": "Free: API trial with rate limits; playground access; Jamba Mini free tier",
-   "usageLimits": "Free: rate-limited API; pay-per-use for production; Enterprise: custom",
+   "currentPricing": "Open weights free to run yourself. Hosted API: 7-day trial with $10 in credits, then pay as you go (Jamba Mini $0.2 / $0.4, Jamba Large $2 / $8 per 1M input / output tokens); Custom plan quoted (as of 2026-10-29)",
+   "freeTierFeatures": "Jamba open-weight models are free to download and run yourself; the hosted API has a 7-day trial with $10 in credits, no card (as of 2026-10-29)",
+   "usageLimits": "Hosted API: usage-based billing after the trial; numeric rate limits not published; Custom plan adds premium rate limits (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Cohere",
@@ -233,7 +233,7 @@
     "Ollama + open models",
     "Cohere free tier"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "international-regional-ai",
     "name": "International & Regional AI"
@@ -2145,9 +2145,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Premium $8.99/mo",
-   "freeTierFeatures": "Free: unlimited searches; AI-synthesized answers; basic paper results",
-   "usageLimits": "Free: unlimited search; Premium: enhanced AI synthesis + GPT-4 analysis + bookmarks",
+   "currentPricing": "Free; Pro $20/mo or $144/yr; Deep $65/mo or $540/yr; Teams and Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "Free: unlimited Papers searches; 10 Pro messages, 3 Deep reviews and 10 Study Snapshots a month; 30 API and MCP calls a month (as of 2026-10-29)",
+   "usageLimits": "Free: 10 Pro messages and 3 Deep reviews a month; Pro: unlimited Pro messages, 15 Deep reviews a month; Deep: 200 Deep reviews a month; Teams: 50 Deep reviews per user a month (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Perplexity AI (general)",
@@ -2159,7 +2159,7 @@
     "Semantic Scholar (free)",
     "Perplexity AI (general research)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -2560,19 +2560,19 @@
    "slug": "docsumo",
    "name": "Docsumo",
    "company": "Docsumo",
-   "website": "https://docsumo.com",
+   "website": "https://www.docsumo.com",
    "description": null,
    "primaryUse": "AI document data extraction and processing",
    "primaryUseCases": "Invoice extraction; receipt processing; financial document parsing; insurance claims; logistics docs",
-   "costTier": "FREE",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
     "api"
    ],
-   "currentPricing": "Free trial; paid plans",
-   "freeTierFeatures": "Free: 100 pages/month; basic document extraction; email support",
-   "usageLimits": "Free: 100 pages/mo; Growth: 500; Business: 2,000; Enterprise: custom",
+   "currentPricing": "No free plan. 14-day free trial (up to 1,000 pages), then Business or Enterprise, quoted on volume (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: a 14-day free trial covers up to 1,000 pages and 10 user licences (as of 2026-10-29)",
+   "usageLimits": "Trial: up to 1,000 pages over 14 days; Business and Enterprise: quoted on volume, credits reset monthly and do not roll over (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Nanonets",
@@ -2584,7 +2584,7 @@
     "Nanonets (free tier)",
     "Reducto (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -3033,9 +3033,9 @@
     "desktop",
     "browser_extension"
    ],
-   "currentPricing": "Included with Figma plans",
-   "freeTierFeatures": "Figma free plan: limited AI features; 3 Figma files; basic design tools",
-   "usageLimits": "Free: 3 Figma files + limited AI; Professional: unlimited; Organization/Enterprise: admin controls",
+   "currentPricing": "Included with Figma plans. Starter free; Full seat billed annually $16/mo Professional, $55/mo Organization, $90/mo Enterprise, each with monthly AI credits (as of 2026-10-29)",
+   "freeTierFeatures": "Starter (free): 150 AI credits a day, up to 500 a month; one team, one folder, 3 files (as of 2026-10-29)",
+   "usageLimits": "AI credits a month per Full seat: Starter 500, Professional 3,000, Organization 3,500, Enterprise 4,250; Dev and Collab seats 500; extra credits can be bought (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Adobe XD",
@@ -3046,7 +3046,7 @@
     "Canva AI (simpler design)",
     "Microsoft Designer (free)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -3189,14 +3189,14 @@
    "description": null,
    "primaryUse": "Fast, cheap inference for open models",
    "primaryUseCases": "Fast model inference; function calling; fine-tuning; cost-effective AI; multi-model serving",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Pay-per-token; generous free tier",
-   "freeTierFeatures": "Free: $1 credit for new accounts; generous rate limits on free models",
-   "usageLimits": "Free: $1 credit; pay-per-use; competitive pricing; serverless and on-demand options",
+   "currentPricing": "No free plan: prepaid, usage-based billing per token (serverless) or per GPU hour (on-demand) (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: billing is prepaid. Without a payment method and credits, an account is limited to 10 requests a minute (as of 2026-10-29)",
+   "usageLimits": "10 requests a minute without a payment method or credits; up to 6,000 a minute with them; higher spend tiers raise limits (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Groq",
@@ -3208,7 +3208,7 @@
     "Groq (free tier)",
     "Together AI"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -4105,7 +4105,7 @@
    ],
    "currentPricing": "Included with ChatGPT Plus ($20/mo); API",
    "freeTierFeatures": "3 images/day on ChatGPT free; included in ChatGPT Plus/Pro",
-   "usageLimits": "Free: 3/day; Plus: ~50/day; Pro: higher limits; API billed per image",
+   "usageLimits": "ChatGPT: free and paid image limits not re-checked (OpenAI's pricing page did not load); API: GPT Image 1.5 is deprecated, and GPT Image 2.5 is billed per token ($5 text in, $8 image in, $30 image out per 1M) (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
@@ -4118,7 +4118,7 @@
     "Midjourney",
     "Adobe Firefly"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -4156,7 +4156,7 @@
    "slug": "gpt4all",
    "name": "GPT4All",
    "company": "Nomic AI",
-   "website": "https://gpt4all.io",
+   "website": "https://www.nomic.ai/gpt4all",
    "description": null,
    "primaryUse": "Simplest desktop app for local LLMs",
    "primaryUseCases": "Private document Q&A (LocalDocs); offline AI chat; privacy-first AI; enterprise evaluation",
@@ -4179,7 +4179,7 @@
     "Ollama (more models)",
     "LM Studio (better UI)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -4437,14 +4437,14 @@
    "description": null,
    "primaryUse": "Ultra-fast LLM inference on custom hardware",
    "primaryUseCases": "Ultra-fast LLM inference (LPU chip); real-time chat; voice AI; low-latency applications; prototyping",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Free tier; pay-per-token",
-   "freeTierFeatures": "Free: generous free tier with rate limits; multiple models available; no credit card required",
-   "usageLimits": "Free: 30 req/min (varies by model); paid: higher limits; Developer: $0; Enterprise: custom",
+   "currentPricing": "Free tier; Developer tier pay as you go, priced per 1M tokens by model (as of 2026-10-29)",
+   "freeTierFeatures": "Free tier with per-model rate limits on requests and tokens; the paid Developer tier is pay as you go and needs a payment method (as of 2026-10-29)",
+   "usageLimits": "Free: per-model limits on requests and tokens per minute and per day; Developer (pay as you go): higher limits (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Together AI",
@@ -4456,7 +4456,7 @@
     "Together AI",
     "OpenAI API (GPT-4o-mini)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -4500,14 +4500,14 @@
    "description": null,
    "primaryUse": "No-code AI workflow builder with visual editor",
    "primaryUseCases": "AI agent workflows; web scraping; lead enrichment; document processing; social media monitoring",
-   "costTier": "FREE",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free plan; paid plans",
-   "freeTierFeatures": "Free: 2,000 credits; 1 trigger; 2 concurrent workflows; community support only",
-   "usageLimits": "Free: 2K credits; Solo: $25/mo; Team: $100/mo; Enterprise: custom",
+   "currentPricing": "No free plan. Pro $37/mo (20,000 credits a month including bonus credits; 14-day trial, card required); Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: Pro starts with a 14-day free trial, which needs a card and converts to paid unless cancelled (as of 2026-10-29)",
+   "usageLimits": "Pro: 20,000 credits a month, no rollover; agents stop at the limit unless pay as you go is turned on; Enterprise: custom credits with rollover (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Zapier",
@@ -4520,7 +4520,7 @@
     "n8n (self-hosted free)",
     "Zapier (simpler)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -4847,15 +4847,15 @@
     "browser_extension"
    ],
    "currentPricing": "Included with HubSpot plans",
-   "freeTierFeatures": "Free CRM + limited AI features (ChatSpot, content assistant); free for up to 5 users",
-   "usageLimits": "Free: limited AI credits; Starter $20/mo: more AI; Professional: full AI; Enterprise: custom",
+   "freeTierFeatures": "Free CRM for up to two users and 1,000 contacts, with no expiry; Breeze Assistant is included (as of 2026-10-29)",
+   "usageLimits": "AI agents use HubSpot credits; paid tiers include a monthly credit allowance and more credits can be bought. Plan prices and credit amounts: see hubspot.com/pricing (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Salesforce Einstein (enterprise)",
     "Zoho CRM"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -4913,9 +4913,9 @@
     "api",
     "local"
    ],
-   "currentPricing": "Free; Pro $9/mo; Enterprise custom",
-   "freeTierFeatures": "Free: model hosting, Spaces (basic), datasets, Inference API (rate-limited), community features",
-   "usageLimits": "Free: rate-limited Inference API; Pro ($9/mo): faster inference; Enterprise: dedicated; Spaces: limited GPU free",
+   "currentPricing": "Free; PRO $9/mo; Team $20/user/mo; Enterprise $50/user/mo; compute (Spaces hardware, Inference Endpoints) billed by usage (as of 2026-10-29)",
+   "freeTierFeatures": "Free: public models and datasets, CPU Basic and ZeroGPU Spaces, community features; no monthly inference credits (as of 2026-10-29)",
+   "usageLimits": "Free: no monthly Inference Providers credits (buy credits to use them); PRO: $2 of inference credits a month and 8x ZeroGPU quota; Team and Enterprise: $2 of credits per seat (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Replicate",
@@ -4923,7 +4923,7 @@
     "GitHub (code)"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -5149,7 +5149,7 @@
   {
    "slug": "jan",
    "name": "Jan",
-   "company": "Open Source (Apache 2.0)",
+   "company": "Menlo Research",
    "website": "https://jan.ai",
    "description": null,
    "primaryUse": "Privacy-first local AI platform",
@@ -5173,7 +5173,7 @@
     "Ollama",
     "LM Studio"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -6097,9 +6097,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Pro $10/mo",
+   "currentPricing": "Free tier; Pro from $10/mo (education rate, billed yearly; academic email required); Team and Enterprise quoted (as of 2026-10-29)",
    "freeTierFeatures": "Free: 1 seed map; limited articles; basic visualization",
-   "usageLimits": "Free: 1 map; Pro: unlimited maps + monitoring + team features",
+   "usageLimits": "Free: 100 articles per map, up to 20 search inputs, monthly alerts; Pro: unlimited maps and articles, advanced search; collaboration is on the Team plan (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Connected Papers",
@@ -6110,7 +6110,7 @@
     "Connected Papers",
     "Research Rabbit (free)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -6151,8 +6151,8 @@
   {
    "slug": "llama-cpp",
    "name": "llama.cpp",
-   "company": "Open Source (Georgi Gerganov)",
-   "website": "https://github.com/ggerganov/llama.cpp",
+   "company": "ggml.ai (Hugging Face)",
+   "website": "https://github.com/ggml-org/llama.cpp",
    "description": null,
    "primaryUse": "C/C++ LLM inference engine",
    "primaryUseCases": "Efficient local LLM inference; model quantization; embedded AI; research; foundation for other tools",
@@ -6171,7 +6171,7 @@
     "LocalAI"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -6216,15 +6216,15 @@
    "description": null,
    "primaryUse": "Desktop GUI for local LLMs",
    "primaryUseCases": "Local model testing; private AI chat; model comparison; development with local LLM; offline AI",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "desktop",
     "local"
    ],
-   "currentPricing": "Free",
-   "freeTierFeatures": "Completely free for personal use; all features included",
-   "usageLimits": "None (hardware-limited only); free for personal use; business license separate",
+   "currentPricing": "Free local app; Bionic+ $20/mo and Pro $100/mo add cloud features (hosted open models, web search) (as of 2026-10-29)",
+   "freeTierFeatures": "Free, including for work: local models (llama.cpp and MLX), the Bionic agent, offline voice transcription, LM Link for up to 5 devices, limited web search (as of 2026-10-29)",
+   "usageLimits": "Local use: limited only by your hardware. Cloud features: an allowance per plan (Pro has 5x Bionic+), with cloud credits beyond it (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Ollama",
@@ -6235,7 +6235,7 @@
     "Ollama (CLI)",
     "Jan (also free)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -6403,14 +6403,14 @@
    "description": null,
    "primaryUse": "AI game design and concept generation",
    "primaryUseCases": "Game concept ideation; mechanic suggestions; trend analysis; competitive research; GDD generation",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Pro $16/mo",
-   "freeTierFeatures": "Free: basic game concept generation; limited daily ideas; community access",
-   "usageLimits": "Free: limited daily generations; Pro: higher limits; Teams: collaboration",
+   "currentPricing": "No free plan; 30 free credits at sign-up. Billed yearly: Indie $15/mo, Pro $35/mo, Studio $300/mo; Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: sign-up gives 30 free credits, no card (as of 2026-10-29)",
+   "usageLimits": "Credits a year: Indie 3,000, Pro 12,000, Studio 120,000; API, MCP and CLI use credits (API from Pro); unused credits roll over while subscribed (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "ChatGPT (brainstorming)",
@@ -6419,7 +6419,7 @@
    "budgetAlternativeTo": [
     "ChatGPT (free brainstorming)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "gaming-creative-ai",
     "name": "Gaming & Creative AI"
@@ -6637,9 +6637,9 @@
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "Included with Mailchimp plans",
-   "freeTierFeatures": "Free Mailchimp plan includes basic AI features; 500 contacts; 1,000 emails/mo",
-   "usageLimits": "Free: 500 contacts, limited AI; Essentials $13/mo: more contacts + AI; Standard: full AI features",
+   "currentPricing": "Free $0; Essentials $13/mo; Standard $20/mo; Premium $350/mo (paid prices shown for the first 12 months); generative AI from Standard (as of 2026-10-29)",
+   "freeTierFeatures": "Free: 250 contacts, 500 emails a month (250 a day); generative AI features not included (as of 2026-10-29)",
+   "usageLimits": "Free: 250 contacts, 500 emails/mo; Essentials: no generative AI; Standard: generative AI, up to 6,000 emails/mo; Premium: up to 150,000 emails/mo (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "HubSpot AI (broader CRM)",
@@ -6648,7 +6648,7 @@
    "budgetAlternativeTo": [
     "HubSpot AI (free email marketing)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -6885,9 +6885,9 @@
     "web",
     "api"
    ],
-   "currentPricing": "Free tier; Pro $20/mo",
-   "freeTierFeatures": "Free: 5 credits/day; basic 3D model generation from text/image",
-   "usageLimits": "Free: 5 credits/day (few models); Pro: 200 credits/mo; Max: 500; Unlimited available",
+   "currentPricing": "Free (100 credits/mo); Pro $20/mo; Premium $40/mo; Ultra $100/mo; Studio $70/mo + $10/seat; Enterprise custom; 20% off annual plans (as of 2026-10-29)",
+   "freeTierFeatures": "Free, no card: 100 credits a month, up to 10 assets, CC BY 4.0 outputs, no API (as of 2026-10-29)",
+   "usageLimits": "Credits a month: Free 100, Pro 1,000, Premium 3,000, Ultra 8,000, Studio 5,500 shared; credits reset monthly and do not accumulate (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Luma AI (3D scanning)",
@@ -6897,7 +6897,7 @@
    "budgetAlternativeTo": [
     "Blender + Stable Diffusion (free but complex)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "gaming-creative-ai",
     "name": "Gaming & Creative AI"
@@ -7654,9 +7654,9 @@
     "web",
     "api"
    ],
-   "currentPricing": "Free tier; Pro $499/mo",
-   "freeTierFeatures": "Free: 500 pages/month; pre-trained models; basic features",
-   "usageLimits": "Free: 500 pages/mo; Pro: 5,000; Enterprise: custom; additional pages purchasable",
+   "currentPricing": "$50 in free credits (no card), then Starter $100/mo for 100 credits; Growth and Enterprise quoted; billed per block run ($0.02 / $0.10 / $0.30) (as of 2026-10-29)",
+   "freeTierFeatures": "$50 in free credits, no card; credits never expire (as of 2026-10-29)",
+   "usageLimits": "Billed per block run: simple $0.02, standard AI $0.10, complex AI $0.30; credits never expire; Growth: volume discounts (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Docsumo",
@@ -7668,7 +7668,7 @@
     "Docsumo (free tier)",
     "Reducto (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -8446,8 +8446,8 @@
     "web"
    ],
    "currentPricing": "From $25/mo (lifetime deals available)",
-   "freeTierFeatures": "Free trial (100 tasks); then paid plans from $25/mo lifetime deals available",
-   "usageLimits": "Starter: 12K tasks/mo; Rookie: 24K; Pro: 50K; Advanced: custom; one-time pricing options exist",
+   "freeTierFeatures": "Free plan, no card: 100 tasks, 2 workflows of up to 2 steps (as of 2026-10-29)",
+   "usageLimits": "Free: 100 tasks; Standard: 10,000 tasks a month; Unlimited: unlimited tasks; lifetime (one-time) plans with 3,000, 10,000 or 20,000 tasks a month (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Zapier",
@@ -8459,7 +8459,7 @@
     "Zapier",
     "Make (Pabbly is already the budget option with lifetime deals)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -8501,7 +8501,7 @@
    "description": null,
    "primaryUse": "AI academic writing assistant",
    "primaryUseCases": "Academic writing improvement; grammar for research papers; journal submission readiness; ESL editing",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
@@ -8518,7 +8518,7 @@
     "Grammarly (broader)",
     "Trinka AI (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -9395,14 +9395,14 @@
    "description": null,
    "primaryUse": "AI document parsing and extraction for developers",
    "primaryUseCases": "Document parsing for RAG; PDF-to-structured-data; table extraction; multi-format parsing",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Free tier; paid plans",
-   "freeTierFeatures": "Free: 200 pages/month; basic parsing; API access",
-   "usageLimits": "Free: 200 pages/mo; Starter: 2,000; Pro: 10,000; Enterprise: custom",
+   "currentPricing": "Standard: pay as you go after $150 in free usage (Parse $10, Extract $20, Split $20 per 1,000 pages); Growth and Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "$150 in free usage on the self-serve Standard plan, a one-time balance rather than a monthly allowance (as of 2026-10-29)",
+   "usageLimits": "Standard: list rates per 1,000 pages after the free $150, up to 5 Studio seats; Growth: unlimited seats, zero data retention and HIPAA BAA; Enterprise: VPC or on-premises (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Upstage (Solar)",
@@ -9414,7 +9414,7 @@
     "Upstage (free tier)",
     "Docsumo (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -9459,14 +9459,14 @@
    "description": null,
    "primaryUse": "No-code AI agent and workflow builder",
    "primaryUseCases": "Custom AI agent building; sales outreach agents; research agents; data processing; customer support bots",
-   "costTier": "FREE",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Pro plans available",
-   "freeTierFeatures": "Free tier: 100 credits/day; basic agent building; limited tools",
-   "usageLimits": "Free: 100 credits/day; Pro: 10K/mo; Business: 100K/mo; Enterprise: custom",
+   "currentPricing": "No free plan. Pro $29/mo ($19/mo billed yearly); Team $349/mo ($234/mo billed yearly); Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: the Free plan is retired for new and existing accounts (as of 2026-10-29)",
+   "usageLimits": "Pro: 2,500 Actions and $20 of Vendor Credits a month; Team: 7,000 Actions and $70 of Vendor Credits a month; Enterprise: custom (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Gumloop",
@@ -9478,7 +9478,7 @@
     "Gumloop",
     "n8n (with AI nodes)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -9529,7 +9529,7 @@
    "platformType": [
     "api"
    ],
-   "currentPricing": "Pay-per-second of compute",
+   "currentPricing": "Pay as you go: most models are billed by run time, per second of hardware; some are billed per token or per output (as of 2026-10-29)",
    "freeTierFeatures": "Free: some models have free predictions; hardware billing per second of compute",
    "usageLimits": "Pay-per-use: billed per second of compute; free credits for some models; no minimum spend",
    "apiAvailable": true,
@@ -9542,7 +9542,7 @@
     "Together AI",
     "Groq (for text)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -9649,19 +9649,19 @@
   {
    "slug": "research-rabbit",
    "name": "Research Rabbit",
-   "company": "Research Rabbit",
+   "company": "Litmap Limited",
    "website": "https://researchrabbit.ai",
    "description": null,
    "primaryUse": "AI-powered paper recommendations and similarity clustering",
    "primaryUseCases": "Paper recommendation; collection building; author discovery; literature monitoring; research networking",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free",
-   "freeTierFeatures": "Completely free; unlimited paper discovery; collections; recommendations; collaboration",
-   "usageLimits": "No limits; fully free platform",
+   "currentPricing": "Free; RR+ $12.50/mo or $10/mo billed yearly; Institution custom (as of 2026-10-29)",
+   "freeTierFeatures": "Free forever: unlimited searches, library and collections, sharing, up to 50 seed articles (as of 2026-10-29)",
+   "usageLimits": "Free: up to 50 seed articles; RR+: up to 300 seed articles, multiple projects, Signals alerts (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Connected Papers",
@@ -9669,7 +9669,7 @@
     "Semantic Scholar"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -9992,17 +9992,17 @@
    "company": "Sakana AI",
    "website": "https://sakana.ai",
    "description": null,
-   "primaryUse": "Japanese AI research lab — nature-inspired AI",
+   "primaryUse": "Japanese AI lab: Fugu multi-model API and subscriptions, Namazu Japanese LLM API",
    "primaryUseCases": "Novel AI research; nature-inspired AI models; Japanese-market AI solutions",
    "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Research; API partnerships",
-   "freeTierFeatures": "Research models available; no consumer product yet; API in development",
-   "usageLimits": "Research-focused; API limits TBD",
-   "apiAvailable": false,
+   "currentPricing": "Fugu subscriptions $20 / $100 / $200 a month; Fugu and Namazu APIs priced per 1M tokens; not available in the EU/EEA (as of 2026-10-29)",
+   "freeTierFeatures": "The Fugu and Namazu pages list paid plans and per-token prices, with no free tier stated; Sakana Chat's pricing was not checked (as of 2026-10-29)",
+   "usageLimits": "Fugu Pro: 10x Standard usage; Fugu Max: 20x; APIs billed per 1M tokens (as of 2026-10-29)",
+   "apiAvailable": true,
    "directAlternatives": [
     "Cohere",
     "AI21 Labs (Jamba)",
@@ -10012,7 +10012,7 @@
     "Cohere (free tier)",
     "AI21 Labs (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "international-regional-ai",
     "name": "International & Regional AI"
