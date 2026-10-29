@@ -7,7 +7,7 @@ export const sciteTutorial: PlatformTutorialData = {
   tagline:
     "Checking whether a scientific paper has been backed up or shot down by the research that came after it.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-15",
+  lastReviewedAt: "2026-10-29",
   accessTier: "PREMIUM",
 
   howItWorks:
@@ -21,8 +21,8 @@ export const sciteTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "This is not free in the way most things on this site are. Scite's free \"Connect\" plan gives you a small monthly allowance of **credits** (the platform's unit of spend — each thing you do costs some) for a connector that pipes Scite's data into ChatGPT, Claude or Gemini. It does not get you into Scite's own site: the pricing table lists Connect as having no Assistant and no search. Scite's Assistant page separately says you start a free trial \"to save and access your chat history\", which reads as though you might get a question or two in without one — the two pages disagree, so assume you will need the trial.",
-    "Paid access starts with Basic, billed a year at a time. Scite's pricing page shows only the annual rate; paying month to month costs more, but the page does not print that figure. Pro adds bigger collections plus patent, clinical trial and grant data. There is a 7-day free trial and you create an account to start it.",
+    "This is not free in the way most things on this site are: **Scite has no free plan.** Its pricing page lists Basic and Pro, each billed a year at a time, and Enterprise through a sales team. Both Basic and Pro start with a 7-day free trial, you create an account to start it, and when the trial ends you are automatically enrolled in the plan you picked — so set a reminder on day one if you are only testing.",
+    "Pro adds bigger collections, patent, clinical trial and grant data, and access to Scite's **API** (the route other software uses to pull Scite data). Both paid plans include a monthly allowance of **MCP credits** — the units spent when an AI assistant such as ChatGPT, Claude or Gemini pulls Scite data through its connector — with Pro's allowance far larger. The pricing page does not say how many MCP credits, if any, come with the trial. The page shows only yearly billing and prints no month-to-month price.",
     "Before paying, check whether your university or employer already subscribes — Scite sells institutional plans through a sales team, and library access is how many people get in. Scite's pricing page also points students and academics at its support address for a discount.",
     "**The coverage gap matters more than the price.** Scite indexes around 317 million articles but holds only about 41 million of them in full text, and a Smart Citation can only be pulled from full text it holds. Its published partner list — 35-plus publishers, last updated June 2026 — includes Wiley, SAGE, Cambridge University Press and the Royal Society of Chemistry, but does not name Elsevier, Springer Nature, Taylor & Francis, IEEE or Oxford University Press. Whole fields will look thinner on Scite than they are. Scite says it adds partners over time, so a publisher missing today may be covered later; check the coverage page rather than trusting a list you read once.",
     "The browser extension is a separate, free thing and runs on Chrome, Firefox, Edge and Safari. Scite describes it as a free extension; you may need to sign in to a free account once it is installed, which is worth checking on the day.",

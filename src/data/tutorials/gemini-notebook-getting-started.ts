@@ -1,32 +1,33 @@
 import type { PlatformTutorialData } from "./types";
 
-export const notebooklmTutorial: PlatformTutorialData = {
-  slug: "notebooklm-getting-started",
-  platformSlug: "notebooklm",
-  title: "Getting Started with NotebookLM",
+export const geminiNotebookTutorial: PlatformTutorialData = {
+  slug: "gemini-notebook-getting-started",
+  platformSlug: "gemini-notebook",
+  title: "Getting Started with Gemini Notebook (formerly NotebookLM)",
   tagline:
-    "Upload your own documents and NotebookLM answers questions using only those sources — with citations, and even a podcast-style audio summary.",
+    "Upload your own documents and Gemini Notebook answers questions using only those sources — with citations, and even a podcast-style audio summary.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
     "You create a notebook, add your sources — files, links, notes — and then chat with them: ask for a summary, a comparison, an explanation, and it answers from those documents only, with citations you click to see the passage. Add another source and ask again; the answers change with what's in the notebook.",
 
   whatItIs: [
-    "NotebookLM is Google's **source-grounded research assistant.** You upload your own material — PDFs, Google Docs, web pages, YouTube videos, notes — and it answers questions using **only those sources**, citing exactly where each answer came from. Because it's anchored to what you gave it, it rarely makes things up. It also turns your sources into study aids: an **Audio Overview** (a podcast-style conversation about your material), video overviews, mind maps, flashcards, and summaries. It's for students, researchers, and anyone making sense of a stack of documents.",
+    "Gemini Notebook — called NotebookLM until Google renamed it on 16 July 2026 — is Google's **source-grounded research assistant.** You upload your own material — PDFs, Google Docs, web pages, YouTube videos, notes — and it answers questions using **only those sources**, citing exactly where each answer came from. Because it's anchored to what you gave it, it rarely makes things up. It also turns your sources into study aids: an **Audio Overview** (a podcast-style conversation about your material), video overviews, mind maps, flashcards, and summaries. It's for students, researchers, and anyone making sense of a stack of documents.",
+    "Google calls the rename \"the same standalone product, now doing more across the Google ecosystem\": you can also open and create notebooks inside the Gemini app, synced with the standalone site at notebook.google.com. Old NotebookLM links redirect there.",
   ],
 
   beforeYouStart: [
-    "Free with a Google account, no time limit: up to 100 notebooks, 50 sources each, and a daily chat allowance that covers a real study session, plus a few Audio Overviews a day. Most people never need to pay.",
-    "**Paid tiers** (bundled into Google's AI plans, which start at a low monthly price) mainly raise those limits and add heavier features.",
+    "Free with a Google account, no time limit. Google's help center lists up to 100 notebooks and 50 sources per notebook without a plan. Chatting and the studio features run on compute-based usage limits that refresh every five hours, up to a weekly limit — enough for a real study session, and most people never need to pay.",
+    "**Paid tiers** (bundled into Google's AI plans, which start at a low monthly price) raise those limits — Google's help center says AI Plus gives two times the standard usage and AI Pro four times — and add heavier features.",
     "One structural thing to know: it's **cloud-only** (no offline mode), and every source caps at a large but real size limit — a single enormous file may not import.",
   ],
 
   security: [
     {
       kind: "text",
-      text: "NotebookLM's defining trait is that it answers **only from the sources you upload**, with citations — so unlike an open chatbot, it rarely fabricates, and you can trace every answer back to a specific document. That grounding is the whole point.",
+      text: "Gemini Notebook's defining trait is that it answers **only from the sources you upload**, with citations — so unlike an open chatbot, it rarely fabricates, and you can trace every answer back to a specific document. That grounding is the whole point.",
     },
     {
       kind: "list",
@@ -68,7 +69,7 @@ export const notebooklmTutorial: PlatformTutorialData = {
       whatItDoes:
         "Create a notebook and upload a few related documents — a PDF, a Google Doc, a web article on one topic.",
       whyHere:
-        "Everything grounds on your sources; this is the step that makes NotebookLM different from a chatbot.",
+        "Everything grounds on your sources; this is the step that makes Gemini Notebook different from a chatbot.",
       tweak: "Start with material you already need to understand — lecture notes, a report, a contract.",
     },
     {
@@ -83,7 +84,7 @@ export const notebooklmTutorial: PlatformTutorialData = {
       whatItDoes:
         "Create the podcast-style Audio Overview and listen to two AI hosts discuss your sources.",
       whyHere:
-        "It's the feature that made NotebookLM famous, and a genuinely different way to absorb dense material.",
+        "It's the feature that made the product famous back when it was called NotebookLM, and a genuinely different way to absorb dense material.",
       tweak: "Great for reviewing on a commute — but still check the citations for anything you'll rely on.",
     },
   ],

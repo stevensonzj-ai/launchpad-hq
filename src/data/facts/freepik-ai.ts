@@ -27,17 +27,18 @@ export default {
         limits: "$33.75/mo billed annually",
       },
       {
-        name: "Pro",
+        name: "Pro Starter",
         price: "$110",
         period: "month",
         limits: "$82.50/mo billed annually",
       },
     ],
+    note: "The pricing page labels the third plan \"Pro Starter\" (renamed from \"Pro\" here on 2026-10-29). Its card lists two credit levels, 1.5M and 4M credits a year; the price shown is the card's listed price.",
     sourceUrl: "https://www.magnific.com/pricing",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    checkedAt: "2026-10-29",
+    gatheredBy: "claude-subagent",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-29",
     status: "verified",
   },
   platforms: {
@@ -75,6 +76,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary: "Third plan renamed Pro -> Pro Starter to match the pricing page; all three prices re-read (unchanged).",
+    },
     {
       date: "2026-10-14",
       field: "displayName",

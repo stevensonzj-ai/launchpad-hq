@@ -35,7 +35,8 @@ describe("catalog audit 11: owner-checked Krisp and GitHub Copilot", () => {
     for (const patch of AUDIT_11_PATCHES.filter((p) => p.verified)) {
       const f = getToolFacts(patch.slug)!;
       assert.equal(f.plans?.status, "verified", patch.slug);
-      assert.equal(f.plans?.checkedAt, CHECKED_AT, patch.slug);
+      // Dated by this audit, or re-checked since (Canva: guide PR D, 2026-10-29).
+      assert.ok((f.plans?.checkedAt ?? "") >= CHECKED_AT, patch.slug);
       const planText = (f.plans?.value ?? []).map((p) => `${p.price} ${p.limits}`).join(" ");
       for (const field of ["currentPricing", "freeTierFeatures", "usageLimits", "description"] as const) {
         for (const price of patch.fields?.[field]?.match(/\$\d[\d,]*(\.\d+)?/g) ?? []) {

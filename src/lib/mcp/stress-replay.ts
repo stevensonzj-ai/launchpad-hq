@@ -86,7 +86,7 @@ export const RULES: Record<string, (r: CallResult) => Verdict> = {
     return pass(t.length >= 3 && t.every((i) => ["BEGINNER", "INTERMEDIATE"].includes(i.difficulty)) && !has(t, "cline"), "beginner+free: no advanced agent in the top 3");
   },
   A13: (r) => pass(has(top(r), "github-copilot"), "GitHub Copilot in the top 5"),
-  A14: (r) => pass(direct(top(r)).length >= 3 && count(top(r), ["khan-academy-khanmigo", "chatgpt", "gemini", "quizlet-q-chat", "notebooklm"]) >= 2, "3+ direct study tools"),
+  A14: (r) => pass(direct(top(r)).length >= 3 && count(top(r), ["khan-academy-khanmigo", "chatgpt", "gemini", "quizlet-q-chat", "gemini-notebook"]) >= 2, "3+ direct study tools"),
   A15: (r) => pass(tagged(top(r), "research-papers").length >= 4, "research-paper tools"),
   A16: (r) => pass(has(top(r, 3), "gamma"), "Gamma top 3"),
   A17: (r) => pass(direct(top(r)).length >= 3 && has(top(r), "julius-ai") && count(top(r), GENERAL) >= 1, "Julius plus a general assistant"),

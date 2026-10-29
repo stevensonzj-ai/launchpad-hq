@@ -1,5 +1,7 @@
 import type { ToolFacts } from "./types";
 
+// The pricing page's metadata may still quote an older $29.99 price (RA,
+// 2026-10-29); ignore it. The plan table is the source.
 export default {
   slug: "lindy-ai",
   lifecycle: "active",
@@ -7,23 +9,24 @@ export default {
     value: [
       {
         name: "Team",
-        price: "from $29.99/mo per active user (3,000 credits each)",
+        price: "from $49.99/mo per active user (5,000 credits each)",
         period: "",
-        limits: "Every active user in the workspace is billed",
+        limits:
+          "Every active user in the workspace is billed; credits pool across the team. Credit tiers run up to 1,750,000 credits for $9,999.50; top-ups $10 per 1,000 credits",
       },
       {
         name: "Enterprise",
         price: "custom",
         period: "",
-        limits: "",
+        limits: "Custom credits and billing",
       },
     ],
-    note: 'USD. "$50 in credits for free… Free credits last 7 days" is a 7-day trial, not a permanent free plan, so no free tier is recorded. Company omitted (footer names no legal entity).',
+    note: 'USD. Billed monthly; the pricing page lists no annual plan. "$50 in credits for free… Free credits last 7 days" (no card) is a 7-day trial, not a permanent free plan, so no free tier is recorded. Company omitted (footer names no legal entity).',
     sourceUrl: "https://www.lindy.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedAt: "2026-10-29",
     status: "verified",
   },
   platforms: {
@@ -46,6 +49,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary:
+        "RA: Team now from $49.99/mo per active user (5,000 credits each), tiers up to 1,750,000 credits for $9,999.50, top-ups $10 per 1,000. Monthly billing only. Replaces $29.99 / 3,000 credits.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

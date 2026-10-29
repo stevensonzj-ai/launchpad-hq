@@ -1,4 +1,14 @@
-import type { PlatformTutorialData } from "./types";
+import type { PlatformTutorialData } from "../types";
+
+/**
+ * RETIRED 2026-10-29 (guide PR D), kept so the page can be restored.
+ * Not registered in ../index.ts: /platform/clarifai/guide 301s to the
+ * platform page (RETIRED_GUIDE_SLUGS in src/lib/catalog-redirects.ts), and
+ * the platform page is hidden (src/data/facts/clarifai.ts). To restore,
+ * move this file back to src/data/tutorials/, re-register it in index.ts,
+ * and remove "clarifai" from RETIRED_GUIDE_SLUGS and the fact file's
+ * visibility. The text below is unchanged from its 2026-09-19 review.
+ */
 
 export const clarifaiTutorial: PlatformTutorialData = {
   slug: "clarifai-getting-started",

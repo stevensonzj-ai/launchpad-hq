@@ -5,9 +5,9 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
   platformSlug: "adobe-firefly",
   title: "Getting Started with Adobe Firefly",
   tagline:
-    "Adobe's image generator, built to be commercially safe — trained only on licensed and public-domain content, with legal backing for paying users.",
+    "Adobe's image generator, built around commercial safety — though the safety story covers Adobe's own models, not every model now in the app.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://helpx.adobe.com/firefly/using/whats-new.html",
   accessTier: "FREE",
 
@@ -15,38 +15,39 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
     "You describe the image you want and it generates several options in seconds. You pick one and refine it — change the style, the shape of the frame, ask for more variations — until you have something worth keeping.",
 
   whatItIs: [
-    "Firefly is Adobe's **generative AI for images** (and increasingly video, audio, and vector art). You describe what you want and it generates it — as a standalone web app, and baked into Adobe tools like Photoshop (Generative Fill) and Illustrator. What sets it apart isn't image quality — Midjourney generally beats it there — it's **legal safety**: Firefly was trained only on content Adobe has the rights to, which is why Adobe can stand behind commercial use in a way most generators can't. It's aimed at marketers, designers, and businesses who need images they can actually use without a copyright headache. Every Firefly image also carries **Content Credentials** — invisible provenance metadata marking it as AI-generated, part of Adobe's transparency push.",
+    "Firefly is Adobe's **generative AI for images** (and increasingly video, audio, and vector art). You describe what you want and it generates it — as a standalone web app, and baked into Adobe tools like Photoshop (Generative Fill) and Illustrator. What sets it apart isn't image quality — Midjourney generally beats it there — it's **legal safety**: Adobe says its own Firefly models are trained on licensed content such as Adobe Stock and on public-domain material, which is why it can stand behind commercial use in a way most generators can't. It's aimed at marketers, designers, and businesses who need images they can actually use without a copyright headache. Every Firefly output also carries **Content Credentials** — provenance metadata marking it as AI-made, part of Adobe's transparency push.",
+    "**One app, two kinds of model.** The Firefly app now also offers **partner models** from other companies — Adobe's product page lists Google's Nano Banana, OpenAI's GPT Image, FLUX, Runway, Luma and ElevenLabs among them. Those are not Adobe's models, and Adobe's licensed-training description is about its own. The model picker tells you which one you're using; for commercial work, that choice matters more than anything else on this page.",
   ],
 
   beforeYouStart: [
-    "The free plan needs only a free Adobe ID (no card) and gives a small monthly batch of credits — enough to try it. Outputs have **no watermark** and are licensed for commercial use, but the free tier is **not** covered by Adobe's legal indemnity (see security).",
-    "**Standalone paid plans add more monthly credits**, and if you already pay for Creative Cloud, Firefly credits are usually bundled in.",
+    "The free plan needs only a free Adobe ID (no card). Adobe's product page describes it as giving \"free daily generations to try Adobe Firefly\" — enough to try it, not to run a campaign on.",
+    "**Paid plans add more generations and access to more models**, and if you already pay for Creative Cloud, check your plan before buying — Firefly use may already be included. Check what a generation costs on the model you pick before you run a big batch.",
     "The headline reason to choose Firefly over a flashier generator is the commercial-safety story below — understand exactly what it does and doesn't cover before you rely on it.",
   ],
 
   security: [
     {
       kind: "text",
-      text: "Firefly's whole pitch is **commercial safety**: it's trained only on **licensed content (Adobe Stock), openly-licensed, and public-domain** material — not scraped from the open web — and Adobe **does not train Firefly on your prompts or uploads.** That clean training data is why Adobe can offer the legal backing below, which most generators can't.",
+      text: "Firefly's whole pitch is **commercial safety**. Adobe says its own Firefly models are \"trained on a dataset of licensed content, such as Adobe Stock, and public domain content where copyright has expired\" — not scraped from the open web. Adobe does not describe how the **partner** models in the app were trained. On your own material the promise covers both: Adobe says user content in its apps is not used to train generative AI models, \"whether those models are from Adobe or its partners.\"",
     },
     {
       kind: "list",
       label: "The indemnity is real — and narrower than the marketing",
       items: [
-        "On **paid** plans, Adobe offers **IP indemnification**: if a Firefly-generated image is hit with a copyright claim, Adobe will defend you and cover it. **Free-tier outputs are NOT covered.**",
+        "Adobe's own page on its approach says it \"provides intellectual property indemnification for **enterprise customers** for content generated with Adobe Firefly.\" That is a promise to business customers on enterprise contracts about Adobe's own models. Nothing on that page extends it to individual plans — free or paid — or to images made with a partner model.",
         "It only backs **clean, on-policy** generations. The moment your prompt names a **real brand, character, or person**, you've stepped outside the safe zone — \"trained on licensed data\" does not make a trademark-infringing prompt safe.",
-        "It doesn't extend to third-party integrations/API wrappers or to reference images you upload — the coverage is for standard Firefly outputs on a paid plan.",
+        "If legal backing is the reason you chose Firefly, generate with an Adobe Firefly model, and if you are buying for a company, ask Adobe in writing which models and features your contract's indemnity covers.",
       ],
     },
     {
       kind: "text",
-      text: "Separate but important: indemnity protects you from infringing **someone else's** copyright; it does **not** give you a copyright **in** your image. As with any generator, a pure prompt-to-image result may not be copyrightable — so you can use it commercially, but you may not be able to stop others from using something similar.",
+      text: "Separate but important: indemnity protects against claims that you infringed **someone else's** copyright; it does **not** give you a copyright **in** your image. As with any generator, a pure prompt-to-image result may not be copyrightable — so you can use it commercially, but you may not be able to stop others from using something similar.",
     },
   ],
 
   triad: {
     bestAt: [
-      "Commercially safe images for ads, marketing, and client work",
+      "Commercially safe images for ads, marketing, and client work, using Adobe's own models",
       "Generative Fill / Expand inside Photoshop and Illustrator",
       "Business use where legal defensibility matters more than raw artistry",
       "Clean, on-brand product and marketing visuals",
@@ -57,7 +58,7 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
       "Photorealistic close-up faces and hands (improving, still imperfect)",
     ],
     avoid: [
-      "Relying on the free tier for indemnified commercial work (it isn't covered)",
+      "Counting on indemnity outside an enterprise contract, or for a partner model",
       "Prompts naming real brands, characters, or people (voids the safe zone)",
       "Assuming 'commercially safe' means you own a copyright in the output",
     ],
@@ -90,7 +91,8 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**The free tier isn't indemnified.** The legal safety net that's Firefly's whole selling point only applies to paid plans.",
+    "**Indemnity is an enterprise promise about Adobe's own models.** Adobe describes it for enterprise customers; a personal plan, free or paid, isn't where that safety net lives.",
+    "**Picking a partner model changes the story.** Nano Banana, GPT Image, FLUX and the rest sit in the same picker as Adobe's models, but Adobe's licensed-training description is about its own models only.",
     "**Naming real IP breaks the safe zone.** Clean prompts are protected; \"make me a [famous character]\" is not.",
     "**Commercial-safe is not the same as you-own-the-copyright.** You can use it; you may not be able to stop others copying it.",
   ],

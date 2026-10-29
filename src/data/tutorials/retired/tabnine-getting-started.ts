@@ -1,4 +1,15 @@
-import type { PlatformTutorialData } from "./types";
+import type { PlatformTutorialData } from "../types";
+
+/**
+ * RETIRED 2026-10-29 (guide PR D), kept for the record. Tricentis acquired
+ * Tabnine (announced 2026-07-30) and no standalone Tabnine plans are sold, so
+ * there is nothing for a new reader to get started with. Not registered in
+ * ../index.ts: /platform/tabnine/guide 301s to the platform page
+ * (RETIRED_GUIDE_SLUGS in src/lib/catalog-redirects.ts), which carries the
+ * "what happened" notice (src/data/facts/tabnine.ts). The text below is
+ * unchanged from its 2026-09-08 review and its pricing is out of date; re-verify
+ * everything before restoring it.
+ */
 
 export const tabnineTutorial: PlatformTutorialData = {
   slug: "tabnine-getting-started",

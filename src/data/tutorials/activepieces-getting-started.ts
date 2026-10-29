@@ -22,7 +22,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The free cloud plan is a plan, not a trial.** No card, unlimited flows, a small team of users, and a daily credit allowance — a fresh batch each morning rather than a monthly bucket, so running out today never eats into tomorrow.",
+    "**The free cloud plan is a plan, not a trial.** No card, unlimited flows, a small team of users, and a credit allowance that the pricing table gives as a monthly figure refreshing daily, so running out today never eats into tomorrow. The same page's FAQ says monthly in one answer and next day in another; go by the table, and check it on the day.",
     "Run out and nothing breaks. The pricing page says your flows stay switched on and runs past the quota simply don't go through until credits refresh the next day. A mistake on this platform costs you a day, not a month.",
     "You would start paying when the free daily allowance stops being enough, or when your team outgrows the small-team user limit. Plus and Team are flat monthly plans with much larger credit allowances, and runs beyond the allowance are billed per credit. AI steps cost more credits the more capable the model is, and a paid plan lets you plug in your own AI account to bring every AI step back down to the cost of an ordinary run.",
     "Worth checking before you commit anything real: the Activepieces cloud runs by default in a European region (Frankfurt, Germany), with other regions available on request. If your work has to sit somewhere else, running it yourself is the answer rather than the cloud.",
@@ -38,7 +38,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
       kind: "list",
       label: "Worth knowing before you switch a flow on",
       items: [
-        "The free plan is one person. There is no way to let a colleague in without handing over your own login — adding people is what the paid plans are for.",
+        "The free plan takes a small team, so invite colleagues as their own users rather than sharing your login.",
         "Templates and pieces are written in the open by a lot of different contributors. That is exactly why the library is so wide, and exactly why you read what a template's steps do before you connect a real account to it.",
         "If you self-host, a new version ships every Monday. Installing it is now your job, not theirs.",
       ],
@@ -52,7 +52,7 @@ export const activepiecesTutorial: PlatformTutorialData = {
       "Keeping an automation running on hardware you own, indefinitely, without asking anyone's permission",
     ],
     okayAt: [
-      "Working as a team on the free plan, which is one person with no separate projects",
+      "Working as a team on the free plan, which allows a few users but no separate projects",
       "Cloud work under a data-location requirement outside Europe, unless you ask Activepieces about another region",
       "Staying entirely clear of technical vocabulary — the cloud side is click-based, but the self-hosting half of the story is written for people comfortable running a server",
     ],

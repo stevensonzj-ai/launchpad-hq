@@ -48,7 +48,26 @@ export default {
     verifiedAt: "2026-10-20",
     status: "verified",
   },
+  features: {
+    value: [
+      "August 2026: added a Canvas for chaining image, video, audio and text generation steps, and a 3D Editor for laying out scenes.",
+      "The Canvas calls third-party models, including Kling, MiniMax, Seedance and Veo video models, ElevenLabs voice models, and Claude, Gemini and GPT text models.",
+      "August 2026: introduced \"more granular pricing controls per model and configuration.\"",
+      "September 2026: 3D assets can be exported to Autodesk Fusion; Text, Audio and Panorama nodes added to the Canvas.",
+    ],
+    sourceUrl: "https://help.wonderdynamics.com/release-notes/",
+    checkedAt: "2026-10-29",
+    gatheredBy: "claude-subagent",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-29",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "features",
+      summary: "Added Canvas, 3D Editor and third-party model support from the official release notes.",
+    },
     {
       date: "2026-10-20",
       field: "displayName",

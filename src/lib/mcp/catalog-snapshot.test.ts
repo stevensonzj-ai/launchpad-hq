@@ -4,6 +4,7 @@ import * as path from "path";
 import { describe, it } from "node:test";
 import { audit10Slugs } from "@/data/catalog-audits/audit-10";
 import { getToolFacts } from "@/data/facts";
+import { AUDIT_15_PATCHES, AUDIT_15_RENAMES } from "@/data/catalog-audits/audit-15";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
 import { loadSnapshot } from "./snapshot";
 import { toPlatformRef } from "./tools";
@@ -31,6 +32,19 @@ const P13C_CHANGED = ["krisp", "deepseek", "invideo-ai", "jasper", "openai-api"]
 const P13_FIELDS = new Set([
   "name", "description", "cost_tier", "free_tier", "starting_price", "tasks", "verification", "as_of", "source_url", "stale", "freshness_note",
 ]);
+/**
+ * Catalog audit 15 (guide PR D, 2026-10-29) moved some observed tools to new
+ * slugs and names. They are looked up under the new slug, and only the
+ * fields a rename changes may differ.
+ */
+const AUDIT_15_MOVES = new Map(AUDIT_15_RENAMES.map((r) => [r.from, r.to]));
+/**
+ * Audit 15 also patches pricing rows (Tabnine, Scite, Lindy, Activepieces)
+ * and Scite gained a fact file; those tools may differ on the same
+ * fields fix P1.3 changed.
+ */
+const AUDIT_15_PATCHED = AUDIT_15_PATCHES.map((p) => p.slug);
+const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "source_url", "stale", "freshness_note"]);
 describe("catalog snapshot", () => {
   const snap = loadSnapshot();
 
@@ -40,7 +54,8 @@ describe("catalog snapshot", () => {
     const hidden = new Set(hiddenPlatformSlugs());
     assert.deepEqual(slugs.filter((s) => hidden.has(s)), []);
     assert.equal(snap.rows.length + snap.hidden_rows.length, snap.db_rows);
-    assert.equal(snap.rows.length, 221);
+    // 221 until guide PR D hid clarifai (2026-10-29).
+    assert.equal(snap.rows.length, 220);
   });
 
   it("reproduces every tool the live stress test returned", () => {
@@ -49,10 +64,11 @@ describe("catalog snapshot", () => {
     ) as Record<string, unknown>[];
     assert.ok(observed.length >= 75);
     const bySlug = new Map(snap.rows.map((r) => [r.slug, r]));
-    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED]);
+    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED]);
     const diffs: string[] = [];
     for (const o of observed) {
-      const row = bySlug.get(o.slug as string);
+      const moved = AUDIT_15_MOVES.get(o.slug as string);
+      const row = bySlug.get(moved ?? (o.slug as string));
       if (!row) {
         diffs.push(`${o.slug}: missing`);
         continue;
@@ -60,6 +76,7 @@ describe("catalog snapshot", () => {
       const ref = toPlatformRef(row, getToolFacts(row.slug)) as unknown as Record<string, unknown>;
       for (const key of Object.keys(o)) {
         if (changedByP13.has(row.slug) && P13_FIELDS.has(key)) continue;
+        if (moved && AUDIT_15_FIELDS.has(key)) continue;
         if (JSON.stringify(ref[key]) !== JSON.stringify(o[key])) diffs.push(`${o.slug}.${key}: ${JSON.stringify(ref[key])} != ${JSON.stringify(o[key])}`);
       }
     }

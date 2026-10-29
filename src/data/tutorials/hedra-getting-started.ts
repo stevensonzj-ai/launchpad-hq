@@ -6,7 +6,7 @@ export const hedraTutorial: PlatformTutorialData = {
   title: "Getting Started with Hedra",
   tagline: "Turn one photo of a face and a voice recording into a talking video — under a rule about whose face that can be that is stricter than most beginners expect.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-15",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -21,8 +21,9 @@ export const hedraTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "**The only real person you may put into Hedra is you.** Hedra's Acceptable Use Policy (the live page carries no date; its download link is the version filed as 31 July 2024, seen 15 October 2026) forbids using the service \"to input, generate, or create output that contains personal information related to any individual other than yourself, including (without limitation) any photos, audio, videos or any other media containing individuals other than yourself.\" The single exception is images of people who \"died at least one hundred years ago.\" The same policy separately bans deepfakes — impersonating real people or creating fake personas \"without consent or legal right.\" Note that the photo-and-audio rule has no permission exception: a friend, a parent, a colleague or a client saying \"yes\" does not, on the policy's wording, make their face or voice allowed. Hedra's own face-swap help article says only to \"use faces you have permission to use\", which is looser; where the two disagree, the policy is the binding document, so follow it. Your own face and voice, characters you generate inside Hedra, and Hedra's library voices are the safe inputs. Breaking the policy lets Hedra suspend or close your account.",
-    "Signing up is free and needs no credit card. Everything you make is paid for in credits (the platform's unit of spend — each thing you make costs some), and Hedra does not publish how many credits the free plan includes. Costs differ from model to model, so check the picker's number rather than guessing.",
-    "Paid plans are monthly subscriptions — Basic, Pro, Ultra and Teams, each with its own monthly credit allowance — with Enterprise priced on request. Hedra's billing help says monthly credits reset each cycle and do not carry over, while one-off credit packs you buy separately do not expire. Its terms say a subscription renews automatically at the then-current price until you cancel; cancelling stops billing, and you keep your credits until the period ends.",
+    "**Don't be thrown by the pricing page.** hedra.com/pricing now opens on per-second and per-image rates, under the line \"No subscription, no seats, no minimum.\" Those are for Hedra's developer API, which bills from a prepaid dollar balance; Hedra's docs say that wallet \"is separate from Studio subscription credits.\" The browser studio this page covers still runs on subscriptions and credits.",
+    "Everything you make in the studio is paid for in credits (the platform's unit of spend — each thing you make costs some). Hedra's pricing page does not describe a free plan; its FAQ says that after you cancel you keep only \"limited watermarked generations.\" Costs differ from model to model, so check the picker's number rather than guessing.",
+    "Studio plans are monthly subscriptions starting at {{from:hedra}}, each with its own monthly credit allowance, with Enterprise priced on request. Hedra's billing help says monthly credits reset each cycle and do not carry over, while one-off credit packs you buy separately do not expire. Its terms say a subscription renews automatically at the then-current price until you cancel; cancelling stops billing, and you keep your credits until the period ends.",
     "Hedra's privacy policy says the service is not intended for anyone under 18.",
   ],
 

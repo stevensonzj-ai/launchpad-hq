@@ -1,10 +1,11 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audit 15 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
   "canva-magic-studio",
+  "clarifai",
   "kakao-brain-karlo",
   "relay-app"
  ],
@@ -22,9 +23,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free $0 (1,000 credits); Plus $20/mo flat (10,000 credits/mo, then $0.007/credit); Team $200/mo flat (50,000 credits/mo, 25 users); Ultimate custom; Embed from $36k/year (as of 2026-10-25)",
-   "freeTierFeatures": "Free forever, no card: 1,000 credits, unlimited flows, up to 5 users. The page lists the Free reset as daily in its comparison table but monthly in its FAQ (as of 2026-10-25)",
-   "usageLimits": "Cloud Free: 1,000 credits (runs past the quota wait for the reset); Plus: 10,000 credits/mo; Team: 50,000 credits/mo; Ultimate: yearly pool; self-hosted Community Edition is free (official, as of 2026-10-25)",
+   "currentPricing": "Free $0 (1,000 credits a month, refreshing daily); Plus $20/mo flat (10,000 credits/mo, then $0.007/credit); Team $200/mo flat (50,000 credits/mo, 25 users); Ultimate custom; Embed from $36k/year (as of 2026-10-29)",
+   "freeTierFeatures": "Free forever, no card: 1,000 credits a month, refreshing daily (per the pricing table), unlimited flows, up to 5 users (as of 2026-10-29)",
+   "usageLimits": "Cloud Free: 1,000 credits a month, refreshing daily (runs past the quota wait for the next day); Plus: 10,000 credits/mo; Team: 50,000 credits/mo; Ultimate: yearly pool; self-hosted Community Edition is free (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "n8n",
@@ -36,7 +37,7 @@
     "Zapier",
     "Make (Activepieces self-hosted is already free)"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -100,10 +101,10 @@
    ],
    "budgetAlternativeTo": [
     "ChatPDF (free)",
-    "NotebookLM (free)",
+    "Gemini Notebook (free)",
     "Claude (free file uploads)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -542,7 +543,7 @@
    "usageLimits": "Free: limited trial per model; pay-per-use after; volume discounts; Provisioned Throughput option",
    "apiAvailable": true,
    "directAlternatives": [
-    "Google Vertex AI",
+    "Gemini Enterprise Agent Platform",
     "Azure OpenAI Service",
     "OpenAI API",
     "Anthropic API"
@@ -551,7 +552,7 @@
     "OpenAI API (simpler)",
     "Together AI (cheaper)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -609,14 +610,13 @@
    "directAlternatives": [
     "GitHub Copilot",
     "Cursor",
-    "Devin Desktop",
-    "Tabnine"
+    "Devin Desktop"
    ],
    "budgetAlternativeTo": [
     "GitHub Copilot Free",
     "Aider"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -673,7 +673,7 @@
    "apiAvailable": true,
    "directAlternatives": [
     "OpenAI API",
-    "Google Vertex AI",
+    "Gemini Enterprise Agent Platform",
     "Amazon Bedrock",
     "Azure OpenAI Service"
    ],
@@ -682,7 +682,7 @@
     "Together AI",
     "OpenAI API (GPT-4o-mini is cheaper)"
    ],
-   "updatedAt": "2026-10-14",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -853,7 +853,7 @@
    "apiAvailable": true,
    "directAlternatives": [
     "OpenAI API (direct)",
-    "Google Vertex AI",
+    "Gemini Enterprise Agent Platform",
     "Amazon Bedrock",
     "Anthropic API"
    ],
@@ -861,7 +861,7 @@
     "OpenAI API (simpler",
     "same models)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -1571,10 +1571,10 @@
     "Claude (file upload)"
    ],
    "budgetAlternativeTo": [
-    "NotebookLM (free)",
+    "Gemini Notebook (free)",
     "Claude free (file upload)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -1604,70 +1604,6 @@
     "Grammarly (writing)",
     "Notion AI (notes)",
     "Google Drive (storage)"
-   ],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "clarifai",
-   "name": "Clarifai",
-   "company": "Clarifai",
-   "website": "https://clarifai.com",
-   "description": null,
-   "primaryUse": "AI computer vision and NLP platform",
-   "primaryUseCases": "Image/video recognition; visual search; content moderation; custom model training; ML pipeline",
-   "costTier": "FREE",
-   "difficultyLevel": "INTERMEDIATE",
-   "platformType": [
-    "api"
-   ],
-   "currentPricing": "Free tier; Enterprise custom",
-   "freeTierFeatures": "Free: 1,000 operations/month; community plan; basic models",
-   "usageLimits": "Free: 1K ops/mo; Essential: 10K; Professional: 100K; Enterprise: custom",
-   "apiAvailable": true,
-   "directAlternatives": [
-    "Scale AI",
-    "Google Vertex AI",
-    "Amazon Bedrock (different scope)"
-   ],
-   "budgetAlternativeTo": [
-    "Google Vertex AI (free tier)",
-    "Hugging Face (open models)"
-   ],
-   "updatedAt": "2026-05-12",
-   "category": {
-    "slug": "ai-apis-developer-services",
-    "name": "AI APIs & Developer Services"
-   },
-   "idealUserTypes": [
-    "Developers",
-    "ML engineers",
-    "enterprises building AI products",
-    "computer vision teams"
-   ],
-   "contentTypes": [
-    "Images",
-    "video",
-    "text",
-    "audio"
-   ],
-   "outputFormats": [
-    "API predictions",
-    "JSON responses",
-    "model deployments"
-   ],
-   "privacyLevel": "HIGH",
-   "timeToProductivity": "2 hours",
-   "learningCurve": "Moderate",
-   "offlineCapable": false,
-   "languageSupport": "English (API); models work across visual content regardless of language",
-   "keyIntegrations": "REST API, Python/Java/Node SDKs, Zapier, various cloud platforms",
-   "upgradeTriggers": "Operation limits; custom model training; dedicated support; SLA; on-premise deployment",
-   "complementaryTools": [
-    "Pinecone (vector search)",
-    "any LLM (text)",
-    "Zapier (automation)"
    ],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -3494,7 +3430,7 @@
     "Perplexity AI"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "text-conversational-ai",
     "name": "Text & Conversational AI"
@@ -3526,8 +3462,8 @@
    "keyIntegrations": "Google Workspace (Docs, Sheets, Gmail, Slides, Drive), Google Maps, YouTube, Extensions",
    "upgradeTriggers": "Heavy usage; needing 2M context; unlimited Deep Research; Google One AI Premium bundle value",
    "complementaryTools": [
-    "NotebookLM (doc research)",
-    "Google Imagen 3 (images)",
+    "Gemini Notebook (doc research)",
+    "Nano Banana (images)",
     "Google Veo 3.1 (video)"
    ],
    "hasMobileApp": true,
@@ -3594,6 +3530,137 @@
     "GitHub (version control)"
    ],
    "hasMobileApp": false,
+   "iosAppUrl": null,
+   "androidAppUrl": null
+  },
+  {
+   "slug": "gemini-enterprise-agent-platform",
+   "name": "Gemini Enterprise Agent Platform",
+   "company": "Google Cloud",
+   "website": "https://cloud.google.com/products/gemini-enterprise-agent-platform",
+   "description": null,
+   "primaryUse": "Enterprise ML/AI platform with Gemini models",
+   "primaryUseCases": "Model serving; Gemini API; custom model training; AutoML; vector search; enterprise AI platform",
+   "costTier": "FREEMIUM",
+   "difficultyLevel": "BEGINNER",
+   "platformType": [
+    "api"
+   ],
+   "currentPricing": "Pay-per-use; various model pricing",
+   "freeTierFeatures": "$300 Google Cloud free trial credits; Gemini API free tier via AI Studio (1,500 req/day)",
+   "usageLimits": "Free: $300 GCP credits + AI Studio free; pay-per-use after; enterprise agreements available",
+   "apiAvailable": true,
+   "directAlternatives": [
+    "Amazon Bedrock",
+    "Azure OpenAI Service",
+    "OpenAI API",
+    "Anthropic API"
+   ],
+   "budgetAlternativeTo": [
+    "OpenAI API (simpler)",
+    "Groq (free tier)"
+   ],
+   "updatedAt": "2026-10-29",
+   "category": {
+    "slug": "ai-apis-developer-services",
+    "name": "AI APIs & Developer Services"
+   },
+   "idealUserTypes": [
+    "Enterprise ML teams",
+    "Google Cloud users",
+    "data scientists",
+    "AI product builders"
+   ],
+   "contentTypes": [
+    "Text",
+    "images",
+    "video",
+    "audio",
+    "embeddings",
+    "custom models"
+   ],
+   "outputFormats": [
+    "API responses",
+    "model predictions",
+    "batch results"
+   ],
+   "privacyLevel": "HIGH",
+   "timeToProductivity": "2 hours",
+   "learningCurve": "Steep",
+   "offlineCapable": false,
+   "languageSupport": "Multilingual",
+   "keyIntegrations": "Google Cloud ecosystem, BigQuery, Cloud Storage, LangChain, TensorFlow, Kubernetes, CI/CD",
+   "upgradeTriggers": "Trial credit expiration; production SLA; higher rate limits; enterprise features; custom models",
+   "complementaryTools": [
+    "BigQuery (data)",
+    "Cloud Storage (files)",
+    "Kubernetes (orchestration)",
+    "Gemini (models)"
+   ],
+   "hasMobileApp": false,
+   "iosAppUrl": null,
+   "androidAppUrl": null
+  },
+  {
+   "slug": "gemini-notebook",
+   "name": "Gemini Notebook",
+   "company": "Google",
+   "website": "https://notebook.google/",
+   "description": null,
+   "primaryUse": "AI Q&A grounded in your uploaded documents",
+   "primaryUseCases": "Study guide creation; source-grounded Q&A; podcast generation from docs; meeting notes analysis",
+   "costTier": "FREE",
+   "difficultyLevel": "BEGINNER",
+   "platformType": [
+    "web"
+   ],
+   "currentPricing": "Free",
+   "freeTierFeatures": "Full access; upload up to 50 sources per notebook; Audio Overview (podcast generation); sharing",
+   "usageLimits": "50 sources/notebook; 500K words/source; limited Audio Overview generations/day",
+   "apiAvailable": false,
+   "directAlternatives": [
+    "ChatPDF",
+    "Anara",
+    "Claude (with file uploads)"
+   ],
+   "budgetAlternativeTo": [
+    "ChatPDF",
+    "Claude free tier"
+   ],
+   "updatedAt": "2026-10-29",
+   "category": {
+    "slug": "text-conversational-ai",
+    "name": "Text & Conversational AI"
+   },
+   "idealUserTypes": [
+    "Students",
+    "researchers",
+    "professionals studying specific documents",
+    "podcast creators"
+   ],
+   "contentTypes": [
+    "Text",
+    "documents",
+    "audio (generated)"
+   ],
+   "outputFormats": [
+    "Text responses",
+    "Audio Overview (podcast-style MP3)",
+    "shareable notebooks"
+   ],
+   "privacyLevel": "HIGH",
+   "timeToProductivity": "10 min",
+   "learningCurve": "Easy",
+   "offlineCapable": false,
+   "languageSupport": "Multilingual (follows source language)",
+   "keyIntegrations": "Google Drive, Google Docs, Google Slides, PDF upload, website URL import",
+   "upgradeTriggers": "NotebookLM Plus for higher limits; team/business features; more Audio Overviews",
+   "complementaryTools": [
+    "Gemini (broader research)",
+    "Google Workspace (source docs)",
+    "Semantic Scholar (find papers)"
+   ],
+   "hasMobileApp": true,
    "iosAppUrl": null,
    "androidAppUrl": null
   },
@@ -3667,14 +3734,12 @@
     "Cursor",
     "Claude Code",
     "Devin Desktop",
-    "Amazon Q Developer",
-    "Tabnine"
+    "Amazon Q Developer"
    ],
    "budgetAlternativeTo": [
-    "Tabnine",
     "Aider (free open-source)"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -3904,67 +3969,6 @@
    "androidAppUrl": null
   },
   {
-   "slug": "google-imagen-3",
-   "name": "Google Imagen 3",
-   "company": "Google DeepMind",
-   "website": "https://deepmind.google/technologies/imagen-3/",
-   "description": null,
-   "primaryUse": "Fast image generation with strong text rendering",
-   "primaryUseCases": "Enterprise image generation; Google Cloud pipelines; Gemini-integrated visual content",
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "Via Gemini; Vertex AI API",
-   "freeTierFeatures": "Available via Gemini free tier (limited); via Vertex AI (pay-per-use)",
-   "usageLimits": "Via Gemini: shared rate limits; via Vertex AI: pay-per-image; via ImageFX: free with limits",
-   "apiAvailable": true,
-   "directAlternatives": [
-    "GPT Image 1.5",
-    "Adobe Firefly",
-    "Midjourney",
-    "FLUX"
-   ],
-   "budgetAlternativeTo": [
-    "GPT Image 1.5",
-    "Midjourney"
-   ],
-   "updatedAt": "2026-04-13",
-   "category": {
-    "slug": "image-generation-editing",
-    "name": "Image Generation & Editing"
-   },
-   "idealUserTypes": [
-    "Google Cloud developers",
-    "enterprise users",
-    "researchers",
-    "Gemini users"
-   ],
-   "contentTypes": [
-    "Images"
-   ],
-   "outputFormats": [
-    "PNG",
-    "JPG"
-   ],
-   "privacyLevel": "HIGH",
-   "timeToProductivity": "5 min",
-   "learningCurve": "Easy",
-   "offlineCapable": false,
-   "languageSupport": "Multilingual prompts",
-   "keyIntegrations": "Gemini, Google Vertex AI, Google Cloud ecosystem",
-   "upgradeTriggers": "Needing API access; higher volume; enterprise features; fewer restrictions",
-   "complementaryTools": [
-    "Gemini (text+image)",
-    "Google Vertex AI (ML pipeline)",
-    "Google Veo 3.1 (video)"
-   ],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
    "slug": "google-lyria-3",
    "name": "Google Lyria 3",
    "company": "Google DeepMind",
@@ -4052,7 +4056,7 @@
     "Runway",
     "Pika"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "video-creation-editing",
     "name": "Video Creation & Editing"
@@ -4078,77 +4082,9 @@
    "upgradeTriggers": "Needing API access; higher volume; enterprise features; longer clips",
    "complementaryTools": [
     "Gemini (scripting)",
-    "Google Imagen 3 (stills)",
+    "Nano Banana (stills)",
     "Google Lyria 3 (audio)",
     "YouTube (distribution)"
-   ],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "google-vertex-ai",
-   "name": "Google Vertex AI",
-   "company": "Google Cloud",
-   "website": "https://cloud.google.com/vertex-ai",
-   "description": null,
-   "primaryUse": "Enterprise ML/AI platform with Gemini models",
-   "primaryUseCases": "Model serving; Gemini API; custom model training; AutoML; vector search; enterprise AI platform",
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "api"
-   ],
-   "currentPricing": "Pay-per-use; various model pricing",
-   "freeTierFeatures": "$300 Google Cloud free trial credits; Gemini API free tier via AI Studio (1,500 req/day)",
-   "usageLimits": "Free: $300 GCP credits + AI Studio free; pay-per-use after; enterprise agreements available",
-   "apiAvailable": true,
-   "directAlternatives": [
-    "Amazon Bedrock",
-    "Azure OpenAI Service",
-    "OpenAI API",
-    "Anthropic API"
-   ],
-   "budgetAlternativeTo": [
-    "OpenAI API (simpler)",
-    "Groq (free tier)"
-   ],
-   "updatedAt": "2026-04-13",
-   "category": {
-    "slug": "ai-apis-developer-services",
-    "name": "AI APIs & Developer Services"
-   },
-   "idealUserTypes": [
-    "Enterprise ML teams",
-    "Google Cloud users",
-    "data scientists",
-    "AI product builders"
-   ],
-   "contentTypes": [
-    "Text",
-    "images",
-    "video",
-    "audio",
-    "embeddings",
-    "custom models"
-   ],
-   "outputFormats": [
-    "API responses",
-    "model predictions",
-    "batch results"
-   ],
-   "privacyLevel": "HIGH",
-   "timeToProductivity": "2 hours",
-   "learningCurve": "Steep",
-   "offlineCapable": false,
-   "languageSupport": "Multilingual",
-   "keyIntegrations": "Google Cloud ecosystem, BigQuery, Cloud Storage, LangChain, TensorFlow, Kubernetes, CI/CD",
-   "upgradeTriggers": "Trial credit expiration; production SLA; higher rate limits; enterprise features; custom models",
-   "complementaryTools": [
-    "BigQuery (data)",
-    "Cloud Storage (files)",
-    "Kubernetes (orchestration)",
-    "Gemini (models)"
    ],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -6093,9 +6029,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Start with $50 in free credits lasting 7 days (no card). Team $29.99/mo for 3,000 credits (pooled); top-ups $10 per 1,000 credits; Enterprise custom (official lindy.ai/pricing, as of 2026-10-14).",
-   "freeTierFeatures": "No ongoing free plan. $50 in free credits, last 7 days, no credit card (official, as of 2026-10-14)",
-   "usageLimits": "Free: limited credits; Starter: 600 credits/mo; Pro: 3,000; Business: custom",
+   "currentPricing": "$50 in free credits lasting 7 days (no card). Team from $49.99/mo per active user for 5,000 credits, in tiers up to 1,750,000 credits for $9,999.50; top-ups $10 per 1,000 credits; Enterprise custom. Billed monthly; no annual plan is listed (official lindy.ai/pricing, as of 2026-10-29).",
+   "freeTierFeatures": "No ongoing free plan. $50 in free credits, last 7 days, no credit card (official, as of 2026-10-29)",
+   "usageLimits": "Free credits: $50, last 7 days; Team: from 5,000 credits per active user a month, pooled across the workspace; Enterprise: custom credits (official, as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Zapier (with AI)",
@@ -6107,7 +6043,7 @@
     "Zapier (basic automation)",
     "ChatGPT (manual agent tasks)"
    ],
-   "updatedAt": "2026-10-14",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -7644,6 +7580,67 @@
    "androidAppUrl": null
   },
   {
+   "slug": "nano-banana",
+   "name": "Nano Banana",
+   "company": "Google DeepMind",
+   "website": "https://gemini.google/overview/image-generation/",
+   "description": null,
+   "primaryUse": "Fast image generation with strong text rendering",
+   "primaryUseCases": "Enterprise image generation; Google Cloud pipelines; Gemini-integrated visual content",
+   "costTier": "FREEMIUM",
+   "difficultyLevel": "BEGINNER",
+   "platformType": [
+    "web"
+   ],
+   "currentPricing": "Via Gemini; Vertex AI API",
+   "freeTierFeatures": "Available via Gemini free tier (limited); via Vertex AI (pay-per-use)",
+   "usageLimits": "Via Gemini: shared rate limits; via Vertex AI: pay-per-image; via ImageFX: free with limits",
+   "apiAvailable": true,
+   "directAlternatives": [
+    "GPT Image 1.5",
+    "Adobe Firefly",
+    "Midjourney",
+    "FLUX"
+   ],
+   "budgetAlternativeTo": [
+    "GPT Image 1.5",
+    "Midjourney"
+   ],
+   "updatedAt": "2026-10-29",
+   "category": {
+    "slug": "image-generation-editing",
+    "name": "Image Generation & Editing"
+   },
+   "idealUserTypes": [
+    "Google Cloud developers",
+    "enterprise users",
+    "researchers",
+    "Gemini users"
+   ],
+   "contentTypes": [
+    "Images"
+   ],
+   "outputFormats": [
+    "PNG",
+    "JPG"
+   ],
+   "privacyLevel": "HIGH",
+   "timeToProductivity": "5 min",
+   "learningCurve": "Easy",
+   "offlineCapable": false,
+   "languageSupport": "Multilingual prompts",
+   "keyIntegrations": "Gemini, Google Vertex AI, Google Cloud ecosystem",
+   "upgradeTriggers": "Needing API access; higher volume; enterprise features; fewer restrictions",
+   "complementaryTools": [
+    "Gemini (text+image)",
+    "Gemini Enterprise Agent Platform (ML pipeline)",
+    "Google Veo 3.1 (video)"
+   ],
+   "hasMobileApp": false,
+   "iosAppUrl": null,
+   "androidAppUrl": null
+  },
+  {
    "slug": "nanonets",
    "name": "Nanonets",
    "company": "Nanonets",
@@ -7818,69 +7815,6 @@
    "androidAppUrl": null
   },
   {
-   "slug": "notebooklm",
-   "name": "Gemini Notebook",
-   "company": "Google",
-   "website": "https://notebook.google/",
-   "description": null,
-   "primaryUse": "AI Q&A grounded in your uploaded documents",
-   "primaryUseCases": "Study guide creation; source-grounded Q&A; podcast generation from docs; meeting notes analysis",
-   "costTier": "FREE",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "Free",
-   "freeTierFeatures": "Full access; upload up to 50 sources per notebook; Audio Overview (podcast generation); sharing",
-   "usageLimits": "50 sources/notebook; 500K words/source; limited Audio Overview generations/day",
-   "apiAvailable": false,
-   "directAlternatives": [
-    "ChatPDF",
-    "Anara",
-    "Claude (with file uploads)"
-   ],
-   "budgetAlternativeTo": [
-    "ChatPDF",
-    "Claude free tier"
-   ],
-   "updatedAt": "2026-10-25",
-   "category": {
-    "slug": "text-conversational-ai",
-    "name": "Text & Conversational AI"
-   },
-   "idealUserTypes": [
-    "Students",
-    "researchers",
-    "professionals studying specific documents",
-    "podcast creators"
-   ],
-   "contentTypes": [
-    "Text",
-    "documents",
-    "audio (generated)"
-   ],
-   "outputFormats": [
-    "Text responses",
-    "Audio Overview (podcast-style MP3)",
-    "shareable notebooks"
-   ],
-   "privacyLevel": "HIGH",
-   "timeToProductivity": "10 min",
-   "learningCurve": "Easy",
-   "offlineCapable": false,
-   "languageSupport": "Multilingual (follows source language)",
-   "keyIntegrations": "Google Drive, Google Docs, Google Slides, PDF upload, website URL import",
-   "upgradeTriggers": "NotebookLM Plus for higher limits; team/business features; more Audio Overviews",
-   "complementaryTools": [
-    "Gemini (broader research)",
-    "Google Workspace (source docs)",
-    "Semantic Scholar (find papers)"
-   ],
-   "hasMobileApp": true,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
    "slug": "notion-ai",
    "name": "Notion AI",
    "company": "Notion Labs",
@@ -8035,14 +7969,14 @@
    "usageLimits": "None (self-hosted, hardware-limited)",
    "apiAvailable": true,
    "directAlternatives": [
-    "Text Generation WebUI (oobabooga)",
+    "TextGen",
     "LibreChat"
    ],
    "budgetAlternativeTo": [
     "ChatGPT/Claude/Gemini (cloud",
     "Open WebUI = free but needs hosting)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -8098,7 +8032,7 @@
    "apiAvailable": true,
    "directAlternatives": [
     "Anthropic API",
-    "Google Vertex AI",
+    "Gemini Enterprise Agent Platform",
     "Amazon Bedrock",
     "Azure OpenAI Service"
    ],
@@ -8107,7 +8041,7 @@
     "Together AI (cheaper)",
     "Fireworks AI"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -10377,9 +10311,9 @@
    ],
    "budgetAlternativeTo": [
     "SciSpace",
-    "NotebookLM (free)"
+    "Gemini Notebook (free)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -10491,14 +10425,14 @@
    "description": null,
    "primaryUse": "AI citation analysis (support vs. contrast)",
    "primaryUseCases": "Citation context analysis; seeing if papers support/contrast claims; research integrity checking",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Premium $20/mo",
-   "freeTierFeatures": "Free: basic search; limited Smart Citation results; community dashboard",
-   "usageLimits": "Free: limited full-text access; Individual: unlimited; Institutional: campus-wide",
+   "currentPricing": "No free plan. Basic $12/mo billed yearly; Pro $40/mo billed yearly (adds API access); Enterprise custom. Basic and Pro start with a 7-day free trial (official, as of 2026-10-29)",
+   "freeTierFeatures": "No free plan. Basic and Pro start with a 7-day free trial, then the chosen plan is billed (official, as of 2026-10-29)",
+   "usageLimits": "Basic: 250 MCP credits/mo; Pro: 2,500 MCP credits/mo plus API access; Enterprise: unlimited users with pooled usage. The trial's MCP credits are not stated (official, as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Semantic Scholar",
@@ -10510,7 +10444,7 @@
     "Semantic Scholar (free)",
     "Connected Papers (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -11398,17 +11332,17 @@
    "name": "Tabnine",
    "company": "Tabnine",
    "website": "https://tabnine.com",
-   "description": null,
-   "primaryUse": "Privacy-first AI code completion",
+   "description": "Tabnine was an AI coding assistant for code completion and chat in the editor. Tricentis announced on July 30, 2026 that it had acquired Tabnine and would build Tabnine's Enterprise Context Engine into its Agentic Quality Engineering Platform.",
+   "primaryUse": "No longer sold on its own: former AI coding assistant, now part of Tricentis",
    "primaryUseCases": "Private code completion; enterprise compliance; air-gapped environments; IP-safe suggestions",
    "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Pro $12/user/mo",
-   "freeTierFeatures": "Free: basic code completions; limited AI chat; single IDE",
-   "usageLimits": "Free: basic completions; Dev: full AI chat + better completions; Enterprise: custom + on-premise",
+   "currentPricing": "No standalone plans or prices. Tabnine is now part of Tricentis, and tabnine.com redirects to Tricentis (as of 2026-10-29).",
+   "freeTierFeatures": "None: Tabnine is no longer sold as a standalone product",
+   "usageLimits": null,
    "apiAvailable": true,
    "directAlternatives": [
     "GitHub Copilot",
@@ -11419,7 +11353,7 @@
    "budgetAlternativeTo": [
     "GitHub Copilot Free"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -11568,10 +11502,10 @@
    "androidAppUrl": null
   },
   {
-   "slug": "text-generation-webui-oobabooga",
-   "name": "Text Generation WebUI (oobabooga)",
+   "slug": "textgen",
+   "name": "TextGen",
    "company": "Open Source",
-   "website": "https://github.com/oobabooga/text-generation-webui",
+   "website": "https://github.com/oobabooga/textgen",
    "description": null,
    "primaryUse": "Feature-rich web interface for LLMs",
    "primaryUseCases": "Local model inference with full control; model fine-tuning; character/roleplay; research; testing",
@@ -11593,7 +11527,7 @@
     "Ollama (simpler)",
     "LM Studio (GUI)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "local-open-source-ai",
     "name": "Local & Open-Source AI"
@@ -12038,10 +11972,10 @@
    ],
    "budgetAlternativeTo": [
     "ChatPDF (free)",
-    "NotebookLM (free)",
+    "Gemini Notebook (free)",
     "Claude (file upload free)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"
@@ -12728,9 +12662,9 @@
    "budgetAlternativeTo": [
     "Adobe Acrobat (Reader free)",
     "ChatPDF (free)",
-    "NotebookLM (free)"
+    "Gemini Notebook (free)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"

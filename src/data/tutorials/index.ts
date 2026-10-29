@@ -35,7 +35,7 @@ import { cursorTutorial } from "./cursor-getting-started";
 import { openaiApiTutorial } from "./openai-api-getting-started";
 import { lovableTutorial } from "./lovable-getting-started";
 import { perplexityTutorial } from "./perplexity-getting-started";
-import { notebooklmTutorial } from "./notebooklm-getting-started";
+import { geminiNotebookTutorial } from "./gemini-notebook-getting-started";
 import { adobeFireflyTutorial } from "./adobe-firefly-getting-started";
 import { canvaAiTutorial } from "./canva-ai-getting-started";
 import { heygenTutorial } from "./heygen-getting-started";
@@ -74,10 +74,9 @@ import { windsurfTutorial } from "./windsurf-getting-started";
 import { amazonBedrockTutorial } from "./amazon-bedrock-getting-started";
 import { assemblyaiTutorial } from "./assemblyai-getting-started";
 import { azureOpenaiServiceTutorial } from "./azure-openai-service-getting-started";
-import { clarifaiTutorial } from "./clarifai-getting-started";
 import { deepgramTutorial } from "./deepgram-getting-started";
 import { fireworksAiTutorial } from "./fireworks-ai-getting-started";
-import { googleVertexAiTutorial } from "./google-vertex-ai-getting-started";
+import { geminiEnterpriseAgentPlatformTutorial } from "./gemini-enterprise-agent-platform-getting-started";
 import { pineconeTutorial } from "./pinecone-getting-started";
 import { replicateTutorial } from "./replicate-getting-started";
 import { scaleAiTutorial } from "./scale-ai-getting-started";
@@ -90,7 +89,6 @@ import { googleAntigravityTutorial } from "./google-antigravity-getting-started"
 import { kiroTutorial } from "./kiro-getting-started";
 import { openaiCodexCliTutorial } from "./openai-codex-cli-getting-started";
 import { replitAgentTutorial } from "./replit-agent-getting-started";
-import { tabnineTutorial } from "./tabnine-getting-started";
 import { v0Tutorial } from "./v0-getting-started";
 import { figmaAiTutorial } from "./figma-ai-getting-started";
 import { hubspotAiTutorial } from "./hubspot-ai-getting-started";
@@ -130,7 +128,7 @@ import { dragonMedicalOneTutorial } from "./dragon-medical-one-getting-started";
 import { healtheeTutorial } from "./healthee-getting-started";
 import { pathaiTutorial } from "./pathai-getting-started";
 import { vizAiTutorial } from "./viz-ai-getting-started";
-import { googleImagen3Tutorial } from "./google-imagen-3-getting-started";
+import { nanoBananaTutorial } from "./nano-banana-getting-started";
 import { gptImage15DallESuccessorTutorial } from "./gpt-image-1-5-dall-e-successor-getting-started";
 import { microsoftDesignerTutorial } from "./microsoft-designer-getting-started";
 import { ai21LabsJambaTutorial } from "./ai21-labs-jamba-getting-started";
@@ -147,7 +145,7 @@ import { spellbookTutorial } from "./spellbook-getting-started";
 import { gpt4allTutorial } from "./gpt4all-getting-started";
 import { llamaCppTutorial } from "./llama-cpp-getting-started";
 import { localaiTutorial } from "./localai-getting-started";
-import { textGenerationWebuiOobaboogaTutorial } from "./text-generation-webui-oobabooga-getting-started";
+import { textgenTutorial } from "./textgen-getting-started";
 import { vllmTutorial } from "./vllm-getting-started";
 import { memTutorial } from "./mem-getting-started";
 import { tactiqTutorial } from "./tactiq-getting-started";
@@ -223,10 +221,9 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [amazonBedrockTutorial.platformSlug]: amazonBedrockTutorial,
   [assemblyaiTutorial.platformSlug]: assemblyaiTutorial,
   [azureOpenaiServiceTutorial.platformSlug]: azureOpenaiServiceTutorial,
-  [clarifaiTutorial.platformSlug]: clarifaiTutorial,
   [deepgramTutorial.platformSlug]: deepgramTutorial,
   [fireworksAiTutorial.platformSlug]: fireworksAiTutorial,
-  [googleVertexAiTutorial.platformSlug]: googleVertexAiTutorial,
+  [geminiEnterpriseAgentPlatformTutorial.platformSlug]: geminiEnterpriseAgentPlatformTutorial,
   [pineconeTutorial.platformSlug]: pineconeTutorial,
   [replicateTutorial.platformSlug]: replicateTutorial,
   [scaleAiTutorial.platformSlug]: scaleAiTutorial,
@@ -239,7 +236,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [kiroTutorial.platformSlug]: kiroTutorial,
   [openaiCodexCliTutorial.platformSlug]: openaiCodexCliTutorial,
   [replitAgentTutorial.platformSlug]: replitAgentTutorial,
-  [tabnineTutorial.platformSlug]: tabnineTutorial,
   [microsoftCopilotTutorial.platformSlug]: microsoftCopilotTutorial,
   [mistralVibeTutorial.platformSlug]: mistralVibeTutorial,
   [leonardoAiTutorial.platformSlug]: leonardoAiTutorial,
@@ -273,7 +269,7 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [openaiApiTutorial.platformSlug]: openaiApiTutorial,
   [lovableTutorial.platformSlug]: lovableTutorial,
   [perplexityTutorial.platformSlug]: perplexityTutorial,
-  [notebooklmTutorial.platformSlug]: notebooklmTutorial,
+  [geminiNotebookTutorial.platformSlug]: geminiNotebookTutorial,
   [adobeFireflyTutorial.platformSlug]: adobeFireflyTutorial,
   [canvaAiTutorial.platformSlug]: canvaAiTutorial,
   [heygenTutorial.platformSlug]: heygenTutorial,
@@ -328,7 +324,7 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [healtheeTutorial.platformSlug]: healtheeTutorial,
   [pathaiTutorial.platformSlug]: pathaiTutorial,
   [vizAiTutorial.platformSlug]: vizAiTutorial,
-  [googleImagen3Tutorial.platformSlug]: googleImagen3Tutorial,
+  [nanoBananaTutorial.platformSlug]: nanoBananaTutorial,
   [gptImage15DallESuccessorTutorial.platformSlug]: gptImage15DallESuccessorTutorial,
   [microsoftDesignerTutorial.platformSlug]: microsoftDesignerTutorial,
   [ai21LabsJambaTutorial.platformSlug]: ai21LabsJambaTutorial,
@@ -345,7 +341,7 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [gpt4allTutorial.platformSlug]: gpt4allTutorial,
   [llamaCppTutorial.platformSlug]: llamaCppTutorial,
   [localaiTutorial.platformSlug]: localaiTutorial,
-  [textGenerationWebuiOobaboogaTutorial.platformSlug]: textGenerationWebuiOobaboogaTutorial,
+  [textgenTutorial.platformSlug]: textgenTutorial,
   [vllmTutorial.platformSlug]: vllmTutorial,
   [memTutorial.platformSlug]: memTutorial,
   [tactiqTutorial.platformSlug]: tactiqTutorial,

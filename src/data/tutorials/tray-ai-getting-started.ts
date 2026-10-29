@@ -5,9 +5,9 @@ export const trayAiTutorial: PlatformTutorialData = {
   platformSlug: "tray-ai",
   title: "Getting Started with Tray.ai",
   tagline:
-    "Enterprise-grade automation you get by asking a salesperson, not by signing up.",
+    "Enterprise-grade automation you can try on your own for 30 days — but buying it still means a quote and an annual contract.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://tray.ai/documentation/releases",
   accessTier: "PREMIUM",
 
@@ -16,14 +16,14 @@ export const trayAiTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Tray.ai is the automation platform a company buys, not the one a person signs up for. It connects the systems a business runs on — Salesforce, NetSuite, Workday, Slack, a data warehouse — and keeps data moving between them without anyone copying it across by hand.",
-    'There is no free plan and no credit-card signup. Pricing is not published: the three plans on the pricing page (Pro, Team and Enterprise) carry feature lists but no dollar amounts, and the buttons say "Get a demo" and "Talk to sales." A free trial exists, but you request it on a form and wait for someone at Tray to set it up. If you want to build an automation tonight, start with Zapier, Make or n8n instead — they are in the same category on this site and all three let you in on your own.',
+    'There is no free plan, but there is now a free trial you start yourself: Tray\'s trial page offers 30 days with "No card, no call, no qualification form." Buying is a different story. The three automation plans on the pricing page (Pro, Team and Enterprise) are each "Sized to your needs", with a "Get a clear quote" button instead of a price. Tray says pricing is based on usage, measured in Tasks (one step a workflow performs), and the starting price its FAQ names is for its entry edition, not these plans. If all you want is a personal automation that keeps running after a month, Zapier, Make or n8n are in the same category on this site and have free plans to fall back on.',
     "The company renamed itself from Tray.io to Tray.ai in July 2024 and rebuilt its story around AI. Alongside the classic automation builder it now sells **Merlin** for building AI **agents** (AI that takes actions on its own rather than only answering). The platform is actively maintained — its public release notes show updates through 9 September 2026.",
     'Its public connector directory says "474+ pre-built connectors" while its homepage and pricing page say "700+ apps," so treat the exact number as approximate; either way the list covers the enterprise systems a small tool usually skips.',
   ],
 
   beforeYouStart: [
-    "**You cannot buy this by yourself, and that is the single fact to plan around.** There is no self-serve signup — the login page has no create-account link — so every route in runs through a demo request or a sales conversation.",
-    'The free trial runs about 14 days, according to Tray\'s own Academy page. You request it by filling in your name, work email, job title, company and employee count, and describing what you want to accomplish. The page calls it a "managed trial" and says someone from the team will reach out to get it set up — so the clock starts when they provision it, not when you decide you are ready.',
+    "**You can start the trial yourself; you cannot finish the purchase yourself.** That is the single fact to plan around. The trial is self-serve, but staying on after it means a quote built from your expected usage and a contract, not a card on a checkout page.",
+    'The trial lasts 30 days. Tray\'s trial page asks for a first and last name, a **work email** (required — that is where the invite goes) and, optionally, a company, then emails an invite to set up your own workspace with the full connector library and a usage allowance big enough for real testing. A personal email address will not do, so it is easiest for someone trying Tray on behalf of an employer.',
     "Tray's Master Subscription Agreement, last updated 28 January 2025 and in force today, is built around a negotiated Order Form and subscription terms that renew automatically for successive one-year periods unless either side gives 30 days' notice. This is an annual commitment with a contract behind it, not a monthly charge you cancel in a settings screen.",
     "If you are reading this to learn automation rather than to buy it for an employer, the concepts transfer completely. Triggers, steps, testing a run before switching it on — build those on a platform you can open right now, and come back to Tray when a company hands you a login. Our Workflow & Automation category has the self-serve options.",
     "Tray's documentation and connector directory are public and need no account, so you can read exactly what a given integration does before you ever speak to anyone.",
@@ -53,11 +53,11 @@ export const trayAiTutorial: PlatformTutorialData = {
     ],
     okayAt: [
       "A single person automating their own work. It will do it, but you are paying for governance machinery you have no use for.",
-      "Getting started quickly. Between the trial request, the sales call and the provisioning, the gap between deciding and building is measured in days.",
+      "Getting started quickly. The trial is minutes away, but the gap between \"this works\" and \"we can keep using it\" is a usage estimate, a quote and a contract.",
     ],
     avoid: [
-      "Learning automation from scratch on your own schedule. You do not choose when the trial starts, and its days tick down whether or not you have time that week.",
-      "Assuming the compliance features come with the plan. Tray's pricing page lists HIPAA, single sign-on, regional hosting, 30-day log retention and 180-day insights as **add-ons**. Hosting defaults to the US (AWS-West); EU (Ireland) and APAC (Sydney) are available, but as something you buy rather than something you select.",
+      "Learning automation from scratch on your own schedule. The trial's 30 days tick down whether or not you have time that week, and there is nothing free to fall back on afterwards.",
+      "Assuming the compliance features come with the plan. Tray's pricing page lists HIPAA, single sign-on, regional hosting, 30-day log retention and 180-day insights as **add-ons** you can buy on Team; only Enterprise includes HIPAA, single sign-on and regional hosting.",
       "Anything you need to keep running after the trial. There is no free tier underneath to fall back to, so whatever you build stops when the trial does unless a purchase is already in motion.",
     ],
   },
@@ -102,10 +102,10 @@ export const trayAiTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**The trial is scoped to the sentence you wrote on the form.** You describe what you want to accomplish, and the workspace is set up around that. Write that field as the thing you genuinely most want to test, not a vague summary.",
-    "**The absence of a published price is by design.** Go into the sales conversation with the shape of your usage already written down — which systems, how many people building, how often things run — or the quote will be built from someone else's assumptions.",
+    "**Use the trial to measure, not just to explore.** Tray's pricing FAQ says to run your own workflows during the trial \"to see how many Tasks they use, so your plan is sized on real usage.\" Build the automation you actually mean to buy for, run it on realistic volumes, and note its Task count before the 30 days are up.",
+    "**The absence of a published plan price is by design.** Go into the sales conversation with the shape of your usage already written down — which systems, how many people building, how often things run — or the quote will be built from someone else's assumptions.",
     '**You will probably not be the person who owns the connections.** In most Tray installations an admin creates and holds the credentials, so "connect my Gmail" is a request you file rather than a button you press. Find out who that person is on day one.',
-    "**Log retention is shorter than you would guess.** The Pro tier's insights window is 7 days and Team's is 30. If your automation fails quietly and nobody looks for three weeks, on the lower tiers the evidence may already be gone.",
+    "**Log retention is shorter than you would guess.** The pricing page lists 7-day log retention on Pro and Team, and an insights window of 7 days on Pro and 30 on Team. If your automation fails quietly and nobody looks for three weeks, on the lower tiers the evidence may already be gone.",
     "**Don't judge it against Zapier on first impressions.** Tray asks more of you up front — expression queries, environments, approvals — and pays it back on the kind of integration that has to survive an audit. On a two-app automation that trade is simply a bad deal.",
   ],
 
