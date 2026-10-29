@@ -147,6 +147,7 @@ async function main() {
           usageLimits: true,
           costTier: true,
           apiAvailable: true,
+          privacyLevel: true,
         },
       });
       if (!row) {

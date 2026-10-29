@@ -7,7 +7,7 @@ export const litmapsTutorial: PlatformTutorialData = {
   tagline:
     "Start from one paper you trust and let the citations draw you a map of the field.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-15",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -22,7 +22,7 @@ export const litmapsTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "A free account gets you in at app.litmaps.com — email sign-up, no card. That is the whole barrier; there is nothing to install.",
-    "**The free tier is small, and its shape is the thing to understand before you start building.** Each map is capped at 100 articles, a search will take up to 20 articles as inputs, and you get basic search only — filtering by publication date, author, journal or journal ranking is a paid feature. Litmaps' own pages disagree on how many maps you get: the main plan card on its pricing page and its help centre both say two, while a second comparison table lower on that same page says one. Plan for one map until you can see your own account.",
+    "**The free tier is small, and its shape is the thing to understand before you start building.** Each map is capped at 100 articles, a search will take up to 20 articles as inputs, and you get basic search only — filtering by publication date, author, journal or journal ranking is a paid feature. You get two maps (Litmaps calls each one a Litmap); its pricing page, checked in a browser on 29 October 2026, says \"2 Litmaps, 100 articles per Map\".",
     "Paying is per person and priced by country, so the figure you are quoted may be lower than the advertised list rates. Litmaps Pro has a cheaper education rate, which requires an academic email address, and a higher commercial rate; both cost less per month billed annually than billed monthly.",
     "You need a starting paper. Litmaps works outward from something you already hold — a title you can search for, or an article from a reading list — so it is the wrong tool for the very first hour on a brand-new topic, when you have nothing to seed it with.",
   ],

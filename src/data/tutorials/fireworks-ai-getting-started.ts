@@ -7,7 +7,7 @@ export const fireworksAiTutorial: PlatformTutorialData = {
   tagline:
     "A hundred-plus open AI models behind one login — try them in a browser chat box, then wire the one you like into software you're building.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://fireworks.ai/blog",
   accessTier: "FREE",
 
@@ -20,7 +20,7 @@ export const fireworksAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Understand the money before anything else.** Fireworks runs on prepaid **credits** (the platform's unit of spend — each thing you make costs some), not a subscription. A new account currently gets a small amount of free credit — a one-off welcome grant, not an allowance that refills. The documentation is explicit: when it runs out with no card on file, the account is suspended until you add one.",
+    "**Understand the money before anything else.** Fireworks runs on prepaid **credits** (the platform's unit of spend — each thing you make costs some), not a subscription. Fireworks' pricing page states no free starting credit: you add a payment method, buy credits, and usage is deducted from that balance. Until you do, an account is held to a very low request rate, so plan on putting a small amount of money in before your first real test.",
     "It goes further than it sounds. The cheapest text models currently list at cents per million chunks of text handled (a chunk is roughly a short word); only the flagships cost dollars. An afternoon in the browser spends a fraction of the grant.",
     "Until a card is on file the account is capped at roughly ten requests a minute — ample for typing questions by hand, far too little to run anything real.",
     "Nothing to install. Sign in with Google, GitHub, LinkedIn or an email address; Fireworks' own onboarding puts experimenting in the model playground before anything else, so the model list and chat box are where to head first.",

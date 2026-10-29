@@ -95,7 +95,8 @@ describe("catalog audit 17: stale facts batch 1", () => {
       const free = getToolFacts(slug)?.freeTier?.value;
       if (!free) continue;
       if (free.available) assert.notEqual(tier, "PAID", slug);
-      else assert.equal(tier, "PAID", slug);
+      // ENTERPRISE allowed since the batch-1 browser check (audit 18): relevance-ai shows only Enterprise.
+      else assert.ok(tier === "PAID" || tier === "ENTERPRISE", `${slug}: ${tier}`);
     }
   });
 

@@ -7,7 +7,7 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
   tagline:
     'Automation you can buy once instead of renting — and what "lifetime" actually covers.',
   archetype: "recipes",
-  lastReviewedAt: "2026-09-17",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -20,7 +20,7 @@ export const pabblyConnectTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Start on the free plan, which is genuinely free and not a trial.** You get a small monthly task allowance, no card required, and unlimited separate workflows — but each one is limited to two steps (a trigger plus a single action). Sign up, connect one app you already use, and build something from the list below before you think about money.",
+    "**Start on the free plan, which is genuinely free and not a trial.** You get a small task allowance, no card required (the free plan's card doesn't say whether it resets monthly, as the paid plans' do), and unlimited separate workflows — but each one is limited to two steps (a trigger plus a single action). Sign up, connect one app you already use, and build something from the list below before you think about money.",
     'A "task" is Pabbly\'s unit of spend, and it is narrower than you\'d guess: only successful actions that touch an outside app count. The trigger is free, and so are Pabbly\'s own internal steps — filters, routers, formatting — so a workflow that looks like four steps may bill as one. Every plan is priced by that number.',
     'The one-time offer is the real decision. Pabbly currently sells three one-time Connect plans, priced by the monthly task allowance; the cheapest also caps how many workflows you can build, while the higher two allow unlimited multi-step workflows. Prices display in your local currency, so you may see a rupee figure instead. The sales page promises all future integrations and updates at no extra cost. But "lifetime" covers the software, not the help: Pabbly\'s terms say lifetime plans include one year of support from purchase, after which you renew support by paying **one third of the original purchase price**. Treat it as a large payment now plus a possible recurring one later.',
     "There is a 30-day money-back guarantee, worded on the sales page as a full refund, no questions asked — which is the real safety net on a four-figure decision.",

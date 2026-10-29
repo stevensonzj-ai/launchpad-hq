@@ -3,8 +3,10 @@ import type { ToolFacts } from "./types";
 /**
  * Figma AI: first fact file, stale-facts batch 1 (catalog audit 17),
  * 2026-10-29. Plans and AI credits read twice on figma.com/pricing, in its
- * annual-billing view. Month-to-month prices were not readable; on the
- * Browser-check list.
+ * annual-billing view. The Research Analyst's browser check the same day
+ * (figma.com/pricing, "Prices in USD") read the monthly view: only
+ * Professional can be billed monthly; Organization and Enterprise are
+ * billed annually only.
  */
 export default {
   slug: "figma-ai",
@@ -42,22 +44,22 @@ export default {
         name: "Professional (Full seat)",
         price: "$16",
         period: "month",
-        limits: "Billed annually; 3,000 AI credits a month; Dev seat $12, Collab seat $3 (500 credits each)",
+        limits: "Billed annually, or $20 billed monthly; 3,000 AI credits a month; Dev seat $12 ($15 monthly), Collab seat $3 ($5 monthly), 500 credits each",
       },
       {
         name: "Organization (Full seat)",
         price: "$55",
         period: "month",
-        limits: "Billed annually; 3,500 AI credits a month; Dev $25, Collab $5",
+        limits: "Billed annually only; 3,500 AI credits a month; Dev $25, Collab $5",
       },
       {
         name: "Enterprise (Full seat)",
         price: "$90",
         period: "month",
-        limits: "Billed annually; 4,250 AI credits a month; Dev $35, Collab $5",
+        limits: "Billed annually only; 4,250 AI credits a month; Dev $35, Collab $5",
       },
     ],
-    note: "USD per seat, as of 2026-10-29. One credit pool covers all Figma AI features; extra credits can be bought. The prices shown are the annual-billing view (the page's toggle reads \"Annual selected\"); month-to-month prices were not readable.",
+    note: "USD per seat, as of 2026-10-29. One credit pool covers all Figma AI features; extra credits can be bought. Annual-billing prices read twice; the monthly view (Professional only) was browser-verified on 2026-10-29.",
     sourceUrl: "https://www.figma.com/pricing/",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -79,6 +81,12 @@ export default {
       field: "plans",
       summary:
         "First fact file: Starter 150 AI credits/day (500/mo); Full seats $16 Professional, $55 Organization, $90 Enterprise with monthly AI credits.",
+    },
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary:
+        "Browser check: Professional billed monthly is $20 Full / $15 Dev / $5 Collab; Organization and Enterprise are billed annually only.",
     },
   ],
 } satisfies ToolFacts;

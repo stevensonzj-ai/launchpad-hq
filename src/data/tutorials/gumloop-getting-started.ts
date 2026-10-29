@@ -7,7 +7,7 @@ export const gumloopTutorial: PlatformTutorialData = {
   tagline:
     "Build automations by dragging boxes onto a canvas — with AI steps built in, not bolted on.",
   archetype: "recipes",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.gumloop.com/changelog",
   accessTier: "PREMIUM",
 
@@ -41,7 +41,7 @@ export const gumloopTutorial: PlatformTutorialData = {
     },
     {
       kind: "text",
-      text: "Documents you push through AI steps go out to third-party AI providers to be processed. Gumloop's privacy policy says that for paying customers it does not use your uploaded data, flows or chat sessions to train any AI, and that those providers are contractually committed not to train on data sent through Gumloop. Better than silence — but treat confidential material as a deliberate decision, not a default.",
+      text: "Documents you push through AI steps go out to third-party AI providers to be processed. Gumloop's own training rule depends on your tier, not on whether you pay. Section 21 of its privacy policy says it may use content from the **self-serve tier** — which it defines as the Pro plan, Pro trials and free accounts — to develop, train and improve its own AI models; only Enterprise content is excluded unless you ask in writing. Separately, Gumloop says OpenAI and Anthropic have agreed not to train on data it sends them. So on Pro, assume what you push through a flow can feed Gumloop's models, and keep confidential material out unless you are on Enterprise.",
     },
   ],
 
@@ -59,7 +59,7 @@ export const gumloopTutorial: PlatformTutorialData = {
     avoid: [
       "Free-forever tinkering — Gumloop dropped its free plan in mid-2026, leaving Pro, Enterprise and a 14-day trial",
       "Pointing an AI step at a batch before you've priced a single run — two hundred documents is not twenty times ten",
-      "Confidential material on the strength of the no-training promise — a policy, not a technical guarantee",
+      "Confidential material on a Pro or trial account — Gumloop's policy lets it train its own models on self-serve content; only Enterprise is excluded",
       "Saving up an allowance for a big month — credits currently don't roll over",
     ],
   },

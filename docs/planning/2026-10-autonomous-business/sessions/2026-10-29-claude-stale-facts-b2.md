@@ -25,3 +25,12 @@
 - Gemini CLI: keep listed as PAID, or hide / point to Antigravity CLI (free use moved there on 2026-06-18).
 - Renames: "Shopify Magic / Sidekick" → Sidekick; "Salesforce Einstein" (page now says AIforce).
 - Cost tiers: Salesforce stays ENTERPRISE despite a $0 Foundations listing; Codex CLI and Designer FREEMIUM without a freeTier fact.
+
+## Add-on: batch-1 browser checks (same day, same PR)
+- Folded the Research Analyst's browser checks of batch 1's 18 open items into this PR. Used only items marked verified, citing the RA's URLs; NOT STATED or self-conflicting items became `unverified` or "not stated" / "not confirmed". The RA notes file stays out of the repo.
+- 18 batch-1 fact files updated. Audit 18 gains 16 batch-1 patches (32 fields) plus a guarded `privacyLevel`: Gumloop HIGH → LOW (policy §21 trains on self-serve content), Relevance AI PAID → ENTERPRISE (public page shows Enterprise only), GPT Image website → https://chatgpt.com. Ludo stays PAID, and its 30 sign-up credits are dropped. Litmaps Free has 2 maps. Meshy is monthly prices only (its yearly view conflicts). Fireworks' starting-credit line is out of its guide.
+- Audit 17's text aligned with audit 18 on 17 shared fields, and its relevance tier goes to ENTERPRISE, so the two converge in either order.
+- 6 guides changed and their dates bumped (fireworks, gumloop, relevance-ai, litmaps, pabbly-connect, replicate). 5 golden re-pins; Grammarly-alternative order is now Paperpal first.
+- Expected dry run if audit 17 already ran: 37 rows / 99 fields. If not, run 17 first, then expect 29 / 81 from 18.
+- Checks: tsc and audit:tutorials clean, lint 0 errors, npm test 1062/1062.
+- For Zach: confirm Gumloop LOW (vs MEDIUM), Relevance ENTERPRISE despite the docs' Pro/Team, and the post-merge edit to audit 17.

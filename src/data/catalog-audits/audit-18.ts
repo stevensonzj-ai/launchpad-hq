@@ -17,6 +17,12 @@
  *     the row still holds the expected old value, so a hand edit is never
  *     overwritten.
  *
+ * It also re-patches 16 batch-1 rows (audit 17) from the Research
+ * Analyst's browser check of batch 1 the same day (AUDIT_18_BATCH1_RECHECK).
+ * Audit 17 writes the same text on every field both audits set, and its
+ * relevance-ai tier goes straight to ENTERPRISE, so the two converge in
+ * either order. Gumloop's privacyLevel is the one new guarded field.
+ *
  * Audit 10 touches none of these slugs. Audit 11 patches one of them
  * (squarespace-ai) on costTier only; this audit never writes that field for
  * it (audit-18.test.ts checks both), so a re-run of audits 10 or 11 cannot
@@ -38,6 +44,7 @@ export type Audit18Guarded = {
   website?: { from: string[]; to: string };
   costTier?: { from: string; to: string };
   apiAvailable?: { from: boolean; to: boolean };
+  privacyLevel?: { from: string; to: string };
 };
 
 export type Audit18Patch = {
@@ -74,6 +81,32 @@ export const AUDIT_18_BATCH = [
   "dragon-medical-one",
   "healthee",
   "viz-ai",
+];
+
+/**
+ * Batch-1 rows (audit 17) re-checked in a browser by the Research Analyst on
+ * 2026-10-29 (18 items). Every one got a fact-file update; the ones whose
+ * row text, website, cost tier or privacy level changes have a patch below.
+ */
+export const AUDIT_18_BATCH1_RECHECK = [
+  "connected-papers",
+  "paperpal",
+  "pabbly-connect",
+  "litmaps",
+  "gpt-image-1-5-dall-e-successor",
+  "figma-ai",
+  "meshy",
+  "ludo-ai",
+  "mailchimp-ai",
+  "hubspot-ai",
+  "groq",
+  "gumloop",
+  "fireworks-ai",
+  "replicate",
+  "relevance-ai",
+  "reducto",
+  "sakana-ai",
+  "consensus",
 ];
 
 export const AUDIT_18_PATCHES: Audit18Patch[] = [
@@ -330,6 +363,172 @@ export const AUDIT_18_PATCHES: Audit18Patch[] = [
       website: { from: ["https://viz.ai"], to: "https://www.viz.ai" },
     },
   },
+
+  // ---- Batch-1 rows (audit 17), re-checked in a browser by the Research Analyst on 2026-10-29. ----
+  // Only items the check marked verified change prices; NOT STATED items and pages that conflict
+  // with themselves become "not stated" / "not confirmed". Where audit 17 writes the same field,
+  // it now writes this same text (audit-18.test.ts checks), so re-running either cannot revert the other.
+  {
+    slug: "connected-papers",
+    finding: "Row listed Academic $3/mo; browser check: Academic $6/mo billed annually ($10 quarterly), Business $20/mo ($30 quarterly), Free 5 graphs a month",
+    sources: ["https://www.connectedpapers.com/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free (5 graphs a month); Academic $6/mo billed annually or $10/mo billed quarterly; Business $20/mo billed annually or $30/mo billed quarterly; no monthly billing ${AS_OF}`,
+      freeTierFeatures: `Free: 5 graphs a month ${AS_OF}`,
+      usageLimits: `Free: 5 graphs a month; Academic and Business: unlimited graphs ${AS_OF}`,
+    },
+  },
+  {
+    slug: "paperpal",
+    finding: "Row said \"Pro plans\" and listed a Premium plan; browser check: Prime $25/mo and Pro $59/mo billed monthly (annual prices on a limited-time offer), and the free plan's limits",
+    sources: ["https://paperpal.com/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free; Prime $25/mo and Pro $59/mo billed monthly; annual billing currently on a limited-time discount ${AS_OF}`,
+      freeTierFeatures: `Free: 200 grammar edits a month; 5 a day of paraphrase, trim, translate, AI Review and similar; 5 a day of Research Q&A; chat with 5 files a month; 300 MB library ${AS_OF}`,
+      usageLimits: `Free: 200 grammar edits a month and 5 a day of the AI tools; Prime and Pro limits not confirmed ${AS_OF}`,
+    },
+  },
+  {
+    slug: "pabbly-connect",
+    finding: "Row said \"From $25/mo\"; the browser check read lower USD prices but was partial, so the row names the plans without prices, and the free plan's monthly reset is not stated",
+    sources: ["https://www.pabbly.com/connect/pricing/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free plan; Standard (10,000 tasks a month) and Unlimited, billed monthly to 3-yearly; one-time lifetime plans; USD prices not confirmed ${AS_OF}`,
+      freeTierFeatures: `Free plan, no card: 100 tasks (a monthly reset is not stated), 2 workflows of up to 2 steps ${AS_OF}`,
+    },
+  },
+  {
+    slug: "litmaps",
+    finding: "Free has 2 Litmaps (the row said 1 seed map); Pro Education $12.50/mo ($10 billed yearly), Commercial $50/mo ($40 yearly); Team has no listed price",
+    sources: ["https://www.litmaps.com/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free; Pro Education $12.50/mo or $10/mo billed yearly (academic email required); Pro Commercial $50/mo or $40/mo billed yearly; Team quoted ${AS_OF}`,
+      freeTierFeatures: `Free: 2 Litmaps of up to 100 articles each, up to 20 search inputs, monthly alerts ${AS_OF}`,
+      usageLimits: `Free: 2 Litmaps, 100 articles per map, up to 20 search inputs, monthly alerts; Pro: unlimited maps and articles, advanced search; collaboration is on the Team plan ${AS_OF}`,
+    },
+  },
+  {
+    slug: "gpt-image-1-5-dall-e-successor",
+    finding: "Row said 3 images a day on ChatGPT Free and linked chat.openai.com; OpenAI states no numeric image limits, and the product is at chatgpt.com",
+    sources: ["https://chatgpt.com/pricing/", "https://help.openai.com/en/articles/9275245"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      freeTierFeatures: `ChatGPT Free includes limited image creation; OpenAI publishes no numeric image limit ${AS_OF}`,
+      usageLimits: `ChatGPT: OpenAI publishes no numeric image limits for any plan; API: GPT Image 1.5 is deprecated, and GPT Image 2.5 is billed per token ($5 text in, $8 image in, $30 image out per 1M) ${AS_OF}`,
+    },
+    guarded: {
+      website: { from: ["https://chat.openai.com"], to: "https://chatgpt.com" },
+    },
+  },
+  {
+    slug: "figma-ai",
+    finding: "Adds the monthly price: only Professional can be billed monthly ($20 Full seat); Organization and Enterprise are billed annually only",
+    sources: ["https://www.figma.com/pricing/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Included with Figma plans. Starter free; Full seat: Professional $16/mo billed annually or $20 monthly; Organization $55/mo and Enterprise $90/mo, billed annually only; each with monthly AI credits ${AS_OF}`,
+    },
+  },
+  {
+    slug: "meshy",
+    finding: "Monthly prices confirmed; the yearly view conflicts with itself ($16 after a new-user discount vs \"$20 per month billed yearly\"), so the annual discount is dropped",
+    sources: ["https://www.meshy.ai/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free (100 credits/mo); billed monthly: Pro $20, Premium $40, Ultra $100, Studio $70 + $10/seat; Enterprise custom; yearly prices not confirmed (the pricing page conflicts with itself) ${AS_OF}`,
+    },
+  },
+  {
+    slug: "ludo-ai",
+    finding: "No free plan on the pricing page (PAID stands) and no mention of 30 sign-up credits there, so they are dropped; monthly prices added (Indie $20, Pro $50, Studio $350)",
+    sources: ["https://ludo.ai/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `No free plan. Billed monthly: Indie $20, Pro $50, Studio $350; billed yearly: Indie $15/mo, Pro $35/mo, Studio $300/mo; Enterprise custom ${AS_OF}`,
+      freeTierFeatures: `No free plan: the pricing page lists only paid plans; sign-up credits are not stated there ${AS_OF}`,
+      usageLimits: `Credits: Indie 250 a month (3,000 a year billed yearly), Pro 1,000 (12,000), Studio 10,000 (120,000); API, MCP and CLI use credits (API from Pro); unused credits roll over ${AS_OF}`,
+    },
+  },
+  {
+    slug: "mailchimp-ai",
+    finding: "Essentials $13 and Standard $20 are regular prices after a 14-day free trial, not 12-month prices; only Premium has an intro price ($297.50 for 12 months, then $350)",
+    sources: ["https://mailchimp.com/pricing/marketing/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free $0; Essentials from $13/mo and Standard from $20/mo after a 14-day free trial; Premium $297.50/mo for 12 months, then $350; prices rise with contacts; generative AI from Standard ${AS_OF}`,
+    },
+  },
+  {
+    slug: "hubspot-ai",
+    finding: "Row said only \"Included with HubSpot plans\"; Marketing Hub Starter is $7/seat/mo paid annually or $10 monthly (new customers), Professional $800/mo, Enterprise $3,600/mo, with 500 / 3,000 / 5,000 HubSpot credits",
+    sources: ["https://www.hubspot.com/pricing/marketing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free CRM; Marketing Hub Starter $7/seat/mo paid annually or $10 monthly (new-customer offer; list $20), Professional $800/mo, Enterprise $3,600/mo ${AS_OF}`,
+      usageLimits: `AI agents use HubSpot credits. Included: Marketing Hub Starter 500, Professional 3,000, Enterprise 5,000; more credits can be bought ${AS_OF}`,
+    },
+  },
+  {
+    slug: "groq",
+    finding: "Adds the free tier's published limits (30 requests a minute, 1,000 a day, 8,000 tokens a minute, 200,000 a day on the GPT OSS and Qwen models)",
+    sources: ["https://console.groq.com/docs/rate-limits"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      usageLimits: `Free: per-model limits; GPT OSS 120B, GPT OSS 20B and Qwen3.8-27B each 30 requests a minute, 1,000 a day, 8,000 tokens a minute, 200,000 a day; Developer (pay as you go): higher limits ${AS_OF}`,
+    },
+  },
+  {
+    slug: "gumloop",
+    finding: "privacyLevel was HIGH; Gumloop's privacy policy section 21 lets it train its models on self-serve content (Pro, Pro trials and free accounts), so LOW",
+    sources: ["https://www.gumloop.com/privacy-policy"],
+    checkedAt: CHECKED_AT,
+    fields: {},
+    guarded: { privacyLevel: { from: "HIGH", to: "LOW" } },
+  },
+  {
+    slug: "replicate",
+    finding: "Row promised free credits for some models; the billing docs say select models can be run free for a while, with no amount stated",
+    sources: ["https://replicate.com/docs/topics/billing", "https://replicate.com/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      freeTierFeatures: `Select models can be run free for a while before billing setup is required; the amount is not stated ${AS_OF}`,
+      usageLimits: `Pay as you go: most models billed per second of hardware, some per token or per output; free use on select models, amount not stated; no minimum spend stated ${AS_OF}`,
+    },
+  },
+  {
+    slug: "relevance-ai",
+    finding: "The public pricing page shows only Enterprise (talk to sales, custom Actions and Vendor Credits); Pro and Team are not shown, so the row is Enterprise only with custom pricing",
+    sources: ["https://relevanceai.com/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Enterprise only: custom pricing through sales; the public pricing page shows no Pro or Team plan ${AS_OF}`,
+      freeTierFeatures: `No free plan: the Free plan is retired, and the public pricing page lists only Enterprise ${AS_OF}`,
+      usageLimits: `Enterprise: custom Actions and custom Vendor Credits; amounts not stated ${AS_OF}`,
+    },
+    guarded: { costTier: { from: "PAID", to: "ENTERPRISE" } },
+  },
+  {
+    slug: "reducto",
+    finding: "Adds who gets the free $150 (first-time users from a domain that has not used it) and that its expiry is not stated",
+    sources: ["https://reducto.ai/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      freeTierFeatures: `$150 in free usage on the self-serve Standard plan for first-time users from a new domain; a one-time balance, not a monthly allowance; expiry not stated ${AS_OF}`,
+    },
+  },
+  {
+    slug: "sakana-ai",
+    finding: "Sakana Chat's logged-out page states no pricing (the row said it was not checked)",
+    sources: ["https://chat.sakana.ai/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      freeTierFeatures: `The Fugu and Namazu pages list paid plans and per-token prices, with no free tier stated; Sakana Chat's logged-out page states no pricing ${AS_OF}`,
+    },
+  },
 ];
 
 export type Audit18Row = Record<Audit18TextField, string | null> & {
@@ -337,6 +536,7 @@ export type Audit18Row = Record<Audit18TextField, string | null> & {
   website: string | null;
   costTier: string;
   apiAvailable?: boolean;
+  privacyLevel?: string | null;
 };
 
 /** Prisma `data` for one row: text fields that differ; guarded fields only from their expected old value. */
@@ -350,6 +550,7 @@ export function audit18PatchData(row: Audit18Row, patch: Audit18Patch): Record<s
   if (g.website && row.website !== null && g.website.from.includes(row.website)) data.website = g.website.to;
   if (g.costTier && row.costTier === g.costTier.from) data.costTier = g.costTier.to;
   if (g.apiAvailable && row.apiAvailable === g.apiAvailable.from) data.apiAvailable = g.apiAvailable.to;
+  if (g.privacyLevel && row.privacyLevel === g.privacyLevel.from) data.privacyLevel = g.privacyLevel.to;
   return data;
 }
 
@@ -361,6 +562,7 @@ export function audit18GuardSkips(row: Audit18Row, patch: Audit18Patch): string[
   if (g.website && row.website !== g.website.to && !(row.website !== null && g.website.from.includes(row.website))) skips.push("website");
   if (g.costTier && row.costTier !== g.costTier.to && row.costTier !== g.costTier.from) skips.push("costTier");
   if (g.apiAvailable && row.apiAvailable !== g.apiAvailable.to && row.apiAvailable !== g.apiAvailable.from) skips.push("apiAvailable");
+  if (g.privacyLevel && row.privacyLevel !== g.privacyLevel.to && row.privacyLevel !== g.privacyLevel.from) skips.push("privacyLevel");
   return skips;
 }
 

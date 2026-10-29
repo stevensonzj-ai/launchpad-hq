@@ -4,7 +4,9 @@ import type { ToolFacts } from "./types";
  * Fireworks AI: first fact file, stale-facts batch 1 (catalog audit 17),
  * 2026-10-29. Billing and rate limits read twice. No free plan: billing is
  * prepaid and usage-based. Neither reader found a sign-up credit on the
- * pricing page; whether one is still granted is on the Browser-check list.
+ * pricing page, and the Research Analyst's browser check the same day found
+ * none stated either (the only free item was a limited-time free model
+ * until 11/30), so no starting-credit claim is made anywhere.
  */
 export default {
   slug: "fireworks-ai",
@@ -24,7 +26,7 @@ export default {
       available: false,
       summary: "No free plan: billing is prepaid and usage-based. Without a payment method and credits, an account is limited to 10 requests a minute.",
     },
-    note: "Pricing: \"Pay per token with pre-paid, usage-based billing.\" Rate limits: 10 RPM without a payment method or credits, up to 6,000 RPM with them.",
+    note: "Pricing: \"Pay per token with pre-paid, usage-based billing. Simply add a payment method to buy credits, and usage is then deducted from your balance.\" No starting credit is stated (browser check, 2026-10-29). Rate limits: 10 RPM without a payment method or credits, up to 6,000 RPM with them.",
     sourceUrl: "https://fireworks.ai/pricing",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -56,6 +58,12 @@ export default {
       field: "freeTier",
       summary:
         "First fact file: no free plan, prepaid usage billing; 10 RPM until a payment method and credits are added. The catalog's \"$1 credit for new accounts\" was not found.",
+    },
+    {
+      date: "2026-10-29",
+      field: "freeTier",
+      summary:
+        "Browser check: no starting credit stated on the pricing page; the guide's welcome-credit line is removed.",
     },
   ],
 } satisfies ToolFacts;

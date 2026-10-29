@@ -1,4 +1,4 @@
-# Stale facts batch 2 + catalog audit 18
+# Stale facts batch 2 + batch-1 browser checks + catalog audit 18
 
 **Branch:** `stale-facts-b2-1029` (off `origin/main` 1dcf6ee, which includes batch 1 / #117). Draft. **Do not run audit 18 before the code deploys.**
 
@@ -7,14 +7,15 @@
 Batch 2 of the stale-facts list: rows 29–51 (23 platforms) in `docs/planning/2026-10-autonomous-business/stale-facts-batches.md`, none of which had a fact file. This PR re-verifies each one on the vendor's own pages, adds a sourced fact file for each, and adds **catalog audit 18**, an operator script that brings the row text in line with the facts. The process and quality bar are the same as batch 1 (#117).
 
 - 20 of the 23 rows date from the April import; the three Healthcare AI rows date from the May restructure.
-- Batch 1's rows (audit 17) and the #115/#116 rows are not touched; the test checks this.
+- **Added later in this PR:** the Research Analyst's browser checks of 18 batch-1 rows (#117, audit 17). They update those 18 fact files, 6 guides, and 16 batch-1 rows through audit 18. See **Batch-1 rows changed** below.
+- The #115/#116 rows are not touched; the test checks this.
 
 ## How facts were verified
 
 - **Two independent, blind readers per platform.** Twelve research agents, two per group of three or four platforms, read each vendor's own pages: their domain, docs, help centre, newsroom, or official GitHub repo. No third-party sites and no X. The two readers ran in parallel without seeing each other's results; I then compared their reports field by field.
 - A fact is `verified` only when both reads agree. It carries `gatheredBy: "research-analyst"`, `verifiedBy: "claude-recheck"` and `verifiedAt: 2026-10-29`, so `isPublishedVerified` holds.
 - A fact that only one reader saw, or that the two read differently, is `unverified`, or left out of the file if it is a price. Those go in the file comment and on the Browser-check list, and the row text is left alone.
-- **Nobody checked these in a real browser.** As in batch 1, no owner check was done.
+- **Nobody checked the batch-2 facts in a real browser.** No owner check was done. Batch 1's open items *were* browser-checked by the Research Analyst; see **Batch-1 rows changed**.
 
 ## Platforms changed (23), and fact status
 
@@ -74,6 +75,35 @@ Batch 2 of the stale-facts list: rows 29–51 (23 platforms) in `docs/planning/2
   - salesforce.com/einstein now shows Salesforce's "AIforce" page.
   - Shopify's AI is now just "Sidekick".
 
+## Batch-1 rows changed
+
+The Research Analyst checked batch 1's 18 open items in a real browser on 2026-10-29 (official vendor pages, US/USD, logged out). I used only what the check marked verified, with its URLs. Where it said NOT STATED, or the page contradicted itself, the fact is now `unverified` or the text says "not stated" / "not confirmed". Facts confirmed in the browser carry `verifiedBy: "ra"`, the same convention as earlier browser checks. Hidden text aimed at AI agents on the Pabbly, Figma, Meshy and HubSpot pages was ignored.
+
+| Row | Check | Fact file | Row (audit 18) | Guide |
+|---|---|---|---|---|
+| `connected-papers` | verified ([pricing](https://www.connectedpapers.com/pricing)) | New verified freeTier and plans: Free 5 graphs/mo; Academic $6/mo billed annually ($10 quarterly); Business $20/mo ($30 quarterly) | currentPricing, freeTierFeatures, usageLimits: replaces "Academic $3/mo" and an invented Team plan | No change (already said annual or quarterly only) |
+| `paperpal` | verified ([pricing](https://paperpal.com/pricing)) | New verified freeTier (200 grammar edits/mo, 5/day AI tools, 5 files/mo, 300 MB) and plans (Prime $25, Pro $59 billed monthly; annual prices are a limited-time promotion). 2- and 3-year plans left out (the page doesn't say which plan they belong to) | currentPricing, freeTierFeatures, usageLimits: drops "Pro plans" and the non-existent Premium plan | No change |
+| `pabbly-connect` | partial ([pricing](https://www.pabbly.com/connect/pricing/)) | Plans move from INR to USD (Standard $14, Unlimited $59 billed monthly) but stay **unverified**: 3-yearly prices unreliable, lifetime prices not read. The free plan's monthly reset is not stated | currentPricing: "From $25/mo" becomes plan names with "USD prices not confirmed"; freeTierFeatures: notes the monthly reset is not stated | "monthly task allowance" becomes "task allowance" with the reset not stated |
+| `litmaps` | verified ([pricing](https://www.litmaps.com/pricing)) | freeTier and plans now verified. **Free gets 2 Litmaps**; Pro Education $12.50 ($10 yearly), Commercial $50 ($40 yearly); Team has no price. Enterprise dropped (not on the page) | currentPricing, freeTierFeatures, usageLimits: "1 seed map" becomes 2 Litmaps; adds the commercial and monthly prices | "Plan for one map" becomes two maps, citing the page |
+| `gpt-image-1-5-dall-e-successor` | partial ([pricing](https://chatgpt.com/pricing/), [FAQ](https://help.openai.com/en/articles/9275245)) | New verified officialUrl **https://chatgpt.com**. freeTier stays unverified and now says **no numeric image caps are stated** | website chat.openai.com becomes https://chatgpt.com (guarded); freeTierFeatures drops "3 images/day"; usageLimits says no numeric limits are published | No change (already chatgpt.com, no numbers) |
+| `figma-ai` | verified ([pricing](https://www.figma.com/pricing/)) | Adds monthly prices: only Professional bills monthly ($20 Full / $15 Dev / $5 Collab); Organization and Enterprise bill annually only | currentPricing | No change |
+| `meshy` | verified, but **the page conflicts with itself** ([pricing](https://www.meshy.ai/pricing)) | Monthly prices kept. Yearly prices not recorded: the toggle says Pro $16 after a new-user discount, the compare table says "$20 billed yearly" | currentPricing: monthly prices only, "yearly prices not confirmed"; the "20% off annual" claim is gone | No change (no annual claim) |
+| `ludo-ai` | verified ([pricing](https://ludo.ai/pricing)) | No free plan, so **PAID stands** after the recheck. The **30 sign-up credits** aren't on the pricing page, so they're out of the verified fact (homepage claim noted as unverified). Monthly prices added: Indie $20, Pro $50, Studio $350 | currentPricing, freeTierFeatures, usageLimits: the 30 credits are dropped, monthly prices and credits added | No change (it gives no number and already says there's no free tier) |
+| `mailchimp-ai` | verified ([pricing](https://mailchimp.com/pricing/marketing/)) | Essentials $13 and Standard $20 are regular prices after a 14-day trial. Only Premium has an intro price ($297.50 for 12 months, then $350) | currentPricing: no longer says all paid prices are 12-month prices | No change |
+| `hubspot-ai` | verified ([pricing](https://www.hubspot.com/pricing/marketing)) | New verified plans: Marketing Hub Starter $7/seat paid annually ($10 monthly; new-customer offer, list $20), Professional $800, Enterprise $3,600; credits 500 / 3,000 / 5,000 | currentPricing, usageLimits | No change |
+| `groq` | verified ([rate limits](https://console.groq.com/docs/rate-limits), [models](https://console.groq.com/docs/models)) | Free-tier limits and per-token prices now verified (30 RPM, 1K RPD, 8K TPM, 200K TPD on GPT OSS and Qwen) | usageLimits | No change |
+| `gumloop` | verified ([privacy §21](https://www.gumloop.com/privacy-policy), [pricing](https://www.gumloop.com/pricing)) | New verified privacy fact, `trainsOnData: true`. §21: self-serve content (Pro, Pro trials, free accounts) may be used to train Gumloop's models; Enterprise is excluded. Pro also notes the 8% orchestration fee | **privacyLevel HIGH → LOW** (guarded; a new guarded field in audit 18) | Rewrites the privacy paragraph, which said paying customers' data isn't used for training, and the matching "avoid" line |
+| `fireworks-ai` | starting credit NOT STATED ([pricing](https://fireworks.ai/pricing)) | Notes that no starting credit is stated | No change (the row had no credit claim) | **Starting-credit claim removed** ("a small amount of free credit … welcome grant") |
+| `replicate` | partial ([billing docs](https://replicate.com/docs/topics/billing)) | New **unverified** freeTier: select models run free "for a bit", amount not stated | freeTierFeatures, usageLimits: "free credits for some models" becomes "free use on select models, amount not stated" | "fixed number of runs" / "one-off allotment" becomes "how many isn't stated" |
+| `relevance-ai` | verified ([pricing](https://relevanceai.com/pricing)) | Plans become **Enterprise only, custom pricing** (Pro and Team aren't shown on the public page; the docs still list them) | currentPricing, freeTierFeatures, usageLimits; **costTier PAID → ENTERPRISE** (guarded) | Removes the self-serve Pro sign-up path; says the public page shows Enterprise only and to confirm with sales |
+| `reducto` | verified ([pricing](https://reducto.ai/pricing)) | Adds the full per-1,000-page rates and the unique-domain eligibility rule; expiry not stated | freeTierFeatures: adds eligibility and "expiry not stated" | No change |
+| `sakana-ai` | partial ([chat](https://chat.sakana.ai/), [API privacy](https://console.sakana.ai/privacy-policy)) | Sakana Chat pricing is not stated. New **unverified** privacy fact (API platform: training subject to opt-out) | freeTierFeatures: "not checked" becomes "states no pricing" | No change (already describes the opt-out) |
+| `consensus` | verified ([pricing](https://consensus.app/pricing/)) | Confirms the help-centre plans on the pricing page; adds $0.05 per API/MCP use past the allowance | No change | No change |
+
+Every changed guide has `lastReviewedAt` bumped to 2026-10-29.
+
+**Audit 17 was edited too, so the two audits can't undo each other.** Audit 17 is merged but may not have run yet. Its text writes are unconditional, so re-running it after audit 18 would have reverted 17 batch-1 fields. Where both audits write a field, audit 17 now writes the same text as audit 18 (17 fields; `audit-18.test.ts` checks this). Its relevance-ai tier now goes FREE → ENTERPRISE, and audit 18's goes PAID → ENTERPRISE, so the two converge in either order. I also updated two of audit 17's `finding` strings (Relevance, Ludo) and its header comment.
+
 ## What audit 18 changes (`scripts/update-catalog-audit-18.ts`, `npm run db:update-catalog-audit-18`)
 
 - **What it does:** the same as audit 17.
@@ -82,17 +112,18 @@ Batch 2 of the stale-facts list: rows 29–51 (23 platforms) in `docs/planning/2
   - Writes a text field only where it differs.
   - Writes company, website and costTier only from their expected old value, and logs a skip for a hand edit.
 - **Safety:** it runs as a dry run unless you pass `--apply`. Production needs `--confirm-production` plus `CONFIRM_PROD_HOST`, and the 5-second countdown applies. The prod-guard code is byte-identical to audits 15, 16 and 17 (the test checks this).
-- **Expected dry run (from the pre-audit snapshot):** `audit18: 21 rows / 67 patched fields`.
-  - 54 text fields: 17 currentPricing, 18 freeTierFeatures, 19 usageLimits.
-  - 6 websites, 6 cost tiers and 1 company.
-  - aider and wix-ai change in code only.
+- **Expected dry run if audit 17 has already been applied:** `audit18: 37 rows / 99 patched fields`.
+  - **Batch 2:** 21 rows / 67 fields: 54 text fields (17 currentPricing, 18 freeTierFeatures, 19 usageLimits), 6 websites, 6 cost tiers and 1 company. aider and wix-ai change in code only.
+  - **Batch-1 re-check:** 16 rows / 32 fields: 29 text fields, 1 website (GPT Image), 1 cost tier (relevance-ai) and 1 privacyLevel (gumloop). fireworks-ai and consensus change in code only.
+  - **If audit 17 hasn't run:** run it first (it now writes the aligned text). Audit 18 then reports 29 rows / 81 fields, because 18 of its batch-1 fields are already in place.
   - **Re-run, or a dry run after `--apply`: 0.**
+- **New guarded field: `privacyLevel`.** It is written only from its expected old value (gumloop HIGH → LOW), like the other guarded fields. The runner now selects it.
 - **Audits 10/11 cannot revert it.**
   - Audit 10 touches no batch-2 slug.
   - Audit 11 patches one batch-2 row, `squarespace-ai`, on costTier only (FREEMIUM→PAID, already applied). Audit 18 writes only text on that row and never its costTier.
   - The test asserts both.
 - **Order:** deploy first. The fact files show on the site at deploy, because the overlay applies them over the row text. Then run the audit: Neon branch first, then production, then `npm run cache:revalidate`.
-- The 21 patched rows get a fresh `updatedAt` on apply.
+- Every patched row gets a fresh `updatedAt` on apply.
 
 ## Other code changes
 - **23 new files in `src/data/facts/`, all registered in `registry.ts`.**
@@ -108,7 +139,7 @@ Batch 2 of the stale-facts list: rows 29–51 (23 platforms) in `docs/planning/2
   - **upstage-solar:** mentions the prepaid commitment plans, and an inline "four cents" became "a few cents".
   - **tray-ai:** the "no published plan price" pitfall now acknowledges the entry price.
   - I didn't bump the other 13 guides. A scan against today's findings found no contradictions (most were written in September), and I didn't re-research their other claims.
-- **`src/lib/mcp/catalog-snapshot.json`:** applied audit 18 with a new one-off script, `scripts/mcp-snapshot/apply-audit-18-to-snapshot.ts`. It uses the same diff function as the DB runner and is idempotent (a second run reports 0).
+- **`src/lib/mcp/catalog-snapshot.json`:** applied audit 18 with a new one-off script, `scripts/mcp-snapshot/apply-audit-18-to-snapshot.ts`. It uses the same diff function as the DB runner and is idempotent (a second run reports 0). Re-run after the batch-1 additions: 16 rows changed, then 0.
 - **`catalog-snapshot.test.ts`:** batch-2 slugs get the same stress-observation exemption batch 1 got.
 - **Tests whose expectations moved with the data (no search or ranking code changed):**
   - `golden-top5.json`: 11 pinned queries were re-pinned because these rows now carry verified facts and new cost tiers.
@@ -119,13 +150,18 @@ Batch 2 of the stale-facts list: rows 29–51 (23 platforms) in `docs/planning/2
     - G37 ("learn a language"): trinka-ai replaces aleph-alpha-luminous at #5.
   - `search-relevance.test.ts`: "free alternative to Grammarly" now puts **trinka-ai** first instead of QuillBot, in both search_tools and find_free_alternatives. The test's own rule ("order follows free-tier evidence") now favours Trinka, because it has a verified free-tier fact. I renamed the test, updated its expected order and comments, and kept the consistency check between the two tools.
   - `search-p13.test.ts`: the "record older than 90 days" example was leonardo-ai, which is now fresh. It is now `aiva`, a batch-3 row, and the test also asserts leonardo is no longer stale.
+  - **From the batch-1 browser checks:**
+    - `golden-top5.json`: 5 more re-pins, because Paperpal and Connected Papers now have verified free-tier facts. A15, G06, G07 and G49 change order only. G28 ("literature review"): connected-papers replaces research-rabbit at #5.
+    - `search-relevance.test.ts`: "free alternative to Grammarly" now puts **Paperpal** first (Paperpal, Trinka, QuillBot). Paperpal has a verified free tier, and the rule is unchanged. The test still checks that it agrees with find_free_alternatives.
+    - `audit-17.test.ts`: a no-free-tier row may now be ENTERPRISE as well as PAID (audit 18's test already allowed this), for relevance-ai.
+    - `audit-18.test.ts`: new tests that cover the 18 re-checked slugs, check that audits 17 and 18 agree on shared fields, and pin the named outcomes (Relevance ENTERPRISE, Gumloop LOW, Litmaps 2 maps, no Ludo credits, Meshy monthly only, chatgpt.com, no Fireworks credit). The dry-run counts are split by batch, and the guard test covers privacyLevel.
   - `audit-11.test.ts`: the squarespace-ai snapshot `updatedAt` pin moves from 2026-04-13 to 2026-10-29, because audit 18 rewrites that row's text. Audit 11's own keeps-updatedAt check is unchanged.
-- **`stale-facts-batches.md`:** batch 1 is marked done in #117, and batch 2 is marked as this PR.
+- **`stale-facts-batches.md`:** batch 1 is marked done in #117 (and notes that its browser checks are folded in here), and batch 2 is marked as this PR.
 
 ## Checks
 - `npx tsc --noEmit` passes.
 - `npm run lint` gives 0 errors and 2 warnings, both in files this PR doesn't touch.
-- `npm test` passes 1059/1059, including the new `audit-18.test.ts`.
+- `npm test` passes 1062/1062, including `audit-18.test.ts`.
 - `npm run audit:tutorials` is clean (197 pages).
 - I didn't run a dev server or touch any database.
 
@@ -162,19 +198,26 @@ These pages could not be read reliably without a real browser, or the two reader
 - **Search order moves** with the data (11 golden re-pins, plus Trinka first for the Grammarly-alternative query). No search code changed, but users will see different top-5s for those queries after deploy.
 - **Squarespace plan prices are marked verified, but the annual/monthly mapping is an inference** that both readers made from the toggle. The row text spells out both prices, so a wrong mapping would swap labels, not invent numbers.
 
+- **Run order:** audit 17 (if not yet applied), then audit 18. With the aligned text either order converges, but 17 first gives the cleanest log.
+- **Batch-1 fact dates:** the batch-1 fact files keep `checkedAt: 2026-10-29`, so they expire on 2026-11-28 along with batch 2.
+
 ## Judgment calls (please confirm)
 1. **Salesforce Einstein stays ENTERPRISE.** Salesforce Foundations is listed at $0 and Starter is $25/user, so FREEMIUM is arguable. But Foundations' requirements aren't stated, and the AI features sit in Core and above.
-2. **Workato, Dragon Medical One, Healthee and Viz.ai stay ENTERPRISE with `freeTier.available: false`.** The audit-18 test allows ENTERPRISE with no free tier, where audit 17's test demanded PAID. Tray moves to PAID because it now publishes a $50 entry price.
+2. **Workato, Dragon Medical One, Healthee and Viz.ai stay ENTERPRISE with `freeTier.available: false`.** The audit-18 test allows ENTERPRISE with no free tier (audit 17's test now does too, for relevance-ai). Tray moves to PAID because it now publishes a $50 entry price.
 3. **Codex CLI and Microsoft Designer go to FREEMIUM without a freeTier fact.** Paid plans are verified for both, but the free part is disputed (Codex) or unreadable (Designer), so there is no freeTier fact for the label to rest on.
 4. **Gemini CLI is PAID and stays listed.** An alternative is to hide it or point readers to Antigravity CLI (`google-antigravity` exists). **Zach to decide.**
 5. **No renames.** "Shopify Magic / Sidekick" (Shopify now says only "Sidekick") and "Salesforce Einstein" (the page now says "AIforce") keep their names and slugs. A rename should be its own PR, as with GPT Image in batch 1. **Zach to decide.**
 6. **Shopify's $0 Agentic plan is left out of `plans`.** It is for selling in AI channels, and whether it includes Sidekick isn't stated. Listing it would contradict "no free store plan".
 7. **Workato guide: no rewrite of the self-serve wording.** The guide's self-serve tiers cite Workato's docs (June 2026). Our readers checked only the pricing page, which is quote-only. I fixed only the edition names and a numeric limit, and put the docs on the Browser-check list.
-8. **Test expectation changes** (Grammarly ordering, stale-flag example, audit-11 `updatedAt` pin, golden re-pins) are listed above. Each follows from the new data, not a code change.
+8. **Gumloop privacyLevel LOW**, not MEDIUM. §21 trains on self-serve content by default and names no opt-out. CLAUDE.md's MEDIUM is "with opt-out or anonymization", so LOW is the honest fit.
+9. **Relevance AI goes to ENTERPRISE,** following the brief and the public pricing page, even though its docs still describe Pro ($29) and Team ($349). The fact note and guide say so.
+10. **Pabbly and Replicate (marked partial) got no verified price facts.** Pabbly's USD prices are recorded as unverified, and the row names the plans without prices.
+11. **Audit 17 edited after merge** so the two audits converge (see Batch-1 rows changed). The alternative was a "never re-run audit 17" rule.
+12. **Test expectation changes** (Grammarly ordering, stale-flag example, audit-11 `updatedAt` pin, golden re-pins) are listed above. Each follows from the new data, not a code change.
 
 ## What's left
 - Batches 3 and 4 (41 rows), listed in `stale-facts-batches.md`.
-- The Browser-check list above.
+- The Browser-check list above (batch 2). Batch 1's list is now resolved, except Pabbly lifetime/3-yearly prices, Replicate's free amount, Sakana Chat pricing, Meshy's yearly prices and ChatGPT's image caps, which the vendors don't state clearly.
 - Running audit 18 after the deploy (and audit 17, if it hasn't run yet).
 - The Gemini CLI listing decision, and the Shopify / Salesforce rename decisions.
 

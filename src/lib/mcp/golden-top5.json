@@ -182,8 +182,8 @@
   "top5": [
    "research-rabbit",
    "scite",
-   "elicit",
    "connected-papers",
+   "elicit",
    "litmaps"
   ]
  },
@@ -434,8 +434,8 @@
    "quillbot",
    "jenni-ai",
    "grammarly",
-   "trinka-ai",
-   "paperpal"
+   "paperpal",
+   "trinka-ai"
   ]
  },
  "G07": {
@@ -444,8 +444,8 @@
   },
   "top5": [
    "grammarly",
-   "trinka-ai",
    "paperpal",
+   "trinka-ai",
    "jenni-ai",
    "quillbot"
   ]
@@ -690,7 +690,7 @@
    "scispace",
    "scholarcy",
    "litmaps",
-   "research-rabbit"
+   "connected-papers"
   ]
  },
  "G29": {
@@ -913,9 +913,9 @@
    "task": "free alternative to Grammarly"
   },
   "top5": [
+   "paperpal",
    "trinka-ai",
    "quillbot",
-   "paperpal",
    "chatgpt",
    "gemini"
   ]

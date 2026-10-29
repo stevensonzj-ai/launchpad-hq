@@ -9,9 +9,10 @@ import { saysTrialOnly } from "@/lib/mcp/label-consistency";
 import { snapshotRows } from "@/lib/mcp/snapshot";
 import { audit10Slugs } from "./audit-10";
 import { AUDIT_11_PATCHES, audit11Slugs } from "./audit-11";
-import { AUDIT_17_BATCH } from "./audit-17";
+import { AUDIT_17_BATCH, AUDIT_17_PATCHES } from "./audit-17";
 import {
   AUDIT_18_BATCH,
+  AUDIT_18_BATCH1_RECHECK,
   AUDIT_18_PATCHES,
   CHECKED_AT,
   audit18GuardSkips,
@@ -36,6 +37,7 @@ const row = (over: Partial<Audit18Row> = {}): Audit18Row => ({
   usageLimits: null,
   costTier: "FREE",
   apiAvailable: false,
+  privacyLevel: "HIGH",
   ...over,
 });
 
@@ -47,8 +49,64 @@ describe("catalog audit 18: stale facts batch 2", () => {
       const facts = getToolFacts(slug);
       assert.ok(facts, `${slug}: fact file registered`);
     }
-    for (const patch of AUDIT_18_PATCHES) assert.ok(AUDIT_18_BATCH.includes(patch.slug), patch.slug);
+    for (const patch of AUDIT_18_PATCHES) {
+      assert.ok(AUDIT_18_BATCH.includes(patch.slug) || AUDIT_18_BATCH1_RECHECK.includes(patch.slug), patch.slug);
+    }
     assert.equal(new Set(AUDIT_18_PATCHES.map((p) => p.slug)).size, AUDIT_18_PATCHES.length);
+  });
+
+  it("re-checks 18 batch-1 rows from the browser check, all of them audit-17 slugs with fact files", () => {
+    assert.equal(AUDIT_18_BATCH1_RECHECK.length, 18);
+    assert.equal(new Set(AUDIT_18_BATCH1_RECHECK).size, 18);
+    for (const slug of AUDIT_18_BATCH1_RECHECK) {
+      assert.ok(AUDIT_17_BATCH.includes(slug), slug);
+      assert.ok(getToolFacts(slug), slug);
+    }
+  });
+
+  it("agrees with audit 17 on every field both write, so re-running either cannot revert the other", () => {
+    for (const patch of AUDIT_18_PATCHES.filter((p) => AUDIT_18_BATCH1_RECHECK.includes(p.slug))) {
+      const a17 = AUDIT_17_PATCHES.find((p) => p.slug === patch.slug);
+      if (!a17) continue;
+      for (const [field, text] of Object.entries(patch.fields)) {
+        const other: string | undefined = a17.fields[field as keyof typeof a17.fields];
+        if (other !== undefined) assert.equal(other, text, `${patch.slug}.${field}`);
+      }
+      const t17 = a17.guarded?.costTier?.to;
+      const t18 = patch.guarded?.costTier?.to;
+      if (t17 && t18) assert.equal(t17, t18, `${patch.slug}.costTier`);
+    }
+  });
+
+  it("follows the browser check on the rows named in the brief", () => {
+    const p = (slug: string) => AUDIT_18_PATCHES.find((x) => x.slug === slug)!;
+    // Relevance AI: Enterprise only, custom pricing.
+    assert.deepEqual(p("relevance-ai").guarded?.costTier, { from: "PAID", to: "ENTERPRISE" });
+    assert.equal(snap("relevance-ai")?.costTier, "ENTERPRISE");
+    assert.deepEqual(getToolFacts("relevance-ai")?.plans?.value.map((x) => x.name), ["Enterprise"]);
+    // Gumloop: self-serve content may train its models (policy section 21).
+    assert.deepEqual(p("gumloop").guarded?.privacyLevel, { from: "HIGH", to: "LOW" });
+    assert.equal(snap("gumloop")?.privacyLevel, "LOW");
+    const gumPrivacy = getToolFacts("gumloop")?.privacy;
+    assert.equal(gumPrivacy?.value.trainsOnData, true);
+    assert.ok(gumPrivacy && isPublishedVerified(gumPrivacy));
+    // Litmaps Free: 2 Litmaps.
+    assert.match(snap("litmaps")?.freeTierFeatures ?? "", /^Free: 2 Litmaps/);
+    // Ludo: no free plan, no sign-up credit claim.
+    assert.equal(snap("ludo-ai")?.costTier, "PAID");
+    assert.equal(getToolFacts("ludo-ai")?.freeTier?.value.available, false);
+    for (const f of ["currentPricing", "freeTierFeatures", "usageLimits"] as const) {
+      assert.doesNotMatch(snap("ludo-ai")?.[f] ?? "", /30 (free )?credits/, f);
+    }
+    // Meshy: monthly prices only.
+    assert.doesNotMatch(snap("meshy")?.currentPricing ?? "", /20% off|annual/i);
+    // ChatGPT / GPT Image: chatgpt.com, no numeric image caps.
+    assert.equal(snap("gpt-image-1-5-dall-e-successor")?.website, "https://chatgpt.com");
+    assert.equal(getToolFacts("gpt-image-1-5-dall-e-successor")?.officialUrl?.value, "https://chatgpt.com");
+    assert.doesNotMatch(snap("gpt-image-1-5-dall-e-successor")?.freeTierFeatures ?? "", /\d+ images/);
+    // Fireworks: no starting-credit claim in the row or the fact file.
+    const fw = getToolFacts("fireworks-ai")!;
+    assert.doesNotMatch(`${fw.freeTier?.value.summary} ${snap("fireworks-ai")?.freeTierFeatures}`, /\$\d+ (sign-up |starting )?credit|free credit/i);
   });
 
   it("skips the rows done in #115/#116 and batch 1 (audit 17)", () => {
@@ -75,7 +133,7 @@ describe("catalog audit 18: stale facts batch 2", () => {
   });
 
   it("stamps every fact checked today, with vendor sources and no affiliate links", () => {
-    for (const slug of AUDIT_18_BATCH) {
+    for (const slug of [...AUDIT_18_BATCH, ...AUDIT_18_BATCH1_RECHECK]) {
       const facts = getToolFacts(slug)!;
       for (const [key, fact] of Object.entries(facts)) {
         if (!fact || typeof fact !== "object" || !("sourceUrl" in fact)) continue;
@@ -102,7 +160,7 @@ describe("catalog audit 18: stale facts batch 2", () => {
   });
 
   it("matches each cost tier to the fact file's free tier", () => {
-    for (const slug of AUDIT_18_BATCH) {
+    for (const slug of [...AUDIT_18_BATCH, ...AUDIT_18_BATCH1_RECHECK]) {
       const patch = AUDIT_18_PATCHES.find((p) => p.slug === slug);
       const tier = patch?.guarded?.costTier?.to ?? snap(slug)?.costTier;
       const free = getToolFacts(slug)?.freeTier?.value;
@@ -126,6 +184,7 @@ describe("catalog audit 18: stale facts batch 2", () => {
         usageLimits: before.usageLimits ?? null,
         costTier: before.costTier,
         apiAvailable: before.apiAvailable,
+        privacyLevel: before.privacyLevel ?? null,
       };
       // The committed snapshot already has audit 18 applied, so start from the pre-audit guard values.
       const g = patch.guarded ?? {};
@@ -133,6 +192,7 @@ describe("catalog audit 18: stale facts batch 2", () => {
       if (g.website) pre.website = g.website.from[0];
       if (g.costTier) pre.costTier = g.costTier.from;
       if (g.apiAvailable) pre.apiAvailable = g.apiAvailable.from;
+      if (g.privacyLevel) pre.privacyLevel = g.privacyLevel.from;
       for (const field of Object.keys(patch.fields) as (keyof typeof patch.fields)[]) pre[field] = "stale";
       const data = audit18PatchData(pre, patch);
       if (Object.keys(data).length) changed += 1;
@@ -143,15 +203,23 @@ describe("catalog audit 18: stale facts batch 2", () => {
     assert.equal(changed, AUDIT_18_PATCHES.length);
   });
 
-  it("matches the expected dry run: 21 rows, 6 websites, 6 cost tiers, 1 company", () => {
-    const withWrites = AUDIT_18_PATCHES.filter((p) => Object.keys(p.fields).length > 0 || p.guarded);
-    assert.equal(withWrites.length, 21);
-    const count = (k: "website" | "costTier" | "company" | "apiAvailable") => AUDIT_18_PATCHES.filter((p) => p.guarded?.[k]).length;
-    assert.equal(count("website"), 6);
-    assert.equal(count("costTier"), 6);
-    assert.equal(count("company"), 1);
-    assert.equal(count("apiAvailable"), 0);
-    assert.equal(AUDIT_18_PATCHES.reduce((n, p) => n + Object.keys(p.fields).length, 0), 54);
+  it("matches the expected dry run: batch 2 21 rows / 67 fields, batch-1 re-check 16 rows / 32 fields", () => {
+    const part = (slugs: string[]) => AUDIT_18_PATCHES.filter((p) => slugs.includes(p.slug));
+    const tally = (patches: typeof AUDIT_18_PATCHES) => {
+      const count = (k: "website" | "costTier" | "company" | "apiAvailable" | "privacyLevel") =>
+        patches.filter((p) => p.guarded?.[k]).length;
+      return {
+        rows: patches.filter((p) => Object.keys(p.fields).length > 0 || p.guarded).length,
+        text: patches.reduce((n, p) => n + Object.keys(p.fields).length, 0),
+        website: count("website"),
+        costTier: count("costTier"),
+        company: count("company"),
+        apiAvailable: count("apiAvailable"),
+        privacyLevel: count("privacyLevel"),
+      };
+    };
+    assert.deepEqual(tally(part(AUDIT_18_BATCH)), { rows: 21, text: 54, website: 6, costTier: 6, company: 1, apiAvailable: 0, privacyLevel: 0 });
+    assert.deepEqual(tally(part(AUDIT_18_BATCH1_RECHECK)), { rows: 16, text: 29, website: 1, costTier: 1, company: 0, apiAvailable: 0, privacyLevel: 1 });
   });
 
   it("leaves a hand-edited guarded field alone and reports it", () => {
@@ -166,6 +234,7 @@ describe("catalog audit 18: stale facts batch 2", () => {
         website: { from: ["https://old.example"], to: "https://new.example" },
         costTier: { from: "FREE", to: "PAID" },
         apiAvailable: { from: false, to: true },
+        privacyLevel: { from: "HIGH", to: "LOW" },
       },
     };
     assert.deepEqual(audit18PatchData(row(), patch), {
@@ -173,10 +242,11 @@ describe("catalog audit 18: stale facts batch 2", () => {
       website: "https://new.example",
       costTier: "PAID",
       apiAvailable: true,
+      privacyLevel: "LOW",
     });
-    const edited = row({ company: "Hand Co", website: "https://hand.example", costTier: "FREEMIUM", apiAvailable: undefined });
+    const edited = row({ company: "Hand Co", website: "https://hand.example", costTier: "FREEMIUM", apiAvailable: undefined, privacyLevel: "MEDIUM" });
     assert.deepEqual(audit18PatchData(edited, patch), {});
-    assert.deepEqual(audit18GuardSkips(edited, patch), ["company", "website", "costTier", "apiAvailable"]);
+    assert.deepEqual(audit18GuardSkips(edited, patch), ["company", "website", "costTier", "apiAvailable", "privacyLevel"]);
   });
 });
 
