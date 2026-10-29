@@ -3,8 +3,8 @@ import type { ToolFacts } from "./types";
 /**
  * Clarifai: unpublished (hidden), guide PR D, 2026-10-29. Reversible: delete
  * `visibility` (and "clarifai" from RETIRED_GUIDE_SLUGS, then restore the
- * guide from src/data/tutorials/retired/) if the platform comes back. The
- * database row is left untouched. No shutdown has been announced, so the
+ * guide from src/data/tutorials/retired/) if the platform comes back. No
+ * database change hides it. No shutdown has been announced, so the
  * lifecycle stays "active" and the notice reports only what we observed.
  */
 export default {

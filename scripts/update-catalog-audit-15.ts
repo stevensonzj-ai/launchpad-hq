@@ -7,7 +7,9 @@
  *      holds the expected old value (a hand edit is logged and left alone);
  *   3. name references to the old names in every row's directAlternatives /
  *      complementaryTools / budgetAlternativeTo / privacyAlternativeTo.
- * Clarifai is hidden in code only; this audit never touches its row.
+ * Clarifai is hidden in code only; this audit leaves its slug, name and
+ * text alone (only the "Google Vertex AI" entry in its alternatives is
+ * renamed, as in every row).
  *
  * Patch values live in src/data/catalog-audits/audit-15.ts with their
  * official sources. Run after audit 14. Deploy the code that adds the four

@@ -20,9 +20,11 @@ import { REF_FIELDS, rewriteNameRefs, type NameRename, type RefField } from "./a
  *     `rewriteNameRefs`.
  *
  * Clarifai is unpublished in code only (src/data/facts/clarifai.ts sets
- * visibility "hidden"; its guide 301s). This audit deliberately leaves the
- * clarifai row and every reference to it untouched, so the hide is undone by
- * reverting code, with nothing to restore in the database.
+ * visibility "hidden"; its guide 301s). This audit changes nothing about
+ * Clarifai: its slug, name, text and visibility stay as they are, and other
+ * rows' references to it are kept, so the hide is undone by reverting code,
+ * with nothing to restore in the database. (Its own alternatives column
+ * names "Google Vertex AI", and that entry is renamed like every other row's.)
  *
  * Kept free of Prisma and dotenv so it typechecks with the app and can be
  * unit-tested (audit-15.test.ts). Never creates or deletes rows.
