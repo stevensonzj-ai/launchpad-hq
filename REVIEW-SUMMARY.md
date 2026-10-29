@@ -9,7 +9,7 @@ Branch `hermes-agent-1029`, based on `origin/main` 1e80d41. This PR adds Hermes 
 - **New row (operator script):**
   - `scripts/update-catalog-audit-16.ts`
   - `src/data/catalog-audits/audit-16.ts` (row data, pure logic)
-  - `src/data/catalog-audits/audit-16.test.ts` (10 tests)
+  - `src/data/catalog-audits/audit-16.test.ts` (10 tests; pricing tests rewritten for the final Portal pricing)
 - **package.json:** adds `db:update-catalog-audit-16` and adds the audit 16 test to `npm test`.
 - **Fact file:**
   - `src/data/facts/hermes-agent.ts` (new)
@@ -43,19 +43,40 @@ Branch `hermes-agent-1029`, based on `origin/main` 1e80d41. This PR adds Hermes 
 | Lindy AI (`lindy-ai`) | Yes | |
 | OpenClaw | **No** | No row, fact file or guide anywhere. Left out. |
 
-## Provisional pricing: where it lives
+## Pricing: final, browser-verified on Nous Portal
 
-One block, the `freeTier` and `plans` entries in **`src/data/facts/hermes-agent.ts`**, under a boxed "PROVISIONAL PRICING" comment. Both entries are marked `status: "unverified"`.
+Pricing was browser-verified by Zach on 2026-10-29 at **https://portal.nousresearch.com/**, the canonical pricing page. (`portal.nousresearch.com/pricing` is a 404 and is linked nowhere; a test checks this.) It lives in one block: the `freeTier` and `plans` entries in **`src/data/facts/hermes-agent.ts`**. Both are now `status: "verified"`, `verifiedBy: "owner"`, with `sourceKind: "plans-page"`, because the source is the Portal home and that path doesn't look like a pricing page.
 
-- `audit-16.ts` builds the row's `currentPricing` and `freeTierFeatures` from that block, so the inserted text matches it. A test pins the exact text: *"Free and open source (MIT). Optional Nous Portal plans: Free $0, Plus $20/mo, Super $100/mo, Ultra $200/mo. Annual pricing and free trial: not stated (as of 2026-10-29)"*.
-- The site overlay shows the fact file over the row text. Editing that block changes the platform page, the guide header and the guide's `{{price:hermes-agent:Plus}}` / `{{price:hermes-agent:Ultra}}` tokens without a new audit. The DB row's fallback text only changes if a later audit rewrites it.
-- **Left out on purpose** (a test checks this): the 10% bonus, rollover caps, credit amounts, and included-usage limits or cloud RAM/disk.
+| Plan | Price | What Portal says |
+|---|---|---|
+| Free | $0 | Free models only, standard rate limits, $0 monthly credits |
+| Plus | $20/mo | Hermes Agent usage included, within limits that reset daily, weekly and monthly; one cloud agent, 4 GB RAM / 25 GB disk |
+| Super | $100/mo | Same included usage; one cloud agent, 4 GB RAM / 100 GB disk |
+| Ultra | $200/mo | Same included usage; one cloud agent, 8 GB RAM / 100 GB disk |
+
+On every paid plan:
+- Any model can be used, but large models have their own monthly limit.
+- API keys always use pay-as-you-go credits, not included usage.
+- Bigger cloud agents and extra agents are paid from credits.
+
+**Credits:** top-ups from $10 to $200, or a custom amount. The Tool Gateway (web search, scraping, image generation, browser use, speech) is priced per use from credits.
+
+**ChatGPT:** an eligible ChatGPT account can be connected for supported inference with no paid Nous subscription. Tools and Hermes Cloud hosting are charged separately.
+
+**Models:** 300+, priced per 1M tokens.
+
+How the pricing reaches readers:
+- `audit-16.ts` builds the row's `currentPricing` and `freeTierFeatures` from that block. A test pins the exact text: *"Free and open source (MIT). Optional Nous Portal plans: Free $0, Plus $20/mo, Super $100/mo, Ultra $200/mo. Paid plans include Hermes Agent usage within limits that reset daily, weekly and monthly, and one cloud agent; API keys use pay-as-you-go credits. Annual pricing and free trial: not stated (as of 2026-10-29)"*.
+- The site overlay shows the fact file over the row text. The platform page, the guide header and the guide's `{{price:hermes-agent:Plus}}` / `{{price:hermes-agent:Ultra}}` tokens all follow the fact file.
+- The guide describes the plans' shape (included usage with daily/weekly/monthly limits, one cloud agent with more memory and disk on higher plans, credits for extras) and doesn't type any price or size. That is the price-guard rule.
+- The features list and `upgradeTriggers` now use Portal's Tool Gateway wording (per use, from credits). They previously quoted the agent site's "a paid-subscription feature".
+- **Left out on purpose** (a test checks this): the 10% bonus and rollover caps.
 
 ## Items written as "not stated"
 
 - Annual pricing.
 - Free trial.
-- Cloud region or host.
+- Cloud hosting provider or region.
 - Data retention period (Portal privacy policy).
 - A public Hermes Agent API. The row's `apiAvailable` is `false` because the column is a non-null boolean; see the judgment calls.
 
@@ -72,7 +93,6 @@ One block, the `freeTier` and `plans` entries in **`src/data/facts/hermes-agent.
 
 ## Risks
 
-- **Pricing is provisional.** Portal `/pricing` returned a Vercel checkpoint (HTTP 429). The agent site and the Portal home describe the plans differently. **A browser check of portal.nousresearch.com/pricing, the signup/trial flow and the cloud region is still owed.**
 - **The 404 window described above.** Keep the gap between deploy and audit short, and run the revalidate.
 - **MCP aliases and task tags were not added.** `NAME_ALIASES` and `task-tags.ts` are checked against the test snapshot, which (like Klap's) doesn't include this row. "Hermes Agent" still resolves by name once the row exists; the bare word "hermes" gets did-you-mean suggestions only.
 - **The test snapshot was not updated.** This follows the Klap precedent (audit 13).
@@ -83,7 +103,8 @@ One block, the `freeTier` and `plans` entries in **`src/data/facts/hermes-agent.
 2. **`privacyLevel: MEDIUM`.** Self-hosting keeps state local, which would argue for HIGH. But the cloud path's policy allows training use unless you opt out with Privacy Mode, which is CLAUDE.md's definition of MEDIUM.
 3. **`difficultyLevel: INTERMEDIATE`, `costTier: FREEMIUM`.** Free open-source software with optional paid plans, the same shape as n8n's row.
 4. **`apiAvailable: false`.** "Not stated" can't be stored in a boolean. I picked the conservative value; the not-stated note lives in the fact file's `features`.
-5. **Fact `status`.** Company, platforms, models, features and privacy are `verified` (research-analyst, 2026-10-29). Pricing (`plans`, `freeTier`) is `unverified` because it's provisional.
+5. **Fact `status`.** Company, platforms, models, features and privacy are `verified` (research-analyst, 2026-10-29). Pricing (`plans`, `freeTier`) is `verified` by owner (your Portal browser check, 2026-10-29).
+7. **`apiAvailable` stays `false`.** Portal mentions API keys, but those are for Portal's model API and are billed in credits. Portal does not state a public API for the agent itself.
 6. **The guide quotes only verified facts.** It leaves out star counts and version numbers (they go stale fast). It also leaves out the "$5 VPS" line, which would trip the price guard; the guide says "a rented server" instead.
 
 ## Also noticed (not changed)
@@ -98,6 +119,6 @@ One block, the `freeTier` and `plans` entries in **`src/data/facts/hermes-agent.
 - `npm test`: 1037 passed, 0 failed (includes audit-16, price-guard, price-tokens, label-consistency and facts).
 - `npm run audit:tutorials`: clean, 197 pages.
 
-**Not verified (owner):** a Vercel preview of `/platform/hermes-agent` and `/guide`. Both 404 on a preview until audit 16 runs against that preview's DB branch. Also owed: the audit 16 dry run and apply on a Neon branch, and the Portal pricing browser check.
+**Not verified (owner):** a Vercel preview of `/platform/hermes-agent` and `/guide`. Both 404 on a preview until audit 16 runs against that preview's DB branch. Also owed: the audit 16 dry run and apply on a Neon branch. (The Portal pricing check is done.)
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

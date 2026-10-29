@@ -7,8 +7,9 @@
  *     slug. Its category is looked up by slug (HERMES_CATEGORY_SLUG) at run
  *     time. The catalog has no "AI agents" category; workflow-automation is
  *     where the closest agent rows already sit (manus, lindy-ai).
- *   - Pricing is provisional and has ONE home: the `freeTier` and `plans`
- *     block of src/data/facts/hermes-agent.ts. The row's currentPricing and
+ *   - Pricing (browser-verified on portal.nousresearch.com, 2026-10-29) has
+ *     ONE home: the `freeTier` and `plans` block of
+ *     src/data/facts/hermes-agent.ts. The row's currentPricing and
  *     freeTierFeatures are built from that block here, so the two cannot
  *     drift at insert time. After the insert, the site overlay shows the fact
  *     file over the row text, so amend the fact file only.
@@ -45,21 +46,23 @@ export const HERMES_SOURCES = [
  */
 export const HERMES_ALTERNATIVES = ["Claude Code", "OpenAI Codex CLI", "Lindy AI"];
 
+const PAID_PLANS =
+  "Paid plans include Hermes Agent usage within limits that reset daily, weekly and monthly, and one cloud agent; API keys use pay-as-you-go credits.";
 const NOT_STATED = "Annual pricing and free trial: not stated";
 
-/** "Free $0, Plus $20/mo, …" from the fact file's provisional plans. */
-export function provisionalPlanList(): string {
+/** "Free $0, Plus $20/mo, …" from the fact file's plans. */
+export function planList(): string {
   return hermesAgentFacts.plans.value
     .map((p) => `${p.name} ${p.price}${p.period === "month" ? "/mo" : ""}`)
     .join(", ");
 }
 
-/** Row currentPricing, built from the fact file's provisional plans. */
+/** Row currentPricing, built from the fact file's plans. */
 export function hermesCurrentPricing(): string {
-  return `Free and open source (MIT). Optional Nous Portal plans: ${provisionalPlanList()}. ${NOT_STATED} (as of ${CHECKED_AT})`;
+  return `Free and open source (MIT). Optional Nous Portal plans: ${planList()}. ${PAID_PLANS} ${NOT_STATED} (as of ${CHECKED_AT})`;
 }
 
-/** Row freeTierFeatures, from the fact file's provisional free-tier summary. */
+/** Row freeTierFeatures, from the fact file's free-tier summary. */
 export function hermesFreeTierFeatures(): string {
   return `${hermesAgentFacts.freeTier.value.summary} (as of ${CHECKED_AT})`;
 }
@@ -82,7 +85,7 @@ export const HERMES_ROW = {
   freeTierFeatures: hermesFreeTierFeatures(),
   usageLimits: null,
   upgradeTriggers:
-    "Having Nous Portal host the agent in the cloud; Tool Gateway (search, image, text-to-speech, browser), which Nous lists as a paid-subscription feature",
+    "Having Nous Portal host the agent in the cloud (each paid plan includes one cloud agent); included Hermes Agent usage on a paid plan; Tool Gateway (web search, scraping, image generation, browser use, speech), priced per use from credits",
   apiAvailable: false,
   offlineCapable: false,
   keyIntegrations:

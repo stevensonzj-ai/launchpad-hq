@@ -61,27 +61,58 @@ describe("catalog audit 16: Hermes Agent row (create only)", () => {
     for (const url of HERMES_SOURCES) assert.match(url, /^https:\/\/(hermes-agent\.nousresearch\.com|portal\.nousresearch\.com|github\.com\/NousResearch)\//);
   });
 
-  it("states the provisional pricing exactly, built from the fact file", () => {
+  it("states the Portal pricing exactly, built from the fact file", () => {
     assert.equal(
       hermesCurrentPricing(),
-      "Free and open source (MIT). Optional Nous Portal plans: Free $0, Plus $20/mo, Super $100/mo, Ultra $200/mo. Annual pricing and free trial: not stated (as of 2026-10-29)",
+      "Free and open source (MIT). Optional Nous Portal plans: Free $0, Plus $20/mo, Super $100/mo, Ultra $200/mo. Paid plans include Hermes Agent usage within limits that reset daily, weekly and monthly, and one cloud agent; API keys use pay-as-you-go credits. Annual pricing and free trial: not stated (as of 2026-10-29)",
     );
     assert.equal(HERMES_ROW.currentPricing, hermesCurrentPricing());
     const facts = getToolFacts(HERMES_SLUG)!;
-    assert.equal(facts.plans!.status, "unverified");
-    assert.deepEqual(facts.plans!.value.map((p) => p.name), ["Free", "Plus", "Super", "Ultra"]);
+    for (const key of ["plans", "freeTier"] as const) {
+      assert.equal(facts[key]!.status, "verified", key);
+      assert.equal(facts[key]!.verifiedBy, "owner", key);
+      assert.equal(facts[key]!.sourceUrl, "https://portal.nousresearch.com/", key);
+    }
+    assert.deepEqual(
+      facts.plans!.value.map((p) => `${p.name} ${p.price}`),
+      ["Free $0", "Plus $20", "Super $100", "Ultra $200"],
+    );
+    const [free, plus, superPlan, ultra] = facts.plans!.value;
+    assert.match(free.limits, /Free models only; standard rate limits; \$0 monthly credits/);
+    for (const p of [plus, superPlan, ultra]) {
+      assert.match(p.limits, /Hermes Agent usage included, within limits that reset daily, weekly and monthly/, p.name);
+    }
+    assert.match(plus.limits, /one cloud agent \(4 GB RAM, 25 GB disk\)/);
+    assert.match(superPlan.limits, /one cloud agent \(4 GB RAM, 100 GB disk\)/);
+    assert.match(ultra.limits, /one cloud agent \(8 GB RAM, 100 GB disk\)/);
+    const note = facts.plans!.note!;
+    for (const re of [
+      /large models have their own monthly limit/,
+      /API keys always use pay-as-you-go credits, not included usage/,
+      /Bigger cloud-agent sizes and extra agents use credits/,
+      /Credit top-ups from \$10 to \$200, or a custom amount/,
+      /Tool Gateway \(web search, scraping, image generation, browser use, speech\) is priced per use from credits/,
+      /300\+ models are priced per 1M tokens/,
+      /Cloud hosting provider and region: not stated/,
+    ]) {
+      assert.match(note, re);
+    }
+    assert.match(facts.freeTier!.value.summary, /eligible ChatGPT account.*without a paid Nous subscription; tools and Hermes Cloud hosting are charged separately/);
   });
 
-  it("never mentions the bonus, rollover caps, credit amounts or included usage", () => {
+  it("never mentions the bonus or rollover caps, and never links Portal's /pricing (a 404)", () => {
     const facts = getToolFacts(HERMES_SLUG)!;
     const texts = [
       JSON.stringify(HERMES_ROW),
-      JSON.stringify(facts.plans),
-      JSON.stringify(facts.freeTier),
+      JSON.stringify(facts),
       JSON.stringify(getStaticTutorialForPlatform(HERMES_SLUG)),
+      JSON.stringify(HERMES_SOURCES),
     ];
     for (const text of texts) {
-      assert.doesNotMatch(text, /bonus|rollover|roll over|\d+(\.\d+)?\s*(monthly )?credits|included usage|usage included|\$22|\$110|\$220/i);
+      assert.doesNotMatch(text, /bonus|rollover|roll over|10\s?%|\$22|\$110|\$220/i);
+      assert.doesNotMatch(text, /portal\.nousresearch\.com\/pricing/);
+      // The only credit amount stated is the Free plan's "$0 monthly credits".
+      assert.doesNotMatch(text.replace(/\$0 monthly credits/g, ""), /\d+(\.\d+)?\s*(monthly )?credits/i);
     }
   });
 

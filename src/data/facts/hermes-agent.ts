@@ -1,7 +1,7 @@
 import type { ToolFacts } from "./types";
 
-const HERMES_HOME_URL = "https://hermes-agent.nousresearch.com/";
 const HERMES_REPO_URL = "https://github.com/NousResearch/hermes-agent";
+const PORTAL_HOME_URL = "https://portal.nousresearch.com/";
 const PORTAL_PRIVACY_URL = "https://portal.nousresearch.com/privacy";
 
 /**
@@ -10,19 +10,14 @@ const PORTAL_PRIVACY_URL = "https://portal.nousresearch.com/privacy";
  * and docs, the GitHub README and LICENSE, and Nous Portal (home and
  * privacy policy).
  *
- * ┌──────────────────────────────────────────────────────────────────────┐
- * │ PROVISIONAL PRICING — amend `freeTier` and `plans` below, nowhere else│
- * │ Nous Portal's /pricing page returned a bot checkpoint (HTTP 429), and │
- * │ the agent site and Portal home describe the same prices with          │
- * │ different plan details. Only the prices both pages agree on are       │
- * │ recorded. Deliberately left out until a browser check of              │
- * │ portal.nousresearch.com/pricing: bonus-credit promotions, rollover    │
- * │ caps, credit amounts and included-usage limits. Annual pricing and a  │
- * │ free trial are not stated. Catalog audit 16 builds the row's          │
- * │ currentPricing and freeTierFeatures text from this block, and the     │
- * │ site overlay shows this block over the row text, so an edit here      │
- * │ changes what readers see without a new audit.                         │
- * └──────────────────────────────────────────────────────────────────────┘
+ * Pricing is the `freeTier` and `plans` block below, and nowhere else.
+ * Browser-verified by the owner on 2026-10-29 at portal.nousresearch.com,
+ * the canonical pricing page (portal.nousresearch.com/pricing is a 404; do
+ * not link it). Catalog audit 16 builds the row's currentPricing and
+ * freeTierFeatures text from this block, and the site overlay shows this
+ * block over the row text, so an edit here changes what readers see without
+ * a new audit. Deliberately left out: bonus-credit promotions and rollover
+ * caps. Annual pricing, a free trial and a public agent API are not stated.
  */
 export default {
   slug: "hermes-agent",
@@ -37,34 +32,51 @@ export default {
     verifiedAt: "2026-10-29",
     status: "verified",
   },
-  // PROVISIONAL PRICING (see the box above).
   freeTier: {
     value: {
       available: true,
       summary:
-        "Free and open source (MIT): you can run Hermes Agent yourself at no charge. Model providers and optional hosted services have their own pricing; Nous Portal also has a Free plan.",
+        "Free and open source (MIT): you can run Hermes Agent yourself at no charge with a model provider of your choice. Nous Portal's Free plan ($0) covers free models only, with standard rate limits and $0 monthly credits. An eligible ChatGPT account can be connected for supported inference without a paid Nous subscription; tools and Hermes Cloud hosting are charged separately.",
     },
-    note: "Site FAQ, as of 2026-10-29: \"Hermes Agent is free and open source under the MIT license. Model providers and optional hosted services have their own pricing.\" Provisional: see the pricing box at the top of this file.",
-    sourceUrl: HERMES_HOME_URL,
-    sourceKind: "product-page",
+    note: "Site FAQ: \"Hermes Agent is free and open source under the MIT license. Model providers and optional hosted services have their own pricing.\" Nous Portal, browser-verified 2026-10-29: Free $0, \"free models only\", standard rate limits, $0 monthly credits; an eligible ChatGPT account can be connected for supported inference with no paid Nous subscription, with tools and Hermes Cloud hosting charged separately.",
+    sourceUrl: PORTAL_HOME_URL,
+    sourceKind: "plans-page",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
-    status: "unverified",
+    verifiedBy: "owner",
+    verifiedAt: "2026-10-29",
+    status: "verified",
   },
-  // PROVISIONAL PRICING (see the box above).
   plans: {
     value: [
-      { name: "Free", price: "$0", period: "", limits: "Optional Nous Portal plan" },
-      { name: "Plus", price: "$20", period: "month", limits: "Optional Nous Portal plan" },
-      { name: "Super", price: "$100", period: "month", limits: "Optional Nous Portal plan" },
-      { name: "Ultra", price: "$200", period: "month", limits: "Optional Nous Portal plan" },
+      { name: "Free", price: "$0", period: "", limits: "Free models only; standard rate limits; $0 monthly credits" },
+      {
+        name: "Plus",
+        price: "$20",
+        period: "month",
+        limits: "Hermes Agent usage included, within limits that reset daily, weekly and monthly; one cloud agent (4 GB RAM, 25 GB disk)",
+      },
+      {
+        name: "Super",
+        price: "$100",
+        period: "month",
+        limits: "Hermes Agent usage included, within limits that reset daily, weekly and monthly; one cloud agent (4 GB RAM, 100 GB disk)",
+      },
+      {
+        name: "Ultra",
+        price: "$200",
+        period: "month",
+        limits: "Hermes Agent usage included, within limits that reset daily, weekly and monthly; one cloud agent (8 GB RAM, 100 GB disk)",
+      },
     ],
-    note: "USD, as of 2026-10-29. Optional Nous Portal plans; Hermes Agent itself is free and open source (MIT). The agent site and the Portal home list the same four prices. Annual pricing: not stated. Free trial: not stated. Portal's /pricing page returned a bot checkpoint (HTTP 429), so plan details are held back until a browser check. Provisional: see the pricing box at the top of this file.",
-    sourceUrl: HERMES_HOME_URL,
-    sourceKind: "product-page",
+    note: "USD, browser-verified 2026-10-29 on Nous Portal (portal.nousresearch.com). Optional; Hermes Agent itself is free and open source (MIT). Paid plans: any model can be used, but large models have their own monthly limit; API keys always use pay-as-you-go credits, not included usage. Bigger cloud-agent sizes and extra agents use credits. Credit top-ups from $10 to $200, or a custom amount. Tool Gateway (web search, scraping, image generation, browser use, speech) is priced per use from credits. 300+ models are priced per 1M tokens. Cloud hosting provider and region: not stated. Annual pricing: not stated. Free trial: not stated.",
+    sourceUrl: PORTAL_HOME_URL,
+    sourceKind: "plans-page",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
-    status: "unverified",
+    verifiedBy: "owner",
+    verifiedAt: "2026-10-29",
+    status: "verified",
   },
   platforms: {
     value: [
@@ -75,7 +87,7 @@ export default {
       "Self-hosted",
       "Cloud via Nous Portal",
     ],
-    note: "Self-hosting, from the site: \"Run it on a $5 VPS, a GPU cluster, or serverless infrastructure\". Cloud, from Nous Portal: \"Deploy in one click and Portal hosts your agent in the cloud, running around the clock. Server costs bill straight to your credit balance.\" Signing up for the cloud option takes a Nous Portal account. Cloud region or host: not stated.",
+    note: "Self-hosting, from the site: \"Run it on a $5 VPS, a GPU cluster, or serverless infrastructure\". Cloud, from Nous Portal: \"Deploy in one click and Portal hosts your agent in the cloud, running around the clock. Server costs bill straight to your credit balance.\" Signing up for the cloud option takes a Nous Portal account; each paid Portal plan includes one cloud agent (see plans). Cloud region or host: not stated.",
     sourceUrl: HERMES_REPO_URL,
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -85,7 +97,7 @@ export default {
   },
   models: {
     value: ["Your choice of provider: Nous Portal, OpenRouter, OpenAI, a custom endpoint and others"],
-    note: "README lists Nous Portal, OpenRouter, OpenAI and a custom endpoint \"and many others\". Nous Portal lists 300+ models.",
+    note: "README lists Nous Portal, OpenRouter, OpenAI and a custom endpoint \"and many others\". Nous Portal lists 300+ models, priced per 1M tokens.",
     sourceUrl: HERMES_REPO_URL,
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -100,10 +112,10 @@ export default {
       "Keeps memory and creates its own skills (\"Autonomous skill creation\"); skills are agentskills.io compatible.",
       "Runs scheduled (cron) tasks and can hand work to subagents.",
       "Runs its work on your own machine, in Docker, over SSH, or on Modal, Daytona or Vercel Sandbox.",
-      "Tool Gateway (search, image, text-to-speech, browser) is \"a paid-subscription feature\".",
+      "Tool Gateway (web search, scraping, image generation, browser use, speech) is priced per use from Nous Portal credits.",
       "A public Hermes Agent API: not stated (Nous Portal has an API section; details not verified).",
     ],
-    note: "From the README, as of 2026-10-29, except the Tool Gateway line (agent site) and the API line.",
+    note: "From the README, as of 2026-10-29, except the Tool Gateway line (Nous Portal, browser-verified 2026-10-29) and the API line.",
     sourceUrl: HERMES_REPO_URL,
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -129,7 +141,7 @@ export default {
       date: "2026-10-29",
       field: "plans",
       summary:
-        "First fact file. Provisional pricing: free and open source (MIT); optional Nous Portal plans Free $0, Plus $20/mo, Super $100/mo, Ultra $200/mo. Annual pricing and trial not stated; Portal /pricing awaiting a browser check.",
+        "First fact file. Pricing browser-verified on Nous Portal: free and open source (MIT); optional Portal plans Free $0, Plus $20/mo, Super $100/mo, Ultra $200/mo, each paid plan with included Hermes Agent usage and one cloud agent. Annual pricing and trial not stated.",
     },
   ],
 } satisfies ToolFacts;

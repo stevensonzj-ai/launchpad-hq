@@ -21,10 +21,10 @@ export const hermesAgentTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Hermes itself costs nothing, but it does not come with an AI model. You connect a **model provider**, the company whose AI does the thinking, such as OpenAI, OpenRouter or Nous's own Portal, and that provider bills you in its own way. Nous's site puts it plainly: \"Model providers and optional hosted services have their own pricing.\"",
-    "Nous Portal is the optional paid side. It has a free plan, and paid plans run from {{price:hermes-agent:Plus}} up to {{price:hermes-agent:Ultra}}. Neither Nous page we checked states annual pricing or a free trial. Nous lists its Tool Gateway, which adds web search, images, text-to-speech and a browser, as a paid-subscription feature.",
+    "Hermes itself costs nothing, but it does not come with an AI model. You connect a **model provider**, the company whose AI does the thinking, such as OpenAI, OpenRouter or Nous's own Portal, and that provider bills you in its own way. Nous's site puts it plainly: \"Model providers and optional hosted services have their own pricing.\" If you have an eligible ChatGPT account, Nous Portal lets you connect it for supported models without a paid Nous plan; tools and cloud hosting are still charged separately.",
+    "Nous Portal is the optional paid side. Its free plan covers free models only. Paid plans run from {{price:hermes-agent:Plus}} up to {{price:hermes-agent:Ultra}}; each includes Hermes Agent usage within limits that reset daily, weekly and monthly, plus one cloud agent, with more memory and disk on the higher plans. You can pick any model, but large models have their own monthly limit. The Tool Gateway (web search, scraping, image generation, browser use and speech) is charged per use from prepaid credits, and API keys always use credits rather than the included usage. Nous does not state annual pricing or a free trial.",
     "Running it yourself means installing software and linking it to a provider account; the desktop app is the gentlest way in. If you would rather have nothing to install, Lindy AI is a hosted assistant agent in the same part of the catalog.",
-    "The hosted option needs a Nous Portal account. Nous says the server costs for a cloud agent are billed to your Portal balance, and it does not say which region or company hosts those servers.",
+    "The hosted option needs a Nous Portal account. Each paid plan includes one cloud agent; a bigger agent or extra agents are paid from your credits. Nous does not say which region or company hosts those servers.",
   ],
 
   gettingSetUpSafely: {
@@ -103,7 +103,7 @@ export const hermesAgentTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**Two descriptions of the same plans.** Nous's agent site and its Portal describe what each paid plan includes in different ways. Read the Portal's own pricing page at checkout rather than either summary.",
+    "**Included usage has limits.** A paid plan's included usage resets daily, weekly and monthly, large models have a separate monthly limit, and API keys always draw on credits. An agent working on its own can reach a limit faster than you would in a chat app, so check your Portal balance during the first week.",
     "**A fast-moving project.** Hermes is updated through GitHub releases, so menus and steps can change between versions. If this guide doesn't match what you see, check the releases page.",
   ],
 
