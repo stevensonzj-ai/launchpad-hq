@@ -14,6 +14,7 @@ import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildPlatformMetadata } from "@/lib/seo-metadata";
+import { getAffiliateLink } from "@/data/affiliates";
 import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
 import { dataAsOf, listedRelatedRows, publicToolCore } from "@/lib/public-data/serialize";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -148,6 +149,7 @@ export default async function PlatformPage({
         company={view.company ?? platform.company}
         logoUrl={platform.logoUrl}
         officialHref={officialHref}
+        affiliate={getAffiliateLink(platform.slug)}
         isFavorited={isFavorited}
         isSignedIn={isSignedIn}
       />

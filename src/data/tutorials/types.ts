@@ -1,3 +1,5 @@
+import type { DisclosureMarker } from '../disclosures';
+
 export type AccessTier = 'FREE' | 'PREMIUM';
 export type TutorialArchetype = 'prompts' | 'recipes' | 'pick-and-setup';
 
@@ -29,4 +31,10 @@ export type PlatformTutorialData = {
   starterActions: StarterAction[];
   pitfalls: string[];
   whereToNext: WhereNext[];
+  /**
+   * Set when the platform has an affiliate link or gave us free access
+   * (src/data/affiliates.ts). The guide page shows that disclosure in its
+   * header; affiliates.test.ts fails if a covered platform is missing here.
+   */
+  disclosure?: DisclosureMarker;
 };

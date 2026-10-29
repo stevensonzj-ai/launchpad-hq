@@ -14,6 +14,7 @@ import { getToolFacts } from "@/data/facts/registry";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
 import { AUDIT_5_PATCHES, type Audit5Patch, type Audit5TextField } from "@/data/catalog-audits/audit-5";
 import { extractUrls, stripInlineCitations } from "@/lib/platform-display";
+import { comparisonDisclosureText } from "@/data/disclosures";
 import {
   COMPARE_HUB_PATH,
   COMPARE_PAGES,
@@ -326,4 +327,16 @@ export function compareLlmsLines(origin: string, pages: readonly ComparePage[]):
     `- [Comparisons](${origin}${COMPARE_HUB_PATH}): Head-to-head comparisons and free alternatives, priced from catalog data`,
     ...pages.map((page) => `- [${page.title}](${origin}${comparePagePath(page)}): ${page.description}`),
   ];
+}
+
+/**
+ * Disclosure lines for the page's marker, one per rendered tool it names
+ * (src/data/disclosures.ts). Text only: a comparison never uses an
+ * affiliate link.
+ */
+export function compareDisclosureLines(page: ComparePage, tools: readonly Pick<CompareTool, "slug" | "name">[]): string[] {
+  return (page.disclosure ?? []).flatMap(({ slug, kinds }) => {
+    const tool = tools.find((t) => t.slug === slug);
+    return tool ? [comparisonDisclosureText(tool.name, kinds)] : [];
+  });
 }

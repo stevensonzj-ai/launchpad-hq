@@ -14,6 +14,7 @@ import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
 import { buildTutorialMetadata, stripInlineMarkup, verifiedDisplayName } from "@/lib/seo-metadata";
+import { getAffiliateLink } from "@/data/affiliates";
 import { buildTutorialStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
 import { toGuideView } from "@/lib/public-data/content-view";
 import { loadFeed } from "@/lib/public-data/load";
@@ -100,6 +101,7 @@ export default async function PlatformGuidePage({
         company={view.company ?? platform.company}
         logoUrl={platform.logoUrl}
         officialHref={officialSiteHref(view.website)}
+        affiliate={getAffiliateLink(platform.slug)}
         isFavorited={favorite !== null}
         isSignedIn={user !== null}
         nameAs="p"

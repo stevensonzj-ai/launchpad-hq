@@ -4,6 +4,7 @@ import type { ToolFacts } from "@/data/facts/types";
 import type { PlatformTutorialData } from "@/data/tutorials/types";
 import type { ComparePage } from "@/data/compare/pages";
 import type { WorkflowTemplate, WorkflowTier } from "@/data/workflows/types";
+import type { AffiliateEntry } from "@/data/affiliates";
 import {
   STALE_DAYS,
   buildContentItems,
@@ -21,6 +22,7 @@ import {
   parseIsoDate,
   parseSitemapLocs,
   summarizeFacts,
+  disclosureGaps,
   type PlatformRecord,
   type TrackerInput,
 } from "./content-tracker";
@@ -132,7 +134,7 @@ function run(over: Partial<TrackerInput> = {}) {
   const items = buildContentItems(i);
   const platforms = buildPlatformRows(i, items);
   const content = buildContentRows(i, items);
-  return { items, platforms, content, summary: buildSummary(platforms, content, NOW) };
+  return { items, platforms, content, summary: buildSummary(platforms, content, NOW, i.affiliates) };
 }
 
 const bySlug = (rows: ReturnType<typeof run>["platforms"], slug: string) => {
@@ -229,8 +231,9 @@ describe("platform rows", () => {
 
   it("never invents unknown columns", () => {
     for (const p of platforms) {
-      assert.equal(p.row.affiliate, null);
-      assert.equal(p.row.sponsor, null);
+      // No fixture slug is in the real affiliate registry: N, not blank.
+      assert.equal(p.row.affiliate, "N");
+      assert.equal(p.row.sponsor, "N");
       assert.equal(p.row.hasMcp, null);
       assert.equal(p.row.pageViews, null);
     }
@@ -351,9 +354,65 @@ describe("summary", () => {
 
   it("reports blank columns and missing inputs as data gaps", () => {
     const gaps = dataGaps({ auditProvided: false, sitemapError: "HTTP 503", sitemapSkipped: false }).map((g) => g.item);
-    for (const col of ["Platforms: Affiliate", "Platforms: Has MCP", "Platforms: Page views", "Content: Published", "Content: Audit result"]) {
+    assert.equal(gaps.includes("Platforms: Affiliate"), false);
+    assert.equal(gaps.includes("Content: Disclosure present"), false);
+    for (const col of ["Platforms: Has MCP", "Platforms: Page views", "Content: Published", "Content: Audit result"]) {
       assert.ok(gaps.includes(col), col);
     }
     assert.ok(gaps.includes("Status / In sitemap"));
+  });
+});
+
+describe("affiliate, free access and disclosure columns", () => {
+  const entry = (slug: string, granted: boolean, disclosure: AffiliateEntry["disclosure"]): AffiliateEntry => ({
+    slug,
+    href: `https://${slug}.example/?via=test`,
+    freeAccess: { granted, source: "test" },
+    disclosure,
+  });
+  const affiliates = {
+    beta: entry("beta", false, ["affiliate"]),
+    gamma: entry("gamma", true, ["affiliate"]), // free access given but not disclosed
+  };
+  const disclosedPages: ComparePage[] = [
+    { ...pages[0], disclosure: [{ slug: "beta", kinds: ["affiliate"] }] } as ComparePage,
+    pages[1],
+  ];
+
+  it("fills Affiliate and Sponsor / free access from the registry", () => {
+    const { platforms } = run({ affiliates });
+    assert.equal(bySlug(platforms, "alpha").row.affiliate, "N");
+    assert.equal(bySlug(platforms, "beta").row.affiliate, "Y");
+    assert.equal(bySlug(platforms, "beta").row.sponsor, "N");
+    assert.equal(bySlug(platforms, "gamma").row.sponsor, "Y");
+  });
+
+  it("flags an affiliate link with no disclosure on the platform and on pages that render it", () => {
+    const { platforms, content, summary } = run({ affiliates });
+    // gamma's own entry lacks free-access; the alternatives page renders gamma without a marker;
+    // the head-to-head and the workflow render beta without a marker.
+    assert.deepEqual(
+      summary.disclosureGaps.map((g) => `${g.where} ${g.slug} ${g.missing.join("+")}`).sort(),
+      [
+        "/alternatives/free-alpha-alternatives gamma affiliate+free-access",
+        "/compare/alpha-vs-beta beta affiliate",
+        "/platform/gamma gamma free-access",
+        "/workflows/blog beta affiliate",
+      ],
+    );
+    assert.match(String(bySlug(platforms, "beta").row.notes), /affiliate link but no disclosure: \/workflows\/blog, \/compare\/alpha-vs-beta/);
+    const disclosure = (path: string) => content.find((c) => c.item.path === path)!.row.disclosure;
+    assert.equal(disclosure("/compare/alpha-vs-beta"), "N");
+    assert.equal(disclosure("/platform/alpha/guide"), null); // renders no affiliate platform
+  });
+
+  it("is clean once every page carries the marker", () => {
+    const fixed = { beta: affiliates.beta, gamma: entry("gamma", true, ["affiliate", "free-access"]) };
+    const i = input({ affiliates: fixed, comparePages: disclosedPages, workflows: [] });
+    const items = buildContentItems(i);
+    const remaining = disclosureGaps(fixed, items).map((g) => g.where);
+    assert.deepEqual(remaining, ["/alternatives/free-alpha-alternatives"]);
+    const content = buildContentRows(i, items);
+    assert.equal(content.find((c) => c.item.path === "/compare/alpha-vs-beta")!.row.disclosure, "Y");
   });
 });
