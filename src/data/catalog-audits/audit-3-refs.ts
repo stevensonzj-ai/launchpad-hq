@@ -1,4 +1,5 @@
 import { REGISTERED_TOOL_FACTS } from "../facts/registry";
+import { PLATFORM_REDIRECTS } from "../../lib/catalog-redirects";
 
 /**
  * Catalog audit #3, follow-on step: rewrite name references orphaned by the
@@ -37,7 +38,9 @@ export type NameRename = { from: string; to: string };
 
 export function audit3NameRenames(): NameRename[] {
   return AUDIT_3_OLD_NAMES.map(({ oldName, slug }) => {
-    const to = REGISTERED_TOOL_FACTS[slug]?.displayName?.value;
+    // A row renamed again later (notebooklm -> gemini-notebook, audit 15)
+    // keeps its fact file under the new slug.
+    const to = REGISTERED_TOOL_FACTS[PLATFORM_REDIRECTS[slug] ?? slug]?.displayName?.value;
     if (!to) throw new Error(`No displayName fact for ${slug}`);
     return { from: oldName, to };
   });

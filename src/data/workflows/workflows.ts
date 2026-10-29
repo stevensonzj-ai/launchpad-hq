@@ -589,8 +589,8 @@ export const WORKFLOWS: WorkflowTemplate[] = [
               "Web-grounded answers with citations. Optimal when research must be checkable and up to date.",
           },
           {
-            name: "NotebookLM",
-            slug: "notebooklm",
+            name: "Gemini Notebook",
+            slug: "gemini-notebook",
             rationale:
               "Ground answers in your PDFs and docs. Best for deep synthesis after you’ve gathered sources.",
           },

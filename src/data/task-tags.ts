@@ -277,7 +277,7 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   "leonardo-ai": ["image-generation"],
   flux: ["image-generation"],
   "gpt-image-1-5-dall-e-successor": ["image-generation"],
-  "google-imagen-3": ["image-generation"],
+  "nano-banana": ["image-generation"], // formerly google-imagen-3 (audit 15)
   krea: ["image-generation"],
   "freepik-ai": ["image-generation"],
 
@@ -338,7 +338,7 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   // Fix plan P1.2 tags (2026-10-26), each from the row's own text.
   "khan-academy-khanmigo": ["study-help"], // row: "AI tutor for personalized education"
   "quizlet-q-chat": ["study-help"], // row: "AI study assistant and flashcard generation", "exam prep"
-  notebooklm: ["study-help", "summarization"], // row: "Study guide creation; source-grounded Q&A"
+  "gemini-notebook": ["study-help", "summarization"], // formerly notebooklm (audit 15); row: "Study guide creation; source-grounded Q&A"
   chatpdf: ["summarization", "study-help"], // row: "Chat with PDF documents", "textbook study"
   "meta-ai": ["chatbot"], // row: "Free chatbot and image helper"
   grok: ["chatbot"], // row: "conversational AI"

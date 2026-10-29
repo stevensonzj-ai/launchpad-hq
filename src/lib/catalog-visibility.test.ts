@@ -8,11 +8,11 @@ import { buildPlatformMetadata, buildTutorialMetadata } from "@/lib/seo-metadata
 
 describe("catalog visibility", () => {
   it("hides the dead-and-obscure pages and the duplicate rows", () => {
-    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc"]) {
+    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai"]) {
       assert.equal(isHiddenPlatform(slug), true, slug);
     }
     // "What happened" pages stay listed and indexed.
-    for (const slug of ["sora-2", "play-ht", "clarifai", "beatoven-ai"]) {
+    for (const slug of ["sora-2", "play-ht", "beatoven-ai"]) {
       assert.equal(isHiddenPlatform(slug), false, slug);
     }
     assert.deepEqual(listedPlatformWhere(), { slug: { notIn: hiddenPlatformSlugs() } });

@@ -58,7 +58,7 @@ import googleAntigravityFacts from "./google-antigravity";
 import runwayForEducationFacts from "./runway-for-education";
 import tabnineFacts from "./tabnine";
 import windsurfFacts from "./windsurf";
-import notebooklmFacts from "./notebooklm";
+import geminiNotebookFacts from "./gemini-notebook";
 import surferSeoFacts from "./surfer-seo";
 import wonderDynamicsWonderStudioFacts from "./wonder-dynamics-wonder-studio";
 import unriddleFacts from "./unriddle";
@@ -98,6 +98,11 @@ import elicitFacts from "./elicit";
 import opusClipFacts from "./opus-clip";
 import klapFacts from "./klap";
 import sunoFacts from "./suno";
+// Guide PR D, 2026-10-29: renames and the Clarifai hide.
+import geminiEnterpriseAgentPlatformFacts from "./gemini-enterprise-agent-platform";
+import nanoBananaFacts from "./nano-banana";
+import textgenFacts from "./textgen";
+import clarifaiFacts from "./clarifai";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -162,7 +167,7 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [runwayForEducationFacts.slug]: runwayForEducationFacts,
   [tabnineFacts.slug]: tabnineFacts,
   [windsurfFacts.slug]: windsurfFacts,
-  [notebooklmFacts.slug]: notebooklmFacts,
+  [geminiNotebookFacts.slug]: geminiNotebookFacts,
   [surferSeoFacts.slug]: surferSeoFacts,
   [wonderDynamicsWonderStudioFacts.slug]: wonderDynamicsWonderStudioFacts,
   [unriddleFacts.slug]: unriddleFacts,
@@ -202,6 +207,11 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [opusClipFacts.slug]: opusClipFacts,
   [klapFacts.slug]: klapFacts,
   [sunoFacts.slug]: sunoFacts,
+  // Guide PR D, 2026-10-29: renames and the Clarifai hide.
+  [geminiEnterpriseAgentPlatformFacts.slug]: geminiEnterpriseAgentPlatformFacts,
+  [nanoBananaFacts.slug]: nanoBananaFacts,
+  [textgenFacts.slug]: textgenFacts,
+  [clarifaiFacts.slug]: clarifaiFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

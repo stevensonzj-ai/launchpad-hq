@@ -1,13 +1,13 @@
 import type { PlatformTutorialData } from "./types";
 
-export const googleImagen3Tutorial: PlatformTutorialData = {
-  slug: "google-imagen-3-getting-started",
-  platformSlug: "google-imagen-3",
-  title: "Getting Started with Google Imagen (Now Nano Banana)",
+export const nanoBananaTutorial: PlatformTutorialData = {
+  slug: "nano-banana-getting-started",
+  platformSlug: "nano-banana",
+  title: "Getting Started with Nano Banana (formerly Google Imagen)",
   tagline:
-    "Google's image generator has been renamed and moved — here's where it actually lives now, and what you get without paying.",
+    "Google's image generator, which replaced Imagen — here's where it actually lives, and what you get without paying.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://gemini.google/release-notes/",
   accessTier: "FREE",
 
@@ -15,13 +15,13 @@ export const googleImagen3Tutorial: PlatformTutorialData = {
     "You open Google's Gemini app in a browser or on your phone, pick the image tool, and type a description of the picture you want. Pictures come back a few seconds later. Then you talk to it — \"make the sky darker,\" \"lose the hat\" — and it redraws, keeping the parts you liked.",
 
   whatItIs: [
-    "Imagen is a **model** — the AI \"brain\" that does the actual thinking — not an app you sign into. You reach Google's picture-making through one of Google's own products, and the model underneath can be swapped for a newer one without your being asked.",
-    "It has been swapped twice. Google's list of retired models records Imagen 3 as shut down on 10 November 2025, and the Imagen 4 models that replaced it as scheduled to shut down on 17 August 2026, with a Gemini image model as the replacement. What you get today is a model Google calls **Nano Banana 2** — its real name, not a nickname; the Gemini app puts a banana on the button.",
-    "For a beginner the swap is good news: what replaced Imagen lives inside the free Gemini app and needs only a Google Account. This page covers that surface — gemini.google.com and the Gemini phone app — not Google Cloud's Vertex AI, where the Imagen name still appears in the developer documentation and which assumes cloud billing.",
+    "Nano Banana is a family of **models** — the AI \"brain\" that does the actual thinking — not an app you sign into. You reach it through Google's own products, chiefly the Gemini app, and the model underneath can be swapped for a newer one without your being asked. \"Nano Banana\" is its real name, not a nickname; the Gemini app puts a banana on the button.",
+    "It replaced Google's earlier image models, called Imagen. Google's developer documentation now says plainly: \"Imagen models are shut down. Use Nano Banana for image generation.\" The family has several members — Google's pages currently name a free default, a newer one offered as an upgrade, and a Pro version for paid plans — and the lineup changes often, so this page describes how it works rather than which version number you'll see.",
+    "For a beginner that is good news: Nano Banana lives inside the free Gemini app and needs only a Google Account. This page covers that surface — gemini.google.com and the Gemini phone app — not the developer API or Google Cloud's Gemini Enterprise Agent Platform (formerly Vertex AI), which assume code and, for the cloud, billing.",
   ],
 
   beforeYouStart: [
-    "**There is no Imagen website, app or download.** Go to gemini.google.com, or install the Gemini app, and sign in with a free Google Account — that is the entire setup. Searching for \"Imagen\" lands people in Google Cloud's developer console, which opens by asking about projects and billing, or on a lookalike site with nothing to do with Google.",
+    "**There is no separate Nano Banana website, app or download.** Go to gemini.google.com, or install the Gemini app, and sign in with a free Google Account — that is the entire setup. Searching for the old Imagen name lands people in developer documentation for a model that has been shut down, or on lookalike sites with nothing to do with Google.",
     "You can make pictures without paying. Google's plan comparison lists \"image generation and editing\" on the free plan, alongside several paid plans. Its two plan pages disagree — the Google One version lists image access only on the paid rows — so assume the free allowance is real but modest.",
     "The clearest free-versus-paid line is the download: Google's help page says images download at 1K resolution without a Google AI plan and 2K with one. 1K is fine for a screen or a slide; small once you want to print or crop in hard.",
     "The limits are not counted in pictures. Google describes usage as compute-based across everything you do in the app, refreshing every five hours until a weekly ceiling — so a long chat earlier in the day eats into the images you were saving. Subscribers who hit it drop to a lighter, faster model; Google does not say what a free account gets there, so treat running out as \"come back in a few hours\".",
@@ -108,7 +108,7 @@ export const googleImagen3Tutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "Following a guide written for Imagen 3. The buttons, the model picker and the results all moved on when that model was retired, so a step-by-step accurate last year will not match your screen.",
+    "Following a guide written for Imagen. The buttons, the model picker and the results all moved on when those models were retired, so a step-by-step accurate last year will not match your screen.",
     "Opening a new chat to make a change. Editing works on the picture in the conversation you are in; start fresh and you are describing it from scratch, with no way to say \"the same one, but.\"",
     "Expecting a named real person to come out right. Between the age gate on editing and the policy limits on impersonation, this is where refusals cluster and results go generic.",
   ],

@@ -25,9 +25,25 @@ export const PLATFORM_REDIRECTS: Readonly<Record<string, string>> = {
   // scripts/update-catalog-audit-6.ts moves the row to the new slug, so no
   // row is left under the old one. Deploy and run audit 6 together.
   "mistral-ai-le-chat": "mistral-vibe",
+  // Slug renames, guide PR D (2026-10-29); scripts/update-catalog-audit-15.ts
+  // moves each row, so deploy and run audit 15 together. Sources:
+  // Google renamed Vertex AI (docs.cloud.google.com/gemini-enterprise-agent-platform/
+  // vertex-ai-name-changes); "Imagen models are shut down. Use Nano Banana"
+  // (ai.google.dev/gemini-api/docs/imagen); the oobabooga repo is now TextGen
+  // (github.com/oobabooga/textgen); "NotebookLM is now Gemini Notebook"
+  // (blog.google, 2026-07-16).
+  "google-vertex-ai": "gemini-enterprise-agent-platform",
+  "google-imagen-3": "nano-banana",
+  "text-generation-webui-oobabooga": "textgen",
+  notebooklm: "gemini-notebook",
 };
 
-export const RETIRED_GUIDE_SLUGS: readonly string[] = ["kakao-brain-karlo"];
+export const RETIRED_GUIDE_SLUGS: readonly string[] = [
+  "kakao-brain-karlo",
+  // Unreachable since September 2026 with no shutdown notice; page hidden,
+  // guide kept in src/data/tutorials/retired/ (guide PR D, 2026-10-29).
+  "clarifai",
+];
 
 export type CatalogRedirect = {
   source: string;

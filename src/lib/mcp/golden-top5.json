@@ -66,7 +66,7 @@
   },
   "top5": [
    "gpt-image-1-5-dall-e-successor",
-   "google-imagen-3",
+   "nano-banana",
    "adobe-firefly",
    "krea",
    "midjourney"
@@ -168,8 +168,8 @@
    "skill_level": "beginner"
   },
   "top5": [
+   "gemini-notebook",
    "khan-academy-khanmigo",
-   "notebooklm",
    "quizlet-q-chat",
    "chatgpt",
    "chatpdf"
@@ -520,7 +520,7 @@
   },
   "top5": [
    "gpt-image-1-5-dall-e-successor",
-   "google-imagen-3",
+   "nano-banana",
    "adobe-firefly",
    "flux",
    "leonardo-ai"
@@ -700,7 +700,7 @@
   "top5": [
    "stability-ai",
    "open-webui",
-   "text-generation-webui-oobabooga",
+   "textgen",
    "firecrawl"
   ]
  },
@@ -794,7 +794,7 @@
   },
   "top5": [
    "quizlet-q-chat",
-   "notebooklm",
+   "gemini-notebook",
    "khan-academy-khanmigo",
    "chatpdf",
    "chatgpt"
@@ -929,7 +929,7 @@
    "adobe-firefly",
    "flux",
    "leonardo-ai",
-   "google-imagen-3"
+   "gpt-image-1-5-dall-e-successor"
   ]
  },
  "G51": {
@@ -1045,8 +1045,8 @@
    "task": "help me with my homework"
   },
   "top5": [
+   "gemini-notebook",
    "khan-academy-khanmigo",
-   "notebooklm",
    "quizlet-q-chat",
    "chatgpt",
    "chatpdf"

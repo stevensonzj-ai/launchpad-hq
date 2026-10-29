@@ -1,13 +1,13 @@
 import type { PlatformTutorialData } from "./types";
 
-export const textGenerationWebuiOobaboogaTutorial: PlatformTutorialData = {
-  slug: "text-generation-webui-oobabooga-getting-started",
-  platformSlug: "text-generation-webui-oobabooga",
-  title: "Getting Started with TextGen (oobabooga's text-generation-webui)",
+export const textgenTutorial: PlatformTutorialData = {
+  slug: "textgen-getting-started",
+  platformSlug: "textgen",
+  title: "Getting Started with TextGen (formerly text-generation-webui)",
   tagline:
     "Run AI models on your own computer with the controls left visible — free, private, and built for people who want to tinker.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://github.com/oobabooga/textgen/releases",
   accessTier: "FREE",
 
@@ -15,7 +15,7 @@ export const textGenerationWebuiOobaboogaTutorial: PlatformTutorialData = {
     "You download a ready-to-run build, unzip it, and double-click it — a window opens on your own computer. You drop a **model** file (the AI \"brain\" that does the actual thinking) into its models folder, pick it from a menu, and type into a chat box. Answers come back locally, and you can adjust the settings and retry.",
 
   whatItIs: [
-    "TextGen — the project most people still know as oobabooga's text-generation-webui — runs AI models on your own machine and shows you the machinery while it does. Where Ollama and LM Studio pick an engine for you and hide the rest, TextGen currently lets you choose among five different engines for the same model, switch between them without restarting, and change dozens of generation settings from a dedicated tab. That control is the entire reason to choose it.",
+    "TextGen — the project most people still know as oobabooga's text-generation-webui — runs AI models on your own machine and shows you the machinery while it does. Its README now calls it \"A desktop app for local LLMs. Open source, no telemetry.\" Where Ollama and LM Studio pick an engine for you and hide the rest, TextGen currently lets you choose among five different engines for the same model, switch between them without restarting, and change dozens of generation settings from a dedicated tab. That control is the entire reason to choose it.",
   ],
 
   beforeYouStart: [
@@ -23,7 +23,7 @@ export const textGenerationWebuiOobaboogaTutorial: PlatformTutorialData = {
     "This is a control panel, not an appliance. You choose the model file, and usually the engine and the generation settings too — nothing is chosen for you, and nothing is hidden to keep the first run simple. If what you want is a local model working in five minutes with no decisions, start with Ollama and come back here once you have a specific setting you want to change.",
     "You will not need to pay. It's free, the code is public, there's no account and no paid tier — the only real cost is disk space, and the longer installation currently wants around 10 GB before you have downloaded a single model.",
     "Ready-to-run builds cover Windows, Linux and macOS, Apple Silicon included. One asymmetry worth knowing up front: the macOS ready-to-run build currently ships only the llama.cpp engine, so the engine-switching this app is known for is mostly a Windows and Linux story unless you do the longer installation.",
-    "The project renamed itself. It is TextGen now, and nearly everything written about it still says text-generation-webui or just \"oobabooga.\" Same project, same maintainer — but it means much of what you find describes an older layout.",
+    "The project renamed itself. It is TextGen now, at github.com/oobabooga/textgen, and nearly everything written about it still says text-generation-webui or just \"oobabooga.\" Same project, same maintainer — but it means much of what you find describes an older layout.",
   ],
 
   gettingSetUpSafely: {
