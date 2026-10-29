@@ -29,14 +29,21 @@ export function PlatformDiscussions({
   platformName,
   platformSlug,
   showFullLink = true,
+  approvedCount,
 }: {
   platformName: string;
   platformSlug: string;
   showFullLink?: boolean;
+  /**
+   * Approved discussions count from the cached platform page row. 0 skips the
+   * list fetch (there is nothing to show). undefined always fetches.
+   */
+  approvedCount?: number;
 }) {
   const { isSignedIn, isLoaded } = useAuth();
   const [items, setItems] = useState<DiscussionRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const knownEmpty = approvedCount === 0;
+  const [loading, setLoading] = useState(!knownEmpty);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);
@@ -65,8 +72,9 @@ export function PlatformDiscussions({
   }
 
   useEffect(() => {
+    if (knownEmpty) return;
     load();
-  }, [platformSlug]);
+  }, [platformSlug, knownEmpty]);
 
   async function submitThread(e: React.FormEvent) {
     e.preventDefault();
@@ -105,14 +113,27 @@ export function PlatformDiscussions({
     setSuccess("Thanks! Your reply is awaiting review and will appear once approved.");
   }
 
+  // Votes apply the route's fresh count locally: refetching the list would
+  // return the cached copy (up to an hour old) and hide the vote just cast.
+  async function postVote(url: string): Promise<number | null> {
+    const res = await fetch(url, { method: "POST" }).catch(() => null);
+    if (!res?.ok) return null;
+    const data: { upvotes?: number } | null = await res.json().catch(() => null);
+    return typeof data?.upvotes === "number" ? data.upvotes : null;
+  }
+
   async function voteDiscussion(id: string) {
-    await fetch(`/api/discussions/${id}/vote`, { method: "POST" });
-    await load();
+    const upvotes = await postVote(`/api/discussions/${id}/vote`);
+    if (upvotes === null) return;
+    setItems((rows) => rows.map((d) => (d.id === id ? { ...d, upvotes } : d)));
   }
 
   async function voteReply(id: string) {
-    await fetch(`/api/discussion-replies/${id}/vote`, { method: "POST" });
-    await load();
+    const upvotes = await postVote(`/api/discussion-replies/${id}/vote`);
+    if (upvotes === null) return;
+    setItems((rows) =>
+      rows.map((d) => ({ ...d, replies: d.replies.map((r) => (r.id === id ? { ...r, upvotes } : r)) })),
+    );
   }
 
   async function reportDiscussion(id: string) {

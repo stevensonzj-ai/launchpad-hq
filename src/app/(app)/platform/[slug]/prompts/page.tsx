@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PlatformPromptsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  // Shared catalog cache; the list itself is fetched client-side, uncached.
+  // Shared catalog cache. The list is fetched client-side from the cached
+  // /api route, and skipped when the cached approved count is 0.
   const platform = await getPlatformPageRow(slug);
   if (!platform) notFound();
 
@@ -29,7 +30,12 @@ export default async function PlatformPromptsPage({ params }: { params: Promise<
       <Link href={`/platform/${slug}`} className="text-sm text-gray-500 hover:text-white">
         ← Back to {platform.name}
       </Link>
-      <PlatformPrompts platformName={platform.name} platformSlug={platform.slug} showFullLink={false} />
+      <PlatformPrompts
+        platformName={platform.name}
+        platformSlug={platform.slug}
+        showFullLink={false}
+        approvedCount={platform._count.prompts}
+      />
     </div>
   );
 }

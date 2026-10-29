@@ -79,7 +79,14 @@ describe("POST /api/revalidate handler", () => {
   it("expires only the named platforms when slugs are sent", async () => {
     const { res, tags } = await call(post(JSON.stringify({ slugs: ["chatgpt", "claude", "chatgpt"] }), `Bearer ${SECRET}`));
     assert.equal(res.status, 200);
-    assert.deepEqual(tags, ["platform:chatgpt", "platform:claude"]);
+    assert.deepEqual(tags, [
+      "platform:chatgpt",
+      "platform-prompts:chatgpt",
+      "platform-discussions:chatgpt",
+      "platform:claude",
+      "platform-prompts:claude",
+      "platform-discussions:claude",
+    ]);
   });
 
   it("400s on bad JSON or bad slugs without revalidating", async () => {

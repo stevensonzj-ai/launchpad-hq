@@ -2,63 +2,40 @@ import { NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
-import { ModerationStatus } from "@prisma/client";
 import { sendModerationNotification } from "@/lib/email";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
+import { cachedCommunityRead, expireTag } from "@/lib/community-cache";
+import { expireIfCreatedApproved, handleCommunityList, privateNoStore } from "@/lib/community-lists";
+import { readApprovedPrompts } from "@/lib/community-queries";
 
-// TODO: reconsider default sort once rating data exists
+/**
+ * Approved prompts, the same for every visitor (no auth is read here): shared
+ * data cache for an hour, tag platform-prompts:<slug>, and the hourly CDN
+ * header. See src/lib/community-lists.ts.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const { searchParams } = new URL(request.url);
-
-  const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
-  const pageSize = Math.min(
-    100,
-    Math.max(1, parseInt(searchParams.get("pageSize") || "20", 10) || 20),
-  );
-
-  const platform = await prisma.platform.findUnique({
-    where: { slug },
-    select: { id: true },
+  return handleCommunityList(request, "prompts", slug, {
+    cache: cachedCommunityRead,
+    read: readApprovedPrompts,
+    log: (line) => console.info(line),
   });
-  if (!platform) {
-    return apiError("not_found", { message: "Platform not found" });
-  }
+}
 
-  const where = { platformId: platform.id, status: ModerationStatus.APPROVED };
-  const [rows, totalCount] = await Promise.all([
-    prisma.prompt.findMany({
-      where,
-      include: { user: { select: { name: true } } },
-      orderBy: { createdAt: "desc" },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    }),
-    prisma.prompt.count({ where }),
-  ]);
-
-  const items = rows.map((p) => ({
-    id: p.id,
-    title: p.title,
-    prompt: p.promptText,
-    outputUrl: p.outputUrl,
-    author: p.user?.name ?? p.author ?? "Anonymous",
-    ratingAvg:
-      p.ratingCount > 0
-        ? Math.round((p.ratingSum / p.ratingCount) * 10) / 10
-        : null,
-    ratingCount: p.ratingCount,
-    createdAt: p.createdAt,
-  }));
-
-  return NextResponse.json({ items, totalCount, page, pageSize });
+// Everything POST returns belongs to one user (their own pending row, or
+// their auth error), so it is always private, no-store.
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ slug: string }> },
+) {
+  return privateNoStore(await createPrompt(request, context));
 }
 
 // TODO: add rate limiting before public launch
-export async function POST(
+async function createPrompt(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
@@ -120,6 +97,13 @@ export async function POST(
       outputUrl,
     },
   });
+
+  // PENDING by default, so normally a no-op; expires the list if a row ever lands APPROVED.
+  const expired = expireIfCreatedApproved("prompt", created.status, slug, expireTag);
+  if (expired.error) {
+    Sentry.captureException(expired.error);
+    await Sentry.flush(2000);
+  }
 
   // Notify the moderator; a failed email must never fail the submission.
   try {

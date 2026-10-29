@@ -1,6 +1,7 @@
 import { createHash, timingSafeEqual } from "crypto";
 import { apiError } from "@/lib/api-error";
 import { CATALOG_TAG, platformTag } from "@/lib/catalog-cache";
+import { communityTag } from "@/lib/community-lists";
 
 /**
  * POST /api/revalidate: expire the shared catalog cache after the database
@@ -33,7 +34,8 @@ export const MAX_REVALIDATE_SLUGS = 200;
 /**
  * Body `{}` (or none): expire everything tagged `catalog`. Body
  * `{ "slugs": ["chatgpt"] }`: expire only those platforms' tags, i.e. the
- * per-platform page row and /api/platforms/<slug>. Lists (Discover, the
+ * per-platform page row, /api/platforms/<slug>, and its approved prompt and
+ * discussion lists (after a Prisma Studio approval). Lists (Discover, the
  * feed, /mcp, sitemap) carry `catalog` only, so a field edit wants the
  * default.
  */
@@ -48,7 +50,11 @@ export function revalidateTags(body: unknown): { tags: string[] } | { error: str
   if (!slugs.every((slug) => typeof slug === "string" && SLUG.test(slug))) {
     return { error: '"slugs" may only contain lowercase platform slugs (a-z, 0-9, -).' };
   }
-  return { tags: [...new Set(slugs.map(platformTag))] };
+  return {
+    tags: [
+      ...new Set(slugs.flatMap((slug) => [platformTag(slug), communityTag("prompts", slug), communityTag("discussions", slug)])),
+    ],
+  };
 }
 
 export type RevalidateDeps = {

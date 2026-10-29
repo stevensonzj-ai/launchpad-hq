@@ -2,72 +2,41 @@ import { NextRequest, NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
-import { ModerationStatus } from "@prisma/client";
 import { sendModerationNotification } from "@/lib/email";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
+import { cachedCommunityRead, expireTag } from "@/lib/community-cache";
+import { expireIfCreatedApproved, handleCommunityList, privateNoStore } from "@/lib/community-lists";
+import { readApprovedDiscussions } from "@/lib/community-queries";
 
+/**
+ * Approved discussions with their approved replies, the same for every
+ * visitor (no auth is read here): shared data cache for an hour, tag
+ * platform-discussions:<slug>, and the hourly CDN header. See
+ * src/lib/community-lists.ts.
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const { searchParams } = new URL(request.url);
-
-  const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
-  const pageSize = Math.min(
-    100,
-    Math.max(1, parseInt(searchParams.get("pageSize") || "20", 10) || 20),
-  );
-
-  const platform = await prisma.platform.findUnique({
-    where: { slug },
-    select: { id: true },
+  return handleCommunityList(request, "discussions", slug, {
+    cache: cachedCommunityRead,
+    read: readApprovedDiscussions,
+    log: (line) => console.info(line),
   });
-  if (!platform) {
-    return apiError("not_found", { message: "Platform not found" });
-  }
+}
 
-  const where = { platformId: platform.id, status: ModerationStatus.APPROVED };
-  const [rows, totalCount] = await Promise.all([
-    prisma.discussion.findMany({
-      where,
-      include: {
-        user: { select: { name: true } },
-        replies: {
-          where: { status: ModerationStatus.APPROVED },
-          include: { user: { select: { name: true } } },
-          orderBy: { createdAt: "asc" },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    }),
-    prisma.discussion.count({ where }),
-  ]);
-
-  const items = rows.map((d) => ({
-    id: d.id,
-    title: d.title,
-    body: d.body,
-    solution: d.solution,
-    upvotes: d.upvotes,
-    author: d.user?.name ?? "Anonymous",
-    createdAt: d.createdAt,
-    replies: d.replies.map((r) => ({
-      id: r.id,
-      body: r.body,
-      upvotes: r.upvotes,
-      author: r.user?.name ?? "Anonymous",
-      createdAt: r.createdAt,
-    })),
-  }));
-
-  return NextResponse.json({ items, totalCount, page, pageSize });
+// Everything POST returns belongs to one user (their own pending row, or
+// their auth error), so it is always private, no-store.
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ slug: string }> },
+) {
+  return privateNoStore(await createDiscussion(request, context));
 }
 
 // TODO: add rate limiting before public launch
-export async function POST(
+async function createDiscussion(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
@@ -116,6 +85,13 @@ export async function POST(
       body: bodyText,
     },
   });
+
+  // PENDING by default, so normally a no-op; expires the list if a row ever lands APPROVED.
+  const expired = expireIfCreatedApproved("discussion", created.status, slug, expireTag);
+  if (expired.error) {
+    Sentry.captureException(expired.error);
+    await Sentry.flush(2000);
+  }
 
   // Notify the moderator; a failed email must never fail the submission.
   try {

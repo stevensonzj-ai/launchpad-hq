@@ -2,6 +2,8 @@ import { NextRequest } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/db";
 import { ModerationStatus } from "@prisma/client";
+import { expireTag } from "@/lib/community-cache";
+import { expireModerated, PRIVATE_NO_STORE } from "@/lib/community-lists";
 import {
   verifyModerationToken,
   type ModerationKind,
@@ -53,7 +55,8 @@ function page(
 </html>`;
   return new Response(html, {
     status,
-    headers: { "Content-Type": "text/html; charset=utf-8" },
+    // Token-bearing, per-moderator pages: never stored by a CDN or browser.
+    headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": PRIVATE_NO_STORE },
   });
 }
 
@@ -119,15 +122,26 @@ async function readSubmission(
   return row ? { status: row.status, title: null, content: row.body } : null;
 }
 
+/** Write the new status and return the platform slug, so its cached lists can be expired. */
 async function writeStatus(
   kind: ModerationKind,
   id: string,
   status: ModerationStatus,
-): Promise<void> {
+): Promise<string> {
   const args = { where: { id }, data: { status } } as const;
-  if (kind === "prompt") await prisma.prompt.update(args);
-  else if (kind === "discussion") await prisma.discussion.update(args);
-  else await prisma.discussionReply.update(args);
+  if (kind === "prompt") {
+    const row = await prisma.prompt.update({ ...args, select: { platform: { select: { slug: true } } } });
+    return row.platform.slug;
+  }
+  if (kind === "discussion") {
+    const row = await prisma.discussion.update({ ...args, select: { platform: { select: { slug: true } } } });
+    return row.platform.slug;
+  }
+  const row = await prisma.discussionReply.update({
+    ...args,
+    select: { discussion: { select: { platform: { select: { slug: true } } } } },
+  });
+  return row.discussion.platform.slug;
 }
 
 /**
@@ -292,7 +306,13 @@ export async function POST(request: NextRequest) {
       action === "approve"
         ? ModerationStatus.APPROVED
         : ModerationStatus.REJECTED;
-    await writeStatus(kind, id, newStatus);
+    const slug = await writeStatus(kind, id, newStatus);
+    // Expire the platform's public list (and tab counts) so an approval shows
+    // on the next read. Rejecting a PENDING item changes nothing public, but
+    // expiring is cheap and keeps the two paths identical. Never fails the
+    // action: the write is done, and the cache refreshes within the hour.
+    const expired = expireModerated(kind, slug, expireTag);
+    if (expired.error) Sentry.captureException(expired.error);
 
     return page(
       action === "approve" ? "Approved" : "Rejected",

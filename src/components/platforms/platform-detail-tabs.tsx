@@ -104,10 +104,14 @@ export function PlatformDetailTabs({
 
       {activeTab === "overview" && children}
       {activeTab === "discussions" && (
-        <PlatformDiscussions platformName={platformName} platformSlug={platformSlug} />
+        <PlatformDiscussions
+          platformName={platformName}
+          platformSlug={platformSlug}
+          approvedCount={counts?.discussions}
+        />
       )}
       {activeTab === "prompts" && (
-        <PlatformPrompts platformName={platformName} platformSlug={platformSlug} />
+        <PlatformPrompts platformName={platformName} platformSlug={platformSlug} approvedCount={counts?.prompts} />
       )}
     </>
   );
