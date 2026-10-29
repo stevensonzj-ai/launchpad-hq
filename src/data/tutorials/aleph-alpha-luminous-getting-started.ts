@@ -7,7 +7,7 @@ export const alephAlphaLuminousTutorial: PlatformTutorialData = {
   tagline:
     "The German company behind Luminous — now sold to governments and large businesses through a salesperson, not a website you can sign up to.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl:
     "https://docs.aleph-alpha.com/phariaai-home/latest/release-notes/index.html",
   accessTier: "PREMIUM",
@@ -19,7 +19,7 @@ export const alephAlphaLuminousTutorial: PlatformTutorialData = {
     "Aleph Alpha is a Heidelberg company that builds language models (a **model** is the AI \"brain\" that does the actual thinking) for European governments and large regulated businesses, and sells them as an installed stack called PhariaAI.",
     "Luminous — the model line that made its name, and what this listing was originally about — is no longer part of what it sells. The company stopped building general-purpose models in September 2024 and now co-builds domain-specific ones with individual customers.",
     "Its documentation describes a chat app and a prompt-and-settings workspace inside each installation, but both live at an address belonging to the customer. Treat that as what the docs describe rather than something anyone can confirm without an account.",
-    "In April 2026 the Canadian AI company Cohere announced a merger with Aleph Alpha; that deal had not closed when this page was last checked, and nothing public says what happens to the PhariaAI product line afterwards.",
+    "In April 2026 the Canadian AI company Cohere announced a partnership with Aleph Alpha, and on 16 September 2026 the two signed a definitive merger agreement. It still needs regulatory approvals and had not closed when this page was last checked, and nothing public says what happens to the PhariaAI product line afterwards.",
   ],
 
   beforeYouStart: [
@@ -100,9 +100,9 @@ export const alephAlphaLuminousTutorial: PlatformTutorialData = {
     {
       title: "Check whether it is still shipping",
       whatItDoes:
-        "Open the release notes index in Aleph Alpha's documentation and look at the top entry. When this page was written the most recent was PhariaAI v1.260700.0.",
+        "Open the release notes index in Aleph Alpha's documentation and look at the top entry. When this page was last checked the most recent was PhariaAI v1.260900.0.",
       whyHere:
-        "Aleph Alpha's version numbers are date-encoded — 1.260700.0 is the July 2026 release — so the number alone tells you how current the stack is without opening anything, which is the only outside-visible sign of life for a product no member of the public can log into. Cohere's changelog does not encode the release date in the version string, and its products are publicly reachable anyway.",
+        "Aleph Alpha's version numbers are date-encoded — 1.260900.0 is the September 2026 release — so the number alone tells you how current the stack is without opening anything, which is the only outside-visible sign of life for a product no member of the public can log into. Cohere's changelog does not encode the release date in the version string, and its products are publicly reachable anyway.",
     },
   ],
 

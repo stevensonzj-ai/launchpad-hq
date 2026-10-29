@@ -10,9 +10,9 @@ export default {
   lifecycle: "acquired",
   status: {
     value: {
-      headline: "Surfer has joined Group Positive. Surfer's announcement says the product keeps its name.",
+      headline: "Surfer has joined Group Positive. The product keeps the Surfer name.",
     },
-    sourceUrl: "https://surferseo.com/blog/surfer-acquisition",
+    sourceUrl: "https://positivegroup.com/news/positive-acquires-surfer",
     checkedAt: "2026-10-20",
     gatheredBy: "claude-subagent",
     verifiedBy: "claude",

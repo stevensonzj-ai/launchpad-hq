@@ -7,7 +7,7 @@ export const googleVeo31Tutorial: PlatformTutorialData = {
   tagline:
     "Describe a shot, get a few seconds of video with the sound already in it.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://ai.google.dev/gemini-api/docs/changelog",
   accessTier: "FREE",
 
@@ -21,7 +21,7 @@ export const googleVeo31Tutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**Start in Google Flow** (`labs.google/fx/tools/flow`), not the Gemini chat app — video there currently needs a paid Google AI plan.",
+    "**Start in Google Flow** (`flow.google.com`), not the Gemini chat app — video there currently needs a paid Google AI plan.",
     "The free allowance is small and spent per attempt — and Google is inconsistent about whether you get one. Flow's own page and its credits help article say a signed-in Google account currently gets a small daily allowance of Flow **credits**, the unit of spend; Flow's \"Get started\" article lists a paid Google AI plan as a requirement. Check which one your account lands on before planning around it. On that reading, the top-quality Veo setting costs about ten times the cheapest: a handful of short clips a day, or a single top-quality one. Credits don't roll over, and mush costs the same as your hero shot.",
     "You'll pay past the experimenting stage, because ten attempts at one shot is a normal session. Paid Google AI plans run from a low-cost entry tier through a mainstream tier to expensive top tiers; check the plan page, these move.",
     "**First step:** sign in, pick the cheapest model, and run one description several times. How much a single wording varies is day one's real lesson. You must be 18 or over and in a supported country.",

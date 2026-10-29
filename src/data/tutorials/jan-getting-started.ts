@@ -7,7 +7,7 @@ export const janTutorial: PlatformTutorialData = {
   tagline:
     "A free AI chat app that runs on your own computer. Your conversations never leave it.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.jan.ai/changelog",
   accessTier: "FREE",
 
@@ -27,7 +27,7 @@ export const janTutorial: PlatformTutorialData = {
 
   gettingSetUpSafely: {
     officialSource: "Jan's official download page",
-    vendorDocsUrl: "https://www.jan.ai/docs/desktop/quickstart",
+    vendorDocsUrl: "https://docs.jan.ai/desktop/quickstart",
     body: [
       "**Download only from jan.ai or Jan's official GitHub releases.** You are installing an application that can touch anything on your machine, and \"free AI chat download\" results are where tampered installers live.",
       "**Measure the machine against those figures first**; processors older than about 2013 will not run it. Model files land in Jan's data folder — Mac `~/Library/Application Support/Jan/data`, Windows `%APPDATA%/Jan/data`, Linux `~/.local/share/Jan/data` — movable in Settings and worth watching; models you tried once accumulate silently.",

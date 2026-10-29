@@ -7,7 +7,7 @@ export const cursorTutorial: PlatformTutorialData = {
   tagline:
     "An AI-first code editor that understands your whole project and edits across files as you describe what you want.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://cursor.com/changelog",
   accessTier: "FREE",
 
@@ -19,7 +19,7 @@ export const cursorTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free **Hobby** plan needs no card and includes a short trial of the paid features plus limited ongoing use — enough to decide whether an AI-first editor fits how you work. **Pro** is a flat monthly plan; current prices are on its Launchpad page.",
+    "The **Free** plan costs nothing and gives limited ongoing use of the editor's AI and agent — enough to decide whether an AI-first editor fits how you work. Paid plans start with **Plus** and step up through **Premium**, **Super** and **Ultra**, each with a bigger shared usage pool; current prices are on its Launchpad page.",
     "**Download Cursor only from `cursor.com`.** Cursor has no authorized resellers; a \"Cursor subscription\" sold anywhere else may be fraudulent and can get the account suspended.",
     "The free tier restricts context to the current file (no whole-codebase indexing or the multi-file agent) — enough to try the editor, not to feel its main advantage.",
     "**Ownership note:** Cursor's maker, Anysphere, agreed in 2026 to be acquired by SpaceX (tying it into the xAI/Grok orbit). As of this review the deal is pending and hasn't changed the product, pricing, or how your data is handled — but if a change of control matters to you, watch for updated terms.",
@@ -80,9 +80,9 @@ export const cursorTutorial: PlatformTutorialData = {
       tweak: "On a team plan, an admin can enforce this for everyone.",
     },
     {
-      title: "Start on the free Hobby plan",
+      title: "Start on the free plan",
       whatItDoes:
-        "Use the free tier's trial and limited usage to try the agent and codebase chat before paying.",
+        "Use the free tier's limited usage to try the agent and codebase chat before paying.",
       whyHere: "You can judge the AI-first workflow at zero cost.",
       tweak: "Students had a discounted route historically — check current offers before paying.",
     },

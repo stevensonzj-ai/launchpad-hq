@@ -7,8 +7,8 @@ export const tactiqTutorial: PlatformTutorialData = {
   tagline:
     "Writes down what's said in your calls from inside your browser — nothing joins the meeting.",
   archetype: "recipes",
-  lastReviewedAt: "2026-10-14",
-  changelogUrl: "https://tactiq.io/changelog",
+  lastReviewedAt: "2026-10-29",
+  changelogUrl: "https://help.tactiq.io/en/collections/19782257-changelog",
   accessTier: "FREE",
 
   howItWorks:
@@ -36,7 +36,7 @@ export const tactiqTutorial: PlatformTutorialData = {
       "Sign in with the same account you use for your meetings, so transcripts attach to the right calendar entries.",
     ],
     vendorDocsUrl:
-      "https://help.tactiq.io/en/collections/7464124-tactiq-for-google-meet-ms-team-zoom",
+      "https://help.tactiq.io/en/collections/7464124-tactiq-for-browser-and-desktop-meeting-platforms",
   },
 
   security: [

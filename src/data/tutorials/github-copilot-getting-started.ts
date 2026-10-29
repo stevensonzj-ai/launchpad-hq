@@ -7,7 +7,7 @@ export const githubCopilotTutorial: PlatformTutorialData = {
   tagline:
     "An AI pair-programmer that lives inside your code editor, suggesting lines and answering questions as you work.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-14",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://github.blog/changelog/label/copilot/",
   accessTier: "FREE",
 
@@ -19,7 +19,7 @@ export const githubCopilotTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "There's a **Free** plan (limited chat and agent usage; GitHub no longer publishes a single completion-count we could confirm on 2026-10-14). Paid individual plans step up through **Pro**, **Pro+** and **Max**, plus a GitHub AI Credits layer; current prices are on its Launchpad page. Verified students and popular open-source maintainers can still get paid features free.",
+    "There's a **Free** plan (limited chat and agent usage, plus a monthly allowance of inline code suggestions; paid plans list inline suggestions as unlimited). Paid individual plans step up through **Pro**, **Pro+** and **Max**, plus a GitHub AI Credits layer; current prices are on its Launchpad page. Verified students and popular open-source maintainers can still get paid features free.",
     "**Install it from the official source only** — the Copilot extension inside your editor's built-in marketplace, or via github.com. Don't install a \"Copilot\" plugin from an unofficial third-party listing.",
     "You need a GitHub account and one of the supported editors. If you don't already have an editor, **VS Code** is free and the most common starting point.",
   ],

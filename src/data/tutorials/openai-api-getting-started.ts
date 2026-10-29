@@ -7,8 +7,8 @@ export const openaiApiTutorial: PlatformTutorialData = {
   tagline:
     "The developer doorway to OpenAI's models — build your own apps on the same AI behind ChatGPT, billed by usage.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-07-13",
-  changelogUrl: "https://platform.openai.com/docs/changelog",
+  lastReviewedAt: "2026-10-29",
+  changelogUrl: "https://developers.openai.com/api/docs/changelog",
   accessTier: "PREMIUM",
 
   howItWorks:
