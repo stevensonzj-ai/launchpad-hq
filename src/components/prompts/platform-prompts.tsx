@@ -21,14 +21,21 @@ export function PlatformPrompts({
   platformName,
   platformSlug,
   showFullLink = true,
+  approvedCount,
 }: {
   platformName: string;
   platformSlug: string;
   showFullLink?: boolean;
+  /**
+   * Approved prompts count from the cached platform page row. 0 skips the
+   * list fetch (there is nothing to show). undefined always fetches.
+   */
+  approvedCount?: number;
 }) {
   const { isSignedIn, isLoaded } = useAuth();
   const [items, setItems] = useState<PromptRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const knownEmpty = approvedCount === 0;
+  const [loading, setLoading] = useState(!knownEmpty);
   const [title, setTitle] = useState("");
   const [prompt, setPrompt] = useState("");
   const [outputUrl, setOutputUrl] = useState("");
@@ -56,8 +63,9 @@ export function PlatformPrompts({
   }
 
   useEffect(() => {
+    if (knownEmpty) return;
     load();
-  }, [platformSlug]);
+  }, [platformSlug, knownEmpty]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -85,13 +93,20 @@ export function PlatformPrompts({
     }
   }
 
+  // Apply the route's fresh numbers locally: refetching the list would return
+  // the cached copy (up to an hour old) and hide the rating just given.
   async function rate(id: string, stars: number) {
-    await fetch(`/api/prompts/${id}/rate`, {
+    const res = await fetch(`/api/prompts/${id}/rate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stars }),
-    });
-    await load();
+    }).catch(() => null);
+    if (!res?.ok) return;
+    const data: { ratingAvg: number | null; ratingCount: number } | null = await res.json().catch(() => null);
+    if (!data) return;
+    setItems((rows) =>
+      rows.map((p) => (p.id === id ? { ...p, ratingAvg: data.ratingAvg, ratingCount: data.ratingCount } : p)),
+    );
   }
 
   async function report(id: string) {

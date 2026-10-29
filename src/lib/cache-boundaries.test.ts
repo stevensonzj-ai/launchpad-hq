@@ -123,8 +123,6 @@ describe("auth, personalized and Stripe paths are untouched", () => {
     "src/app/api/stripe/webhook/route.ts",
     "src/app/api/user/quiz/route.ts",
     "src/app/api/platforms/[slug]/favorite/route.ts",
-    "src/app/api/platforms/[slug]/prompts/route.ts",
-    "src/app/api/platforms/[slug]/discussions/route.ts",
     "src/app/api/discussions/[id]/replies/route.ts",
     "src/app/api/discussions/[id]/vote/route.ts",
     "src/app/api/discussions/[id]/report/route.ts",
@@ -159,8 +157,28 @@ describe("auth, personalized and Stripe paths are untouched", () => {
     }
   });
 
-  it("only the catalog cache and the revalidate route use Next's cache APIs", () => {
+  it("only the catalog cache, the community-list cache and the revalidate route use Next's cache APIs", () => {
     const users = SOURCE.filter((f) => /from "next\/cache"/.test(read(f))).sort();
-    assert.deepEqual(users, ["src/app/api/revalidate/route.ts", "src/lib/catalog-cache.ts"]);
+    assert.deepEqual(users, ["src/app/api/revalidate/route.ts", "src/lib/catalog-cache.ts", "src/lib/community-cache.ts"]);
+  });
+});
+
+describe("approved prompt/discussion lists (src/lib/community-lists.ts)", () => {
+  it("the cache, handler and reads never touch the visitor", () => {
+    for (const rel of ["src/lib/community-cache.ts", "src/lib/community-lists.ts", "src/lib/community-queries.ts"]) {
+      assert.doesNotMatch(
+        read(rel),
+        /@clerk|auth-db|getOrCreateDbUser|auth\(\)|currentUser|cookies\(\)|headers\(\)|userFavorite|prisma\.user|stripe/i,
+        rel,
+      );
+    }
+  });
+
+  it("successful GETs send PUBLIC_HOURLY_CACHE; POSTs and moderation pages are private, no-store", () => {
+    assert.match(read("src/lib/community-lists.ts"), /"Cache-Control": PUBLIC_HOURLY_CACHE/);
+    for (const rel of ["src/app/api/platforms/[slug]/prompts/route.ts", "src/app/api/platforms/[slug]/discussions/route.ts"]) {
+      assert.match(read(rel), /privateNoStore\(await /, rel);
+    }
+    assert.match(read("src/app/api/moderation/route.ts"), /"Cache-Control": PRIVATE_NO_STORE/);
   });
 });
