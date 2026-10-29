@@ -201,6 +201,8 @@ import { granolaTutorial } from "./granola-getting-started";
 import { wisprFlowTutorial } from "./wispr-flow-getting-started";
 import { apolloIoTutorial } from "./apollo-io-getting-started";
 import { magicschoolTutorial } from "./magicschool-getting-started";
+// Catalog audit 16, 2026-10-29
+import { hermesAgentTutorial } from "./hermes-agent-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [openrouterTutorial.platformSlug]: openrouterTutorial,
@@ -401,6 +403,8 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [clayTutorial.platformSlug]: clayTutorial,
   [openevidenceTutorial.platformSlug]: openevidenceTutorial,
   [readAiTutorial.platformSlug]: readAiTutorial,
+  // Catalog audit 16, 2026-10-29
+  [hermesAgentTutorial.platformSlug]: hermesAgentTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {

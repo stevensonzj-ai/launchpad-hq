@@ -104,6 +104,8 @@ import nanoBananaFacts from "./nano-banana";
 import textgenFacts from "./textgen";
 import clarifaiFacts from "./clarifai";
 import sciteFacts from "./scite";
+// Catalog audit 16, 2026-10-29: Hermes Agent (new row).
+import hermesAgentFacts from "./hermes-agent";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -214,6 +216,8 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [textgenFacts.slug]: textgenFacts,
   [clarifaiFacts.slug]: clarifaiFacts,
   [sciteFacts.slug]: sciteFacts,
+  // Catalog audit 16, 2026-10-29: Hermes Agent (new row, provisional pricing).
+  [hermesAgentFacts.slug]: hermesAgentFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {
