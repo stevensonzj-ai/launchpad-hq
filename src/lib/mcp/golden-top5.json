@@ -180,8 +180,8 @@
    "task": "research with citations"
   },
   "top5": [
-   "scite",
    "research-rabbit",
+   "scite",
    "elicit",
    "connected-papers",
    "litmaps"
@@ -690,7 +690,7 @@
    "scispace",
    "scholarcy",
    "litmaps",
-   "connected-papers"
+   "research-rabbit"
   ]
  },
  "G29": {
@@ -771,8 +771,8 @@
    "task": "customer support chatbot for my website"
   },
   "top5": [
-   "lindy-ai",
    "relevance-ai",
+   "lindy-ai",
    "grok-bot"
   ]
  },

@@ -21,6 +21,9 @@
 
 Checks: tsc, lint (0 errors), npm test (1037/1037) and audit:tutorials are all green.
 
+## Post-merge
+- #116 post-merge: deploys dpl_AmDFfVYxo548QbpAhwjEnqhyR5bo and dpl_7gzG4WaZeYp9nF3FQszyQsF8C3kN, both READY; sitemap 461 URLs all 200; MCP search_tools finds hermes-agent; IndexNow 28 URLs, 200.
+
 ## Open
 - Run audit 16 after the deploy: Neon branch first, then production, then `npm run cache:revalidate`. No redeploy is needed, because the routes are force-dynamic. A null row cached before the insert can show a 404 for up to 24 h unless you revalidate or redeploy.
 - `/llms.txt` links the guide as soon as the code deploys, and that link 404s until the row exists.
