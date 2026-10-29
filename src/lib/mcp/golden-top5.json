@@ -180,8 +180,8 @@
    "task": "research with citations"
   },
   "top5": [
-   "research-rabbit",
    "scite",
+   "research-rabbit",
    "elicit",
    "connected-papers",
    "litmaps"
@@ -614,8 +614,8 @@
    "github-copilot",
    "claude-code",
    "cline",
-   "tabnine",
-   "aider"
+   "aider",
+   "bolt-new"
   ]
  },
  "G23": {
@@ -626,9 +626,9 @@
   "top5": [
    "github-copilot",
    "cline",
-   "tabnine",
    "bolt-new",
-   "cursor"
+   "cursor",
+   "replit-agent"
   ]
  },
  "G24": {

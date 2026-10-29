@@ -32,7 +32,8 @@ const OFFICIAL: Record<string, string[]> = {
   "perplexity-ai": ["perplexity.ai"],
   gemini: ["gemini.google"],
   "microsoft-copilot": ["microsoft.com"],
-  "canva-ai-magic-studio": ["canva.com"],
+  // canva-ai-magic-studio: re-checked 2026-10-29 (guide PR D), so none of its
+  // facts is still the 10-26 gathering; the pin below keeps its prices.
   recraft: ["recraft.ai"],
   claude: ["claude.com"],
   ideogram: ["ideogram.ai"],
@@ -116,8 +117,10 @@ describe("search-relevance fact pass (2026-10-26)", () => {
     // page's embedded plan data (P1.3) and left out Pro's annual price, which
     // differed between copies of the page. The owner then checked both billing
     // toggles by hand in a browser (P1.3c addendum): Pro is $144/year.
+    // Re-checked 2026-10-29 (guide PR D) from the same embedded plan data: still $144.
     const canva = facts("canva-ai-magic-studio").plans;
-    assert.equal(canva?.verifiedBy, "owner");
+    assert.ok(["owner", "claude"].includes(canva?.verifiedBy ?? ""));
+    assert.ok((canva?.verifiedAt ?? "") >= DATE);
     assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /\$144\/year billed yearly/);
     assert.equal(facts("recraft").plans, undefined);
     // Notion's monthly-billing prices were not in the rendered page; only the yearly view is recorded.

@@ -11,6 +11,10 @@ import {
   AUDIT_15_NAME_RENAMES,
   AUDIT_15_RENAMES,
   CHECKED_AT,
+  AUDIT_15_PATCHES,
+  AUDIT_15_REF_REMOVALS,
+  audit15PatchData,
+  audit15RefRemoval,
   audit15RefUpdates,
   audit15UpdateData,
   planAudit15Fields,
@@ -167,9 +171,12 @@ describe("guide PR D: Clarifai unpublished reversibly", () => {
     const facts = getToolFacts("clarifai");
     assert.ok(facts);
     assert.equal(facts.visibility, "hidden");
-    // No shutdown was announced, so the page does not claim one.
-    assert.equal(facts.lifecycle, "active");
-    assert.ok(facts.status?.value.headline.includes("has not published a shutdown notice"));
+    // Shutdown confirmed; the team-and-IP move is sourced to Nebius's release.
+    assert.equal(facts.lifecycle, "discontinued");
+    assert.match(facts.status?.value.headline ?? "", /shut down/);
+    assert.match(facts.status?.value.headline ?? "", /Nebius/);
+    assert.match(facts.status?.sourceUrl ?? "", /^https:\/\/nebius\.com\/newsroom\//);
+    assert.ok(facts.status?.value.details?.some((d) => d.includes("did not announce buying Clarifai")));
     assert.ok(isHiddenPlatform("clarifai"));
     assert.ok(RETIRED_GUIDE_SLUGS.includes("clarifai"));
     assert.equal(getStaticTutorialForPlatform("clarifai"), undefined);
@@ -186,6 +193,117 @@ describe("guide PR D: Clarifai unpublished reversibly", () => {
   it("audit 15 never names the clarifai row", () => {
     assert.doesNotMatch(read("src/data/catalog-audits/audit-15.ts").replace(/\/\*\*[\s\S]*?\*\//g, ""), /clarifai/i);
     assert.doesNotMatch(read("scripts/update-catalog-audit-15.ts").replace(/\/\*\*[\s\S]*?\*\//, ""), /clarifai/i);
+  });
+});
+
+describe("guide PR D: Tabnine retired to a what-happened note", () => {
+  it("retires the guide with a 301 and keeps its text outside the registry", () => {
+    assert.ok(RETIRED_GUIDE_SLUGS.includes("tabnine"));
+    assert.equal(getStaticTutorialForPlatform("tabnine"), undefined);
+    assert.ok(
+      catalogRedirects().some((m) => m.source === "/platform/tabnine/guide" && m.destination === "/platform/tabnine"),
+    );
+    assert.match(read("src/data/tutorials/retired/tabnine-getting-started.ts"), /platformSlug: "tabnine"/);
+    // The page stays listed: it is the note readers land on.
+    assert.equal(isHiddenPlatform("tabnine"), false);
+  });
+
+  it("states the acquisition, the integration and customer support, sourced to Tricentis", () => {
+    const facts = getToolFacts("tabnine");
+    assert.ok(facts?.status);
+    assert.equal(facts.lifecycle, "discontinued");
+    assert.equal(facts.status.sourceUrl, "https://www.tricentis.com/news/tricentis-acquires-tabnine");
+    const text = [facts.status.value.headline, ...(facts.status.value.details ?? [])].join(" ");
+    assert.match(text, /July 30, 2026/);
+    assert.match(text, /Agentic Quality Engineering Platform/);
+    assert.match(text, /existing customers would continue to be supported/);
+    assert.equal(facts.plans, undefined);
+    assert.equal(facts.freeTier, undefined);
+  });
+
+  it("audit 15 removes the row's pricing claims and the rows recommending it", () => {
+    const patch = AUDIT_15_PATCHES.find((p) => p.slug === "tabnine");
+    assert.ok(patch);
+    assert.doesNotMatch(JSON.stringify(patch.fields), /\$\d/);
+    assert.equal(patch.fields.usageLimits, null);
+    assert.deepEqual(
+      AUDIT_15_REF_REMOVALS.map((r) => `${r.slug}.${r.field}`),
+      ["amazon-q-developer.directAlternatives", "github-copilot.directAlternatives", "github-copilot.budgetAlternativeTo"],
+    );
+    assert.deepEqual(audit15RefRemoval("github-copilot", "directAlternatives", ["Cursor", "tabnine"]), ["Cursor"]);
+    assert.equal(audit15RefRemoval("github-copilot", "directAlternatives", ["Cursor"]), null);
+    assert.equal(audit15RefRemoval("cursor", "directAlternatives", ["Tabnine"]), null);
+  });
+});
+
+describe("catalog audit 15: row patches", () => {
+  const patchFor = (slug: string) => {
+    const patch = AUDIT_15_PATCHES.find((p) => p.slug === slug);
+    assert.ok(patch, slug);
+    return patch;
+  };
+
+  it("patches exactly the four RA-verified rows, dated and sourced on the vendor's pages", () => {
+    // Canva's row already matches (audits 10 and 11); only its fact file changed.
+    assert.deepEqual(AUDIT_15_PATCHES.map((p) => p.slug), ["tabnine", "scite", "lindy-ai", "activepieces"]);
+    for (const p of AUDIT_15_PATCHES) {
+      assert.equal(p.checkedAt, CHECKED_AT);
+      assert.ok(p.sources.length > 0 && p.sources.every((u) => u.startsWith("https://")), p.slug);
+    }
+  });
+
+  it("Scite: no free plan, paid-only MCP credits, never claims trial or free MCP credits", () => {
+    const patch = patchFor("scite");
+    assert.match(patch.fields.currentPricing ?? "", /^No free plan\. Basic \$12\/mo billed yearly; Pro \$40\/mo billed yearly/);
+    assert.match(patch.fields.usageLimits ?? "", /Basic: 250 MCP credits\/mo; Pro: 2,500 MCP credits\/mo plus API access/);
+    assert.match(patch.fields.usageLimits ?? "", /trial's MCP credits are not stated/);
+    for (const text of Object.values(patch.fields)) assert.doesNotMatch(text ?? "", /free[^.]*MCP credits/i);
+    assert.deepEqual(patch.costTier, { from: "FREEMIUM", to: "PAID" });
+    const facts = getToolFacts("scite");
+    assert.equal(facts?.freeTier?.value.available, false);
+    assert.deepEqual(facts?.plans?.value.map((p) => [p.name, p.price]), [["Basic", "$12"], ["Pro", "$40"], ["Enterprise", "Custom"]]);
+  });
+
+  it("Lindy: $49.99 for 5,000 credits, top tier and top-ups, no $29.99 anywhere", () => {
+    const patch = patchFor("lindy-ai");
+    assert.match(patch.fields.currentPricing ?? "", /Team from \$49\.99\/mo per active user for 5,000 credits/);
+    assert.match(patch.fields.currentPricing ?? "", /1,750,000 credits for \$9,999\.50; top-ups \$10 per 1,000 credits/);
+    assert.doesNotMatch(JSON.stringify(patch.fields), /29\.99|3,000/);
+    assert.match(getToolFacts("lindy-ai")?.plans?.value[0].price ?? "", /^from \$49\.99\/mo per active user \(5,000 credits each\)$/);
+  });
+
+  it("Activepieces: 1,000 credits a month, refreshing daily, per the pricing table", () => {
+    const patch = patchFor("activepieces");
+    for (const field of ["currentPricing", "freeTierFeatures", "usageLimits"] as const) {
+      assert.match(patch.fields[field] ?? "", /1,000 credits a month, refreshing daily/, field);
+    }
+  });
+
+  it("Canva: facts say Pro yearly is $144 (not $180), Business $250, no Teams plan offered", () => {
+    const facts = getToolFacts("canva-ai-magic-studio");
+    const plans = facts?.plans?.value ?? [];
+    assert.deepEqual(plans.map((p) => p.name), ["Free", "Pro", "Business", "Enterprise"]);
+    assert.match(plans[1].limits, /\$144\/year/);
+    assert.doesNotMatch(JSON.stringify(plans), /180/);
+    assert.match(plans[2].limits, /\$250\/year per person/);
+    assert.equal(facts?.plans?.checkedAt, CHECKED_AT);
+    assert.match(facts?.plans?.note ?? "", /Prices exclude applicable tax/);
+  });
+
+  it("writes only differing fields, and costTier only from its expected old value", () => {
+    const patch = patchFor("scite");
+    const row = {
+      description: null,
+      primaryUse: "x",
+      currentPricing: patch.fields.currentPricing ?? null,
+      freeTierFeatures: "old",
+      usageLimits: patch.fields.usageLimits ?? null,
+      costTier: "FREEMIUM",
+    };
+    assert.deepEqual(audit15PatchData(row, patch), { freeTierFeatures: patch.fields.freeTierFeatures, costTier: "PAID" });
+    assert.deepEqual(audit15PatchData({ ...row, freeTierFeatures: patch.fields.freeTierFeatures ?? null, costTier: "ENTERPRISE" }, patch), {});
+    const tabnine = patchFor("tabnine");
+    assert.equal(audit15PatchData({ ...row, usageLimits: "Free: basic" }, tabnine).usageLimits, null);
   });
 });
 

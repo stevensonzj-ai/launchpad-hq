@@ -98,11 +98,12 @@ import elicitFacts from "./elicit";
 import opusClipFacts from "./opus-clip";
 import klapFacts from "./klap";
 import sunoFacts from "./suno";
-// Guide PR D, 2026-10-29: renames and the Clarifai hide.
+// Guide PR D, 2026-10-29: renames, the Clarifai hide and Scite.
 import geminiEnterpriseAgentPlatformFacts from "./gemini-enterprise-agent-platform";
 import nanoBananaFacts from "./nano-banana";
 import textgenFacts from "./textgen";
 import clarifaiFacts from "./clarifai";
+import sciteFacts from "./scite";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -207,11 +208,12 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [opusClipFacts.slug]: opusClipFacts,
   [klapFacts.slug]: klapFacts,
   [sunoFacts.slug]: sunoFacts,
-  // Guide PR D, 2026-10-29: renames and the Clarifai hide.
+  // Guide PR D, 2026-10-29: renames, the Clarifai hide and Scite.
   [geminiEnterpriseAgentPlatformFacts.slug]: geminiEnterpriseAgentPlatformFacts,
   [nanoBananaFacts.slug]: nanoBananaFacts,
   [textgenFacts.slug]: textgenFacts,
   [clarifaiFacts.slug]: clarifaiFacts,
+  [sciteFacts.slug]: sciteFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

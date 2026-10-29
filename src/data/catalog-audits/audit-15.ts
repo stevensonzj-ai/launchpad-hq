@@ -2,7 +2,7 @@ import { planSlugRename, type SlugRenamePlan } from "./audit-6";
 import { REF_FIELDS, rewriteNameRefs, type NameRename, type RefField } from "./audit-3-refs";
 
 /**
- * Catalog audit #15 — guide PR D renames, 2026-10-29. UPDATE-only, keyed by
+ * Catalog audit #15 — guide PR D renames and row patches, 2026-10-29. UPDATE-only, keyed by
  * slug:
  *   - slug renames (each confirmed on the vendor's own pages today):
  *       google-vertex-ai                -> gemini-enterprise-agent-platform
@@ -17,7 +17,13 @@ import { REF_FIELDS, rewriteNameRefs, type NameRename, type RefField } from "./a
  *   - name references: other rows point at platforms by name in four
  *     String[] columns; exact old names (and their parenthetical variants,
  *     which never linked but read stale) are rewritten with audit 3's
- *     `rewriteNameRefs`.
+ *     `rewriteNameRefs`;
+ *   - row patches (AUDIT_15_PATCHES): Tabnine's pricing claims removed (no
+ *     standalone plans since the Tricentis acquisition), and Scite, Lindy
+ *     and Activepieces pricing text matched to the vendor pages. Text
+ *     fields are written only where they differ; costTier only while the row
+ *     still has the expected old value;
+ *   - ref removals: "Tabnine" dropped from the two rows that recommend it.
  *
  * Clarifai is unpublished in code only (src/data/facts/clarifai.ts sets
  * visibility "hidden"; its guide 301s). This audit changes nothing about
@@ -158,4 +164,128 @@ export function audit15RefUpdates(row: Audit15RefRow): { field: RefField; to: st
 /** Slug a rename target is read from before its rename has been applied (dry runs). */
 export function preRenameSlug15(slug: string): string {
   return AUDIT_15_RENAMES.find((r) => r.to === slug)?.from ?? slug;
+}
+
+// ---------- row patches (guide PR D follow-up, RA-verified 2026-10-29) ----------
+
+export type Audit15PatchField =
+  | "description"
+  | "primaryUse"
+  | "currentPricing"
+  | "freeTierFeatures"
+  | "usageLimits";
+
+export type Audit15Patch = {
+  slug: string;
+  finding: string;
+  sources: string[];
+  checkedAt: string;
+  /** Text fields set to exactly this value (null clears); written only where they differ. */
+  fields: Partial<Record<Audit15PatchField, string | null>>;
+  /** Changes only while the row still has `from` (a hand edit is left alone). */
+  costTier?: { from: string; to: string };
+};
+
+const TRICENTIS_NEWS = "https://www.tricentis.com/news/tricentis-acquires-tabnine";
+const TABNINE_BLOG = "https://www.tabnine.com/blog/a-new-chapter-for-tabnine/";
+const SCITE_PRICING = "https://scite.ai/pricing";
+const LINDY_PRICING = "https://www.lindy.ai/pricing";
+const ACTIVEPIECES_PRICING = "https://www.activepieces.com/pricing";
+
+/**
+ * Pricing rows the vendor pages contradict. Tabnine's pricing claims are
+ * removed (no standalone plans are sold since the Tricentis acquisition;
+ * src/data/facts/tabnine.ts carries the "what happened" notice). The other
+ * rows are brought in line with the fact files and pricing pages. Canva was
+ * re-checked the same day and its row already matches (audits 10 and 11), so
+ * only its fact file changed; patching it here would make a re-run of those
+ * audits revert it.
+ */
+export const AUDIT_15_PATCHES: Audit15Patch[] = [
+  {
+    slug: "tabnine",
+    finding: "Acquired by Tricentis (2026-07-30); tabnine.com redirects to Tricentis and no standalone plans or prices are published, but the row still listed Free and Pro $12/user/mo",
+    sources: [TRICENTIS_NEWS, TABNINE_BLOG],
+    checkedAt: CHECKED_AT,
+    fields: {
+      primaryUse: "No longer sold on its own: former AI coding assistant, now part of Tricentis",
+      description:
+        "Tabnine was an AI coding assistant for code completion and chat in the editor. Tricentis announced on July 30, 2026 that it had acquired Tabnine and would build Tabnine's Enterprise Context Engine into its Agentic Quality Engineering Platform.",
+      currentPricing:
+        "No standalone plans or prices. Tabnine is now part of Tricentis, and tabnine.com redirects to Tricentis (as of 2026-10-29).",
+      freeTierFeatures: "None: Tabnine is no longer sold as a standalone product",
+      usageLimits: null,
+    },
+  },
+  {
+    slug: "scite",
+    finding: "Row listed a free tier and Premium $20/mo; the pricing page has no free plan, only Basic and Pro billed yearly (with a 7-day trial) and Enterprise",
+    sources: [SCITE_PRICING],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "No free plan. Basic $12/mo billed yearly; Pro $40/mo billed yearly (adds API access); Enterprise custom. Basic and Pro start with a 7-day free trial (official, as of 2026-10-29)",
+      freeTierFeatures:
+        "No free plan. Basic and Pro start with a 7-day free trial, then the chosen plan is billed (official, as of 2026-10-29)",
+      usageLimits:
+        "Basic: 250 MCP credits/mo; Pro: 2,500 MCP credits/mo plus API access; Enterprise: unlimited users with pooled usage. The trial's MCP credits are not stated (official, as of 2026-10-29)",
+    },
+    costTier: { from: "FREEMIUM", to: "PAID" },
+  },
+  {
+    slug: "lindy-ai",
+    finding: "Row listed Team $29.99/mo for 3,000 credits and retired Starter/Pro limits; the pricing page shows Team from $49.99/mo per active user for 5,000 credits",
+    sources: [LINDY_PRICING],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "$50 in free credits lasting 7 days (no card). Team from $49.99/mo per active user for 5,000 credits, in tiers up to 1,750,000 credits for $9,999.50; top-ups $10 per 1,000 credits; Enterprise custom. Billed monthly; no annual plan is listed (official lindy.ai/pricing, as of 2026-10-29).",
+      freeTierFeatures: "No ongoing free plan. $50 in free credits, last 7 days, no credit card (official, as of 2026-10-29)",
+      usageLimits:
+        "Free credits: $50, last 7 days; Team: from 5,000 credits per active user a month, pooled across the workspace; Enterprise: custom credits (official, as of 2026-10-29)",
+    },
+  },
+  {
+    slug: "activepieces",
+    finding: "Free tier: the pricing table lists 1,000 credits a month with a daily reset (the page's FAQ is inconsistent: monthly in one answer, next day in another)",
+    sources: [ACTIVEPIECES_PRICING],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing:
+        "Free $0 (1,000 credits a month, refreshing daily); Plus $20/mo flat (10,000 credits/mo, then $0.007/credit); Team $200/mo flat (50,000 credits/mo, 25 users); Ultimate custom; Embed from $36k/year (as of 2026-10-29)",
+      freeTierFeatures:
+        "Free forever, no card: 1,000 credits a month, refreshing daily (per the pricing table), unlimited flows, up to 5 users (as of 2026-10-29)",
+      usageLimits:
+        "Cloud Free: 1,000 credits a month, refreshing daily (runs past the quota wait for the next day); Plus: 10,000 credits/mo; Team: 50,000 credits/mo; Ultimate: yearly pool; self-hosted Community Edition is free (as of 2026-10-29)",
+    },
+  },
+];
+
+/** Tabnine is no longer sold, so other rows stop recommending it. */
+export const AUDIT_15_REF_REMOVALS: { slug: string; field: RefField; value: string }[] = [
+  { slug: "amazon-q-developer", field: "directAlternatives", value: "Tabnine" },
+  { slug: "github-copilot", field: "directAlternatives", value: "Tabnine" },
+  { slug: "github-copilot", field: "budgetAlternativeTo", value: "Tabnine" },
+];
+
+export type Audit15PatchRow = Record<Audit15PatchField, string | null> & { costTier: string };
+
+/** Prisma `data` for one patched row: only fields that differ; costTier only from its expected old value. */
+export function audit15PatchData(row: Audit15PatchRow, patch: Audit15Patch): Record<string, string | null> {
+  const data: Record<string, string | null> = {};
+  for (const [field, value] of Object.entries(patch.fields) as [Audit15PatchField, string | null][]) {
+    if (row[field] !== value) data[field] = value;
+  }
+  if (patch.costTier && row.costTier === patch.costTier.from) data.costTier = patch.costTier.to;
+  return data;
+}
+
+/** New value of one reference array after this audit's removals for `slug`; null when unchanged. */
+export function audit15RefRemoval(slug: string, field: RefField, entries: readonly string[]): string[] | null {
+  const drop = AUDIT_15_REF_REMOVALS.filter((r) => r.slug === slug && r.field === field).map((r) =>
+    r.value.toLowerCase(),
+  );
+  if (drop.length === 0) return null;
+  const next = entries.filter((e) => !drop.includes(e.toLowerCase()));
+  return next.length === entries.length ? null : next;
 }

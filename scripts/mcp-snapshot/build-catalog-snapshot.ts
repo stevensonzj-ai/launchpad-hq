@@ -17,8 +17,8 @@
  *   6. catalog audits 3-11 (src/data/catalog-audits/*), each applied with its
  *      own diff function, bumping `updatedAt` to the audit's run date only
  *      when the diff is non-empty, like Prisma's @updatedAt;
- *   7. audit 15's slug renames, guarded name/website fields and name refs
- *      (guide PR D). Audits 12-14 are not replayed (text and category
+ *   7. audit 15's slug renames, guarded name/website fields, name refs,
+ *      row patches and Tabnine ref removals (guide PR D). Audits 12-14 are not replayed (text and category
  *      fields only), as before.
  *
  * Hidden rows (catalog-visibility.ts) are dropped, as loadCatalog does.
@@ -62,6 +62,9 @@ import { audit10Slugs, audit10UpdateData, diffAudit10Row } from "../../src/data/
 import { audit11KeepsUpdatedAt, audit11Slugs, audit11UpdateData, diffAudit11Row } from "../../src/data/catalog-audits/audit-11";
 import {
   AUDIT_15_RENAMES,
+  AUDIT_15_PATCHES,
+  audit15PatchData,
+  audit15RefRemoval,
   audit15RefUpdates,
   audit15UpdateData,
   planAudit15Fields,
@@ -482,6 +485,27 @@ function main() {
     for (const u of updates) (row as Record<string, unknown>)[u.field] = u.to;
     touch(row, AUDIT_15);
   }
+  for (const patch of AUDIT_15_PATCHES) {
+    const row = out.get(patch.slug);
+    if (!row) continue;
+    const data = audit15PatchData(row as never, patch);
+    if (Object.keys(data).length) {
+      Object.assign(row, data);
+      touch(row, AUDIT_15);
+    }
+  }
+  for (const row of out.values()) {
+    const r = row as Record<string, unknown>;
+    let changed = false;
+    for (const field of REF_FIELDS) {
+      const next = audit15RefRemoval(row.slug, field, (r[field] as string[] | undefined) ?? []);
+      if (next) {
+        r[field] = next;
+        changed = true;
+      }
+    }
+    if (changed) touch(row, AUDIT_15);
+  }
 
   const hidden = new Set(hiddenPlatformSlugs());
   const listed = [...out.values()].filter((r) => !hidden.has(r.slug)).sort((a, b) => a.slug.localeCompare(b.slug));
@@ -489,7 +513,7 @@ function main() {
     note:
       "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). " +
       "Not a production export; regenerate from a real /data/v1 pull when one is taken.",
-    built_from: "xlsx + seed scripts + catalog audits 1-11 + audit 15 renames + local export 2026-10-15",
+    built_from: "xlsx + seed scripts + catalog audits 1-11 + audit 15 + local export 2026-10-15",
     db_rows: out.size,
     hidden_rows: [...out.keys()].filter((s) => hidden.has(s)).sort(),
     rows: listed,

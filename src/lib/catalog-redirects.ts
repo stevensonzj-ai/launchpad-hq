@@ -40,9 +40,12 @@ export const PLATFORM_REDIRECTS: Readonly<Record<string, string>> = {
 
 export const RETIRED_GUIDE_SLUGS: readonly string[] = [
   "kakao-brain-karlo",
-  // Unreachable since September 2026 with no shutdown notice; page hidden,
+  // Shut down (final deprecation July 2026); page hidden,
   // guide kept in src/data/tutorials/retired/ (guide PR D, 2026-10-29).
   "clarifai",
+  // Acquired by Tricentis (2026-07-30) and no longer sold on its own; guide
+  // kept in src/data/tutorials/retired/ (guide PR D, 2026-10-29).
+  "tabnine",
 ];
 
 export type CatalogRedirect = {

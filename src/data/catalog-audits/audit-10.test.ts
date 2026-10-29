@@ -69,12 +69,13 @@ describe("catalog audit 10: RA-verified corrections", () => {
     }
   });
 
-  it("every RA-corrected tool now has verified facts with a pricing source dated 2026-10-26", () => {
+  it("every RA-corrected tool now has verified facts with a pricing source dated 2026-10-26 or later", () => {
     for (const slug of ["otter-ai", "canva-ai-magic-studio", "midjourney", "julius-ai", "elicit", "suno"]) {
       const f = getToolFacts(slug);
       assert.equal(f?.plans?.status, "verified", slug);
-      assert.equal(f?.plans?.checkedAt, CHECKED_AT, slug);
-      assert.equal(f?.freeTier?.checkedAt, CHECKED_AT, slug);
+      // Dated by this audit, or re-checked since (Canva: guide PR D, 2026-10-29).
+      assert.ok((f?.plans?.checkedAt ?? "") >= CHECKED_AT, slug);
+      assert.ok((f?.freeTier?.checkedAt ?? "") >= CHECKED_AT, slug);
     }
     // opus-clip was rechecked after audit 10 (CTO, 2026-10-29, catalog audit 13) and awaits RA verification.
     const opus = getToolFacts("opus-clip");

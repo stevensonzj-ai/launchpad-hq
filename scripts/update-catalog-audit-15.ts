@@ -6,7 +6,12 @@
  *   2. name / website on the renamed rows, written only while the row still
  *      holds the expected old value (a hand edit is logged and left alone);
  *   3. name references to the old names in every row's directAlternatives /
- *      complementaryTools / budgetAlternativeTo / privacyAlternativeTo.
+ *      complementaryTools / budgetAlternativeTo / privacyAlternativeTo;
+ *   4. row patches: Tabnine's pricing claims removed, Scite / Lindy /
+ *      Activepieces pricing text matched to the vendor pages
+ *      (fields written only where they differ; costTier only from its
+ *      expected old value);
+ *   5. "Tabnine" removed from the rows that recommend it.
  * Clarifai is hidden in code only; this audit leaves its slug, name and
  * text alone (only the "Google Vertex AI" entry in its alternatives is
  * renamed, as in every row).
@@ -59,7 +64,11 @@ import {
   checkTargetHost,
 } from "../src/lib/prod-guard";
 import {
+  AUDIT_15_PATCHES,
+  AUDIT_15_REF_REMOVALS,
   AUDIT_15_RENAMES,
+  audit15PatchData,
+  audit15RefRemoval,
   audit15RefUpdates,
   audit15UpdateData,
   planAudit15Fields,
@@ -222,8 +231,69 @@ async function main() {
       });
     }
 
+    // Step 4: row patches (pricing text; Tabnine's pricing claims removed).
+    let patchRows = 0;
+    let patchFields = 0;
+    for (const patch of AUDIT_15_PATCHES) {
+      const row = await prisma.platform.findUnique({
+        where: { slug: patch.slug },
+        select: {
+          description: true,
+          primaryUse: true,
+          currentPricing: true,
+          freeTierFeatures: true,
+          usageLimits: true,
+          costTier: true,
+        },
+      });
+      if (!row) {
+        console.warn(`! skip missing slug: ${patch.slug}`);
+        continue;
+      }
+      if (patch.costTier && row.costTier !== patch.costTier.from && row.costTier !== patch.costTier.to) {
+        console.log(`${patch.slug}: costTier skipped (differs from expected)`);
+      }
+      const data = audit15PatchData(row, patch);
+      const fields = Object.keys(data);
+      if (fields.length === 0) continue;
+      patchRows += 1;
+      patchFields += fields.length;
+      console.log(`patch ${patch.slug}: ${fields.join(", ")}`);
+      if (dryRun) continue;
+      await prisma.platform.update({ where: { slug: patch.slug }, data });
+    }
+
+    // Step 5: stop recommending Tabnine.
+    let removals = 0;
+    for (const slug of [...new Set(AUDIT_15_REF_REMOVALS.map((r) => r.slug))]) {
+      const row = all.find((r) => r.slug === slug);
+      if (!row) {
+        console.warn(`! skip missing slug: ${slug}`);
+        continue;
+      }
+      // Read fresh: step 3 may have rewritten this row's arrays.
+      const fresh = dryRun
+        ? row
+        : await prisma.platform.findUnique({
+            where: { slug },
+            select: { directAlternatives: true, complementaryTools: true, budgetAlternativeTo: true, privacyAlternativeTo: true },
+          });
+      if (!fresh) continue;
+      const data: Record<string, string[]> = {};
+      for (const field of ["directAlternatives", "complementaryTools", "budgetAlternativeTo", "privacyAlternativeTo"] as const) {
+        const next = audit15RefRemoval(slug, field, fresh[field]);
+        if (next) data[field] = next;
+      }
+      const fields = Object.keys(data);
+      if (fields.length === 0) continue;
+      removals += fields.length;
+      console.log(`unref ${slug}: ${fields.join(", ")}`);
+      if (dryRun) continue;
+      await prisma.platform.update({ where: { slug }, data });
+    }
+
     console.log(
-      `audit15: ${renames} slug renames, ${rows} rows / ${fieldChanges} field changes, ${refRows} rows / ${refChanges} name references (${dryRun ? "dry-run" : "applied"})`,
+      `audit15: ${renames} slug renames, ${rows} rows / ${fieldChanges} field changes, ${refRows} rows / ${refChanges} name references, ${patchRows} rows / ${patchFields} patched fields, ${removals} Tabnine refs removed (${dryRun ? "dry-run" : "applied"})`,
     );
     if (!dryRun) {
       // The site caches catalog reads (docs/caching.md).

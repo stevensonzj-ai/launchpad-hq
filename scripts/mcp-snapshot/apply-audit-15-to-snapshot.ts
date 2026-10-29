@@ -10,7 +10,10 @@
 import * as fs from "fs";
 import * as path from "path";
 import {
+  AUDIT_15_PATCHES,
   AUDIT_15_RENAMES,
+  audit15PatchData,
+  audit15RefRemoval,
   audit15RefUpdates,
   audit15UpdateData,
   planAudit15Fields,
@@ -56,6 +59,28 @@ for (const row of out.values()) {
   row.updatedAt = AUDIT_15;
   changes += 1;
 }
+for (const patch of AUDIT_15_PATCHES) {
+  const row = out.get(patch.slug);
+  if (!row) continue;
+  const data = audit15PatchData(row as never, patch);
+  if (Object.keys(data).length === 0) continue;
+  Object.assign(row, data);
+  row.updatedAt = AUDIT_15;
+  changes += 1;
+}
+for (const row of out.values()) {
+  let changed = false;
+  for (const field of REF_FIELDS) {
+    const next = audit15RefRemoval(row.slug, field, (row[field] as string[] | undefined) ?? []);
+    if (next) {
+      row[field] = next;
+      changed = true;
+    }
+  }
+  if (!changed) continue;
+  row.updatedAt = AUDIT_15;
+  changes += 1;
+}
 
 // Rows the code now hides (clarifai) leave the listed rows, as loadCatalog does.
 const hidden = new Set(hiddenPlatformSlugs());
@@ -63,7 +88,7 @@ const nowHidden = [...out.keys()].filter((s) => hidden.has(s));
 const listed = [...out.values()].filter((r) => !hidden.has(r.slug)).sort((a, b) => a.slug.localeCompare(b.slug));
 const next: Snapshot = {
   ...snap,
-  built_from: "xlsx + seed scripts + catalog audits 1-11 + audit 15 renames + local export 2026-10-15",
+  built_from: "xlsx + seed scripts + catalog audits 1-11 + audit 15 + local export 2026-10-15",
   hidden_rows: [...new Set([...snap.hidden_rows, ...nowHidden])].sort(),
   rows: listed,
 };

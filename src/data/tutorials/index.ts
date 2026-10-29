@@ -89,7 +89,6 @@ import { googleAntigravityTutorial } from "./google-antigravity-getting-started"
 import { kiroTutorial } from "./kiro-getting-started";
 import { openaiCodexCliTutorial } from "./openai-codex-cli-getting-started";
 import { replitAgentTutorial } from "./replit-agent-getting-started";
-import { tabnineTutorial } from "./tabnine-getting-started";
 import { v0Tutorial } from "./v0-getting-started";
 import { figmaAiTutorial } from "./figma-ai-getting-started";
 import { hubspotAiTutorial } from "./hubspot-ai-getting-started";
@@ -237,7 +236,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [kiroTutorial.platformSlug]: kiroTutorial,
   [openaiCodexCliTutorial.platformSlug]: openaiCodexCliTutorial,
   [replitAgentTutorial.platformSlug]: replitAgentTutorial,
-  [tabnineTutorial.platformSlug]: tabnineTutorial,
   [microsoftCopilotTutorial.platformSlug]: microsoftCopilotTutorial,
   [mistralVibeTutorial.platformSlug]: mistralVibeTutorial,
   [leonardoAiTutorial.platformSlug]: leonardoAiTutorial,

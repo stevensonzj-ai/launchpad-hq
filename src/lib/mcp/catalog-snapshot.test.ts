@@ -4,7 +4,7 @@ import * as path from "path";
 import { describe, it } from "node:test";
 import { audit10Slugs } from "@/data/catalog-audits/audit-10";
 import { getToolFacts } from "@/data/facts";
-import { AUDIT_15_RENAMES } from "@/data/catalog-audits/audit-15";
+import { AUDIT_15_PATCHES, AUDIT_15_RENAMES } from "@/data/catalog-audits/audit-15";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
 import { loadSnapshot } from "./snapshot";
 import { toPlatformRef } from "./tools";
@@ -38,6 +38,12 @@ const P13_FIELDS = new Set([
  * fields a rename changes may differ.
  */
 const AUDIT_15_MOVES = new Map(AUDIT_15_RENAMES.map((r) => [r.from, r.to]));
+/**
+ * Audit 15 also patches pricing rows (Tabnine, Scite, Lindy, Activepieces)
+ * and Scite gained a fact file; those tools may differ on the same
+ * fields fix P1.3 changed.
+ */
+const AUDIT_15_PATCHED = AUDIT_15_PATCHES.map((p) => p.slug);
 const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "source_url", "stale", "freshness_note"]);
 describe("catalog snapshot", () => {
   const snap = loadSnapshot();
@@ -58,7 +64,7 @@ describe("catalog snapshot", () => {
     ) as Record<string, unknown>[];
     assert.ok(observed.length >= 75);
     const bySlug = new Map(snap.rows.map((r) => [r.slug, r]));
-    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED]);
+    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED]);
     const diffs: string[] = [];
     for (const o of observed) {
       const moved = AUDIT_15_MOVES.get(o.slug as string);

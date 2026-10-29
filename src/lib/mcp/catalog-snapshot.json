@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audit 15 renames + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audit 15 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -23,9 +23,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free $0 (1,000 credits); Plus $20/mo flat (10,000 credits/mo, then $0.007/credit); Team $200/mo flat (50,000 credits/mo, 25 users); Ultimate custom; Embed from $36k/year (as of 2026-10-25)",
-   "freeTierFeatures": "Free forever, no card: 1,000 credits, unlimited flows, up to 5 users. The page lists the Free reset as daily in its comparison table but monthly in its FAQ (as of 2026-10-25)",
-   "usageLimits": "Cloud Free: 1,000 credits (runs past the quota wait for the reset); Plus: 10,000 credits/mo; Team: 50,000 credits/mo; Ultimate: yearly pool; self-hosted Community Edition is free (official, as of 2026-10-25)",
+   "currentPricing": "Free $0 (1,000 credits a month, refreshing daily); Plus $20/mo flat (10,000 credits/mo, then $0.007/credit); Team $200/mo flat (50,000 credits/mo, 25 users); Ultimate custom; Embed from $36k/year (as of 2026-10-29)",
+   "freeTierFeatures": "Free forever, no card: 1,000 credits a month, refreshing daily (per the pricing table), unlimited flows, up to 5 users (as of 2026-10-29)",
+   "usageLimits": "Cloud Free: 1,000 credits a month, refreshing daily (runs past the quota wait for the next day); Plus: 10,000 credits/mo; Team: 50,000 credits/mo; Ultimate: yearly pool; self-hosted Community Edition is free (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "n8n",
@@ -37,7 +37,7 @@
     "Zapier",
     "Make (Activepieces self-hosted is already free)"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -610,14 +610,13 @@
    "directAlternatives": [
     "GitHub Copilot",
     "Cursor",
-    "Devin Desktop",
-    "Tabnine"
+    "Devin Desktop"
    ],
    "budgetAlternativeTo": [
     "GitHub Copilot Free",
     "Aider"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -3735,14 +3734,12 @@
     "Cursor",
     "Claude Code",
     "Devin Desktop",
-    "Amazon Q Developer",
-    "Tabnine"
+    "Amazon Q Developer"
    ],
    "budgetAlternativeTo": [
-    "Tabnine",
     "Aider (free open-source)"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -6032,9 +6029,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Start with $50 in free credits lasting 7 days (no card). Team $29.99/mo for 3,000 credits (pooled); top-ups $10 per 1,000 credits; Enterprise custom (official lindy.ai/pricing, as of 2026-10-14).",
-   "freeTierFeatures": "No ongoing free plan. $50 in free credits, last 7 days, no credit card (official, as of 2026-10-14)",
-   "usageLimits": "Free: limited credits; Starter: 600 credits/mo; Pro: 3,000; Business: custom",
+   "currentPricing": "$50 in free credits lasting 7 days (no card). Team from $49.99/mo per active user for 5,000 credits, in tiers up to 1,750,000 credits for $9,999.50; top-ups $10 per 1,000 credits; Enterprise custom. Billed monthly; no annual plan is listed (official lindy.ai/pricing, as of 2026-10-29).",
+   "freeTierFeatures": "No ongoing free plan. $50 in free credits, last 7 days, no credit card (official, as of 2026-10-29)",
+   "usageLimits": "Free credits: $50, last 7 days; Team: from 5,000 credits per active user a month, pooled across the workspace; Enterprise: custom credits (official, as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Zapier (with AI)",
@@ -6046,7 +6043,7 @@
     "Zapier (basic automation)",
     "ChatGPT (manual agent tasks)"
    ],
-   "updatedAt": "2026-10-14",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -10428,14 +10425,14 @@
    "description": null,
    "primaryUse": "AI citation analysis (support vs. contrast)",
    "primaryUseCases": "Citation context analysis; seeing if papers support/contrast claims; research integrity checking",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Premium $20/mo",
-   "freeTierFeatures": "Free: basic search; limited Smart Citation results; community dashboard",
-   "usageLimits": "Free: limited full-text access; Individual: unlimited; Institutional: campus-wide",
+   "currentPricing": "No free plan. Basic $12/mo billed yearly; Pro $40/mo billed yearly (adds API access); Enterprise custom. Basic and Pro start with a 7-day free trial (official, as of 2026-10-29)",
+   "freeTierFeatures": "No free plan. Basic and Pro start with a 7-day free trial, then the chosen plan is billed (official, as of 2026-10-29)",
+   "usageLimits": "Basic: 250 MCP credits/mo; Pro: 2,500 MCP credits/mo plus API access; Enterprise: unlimited users with pooled usage. The trial's MCP credits are not stated (official, as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Semantic Scholar",
@@ -10447,7 +10444,7 @@
     "Semantic Scholar (free)",
     "Connected Papers (free tier)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -11335,17 +11332,17 @@
    "name": "Tabnine",
    "company": "Tabnine",
    "website": "https://tabnine.com",
-   "description": null,
-   "primaryUse": "Privacy-first AI code completion",
+   "description": "Tabnine was an AI coding assistant for code completion and chat in the editor. Tricentis announced on July 30, 2026 that it had acquired Tabnine and would build Tabnine's Enterprise Context Engine into its Agentic Quality Engineering Platform.",
+   "primaryUse": "No longer sold on its own: former AI coding assistant, now part of Tricentis",
    "primaryUseCases": "Private code completion; enterprise compliance; air-gapped environments; IP-safe suggestions",
    "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Pro $12/user/mo",
-   "freeTierFeatures": "Free: basic code completions; limited AI chat; single IDE",
-   "usageLimits": "Free: basic completions; Dev: full AI chat + better completions; Enterprise: custom + on-premise",
+   "currentPricing": "No standalone plans or prices. Tabnine is now part of Tricentis, and tabnine.com redirects to Tricentis (as of 2026-10-29).",
+   "freeTierFeatures": "None: Tabnine is no longer sold as a standalone product",
+   "usageLimits": null,
    "apiAvailable": true,
    "directAlternatives": [
     "GitHub Copilot",
@@ -11356,7 +11353,7 @@
    "budgetAlternativeTo": [
     "GitHub Copilot Free"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"

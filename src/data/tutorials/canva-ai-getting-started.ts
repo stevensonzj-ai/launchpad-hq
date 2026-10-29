@@ -7,7 +7,7 @@ export const canvaAiTutorial: PlatformTutorialData = {
   tagline:
     "Canva's built-in AI toolkit, Magic Studio — generate images, write copy, design layouts, and edit photos without leaving your design.",
   archetype: "prompts",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.canva.com/newsroom/",
   accessTier: "FREE",
 
@@ -19,8 +19,8 @@ export const canvaAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "The free plan is a real design tool (huge template library, collaboration) with **limited** AI — enough to try Magic Studio, not to lean on it. **Pro** is a paid monthly plan with a much bigger monthly AI credit pool.",
-    "Credits are shared across all AI features and **don't top up a la carte** — heavy image + copy + editing use burns them fast, then you wait for the reset or upgrade.",
+    "The free plan is a real design tool (huge template library, collaboration) with a **small monthly AI allowance** — enough to try Magic Studio, not to lean on it. **Pro** is for one person and multiplies that allowance several times over; **Business** now covers both individuals and teams (Canva no longer sells a separate Teams plan) and doubles Pro's allowance again. Both can be paid monthly or yearly, and the prices on Canva's page exclude tax.",
+    "Every AI tool draws on **one shared allowance**, with heavier tools using it up faster — so heavy image, video and copy use burns through it quickly. When it runs out, Pro and Business users can buy **AI Pass**, a pricey monthly add-on with Canva's largest allowance; Business can also buy smaller one-off top-ups. Free users wait for the monthly reset or upgrade.",
     "One setting to check on day one: your AI training preference (see security).",
   ],
 
@@ -34,7 +34,7 @@ export const canvaAiTutorial: PlatformTutorialData = {
       label: "Two things to set and know",
       items: [
         "**AI training is on by default for Free and Pro users.** Canva may use your content to help improve its AI unless you **opt out in privacy settings.** (Teams/Enterprise content is never used for training.) If your designs are sensitive, flip that off first.",
-        "Canva's **IP indemnity (Canva Shield) is Enterprise-only** — so unlike Adobe Firefly's paid indemnity, a Pro user carries the residual legal risk themselves. Keep commercial prompts clean and generic.",
+        "Canva's **IP indemnity (Canva Shield) is Enterprise-only** — so a Pro or Business user carries the residual legal risk themselves. Keep commercial prompts clean and generic.",
         "The usual generator caveats apply: AI images can occasionally resemble existing work, and a pure AI image may not be copyrightable — review outputs before high-stakes commercial use.",
       ],
     },
@@ -92,7 +92,7 @@ export const canvaAiTutorial: PlatformTutorialData = {
 
   pitfalls: [
     "**AI training is on by default (Free/Pro).** Opt out in privacy settings if you don't want your designs improving Canva's AI.",
-    "**Credits are shared and burn fast.** Images, copy, and edits all draw from one pool, with no a la carte top-ups.",
+    "**The AI allowance is shared and burns fast.** Images, copy, and edits all draw from one pool; only Business can buy small top-ups, and AI Pass is an expensive monthly add-on.",
     "**Indemnity is Enterprise-only.** A Pro user owns both the design and the residual legal risk — keep prompts clean.",
   ],
 
