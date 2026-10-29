@@ -149,3 +149,7 @@ Renamed guides: each title is now "X (formerly Y)", with the old-name passages r
 ## Not touched
 
 Tabnine, Scite, Lindy, Canva, Activepieces. Audit 10 was not re-run.
+
+---
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
