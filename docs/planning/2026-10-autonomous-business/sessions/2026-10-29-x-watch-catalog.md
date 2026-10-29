@@ -6,10 +6,12 @@ Agent: Claude (Claude Code), branch `catalog/x-watch-1029`. Prep only: no databa
 
 - `src/data/catalog-audits/audit-12.ts` — patch data and pure diff logic.
 - `scripts/update-catalog-audit-12.ts` — operator runner (same guard block as audit 11, byte for byte).
-- `src/data/catalog-audits/audit-12.test.ts` — 11 tests, added to `npm test`.
+- `src/data/catalog-audits/audit-12.test.ts` — 13 tests, added to `npm test`.
 - `package.json` — `db:update-catalog-audit-12`.
 
-How it differs from audit 11: it **only appends**. Each note is added to `description` (or `currentPricing` for OpenAI API) only while the field doesn't already contain it, so existing text is never rewritten. `kling-ai.apiAvailable` changes false → true only while it is still false. Every row keeps its `updatedAt`, because a note re-checks none of the row's other text, and each note carries its own "as of 2026-10-29". Dry-run prints `(was empty)` when a field was empty before the note. Expected on the snapshot: **9 rows / 11 field changes**, and 0 on a re-run.
+How it differs from audit 11: it **only appends**. Each note is added to `description` (or `currentPricing` for OpenAI API) only while the field doesn't already contain it, so existing text is never rewritten. `kling-ai.apiAvailable` changes false → true only while it is still false. Every row keeps its `updatedAt`, because a note re-checks none of the row's other text, and each note carries its own "as of 2026-10-29". Dry-run prints `(was empty)` when a field was empty before the note.
+
+**Empty descriptions are skipped.** A description note is not written while the row's description is empty, null or whitespace, so a dated note never becomes a row's whole description. `currentPricing` notes and the guarded `apiAvailable` change still apply on those rows. The runner logs `<slug>: description note skipped (empty description)` for each one (no values printed); the helper is `audit12SkippedEmptyDescription`. On the prod-derived branch, **gemini, chatgpt, openai-api, github-copilot, runway, suno, notion-ai and mistral-vibe have empty descriptions**, so their description notes are skipped pending proper descriptions. The verified facts stay recorded in this note (table below) and in `audit-12.ts` for that later pass. Expected on the snapshot (same empty rows): **2 rows / 3 field changes** — `openai-api.currentPricing`, `kling-ai.description` and `kling-ai.apiAvailable` — and 0 on a re-run.
 
 ## Items (all verified 2026-10-29 on the vendor's own page)
 
@@ -34,13 +36,13 @@ New listings: **none added.**
 
 ## Open / for Zach
 
-- The prod rows' current text is unknown, because the snapshot is an offline reconstruction. If dry-run shows `description (was empty)` for a row, the note becomes that row's whole description. Decide whether that is acceptable.
+- Eight rows (gemini, chatgpt, openai-api, github-copilot, runway, suno, notion-ai, mistral-vibe) need proper descriptions written. Their audit 12 description notes are held until then; re-running audit 12 after the descriptions land will append them.
 - Fact files (`src/data/facts/*`) and the MCP catalog snapshot were not updated. The snapshot can only be rebuilt from the local export.
 - `openai-api` still shows stale GPT-4o pricing from 2026-04 ahead of the new note.
 
 ## Ship steps (after the Neon reset, 7 PM CT Oct 31)
 
-1. **Neon branch run.** Point `DATABASE_URL` at a fresh branch of prod. Run `npm run db:update-catalog-audit-12` (dry-run): expect about 9 rows / 11 fields, and note any `(was empty)`. Then run with `-- --apply`. Re-run the dry-run: it must print `audit12: 0 rows / 0 field changes`. Spot-check rows in Prisma Studio.
+1. **Neon branch run.** Point `DATABASE_URL` at a fresh branch of prod. Run `npm run db:update-catalog-audit-12` (dry-run): expect 2 rows / 3 fields, plus 8 `description note skipped (empty description)` lines. Then run with `-- --apply`. Re-run the dry-run: it must print `audit12: 0 rows / 0 field changes`. Spot-check rows in Prisma Studio.
 2. **Take a prod restore point** in the Neon console before writing.
 3. **Prod run.** Run `Remove-Item Env:DATABASE_URL` (G14), then point at prod. Set `$env:CONFIRM_PROD_HOST='ep-odd-mud-ajdk8f99'`, then run `npx tsx scripts/update-catalog-audit-12.ts --confirm-production` (dry-run). Then run with `--confirm-production --apply`, then the dry-run again (expect 0). Run `Remove-Item Env:CONFIRM_PROD_HOST`. Then run `npm run cache:revalidate`.
-4. **Post-merge check.** Open the 9 platform pages and MCP `get_pricing_facts` for kling-ai / openai-api. Confirm the notes show, nothing else changed, and the `updatedAt` dates did not move.
+4. **Post-merge check.** Open the kling-ai and openai-api platform pages and MCP `get_pricing_facts` for kling-ai / openai-api. Confirm the notes show, nothing else changed, and the `updatedAt` dates did not move.

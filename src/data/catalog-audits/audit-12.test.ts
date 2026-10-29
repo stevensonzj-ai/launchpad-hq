@@ -8,6 +8,7 @@ import {
   AUDIT_12_PATCHES,
   CHECKED_AT,
   appendNote,
+  audit12SkippedEmptyDescription,
   audit12Slugs,
   audit12UpdateData,
   diffAudit12,
@@ -92,7 +93,31 @@ describe("catalog audit 12: appends, never overwrites; idempotent", () => {
     }
   });
 
-  it("9 rows / 11 field changes on the current snapshot, then 0 on a re-run", () => {
+  it("an empty, null or whitespace description gets no note; currentPricing and guarded apiAvailable still apply", () => {
+    // openai-api's appends (currentPricing + description) with kling-ai's apiAvailable guard.
+    const patch = { ...patchFor("openai-api"), guarded: patchFor("kling-ai").guarded };
+    for (const description of ["", null, "  \n\t "]) {
+      const row: Audit12Row = { description, currentPricing: "Old pricing", apiAvailable: false };
+      const diffs = diffAudit12(row, patch);
+      assert.equal(diffs.some((d) => d.field === "description"), false, JSON.stringify(description));
+      assert.deepEqual(audit12UpdateData(diffs), {
+        currentPricing: `Old pricing; ${patch.appends[0].note}`,
+        apiAvailable: true,
+      });
+      assert.equal(audit12SkippedEmptyDescription("openai-api", row), true);
+    }
+    const filled: Audit12Row = { description: "Existing.", currentPricing: "Old pricing", apiAvailable: false };
+    assert.equal(diffAudit12(filled, patch).some((d) => d.field === "description"), true);
+    assert.equal(audit12SkippedEmptyDescription("openai-api", filled), false);
+    assert.equal(audit12SkippedEmptyDescription("not-in-audit-12", { ...filled, description: "" }), false);
+  });
+
+  it("the snapshot's empty-description rows are the ones whose notes are skipped", () => {
+    const skipped = audit12Slugs().filter((slug) => audit12SkippedEmptyDescription(slug, snap(slug)));
+    assert.deepEqual(skipped, ["gemini", "chatgpt", "openai-api", "github-copilot", "runway", "suno", "notion-ai", "mistral-vibe"]);
+  });
+
+  it("2 rows / 3 field changes on the current snapshot, then 0 on a re-run", () => {
     let rows = 0;
     let fields = 0;
     for (const slug of audit12Slugs()) {
@@ -101,7 +126,7 @@ describe("catalog audit 12: appends, never overwrites; idempotent", () => {
       fields += diffs.length;
       assert.deepEqual(diffAudit12Row(slug, applied(slug) as Audit12Row), [], `${slug} re-run`);
     }
-    assert.deepEqual([rows, fields], [9, 11]);
+    assert.deepEqual([rows, fields], [2, 3]);
   });
 
   it("audit 10 and 11 re-runs leave audit 12's notes alone", () => {
@@ -120,6 +145,7 @@ describe("catalog audit 12: appends, never overwrites; idempotent", () => {
     assert.match(source, /await countdown\(5\)/);
     assert.match(source, /if \(dryRun\) continue;/);
     assert.match(source, /updatedAt: existing\.updatedAt/);
+    assert.match(source, /`\$\{slug\}: description note skipped \(empty description\)`/);
     assert.match(source, /`audit12: \$\{rows\} rows \/ \$\{fieldChanges\} field changes/);
     assert.doesNotMatch(source, /console\.log\([^)]*DATABASE_URL/);
     assert.doesNotMatch(source, /console\.(log|warn)\([^)]*\.(to|description|currentPricing)\b/);

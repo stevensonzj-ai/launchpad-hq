@@ -26,6 +26,9 @@
  * Output is slugs, field names and counts only (no values, no URLs). A
  * field that was empty before the note is marked "(was empty)" so the
  * operator can check that row by hand.
+ * A description note is skipped while the row's description is empty (so a
+ * dated note never becomes the whole description); such rows are logged as
+ * "<slug>: description note skipped (empty description)".
  *
  * Usage (default is dry-run; writes require --apply):
  *   npx tsx scripts/update-catalog-audit-12.ts
@@ -60,7 +63,12 @@ import {
   CONFIRM_PRODUCTION_FLAG,
   checkTargetHost,
 } from "../src/lib/prod-guard";
-import { audit12Slugs, audit12UpdateData, diffAudit12Row } from "../src/data/catalog-audits/audit-12";
+import {
+  audit12SkippedEmptyDescription,
+  audit12Slugs,
+  audit12UpdateData,
+  diffAudit12Row,
+} from "../src/data/catalog-audits/audit-12";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";
@@ -149,6 +157,9 @@ async function main() {
       if (!existing) {
         console.warn(`! skip missing slug: ${slug}`);
         continue;
+      }
+      if (audit12SkippedEmptyDescription(slug, existing)) {
+        console.log(`${slug}: description note skipped (empty description)`);
       }
       const diffs = diffAudit12Row(slug, existing);
       if (diffs.length === 0) continue;

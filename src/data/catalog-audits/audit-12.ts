@@ -23,6 +23,9 @@
  * APPEND-ONLY. Unlike audits 10-11, no patch here replaces a field: each
  * note is appended to the field's current text (or becomes the text when the
  * field is empty) only while that text does not already contain the note.
+ * Exception: a description note is skipped while the row's description is
+ * empty, so a dated note never becomes a whole description (the runner logs
+ * those rows; see audit12SkippedEmptyDescription).
  * Rows' existing wording, prices and dates are never rewritten, so the
  * production values (which the offline snapshot only approximates) cannot
  * be clobbered. `apiAvailable` changes only while the row still has the old
@@ -238,6 +241,8 @@ export function appendNote(current: string | null, append: Audit12Append): strin
 export function diffAudit12(row: Audit12Row, patch: Audit12Patch): Audit12Diff[] {
   const next: Partial<Record<Audit12TextField, string>> = {};
   for (const append of patch.appends) {
+    // Never let a dated note become a whole description: skip empty descriptions.
+    if (append.field === "description" && !row.description?.trim()) continue;
     const to = appendNote(next[append.field] ?? row[append.field], append);
     if (to !== null) next[append.field] = to;
   }
@@ -264,4 +269,10 @@ export function audit12Slugs(): string[] {
 export function diffAudit12Row(slug: string, row: Audit12Row): Audit12Diff[] {
   const patch = AUDIT_12_PATCHES.find((p) => p.slug === slug);
   return patch ? diffAudit12(row, patch) : [];
+}
+
+/** True when `slug` has a description note that diffAudit12 skips because the row's description is empty. */
+export function audit12SkippedEmptyDescription(slug: string, row: Audit12Row): boolean {
+  const patch = AUDIT_12_PATCHES.find((p) => p.slug === slug);
+  return !!patch?.appends.some((a) => a.field === "description") && !row.description?.trim();
 }
