@@ -7,7 +7,7 @@ export const restbAiTutorial: PlatformTutorialData = {
   tagline:
     "AI that reads property photos and writes down what it sees — built for real-estate companies, with one way in for individuals.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://restb.ai/company/press-releases/",
   accessTier: "FREE",
 
@@ -21,9 +21,9 @@ export const restbAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The main product is not something you sign up for.** Restb.ai's site has no log-in, no sign-up and no self-serve access — the only buttons are \"Try our demos\" and \"contact us\", and its FAQ says plainly that it does not have an app. The pricing page promises \"accessible pricing\" and prints no numbers; the FAQ gives the shape instead: a fixed monthly fee covering an allowance of requests, an overage fee for each one beyond it, and separate pricing for large batches of property data.",
+    "**The main product, the API, is not something you sign up for.** Restb.ai's main site has no sign-up for it and no self-serve access — the only buttons are \"Try our demos\" and \"contact us\", and its FAQ says plainly that it does not have an app. The pricing page promises \"accessible pricing\" and prints no numbers; the FAQ gives the shape instead: a fixed monthly fee covering an allowance of requests, an overage fee for each one beyond it, and separate pricing for large batches of property data.",
     "If you are a US estate agent, check before you buy anything — you may already have it. Restb.ai sells to MLSs, which switch it on for their members, and by the company's own April 2025 count that reached more than 800,000 agents and brokers across North America. No vendor page says whether those features are covered by your dues or billed on top, so ask your board rather than assuming.",
-    "The one path that does not go through a salesperson is Restb Lens. Its published plans start with a single-user plan that caps monthly property searches, rising through pricier tiers with more seats and more searches, and the site advertises a two-week free trial you request by form — \"We'll send you a promo code right away. No credit card needed.\" That trial is the only free look, and we could not confirm from outside whether it is still being offered.",
+    "The one path that does not go through a salesperson is Restb Lens, a web tool with its own sign-in and sign-up page. When we checked on 29 October 2026 without an account, its plans and prices were not visible, and the Lens pages on Restb.ai's own site returned \"not found\" — so we cannot tell you what a Lens plan costs, what it caps, or whether a free trial is still offered. Treat Lens as a sign-up web app with no public prices, and ask before you assume there is a self-serve plan.",
     "It is built around American property. Restb Lens runs on nationwide property data, and its condition and quality ratings follow the 1-to-6 scales Fannie Mae and Freddie Mac use in US appraisals. The photo labelling does not look country-specific — Restb.ai has European customers and was founded in Spain — but the scores, the recent-sales comparisons and the compliance rules are US-shaped.",
     "Restb Lens needs no coding; the API side genuinely does — Restb.ai's FAQ describes clients integrating it themselves. If you only want to see what AI makes of a photo you own, a general chatbot will describe one at no cost; property data is what brings you back here.",
   ],
@@ -78,9 +78,9 @@ export const restbAiTutorial: PlatformTutorialData = {
         "If nothing fills itself in, ask your MLS's support desk which AI features are on for your board — this varies by MLS, not by agent.",
     },
     {
-      title: "Run the free trial against a house you know inside out",
+      title: "Check a rating against a house you know inside out",
       whatItDoes:
-        "Request the two-week Restb Lens trial, then look up a property you have actually stood inside — your own home, a place you sold — and compare the condition and quality ratings it returns with what you already know about the building.",
+        "If you get into Restb Lens — through your employer, or by signing up — look up a property you have actually stood inside, such as your own home or a place you sold, and compare the condition and quality ratings it returns with what you already know about the building.",
       whyHere:
         "The ratings map onto the American appraisal scales noted above, so this is one of the few AI outputs a beginner can mark against a published external standard rather than a feeling.",
     },
@@ -105,7 +105,7 @@ export const restbAiTutorial: PlatformTutorialData = {
   pitfalls: [
     "**Two products, one name.** \"Restb.ai\" is the business product; \"Restb Lens\" is the web tool you can actually sign up for. Searching for Restb.ai pricing lands you on a page that talks about affordability and prints no figures — that is the real page, not a broken one.",
     "**Assuming that because it arrived through your MLS, you control it.** You get whichever features your board switched on; nothing public describes a setting you can change or an upgrade you can buy for yourself.",
-    "**It meters by property, not by hours.** The Lens search allowance noted above is the real ceiling. The vendor's own user guide never defines what counts as one search, so treat re-runs and report exports as possible charges until someone tells you otherwise.",
+    "**Expect metering by property, not by hours.** Restb.ai's FAQ describes pricing by request volume, and the vendor's own Lens user guide never defines what counts as one search, so treat re-runs and report exports as possible charges until someone tells you otherwise.",
     "**Trusting a score attached to stale photos.** A listing whose pictures predate a renovation — or a flood — scores the house that was photographed, and nothing in the output tells you when the shutter clicked.",
   ],
 

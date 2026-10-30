@@ -12,6 +12,15 @@ import type { ToolFacts } from "./types";
  * ENTERPRISE. The API is sales-only (contracts, no published prices) while
  * Restb Lens, the same company's web tool, has self-serve plans (per the
  * guide; Lens prices were not checked). The note is in the row description.
+ *
+ * Catalog audit 21 (Research Analyst browser check, 2026-10-29, logged out):
+ * the pricing page shows no prices ("Discover Our Pricing - Scalable AI
+ * Solutions to Meet Your Needs"; "Try our demos" and contact us); the Restb
+ * Lens marketing pages 404, and lens.restb.ai is a sign-in / "Sign up!" web
+ * app whose plans are not visible logged out. No page shows public self-serve
+ * paid plans with prices, so the "Lens has self-serve plans" claim is gone.
+ * Zach reversed the tier to ENTERPRISE: the API is sales-only and Lens is a
+ * sign-up web app with no public prices.
  */
 export default {
   slug: "restb-ai",
@@ -39,7 +48,7 @@ export default {
         limits: "Billed as a monthly flat rate, monthly volume, or a fixed fee per API request",
       },
     ],
-    note: "Terms §16 lists the three fee models; no amounts are published, as of 2026-10-29.",
+    note: "Terms §16 lists the three fee models; no amounts are published, as of 2026-10-29. Restb Lens, the web tool, is a sign-up app whose plans are not visible logged out (browser check, 2026-10-29), so no Lens price is given.",
     sourceUrl: "https://restb.ai/terms-conditions/",
     sourceKind: "plans-page",
     checkedAt: "2026-10-29",
@@ -49,6 +58,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "freeTier",
+      summary: "Cost tier set to ENTERPRISE (Zach, audit 21): the API is sales-only; Restb Lens is a sign-up web app with no public prices (browser check). Replaces PAID.",
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

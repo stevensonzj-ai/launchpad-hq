@@ -15,13 +15,13 @@ export const acrobatAiTutorial: PlatformTutorialData = {
 
   whatItIs: [
     `A question-and-answer layer over PDFs and other documents, built into software most people already have installed.`,
-    `Built into Adobe's paid Acrobat Express and Acrobat Studio plans, with a separate add-on also mentioned; the free Reader does not include it.`,
+    `Included in Adobe's paid Acrobat Studio plan, not in Acrobat Standard or Pro; Acrobat Express is marketed as AI-powered, and a separate add-on is also mentioned. The free Reader does not include it.`,
     `Grounded in your documents, with citations back to source passages rather than free-form generation.`,
     `Able to work across multiple documents at once, which is where it beats reading them individually.`,
   ],
 
   beforeYouStart: [
-    `**This is paid.** It is not included with the free Reader. Adobe's pricing pages build the AI Assistant features into the Acrobat Express and Acrobat Studio plans and also mention a separate add-on; check which one your Acrobat plan needs, because the standard Acrobat plans are listed without it.`,
+    `**This is paid.** It is not included with the free Reader. Adobe's plans page says Acrobat Studio "includes everything in Acrobat Pro, plus AI Assistant", so Standard and Pro do not have it. Acrobat Express is marketed as AI-powered document insights, and Adobe's pages also mention a separate add-on without a price we could find; check what your plan names before you rely on either.`,
     `Pricing has changed since launch and is bundled differently across several Adobe tiers. **Check Adobe's current plans page for the figure that applies to you** rather than relying on a quoted price from an article.`,
     `It works on scanned documents by running text recognition first, but quality drops on poor scans. A bad photograph of a page produces bad answers.`,
     `It answers about your documents, not about the world. It is not a general assistant and does not try to be.`,
@@ -97,7 +97,7 @@ export const acrobatAiTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    `**It is paid, and the plan matters.** The free Reader does not include it, and Adobe builds it into Acrobat Express and Acrobat Studio rather than the standard plans. Check what your plan actually covers before assuming you have access.`,
+    `**It is paid, and the plan matters.** The free Reader does not include it, and Adobe includes it in Acrobat Studio rather than Standard or Pro. Check what your plan actually covers before assuming you have access.`,
     `**Scan quality caps everything.** Text recognition runs before the AI does, so a poor scan produces poor answers with no warning that the input was the problem.`,
     `**Do not accept a summary of a contract.** Summarisation is a starting point for legal or financial documents, never a substitute for reading the clauses that bind you.`,
     `**Not used for training is not the same as never leaves your device.** Documents are still transmitted for processing. For genuinely regulated material, that needs a deliberate decision.`,

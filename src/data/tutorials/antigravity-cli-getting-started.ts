@@ -48,7 +48,9 @@ export const antigravityCliTutorial: PlatformTutorialData = {
       items: [
         "Google uses what you send and receive — its terms call these \"Interactions\" — to \"evaluate, develop, and improve\" its products and machine-learning technologies.",
         "\"Google employees and contractors may access, view, review and use Interactions\", and the terms ask you not to submit confidential information.",
-        "Google's FAQ says: \"You can opt out of data collection at any point from the Settings panel.\" It ties that to no plan and does not mention training, so we could not confirm that switching it off stops the training use; look in the Settings panel before you point it at real work.",
+        "The opt-out is a setting called **Enable Telemetry**. Google's FAQ says \"You can opt out of data collection at any point from the Settings panel,\" and the terms say that if you do not want your Interactions used this way you can change that preference in settings. For the CLI it is saved with your account rather than in a settings file. It is on by default for personal accounts, so switch it off before you point the CLI at real work.",
+        "Switching it off does not stop everything. The terms say that even with telemetry off, Google still uses your data to provide the service, process any feedback you send and help keep Antigravity safe. The terms make no distinction between the free plan and a paid Google AI plan for personal accounts, and we found no separate paid-individual wording.",
+        "Business accounts (Google Workspace, Gemini Enterprise) are different: the CLI documentation says telemetry is always off for them, and they follow their organisation's Google Cloud terms.",
         "To have your Interactions deleted, the terms say to email Google's Antigravity support team. There is no self-serve delete button described.",
         "Work and school accounts are different: they follow whatever Google Cloud or Workspace terms your administrator signed.",
       ],
@@ -66,7 +68,7 @@ export const antigravityCliTutorial: PlatformTutorialData = {
       "Matching a Gemini CLI setup, since Google says features do not carry over one to one",
     ],
     avoid: [
-      "Code you are barred from sharing: personal-account conversations can be read by Google reviewers",
+      "Code you are barred from sharing, unless telemetry is off: with it on, personal-account conversations can be read by Google reviewers",
       "Anything that needs your own API key or a fixed per-use bill — that is Gemini CLI's route, not this one",
     ],
   },

@@ -10,11 +10,18 @@ import type { ToolFacts } from "./types";
  * is used and a FAQ line on opting out of data collection. The analyst's
  * browser check of 2026-10-29 (catalog audit 20) confirmed the FAQ line:
  * "You can opt out of data collection at any point from the Settings
- * panel." It is not tied to a plan and says nothing about model training,
- * so a training opt-out is still not confirmed and the row stays LOW:
- * Google uses Interactions to improve its ML by default, and reviewers may
- * see them (CLAUDE.md: LOW is "inputs used for training by default"; MEDIUM
- * needs an opt-out for that use). Not open source: no public source or licence; distributed as
+ * panel." The analyst's second browser pass the same day (catalog audit 21)
+ * found the setting and what it controls: "Enable Telemetry", in Settings
+ * under Account (CLI: saved with your account, always off for business
+ * accounts). Zach confirmed the rating: MEDIUM. CLAUDE.md's rubric puts
+ * "improvement with an opt-out" at MEDIUM, and the terms tie this setting to
+ * the improvement and human-review use for individual accounts. Four
+ * qualifications stay on the page: the default for individuals is on, Google
+ * still uses data to provide the service, process feedback and keep
+ * Antigravity safe with it off, business accounts have it always off, and the
+ * terms make no distinction between the free plan and Google AI Pro or Ultra
+ * individual accounts (no separate paid-individual wording was found). Not
+ * open source: no public source or licence; distributed as
  * a binary under the Antigravity Additional Terms. Numeric requests per
  * minute or per day: not stated. Replaces Gemini CLI for free individual
  * and Google AI Pro / Ultra use (2026-06-18).
@@ -149,7 +156,7 @@ export default {
       trainsOnData: true,
       policyUrl: "https://antigravity.google/terms",
     },
-    note: "Antigravity terms (individual accounts): \"We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies\"; \"Google employees and contractors may access, view, review and use Interactions\"; \"Please don't submit confidential information\". Deletion is by email request to Google's Antigravity support. The Google Privacy Policy applies. The FAQ (antigravity.google/docs/faq, \"What is Google Antigravity's stance on data collection?\") says: \"Refer to the Terms of Service. You can opt out of data collection at any point from the Settings panel.\" That opt-out is not tied to a plan and the FAQ does not mention model training, so a training opt-out is not confirmed. Enterprise accounts follow their administrator's Google Cloud terms.",
+    note: "Antigravity terms (individual accounts): \"We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies\"; \"Google employees and contractors may access, view, review and use Interactions\"; \"If you don't want your Interactions used in this way, navigate to settings to change your preference\"; \"Even when your Telemetry is toggled off, Google still uses your data to provide the service, process any feedback and help keep Antigravity safe\"; \"Please don't submit confidential information\". The opt-out is the Enable Telemetry setting (Settings, Account section): \"When toggled on, Antigravity collects interactions for use in evaluating, developing, and improving Antigravity and models that support Antigravity\". CLI docs: \"This choice is saved with your account instead of in settings.json, and it's always off for business accounts.\" The FAQ line is \"You can opt out of data collection at any point from the Settings panel.\" The terms make no distinction between free and Google AI Pro or Ultra individual accounts, and no separate paid-individual wording was found. Business accounts (Workspace, Gemini Enterprise) follow Google Cloud terms, which were not read. Deletion is by email request to Google's Antigravity support. Rated MEDIUM (improvement with an opt-out); trainsOnData is true because individual accounts start with telemetry on.",
     sourceUrl: "https://antigravity.google/terms",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -162,6 +169,11 @@ export default {
       date: "2026-10-29",
       field: "plans",
       summary: "First fact file (new row): $0 for individuals with a weekly quota; Google AI Pro $19.99 and Ultra from $99.99 a month; Gemini Enterprise from $30/seat. Not open source.",
+    },
+    {
+      date: "2026-10-29",
+      field: "privacy",
+      summary: "Privacy MEDIUM (Zach, audit 21): the Enable Telemetry setting is the opt-out from the improvement and human-review use for individual accounts; business accounts have it always off; service, safety and feedback uses continue with it off.",
     },
   ],
 } satisfies ToolFacts;

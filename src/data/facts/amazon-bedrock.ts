@@ -14,6 +14,13 @@ import type { ToolFacts } from "./types";
  * Model providers cannot see prompts or completions (data-protection docs). The
  * explicit "content is not used to improve base models" line is from the
  * Bedrock FAQ, read by one reader only.
+ *
+ * Catalog audit 21 (Research Analyst browser check, 2026-10-29): the Bedrock
+ * pricing page states no free tier (the only $0 items are managed Knowledge
+ * Base parsing, embeddings and reranking, and the regex and word Guardrails
+ * filters), and aws.amazon.com/free lists Bedrock under "Get started for free
+ * with up to $200 in credits". Those credits are the general new-account
+ * ones, not a Bedrock allowance. Cost tier stays PAID.
  */
 export default {
   slug: "amazon-bedrock",
@@ -84,6 +91,11 @@ export default {
     status: "verified"
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "freeTier",
+      summary: "Browser check (audit 21): confirmed no Bedrock-specific free tier; the only credits are the general new-AWS-account ones. Cost tier stays PAID."
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

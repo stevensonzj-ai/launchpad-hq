@@ -10,9 +10,20 @@ import type { ToolFacts } from "./types";
  * current Command A family. The privacy policy says trial and research users'
  * inputs and outputs may be used for research and development after
  * de-identification, with no opt-out described; Enterprise users can control
- * training; private deployments are not trained on. Only one reader read the
- * rate-limit docs (1,000 calls a month on trial keys), so the row's usage
- * limit is left as it is.
+ * training; private deployments are not trained on.
+ *
+ * Catalog audit 21 (Research Analyst browser check, 2026-10-29) read the
+ * rate-limit docs: trial keys (and production keys on newer Chat model
+ * variants) are limited to 1,000 API calls a month, plus per-minute limits
+ * (Chat 20 a minute per model, Rerank 10, Embed 2,000 inputs, Embed images 5,
+ * Tokenize 100, default 500). Cost tier stays FREEMIUM, not PAID: the rubric's
+ * test is whether a permanent free tier exists, and the trial key has no
+ * expiry date ("API calls made from a Trial API key are free"), so the
+ * "trial" is a name, not a time limit. What it lacks is permission:
+ * production and commercial use need a paid production key. That is a
+ * non-commercial free tier with a monthly cap, the same shape as other
+ * freemium developer APIs. PAID is defensible for a commercial reader; the
+ * row text says so plainly (free, capped, no commercial use).
  */
 export default {
   slug: "cohere",
@@ -39,7 +50,7 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "A free Trial API key: calls are free but rate limited, and trial keys may not be used for production or commercial purposes."
+      summary: "A free Trial API key: calls are free but capped at 1,000 API calls a month and rate limited, and trial keys may not be used for production or commercial purposes. The key has no expiry date."
     },
     sourceUrl: "https://cohere.com/pricing",
     sourceKind: "plans-page",
@@ -73,6 +84,23 @@ export default {
     verifiedAt: "2026-10-29",
     status: "verified"
   },
+  usageLimits: {
+    value: {
+      other: [
+        "Trial keys: 1,000 API calls a month (production keys on newer Chat model variants are limited the same way).",
+        "Trial per-minute limits: Chat 20 requests a minute per model, Rerank 10, Embed 2,000 inputs, Embed images 5, Tokenize 100, everything else 500.",
+        "Trial keys are not permitted for production or commercial purposes; production keys are pay as you go."
+      ]
+    },
+    note: "Browser check of 2026-10-29: \"evaluation keys (free but limited in usage)\"; \"Trial keys (and prod keys on newer Chat model variants) are limited to 1,000 API calls a month.\"",
+    sourceUrl: "https://docs.cohere.com/docs/rate-limits",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-29",
+    gatheredBy: "research-analyst",
+    verifiedBy: "ra",
+    verifiedAt: "2026-10-29",
+    status: "verified"
+  },
   apiPricing: {
     value: "Per 1M tokens, input / output: Command R+ 08-2024 $2.50 / $10.00; Aya Expanse 8B and 32B $0.50 / $1.50. The page lists older models only for existing customers and shows no prices for the current Command A models.",
     sourceUrl: "https://cohere.com/pricing",
@@ -98,6 +126,11 @@ export default {
     status: "verified"
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "freeTier",
+      summary: "Browser check (audit 21): the free Trial key is capped at 1,000 API calls a month and has no expiry; cost tier stays FREEMIUM (a permanent free tier with a non-commercial limit)."
+    },
     {
       date: "2026-10-29",
       field: "freeTier",
