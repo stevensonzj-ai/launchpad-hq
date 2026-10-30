@@ -30,7 +30,7 @@ export const glaspTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: "Glasp is a publishing tool wearing a highlighter's clothes, and that is the single most important thing to understand before you use it. Its mission statement is about sharing what you read, and its free plan is sold on public highlights. Some of that is not optional: Glasp's privacy policy (last updated **31 August 2026**) says it will publicly share your profile picture, name, user handle and any social media handles you have added to your profile. Anything marked public \"can be indexed by search engines.\"",
+      text: "Glasp is a publishing tool wearing a highlighter's clothes, and that is the single most important thing to understand before you use it. Its mission statement is about sharing what you read, and its free plan is sold on public highlights. Some of that is not optional: Glasp's privacy policy (as of its **31 August 2026** version; Glasp updated it again on 29 October 2026) says it will publicly share your profile picture, name, user handle and any social media handles you have added to your profile. Anything marked public \"can be indexed by search engines.\"",
     },
     {
       kind: "list",

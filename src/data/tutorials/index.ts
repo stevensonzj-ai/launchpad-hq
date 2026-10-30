@@ -203,6 +203,7 @@ import { apolloIoTutorial } from "./apollo-io-getting-started";
 import { magicschoolTutorial } from "./magicschool-getting-started";
 // Catalog audit 16, 2026-10-29
 import { hermesAgentTutorial } from "./hermes-agent-getting-started";
+import { antigravityCliTutorial } from "./antigravity-cli-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [openrouterTutorial.platformSlug]: openrouterTutorial,
@@ -405,6 +406,7 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [readAiTutorial.platformSlug]: readAiTutorial,
   // Catalog audit 16, 2026-10-29
   [hermesAgentTutorial.platformSlug]: hermesAgentTutorial,
+  [antigravityCliTutorial.platformSlug]: antigravityCliTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {

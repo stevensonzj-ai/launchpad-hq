@@ -7,7 +7,7 @@ export const scaleAiTutorial: PlatformTutorialData = {
   tagline:
     "The company that builds the training data behind the big AI labs. You almost certainly can't buy it — but its free public leaderboards tell you which AI model is currently best at the job you actually have.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://scale.com/blog",
   accessTier: "FREE",
 
@@ -23,7 +23,7 @@ export const scaleAiTutorial: PlatformTutorialData = {
   beforeYouStart: [
     "**Nothing here is something you can buy by clicking.** Scale is sales-led: the pricing page lists an Enterprise tier with no prices and a \"Book a demo\" link, and that demo page is a form to book an intro call.",
     "The free part needs no account. The leaderboards at labs.scale.com are public web pages you read like any article. That's where a beginner should spend their time here.",
-    "There's one self-serve exception, and it probably isn't what you want. The pricing page still advertises a pay-as-you-go \"Self-Serve Data Engine\" billed to a card, with the first 1,000 labelling units and first 10,000 uploaded images free. What that buys is a console for labelling a dataset you already own — useful if you're training your own model, useless if you wanted something to chat with.",
+    "The pricing page used to advertise a pay-as-you-go \"Self-Serve Data Engine\" billed to a card. As of 29 October 2026 it shows no prices or self-serve plan at all — every route leads to a demo request. Even when it was offered, what it bought was a console for labelling a dataset you already own, not something to chat with.",
     "One Scale surface an individual can sign up for: Outlier, its platform for paid freelance contributors who train and grade AI models. That's a job, not a product, and it's covered further down.",
   ],
 

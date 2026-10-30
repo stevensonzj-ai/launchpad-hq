@@ -22,7 +22,7 @@ export const openaiCodexCliTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "The entry requirement is code already on your disk and comfort opening a command line. Never used one? A browser-based coding assistant is the better first step; this will still be here.",
-    "You do not buy Codex; you sign in with a ChatGPT account and your plan pays for it. Codex is included in ChatGPT plans, with usage limits that depend on the plan. OpenAI's pages disagree on whether the free and Go plans reach the CLI or only the desktop app, so check what yours offers when you sign in; Plus at {{price:chatgpt:Plus}} and above include it. Billing your own OpenAI developer account per use is the other route.",
+    "You do not buy Codex; you sign in with a ChatGPT account and your plan pays for it. Codex is included in ChatGPT plans, with usage limits that depend on the plan. The free and Go plans include the CLI too, within their usage limits; what they leave out is Codex cloud, the version that runs tasks on OpenAI's servers, which starts at Plus ({{price:chatgpt:Plus}}). Billing your own OpenAI developer account per use is the other route.",
     "Usage runs as rolling five-hour and weekly windows rather than a balance you can watch, and Plus and Pro can buy extra credits instead of upgrading.",
   ],
 

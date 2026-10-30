@@ -105,12 +105,14 @@ describe("feed: optional stale flag (schema 1.3)", () => {
 
   it("marks a record older than 90 days, and not a fresh one", () => {
     assert.equal(SCHEMA_VERSION, "1.3");
-    // Leonardo was the example until stale facts batch 2 (2026-10-29) refreshed it; AIVA (batch 3) is still on its May import.
-    assert.equal(tool("aiva").data_as_of ?? tool("aiva").record_updated_at, "2026-05-12");
-    assert.equal(tool("aiva").stale, true);
+    // Leonardo was the example until stale facts batch 2 refreshed it, then AIVA until batch 3 (both 2026-10-29).
+    // Quizlet is still on its May import: every quizlet.com page was blocked, so batch 3 left it alone.
+    assert.equal(tool("quizlet-q-chat").data_as_of ?? tool("quizlet-q-chat").record_updated_at, "2026-05-12");
+    assert.equal(tool("quizlet-q-chat").stale, true);
+    assert.equal(tool("aiva").stale, false);
     assert.equal(tool("leonardo-ai").stale, false);
     assert.equal(tool("midjourney").stale, false);
-    PublicTool.parse(tool("aiva"));
+    PublicTool.parse(tool("quizlet-q-chat"));
   });
 
   it("is optional: a 1.2-shaped record without it still validates", () => {

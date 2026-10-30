@@ -158,6 +158,30 @@ import microsoftPowerAutomateFacts from "./microsoft-power-automate";
 import dragonMedicalOneFacts from "./dragon-medical-one";
 import healtheeFacts from "./healthee";
 import vizAiFacts from "./viz-ai";
+// Stale facts batch 3, 2026-10-29 (catalog audit 19).
+import pathaiFacts from "./pathai";
+import alphasenseFacts from "./alphasense";
+import bloombergGptTerminalAiFacts from "./bloomberg-gpt-terminal-ai";
+import rampIntelligenceFacts from "./ramp-intelligence";
+import canopyTaxFacts from "./canopy-tax";
+import zillowAiZestimateFacts from "./zillow-ai-zestimate";
+import restbAiFacts from "./restb-ai";
+import scaleAiFacts from "./scale-ai";
+import khanAcademyKhanmigoFacts from "./khan-academy-khanmigo";
+import duolingoMaxFacts from "./duolingo-max";
+import speakLanguageAiFacts from "./speak-language-ai";
+import gongFacts from "./gong";
+import outreachFacts from "./outreach";
+import semrushAiFacts from "./semrush-ai";
+import udioFacts from "./udio";
+import aivaFacts from "./aiva";
+import beatovenAiFacts from "./beatoven-ai";
+import googleLyria3Facts from "./google-lyria-3";
+import soundrawFacts from "./soundraw";
+import murfAiFacts from "./murf-ai";
+import glaspFacts from "./glasp";
+// Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
+import antigravityCliFacts from "./antigravity-cli";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -322,6 +346,30 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [dragonMedicalOneFacts.slug]: dragonMedicalOneFacts,
   [healtheeFacts.slug]: healtheeFacts,
   [vizAiFacts.slug]: vizAiFacts,
+  // Stale facts batch 3, 2026-10-29 (catalog audit 19).
+  [pathaiFacts.slug]: pathaiFacts,
+  [alphasenseFacts.slug]: alphasenseFacts,
+  [bloombergGptTerminalAiFacts.slug]: bloombergGptTerminalAiFacts,
+  [rampIntelligenceFacts.slug]: rampIntelligenceFacts,
+  [canopyTaxFacts.slug]: canopyTaxFacts,
+  [zillowAiZestimateFacts.slug]: zillowAiZestimateFacts,
+  [restbAiFacts.slug]: restbAiFacts,
+  [scaleAiFacts.slug]: scaleAiFacts,
+  [khanAcademyKhanmigoFacts.slug]: khanAcademyKhanmigoFacts,
+  [duolingoMaxFacts.slug]: duolingoMaxFacts,
+  [speakLanguageAiFacts.slug]: speakLanguageAiFacts,
+  [gongFacts.slug]: gongFacts,
+  [outreachFacts.slug]: outreachFacts,
+  [semrushAiFacts.slug]: semrushAiFacts,
+  [udioFacts.slug]: udioFacts,
+  [aivaFacts.slug]: aivaFacts,
+  [beatovenAiFacts.slug]: beatovenAiFacts,
+  [googleLyria3Facts.slug]: googleLyria3Facts,
+  [soundrawFacts.slug]: soundrawFacts,
+  [murfAiFacts.slug]: murfAiFacts,
+  [glaspFacts.slug]: glaspFacts,
+  // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
+  [antigravityCliFacts.slug]: antigravityCliFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

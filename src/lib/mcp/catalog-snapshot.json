@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17 and 18 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18 and 19 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -346,9 +346,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Standard €15/mo; Pro €49/mo",
-   "freeTierFeatures": "3 compositions/month; non-commercial; MIDI + MP3 download; limited styles",
-   "usageLimits": "Free: 3 tracks/mo, max 3 min each; Standard: 15/mo; Pro: 300/mo",
+   "currentPricing": "Free; Standard €11/mo and Pro €33/mo billed annually (+ VAT); monthly-billing prices not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "Free forever: 3 downloads a month, tracks up to 3 minutes, MP3 and MIDI; AIVA owns the copyright (as of 2026-10-29)",
+   "usageLimits": "Downloads a month: Free 3, Standard 15, Pro 300; tracks up to 3 min, 5 min and 5 min 30 s; you own the copyright only on Pro (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Suno",
@@ -361,7 +361,7 @@
     "Suno",
     "Udio (AIVA free is already quite limited)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
@@ -463,7 +463,7 @@
    "slug": "alphasense",
    "name": "AlphaSense",
    "company": "AlphaSense",
-   "website": "https://alpha-sense.com",
+   "website": "https://www.alpha-sense.com",
    "description": null,
    "primaryUse": "AI market intelligence and financial research",
    "primaryUseCases": "Earnings call analysis; competitive intelligence; market research; financial document search; expert insights",
@@ -472,9 +472,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "Free trial available; no permanent free tier",
-   "usageLimits": "Subscription-based; pricing per user/year (typically $10K+ annually)",
+   "currentPricing": "Quote only: Market Intelligence and Enterprise Intelligence packages, sold as annual subscriptions (per seat or enterprise-wide) (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan; a free trial is offered on request (length not stated) (as of 2026-10-29)",
+   "usageLimits": "No published price or limits (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Bloomberg GPT / Terminal AI",
@@ -484,7 +484,7 @@
     "Perplexity AI (basic research)",
     "Semantic Scholar (academic)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -909,14 +909,14 @@
    "description": null,
    "primaryUse": "AI background music for videos/podcasts",
    "primaryUseCases": "Background music for videos; podcast intros/outros; mood-based music; corporate content",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Pro plans",
-   "freeTierFeatures": "5 songs free; up to 15 min per track; royalty-free",
-   "usageLimits": "Free: 5 downloads; Pro: unlimited downloads; Business: commercial + custom branding",
+   "currentPricing": "Pay per track or subscribe for monthly download minutes; plan prices not confirmed (the pricing page returns 404) (as of 2026-10-29)",
+   "freeTierFeatures": "A free start is listed in the site's data (5 generations) but not confirmed; downloads are bought per track or with a subscription (as of 2026-10-29)",
+   "usageLimits": "Subscriptions are metered in download minutes a month; per-plan amounts not confirmed (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Soundraw",
@@ -928,7 +928,7 @@
     "Soundraw",
     "AIVA"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
@@ -953,7 +953,7 @@
    "offlineCapable": false,
    "languageSupport": "N/A (instrumental)",
    "keyIntegrations": "Direct download, YouTube-friendly licensing",
-   "upgradeTriggers": "Exhausting 5 free downloads; needing more genres; commercial license; team features",
+   "upgradeTriggers": "Downloading tracks (per track or monthly minutes); more download minutes",
    "complementaryTools": [
     "Descript (editing)",
     "InVideo AI (video)",
@@ -1143,7 +1143,7 @@
    "slug": "canopy-tax",
    "name": "Canopy (Tax)",
    "company": "Canopy",
-   "website": "https://canopytax.com",
+   "website": "https://www.getcanopy.com",
    "description": null,
    "primaryUse": "AI practice management for tax professionals",
    "primaryUseCases": "Tax practice management; IRS transcript analysis; document management; client communication; tax resolution",
@@ -1152,16 +1152,16 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "From $50/mo",
-   "freeTierFeatures": "Free trial; no permanent free tier",
-   "usageLimits": "Per-user pricing from $39/user/mo; volume discounts available",
+   "currentPricing": "Per user a month, billed annually: Standard $74, Plus $109, Premium $149 (coming soon); Enterprise custom; Tax Resolution add-on $50 per user a month (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan; a trial is arranged through a sales demo (length not stated) (as of 2026-10-29)",
+   "usageLimits": "AI Notetaker (beta): 8, 12 or 16 hours per user a month on Standard, Plus and Premium; add-ons priced per credit, client or user (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Drake Tax",
     "Lacerte"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -2687,7 +2687,7 @@
    ],
    "currentPricing": "Enterprise licences through Microsoft; no public prices. Microsoft offers a migration path to Dragon Copilot (as of 2026-10-29)",
    "freeTierFeatures": "No free tier or trial listed; licences are sold through Microsoft (as of 2026-10-29)",
-   "usageLimits": "Not published (as of 2026-10-29)",
+   "usageLimits": "Not published. Dragon Medical One LTSR version 2021.4.5 and earlier stop working after December 31, 2026 (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Otter AI (general)",
@@ -3490,7 +3490,8 @@
    "directAlternatives": [
     "Claude Code",
     "OpenAI Codex CLI",
-    "Aider"
+    "Aider",
+    "Antigravity CLI"
    ],
    "budgetAlternativeTo": [
     "OpenAI Codex CLI",
@@ -3784,21 +3785,21 @@
    "description": null,
    "primaryUse": "AI-powered web highlighting and note-taking",
    "primaryUseCases": "Web highlighting; reading notes; YouTube transcript highlighting; knowledge curation; community learning",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "browser_extension"
    ],
-   "currentPricing": "Free",
-   "freeTierFeatures": "Completely free; all features included; social highlighting platform",
-   "usageLimits": "No limits; free platform (ad/premium model anticipated)",
+   "currentPricing": "Free; Pro $12.50/mo ($150 billed yearly); Unlimited $30/mo ($360 billed yearly) (as of 2026-10-29)",
+   "freeTierFeatures": "Free, no card: unlimited public highlights, 3 basic YouTube summaries a day, 30 PDF uploads, 20 AI chat credits and 30 audio minutes a month; private highlights need Pro (as of 2026-10-29)",
+   "usageLimits": "AI chat credits a month: Free 20, Pro 500, Unlimited 2,000; audio minutes a month: 30 / 300 / 1,500 (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Hypothes.is",
     "Readwise"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -3827,7 +3828,7 @@
    "offlineCapable": false,
    "languageSupport": "English (interface); highlights in any language",
    "keyIntegrations": "Kindle, YouTube, PDF highlighting, Readwise, Notion, Obsidian export",
-   "upgradeTriggers": "N/A (currently free); premium features may emerge",
+   "upgradeTriggers": "Private highlights; more AI chat credits, audio minutes and PDF uploads",
    "complementaryTools": [
     "Notion AI (organizing notes)",
     "Mem (knowledge base)",
@@ -3850,9 +3851,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; enterprise pricing; demo available",
-   "usageLimits": "Per-user enterprise pricing; unlimited call recording on paid plans",
+   "currentPricing": "Quote only: per-user licences plus a platform fee based on the number of users (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier or trial; pricing by custom proposal (as of 2026-10-29)",
+   "usageLimits": "Not published; priced per user (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Outreach",
@@ -3863,7 +3864,7 @@
     "tl",
     "dv (meeting recording)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "sales-marketing-seo-ai",
     "name": "Sales, Marketing & SEO AI"
@@ -3972,19 +3973,19 @@
    "slug": "google-lyria-3",
    "name": "Google Lyria 3",
    "company": "Google DeepMind",
-   "website": "https://deepmind.google",
+   "website": "https://deepmind.google/models/lyria/",
    "description": null,
    "primaryUse": "AI music generation and real-time adaptive music",
    "primaryUseCases": "Music generation for YouTube content; experimental compositions; Google ecosystem audio; instrument demos",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
     "api"
    ],
-   "currentPricing": "Free (MusicFX); API via Vertex AI",
-   "freeTierFeatures": "Available via YouTube Music AI tools; limited via MusicFX (Google AI Test Kitchen)",
-   "usageLimits": "MusicFX: limited generations per session; YouTube tools: integrated into YouTube Music for eligible users",
+   "currentPricing": "Free to try in the Gemini app (limits apply) and Google Flow Music (daily credits); Gemini API per song: Lyria 3.5 $0.08, Lyria 3 Clip $0.04, Lyria 3 Pro $0.08; no free API tier (as of 2026-10-29)",
+   "freeTierFeatures": "Gemini app (18+): music generation on the free plan, with limits Google does not publish; Google Flow Music: free to start, with daily credits; MusicFX now redirects to Flow Music (as of 2026-10-29)",
+   "usageLimits": "Track limits not published; paid Google AI plans get higher limits; full-length tracks use the Pro model (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Suno",
@@ -3996,7 +3997,7 @@
     "Suno",
     "Udio"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
@@ -4020,7 +4021,7 @@
    "offlineCapable": false,
    "languageSupport": "N/A (experimental)",
    "keyIntegrations": "YouTube Music, Google Vertex AI, MusicFX",
-   "upgradeTriggers": "Enterprise needs; Vertex AI API access; higher volume generation",
+   "upgradeTriggers": "Higher track limits on paid Google AI plans; API use (paid per song)",
    "complementaryTools": [
     "Google Veo 3.1 (video)",
     "Gemini (creative)",
@@ -4142,7 +4143,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual prompts",
    "keyIntegrations": "ChatGPT (native), OpenAI API, Zapier, Make",
-   "upgradeTriggers": "Needing more than 3 images/day; API integration; higher resolution; bulk generation",
+   "upgradeTriggers": "More image generation than ChatGPT Free allows (OpenAI publishes no numeric limit); API integration; higher resolution; bulk generation",
    "complementaryTools": [
     "ChatGPT (conversational iteration)",
     "Canva AI (templates)",
@@ -5436,19 +5437,19 @@
    "slug": "khan-academy-khanmigo",
    "name": "Khan Academy (Khanmigo)",
    "company": "Khan Academy",
-   "website": "https://khanacademy.org",
+   "website": "https://www.khanmigo.ai",
    "description": null,
    "primaryUse": "AI tutor for personalized education",
    "primaryUseCases": "AI math tutoring; writing coaching; SAT prep; science explanations; coding lessons; teacher assistant",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
     "mobile"
    ],
-   "currentPricing": "Free (with Khanmigo); District licensing",
-   "freeTierFeatures": "Khanmigo free for all learners; teachers need school district partnership or $5/mo premium",
-   "usageLimits": "Free: unlimited AI tutoring; premium adds teacher tools and AI-graded writing",
+   "currentPricing": "Free for teachers; learners and parents $4/mo or $44/yr (US only); districts request pricing (as of 2026-10-29)",
+   "freeTierFeatures": "Free for teachers; learners and parents pay (US only, account holder 18+); the Khan Academy lesson library stays free (as of 2026-10-29)",
+   "usageLimits": "Paid learner and parent plans are US-only; usage limits not published (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Duolingo Max (language)",
@@ -5456,7 +5457,7 @@
     "ChatGPT (general tutoring)"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -5484,7 +5485,7 @@
    "offlineCapable": false,
    "languageSupport": "English (primary); expanding multilingual (Spanish, Portuguese, etc.)",
    "keyIntegrations": "Google Classroom, Clever SSO, school LMS platforms",
-   "upgradeTriggers": "Teacher tools; writing grading; school/district management; analytics dashboard",
+   "upgradeTriggers": "AI tutoring for a learner or a parent's children (paid); district-wide classroom access",
    "complementaryTools": [
     "Duolingo Max (languages)",
     "Quizlet Q-Chat (flashcards)",
@@ -5920,9 +5921,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (150 tokens a day); paid plans Essential, Premium and Ultimate, plus Teams; prices not confirmed (as of 2026-10-29)",
-   "freeTierFeatures": "150 fast tokens a day, reset daily; unused tokens do not carry over (as of 2026-10-29)",
-   "usageLimits": "Free: 150 tokens a day. Premium adds unlimited relaxed image generation on select models; Ultimate adds relaxed video; monthly token amounts not confirmed (as of 2026-10-29)",
+   "currentPricing": "Free (150 tokens a day); billed monthly: Essential $12, Premium $30, Ultimate $60 a month (ex. tax); billed yearly: $12, $29 and $58 a month; Teams Starter $24 and Growth $48 per seat a month (as of 2026-10-29)",
+   "freeTierFeatures": "150 fast tokens a day, reset daily; unused tokens do not carry over; content made on the free plan can be used to train Leonardo's models (as of 2026-10-29)",
+   "usageLimits": "Fast tokens a month: Essential 8,500, Premium 25,000, Ultimate 60,000, with Token Bank caps of 25,500 / 75,000 / 180,000; Premium adds unlimited relaxed image generation on select models, Ultimate relaxed video (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
@@ -5959,7 +5960,7 @@
    "offlineCapable": false,
    "languageSupport": "English prompts primarily",
    "keyIntegrations": "API, Canva (parent company), Discord community",
-   "upgradeTriggers": "Token limits; custom model training; priority generation; private models; commercial use",
+   "upgradeTriggers": "Token limits; generating privately (paid plans; private content is not used for training); custom model training; priority generation; commercial use",
    "complementaryTools": [
     "Canva AI (layout)",
     "Scenario (game-specific)",
@@ -7063,9 +7064,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free with a Microsoft account; more AI usage with Microsoft 365 Personal, Family, Premium or Pro (as of 2026-10-29)",
-   "freeTierFeatures": "Free with a Microsoft account; AI generation uses a monthly AI credit allowance (the free amount was not confirmed) (as of 2026-10-29)",
-   "usageLimits": "AI use counts against monthly AI credits shared across Microsoft 365 apps; Personal and Family get standard image-generation usage, Premium and Pro extensive (as of 2026-10-29)",
+   "currentPricing": "Free, with monthly AI credits; Microsoft 365 Personal, Family or Premium give up to 4x more credits (Personal $9.99/mo) (as of 2026-10-29)",
+   "freeTierFeatures": "Free, with a fresh set of AI credits each month (1 credit per AI action); the free amount is not stated (as of 2026-10-29)",
+   "usageLimits": "1 credit per Copilot or Designer AI action, refreshed monthly; free amount not stated; Microsoft 365 Personal, Family or Premium up to 4x more; boosts are gone (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Canva AI",
@@ -7104,7 +7105,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual",
    "keyIntegrations": "Microsoft 365, OneDrive, Edge browser, Windows",
-   "upgradeTriggers": "Needing more daily boosts; Microsoft 365 integration features; brand kit",
+   "upgradeTriggers": "More monthly AI credits (Microsoft 365 Personal, Family or Premium); Microsoft 365 integration features; brand kit",
    "complementaryTools": [
     "Microsoft Copilot (text)",
     "Canva AI (more templates)",
@@ -7129,7 +7130,7 @@
     "desktop"
    ],
    "currentPricing": "Free licence for work or school accounts; Premium $15/user/mo, Process $150/bot/mo, Hosted Process $215/bot/mo, all paid yearly; limited rights included in Microsoft 365 (as of 2026-10-29)",
-   "freeTierFeatures": "Free licence (work or school account): cloud flows without sharing, attended desktop flows, standard connectors only; a premium trial is offered (as of 2026-10-29)",
+   "freeTierFeatures": "Free licence (work or school account): cloud flows without sharing, attended desktop flows, standard connectors only; a 30-day premium trial is offered (as of 2026-10-29)",
    "usageLimits": "Free and Microsoft 365: standard connectors only; Premium: premium and custom connectors, 40,000 actions a day, 5,000 AI Builder credits a month (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
@@ -7476,8 +7477,8 @@
   {
    "slug": "murf-ai",
    "name": "Murf AI",
-   "company": null,
-   "website": null,
+   "company": "Murf Inc.",
+   "website": "https://murf.ai",
    "description": "AI voice generator for voiceovers, e-learning, and ads with multiple voices and languages.",
    "primaryUse": "Text-to-speech, voice overs",
    "primaryUseCases": null,
@@ -7486,13 +7487,13 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; $29/mo",
-   "freeTierFeatures": "Limited free voice generation minutes",
-   "usageLimits": null,
+   "currentPricing": "Free; Creator from $19/mo and Business from $66/mo billed annually; Enterprise custom; API pay as you go $0.03 per 1,000 characters ($2 minimum) (as of 2026-10-29)",
+   "freeTierFeatures": "Free, no card: 10 minutes of voice generation; downloads need a paid plan (as of 2026-10-29)",
+   "usageLimits": "Free: 10 minutes of voice generation, no downloads; API free trial 100,000 characters; paid-plan voice hours not confirmed (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "voice-speech",
     "name": "Voice & Speech"
@@ -7506,7 +7507,7 @@
    "offlineCapable": false,
    "languageSupport": null,
    "keyIntegrations": null,
-   "upgradeTriggers": null,
+   "upgradeTriggers": "Downloading voiceovers; more voice generation time",
    "complementaryTools": [],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -8097,7 +8098,7 @@
     "web"
    ],
    "currentPricing": "Open source (Apache 2.0). Use comes with ChatGPT plans (Free, Go $8, Plus $20, Pro from $100, Business $20/user/mo billed annually) or an API key billed at API rates (as of 2026-10-29)",
-   "freeTierFeatures": "Sign in with ChatGPT; Codex is included in ChatGPT plans from Free up, with usage limits by plan; which plans include the CLI is not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "Sign in with ChatGPT: the CLI is included from ChatGPT Free and Go up, with usage limits by plan; Codex cloud tasks are not included on Free and Go (as of 2026-10-29)",
    "usageLimits": "With ChatGPT sign-in, limits follow the plan (5-hour windows on Plus; Pro has no five-hour limit); API-key use follows API pricing (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
@@ -8134,7 +8135,7 @@
    "offlineCapable": false,
    "languageSupport": "All major programming languages",
    "keyIntegrations": "Terminal, Git, any CLI tool, shell scripts",
-   "upgradeTriggers": "N/A (open-source); upgrade OpenAI API tier for higher rate limits",
+   "upgradeTriggers": "Higher Codex usage limits on paid ChatGPT plans; Codex cloud tasks (Plus and above); API-key use billed at API rates",
    "complementaryTools": [
     "ChatGPT (web planning)",
     "GitHub Copilot (IDE)",
@@ -8371,7 +8372,7 @@
    "slug": "outreach",
    "name": "Outreach",
    "company": "Outreach",
-   "website": "https://outreach.io",
+   "website": "https://www.outreach.ai",
    "description": null,
    "primaryUse": "AI-powered sales engagement platform",
    "primaryUseCases": "Sales engagement sequences; email/call automation; pipeline management; deal intelligence; forecasting",
@@ -8380,9 +8381,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; enterprise pricing; demo available",
-   "usageLimits": "Enterprise pricing per seat",
+   "currentPricing": "Quote only: Amplify Essentials, Core, Plus and Pro, priced per user plus AI credits; no platform fees (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier or trial; pricing on request, with a demo (as of 2026-10-29)",
+   "usageLimits": "AI credits by plan: Essentials 10,000, Core 25,000, Plus 50,000, Pro 100,000 (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Gong",
@@ -8391,7 +8392,7 @@
    "budgetAlternativeTo": [
     "HubSpot AI (free CRM + sequences)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "sales-marketing-seo-ai",
     "name": "Sales, Marketing & SEO AI"
@@ -8558,7 +8559,7 @@
    "slug": "pathai",
    "name": "PathAI",
    "company": "PathAI",
-   "website": "https://pathai.com",
+   "website": "https://www.pathai.com",
    "description": null,
    "primaryUse": "AI-powered pathology and diagnostics",
    "primaryUseCases": "AI pathology analysis; biomarker quantification; clinical trial support; cancer diagnosis assistance",
@@ -8567,16 +8568,16 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; enterprise/pharma contracts",
-   "usageLimits": "Custom per contract",
+   "currentPricing": "No public pricing; access starts with a demo request (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier or trial listed (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Paige AI",
     "Proscia"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "healthcare-ai",
     "name": "Healthcare AI"
@@ -9228,16 +9229,16 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free; Ramp Plus $12/user/mo",
-   "freeTierFeatures": "Free for Ramp card customers (no card required for basic spend management)",
-   "usageLimits": "Free with Ramp account; advanced features on Ramp Plus ($12/user/mo)",
+   "currentPricing": "Free $0 per user a month; Plus $15 per user a month plus a platform fee based on team size (20% off billed annually); Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "Ramp Free: $0 per user a month, for smaller teams; Plus has a 30-day free trial (as of 2026-10-29)",
+   "usageLimits": "Per-user pricing; no AI usage limits published; Plus adds AI agents for bill pay (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Brex",
     "Divvy"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -9715,21 +9716,21 @@
    "description": null,
    "primaryUse": "AI computer vision for real estate",
    "primaryUseCases": "Property photo tagging; room detection; feature extraction; image quality scoring; virtual staging AI",
-   "costTier": "FREEMIUM",
+   "costTier": "ENTERPRISE",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "api"
    ],
-   "currentPricing": "API pay-per-use",
-   "freeTierFeatures": "Free API trial with limited calls",
-   "usageLimits": "Pay-per-API-call pricing; volume discounts",
+   "currentPricing": "No public prices: billed as a monthly flat rate, monthly volume or a fixed fee per API request; contact sales (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan or free API trial listed; complimentary proofs of concept on request (as of 2026-10-29)",
+   "usageLimits": "Set by contract (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Zillow AI (different focus)",
     "CoreLogic"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -10173,9 +10174,9 @@
    "platformType": [
     "api"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; enterprise/project-based pricing",
-   "usageLimits": "Project-based pricing; varies by data volume and complexity",
+   "currentPricing": "No public pricing; sales-led (demo request) (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier or self-serve plan listed (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Clarifai (ML platform)",
@@ -10185,7 +10186,7 @@
     "Clarifai (free tier)",
     "Hugging Face (community)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -10551,19 +10552,19 @@
   {
    "slug": "semrush-ai",
    "name": "Semrush AI",
-   "company": "Semrush",
+   "company": "Semrush (an Adobe company)",
    "website": "https://semrush.com",
    "description": null,
    "primaryUse": "AI-enhanced SEO and marketing analytics",
    "primaryUseCases": "Keyword research; competitive analysis; site audits; content marketing; social media; PPC analysis",
-   "costTier": "ENTERPRISE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Pro $129.95/mo; Guru $249.95/mo",
-   "freeTierFeatures": "Free account: 10 analytics reports/day; limited keyword tracking; basic features",
-   "usageLimits": "Free: very limited; Pro $130/mo: 5 projects; Guru $250/mo: 15; Business $500/mo: 40",
+   "currentPricing": "Free; billed monthly: SEO $139, Starter $199, Pro+ $299 a month ($117.33 / $165.17 / $248.17 a month billed annually); Advanced and Enterprise custom (as of 2026-10-29)",
+   "freeTierFeatures": "Free account, no card: 1 demo project and 10 reports a day across the main tools; paid plans have a 7-day free trial (as of 2026-10-29)",
+   "usageLimits": "Websites: SEO and Starter 5, Pro+ 15, Advanced 40+; keywords tracked daily: 500 / 500 / 1,500 / 5,000+; AI prompts tracked daily: Starter 50, Pro+ 100 (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Surfer SEO (content focus)",
@@ -10571,7 +10572,7 @@
     "Moz"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "sales-marketing-seo-ai",
     "name": "Sales, Marketing & SEO AI"
@@ -10801,14 +10802,14 @@
    "description": null,
    "primaryUse": "Customizable royalty-free AI background music",
    "primaryUseCases": "Royalty-free music for YouTube; podcast intros; ad background music; corporate video soundtracks",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Creator $16.99/mo",
-   "freeTierFeatures": "Unlimited song creation and previews; download requires paid plan",
-   "usageLimits": "Free: create unlimited, download 0; Creator: unlimited downloads; Artist: stems access",
+   "currentPricing": "Creator, Artist Starter, Artist Pro and Artist Unlimited; prices shown $16.99 / $11.04, $29.99 / $19.49, $35.99 / $23.39 and $50 / $32.50 a month (billing view unlabelled; annual saves up to 67%); Enterprise on request (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan listed: you can try it free, and commercial use is on paid plans (as of 2026-10-29)",
+   "usageLimits": "Downloads a month: Creator and Artist Unlimited unlimited, Artist Starter 10, Artist Pro 20; WAV and stems from Artist Pro (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Mubert",
@@ -10821,7 +10822,7 @@
     "AIVA",
     "Suno (free tiers)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
@@ -10862,16 +10863,16 @@
    "company": "Speak",
    "website": "https://speak.com",
    "description": null,
-   "primaryUse": "AI-powered English conversation practice",
+   "primaryUse": "AI speaking practice for learning a new language",
    "primaryUseCases": "Conversational AI language practice; pronunciation training; situational English; business English",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "mobile"
    ],
-   "currentPricing": "Premium $13.99/mo",
-   "freeTierFeatures": "Free: limited lessons; basic AI conversation; sample content",
-   "usageLimits": "Free: limited; Premium: ~$13/mo full curriculum + unlimited AI conversation",
+   "currentPricing": "Premium and Premium Plus; US web offer $99.99 and $234.99 a year (promotional); prices vary by region and are shown in the app (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan: a 7-day free trial, then a paid subscription (as of 2026-10-29)",
+   "usageLimits": "Plan limits are not published; Premium Plus is the higher tier (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Duolingo Max",
@@ -10880,7 +10881,7 @@
    "budgetAlternativeTo": [
     "Duolingo Max (free tier)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -10900,13 +10901,13 @@
     "conversation transcripts",
     "progress tracking"
    ],
-   "privacyLevel": "HIGH",
+   "privacyLevel": "LOW",
    "timeToProductivity": "5 min",
    "learningCurve": "Instant",
    "offlineCapable": false,
    "languageSupport": "English, Spanish, Korean, Japanese, French, and more",
    "keyIntegrations": "Standalone app",
-   "upgradeTriggers": "Full curriculum access; unlimited AI conversations; advanced pronunciation feedback; progress tracking",
+   "upgradeTriggers": "Continuing after the 7-day trial; moving up to Premium Plus",
    "complementaryTools": [
     "Duolingo Max (broader language)",
     "Khan Academy (Khanmigo) (other subjects)"
@@ -11837,9 +11838,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Premium $20/mo",
+   "currentPricing": "Free Basic; Premium $48/yr (shown struck through from $80) and Premium Plus $125/yr; Confidential Data $300/yr (from $500); monthly prices not confirmed (as of 2026-10-29)",
    "freeTierFeatures": "Basic (free, never expires, no card): 5,000 words a month, 5 AI writing requests and 4 credits a month (as of 2026-10-29)",
-   "usageLimits": "Basic: 5,000 words, 5 AI writing requests and 4 credits a month; Premium: full writing access; Confidential Data plan ($41.67/mo billed annually, teams): no data storage and no AI training (as of 2026-10-29)",
+   "usageLimits": "Basic: 5,000 words, 5 AI writing requests and 4 credits a month; Premium: full writing access; Confidential Data plan (teams): no data storage and no AI training (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Grammarly",
@@ -11899,9 +11900,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (600/mo); Standard $10/mo; Premium $30/mo",
-   "freeTierFeatures": "10 songs/day; basic features; non-commercial",
-   "usageLimits": "Free: ~10 songs/day; Standard: 1,200 credits/mo; Pro: unlimited generation",
+   "currentPricing": "Free; Standard (up to 2,400 credits a month) and Pro (up to 6,000); monthly prices not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "Free: 10 credits a day, up to 100 a month; downloads of audio, video and stems are disabled for all users since the Universal Music Group deal (2025-10-29) (as of 2026-10-29)",
+   "usageLimits": "Credits a month: Standard up to 2,400, Pro up to 6,000; no downloads during Udio's transition to a new platform (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Suno",
@@ -11913,7 +11914,7 @@
     "Suno",
     "AIVA"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
@@ -11937,7 +11938,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual lyrics",
    "keyIntegrations": "Direct sharing, social media export",
-   "upgradeTriggers": "Commercial use; more generations; audio extensions; stem separation; priority",
+   "upgradeTriggers": "More monthly credits",
    "complementaryTools": [
     "Descript (editing)",
     "ElevenLabs (voiceover)",
@@ -12524,9 +12525,9 @@
     "web",
     "browser_extension"
    ],
-   "currentPricing": "Included with Wix plans from $17/mo",
-   "freeTierFeatures": "Wix free plan includes basic AI; limited features; Wix branding; no custom domain",
-   "usageLimits": "Free: Wix ads shown; limited storage/bandwidth; AI features limited; paid from $17/mo",
+   "currentPricing": "Included with Wix plans; billed yearly: Light $17, Core $29, Business $39, Business Elite $159 a month (as of 2026-10-29)",
+   "freeTierFeatures": "Free plan, no card: Wix branding and no custom domain; AI creation tools included; storage not stated (as of 2026-10-29)",
+   "usageLimits": "AI credits a month: Light 150, Core 200, Business 300, Business Elite 1,000; removing Wix branding needs Core or above (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Squarespace AI",
@@ -12537,7 +12538,7 @@
     "WordPress + free theme (more control",
     "free)"
    ],
-   "updatedAt": "2026-04-13",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -12565,7 +12566,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (site builder supports many languages)",
    "keyIntegrations": "Google Analytics, Facebook Pixel, Mailchimp, Instagram, PayPal, Stripe, Google Business",
-   "upgradeTriggers": "Removing Wix ads; custom domain; e-commerce; advanced AI features; more storage",
+   "upgradeTriggers": "Removing Wix branding (Core or above); custom domain; e-commerce; more AI credits; more storage",
    "complementaryTools": [
     "Google Analytics (tracking)",
     "Mailchimp AI (email)",

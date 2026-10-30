@@ -7,6 +7,12 @@ import type { ToolFacts } from "./types";
  * connectors; Premium is $15 per user a month, paid yearly. The trial length
  * differs between pages (30 days on the pricing page, 90 in Learn), so no
  * trial length is written.
+ *
+ * The Research Analyst's browser check the same day confirmed the 30-day
+ * trial on the pricing page ("Start automating for free with a 30-day
+ * trial"); the product page also says "free for 30 days". Catalog audit 19
+ * adds it to the row. One Learn page (sign-up, 2026-09-16) still says 90
+ * days.
  */
 export default {
   slug: "microsoft-power-automate",
@@ -32,8 +38,9 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Free licence for work or school accounts: cloud flows (no sharing), attended desktop flows on your own PC, and standard connectors only. Microsoft 365 licences include a limited set of Power Automate capabilities.",
+      summary: "Free licence for work or school accounts: cloud flows (no sharing), attended desktop flows on your own PC, and standard connectors only. Microsoft 365 licences include a limited set of Power Automate capabilities. Premium features have a 30-day free trial.",
     },
+    note: "Trial length, browser check 2026-10-29: \"Start automating for free with a 30-day trial\" (pricing page). A Microsoft Learn sign-up page (2026-09-16) still says 90 days.",
     sourceUrl: "https://learn.microsoft.com/en-us/power-platform/admin/power-automate-licensing/types",
     sourceKind: "plans-page",
     checkedAt: "2026-10-29",
@@ -82,6 +89,11 @@ export default {
       date: "2026-10-29",
       field: "plans",
       summary: "First fact file: free licence for work/school accounts; Premium $15/user/mo, Process $150/bot/mo, paid yearly.",
+    },
+    {
+      date: "2026-10-29",
+      field: "freeTier",
+      summary: "Browser check: the premium trial is 30 days (pricing page).",
     },
   ],
 } satisfies ToolFacts;

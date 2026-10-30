@@ -7,7 +7,7 @@ export const pathaiTutorial: PlatformTutorialData = {
   tagline:
     "AI that reads tissue slides inside hospital and drug-company labs — sold to institutions, not to people.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.pathai.com/news",
   accessTier: "FREE",
 
@@ -17,7 +17,7 @@ export const pathaiTutorial: PlatformTutorialData = {
   whatItIs: [
     "PathAI is a Boston-based company building AI software for pathologists — the doctors who examine tissue samples under a microscope and say what a disease is. Its own description of who uses the platform: \"biopharma, reference laboratories, academic medical centers, and health systems.\"",
     "It sells two things: a platform that holds, displays and routes a lab's scanned slides, and a set of AI **models** (the AI \"brain\" that does the actual thinking) — PathExplore, IHCExplore, LiverExplore, IBDExplore, TumorDetect, ArtifactDetect, PathAssist Derm, AIM-MASH — which run on it and mark up or measure what is in an image.",
-    "PathAI used to own a pathology laboratory business too; it was sold to Quest Diagnostics in 2024, and PathAI has described itself since as \"an independent company, dedicated to advancing AI and digital pathology solutions for biopharmaceutical companies and pathology laboratories.\"",
+    "PathAI used to own a pathology laboratory business too; it was sold to Quest Diagnostics in 2024, and PathAI has described itself since as \"an independent company, dedicated to advancing AI and digital pathology solutions for biopharmaceutical companies and pathology laboratories.\" That is changing: PathAI's homepage now says it \"has entered into a definitive merger agreement to be acquired by Roche\", and Roche's announcement of 7 May 2026 expects the deal to close in the second half of the year.",
   ],
 
   beforeYouStart: [
