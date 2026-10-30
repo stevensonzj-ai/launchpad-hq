@@ -105,8 +105,8 @@
   "top5": [
    "beatoven-ai",
    "descript",
-   "opus-clip",
-   "elevenlabs"
+   "elevenlabs",
+   "opus-clip"
   ]
  },
  "A10": {
@@ -278,10 +278,10 @@
   },
   "top5": [
    "google-lyria-3",
+   "mubert",
    "soundraw",
    "udio",
-   "beatoven-ai",
-   "mubert"
+   "beatoven-ai"
   ]
  },
  "A24": {
@@ -785,7 +785,7 @@
    "sarvam-ai",
    "duolingo-max",
    "ai21-labs-jamba",
-   "trinka-ai"
+   "deepgram"
   ]
  },
  "G38": {
@@ -868,8 +868,8 @@
   "top5": [
    "beatoven-ai",
    "google-lyria-3",
-   "udio",
    "mubert",
+   "udio",
    "aiva"
   ]
  },
@@ -882,7 +882,7 @@
    "udio",
    "aiva",
    "google-lyria-3",
-   "soundraw"
+   "mubert"
   ]
  },
  "G47": {
@@ -892,8 +892,8 @@
   "top5": [
    "descript",
    "beatoven-ai",
-   "opus-clip",
-   "elevenlabs"
+   "elevenlabs",
+   "opus-clip"
   ]
  },
  "G48": {
