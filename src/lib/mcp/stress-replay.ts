@@ -125,7 +125,8 @@ export const RULES: Record<string, (r: CallResult) => Verdict> = {
   C05: (r) => pass(((r.data?.items ?? []) as Item[]).every((i) => i.verification === "verified"), "Otter facts (P1.3)"),
 
   D01: (r) => pass(has(r.data?.alternatives ?? [], "quillbot"), "QuillBot"),
-  D02: (r) => pass(count(r.data?.alternatives ?? [], ["ideogram", "canva-ai-magic-studio", "krea"]) >= 2, "Ideogram / Canva / Krea"),
+  // Adobe Firefly joined the accepted answers in stale facts batch 4: its verified free tier ranks it first, which pushes a fifth free alternative out of the top 5.
+  D02: (r) => pass(count(r.data?.alternatives ?? [], ["ideogram", "canva-ai-magic-studio", "krea", "adobe-firefly"]) >= 2, "Ideogram / Canva / Krea / Adobe Firefly"),
   D03: (r) => pass((r.data?.alternatives ?? []).length === 3, "limit 3 honoured"),
   D04: (r) => pass(count(r.data?.alternatives ?? [], ["fathom", "fireflies-ai", "granola"]) >= 2, "Fathom / Fireflies / Granola"),
   D05: (r) => pass(count(r.data?.alternatives ?? [], ["claude", "gemini", "microsoft-copilot"]) >= 2, "Claude / Gemini / Copilot"),

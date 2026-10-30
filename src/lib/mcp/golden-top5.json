@@ -521,8 +521,8 @@
   "top5": [
    "gpt-image-1-5-dall-e-successor",
    "nano-banana",
-   "leonardo-ai",
    "adobe-firefly",
+   "leonardo-ai",
    "flux"
   ]
  },
@@ -611,9 +611,9 @@
    "task": "write code"
   },
   "top5": [
+   "cline",
    "github-copilot",
    "claude-code",
-   "cline",
    "aider",
    "gemini-cli"
   ]
@@ -624,8 +624,8 @@
    "skill_level": "intermediate"
   },
   "top5": [
-   "github-copilot",
    "cline",
+   "github-copilot",
    "bolt-new",
    "cursor",
    "replit-agent"
@@ -785,7 +785,7 @@
    "sarvam-ai",
    "duolingo-max",
    "ai21-labs-jamba",
-   "murf-ai"
+   "trinka-ai"
   ]
  },
  "G38": {
@@ -925,9 +925,9 @@
    "task": "something like Midjourney but cheaper"
   },
   "top5": [
+   "adobe-firefly",
    "ideogram",
    "leonardo-ai",
-   "adobe-firefly",
    "flux",
    "gpt-image-1-5-dall-e-successor"
   ]
@@ -988,9 +988,9 @@
    "platform_type": "mobile"
   },
   "top5": [
+   "adobe-firefly",
    "krea",
    "leonardo-ai",
-   "adobe-firefly",
    "freepik-ai",
    "ideogram"
   ]
