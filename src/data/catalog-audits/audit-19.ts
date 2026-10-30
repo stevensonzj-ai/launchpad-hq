@@ -177,7 +177,8 @@ export const AUDIT_19_PATCHES: Audit19Patch[] = [
       freeTierFeatures: `No free plan or free API trial listed; complimentary proofs of concept on request ${AS_OF}`,
       usageLimits: `Set by contract ${AS_OF}`,
     },
-    guarded: { costTier: { from: "FREEMIUM", to: "ENTERPRISE" } },
+    // Zach (2026-10-29): PAID, not ENTERPRISE. Audit 20 writes the same tier, and also moves a row an earlier run left at ENTERPRISE.
+    guarded: { costTier: { from: "FREEMIUM", to: "PAID" } },
   },
   {
     slug: "scale-ai",

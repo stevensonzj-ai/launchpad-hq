@@ -5,23 +5,23 @@ export const quizletQChatTutorial: PlatformTutorialData = {
   platformSlug: "quizlet-q-chat",
   title: "Getting Started with Quizlet's AI Tutor",
   tagline:
-    "Quizlet retired Q-Chat. Here's the AI study chat that's inside Quizlet now — what it does, and who can actually use it.",
+    "Q-Chat was Quizlet's earlier AI tutor. Here's the AI study chat inside Quizlet now — what it does, and who can actually use it.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
     "You open the chat from your Quizlet home page or from a set you're already studying, type a question about whatever you're stuck on — or hand it a photo of your notes — and it answers in the window. You keep asking follow-ups, and it can turn what it just explained into flashcards.",
 
   whatItIs: [
-    "Q-Chat was Quizlet's AI tutor, launched in March 2023 and built on the technology behind ChatGPT. It is no longer available: Quizlet's help centre has no page for it in any language, and independent write-ups put its removal around June 2025. Quizlet does not appear to have announced the retirement anywhere public.",
-    "What Quizlet has instead is Ask Quizlet — a chat window inside Quizlet that explains things from your coursework, points you at study sets, and turns its own explanations into flashcards you can study. We have not seen Quizlet describe it as a renamed Q-Chat, so treat it as the current tool rather than the old one under a new label.",
+    "Q-Chat was Quizlet's AI tutor, launched in March 2023 and built on the technology behind ChatGPT. Quizlet's help centre has no article on it today and no page says what became of it, so we can't tell you its status; the AI feature Quizlet documents now is the one below.",
+    "What Quizlet documents now is Ask Quizlet — a chat window inside Quizlet that explains things from your coursework, points you at study sets, and turns its own explanations into flashcards you can study. No Quizlet page says it replaces or renames Q-Chat, so treat it as the current tool rather than the old one under a new label.",
     "The reason to use it rather than a general chatbot is where it sits: it opens on top of the set you're revising, in the account you already study in.",
   ],
 
   beforeYouStart: [
     "**Start here, because it decides everything else:** Quizlet's help centre says Ask Quizlet \"is currently only available for users in the United States who are 14 years old or older.\" If you're outside the US or under 14, nothing on this page will appear for you, and the honest move is a general chatbot instead — start with our Text & Conversational AI category.",
-    "You need a Quizlet account and to be signed in, but you don't need to pay. Quizlet's help page for Ask Quizlet names no subscription requirement and no usage cap. That's worth a pinch of salt rather than a guarantee: Quizlet does cap its other AI features by plan — its study-guide generator is \"limited access\" on a free account and unlimited on a paid one — so a cap on the chat may exist without being written down. Check for a limit once you're signed in. Paid Quizlet Plus is a yearly subscription (also sold monthly as an in-app purchase on Apple devices), and what it buys is more of the other AI tools, not obviously more chat.",
+    "You need a Quizlet account and to be signed in, but you don't need to pay. Quizlet's help page for Ask Quizlet names no subscription requirement and no usage cap. That's worth a pinch of salt rather than a guarantee: Quizlet does cap its other AI features by plan — its study-guide generator is \"limited access\" on a free account and unlimited on a paid one — so a cap on the chat may exist without being written down. Check for a limit once you're signed in. Quizlet's upgrade page lists Plus, Plus Unlimited and Family plans, all billed yearly (current prices are on this page's header; the monthly plan is not eligible for the free trial), and names no AI feature among what they add — the differences it shows are Learn rounds, practice tests and Expert Solutions.",
     "You can type a question, or attach your own material and add a **prompt** (the message you type) saying what to do with it — Quizlet says up to three files at a time, in `.pptx`, `.docx`, `.pdf`, `.png`, `.jpg` or `.jpeg`, and under 25 MB each if you're on a phone.",
     "The conversation is not kept. Quizlet says plainly: \"Chat history isn't saved across pages. If you leave Ask Quizlet, the conversation will reset, but minimizing it will keep your chat active.\" So if it explains something well, copy it out or turn it into flashcards before you navigate away.",
   ],
@@ -97,7 +97,7 @@ export const quizletQChatTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "**Everything you find about Q-Chat is out of date, including Quizlet's own page.** Quizlet's March 2023 announcement, \"Introducing Q-Chat, the world's first AI tutor built with OpenAI's ChatGPT,\" is still live on its blog with no retirement notice on it. If a guide, a video or a teacher's handout tells you to click Q-Chat, it was written before the tool went away.",
+    "**Material about Q-Chat may not match what you see.** Quizlet's March 2023 announcement, \"Introducing Q-Chat, the world's first AI tutor built with OpenAI's ChatGPT,\" is still live on its blog, while the help centre has no Q-Chat article. If a guide, a video or a teacher's handout tells you to click Q-Chat and you can't find it, look for Ask Quizlet instead.",
     "Blaming yourself when the chat isn't there. If no chat appears on your home page or set page, the likeliest reason is the eligibility limit above, not your account, your browser or your plan.",
     "Assuming Quizlet's AI features share one rulebook. They don't: its study-guide generator is available to 14-year-olds in the US and UK, 15 in Australia, 16 in Canada, Ireland and New Zealand and 18 in a long list of other countries, and works in English, French or German — a far wider gate than the chat's US-only one.",
     "Letting it write flashcards you never read properly. A wrong or half-right explanation doesn't just get read and forgotten — it gets made into a card and then memorised on purpose. Read what it generated before you study it.",

@@ -977,9 +977,9 @@
    "platformType": [
     "desktop"
    ],
-   "currentPricing": "~$24,000/year (Terminal)",
-   "freeTierFeatures": "No free tier; Bloomberg Terminal subscription required ($24K+/year)",
-   "usageLimits": "Unlimited within Bloomberg Terminal subscription",
+   "currentPricing": "Bloomberg Terminal: no public price, sold through an order or demo request; ASKB, the Terminal's AI, is sales-only. A separate Bloomberg.com consumer subscription is $399 a year ($180 for the first year) or $39.99 a month ($1.99 for the first month), and its page names no AI feature (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan stated for the Terminal; it is ordered or demoed through sales (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "AlphaSense",
@@ -989,7 +989,7 @@
     "AlphaSense",
     "Perplexity AI (basic research)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -2746,9 +2746,9 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free; Super $12.99/mo; Max $29.99/mo",
+   "currentPricing": "Free; Super and Max are paid subscriptions; Max is Super plus Roleplay and Video Call with Lily; prices are not stated on Duolingo's logged-out pages (as of 2026-10-29)",
    "freeTierFeatures": "Duolingo free: full lessons with ads; limited hearts; basic features",
-   "usageLimits": "Free: ad-supported + heart limits; Super: $7/mo no ads; Max: $14/mo adds AI features",
+   "usageLimits": "Free: ads and heart limits; Max includes all Super benefits plus Roleplay and Video Call with Lily; prices are not stated (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Speak (Language AI)",
@@ -2758,7 +2758,7 @@
    "budgetAlternativeTo": [
     "Speak (Language AI)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -2786,7 +2786,7 @@
    "offlineCapable": false,
    "languageSupport": "40+ languages available to learn",
    "keyIntegrations": "Standalone app; Family plan sharing; school dashboard",
-   "upgradeTriggers": "Removing ads; unlimited hearts; AI Roleplay conversations; AI Explain My Answer; no mistakes penalty",
+   "upgradeTriggers": "Removing ads; unlimited hearts; AI Roleplay conversations and Video Call with Lily (Max); no mistakes penalty",
    "complementaryTools": [
     "Speak (Language AI) (conversation practice)",
     "Khan Academy (Khanmigo) (other subjects)"
@@ -3953,7 +3953,7 @@
     "deployable apps",
     "web previews"
    ],
-   "privacyLevel": "HIGH",
+   "privacyLevel": "LOW",
    "timeToProductivity": "15 min",
    "learningCurve": "Easy",
    "offlineCapable": false,
@@ -5955,7 +5955,7 @@
     "PNG",
     "JPG (various resolutions up to 1536x1536)"
    ],
-   "privacyLevel": "MEDIUM",
+   "privacyLevel": "LOW",
    "timeToProductivity": "10 min",
    "learningCurve": "Easy",
    "offlineCapable": false,
@@ -9119,9 +9119,9 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free tier; Plus $35.99/year",
-   "freeTierFeatures": "Free: basic flashcards; limited AI features; ad-supported",
-   "usageLimits": "Free: limited AI explanations; Plus: $8/mo enhanced AI + no ads; Teachers: $4/mo",
+   "currentPricing": "Free tier; Quizlet Plus $35.99 a year, Plus Unlimited $44.99 a year and Family $83.99 a year (up to 5 accounts), all billed yearly; the monthly plan is not eligible for the free trial (as of 2026-10-29)",
+   "freeTierFeatures": "Ask Quizlet, the AI study chat, needs a login and is available only to users in the United States aged 14 or older; the help article names no plan requirement or usage limit (as of 2026-10-29)",
+   "usageLimits": "Plus: 20 Learn rounds a month; Plus Unlimited and Family: unlimited Learn rounds; limits on Ask Quizlet are not stated (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Khan Academy (Khanmigo)",
@@ -9131,7 +9131,7 @@
    "budgetAlternativeTo": [
     "Khan Academy (Khanmigo) (free AI tutoring)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -9158,7 +9158,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (flashcards in any language; AI in English primary)",
    "keyIntegrations": "Google Classroom, Canvas LMS, export to various formats",
-   "upgradeTriggers": "Removing ads; full Q-Chat AI; enhanced study modes; practice tests; teacher analytics",
+   "upgradeTriggers": "More than 20 Learn rounds a month (Plus Unlimited or Family); practice tests; Expert Solutions; up to 5 accounts (Family)",
    "complementaryTools": [
     "Khan Academy (Khanmigo) (subject tutoring)",
     "Grammarly (writing)",
@@ -9714,10 +9714,10 @@
    "name": "Restb.ai",
    "company": "Restb.ai",
    "website": "https://restb.ai",
-   "description": null,
+   "description": "AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts); Restb Lens, its web tool, has self-serve plans (as of 2026-10-29).",
    "primaryUse": "AI computer vision for real estate",
    "primaryUseCases": "Property photo tagging; room detection; feature extraction; image quality scoring; virtual staging AI",
-   "costTier": "ENTERPRISE",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "api"
@@ -12981,16 +12981,16 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free (consumer); Premier Agent paid",
-   "freeTierFeatures": "Completely free for consumers; Zestimate on all properties",
-   "usageLimits": "No limits for consumer use; agent tools have separate pricing",
+   "currentPricing": "Zillow states no cost for its AI features: the Zillow app in ChatGPT, the Zillow connector in Claude, the rentals feature in Gemini and AI mode on Zillow; Premier Agent is paid (as of 2026-10-29)",
+   "freeTierFeatures": "Not stated: Zillow's pages do not say whether the AI features are free or have limits (as of 2026-10-29)",
+   "usageLimits": "Not stated (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Redfin Estimate",
     "Realtor.com"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"

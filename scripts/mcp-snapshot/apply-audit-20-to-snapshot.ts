@@ -1,6 +1,6 @@
 /**
- * One-off, tests only: applies catalog audit 20 (stale facts batch 4 and the
- * three batch-3 leftovers) to the committed src/lib/mcp/catalog-snapshot.json
+ * One-off, tests only: applies catalog audit 20 (stale facts batch 4, the
+ * batch-3 leftovers, Zach's decisions and the batch-3 browser check) to the committed src/lib/mcp/catalog-snapshot.json
  * in place, with the same diff function the DB runner uses, so the label
  * and MCP tests see the patched rows next to the new fact files. No
  * database, no network. Idempotent: a second run changes nothing.

@@ -7,7 +7,7 @@ export const duolingoMaxTutorial: PlatformTutorialData = {
   tagline:
     "The top Duolingo tier, what it actually adds, and how to check your language is covered.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-09",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -17,7 +17,6 @@ export const duolingoMaxTutorial: PlatformTutorialData = {
     "Duolingo Max is the top of three tiers: the free app, then Super, then Max.",
     "Max includes everything Super does — no ads, unlimited hearts (a benefit Duolingo's help centre says may be part of a test it is running, so what you see may differ), personalised review of your mistakes — and adds two AI conversation features on top: Roleplay, a typed run through a set scenario with one of the app's characters, and Video Call, where you speak to a character called Lily and she answers in the language you're learning.",
     "It unlocks no extra lessons and no extra courses. Duolingo says it offers \"the same lesson content to all users\", so what the money buys is practice modes, not curriculum.",
-    "Some things that used to be Max-only are now free: **Explain My Answer**, the in-lesson grammar explanation, went free for every learner in January 2026, so older reviews and comparison articles overstate what the tier includes.",
   ],
 
   beforeYouStart: [

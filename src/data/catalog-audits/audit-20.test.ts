@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -27,6 +26,8 @@ import {
 import { AUDIT_5_REF_EDITS } from "./audit-5";
 import {
   AUDIT_20_BATCH,
+  AUDIT_20_BROWSER_CHECK,
+  AUDIT_20_DECISIONS,
   AUDIT_20_LEFTOVERS,
   AUDIT_20_NO_FACT_FILE,
   AUDIT_20_NO_ROW_CHANGE,
@@ -34,6 +35,7 @@ import {
   CHECKED_AT,
   MURF_DESCRIPTION_NEW,
   MURF_DESCRIPTION_OLD,
+  RESTB_DESCRIPTION,
   audit20GuardSkips,
   audit20PatchData,
   type Audit20Patch,
@@ -120,8 +122,11 @@ describe("catalog audit 20: stale facts batch 4", () => {
       else assert.ok(patched.includes(slug), slug);
     }
     assert.deepEqual(Object.keys(AUDIT_20_NO_ROW_CHANGE), ["clio-manage", "scholarcy", "naver-hyperclova-x-cue"]);
-    for (const slug of AUDIT_20_LEFTOVERS) assert.ok(patched.includes(slug), slug);
-    for (const slug of patched) assert.ok([...AUDIT_20_BATCH, ...AUDIT_20_LEFTOVERS].includes(slug), slug);
+    for (const slug of [...AUDIT_20_LEFTOVERS, ...AUDIT_20_DECISIONS, ...AUDIT_20_BROWSER_CHECK]) assert.ok(patched.includes(slug), slug);
+    for (const slug of patched) assert.ok([...AUDIT_20_BATCH, ...AUDIT_20_LEFTOVERS, ...AUDIT_20_DECISIONS, ...AUDIT_20_BROWSER_CHECK].includes(slug), slug);
+    assert.deepEqual(AUDIT_20_DECISIONS, ["restb-ai", "leonardo-ai"]);
+    assert.deepEqual(AUDIT_20_BROWSER_CHECK, ["quizlet-q-chat", "bloomberg-gpt-terminal-ai", "zillow-ai-zestimate", "duolingo-max"]);
+    assert.equal(patched.length, 26);
   });
 
   it("skips the rows done in earlier stale-facts batches", () => {
@@ -144,7 +149,14 @@ describe("catalog audit 20: no conflict with earlier audits", () => {
           ...Object.keys(e.guarded ?? {}),
           ...(("addDirectAlternatives" in e && e.addDirectAlternatives?.length) ? ["directAlternatives"] : []),
         ];
-        for (const key of theirs) assert.equal(owned.has(key), false, `${p.slug}.${key} is written by both`);
+        for (const key of theirs) {
+          // restb-ai costTier is the one shared field: Zach's PAID, written by both with the same target.
+          if (p.slug === "restb-ai" && key === "costTier") {
+            assert.equal(p.guarded!.costTier!.to, (e.guarded as { costTier: { to: string } }).costTier.to);
+            continue;
+          }
+          assert.equal(owned.has(key), false, `${p.slug}.${key} is written by both`);
+        }
       }
     }
   });
@@ -164,8 +176,8 @@ describe("catalog audit 20: no conflict with earlier audits", () => {
       }
       assert.deepEqual(audit20PatchData(after, p), {}, `${p.slug}: snapshot already has audit 20 applied`);
     }
-    // murf-ai (19) and openai-codex-cli (18 and 19) are the only rows audit 20 shares with the earlier audits.
-    assert.equal(shared, 3);
+    // murf-ai (19), openai-codex-cli (18 and 19), leonardo-ai (18 and 19) and restb-ai (19) are the only rows audit 20 shares with the earlier audits.
+    assert.equal(shared, 6);
   });
 
   it("touches only claude-code among audit 10's slugs (a different field), and never the tiers audit 11 owns on clio-manage and spellbook", () => {
@@ -276,16 +288,16 @@ describe("catalog audit 20: content rules", () => {
     for (const slug of ["clio-manage", "scholarcy", "naver-hyperclova-x-cue"]) assert.equal(AUDIT_20_PATCHES.some((p) => p.slug === slug), false, slug);
   });
 
-  it("leaves alone what the brief says not to change", () => {
+  it("leaves alone what the brief says not to change, and the rows the browser check confirmed as they are", () => {
     const patched = new Set(AUDIT_20_PATCHES.map((p) => p.slug));
-    for (const slug of ["restb-ai", "leonardo-ai", "google-lyria-3", "quizlet-q-chat", "shopify-magic-sidekick", "salesforce-einstein", "gemini-cli"]) {
+    // Lyria changes in its fact file and guide only (the row text already says Lyria 3.5); Gemini CLI, Upstage and Aider were confirmed as they are (Codex CLI keeps only the leftover budget-alternative swap).
+    for (const slug of ["google-lyria-3", "shopify-magic-sidekick", "salesforce-einstein", "gemini-cli", "upstage-solar", "aider"]) {
       assert.equal(patched.has(slug), false, slug);
     }
-    assert.equal(snap("restb-ai")?.costTier, "ENTERPRISE");
-    assert.equal(snap("leonardo-ai")?.privacyLevel, "MEDIUM");
     assert.equal(snap("gemini-cli")?.costTier, "PAID");
     assert.equal(snap("google-lyria-3")?.name, "Google Lyria 3");
     assert.equal(snap("quizlet-q-chat")?.name, "Quizlet Q-Chat");
+    assert.equal(snap("duolingo-max")?.name, "Duolingo Max");
   });
 });
 
@@ -358,6 +370,199 @@ describe("catalog audit 20: batch-3 leftovers", () => {
   });
 });
 
+describe("catalog audit 20: Zach's decisions", () => {
+  it("restb-ai is PAID (the API is sales-only, Restb Lens is self-serve), whichever order audits 19 and 20 run in", () => {
+    const p = patch20("restb-ai");
+    const r = snap("restb-ai")!;
+    assert.equal(r.costTier, "PAID");
+    assert.equal(r.description, RESTB_DESCRIPTION);
+    assert.match(RESTB_DESCRIPTION, /API is sold through sales only/);
+    assert.match(RESTB_DESCRIPTION, /Restb Lens, its web tool, has self-serve plans/);
+    assert.deepEqual(Object.keys(p.fields), []);
+    assert.deepEqual(p.guarded?.costTier, { from: ["FREEMIUM", "ENTERPRISE"], to: "PAID" });
+    // The tier is the same one audit 19 writes now, so neither audit undoes the other.
+    const p19 = AUDIT_19_PATCHES.find((x) => x.slug === "restb-ai")!;
+    assert.equal(p19.guarded!.costTier!.to, "PAID");
+    // A row at FREEMIUM (audit 19 not run), ENTERPRISE (the first audit 19 run) or PAID (audit 19 as it is now).
+    for (const start of ["FREEMIUM", "ENTERPRISE", "PAID"]) {
+      const pre = row({ costTier: start, description: null });
+      const after = { ...pre, ...audit20PatchData(pre, p) } as Audit20Row;
+      assert.equal(after.costTier, "PAID", start);
+      assert.equal(after.description, RESTB_DESCRIPTION, start);
+      assert.deepEqual(audit20PatchData(after, p), {}, start);
+      // Audit 19 re-run afterwards cannot move the tier back.
+      assert.equal("costTier" in audit19PatchData(after as Audit19Row, p19), false, start);
+    }
+    // A hand-edited tier or description is left alone and logged.
+    const edited = row({ costTier: "FREE", description: "Hand text." });
+    assert.deepEqual(audit20PatchData(edited, p), {});
+    assert.deepEqual(audit20GuardSkips(edited, p), ["description", "costTier"]);
+    // Text fields stay owned by audit 19 and say the same thing.
+    assert.match(r.currentPricing ?? "", /^No public prices/);
+    assert.equal(r.currentPricing, p19.fields.currentPricing);
+    // The fact file records the decision and still says there is no free tier.
+    const facts = getToolFacts("restb-ai")!;
+    assert.equal(facts.freeTier?.value.available, false);
+    assert.match(JSON.stringify(facts.changelog), /Cost tier set to PAID/);
+  });
+
+  it("leonardo-ai is LOW privacy because Free-plan content is used for training; its text stays with audits 18 and 19", () => {
+    const p = patch20("leonardo-ai");
+    assert.equal(snap("leonardo-ai")?.privacyLevel, "LOW");
+    assert.deepEqual(Object.keys(p.fields), []);
+    assert.deepEqual(p.guarded, { privacyLevel: { from: "MEDIUM", to: "LOW" } });
+    assert.match(p.finding, /Free-plan content is used for training/);
+    assert.deepEqual(audit20PatchData(row({ privacyLevel: "MEDIUM" }), p), { privacyLevel: "LOW" });
+    assert.deepEqual(audit20PatchData(row({ privacyLevel: "LOW" }), p), {});
+    assert.deepEqual(audit20PatchData(row({ privacyLevel: "HIGH" }), p), {});
+    assert.deepEqual(audit20GuardSkips(row({ privacyLevel: "HIGH" }), p), ["privacyLevel"]);
+    // The snapshot text is audits 18 and 19's, unchanged by this audit.
+    for (const earlier of [AUDIT_18_PATCHES, AUDIT_19_PATCHES]) {
+      const e = earlier.find((x) => x.slug === "leonardo-ai")!;
+      assert.equal("privacyLevel" in (e.guarded ?? {}), false);
+      assert.equal(snap("leonardo-ai")?.freeTierFeatures, e.fields.freeTierFeatures);
+    }
+    const facts = getToolFacts("leonardo-ai")!;
+    assert.equal(facts.privacy?.value.trainsOnData, true);
+    assert.ok(isPublishedVerified(facts.privacy!));
+    assert.match(JSON.stringify(facts.changelog), /Privacy rated LOW/);
+    // The guide already says free content feeds training.
+    assert.match(JSON.stringify(getStaticTutorialForPlatform("leonardo-ai")), /free content feeds model training/);
+  });
+});
+
+describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)", () => {
+  const guide = (slug: string) => JSON.stringify(getStaticTutorialForPlatform(slug) ?? {});
+
+  it("Quizlet: the RA's prices, Ask Quizlet (US, 14+, login), and Q-Chat is not called retired; slug and title unchanged", () => {
+    const facts = getToolFacts("quizlet-q-chat")!;
+    assert.ok(facts, "fact file registered");
+    assert.deepEqual(
+      facts.plans!.value.map((x) => [x.name, x.price, x.period]),
+      [["Plus", "$35.99", "year"], ["Plus Unlimited", "$44.99", "year"], ["Family", "$83.99", "year"]],
+    );
+    assert.ok(isPublishedVerified(facts.plans!));
+    assert.equal(facts.plans!.sourceUrl, "https://quizlet.com/upgrade");
+    assert.match(JSON.stringify(facts.features!.value), /United States who are 14 years old or older/);
+    assert.match(JSON.stringify(facts.features!.value), /needs a login/);
+    const r = snap("quizlet-q-chat")!;
+    assert.equal(r.name, "Quizlet Q-Chat");
+    assert.match(r.currentPricing ?? "", /Plus \$35\.99 a year, Plus Unlimited \$44\.99 a year and Family \$83\.99 a year/);
+    assert.match(r.freeTierFeatures ?? "", /Ask Quizlet/);
+    assert.match(r.freeTierFeatures ?? "", /United States aged 14 or older/);
+    assert.doesNotMatch(r.usageLimits ?? "", /\$8|\$4/);
+    assert.doesNotMatch(r.upgradeTriggers ?? "", /Q-Chat/);
+    assert.equal(r.costTier, "FREEMIUM");
+    // Nothing we publish calls Q-Chat retired, and the guide no longer says so.
+    for (const text of [JSON.stringify(r), JSON.stringify(facts.features), guide("quizlet-q-chat")]) {
+      assert.doesNotMatch(text, /retired|no longer available|went away/i);
+    }
+    assert.equal(getStaticTutorialForPlatform("quizlet-q-chat")?.lastReviewedAt, CHECKED_AT);
+    assert.equal(getStaticTutorialForPlatform("quizlet-q-chat")?.slug, "quizlet-q-chat-getting-started");
+    assert.doesNotMatch(guide("quizlet-q-chat"), /\$\d/);
+  });
+
+  it("Bloomberg: consumer plan $399 a year ($180 first year) or $39.99 a month with no AI feature; ASKB is the Terminal's AI and sales-only", () => {
+    const facts = getToolFacts("bloomberg-gpt-terminal-ai")!;
+    assert.deepEqual(facts.plans!.value.map((x) => [x.price, x.period]), [["$399", "year"], ["$39.99", "month"]]);
+    assert.match(facts.plans!.value[0].limits, /\$180 for the first year/);
+    assert.ok(isPublishedVerified(facts.plans!));
+    assert.match(JSON.stringify(facts.features!.value), /ASKB by Bloomberg is the AI on the Bloomberg Terminal/);
+    assert.doesNotMatch(JSON.stringify(facts.features!.value), /summar/i);
+    const r = snap("bloomberg-gpt-terminal-ai")!;
+    assert.match(r.currentPricing ?? "", /\$399 a year \(\$180 for the first year\) or \$39\.99 a month/);
+    assert.match(r.currentPricing ?? "", /ASKB, the Terminal's AI, is sales-only/);
+    assert.match(r.currentPricing ?? "", /names no AI feature/);
+    assert.doesNotMatch(JSON.stringify(r), /24,000|24K/);
+    assert.equal(r.costTier, "ENTERPRISE");
+    const g = getStaticTutorialForPlatform("bloomberg-gpt-terminal-ai")!;
+    assert.equal(g.lastReviewedAt, CHECKED_AT);
+    assert.doesNotMatch(JSON.stringify(g), /publishes no price anywhere/);
+    assert.match(JSON.stringify(g.beforeYouStart), /separate consumer subscription/);
+  });
+
+  it("Zillow: ChatGPT app, Claude connector, rentals-only Gemini feature and AI mode; cost not stated", () => {
+    const facts = getToolFacts("zillow-ai-zestimate")!;
+    const text = JSON.stringify(facts.features!.value);
+    for (const re of [/app in ChatGPT/, /connector in Anthropic's Claude/, /rentals-only feature inside Google's Gemini/, /AI mode/, /does not state a cost/]) assert.match(text, re);
+    assert.ok(isPublishedVerified(facts.features!));
+    assert.equal(facts.features!.sourceUrl, "https://www.zillow.com/news/when-people-ask-ai-about-housing-chatgpt-gemini-and-claude-all-connect-to-zillow/");
+    const r = snap("zillow-ai-zestimate")!;
+    assert.match(r.currentPricing ?? "", /Zillow states no cost for its AI features/);
+    assert.match(r.freeTierFeatures ?? "", /^Not stated/);
+    assert.doesNotMatch(JSON.stringify(r.freeTierFeatures) + JSON.stringify(r.usageLimits), /Completely free|No limits/);
+    const g = getStaticTutorialForPlatform("zillow-ai-zestimate")!;
+    assert.equal(g.lastReviewedAt, CHECKED_AT);
+    assert.match(JSON.stringify(g), /Zillow app in ChatGPT/);
+    assert.match(JSON.stringify(g), /rentals-only Zillow feature in Google's Gemini/);
+  });
+
+  it("Duolingo Max: Super plus Roleplay and Video Call with Lily, price not stated, Explain My Answer gone everywhere", () => {
+    const facts = getToolFacts("duolingo-max")!;
+    assert.match(JSON.stringify(facts.features!.value), /Roleplay and Video Call with Lily/);
+    assert.match(JSON.stringify(facts.features!.value), /Prices are not stated/);
+    assert.ok(isPublishedVerified(facts.features!));
+    const r = snap("duolingo-max")!;
+    assert.match(r.currentPricing ?? "", /prices are not stated on Duolingo's logged-out pages/);
+    assert.doesNotMatch(JSON.stringify([r.currentPricing, r.usageLimits, r.upgradeTriggers]), /\$\d/);
+    assert.match(r.upgradeTriggers ?? "", /Video Call with Lily/);
+    assert.equal(r.name, "Duolingo Max");
+    for (const text of [JSON.stringify(r), JSON.stringify(facts), guide("duolingo-max")]) assert.doesNotMatch(text, /Explain My Answer/i);
+    assert.equal(getStaticTutorialForPlatform("duolingo-max")?.lastReviewedAt, CHECKED_AT);
+    // Nothing else in the catalog lists it either.
+    for (const x of snapshotRows()) assert.doesNotMatch(JSON.stringify(x), /Explain My Answer/i, x.slug);
+  });
+
+  it("Lyria: the current model is Lyria 3.5 in the facts and the guide; no date claimed; name and slug unchanged", () => {
+    const facts = getToolFacts("google-lyria-3")!;
+    assert.deepEqual(facts.models!.value, ["Lyria 3.5 (current)"]);
+    assert.ok(isPublishedVerified(facts.models!));
+    assert.match(JSON.stringify(facts.features!.value), /Lyria 3\.5 is the current model/);
+    assert.match(facts.features!.note ?? "", /does not give an announcement date/);
+    const g = getStaticTutorialForPlatform("google-lyria-3")!;
+    assert.equal(g.lastReviewedAt, CHECKED_AT);
+    assert.match(JSON.stringify(g), /the current model is Lyria 3\.5/);
+    assert.doesNotMatch(JSON.stringify(g), /from September 2026/);
+    assert.equal(snap("google-lyria-3")?.name, "Google Lyria 3");
+    assert.equal(AUDIT_20_PATCHES.some((x) => x.slug === "google-lyria-3"), false);
+  });
+
+  it("Antigravity: the FAQ opt-out is recorded, not tied to a plan and silent on training, so the CLI stays LOW and the IDE moves to LOW to match", () => {
+    const cli = getToolFacts("antigravity-cli")!;
+    assert.match(cli.privacy!.note ?? "", /You can opt out of data collection at any point from the Settings panel/);
+    assert.match(cli.privacy!.note ?? "", /not tied to a plan/);
+    assert.match(cli.privacy!.note ?? "", /does not mention model training/);
+    assert.match(cli.privacy!.note ?? "", /training opt-out is not confirmed/);
+    assert.equal(ANTIGRAVITY_ROW.privacyLevel, "LOW");
+    // The IDE runs under the same terms: same privacy fact, same rating.
+    const ide = getToolFacts("google-antigravity")!;
+    assert.equal(ide.privacy!.value.trainsOnData, true);
+    assert.equal(ide.privacy!.value.policyUrl, cli.privacy!.value.policyUrl);
+    assert.ok(isPublishedVerified(ide.privacy!));
+    assert.match(ide.privacy!.note ?? "", /same terms/);
+    const p = patch20("google-antigravity");
+    assert.deepEqual(p.guarded?.privacyLevel, { from: "HIGH", to: "LOW" });
+    assert.match(p.finding, /FAQ opt-out covers data collection and says nothing about training/);
+    assert.equal(snap("google-antigravity")?.privacyLevel, ANTIGRAVITY_ROW.privacyLevel);
+    assert.equal(audit20PatchData(row({ privacyLevel: "HIGH", costTier: "FREEMIUM" }), p).privacyLevel, "LOW");
+    assert.equal("privacyLevel" in audit20PatchData(row({ privacyLevel: "MEDIUM", costTier: "FREEMIUM" }), p), false);
+    // Both guides name the FAQ opt-out and neither calls it a training opt-out.
+    const cliGuide = getStaticTutorialForPlatform("antigravity-cli")!;
+    const ideGuide = getStaticTutorialForPlatform("google-antigravity")!;
+    assert.match(JSON.stringify(cliGuide), /opt out of data collection at any point from the Settings panel/);
+    assert.match(JSON.stringify(ideGuide), /opt out of data collection at any point from the Settings panel/);
+    assert.match(JSON.stringify(ideGuide), /do not treat it as a training opt-out/);
+    assert.equal(cliGuide.lastReviewedAt, CHECKED_AT);
+    assert.equal(ideGuide.lastReviewedAt, CHECKED_AT);
+  });
+
+  it("the Restb.ai and Leonardo guides, which already agree with the decisions, are left alone", () => {
+    assert.match(guide("restb-ai"), /Restb Lens/);
+    assert.notEqual(getStaticTutorialForPlatform("restb-ai")?.lastReviewedAt, CHECKED_AT);
+    assert.notEqual(getStaticTutorialForPlatform("leonardo-ai")?.lastReviewedAt, CHECKED_AT);
+  });
+});
+
 describe("catalog audit 20: guides", () => {
   it("the Acrobat and Open WebUI guides follow the findings, with today's review date", () => {
     const acrobat = getStaticTutorialForPlatform("adobe-acrobat-ai-assistant")!;
@@ -371,32 +576,13 @@ describe("catalog audit 20: guides", () => {
 });
 
 describe("catalog audit 20: dry run and guards", () => {
-  /** The committed snapshot already has audit 20 applied; the pre-audit rows come from git HEAD. */
+  /** The committed snapshot already has audit 20 applied; the pre-audit rows are the fixture taken from origin/main 53eafe7 (audits 17-19 applied). */
   const preAudit = (): Record<string, AnyRow> => {
-    const old = JSON.parse(execSync("git show HEAD:src/lib/mcp/catalog-snapshot.json", { maxBuffer: 1 << 28 }).toString()) as { rows: Record<string, unknown>[] };
-    return Object.fromEntries(
-      old.rows.map((r) => [
-        r.slug as string,
-        {
-          company: (r.company as string | null) ?? null,
-          website: (r.website as string | null) ?? null,
-          description: (r.description as string | null) ?? null,
-          primaryUse: (r.primaryUse as string | null) ?? null,
-          currentPricing: (r.currentPricing as string | null) ?? null,
-          freeTierFeatures: (r.freeTierFeatures as string | null) ?? null,
-          usageLimits: (r.usageLimits as string | null) ?? null,
-          upgradeTriggers: (r.upgradeTriggers as string | null) ?? null,
-          costTier: r.costTier as string,
-          apiAvailable: r.apiAvailable as boolean,
-          privacyLevel: (r.privacyLevel as string | null) ?? null,
-          directAlternatives: [...((r.directAlternatives as string[]) ?? [])],
-          budgetAlternativeTo: [...((r.budgetAlternativeTo as string[]) ?? [])],
-        } as AnyRow,
-      ]),
-    );
+    const fixture = JSON.parse(readFileSync(join(process.cwd(), "src/data/catalog-audits/audit-20-pre-rows.json"), "utf8")) as { rows: Record<string, AnyRow> };
+    return fixture.rows;
   };
 
-  it("dry run against the pre-audit rows reports 20 rows / 73 fields (16 batch-4 rows / 65 fields, 4 leftover rows / 8 fields); a re-run reports 0", () => {
+  it("dry run against the pre-audit rows reports 26 rows / 90 fields (16 batch-4 rows / 65 fields, 4 leftover rows / 9, 2 decision rows / 3, 4 browser-check rows / 13); a re-run reports 0", () => {
     const pre = preAudit();
     const tally = (slugs: string[]) => {
       const kinds: Record<string, number> = {};
@@ -404,6 +590,7 @@ describe("catalog audit 20: dry run and guards", () => {
       let fields = 0;
       for (const p of AUDIT_20_PATCHES.filter((x) => slugs.includes(x.slug))) {
         const before = pre[p.slug];
+        assert.ok(before, `${p.slug}: pre-audit row in the fixture`);
         const data = audit20PatchData(before, p);
         const keys = Object.keys(data);
         if (keys.length) {
@@ -419,6 +606,8 @@ describe("catalog audit 20: dry run and guards", () => {
     };
     const batch = tally(AUDIT_20_BATCH);
     const leftovers = tally(AUDIT_20_LEFTOVERS);
+    const decisions = tally(AUDIT_20_DECISIONS);
+    const browser = tally(AUDIT_20_BROWSER_CHECK);
     assert.deepEqual(batch, {
       rows: 16,
       fields: 65,
@@ -426,9 +615,17 @@ describe("catalog audit 20: dry run and guards", () => {
     });
     assert.deepEqual(leftovers, {
       rows: 4,
-      fields: 8,
-      kinds: { currentPricing: 1, freeTierFeatures: 1, usageLimits: 1, upgradeTriggers: 1, costTier: 1, budgetAlternativeTo: 2, description: 1 },
+      fields: 9,
+      kinds: { currentPricing: 1, freeTierFeatures: 1, usageLimits: 1, upgradeTriggers: 1, costTier: 1, privacyLevel: 1, budgetAlternativeTo: 2, description: 1 },
     });
+    assert.deepEqual(decisions, { rows: 2, fields: 3, kinds: { costTier: 1, description: 1, privacyLevel: 1 } });
+    assert.deepEqual(browser, {
+      rows: 4,
+      fields: 13,
+      kinds: { currentPricing: 4, freeTierFeatures: 3, usageLimits: 4, upgradeTriggers: 2 },
+    });
+    assert.equal(batch.rows + leftovers.rows + decisions.rows + browser.rows, 26);
+    assert.equal(batch.fields + leftovers.fields + decisions.fields + browser.fields, 90);
   });
 
   it("leaves a hand-edited guarded field alone and reports it; null company and website are fillable", () => {

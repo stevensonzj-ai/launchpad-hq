@@ -16,12 +16,19 @@
  *   - budgetAlternativeTo swaps one named entry (claude-code and
  *     openai-codex-cli: "Gemini CLI (free…)" becomes "Antigravity CLI (free…)")
  *     only while the row still holds the old entry;
- *   - google-antigravity gets the verified Antigravity plans; murf-ai's
- *     description loses the word that made it match "learn a language".
+ *   - google-antigravity gets the verified Antigravity plans (and privacy
+ *     LOW, to match the CLI row); murf-ai's description loses the word that
+ *     made it match "learn a language";
+ *   - Zach's decisions: restb-ai costTier PAID (plus a description note, only
+ *     while the description is empty) and leonardo-ai privacyLevel LOW;
+ *   - the Research Analyst browser check of batch 3 (2026-10-29): row text
+ *     for quizlet-q-chat, bloomberg-gpt-terminal-ai, zillow-ai-zestimate
+ *     and duolingo-max.
  * Facts a vendor page did not show (blocked, or rendered only in a browser)
  * are left as the row has them; see REVIEW-SUMMARY.md "Browser-check list".
  * Audits 17, 18 and 19 write none of the fields this one writes on the same
- * row, so re-running any of them cannot revert this one (asserted in
+ * row, except restb-ai costTier, where audit 19 writes the same PAID, so
+ * re-running any of them cannot revert this one (asserted in
  * audit-20.test.ts). Audit 10 patches claude-code currentPricing only; audit
  * 11 patches the clio-manage and spellbook cost tiers only; this audit
  * writes neither.

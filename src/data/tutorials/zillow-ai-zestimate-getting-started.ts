@@ -6,7 +6,7 @@ export const zillowAiZestimateTutorial: PlatformTutorialData = {
   title: "Getting Started with the Zillow Zestimate",
   tagline: "The free home-value number on Zillow listings — and how far off it usually is.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://www.zillow.com/news/",
   accessTier: "FREE",
 
@@ -21,7 +21,7 @@ export const zillowAiZestimateTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Free, and you don't need an account to look. Type an address into the search box at zillow.com and the Zestimate is on the home's page. There's no paid version and no upgrade to hit.",
+    "Free, and you don't need an account to look. Type an address into the search box at zillow.com and the Zestimate is on the home's page. The Zestimate has no paid version and no upgrade to hit; Zillow states no cost for its AI features, covered further down.",
     "It's a US number. Zillow counts its coverage in US homes, so a house in another country won't have a Zestimate — though Zillow doesn't state a geographic limit outright anywhere we could find. Zillow does say plainly that estimates are for residential property only: large multi-family buildings, vacant land and commercial properties aren't eligible.",
     "Some homes simply don't have one. Zillow withholds the figure where it doesn't have, in its words, \"sufficient reliable data to generate an estimate that meets our accuracy standards\" — incomplete or inconsistent property records, or an area with few recent sales. If you find a blank where the number should be, nothing is broken.",
     "If the home is yours, you can claim it — confirm to Zillow that you're the owner, which opens an owner dashboard where you can correct the facts the estimate is built on: bedrooms, bathrooms, finished square footage, lot size, year built. Claiming is free, and expect to need a Zillow sign-in for it even though Zillow's claim page doesn't say so outright.",
@@ -96,7 +96,7 @@ export const zillowAiZestimateTutorial: PlatformTutorialData = {
     {
       title: "Ask Zillow's own AI about the number — if you have it",
       whatItDoes:
-        "Zillow has been rolling out what it calls AI mode: a conversational layer where you type a question in plain English instead of setting filters. Zillow's March 2026 announcement lists \"explain and contextualize the Zestimate\" among its jobs, and gives \"How has this home's Zestimate changed over time?\" as a sample question. The catch is availability — as of Zillow's own July 2026 update it was still in beta, open to a limited group of users with access \"expanding over time,\" so there's a real chance you go looking and find no such box. Separately, Zillow's ordinary search bar does accept plain-English descriptions like \"Austin TX homes with backyard\" — though Zillow's own pages disagree about where: a September 2024 announcement says the iOS and Android apps with the website to follow, while a Zillow help page updated in April 2026 says the iOS app only.",
+        "Zillow has been rolling out what it calls AI mode: a conversational layer where you type a question in plain English instead of setting filters. Zillow's March 2026 announcement lists \"explain and contextualize the Zestimate\" among its jobs, and gives \"How has this home's Zestimate changed over time?\" as a sample question. The catch is availability — as of Zillow's own July 2026 update it was still in beta, open to a limited group of users with access \"expanding over time,\" so there's a real chance you go looking and find no such box. Zillow's October 21, 2026 post adds that the same AI now reaches you outside Zillow too: a Zillow app in ChatGPT and a Zillow connector in Anthropic's Claude (listings, home values and affordability), and a rentals-only Zillow feature in Google's Gemini. It states no cost for any of these. Separately, Zillow's ordinary search bar does accept plain-English descriptions like \"Austin TX homes with backyard\" — though Zillow's own pages disagree about where: a September 2024 announcement says the iOS and Android apps with the website to follow, while a Zillow help page updated in April 2026 says the iOS app only.",
       whyHere:
         "This is the only Zillow surface where the Zestimate becomes something you can put a question to, and its own sample questions are about the estimate's history rather than about finding listings.",
       tweak:

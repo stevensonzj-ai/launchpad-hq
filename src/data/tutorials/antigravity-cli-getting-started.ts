@@ -48,7 +48,7 @@ export const antigravityCliTutorial: PlatformTutorialData = {
       items: [
         "Google uses what you send and receive — its terms call these \"Interactions\" — to \"evaluate, develop, and improve\" its products and machine-learning technologies.",
         "\"Google employees and contractors may access, view, review and use Interactions\", and the terms ask you not to submit confidential information.",
-        "The terms point to a Settings preference for how this data is used. We could not confirm whether switching it off stops the training use, so look in its Settings panel before you point it at real work.",
+        "Google's FAQ says: \"You can opt out of data collection at any point from the Settings panel.\" It ties that to no plan and does not mention training, so we could not confirm that switching it off stops the training use; look in the Settings panel before you point it at real work.",
         "To have your Interactions deleted, the terms say to email Google's Antigravity support team. There is no self-serve delete button described.",
         "Work and school accounts are different: they follow whatever Google Cloud or Workspace terms your administrator signed.",
       ],

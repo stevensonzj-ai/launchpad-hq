@@ -37,8 +37,26 @@
  *      text-to-speech tool, so the description is reworded without that word.
  *      No search code changes.
  *
- * Earlier audits: none of them writes a field this one writes on the same
- * row (audit-20.test.ts checks 17, 18 and 19 field by field, and re-runs them
+ * Zach's two approved decisions and the Research Analyst's batch-3 browser check
+ * (2026-10-29) are in here too (AUDIT_20_DECISIONS, AUDIT_20_BROWSER_CHECK):
+ *   4. restb-ai: cost tier PAID (the API is sales-only, Restb Lens has
+ *      self-serve plans; the note is in the description); leonardo-ai:
+ *      privacy LOW, because Free-plan content is used for training.
+ *   5. quizlet-q-chat, bloomberg-gpt-terminal-ai, zillow-ai-zestimate and
+ *      duolingo-max: row text from the browser check (Quizlet gets its first
+ *      fact file). Q-Chat is not called retired; Duolingo's "Explain My
+ *      Answer" is dropped; Zillow and Duolingo prices are "not stated".
+ *   6. google-antigravity: privacy HIGH to LOW, to match the CLI row under
+ *      the same Antigravity terms (rubric reasoning in
+ *      src/data/facts/google-antigravity.ts). The antigravity-cli row stays
+ *      LOW (audit 19 creates it); only its fact note changes.
+ *   Lyria (current model is Lyria 3.5) changes in its fact file and guide
+ *   only; the row text already says so. Codex CLI, Gemini CLI, Upstage and
+ *   Aider were confirmed as they are.
+ *
+ * Earlier audits: they write no field this one writes on a row, with one
+ * exception: restb-ai costTier, where audit 19 now writes the same PAID
+ * (audit-20.test.ts checks 17, 18 and 19 field by field, and re-runs them
  * against the patched snapshot). Audit 10 patches currentPricing on
  * claude-code only; this audit writes budgetAlternativeTo there. Audit 11
  * patches clio-manage and spellbook on costTier only; this audit writes
@@ -67,7 +85,7 @@ export type Audit20TextField = "primaryUse" | "currentPricing" | "freeTierFeatur
 export type Audit20Guarded = {
   company?: { from: (string | null)[]; to: string };
   website?: { from: (string | null)[]; to: string };
-  costTier?: { from: string; to: string };
+  costTier?: { from: string | string[]; to: string };
   apiAvailable?: { from: boolean; to: boolean };
   privacyLevel?: { from: string; to: string };
   description?: { from: (string | null)[]; to: string };
@@ -124,6 +142,14 @@ export const AUDIT_20_NO_ROW_CHANGE: Record<string, string> = {
 
 /** The three leftovers carried over from batch 3. */
 export const AUDIT_20_LEFTOVERS = ["google-antigravity", "claude-code", "openai-codex-cli", "murf-ai"];
+
+/** Zach's approved decisions (2026-10-29). */
+export const AUDIT_20_DECISIONS = ["restb-ai", "leonardo-ai"];
+
+/** Rows changed by the Research Analyst's batch-3 browser check (2026-10-29). */
+export const AUDIT_20_BROWSER_CHECK = ["quizlet-q-chat", "bloomberg-gpt-terminal-ai", "zillow-ai-zestimate", "duolingo-max"];
+
+export const RESTB_DESCRIPTION = `AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts); Restb Lens, its web tool, has self-serve plans (as of ${CHECKED_AT}).`;
 
 export const MURF_DESCRIPTION_OLD = "AI voice generator for voiceovers, e-learning, and ads with multiple voices and languages.";
 export const MURF_DESCRIPTION_NEW =
@@ -341,8 +367,8 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
   // ---- Leftovers from batch 3. ----
   {
     slug: "google-antigravity",
-    finding: "Row said \"Free (preview)\", a free cloud-based IDE and generous free tier; Google's Antigravity pricing is $0 for individuals with weekly rate limits, Google AI Pro and Ultra raise them, organisations use Gemini Enterprise (same plans as the Antigravity CLI row)",
-    sources: ["https://antigravity.google/pricing", "https://antigravity.google/docs/plans", "https://antigravity.google/docs/models"],
+    finding: "Row said \"Free (preview)\", a free cloud-based IDE and generous free tier; Google's Antigravity pricing is $0 for individuals with weekly rate limits, Google AI Pro and Ultra raise them, organisations use Gemini Enterprise (same plans as the Antigravity CLI row). Privacy HIGH to LOW to match the CLI row: same Antigravity terms, interactions are used to improve Google's products and machine learning by default, reviewers may see them; the FAQ opt-out covers data collection and says nothing about training, so the rubric's MEDIUM (improvement with an opt-out) is not established",
+    sources: ["https://antigravity.google/pricing", "https://antigravity.google/docs/plans", "https://antigravity.google/docs/models", "https://antigravity.google/terms", "https://antigravity.google/docs/faq"],
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: antigravityCurrentPricing(),
@@ -350,7 +376,10 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
       usageLimits: ANTIGRAVITY_ROW.usageLimits,
       upgradeTriggers: ANTIGRAVITY_ROW.upgradeTriggers,
     },
-    guarded: { costTier: { from: "FREE", to: "FREEMIUM" } },
+    guarded: {
+      costTier: { from: "FREE", to: "FREEMIUM" },
+      privacyLevel: { from: "HIGH", to: "LOW" },
+    },
   },
   {
     slug: "claude-code",
@@ -376,6 +405,73 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     fields: {},
     guarded: { description: { from: [MURF_DESCRIPTION_OLD], to: MURF_DESCRIPTION_NEW } },
   },
+  // ---- Zach's approved decisions (2026-10-29). ----
+  {
+    slug: "restb-ai",
+    finding: "Zach: cost tier PAID. The Restb.ai API is sales-only (contracts, no published prices) while Restb Lens, the same company's web tool, has self-serve plans (per the guide). Audit 19 moved the row FREEMIUM to ENTERPRISE (now PAID too); a row it left at ENTERPRISE moves here. The note is the description (no field audit 18 or 19 owns)",
+    sources: ["https://restb.ai/faq/", "https://restb.ai/terms-conditions/"],
+    checkedAt: CHECKED_AT,
+    fields: {},
+    guarded: {
+      costTier: { from: ["FREEMIUM", "ENTERPRISE"], to: "PAID" },
+      description: { from: [null], to: RESTB_DESCRIPTION },
+    },
+  },
+  {
+    slug: "leonardo-ai",
+    finding: "Zach: privacy LOW. Leonardo's privacy policy lets it train on content unless it is generated privately, which needs a paid plan, so Free-plan content is used for training (rubric: LOW is inputs used for training by default). Text is owned by audits 18 and 19",
+    sources: ["https://leonardo.ai/privacy-policy", "https://leonardo.ai/pricing"],
+    checkedAt: CHECKED_AT,
+    fields: {},
+    guarded: { privacyLevel: { from: "MEDIUM", to: "LOW" } },
+  },
+
+  // ---- Research Analyst batch-3 browser check (2026-10-29, logged out, US/USD). ----
+  {
+    slug: "quizlet-q-chat",
+    finding: "Row said Plus $35.99/year, Plus $8/mo and Teachers $4/mo, limited AI features and full Q-Chat AI; Quizlet's upgrade page shows Plus $35.99, Plus Unlimited $44.99 and Family $83.99 a year and names no AI feature, and the AI feature documented now is Ask Quizlet (US only, 14+, login required). No page says Q-Chat was retired, so the row does not",
+    sources: ["https://quizlet.com/upgrade", "https://help.quizlet.com/hc/en-us/articles/42790350723725-Studying-with-Ask-Quizlet"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free tier; Quizlet Plus $35.99 a year, Plus Unlimited $44.99 a year and Family $83.99 a year (up to 5 accounts), all billed yearly; the monthly plan is not eligible for the free trial ${AS_OF}`,
+      freeTierFeatures: `Ask Quizlet, the AI study chat, needs a login and is available only to users in the United States aged 14 or older; the help article names no plan requirement or usage limit ${AS_OF}`,
+      usageLimits: `Plus: 20 Learn rounds a month; Plus Unlimited and Family: unlimited Learn rounds; limits on Ask Quizlet are not stated ${AS_OF}`,
+      upgradeTriggers: "More than 20 Learn rounds a month (Plus Unlimited or Family); practice tests; Expert Solutions; up to 5 accounts (Family)",
+    },
+  },
+  {
+    slug: "bloomberg-gpt-terminal-ai",
+    finding: "Row said ~$24,000/year (Terminal) and unlimited use; Bloomberg publishes no Terminal price (Order or Request a Demo) and ASKB is the Terminal's AI. Bloomberg.com's consumer plan is $399 a year ($180 the first year) or $39.99 a month, and its page names no AI feature",
+    sources: ["https://www.bloomberg.com/subscriptions", "https://www.bloomberg.com/professional/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Bloomberg Terminal: no public price, sold through an order or demo request; ASKB, the Terminal's AI, is sales-only. A separate Bloomberg.com consumer subscription is $399 a year ($180 for the first year) or $39.99 a month ($1.99 for the first month), and its page names no AI feature ${AS_OF}`,
+      freeTierFeatures: `No free plan stated for the Terminal; it is ordered or demoed through sales ${AS_OF}`,
+      usageLimits: `Not published ${AS_OF}`,
+    },
+  },
+  {
+    slug: "zillow-ai-zestimate",
+    finding: "Row said completely free for consumers with no limits; Zillow's October 21, 2026 post lists a Zillow app in ChatGPT, a connector in Claude, a rentals-only feature in Gemini and AI mode, and states no cost for them",
+    sources: ["https://www.zillow.com/news/when-people-ask-ai-about-housing-chatgpt-gemini-and-claude-all-connect-to-zillow/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Zillow states no cost for its AI features: the Zillow app in ChatGPT, the Zillow connector in Claude, the rentals feature in Gemini and AI mode on Zillow; Premier Agent is paid ${AS_OF}`,
+      freeTierFeatures: `Not stated: Zillow's pages do not say whether the AI features are free or have limits ${AS_OF}`,
+      usageLimits: `Not stated ${AS_OF}`,
+    },
+  },
+  {
+    slug: "duolingo-max",
+    finding: "Row listed Super $12.99/mo, Max $29.99/mo (and, in another field, $7 and $14) and Explain My Answer; Duolingo's logged-out pages state no price, and its help centre says Max is Super plus Roleplay and Video Call with Lily. Explain My Answer is on no current page",
+    sources: ["https://blog.duolingo.com/duolingo-max/", "https://www.duolingo.com/"],
+    checkedAt: CHECKED_AT,
+    fields: {
+      currentPricing: `Free; Super and Max are paid subscriptions; Max is Super plus Roleplay and Video Call with Lily; prices are not stated on Duolingo's logged-out pages ${AS_OF}`,
+      usageLimits: `Free: ads and heart limits; Max includes all Super benefits plus Roleplay and Video Call with Lily; prices are not stated ${AS_OF}`,
+      upgradeTriggers: "Removing ads; unlimited hearts; AI Roleplay conversations and Video Call with Lily (Max); no mistakes penalty",
+    },
+  },
 ];
 
 export type Audit20Row = Partial<Record<Audit20TextField, string | null>> & {
@@ -389,6 +485,8 @@ export type Audit20Row = Partial<Record<Audit20TextField, string | null>> & {
   budgetAlternativeTo?: string[];
 };
 
+const tierFrom = (t: { from: string | string[] }): string[] => (Array.isArray(t.from) ? t.from : [t.from]);
+
 /** Prisma `data` for one row: text fields that differ; guarded fields only from their expected old value. */
 export function audit20PatchData(row: Audit20Row, patch: Audit20Patch): Record<string, string | boolean | string[]> {
   const data: Record<string, string | boolean | string[]> = {};
@@ -400,7 +498,7 @@ export function audit20PatchData(row: Audit20Row, patch: Audit20Patch): Record<s
   if (g.company && g.company.from.includes(company)) data.company = g.company.to;
   if (g.website && g.website.from.includes(row.website)) data.website = g.website.to;
   if (g.description && g.description.from.includes(row.description ?? null)) data.description = g.description.to;
-  if (g.costTier && row.costTier === g.costTier.from) data.costTier = g.costTier.to;
+  if (g.costTier && tierFrom(g.costTier).includes(row.costTier)) data.costTier = g.costTier.to;
   if (g.apiAvailable && row.apiAvailable === g.apiAvailable.from) data.apiAvailable = g.apiAvailable.to;
   if (g.privacyLevel && row.privacyLevel === g.privacyLevel.from) data.privacyLevel = g.privacyLevel.to;
   if (patch.addDirectAlternatives?.length) {
@@ -429,7 +527,7 @@ export function audit20GuardSkips(row: Audit20Row, patch: Audit20Patch): string[
   if (g.company && company !== g.company.to && !g.company.from.includes(company)) skips.push("company");
   if (g.website && row.website !== g.website.to && !g.website.from.includes(row.website)) skips.push("website");
   if (g.description && description !== g.description.to && !g.description.from.includes(description)) skips.push("description");
-  if (g.costTier && row.costTier !== g.costTier.to && row.costTier !== g.costTier.from) skips.push("costTier");
+  if (g.costTier && row.costTier !== g.costTier.to && !tierFrom(g.costTier).includes(row.costTier)) skips.push("costTier");
   if (g.apiAvailable && row.apiAvailable !== g.apiAvailable.to && row.apiAvailable !== g.apiAvailable.from) skips.push("apiAvailable");
   if (g.privacyLevel && row.privacyLevel !== g.privacyLevel.to && row.privacyLevel !== g.privacyLevel.from) skips.push("privacyLevel");
   for (const { from, to } of patch.replaceBudgetAlternatives ?? []) {

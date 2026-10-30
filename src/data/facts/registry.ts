@@ -180,6 +180,8 @@ import googleLyria3Facts from "./google-lyria-3";
 import soundrawFacts from "./soundraw";
 import murfAiFacts from "./murf-ai";
 import glaspFacts from "./glasp";
+// Research Analyst browser check of batch 3, 2026-10-29 (catalog audit 20).
+import quizletQChatFacts from "./quizlet-q-chat";
 // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
 import antigravityCliFacts from "./antigravity-cli";
 import clineFacts from "./cline";
@@ -383,6 +385,7 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [beatovenAiFacts.slug]: beatovenAiFacts,
   [googleLyria3Facts.slug]: googleLyria3Facts,
   [soundrawFacts.slug]: soundrawFacts,
+  [quizletQChatFacts.slug]: quizletQChatFacts,
   [murfAiFacts.slug]: murfAiFacts,
   [glaspFacts.slug]: glaspFacts,
   // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
