@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19 and 20 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -89,7 +89,7 @@
     "web",
     "desktop"
    ],
-   "currentPricing": "AI Assistant features are built into Acrobat Express ($9.99/mo on an annual plan billed monthly; $10.99 month to month) and Acrobat Studio ($24.99/mo; $34.99 month to month); an AI Assistant add-on is also mentioned (price not confirmed) (as of 2026-10-29)",
+   "currentPricing": "AI Assistant is included in Acrobat Studio ($24.99/mo, annual plan billed monthly), not in Acrobat Standard ($14.99) or Pro ($19.99); Acrobat Express ($9.99/mo) is marketed as AI-powered document insights; no standalone AI Assistant price was seen (US, individuals) (as of 2026-10-29)",
    "freeTierFeatures": "No permanent free AI tier: Acrobat Reader is free for viewing and commenting, and the paid plans offer free trials (length not stated) (as of 2026-10-29)",
    "usageLimits": "Not published for individual plans (as of 2026-10-29)",
    "apiAvailable": true,
@@ -131,7 +131,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual",
    "keyIntegrations": "Adobe Creative Cloud, Microsoft 365, Google Drive, SharePoint, Box, Dropbox",
-   "upgradeTriggers": "Moving to Acrobat Express or Studio for the AI Assistant features; the AI Assistant add-on",
+   "upgradeTriggers": "Moving to Acrobat Studio for the AI Assistant; Acrobat Express for AI-powered document insights",
    "complementaryTools": [
     "Adobe Firefly (design)",
     "Microsoft Copilot (Office)",
@@ -154,7 +154,7 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free daily generations (count not stated); paid plans Standard, Pro, Pro Plus and Premium carry 2,000 / 4,000 / 10,000 / 50,000 generative credits a month; USD prices vary by region and are not confirmed (as of 2026-10-29)",
+   "currentPricing": "Free daily generations (limit not stated); paid monthly plans: Standard $9.99 (2,000 credits), Pro $19.99 (4,000), Pro Plus $49.99 (10,000), Premium $199.99 (50,000); credit add-ons are available (as of 2026-10-29)",
    "freeTierFeatures": "Free daily generations across image, video and audio, with no plan needed; limits refresh every day and the daily count is not stated (as of 2026-10-29)",
    "usageLimits": "Monthly generative credits: Standard 2,000, Pro 4,000, Pro Plus 10,000, Premium 50,000; credits reset each billing cycle and do not roll over; paid plans include unlimited standard image and vector generation (as of 2026-10-29)",
    "apiAvailable": true,
@@ -539,7 +539,7 @@
     "api"
    ],
    "currentPricing": "Pay as you go per token (On-Demand Standard, Flex and Priority tiers); Batch is about 50% lower on select models; Provisioned Throughput is hourly with no commitment, 1-month or 6-month terms (as of 2026-10-29)",
-   "freeTierFeatures": "No Bedrock free tier of its own: new AWS accounts on the AWS Free plan get up to $200 in credits (valid 6 months), usable on Bedrock (as of 2026-10-29)",
+   "freeTierFeatures": "No Bedrock free tier of its own: the only credits are the general new-AWS-account ones (up to $200 over 6 months), which any eligible service can use, Bedrock included (as of 2026-10-29)",
    "usageLimits": "Per-token and per-hour billing, no subscription plans; Guardrails, Knowledge Bases and Model Evaluation are billed separately (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
@@ -849,7 +849,7 @@
     "api"
    ],
    "currentPricing": "Pay as you go per token (Global, Data Zone and Regional deployments); provisioned throughput (PTU) by monthly or annual reservation; Batch pricing; per-token prices are on the Azure pricing page (as of 2026-10-29)",
-   "freeTierFeatures": "No permanent free tier: pay as you go, or try Azure free for up to 30 days; the credit amount is not stated on the pages read (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier for the service itself: the only credit is the general new-Azure-account one ($200, usable for up to 30 days, new customers only), not specific to Azure OpenAI (as of 2026-10-29)",
    "usageLimits": "Consumption-based billing; provisioned throughput (PTU) reserved monthly or annually (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
@@ -1908,9 +1908,9 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "From $49/user/mo",
-   "freeTierFeatures": "7-day free trial; no permanent free tier",
-   "usageLimits": "Per-user monthly pricing: EasyStart $39, Essentials $69, Advanced $99, Complete $129",
+   "currentPricing": "Starter $49 per user a month; Core, Signature and Elite: get pricing (no public price); Enterprise: book a demo; Clio Work, the legal AI add-on, is priced on request (US, logged out) (as of 2026-10-29)",
+   "freeTierFeatures": "No free tier; 7-day free trial, no credit card required (as of 2026-10-29)",
+   "usageLimits": "Priced per user; AI is included in the plan from Core up, and Clio Work is a separate add-on (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "MyCase",
@@ -1918,7 +1918,7 @@
     "Rocket Matter"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "legal-ai",
     "name": "Legal AI"
@@ -1945,7 +1945,7 @@
    "offlineCapable": false,
    "languageSupport": "English",
    "keyIntegrations": "QuickBooks, Xero, Gmail, Outlook, Calendly, Zapier, Zoom, Google Drive, Dropbox, 250+ integrations",
-   "upgradeTriggers": "Trial expiry; needing billing; document automation; AI features; client portal",
+   "upgradeTriggers": "Trial expiry; billing and document automation; AI included from Core up; Clio Work add-on (research, analysis and drafting); client portal",
    "complementaryTools": [
     "Harvey AI (research)",
     "CoCounsel",
@@ -1970,8 +1970,8 @@
     "api"
    ],
    "currentPricing": "Free Trial API key (rate limited; no production or commercial use); production is pay as you go; Model Vault is priced per instance (Rerank 5 Medium $4.00 an hour or $2,500 a month); North, Compass and private deployments are custom (as of 2026-10-29)",
-   "freeTierFeatures": "Free Trial API key: calls are free but rate limited, and trial keys may not be used for production or commercial purposes; a production key needs a Go to Production application (as of 2026-10-29)",
-   "usageLimits": "Free: 1,000 API calls/mo; Production: pay-per-use; Enterprise: custom; generous trial for testing",
+   "freeTierFeatures": "Free Trial API key: calls are free but capped at 1,000 API calls a month and rate limited, and trial keys may not be used for production or commercial purposes; a production key needs a Go to Production application (as of 2026-10-29)",
+   "usageLimits": "Trial key: 1,000 API calls a month, plus per-minute rate limits (Chat 20 requests a minute per model); production key: pay as you go; Enterprise: custom (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "AI21 Labs (Jamba)",
@@ -3953,7 +3953,7 @@
     "deployable apps",
     "web previews"
    ],
-   "privacyLevel": "LOW",
+   "privacyLevel": "MEDIUM",
    "timeToProductivity": "15 min",
    "learningCurve": "Easy",
    "offlineCapable": false,
@@ -9714,10 +9714,10 @@
    "name": "Restb.ai",
    "company": "Restb.ai",
    "website": "https://restb.ai",
-   "description": "AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts); Restb Lens, its web tool, has self-serve plans (as of 2026-10-29).",
+   "description": "AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts, no published prices); Restb Lens, its web tool, is a sign-up web app with no public prices (as of 2026-10-29).",
    "primaryUse": "AI computer vision for real estate",
    "primaryUseCases": "Property photo tagging; room detection; feature extraction; image quality scoring; virtual staging AI",
-   "costTier": "PAID",
+   "costTier": "ENTERPRISE",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "api"
@@ -10296,14 +10296,14 @@
    "description": null,
    "primaryUse": "AI paper summarization and flashcard generation",
    "primaryUseCases": "Paper summarization; flashcard creation; key finding extraction; reading comprehension; literature review",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; paid plans",
-   "freeTierFeatures": "Free Chrome extension: summarize any article; flashcard generation; limited features",
-   "usageLimits": "Free extension: individual articles only; Library plans: bulk processing + reference extraction",
+   "currentPricing": "Free Article Summarizer (limited); Scholarcy Plus $9.99 a month or $90 a year, with a 1-week free trial (as of 2026-10-29)",
+   "freeTierFeatures": "Free Article Summarizer with a limited allowance; Scholarcy's pricing table and its FAQ state different limits, so no number is given here (as of 2026-10-29)",
+   "usageLimits": "Free: a limited number of summaries (the pricing page and FAQ conflict, so none is stated); Plus: summaries, flashcards, Literature Matrix and bibliographies (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "SciSpace",
@@ -10343,7 +10343,7 @@
    "offlineCapable": false,
    "languageSupport": "English (primary)",
    "keyIntegrations": "Chrome extension, Zotero, Mendeley, BibTeX export, Kindle highlights import",
-   "upgradeTriggers": "Bulk article processing; personal library; reference extraction; integration with reference managers",
+   "upgradeTriggers": "More than the free allowance; Literature Matrix and bibliographies (Plus)",
    "complementaryTools": [
     "Semantic Scholar (discovery)",
     "Zotero (refs)",
@@ -11707,7 +11707,7 @@
    "platformType": [
     "desktop"
    ],
-   "currentPricing": "Subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo, Studio bundle $399/yr or $69/mo; Pro versions and Enterprise cost more; list prices, sales are frequent (as of 2026-10-29)",
+   "currentPricing": "No free plan; subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo; Topaz Studio (all apps) $399/yr, $45/mo billed annually or $69/mo month to month; Pro versions and Enterprise cost more; list prices, sales are frequent (as of 2026-10-29)",
    "freeTierFeatures": "No free plan listed; every plan shown is a subscription, and the pricing page does not mention a trial (as of 2026-10-29)",
    "usageLimits": "Standard plans: limited commercial use for organisations under $1M annual revenue; Pro plans: full commercial use (as of 2026-10-29)",
    "apiAvailable": false,

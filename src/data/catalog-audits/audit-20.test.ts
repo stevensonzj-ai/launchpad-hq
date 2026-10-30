@@ -108,8 +108,9 @@ describe("catalog audit 20: stale facts batch 4", () => {
     assert.deepEqual(tracker.map(([, slug]) => slug).sort(), [...AUDIT_20_BATCH].sort());
     for (const slug of AUDIT_20_BATCH) {
       assert.ok(snap(slug), `${slug}: row exists`);
-      if (AUDIT_20_NO_FACT_FILE[slug]) assert.equal(getToolFacts(slug), undefined, slug);
-      else assert.ok(getToolFacts(slug), `${slug}: fact file registered`);
+      // clio-manage and scholarcy had none when this audit ran; audit 21's browser check added theirs.
+      assert.ok(getToolFacts(slug), `${slug}: fact file registered`);
+      if (AUDIT_20_NO_FACT_FILE[slug]) assert.match(JSON.stringify(getToolFacts(slug)?.changelog), /browser check/i, slug);
     }
     assert.deepEqual(Object.keys(AUDIT_20_NO_FACT_FILE), ["clio-manage", "scholarcy"]);
   });
@@ -150,7 +151,7 @@ describe("catalog audit 20: no conflict with earlier audits", () => {
           ...(("addDirectAlternatives" in e && e.addDirectAlternatives?.length) ? ["directAlternatives"] : []),
         ];
         for (const key of theirs) {
-          // restb-ai costTier is the one shared field: Zach's PAID, written by both with the same target.
+          // restb-ai costTier is the one shared field: Zach's ENTERPRISE (audit 21), written by both with the same target.
           if (p.slug === "restb-ai" && key === "costTier") {
             assert.equal(p.guarded!.costTier!.to, (e.guarded as { costTier: { to: string } }).costTier.to);
             continue;
@@ -251,10 +252,12 @@ describe("catalog audit 20: content rules", () => {
     assert.doesNotMatch(snap("spellbook")?.currentPricing ?? "", /\$99/);
     assert.doesNotMatch(snap("chatpdf")?.currentPricing ?? "", /\$5/);
     assert.doesNotMatch(snap("adobe-firefly")?.freeTierFeatures ?? "", /25 generative credits/);
-    assert.doesNotMatch(snap("adobe-firefly")?.currentPricing ?? "", /199\.99/);
+    // Audit 21: Premium $199.99 is on the plans page (browser check), so it is back, as a Premium price.
+    assert.match(snap("adobe-firefly")?.currentPricing ?? "", /Premium \$199\.99 \(50,000\)/);
     assert.doesNotMatch(snap("topaz-labs")?.currentPricing ?? "", /perpetual\)/);
     assert.doesNotMatch(snap("amazon-bedrock")?.freeTierFeatures ?? "", /2 months/);
-    assert.doesNotMatch(snap("azure-openai-service")?.freeTierFeatures ?? "", /\$200/);
+    // Audit 21: the $200 is the general new-account credit, now sourced (azure-account page), and said not to be Azure OpenAI's.
+    assert.match(snap("azure-openai-service")?.freeTierFeatures ?? "", /general new-Azure-account one \(\$200, usable for up to 30 days, new customers only\), not specific to Azure OpenAI/);
     assert.doesNotMatch(snap("wondershare-pdfelement-ai")?.currentPricing ?? "", /79\.99/);
     assert.doesNotMatch(snap("adobe-acrobat-ai-assistant")?.currentPricing ?? "", /22\.99/);
     // Tiers and ratings follow the facts.
@@ -281,7 +284,8 @@ describe("catalog audit 20: content rules", () => {
     assert.equal(getToolFacts("azure-openai-service")?.privacy?.value.trainsOnData, false);
     assert.ok(snap("amazon-q-developer")?.directAlternatives?.includes("Kiro"));
     // One-reader facts stay unverified and out of the row text.
-    for (const [slug, key] of [["harvey-ai", "privacy"], ["spellbook", "company"], ["adobe-firefly", "plans"], ["adobe-firefly", "privacy"], ["adobe-acrobat-ai-assistant", "privacy"], ["open-webui", "company"]] as const) {
+    // (adobe-firefly plans and adobe-acrobat-ai-assistant privacy were one-reader facts; audit 21's browser check read them again and verified them.)
+    for (const [slug, key] of [["harvey-ai", "privacy"], ["spellbook", "company"], ["adobe-firefly", "privacy"], ["open-webui", "company"]] as const) {
       assert.equal(getToolFacts(slug)?.[key]?.status, "unverified", `${slug}.${key}`);
     }
     // Rows with nothing read keep their text.
@@ -371,23 +375,24 @@ describe("catalog audit 20: batch-3 leftovers", () => {
 });
 
 describe("catalog audit 20: Zach's decisions", () => {
-  it("restb-ai is PAID (the API is sales-only, Restb Lens is self-serve), whichever order audits 19 and 20 run in", () => {
+  it("restb-ai is ENTERPRISE (the API is sales-only, Restb Lens has no public prices; first PAID, reversed in audit 21), whichever order audits 19, 20 and 21 run in", () => {
     const p = patch20("restb-ai");
     const r = snap("restb-ai")!;
-    assert.equal(r.costTier, "PAID");
+    assert.equal(r.costTier, "ENTERPRISE");
     assert.equal(r.description, RESTB_DESCRIPTION);
     assert.match(RESTB_DESCRIPTION, /API is sold through sales only/);
-    assert.match(RESTB_DESCRIPTION, /Restb Lens, its web tool, has self-serve plans/);
+    assert.match(RESTB_DESCRIPTION, /Restb Lens, its web tool, is a sign-up web app with no public prices/);
+    assert.doesNotMatch(RESTB_DESCRIPTION, /self-serve/);
     assert.deepEqual(Object.keys(p.fields), []);
-    assert.deepEqual(p.guarded?.costTier, { from: ["FREEMIUM", "ENTERPRISE"], to: "PAID" });
+    assert.deepEqual(p.guarded?.costTier, { from: ["FREEMIUM", "PAID"], to: "ENTERPRISE" });
     // The tier is the same one audit 19 writes now, so neither audit undoes the other.
     const p19 = AUDIT_19_PATCHES.find((x) => x.slug === "restb-ai")!;
-    assert.equal(p19.guarded!.costTier!.to, "PAID");
-    // A row at FREEMIUM (audit 19 not run), ENTERPRISE (the first audit 19 run) or PAID (audit 19 as it is now).
+    assert.equal(p19.guarded!.costTier!.to, "ENTERPRISE");
+    // A row at FREEMIUM (audit 19 not run), PAID (audit 20 as first merged) or ENTERPRISE (audit 19 as it is now).
     for (const start of ["FREEMIUM", "ENTERPRISE", "PAID"]) {
       const pre = row({ costTier: start, description: null });
       const after = { ...pre, ...audit20PatchData(pre, p) } as Audit20Row;
-      assert.equal(after.costTier, "PAID", start);
+      assert.equal(after.costTier, "ENTERPRISE", start);
       assert.equal(after.description, RESTB_DESCRIPTION, start);
       assert.deepEqual(audit20PatchData(after, p), {}, start);
       // Audit 19 re-run afterwards cannot move the tier back.
@@ -404,6 +409,7 @@ describe("catalog audit 20: Zach's decisions", () => {
     const facts = getToolFacts("restb-ai")!;
     assert.equal(facts.freeTier?.value.available, false);
     assert.match(JSON.stringify(facts.changelog), /Cost tier set to PAID/);
+    assert.match(JSON.stringify(facts.changelog), /Cost tier set to ENTERPRISE/);
   });
 
   it("leonardo-ai is LOW privacy because Free-plan content is used for training; its text stays with audits 18 and 19", () => {
@@ -527,13 +533,13 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
     assert.equal(AUDIT_20_PATCHES.some((x) => x.slug === "google-lyria-3"), false);
   });
 
-  it("Antigravity: the FAQ opt-out is recorded, not tied to a plan and silent on training, so the CLI stays LOW and the IDE moves to LOW to match", () => {
+  it("Antigravity: the Enable Telemetry opt-out is recorded with its limits, so the CLI and the IDE are both MEDIUM (first LOW; audit 21)", () => {
     const cli = getToolFacts("antigravity-cli")!;
     assert.match(cli.privacy!.note ?? "", /You can opt out of data collection at any point from the Settings panel/);
-    assert.match(cli.privacy!.note ?? "", /not tied to a plan/);
-    assert.match(cli.privacy!.note ?? "", /does not mention model training/);
-    assert.match(cli.privacy!.note ?? "", /training opt-out is not confirmed/);
-    assert.equal(ANTIGRAVITY_ROW.privacyLevel, "LOW");
+    assert.match(cli.privacy!.note ?? "", /no distinction between free and Google AI Pro or Ultra individual accounts/);
+    assert.match(cli.privacy!.note ?? "", /Enable Telemetry setting/);
+    assert.match(cli.privacy!.note ?? "", /always off for business accounts/);
+    assert.equal(ANTIGRAVITY_ROW.privacyLevel, "MEDIUM");
     // The IDE runs under the same terms: same privacy fact, same rating.
     const ide = getToolFacts("google-antigravity")!;
     assert.equal(ide.privacy!.value.trainsOnData, true);
@@ -541,24 +547,26 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
     assert.ok(isPublishedVerified(ide.privacy!));
     assert.match(ide.privacy!.note ?? "", /same terms/);
     const p = patch20("google-antigravity");
-    assert.deepEqual(p.guarded?.privacyLevel, { from: "HIGH", to: "LOW" });
-    assert.match(p.finding, /FAQ opt-out covers data collection and says nothing about training/);
+    assert.deepEqual(p.guarded?.privacyLevel, { from: "HIGH", to: "MEDIUM" });
+    assert.match(p.finding, /the Enable Telemetry setting is the opt-out/);
     assert.equal(snap("google-antigravity")?.privacyLevel, ANTIGRAVITY_ROW.privacyLevel);
-    assert.equal(audit20PatchData(row({ privacyLevel: "HIGH", costTier: "FREEMIUM" }), p).privacyLevel, "LOW");
+    assert.equal(audit20PatchData(row({ privacyLevel: "HIGH", costTier: "FREEMIUM" }), p).privacyLevel, "MEDIUM");
     assert.equal("privacyLevel" in audit20PatchData(row({ privacyLevel: "MEDIUM", costTier: "FREEMIUM" }), p), false);
     // Both guides name the FAQ opt-out and neither calls it a training opt-out.
     const cliGuide = getStaticTutorialForPlatform("antigravity-cli")!;
     const ideGuide = getStaticTutorialForPlatform("google-antigravity")!;
     assert.match(JSON.stringify(cliGuide), /opt out of data collection at any point from the Settings panel/);
     assert.match(JSON.stringify(ideGuide), /opt out of data collection at any point from the Settings panel/);
-    assert.match(JSON.stringify(ideGuide), /do not treat it as a training opt-out/);
+    assert.match(JSON.stringify(ideGuide), /Enable Telemetry/);
+    assert.match(JSON.stringify(ideGuide), /does not stop everything/);
     assert.equal(cliGuide.lastReviewedAt, CHECKED_AT);
     assert.equal(ideGuide.lastReviewedAt, CHECKED_AT);
   });
 
-  it("the Restb.ai and Leonardo guides, which already agree with the decisions, are left alone", () => {
+  it("the Leonardo guide, which already agrees with the decision, is left alone (the Restb.ai guide changed in audit 21)", () => {
     assert.match(guide("restb-ai"), /Restb Lens/);
-    assert.notEqual(getStaticTutorialForPlatform("restb-ai")?.lastReviewedAt, CHECKED_AT);
+    assert.match(guide("restb-ai"), /sign-up web app with no public prices/);
+    assert.doesNotMatch(guide("restb-ai"), /two-week|promo code|plans start with a single-user plan/);
     assert.notEqual(getStaticTutorialForPlatform("leonardo-ai")?.lastReviewedAt, CHECKED_AT);
   });
 });
@@ -582,7 +590,7 @@ describe("catalog audit 20: dry run and guards", () => {
     return fixture.rows;
   };
 
-  it("dry run against the pre-audit rows reports 26 rows / 90 fields (16 batch-4 rows / 65 fields, 4 leftover rows / 9, 2 decision rows / 3, 4 browser-check rows / 13); a re-run reports 0", () => {
+  it("dry run against the pre-audit rows reports 26 rows / 89 fields (16 batch-4 rows / 65 fields, 4 leftover rows / 9, 2 decision rows / 2, 4 browser-check rows / 13); a re-run reports 0", () => {
     const pre = preAudit();
     const tally = (slugs: string[]) => {
       const kinds: Record<string, number> = {};
@@ -618,14 +626,15 @@ describe("catalog audit 20: dry run and guards", () => {
       fields: 9,
       kinds: { currentPricing: 1, freeTierFeatures: 1, usageLimits: 1, upgradeTriggers: 1, costTier: 1, privacyLevel: 1, budgetAlternativeTo: 2, description: 1 },
     });
-    assert.deepEqual(decisions, { rows: 2, fields: 3, kinds: { costTier: 1, description: 1, privacyLevel: 1 } });
+    // restb-ai is already ENTERPRISE in the fixture (audit 19 as first merged), which is audit 20's target now, so only its description changes.
+    assert.deepEqual(decisions, { rows: 2, fields: 2, kinds: { description: 1, privacyLevel: 1 } });
     assert.deepEqual(browser, {
       rows: 4,
       fields: 13,
       kinds: { currentPricing: 4, freeTierFeatures: 3, usageLimits: 4, upgradeTriggers: 2 },
     });
     assert.equal(batch.rows + leftovers.rows + decisions.rows + browser.rows, 26);
-    assert.equal(batch.fields + leftovers.fields + decisions.fields + browser.fields, 90);
+    assert.equal(batch.fields + leftovers.fields + decisions.fields + browser.fields, 89);
   });
 
   it("leaves a hand-edited guarded field alone and reports it; null company and website are fillable", () => {

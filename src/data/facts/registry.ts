@@ -184,6 +184,9 @@ import glaspFacts from "./glasp";
 import quizletQChatFacts from "./quizlet-q-chat";
 // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
 import antigravityCliFacts from "./antigravity-cli";
+// Research Analyst browser check of batch 4, 2026-10-29 (catalog audit 21).
+import clioManageFacts from "./clio-manage";
+import scholarcyFacts from "./scholarcy";
 import clineFacts from "./cline";
 import harveyAiFacts from "./harvey-ai";
 import luminanceFacts from "./luminance";
@@ -390,6 +393,9 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [glaspFacts.slug]: glaspFacts,
   // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
   [antigravityCliFacts.slug]: antigravityCliFacts,
+  // Catalog audit 21, 2026-10-29: Research Analyst browser check of batch 4.
+  [clioManageFacts.slug]: clioManageFacts,
+  [scholarcyFacts.slug]: scholarcyFacts,
   // Catalog audit 20, 2026-10-29: stale facts batch 4.
   [clineFacts.slug]: clineFacts,
   [harveyAiFacts.slug]: harveyAiFacts,

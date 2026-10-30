@@ -40,7 +40,7 @@ export const googleAntigravityTutorial: PlatformTutorialData = {
   security: [
     {
       kind: "text",
-      text: "The work happens on your machine; the thinking happens at Google, and the files an agent touches are sent there. Free and paid use fall under the same terms, which are blunt about it: interactions are used to develop and improve Google's products and machine learning, and Google employees and contractors may access, view and review them. Google's FAQ says you can opt out of data collection at any point from the Settings panel (in the app this is the **Enable Telemetry** toggle, under Account); the FAQ ties it to no plan and does not say whether it also stops the use of your interactions for training, so do not treat it as a training opt-out.",
+      text: "The work happens on your machine; the thinking happens at Google, and the files an agent touches are sent there. Free and paid use fall under the same terms, which are blunt about it: interactions are used to develop and improve Google's products and machine learning, and Google employees and contractors may access, view and review them. The opt-out is the **Enable Telemetry** toggle under Account in Settings (Google's FAQ: you can opt out of data collection at any point from the Settings panel), and the terms tie it to that improvement and review use. It is on by default for personal accounts, and the terms make no distinction between free and paid personal accounts. Switching it off does not stop everything: Google still uses your data to provide the service, process any feedback and help keep Antigravity safe. Business accounts (Workspace, Gemini Enterprise) have it always off and follow their organisation's Google Cloud terms.",
     },
     {
       kind: "list",
@@ -67,7 +67,7 @@ export const googleAntigravityTutorial: PlatformTutorialData = {
     avoid: [
       "Anyone under 18 — Google refuses the account outright",
       "Work or school Google accounts; Google's own FAQ sends people to a personal Gmail",
-      "Code a person at Google should not read, unless you have turned telemetry off",
+      "Code a person at Google should not read, unless you have switched Enable Telemetry off",
     ],
   },
 

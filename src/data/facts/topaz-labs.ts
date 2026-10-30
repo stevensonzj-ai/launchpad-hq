@@ -11,6 +11,13 @@ import type { ToolFacts } from "./types";
  * or $75/mo; Topaz for Web prices), so those are left out. A free trial is not
  * mentioned in the part read. The privacy policy never mentions training AI
  * models and describes no opt-out; the terms page returned 404 for one reader.
+ *
+ * Catalog audit 21 (Research Analyst browser check, 2026-10-29) read the
+ * pricing page and confirmed: no free plan is listed; Topaz Studio (all apps,
+ * 300 monthly video cloud credits) is $399 a year, $45 a month on an annual
+ * commitment, or $69 a month month to month; Studio Pro (600 credits, full
+ * commercial use) is $799 a year, and its monthly price is left out because
+ * the page shows both $79 and $75. Single apps match the plans below.
  */
 export default {
   slug: "topaz-labs",
@@ -71,7 +78,13 @@ export default {
         name: "Topaz Studio",
         price: "$399",
         period: "year",
-        limits: "$69 a month, or $45 a month on a 12-month commitment; the all-apps bundle"
+        limits: "$69 a month, or $45 a month on a 12-month commitment; the all-apps bundle; 300 monthly video cloud credits"
+      },
+      {
+        name: "Topaz Studio Pro",
+        price: "$799",
+        period: "year",
+        limits: "600 monthly video cloud credits; full commercial use; seat management; the page shows two conflicting monthly prices, so none is given"
       },
       {
         name: "Pro versions",
@@ -108,6 +121,11 @@ export default {
     status: "verified"
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "plans",
+      summary: "Browser check (audit 21): no free plan; Studio $399 a year, $45 a month on an annual commitment or $69 month to month; Studio Pro $799 a year."
+    },
     {
       date: "2026-10-29",
       field: "plans",

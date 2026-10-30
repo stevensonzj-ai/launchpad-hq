@@ -30,7 +30,8 @@
  *
  *   - ANTIGRAVITY_ROW: a new `antigravity-cli` row, created only when no row
  *     has that slug (the audit 16 pattern). Its pricing text is built from
- *     the fact file's plans and free tier.
+ *     the fact file's plans and free tier. Its privacy (MEDIUM) and description
+ *     follow audit 21; a row an earlier run created at LOW moves there.
  *
  * Audit 10 touches none of these slugs. Audit 11 patches canopy-tax and
  * squarespace-ai on costTier only; this audit never writes that field for
@@ -42,6 +43,7 @@
  * be unit-tested (audit-19.test.ts).
  */
 import antigravityCliFacts from "../facts/antigravity-cli";
+import { ANTIGRAVITY_DESCRIPTION_NEW } from "./audit-21";
 
 export const CHECKED_AT = "2026-10-29";
 const AS_OF = `(as of ${CHECKED_AT})`;
@@ -177,8 +179,8 @@ export const AUDIT_19_PATCHES: Audit19Patch[] = [
       freeTierFeatures: `No free plan or free API trial listed; complimentary proofs of concept on request ${AS_OF}`,
       usageLimits: `Set by contract ${AS_OF}`,
     },
-    // Zach (2026-10-29): PAID, not ENTERPRISE. Audit 20 writes the same tier, and also moves a row an earlier run left at ENTERPRISE.
-    guarded: { costTier: { from: "FREEMIUM", to: "PAID" } },
+    // Zach (2026-10-29): ENTERPRISE again (audit 21; briefly PAID). Audit 20 writes the same tier, and also moves a row an earlier run left at PAID.
+    guarded: { costTier: { from: "FREEMIUM", to: "ENTERPRISE" } },
   },
   {
     slug: "scale-ai",
@@ -543,8 +545,8 @@ export const ANTIGRAVITY_ROW = {
   name: "Antigravity CLI",
   company: "Google",
   website: "https://antigravity.google/product/antigravity-cli",
-  description:
-    "Google's terminal coding agent: you type what you want in plain English, and its AI agent reads your project, edits files and runs commands. It replaced Gemini CLI for free individual use and for Google AI Pro and Ultra subscribers on 2026-06-18. Individuals can use it for $0 with a quota refreshed weekly; Google AI Pro and Ultra raise the limits. It is not open source. Google's Antigravity terms (as of 2026-10-29) say Google uses your interactions to improve its products and machine-learning technologies and that Google employees and contractors may review them, and ask you not to submit confidential information.",
+  // Wording owned by audit 21 (Enable Telemetry opt-out; privacy MEDIUM).
+  description: ANTIGRAVITY_DESCRIPTION_NEW,
   primaryUse: "Google's terminal AI coding agent, free for individuals with a weekly quota",
   primaryUseCases:
     "Coding from the terminal; multi-file edits and refactors; running commands and tests; moving over from Gemini CLI",
@@ -560,7 +562,8 @@ export const ANTIGRAVITY_ROW = {
   offlineCapable: false,
   keyIntegrations:
     "Terminal; MCP servers; plugins, skills and hooks; the Antigravity desktop app (same agent harness); Gemini CLI extensions import as plugins",
-  privacyLevel: "LOW",
+  // MEDIUM (Zach, audit 21): the Enable Telemetry setting is the opt-out. Audit 19 first created the row at LOW.
+  privacyLevel: "MEDIUM",
   idealUserTypes: ["Developers", "Google ecosystem users", "terminal-native engineers", "former Gemini CLI users"] as string[],
   timeToProductivity: null,
   learningCurve: "Moderate",

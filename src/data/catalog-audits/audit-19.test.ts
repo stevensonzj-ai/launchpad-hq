@@ -344,9 +344,9 @@ describe("catalog audit 19: Antigravity CLI row (create only) and the Gemini CLI
     }
   });
 
-  it("is FREEMIUM, privacy LOW, not open source, and states no request-rate numbers", () => {
+  it("is FREEMIUM, privacy MEDIUM (Enable Telemetry opt-out, audit 21), not open source, and states no request-rate numbers", () => {
     assert.equal(ANTIGRAVITY_ROW.costTier, "FREEMIUM");
-    assert.equal(ANTIGRAVITY_ROW.privacyLevel, "LOW");
+    assert.equal(ANTIGRAVITY_ROW.privacyLevel, "MEDIUM");
     const text = JSON.stringify(ANTIGRAVITY_ROW);
     assert.doesNotMatch(text.replace(/not open source/g, ""), /open[- ]source|apache|\bMIT\b/i);
     assert.doesNotMatch(text, /\d+\s*(requests?|RPM|RPD)\b|per (minute|day):? \d/i);
@@ -358,7 +358,7 @@ describe("catalog audit 19: Antigravity CLI row (create only) and the Gemini CLI
     assert.doesNotMatch(text, /via=|affiliate|referral|sponsor|utm_/i);
     const facts = getToolFacts(ANTIGRAVITY_SLUG)!;
     assert.equal(facts.privacy?.value.trainsOnData, true);
-    assert.match(facts.privacy?.note ?? "", /opt-out is not confirmed/);
+    assert.match(facts.privacy?.note ?? "", /Enable Telemetry setting/);
     assert.ok(facts.features?.value.some((f) => /Not open source/.test(f)));
   });
 

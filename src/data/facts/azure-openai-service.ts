@@ -14,6 +14,15 @@ import type { ToolFacts } from "./types";
  * completions are not used to train foundation models without permission and
  * are not available to OpenAI or other providers; a sample may be stored for
  * abuse monitoring.
+ *
+ * Catalog audit 21 (Research Analyst browser check, 2026-10-29): the Azure
+ * free-account page offers a $200 credit usable for up to 30 days, for new
+ * customers only (one per customer); the account is disabled after 30 days
+ * unless upgraded to pay as you go. Azure OpenAI is not on the free-services
+ * list there (the AI items listed free are Speech and Document Intelligence).
+ * The OpenAI pricing page's only "free" mention is 1 GB of vector storage a
+ * day. So the credit is the general new-account one, not an Azure OpenAI
+ * allowance. Cost tier stays PAID.
  */
 export default {
   slug: "azure-openai-service",
@@ -21,13 +30,14 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "No permanent free tier: pay as you go, or try Azure free for up to 30 days. The free-account credit amount is not stated on the pages read."
+      summary: "No free tier for the service itself. The only credit is the general new-Azure-account one: $200, usable for up to 30 days, for new customers only. Azure OpenAI is not on the free-services list."
     },
-    sourceUrl: "https://azure.microsoft.com/en-us/products/ai-foundry/",
-    sourceKind: "product-page",
+    note: "Both batch-4 readers saw \"Pay as you go or try Azure free for up to 30 days\" on the Foundry page; the $200 credit amount is from the browser check of 2026-10-29 (azure-account page).",
+    sourceUrl: "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account",
+    sourceKind: "plans-page",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "ra",
     verifiedAt: "2026-10-29",
     status: "verified"
   },
@@ -86,6 +96,11 @@ export default {
     status: "verified"
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "freeTier",
+      summary: "Browser check (audit 21): the general new-account credit is $200 for up to 30 days (new customers only); the service is not on the free-services list. Cost tier stays PAID."
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

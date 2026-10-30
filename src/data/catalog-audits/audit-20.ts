@@ -39,23 +39,28 @@
  *
  * Zach's two approved decisions and the Research Analyst's batch-3 browser check
  * (2026-10-29) are in here too (AUDIT_20_DECISIONS, AUDIT_20_BROWSER_CHECK):
- *   4. restb-ai: cost tier PAID (the API is sales-only, Restb Lens has
- *      self-serve plans; the note is in the description); leonardo-ai:
+ *   4. restb-ai: cost tier ENTERPRISE (first PAID; audit 21 reversed it: the API
+ *      is sales-only, Restb Lens shows no public prices; the note is in the
+ *      description); leonardo-ai:
  *      privacy LOW, because Free-plan content is used for training.
  *   5. quizlet-q-chat, bloomberg-gpt-terminal-ai, zillow-ai-zestimate and
  *      duolingo-max: row text from the browser check (Quizlet gets its first
  *      fact file). Q-Chat is not called retired; Duolingo's "Explain My
  *      Answer" is dropped; Zillow and Duolingo prices are "not stated".
- *   6. google-antigravity: privacy HIGH to LOW, to match the CLI row under
- *      the same Antigravity terms (rubric reasoning in
- *      src/data/facts/google-antigravity.ts). The antigravity-cli row stays
- *      LOW (audit 19 creates it); only its fact note changes.
+ *   6. google-antigravity: privacy HIGH to MEDIUM (first LOW; audit 21 moved
+ *      it, with the antigravity-cli row that audit 19 creates, once Zach
+ *      confirmed the Enable Telemetry opt-out; reasoning in
+ *      src/data/facts/google-antigravity.ts).
  *   Lyria (current model is Lyria 3.5) changes in its fact file and guide
  *   only; the row text already says so. Codex CLI, Gemini CLI, Upstage and
  *   Aider were confirmed as they are.
  *
+ * Audit 21 (batch-4 browser corrections) rewrites a few of this audit's
+ * targets (A21_TEXT, the restb-ai tier and description, the google-antigravity
+ * privacy); they are imported from audit-21.ts so the two agree.
+ *
  * Earlier audits: they write no field this one writes on a row, with one
- * exception: restb-ai costTier, where audit 19 now writes the same PAID
+ * exception: restb-ai costTier, where audit 19 now writes the same ENTERPRISE
  * (audit-20.test.ts checks 17, 18 and 19 field by field, and re-runs them
  * against the patched snapshot). Audit 10 patches currentPricing on
  * claude-code only; this audit writes budgetAlternativeTo there. Audit 11
@@ -71,6 +76,7 @@
  * Kept free of Prisma and dotenv so it typechecks with the app and can be
  * unit-tested (audit-20.test.ts).
  */
+import { A21_TEXT, RESTB_DESCRIPTION, RESTB_DESCRIPTION_OLD } from "./audit-21";
 import {
   antigravityCurrentPricing,
   antigravityFreeTierFeatures,
@@ -129,8 +135,8 @@ export const AUDIT_20_BATCH = [
 
 /** Batch-4 rows with no fact file, and why. */
 export const AUDIT_20_NO_FACT_FILE: Record<string, string> = {
-  "clio-manage": "clio.com, /pricing and /privacy returned 403 to both readers (Browser-check list).",
-  scholarcy: "Every scholarcy.com page (home, pricing, privacy policy) returned 403 to both readers (Browser-check list).",
+  "clio-manage": "clio.com, /pricing and /privacy returned 403 to both readers (Browser-check list). Audit 21 added its fact file from the browser check.",
+  scholarcy: "Every scholarcy.com page (home, pricing, privacy policy) returned 403 to both readers (Browser-check list). Audit 21 added its fact file from the browser check.",
 };
 
 /** Batch-4 rows read, but with nothing both readers saw that changes the row text. */
@@ -149,7 +155,8 @@ export const AUDIT_20_DECISIONS = ["restb-ai", "leonardo-ai"];
 /** Rows changed by the Research Analyst's batch-3 browser check (2026-10-29). */
 export const AUDIT_20_BROWSER_CHECK = ["quizlet-q-chat", "bloomberg-gpt-terminal-ai", "zillow-ai-zestimate", "duolingo-max"];
 
-export const RESTB_DESCRIPTION = `AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts); Restb Lens, its web tool, has self-serve plans (as of ${CHECKED_AT}).`;
+// Restb.ai's description is owned by audit 21 (the "Lens has self-serve plans" claim came out); audit 20 writes the same text.
+export { RESTB_DESCRIPTION };
 
 export const MURF_DESCRIPTION_OLD = "AI voice generator for voiceovers, e-learning, and ads with multiple voices and languages.";
 export const MURF_DESCRIPTION_NEW =
@@ -212,11 +219,11 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
   },
   {
     slug: "adobe-firefly",
-    finding: "Row said 25 free credits a month and Premium $199.99/mo; Adobe now gives free daily generations (count not stated), paid plans carry 2,000 / 4,000 / 10,000 / 50,000 monthly credits that do not roll over, and $199.99 is the teams price",
+    finding: "Row said 25 free credits a month and Premium $199.99/mo; Adobe now gives free daily generations (count not stated), paid plans carry 2,000 / 4,000 / 10,000 / 50,000 monthly credits that do not roll over, and the row's $199.99 was read as the teams price (audit 21: the plans page shows it as Premium)",
     sources: ["https://www.adobe.com/products/firefly/plans.html", "https://www.adobe.com/products/firefly.html"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Free daily generations (count not stated); paid plans Standard, Pro, Pro Plus and Premium carry 2,000 / 4,000 / 10,000 / 50,000 generative credits a month; USD prices vary by region and are not confirmed ${AS_OF}`,
+      currentPricing: A21_TEXT["adobe-firefly"].currentPricing,
       freeTierFeatures: `Free daily generations across image, video and audio, with no plan needed; limits refresh every day and the daily count is not stated ${AS_OF}`,
       usageLimits: `Monthly generative credits: Standard 2,000, Pro 4,000, Pro Plus 10,000, Premium 50,000; credits reset each billing cycle and do not roll over; paid plans include unlimited standard image and vector generation ${AS_OF}`,
       upgradeTriggers: "More than the free daily generations; video, audio and partner models (they use credits); more monthly credits",
@@ -228,7 +235,7 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     sources: ["https://www.topazlabs.com/pricing", "https://www.topazlabs.com/privacy-policy"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo, Studio bundle $399/yr or $69/mo; Pro versions and Enterprise cost more; list prices, sales are frequent ${AS_OF}`,
+      currentPricing: A21_TEXT["topaz-labs"].currentPricing,
       freeTierFeatures: `No free plan listed; every plan shown is a subscription, and the pricing page does not mention a trial ${AS_OF}`,
       usageLimits: `Standard plans: limited commercial use for organisations under $1M annual revenue; Pro plans: full commercial use ${AS_OF}`,
       upgradeTriggers: "Full commercial use (Pro plans); the all-apps Studio bundle; photo, video and enlargement are separate products",
@@ -242,7 +249,7 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: `Free Trial API key (rate limited; no production or commercial use); production is pay as you go; Model Vault is priced per instance (Rerank 5 Medium $4.00 an hour or $2,500 a month); North, Compass and private deployments are custom ${AS_OF}`,
-      freeTierFeatures: `Free Trial API key: calls are free but rate limited, and trial keys may not be used for production or commercial purposes; a production key needs a Go to Production application ${AS_OF}`,
+      freeTierFeatures: A21_TEXT.cohere.freeTierFeatures,
     },
     guarded: {
       costTier: { from: "FREE", to: "FREEMIUM" },
@@ -255,10 +262,10 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     sources: ["https://www.adobe.com/acrobat/pricing.html", "https://www.adobe.com/acrobat/generative-ai-pdf.html"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `AI Assistant features are built into Acrobat Express ($9.99/mo on an annual plan billed monthly; $10.99 month to month) and Acrobat Studio ($24.99/mo; $34.99 month to month); an AI Assistant add-on is also mentioned (price not confirmed) ${AS_OF}`,
+      currentPricing: A21_TEXT["adobe-acrobat-ai-assistant"].currentPricing,
       freeTierFeatures: `No permanent free AI tier: Acrobat Reader is free for viewing and commenting, and the paid plans offer free trials (length not stated) ${AS_OF}`,
       usageLimits: `Not published for individual plans ${AS_OF}`,
-      upgradeTriggers: "Moving to Acrobat Express or Studio for the AI Assistant features; the AI Assistant add-on",
+      upgradeTriggers: A21_TEXT["adobe-acrobat-ai-assistant"].upgradeTriggers,
     },
     guarded: { costTier: { from: "FREEMIUM", to: "PAID" } },
   },
@@ -269,7 +276,7 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: `Pay as you go per token (On-Demand Standard, Flex and Priority tiers); Batch is about 50% lower on select models; Provisioned Throughput is hourly with no commitment, 1-month or 6-month terms ${AS_OF}`,
-      freeTierFeatures: `No Bedrock free tier of its own: new AWS accounts on the AWS Free plan get up to $200 in credits (valid 6 months), usable on Bedrock ${AS_OF}`,
+      freeTierFeatures: A21_TEXT["amazon-bedrock"].freeTierFeatures,
       usageLimits: `Per-token and per-hour billing, no subscription plans; Guardrails, Knowledge Bases and Model Evaluation are billed separately ${AS_OF}`,
       upgradeTriggers: "Free-plan credits running out; Provisioned Throughput; Guardrails; Knowledge Bases; Model Evaluation",
     },
@@ -287,7 +294,7 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     fields: {
       primaryUse: "OpenAI models on Azure infrastructure, now offered inside Microsoft Foundry",
       currentPricing: `Pay as you go per token (Global, Data Zone and Regional deployments); provisioned throughput (PTU) by monthly or annual reservation; Batch pricing; per-token prices are on the Azure pricing page ${AS_OF}`,
-      freeTierFeatures: `No permanent free tier: pay as you go, or try Azure free for up to 30 days; the credit amount is not stated on the pages read ${AS_OF}`,
+      freeTierFeatures: A21_TEXT["azure-openai-service"].freeTierFeatures,
       usageLimits: `Consumption-based billing; provisioned throughput (PTU) reserved monthly or annually ${AS_OF}`,
     },
     guarded: { costTier: { from: "FREEMIUM", to: "PAID" } },
@@ -367,7 +374,7 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
   // ---- Leftovers from batch 3. ----
   {
     slug: "google-antigravity",
-    finding: "Row said \"Free (preview)\", a free cloud-based IDE and generous free tier; Google's Antigravity pricing is $0 for individuals with weekly rate limits, Google AI Pro and Ultra raise them, organisations use Gemini Enterprise (same plans as the Antigravity CLI row). Privacy HIGH to LOW to match the CLI row: same Antigravity terms, interactions are used to improve Google's products and machine learning by default, reviewers may see them; the FAQ opt-out covers data collection and says nothing about training, so the rubric's MEDIUM (improvement with an opt-out) is not established",
+    finding: "Row said \"Free (preview)\", a free cloud-based IDE and generous free tier; Google's Antigravity pricing is $0 for individuals with weekly rate limits, Google AI Pro and Ultra raise them, organisations use Gemini Enterprise (same plans as the Antigravity CLI row). Privacy HIGH to MEDIUM to match the CLI row (first written as LOW; audit 21 moved it once Zach confirmed the Enable Telemetry opt-out): same Antigravity terms, interactions are used to improve Google's products and machine learning by default and reviewers may see them, and the Enable Telemetry setting is the opt-out, so the rubric's MEDIUM (improvement with an opt-out) applies",
     sources: ["https://antigravity.google/pricing", "https://antigravity.google/docs/plans", "https://antigravity.google/docs/models", "https://antigravity.google/terms", "https://antigravity.google/docs/faq"],
     checkedAt: CHECKED_AT,
     fields: {
@@ -378,7 +385,7 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
     },
     guarded: {
       costTier: { from: "FREE", to: "FREEMIUM" },
-      privacyLevel: { from: "HIGH", to: "LOW" },
+      privacyLevel: { from: "HIGH", to: "MEDIUM" },
     },
   },
   {
@@ -408,13 +415,13 @@ export const AUDIT_20_PATCHES: Audit20Patch[] = [
   // ---- Zach's approved decisions (2026-10-29). ----
   {
     slug: "restb-ai",
-    finding: "Zach: cost tier PAID. The Restb.ai API is sales-only (contracts, no published prices) while Restb Lens, the same company's web tool, has self-serve plans (per the guide). Audit 19 moved the row FREEMIUM to ENTERPRISE (now PAID too); a row it left at ENTERPRISE moves here. The note is the description (no field audit 18 or 19 owns)",
+    finding: "Zach: cost tier ENTERPRISE (first decided PAID, reversed the same day in audit 21 after the Research Analyst's browser check: the API is sales-only and Restb Lens shows no public prices). Audit 19 now writes the same ENTERPRISE; a row an earlier run left at PAID moves here. The note is the description (no field audit 18 or 19 owns)",
     sources: ["https://restb.ai/faq/", "https://restb.ai/terms-conditions/"],
     checkedAt: CHECKED_AT,
     fields: {},
     guarded: {
-      costTier: { from: ["FREEMIUM", "ENTERPRISE"], to: "PAID" },
-      description: { from: [null], to: RESTB_DESCRIPTION },
+      costTier: { from: ["FREEMIUM", "PAID"], to: "ENTERPRISE" },
+      description: { from: [null, RESTB_DESCRIPTION_OLD], to: RESTB_DESCRIPTION },
     },
   },
   {

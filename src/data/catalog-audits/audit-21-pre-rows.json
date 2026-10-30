@@ -1,0 +1,115 @@
+{
+ "note": "Rows as of origin/main 1b16b86 (catalog audits 17-20 applied, audit 21 not): the input of the audit-21 dry-run test, so it does not depend on git history. antigravity-cli is the row audit 19 creates (it is not in the snapshot), as audit 19 created it before audit 21.",
+ "rows": {
+  "antigravity-cli": {
+   "description": "Google's terminal coding agent: you type what you want in plain English, and its AI agent reads your project, edits files and runs commands. It replaced Gemini CLI for free individual use and for Google AI Pro and Ultra subscribers on 2026-06-18. Individuals can use it for $0 with a quota refreshed weekly; Google AI Pro and Ultra raise the limits. It is not open source. Google's Antigravity terms (as of 2026-10-29) say Google uses your interactions to improve its products and machine-learning technologies and that Google employees and contractors may review them, and ask you not to submit confidential information.",
+   "primaryUse": null,
+   "currentPricing": "$0 for individuals (quota refreshed weekly); Google AI Pro $19.99/mo and Google AI Ultra from $99.99/mo raise the limits; organisations: Gemini Enterprise from $30 per seat a month, or pay-as-you-go (as of 2026-10-29)",
+   "freeTierFeatures": "$0 for individuals with a personal Google account (18+, supported countries): a variety of agent models, unlimited Tab completions and Command requests, and a quota refreshed weekly. Numeric limits are not stated. (as of 2026-10-29)",
+   "usageLimits": "Free: a quota refreshed weekly; Google AI Pro: refreshed every five hours up to a weekly limit; Ultra: the highest quota; numeric requests per minute or per day are not stated (as of 2026-10-29)",
+   "upgradeTriggers": "Higher rate limits (Google AI Pro or Ultra); Google's newest Gemini and Claude models on paid plans; AI credits for overage",
+   "costTier": "FREEMIUM",
+   "privacyLevel": "LOW"
+  },
+  "google-antigravity": {
+   "description": null,
+   "primaryUse": "Multi-agent AI coding IDE",
+   "currentPricing": "$0 for individuals (quota refreshed weekly); Google AI Pro $19.99/mo and Google AI Ultra from $99.99/mo raise the limits; organisations: Gemini Enterprise from $30 per seat a month, or pay-as-you-go (as of 2026-10-29)",
+   "freeTierFeatures": "$0 for individuals with a personal Google account (18+, supported countries): a variety of agent models, unlimited Tab completions and Command requests, and a quota refreshed weekly. Numeric limits are not stated. (as of 2026-10-29)",
+   "usageLimits": "Free: a quota refreshed weekly; Google AI Pro: refreshed every five hours up to a weekly limit; Ultra: the highest quota; numeric requests per minute or per day are not stated (as of 2026-10-29)",
+   "upgradeTriggers": "Higher rate limits (Google AI Pro or Ultra); Google's newest Gemini and Claude models on paid plans; AI credits for overage",
+   "costTier": "FREEMIUM",
+   "privacyLevel": "LOW"
+  },
+  "restb-ai": {
+   "description": "AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts); Restb Lens, its web tool, has self-serve plans (as of 2026-10-29).",
+   "primaryUse": "AI computer vision for real estate",
+   "currentPricing": "No public prices: billed as a monthly flat rate, monthly volume or a fixed fee per API request; contact sales (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan or free API trial listed; complimentary proofs of concept on request (as of 2026-10-29)",
+   "usageLimits": "Set by contract (as of 2026-10-29)",
+   "upgradeTriggers": "Volume needs; custom models; enterprise SLA; dedicated support",
+   "costTier": "PAID",
+   "privacyLevel": "HIGH"
+  },
+  "clio-manage": {
+   "description": null,
+   "primaryUse": "AI-powered legal practice management",
+   "currentPricing": "From $49/user/mo",
+   "freeTierFeatures": "7-day free trial; no permanent free tier",
+   "usageLimits": "Per-user monthly pricing: EasyStart $39, Essentials $69, Advanced $99, Complete $129",
+   "upgradeTriggers": "Trial expiry; needing billing; document automation; AI features; client portal",
+   "costTier": "PAID",
+   "privacyLevel": "HIGH"
+  },
+  "scholarcy": {
+   "description": null,
+   "primaryUse": "AI paper summarization and flashcard generation",
+   "currentPricing": "Free tier; paid plans",
+   "freeTierFeatures": "Free Chrome extension: summarize any article; flashcard generation; limited features",
+   "usageLimits": "Free extension: individual articles only; Library plans: bulk processing + reference extraction",
+   "upgradeTriggers": "Bulk article processing; personal library; reference extraction; integration with reference managers",
+   "costTier": "FREE",
+   "privacyLevel": "MEDIUM"
+  },
+  "adobe-firefly": {
+   "description": null,
+   "primaryUse": "Commercially safe AI image generation/editing",
+   "currentPricing": "Free daily generations (count not stated); paid plans Standard, Pro, Pro Plus and Premium carry 2,000 / 4,000 / 10,000 / 50,000 generative credits a month; USD prices vary by region and are not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "Free daily generations across image, video and audio, with no plan needed; limits refresh every day and the daily count is not stated (as of 2026-10-29)",
+   "usageLimits": "Monthly generative credits: Standard 2,000, Pro 4,000, Pro Plus 10,000, Premium 50,000; credits reset each billing cycle and do not roll over; paid plans include unlimited standard image and vector generation (as of 2026-10-29)",
+   "upgradeTriggers": "More than the free daily generations; video, audio and partner models (they use credits); more monthly credits",
+   "costTier": "FREEMIUM",
+   "privacyLevel": "HIGH"
+  },
+  "topaz-labs": {
+   "description": null,
+   "primaryUse": "AI video/image upscaling and enhancement",
+   "currentPricing": "Subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo, Studio bundle $399/yr or $69/mo; Pro versions and Enterprise cost more; list prices, sales are frequent (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan listed; every plan shown is a subscription, and the pricing page does not mention a trial (as of 2026-10-29)",
+   "usageLimits": "Standard plans: limited commercial use for organisations under $1M annual revenue; Pro plans: full commercial use (as of 2026-10-29)",
+   "upgradeTriggers": "Full commercial use (Pro plans); the all-apps Studio bundle; photo, video and enlargement are separate products",
+   "costTier": "PAID",
+   "privacyLevel": "HIGH"
+  },
+  "cohere": {
+   "description": null,
+   "primaryUse": "Enterprise LLM API with multilingual focus",
+   "currentPricing": "Free Trial API key (rate limited; no production or commercial use); production is pay as you go; Model Vault is priced per instance (Rerank 5 Medium $4.00 an hour or $2,500 a month); North, Compass and private deployments are custom (as of 2026-10-29)",
+   "freeTierFeatures": "Free Trial API key: calls are free but rate limited, and trial keys may not be used for production or commercial purposes; a production key needs a Go to Production application (as of 2026-10-29)",
+   "usageLimits": "Free: 1,000 API calls/mo; Production: pay-per-use; Enterprise: custom; generous trial for testing",
+   "upgradeTriggers": "Production use; higher rate limits; fine-tuning; enterprise support; private deployment; SLA",
+   "costTier": "FREEMIUM",
+   "privacyLevel": "MEDIUM"
+  },
+  "amazon-bedrock": {
+   "description": null,
+   "primaryUse": "Managed access to multiple foundation models",
+   "currentPricing": "Pay as you go per token (On-Demand Standard, Flex and Priority tiers); Batch is about 50% lower on select models; Provisioned Throughput is hourly with no commitment, 1-month or 6-month terms (as of 2026-10-29)",
+   "freeTierFeatures": "No Bedrock free tier of its own: new AWS accounts on the AWS Free plan get up to $200 in credits (valid 6 months), usable on Bedrock (as of 2026-10-29)",
+   "usageLimits": "Per-token and per-hour billing, no subscription plans; Guardrails, Knowledge Bases and Model Evaluation are billed separately (as of 2026-10-29)",
+   "upgradeTriggers": "Free-plan credits running out; Provisioned Throughput; Guardrails; Knowledge Bases; Model Evaluation",
+   "costTier": "PAID",
+   "privacyLevel": "HIGH"
+  },
+  "azure-openai-service": {
+   "description": null,
+   "primaryUse": "OpenAI models on Azure infrastructure, now offered inside Microsoft Foundry",
+   "currentPricing": "Pay as you go per token (Global, Data Zone and Regional deployments); provisioned throughput (PTU) by monthly or annual reservation; Batch pricing; per-token prices are on the Azure pricing page (as of 2026-10-29)",
+   "freeTierFeatures": "No permanent free tier: pay as you go, or try Azure free for up to 30 days; the credit amount is not stated on the pages read (as of 2026-10-29)",
+   "usageLimits": "Consumption-based billing; provisioned throughput (PTU) reserved monthly or annually (as of 2026-10-29)",
+   "upgradeTriggers": "Trial expiration; higher rate limits; PTU (Provisioned Throughput); enterprise compliance; private endpoints",
+   "costTier": "PAID",
+   "privacyLevel": "HIGH"
+  },
+  "adobe-acrobat-ai-assistant": {
+   "description": null,
+   "primaryUse": "AI-powered PDF reading, summarization, and Q&A",
+   "currentPricing": "AI Assistant features are built into Acrobat Express ($9.99/mo on an annual plan billed monthly; $10.99 month to month) and Acrobat Studio ($24.99/mo; $34.99 month to month); an AI Assistant add-on is also mentioned (price not confirmed) (as of 2026-10-29)",
+   "freeTierFeatures": "No permanent free AI tier: Acrobat Reader is free for viewing and commenting, and the paid plans offer free trials (length not stated) (as of 2026-10-29)",
+   "usageLimits": "Not published for individual plans (as of 2026-10-29)",
+   "upgradeTriggers": "Moving to Acrobat Express or Studio for the AI Assistant features; the AI Assistant add-on",
+   "costTier": "PAID",
+   "privacyLevel": "HIGH"
+  }
+ }
+}
