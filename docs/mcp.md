@@ -45,6 +45,7 @@ Pure and deterministic (`src/lib/mcp/tools.ts`, `searchTools`); every point show
 ## Limits
 
 - **Inputs:** strings are capped at 200 characters. `limit` is at most 10 (default 5). `compare` takes 2–4 tools.
+- **Requests:** bodies over 64 KB get 413 (checked before parsing, chunked bodies included). A JSON-RPC batch may hold at most 10 messages; larger batches get a -32600 error. A browser `Origin` must be our own site or a listed AI client (`MCP_ALLOWED_ORIGINS` in `src/lib/mcp/request-guard.ts`); others get 403, and only the origin's host is logged. Requests with no `Origin` (server-side clients such as Claude, ChatGPT and Grok connectors) are allowed.
 - **Catalog caching:** the catalog comes from Next's shared data cache (tag `catalog`, 1 hour), with 5 minutes of per-instance memory in front. `/data/v1` reads the same loader. See [caching.md](caching.md).
 - **Rate limiting:** No per-IP rate limit is applied yet; Vercel's platform DDoS protection covers abuse, and usage is monitored via logs.
 
