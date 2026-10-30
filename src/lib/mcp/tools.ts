@@ -850,6 +850,24 @@ export function searchTools(
   // nothing matched strongly, keep the single-word hits as best effort.
   const multiWord = query.strong.length + query.weak.length >= 2;
   if (multiWord && matched.some((s) => s.strong)) matched = matched.filter((s) => s.strong);
+  // Relevance cutoff: in a multi-word search where no tool matched strongly,
+  // a tool whose name or primary use names the job outranks stray words in
+  // other tools' descriptions, so only those are kept ("learn a language").
+  // When not one tool names the job and the search names no known task, every
+  // hit is a stray word ("book" for "book a flight"): nothing is relevant, so
+  // return no results and say so instead of padding with unrelated tools.
+  // Loose-only searches, a named tool and "write ..." searches (which get a
+  // labelled writing top-up) keep their best effort.
+  let offTopic = false;
+  if (multiWord && !looseOnly && !target && hintedTasks(searched).length === 0 && matched.length > 0 && !matched.some((s) => s.strong)) {
+    const jobs = matched.filter((s) => s.job);
+    if (jobs.length > 0) matched = jobs;
+    else if (queryTasks.length === 0) {
+      matched = [];
+      offTopic = true;
+    }
+  }
+
 
   const freeIntent = priceIntent === "free" || input.budget === "free";
   const spelling = corrections.map((c) => `spelling: ${c.from} → ${c.to}`);
@@ -985,7 +1003,9 @@ export function searchTools(
   const notes: string[] = [];
   if (truncated) notes.push(`Only the first ${MAX_INPUT_CHARS} characters of your request were searched.`);
   if (corrections.length) notes.push(`Spelling corrected: ${corrections.map((c) => `${c.from} → ${c.to}`).join(", ")}.`);
-  if (results.length === 0) notes.push("No Launchpad HQ tools matched; try a broader task or remove filters.");
+  if (offTopic) {
+    notes.push("Nothing relevant: Launchpad HQ lists AI tools, and no tool in the catalog matches this request. Name a task an AI tool could help with (for example 'transcribe meetings' or 'make slides').");
+  } else if (results.length === 0) notes.push("No Launchpad HQ tools matched; try a broader task or remove filters.");
   else if (fallback === "starter") {
     notes.push("Your request names no task, so these are popular starter tools (labelled fallback), not direct matches; name a task (for example 'cover letter' or 'logo') for better results.");
   } else {
