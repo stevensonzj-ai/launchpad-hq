@@ -36,12 +36,12 @@ export default {
       { name: "Quarterly", price: "$18", period: "month, billed every 3 months", limits: "Includes vouchers for 3 friends" },
       { name: "Monthly", price: "$24", period: "month", limits: "" },
     ],
-    note: "USD regular prices (shown struck through) on 2026-10-26, when the page ran a limited-time 20% discount: Yearly $6.40/month (\"Pay $76.80 for the first 12 months\"), Quarterly $14.40/month (\"Pay $43.20 for the first 3 months\"), Monthly $19.20 for the first month. Undiscounted per-term totals are not shown. All paid plans list a 14-day money-back guarantee.",
+    note: "USD, as of 2026-10-30: Yearly $8/month (\"Pay $96 every 12 months\"), Quarterly \"Pay $54 every 3 months\", Monthly $24/month. The limited-time 20% discount shown on 2026-10-26 is no longer on the page. All paid plans list a 14-day money-back guarantee.",
     sourceUrl: KICKRESUME_PRICING_URL,
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-10-30",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-10-30",
     status: "verified",
   },
   platforms: {
@@ -83,6 +83,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "plans",
+      summary: "Re-read: the limited-time 20% discount has ended; regular prices Yearly $8/mo ($96/yr), Quarterly $54 per 3 months, Monthly $24.",
+    },
     {
       date: "2026-10-26",
       field: "plans",
