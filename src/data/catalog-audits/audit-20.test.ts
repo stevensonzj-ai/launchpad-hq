@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { AUDIT_27_PATCHES } from "./audit-27";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -175,7 +176,10 @@ describe("catalog audit 20: no conflict with earlier audits", () => {
         shared += 1;
         for (const key of Object.keys(data)) assert.equal(owned.has(key), false, `${p.slug}.${key} would be reverted`);
       }
-      assert.deepEqual(audit20PatchData(after, p), {}, `${p.slug}: snapshot already has audit 20 applied`);
+      // Audit 27 (2026-10-30) later rewrote some of these fields from a fresh vendor read; only the rest must match.
+      const later = Object.keys(AUDIT_27_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {});
+      const left = Object.fromEntries(Object.entries(audit20PatchData(after, p)).filter(([k]) => !later.includes(k)));
+      assert.deepEqual(left, {}, `${p.slug}: snapshot already has audit 20 applied`);
     }
     // murf-ai (19), openai-codex-cli (18 and 19), leonardo-ai (18 and 19) and restb-ai (19) are the only rows audit 20 shares with the earlier audits.
     assert.equal(shared, 6);

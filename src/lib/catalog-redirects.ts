@@ -68,6 +68,9 @@ export const RETIRED_GUIDE_SLUGS: readonly string[] = [
 export const HIDDEN_PAGE_REDIRECTS: Readonly<Record<string, string>> = {
   "relay-app": "/alternatives/free-zapier-alternatives",
   tabnine: "/compare/cursor-vs-github-copilot",
+  // Audit 27 (2026-10-30): Sora is discontinued (OpenAI Help Center). No AI-video
+  // compare page exists yet, so the 301 goes to the first listed alternative.
+  "sora-2": "/platform/google-veo-3-1",
 };
 
 export type CatalogRedirect = {

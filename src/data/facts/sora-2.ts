@@ -8,6 +8,7 @@ import type { ToolFacts } from "./types";
 export default {
   slug: "sora-2",
   lifecycle: "discontinued",
+  visibility: "hidden",
   status: {
     value: {
       headline: "OpenAI discontinued the Sora web and app experiences on April 26, 2026, and the Sora API on September 24, 2026.",
@@ -19,13 +20,19 @@ export default {
       ],
     },
     sourceUrl: "https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation",
-    checkedAt: "2026-10-20",
+    checkedAt: "2026-10-30",
     gatheredBy: "claude-subagent",
     verifiedBy: "claude",
     verifiedAt: "2026-10-20",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "visibility",
+      summary:
+        "Discontinuation re-read on the OpenAI Help Center (catalog audit 27). Page hidden; /platform/sora-2 now 301s to /platform/google-veo-3-1.",
+    },
     {
       date: "2026-10-20",
       field: "lifecycle",

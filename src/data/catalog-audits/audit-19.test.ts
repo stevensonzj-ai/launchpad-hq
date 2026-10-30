@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { AUDIT_27_PATCHES } from "./audit-27";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -145,7 +146,10 @@ describe("catalog audit 19: no conflict with earlier audits", () => {
         shared += 1;
         for (const key of Object.keys(data)) assert.equal(owned.has(key), false, `${p.slug}.${key} would be reverted`);
       }
-      assert.deepEqual(audit19PatchData(after, p), {}, `${p.slug}: snapshot already has audit 19 applied`);
+      // Audit 27 (2026-10-30) later rewrote some of these fields from a fresh vendor read; only the rest must match.
+      const later = Object.keys(AUDIT_27_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {});
+      const left = Object.fromEntries(Object.entries(audit19PatchData(after, p)).filter(([k]) => !later.includes(k)));
+      assert.deepEqual(left, {}, `${p.slug}: snapshot already has audit 19 applied`);
     }
     // gpt-image is in both 17 and 18; gemini-cli, leonardo, trinka, designer, codex, power automate and dragon in 18.
     assert.equal(shared, 9);

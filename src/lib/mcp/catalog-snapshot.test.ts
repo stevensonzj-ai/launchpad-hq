@@ -10,6 +10,7 @@ import { AUDIT_18_BATCH } from "@/data/catalog-audits/audit-18";
 import { AUDIT_19_BATCH } from "@/data/catalog-audits/audit-19";
 import { AUDIT_20_BATCH } from "@/data/catalog-audits/audit-20";
 import { AUDIT_22_RENAMES } from "@/data/catalog-audits/audit-22";
+import { AUDIT_27_PATCHES } from "@/data/catalog-audits/audit-27";
 import { AUDIT_25_FACT_SLUGS } from "@/data/catalog-audits/audit-25";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
 import { loadSnapshot } from "./snapshot";
@@ -74,8 +75,9 @@ describe("catalog snapshot", () => {
     const hidden = new Set(hiddenPlatformSlugs());
     assert.deepEqual(slugs.filter((s) => hidden.has(s)), []);
     assert.equal(snap.rows.length + snap.hidden_rows.length, snap.db_rows);
-    // 221 until guide PR D hid clarifai (2026-10-29); 220 until audit 26 hid tabnine (2026-10-30).
-    assert.equal(snap.rows.length, 219);
+    // 221 until guide PR D hid clarifai (2026-10-29); 220 until audit 26 hid tabnine (2026-10-30);
+    // 219 until audit 27 hid sora-2 (2026-10-30).
+    assert.equal(snap.rows.length, 218);
   });
 
   it("reproduces every tool the live stress test returned", () => {
@@ -84,7 +86,7 @@ describe("catalog snapshot", () => {
     ) as Record<string, unknown>[];
     assert.ok(observed.length >= 75);
     const bySlug = new Map(snap.rows.map((r) => [r.slug, r]));
-    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED, ...AUDIT_17_BATCH, ...AUDIT_18_BATCH, ...AUDIT_19_BATCH, ...AUDIT_20_BATCH, ...AUDIT_25_FACT_SLUGS]);
+    const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED, ...AUDIT_17_BATCH, ...AUDIT_18_BATCH, ...AUDIT_19_BATCH, ...AUDIT_20_BATCH, ...AUDIT_25_FACT_SLUGS, ...AUDIT_27_PATCHES.map((p) => p.slug)]);
     const diffs: string[] = [];
     for (const o of observed) {
       const moved = AUDIT_15_MOVES.get(o.slug as string) ?? AUDIT_22_MOVES.get(o.slug as string);
