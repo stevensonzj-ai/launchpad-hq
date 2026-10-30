@@ -9,6 +9,9 @@ import type { ListPage, ListParams } from "@/lib/community-lists";
  */
 
 // TODO: reconsider default sort once rating data exists
+/** Replies loaded per discussion on a platform page (oldest first). */
+export const MAX_REPLIES_PER_DISCUSSION = 50;
+
 export async function readApprovedPrompts(slug: string, { page, pageSize }: ListParams) {
   const platform = await prisma.platform.findUnique({
     where: { slug },
@@ -62,6 +65,8 @@ export async function readApprovedDiscussions(slug: string, { page, pageSize }: 
           where: { status: ModerationStatus.APPROVED },
           include: { user: { select: { name: true } } },
           orderBy: { createdAt: "asc" },
+          // Bound the nested read: one busy thread cannot balloon the page.
+          take: MAX_REPLIES_PER_DISCUSSION,
         },
       },
       orderBy: { createdAt: "desc" },
