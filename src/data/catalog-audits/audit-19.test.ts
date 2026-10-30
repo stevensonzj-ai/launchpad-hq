@@ -86,7 +86,8 @@ describe("catalog audit 19: stale facts batch 3", () => {
     assert.equal(AUDIT_19_BATCH.length, 22);
     assert.equal(new Set(AUDIT_19_BATCH).size, 22);
     for (const slug of AUDIT_19_BATCH) {
-      if (AUDIT_19_NO_FACT_FILE[slug]) assert.equal(getToolFacts(slug), undefined, slug);
+      // Audit 20 adds the Quizlet fact file from the Research Analyst browser check (2026-10-29).
+      if (AUDIT_19_NO_FACT_FILE[slug] && slug !== "quizlet-q-chat") assert.equal(getToolFacts(slug), undefined, slug);
       else assert.ok(getToolFacts(slug), `${slug}: fact file registered`);
     }
     assert.deepEqual(Object.keys(AUDIT_19_NO_FACT_FILE), ["quizlet-q-chat"]);

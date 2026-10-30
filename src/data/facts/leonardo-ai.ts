@@ -16,6 +16,10 @@ import type { ToolFacts } from "./types";
  * privacy policy lets Leonardo train on content unless it is generated
  * privately, which needs a paid plan, so Free-plan content can be used for
  * training. Catalog audit 19 applies this to the row.
+ *
+ * Zach's decision, 2026-10-29 (catalog audit 20): privacyLevel LOW, because
+ * Free-plan content is used for training (only paid plans can generate
+ * privately). CLAUDE.md's rubric: LOW is "inputs used for training by default".
  */
 export default {
   slug: "leonardo-ai",
@@ -94,6 +98,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-29",
+      field: "privacy",
+      summary: "Privacy rated LOW (Zach): Free-plan content is used for training; private generation needs a paid plan.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

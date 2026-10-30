@@ -7,7 +7,7 @@ export const openWebuiTutorial: PlatformTutorialData = {
   tagline:
     "The chat interface you run yourself — you bring the model, it brings everything else.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://github.com/open-webui/open-webui/releases",
   accessTier: "FREE",
 
@@ -20,7 +20,7 @@ export const openWebuiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "Free, and the code is public — no account, no trial, no card. The company sells licensing to large organisations; nothing you'd run is paywalled.",
+    "Free, and the code is public — no account, no trial, no card. It is not classic open source, though: since version 0.6.6 it runs on Open WebUI's own licence, which the project's docs say is not OSI-approved and which asks you to keep the Open WebUI branding visible (unless you have 50 or fewer users, written permission or an enterprise licence). The company sells that enterprise licence to large organisations; nothing you'd run at home is paywalled.",
     "**Open WebUI is not an AI.** Install it and you get an empty model dropdown — sort out the AI half first. Ollama is the usual answer, and this site has a page for it.",
     "The real question isn't whether you're technical, it's whether you want a small server in your house. You'll need **Docker** (a way of running an app in a self-contained box, so you don't install its parts by hand). If you only want AI on your laptop, **Jan** or **LM Studio** do it in an afternoon.",
   ],

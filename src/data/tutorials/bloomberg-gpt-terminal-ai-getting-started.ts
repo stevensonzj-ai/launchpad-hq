@@ -7,7 +7,7 @@ export const bloombergGptTerminalAiTutorial: PlatformTutorialData = {
   tagline:
     "The AI built into Bloomberg's financial data workstation — and why the \"BloombergGPT\" you read about isn't something you can sign up for.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-12",
+  lastReviewedAt: "2026-10-29",
   accessTier: "FREE",
 
   howItWorks:
@@ -20,7 +20,7 @@ export const bloombergGptTerminalAiTutorial: PlatformTutorialData = {
   ],
 
   beforeYouStart: [
-    "**The barrier here is the subscription, not the AI.** The Bloomberg Terminal is sold to firms and institutions through a sales conversation: Bloomberg publishes no price anywhere on its site, and every Terminal product page ends in \"Request a Demo\". There is no free tier, no trial button and no credit-card checkout. Annual figures in the tens of thousands of dollars per user circulate widely in the press and in software-procurement write-ups, but Bloomberg does not publish them, so treat any number you see — including that one — as an outside estimate rather than a price.",
+    "**The barrier here is the subscription, not the AI.** The Bloomberg Terminal is sold to firms and institutions through a sales conversation: Bloomberg publishes no Terminal price, and the Terminal pages end in an order or demo request, with ASKB sold only that way. There is no free Terminal tier and no credit-card checkout. Bloomberg.com does sell a separate consumer subscription (current prices are on this page's header), but its page names no AI feature, so it is not a way into ASKB. Annual figures in the tens of thousands of dollars per user circulate widely in the press and in software-procurement write-ups, but Bloomberg does not publish them, so treat any number you see — including that one — as an outside estimate rather than a price.",
     "There are three realistic ways to end up in front of one: your employer gives you a login; your university or school has a Bloomberg lab (Bloomberg runs a \"Bloomberg Terminal on Campus\" programme for universities and high schools, built around physical Terminals in a teaching facility); or you contact Bloomberg's sales team yourself. If none of those is true for you today, none of what follows is reachable yet — start somewhere free instead, like our Getting Started with ChatGPT page or the Finance & Real Estate category, and come back if a Terminal ever lands on your desk.",
     "Bloomberg labels ASKB \"now in beta\" and has not published which subscribers have it, in which regions, or whether it costs anything on top of a Terminal licence. The older AI pieces are described as ordinary Terminal features — Bloomberg announced AI-powered earnings-call summaries in January 2024 and AI-powered news summaries in January 2025. So if the question box isn't in your login, the likely reason is the beta, not anything you did wrong; ask whoever administers your Terminal.",
     "The AI sits on top of a system you still have to learn — the Terminal's own short-code navigation, confirmed with the GO key (Bloomberg's student guide teaches `DES` for a company description, `FA` for financial statements, `WEI` for world equity indices), which Bloomberg describes ASKB as complementing rather than replacing. If you want those basics before you sit down, Bloomberg publishes a self-paced course called Bloomberg Market Concepts; it doesn't state a price on that page.",

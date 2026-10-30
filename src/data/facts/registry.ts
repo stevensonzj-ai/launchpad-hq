@@ -180,8 +180,27 @@ import googleLyria3Facts from "./google-lyria-3";
 import soundrawFacts from "./soundraw";
 import murfAiFacts from "./murf-ai";
 import glaspFacts from "./glasp";
+// Research Analyst browser check of batch 3, 2026-10-29 (catalog audit 20).
+import quizletQChatFacts from "./quizlet-q-chat";
 // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
 import antigravityCliFacts from "./antigravity-cli";
+import clineFacts from "./cline";
+import harveyAiFacts from "./harvey-ai";
+import luminanceFacts from "./luminance";
+import scispaceFacts from "./scispace";
+import spellbookFacts from "./spellbook";
+import adobeFireflyFacts from "./adobe-firefly";
+import topazLabsFacts from "./topaz-labs";
+import cohereFacts from "./cohere";
+import adobeAcrobatAiAssistantFacts from "./adobe-acrobat-ai-assistant";
+import chatpdfFacts from "./chatpdf";
+import wondersharePdfelementAiFacts from "./wondershare-pdfelement-ai";
+import amazonBedrockFacts from "./amazon-bedrock";
+import azureOpenaiServiceFacts from "./azure-openai-service";
+import amazonQDeveloperFacts from "./amazon-q-developer";
+import googleVeo31Facts from "./google-veo-3-1";
+import openWebuiFacts from "./open-webui";
+import naverHyperclovaXCueFacts from "./naver-hyperclova-x-cue";
 import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
@@ -366,10 +385,29 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [beatovenAiFacts.slug]: beatovenAiFacts,
   [googleLyria3Facts.slug]: googleLyria3Facts,
   [soundrawFacts.slug]: soundrawFacts,
+  [quizletQChatFacts.slug]: quizletQChatFacts,
   [murfAiFacts.slug]: murfAiFacts,
   [glaspFacts.slug]: glaspFacts,
   // Catalog audit 19, 2026-10-29: Antigravity CLI (new row).
   [antigravityCliFacts.slug]: antigravityCliFacts,
+  // Catalog audit 20, 2026-10-29: stale facts batch 4.
+  [clineFacts.slug]: clineFacts,
+  [harveyAiFacts.slug]: harveyAiFacts,
+  [luminanceFacts.slug]: luminanceFacts,
+  [scispaceFacts.slug]: scispaceFacts,
+  [spellbookFacts.slug]: spellbookFacts,
+  [adobeFireflyFacts.slug]: adobeFireflyFacts,
+  [topazLabsFacts.slug]: topazLabsFacts,
+  [cohereFacts.slug]: cohereFacts,
+  [adobeAcrobatAiAssistantFacts.slug]: adobeAcrobatAiAssistantFacts,
+  [chatpdfFacts.slug]: chatpdfFacts,
+  [wondersharePdfelementAiFacts.slug]: wondersharePdfelementAiFacts,
+  [amazonBedrockFacts.slug]: amazonBedrockFacts,
+  [azureOpenaiServiceFacts.slug]: azureOpenaiServiceFacts,
+  [amazonQDeveloperFacts.slug]: amazonQDeveloperFacts,
+  [googleVeo31Facts.slug]: googleVeo31Facts,
+  [openWebuiFacts.slug]: openWebuiFacts,
+  [naverHyperclovaXCueFacts.slug]: naverHyperclovaXCueFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

@@ -7,10 +7,14 @@ import type { ToolFacts } from "./types";
  * per-plan model table) and a second blind read the same day. Both agree
  * on everything below except the training opt-out: the analyst found
  * none stated; the second read found a Settings preference on how data
- * is used and a FAQ line on opting out of data collection. So the opt-out
- * is "not confirmed" (Browser-check list) and the row stays LOW as
- * briefed: Google uses Interactions to improve its ML, and reviewers may
- * see them. Not open source: no public source or licence; distributed as
+ * is used and a FAQ line on opting out of data collection. The analyst's
+ * browser check of 2026-10-29 (catalog audit 20) confirmed the FAQ line:
+ * "You can opt out of data collection at any point from the Settings
+ * panel." It is not tied to a plan and says nothing about model training,
+ * so a training opt-out is still not confirmed and the row stays LOW:
+ * Google uses Interactions to improve its ML by default, and reviewers may
+ * see them (CLAUDE.md: LOW is "inputs used for training by default"; MEDIUM
+ * needs an opt-out for that use). Not open source: no public source or licence; distributed as
  * a binary under the Antigravity Additional Terms. Numeric requests per
  * minute or per day: not stated. Replaces Gemini CLI for free individual
  * and Google AI Pro / Ultra use (2026-06-18).
@@ -145,7 +149,7 @@ export default {
       trainsOnData: true,
       policyUrl: "https://antigravity.google/terms",
     },
-    note: "Antigravity terms (individual accounts): \"We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies\"; \"Google employees and contractors may access, view, review and use Interactions\"; \"Please don't submit confidential information\". Deletion is by email request to Google's Antigravity support. The Google Privacy Policy applies. A training opt-out is not confirmed: one read found none; the other found a Settings preference on how data is used. Enterprise accounts follow their administrator's Google Cloud terms.",
+    note: "Antigravity terms (individual accounts): \"We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies\"; \"Google employees and contractors may access, view, review and use Interactions\"; \"Please don't submit confidential information\". Deletion is by email request to Google's Antigravity support. The Google Privacy Policy applies. The FAQ (antigravity.google/docs/faq, \"What is Google Antigravity's stance on data collection?\") says: \"Refer to the Terms of Service. You can opt out of data collection at any point from the Settings panel.\" That opt-out is not tied to a plan and the FAQ does not mention model training, so a training opt-out is not confirmed. Enterprise accounts follow their administrator's Google Cloud terms.",
     sourceUrl: "https://antigravity.google/terms",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",

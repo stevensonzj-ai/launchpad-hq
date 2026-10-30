@@ -7,7 +7,7 @@ export const googleLyria3Tutorial: PlatformTutorialData = {
   tagline:
     "Describe a song in a sentence and Google's Gemini app writes, sings and mixes it — free.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-15",
+  lastReviewedAt: "2026-10-29",
   changelogUrl: "https://gemini.google/release-notes/",
   accessTier: "FREE",
 
@@ -17,7 +17,7 @@ export const googleLyria3Tutorial: PlatformTutorialData = {
   whatItIs: [
     "Lyria is Google's music-generating **model** (the AI \"brain\" that does the actual thinking) — it writes, performs and mixes a complete track, vocals and all, from a plain-English description.",
     "You never meet it by name. It runs inside the Gemini app, on the Music page, behind the same login you would use to chat with Gemini — the button says \"Music generation,\" not \"Lyria.\"",
-    "Google keeps shipping new versions under the same name: the one currently serving the Gemini app is Lyria 3.5, from September 2026. Businesses and developers can also buy Lyria through Google's paid Vertex AI and developer products, but you need none of that to make a song.",
+    "Google keeps shipping new versions under the same name: the current model is Lyria 3.5, which Google calls its newest music generation model (its page gives no announcement date). Businesses and developers can also buy Lyria through Google's paid Vertex AI and developer products, but you need none of that to make a song.",
   ],
 
   beforeYouStart: [

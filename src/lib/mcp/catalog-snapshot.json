@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18 and 19 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19 and 20 + local export 2026-10-15",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -83,15 +83,15 @@
    "description": null,
    "primaryUse": "AI-powered PDF reading, summarization, and Q&A",
    "primaryUseCases": "PDF Q&A; document summarization; contract review; report analysis; form processing",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
     "desktop"
    ],
-   "currentPricing": "Included with Acrobat Pro $22.99/mo",
-   "freeTierFeatures": "Included with Acrobat paid plans; no standalone free tier; limited preview for free Acrobat users",
-   "usageLimits": "Standard: basic AI queries; Pro: full AI Assistant; AI credits refresh monthly",
+   "currentPricing": "AI Assistant features are built into Acrobat Express ($9.99/mo on an annual plan billed monthly; $10.99 month to month) and Acrobat Studio ($24.99/mo; $34.99 month to month); an AI Assistant add-on is also mentioned (price not confirmed) (as of 2026-10-29)",
+   "freeTierFeatures": "No permanent free AI tier: Acrobat Reader is free for viewing and commenting, and the paid plans offer free trials (length not stated) (as of 2026-10-29)",
+   "usageLimits": "Not published for individual plans (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "ChatPDF",
@@ -131,7 +131,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual",
    "keyIntegrations": "Adobe Creative Cloud, Microsoft 365, Google Drive, SharePoint, Box, Dropbox",
-   "upgradeTriggers": "Needing full AI Q&A; document comparison; summary generation; cross-document analysis",
+   "upgradeTriggers": "Moving to Acrobat Express or Studio for the AI Assistant features; the AI Assistant add-on",
    "complementaryTools": [
     "Adobe Firefly (design)",
     "Microsoft Copilot (Office)",
@@ -154,9 +154,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free credits; Included with Adobe CC; Premium $199.99/mo",
-   "freeTierFeatures": "25 generative credits/month free; basic image generation; text effects; generative fill",
-   "usageLimits": "25 credits/month free; paid Creative Cloud plans include more (250-1000+); credits refresh monthly",
+   "currentPricing": "Free daily generations (count not stated); paid plans Standard, Pro, Pro Plus and Premium carry 2,000 / 4,000 / 10,000 / 50,000 generative credits a month; USD prices vary by region and are not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "Free daily generations across image, video and audio, with no plan needed; limits refresh every day and the daily count is not stated (as of 2026-10-29)",
+   "usageLimits": "Monthly generative credits: Standard 2,000, Pro 4,000, Pro Plus 10,000, Premium 50,000; credits reset each billing cycle and do not roll over; paid plans include unlimited standard image and vector generation (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
@@ -169,7 +169,7 @@
     "Midjourney",
     "GPT Image 1.5"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -196,7 +196,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual prompts (100+ languages)",
    "keyIntegrations": "Adobe Photoshop, Illustrator, Express, InDesign, Premiere Pro; Adobe Stock; Zapier",
-   "upgradeTriggers": "Exceeding 25 credits; removing watermarks; access via Photoshop/Illustrator; commercial projects",
+   "upgradeTriggers": "More than the free daily generations; video, audio and partner models (they use credits); more monthly credits",
    "complementaryTools": [
     "Canva AI (templates)",
     "Photoroom (product photos)"
@@ -533,14 +533,14 @@
    "description": null,
    "primaryUse": "Managed access to multiple foundation models",
    "primaryUseCases": "Multi-model AI platform; Claude/Llama/Mistral via AWS; RAG with Knowledge Bases; AI Agents; Guardrails",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Pay-per-use",
-   "freeTierFeatures": "AWS Free Tier: limited model usage for first 2 months; varies by model",
-   "usageLimits": "Free: limited trial per model; pay-per-use after; volume discounts; Provisioned Throughput option",
+   "currentPricing": "Pay as you go per token (On-Demand Standard, Flex and Priority tiers); Batch is about 50% lower on select models; Provisioned Throughput is hourly with no commitment, 1-month or 6-month terms (as of 2026-10-29)",
+   "freeTierFeatures": "No Bedrock free tier of its own: new AWS accounts on the AWS Free plan get up to $200 in credits (valid 6 months), usable on Bedrock (as of 2026-10-29)",
+   "usageLimits": "Per-token and per-hour billing, no subscription plans; Guardrails, Knowledge Bases and Model Evaluation are billed separately (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Gemini Enterprise Agent Platform",
@@ -579,7 +579,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (depends on model selected)",
    "keyIntegrations": "AWS ecosystem (Lambda, S3, SageMaker, CloudWatch), LangChain, LlamaIndex, all AWS services",
-   "upgradeTriggers": "Trial expiration; Provisioned Throughput; custom fine-tuning; Guardrails; Knowledge Bases; Agents",
+   "upgradeTriggers": "Free-plan credits running out; Provisioned Throughput; Guardrails; Knowledge Bases; Model Evaluation",
    "complementaryTools": [
     "AWS Lambda (compute)",
     "S3 (storage)",
@@ -603,14 +603,15 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Pro $19/user/mo",
-   "freeTierFeatures": "Free tier: code suggestions in IDE; chat; limited security scanning; CodeWhisperer legacy features",
-   "usageLimits": "Free: code suggestions unlimited; chat limited; Pro: $19/user/mo with higher limits; agents included",
+   "currentPricing": "Free; Pro $19 per user a month (4,000 lines of code per user a month for transformation, then $0.003 a line) (as of 2026-10-29)",
+   "freeTierFeatures": "Free tier: 50 agentic chat interactions a month and 1,000 lines of code a month for Java upgrades; no admin dashboard or IP indemnity. AWS ends IDE plugin support on April 30, 2027 and points to Kiro (as of 2026-10-29)",
+   "usageLimits": "Free: 50 agentic requests and 1,000 transformation lines a month; Pro: higher limits, 4,000 lines per user a month pooled at the account level (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "GitHub Copilot",
     "Cursor",
-    "Devin Desktop"
+    "Devin Desktop",
+    "Kiro"
    ],
    "budgetAlternativeTo": [
     "GitHub Copilot Free",
@@ -637,13 +638,13 @@
     "CLI commands",
     "security reports"
    ],
-   "privacyLevel": "HIGH",
+   "privacyLevel": "MEDIUM",
    "timeToProductivity": "15 min",
    "learningCurve": "Moderate",
    "offlineCapable": false,
    "languageSupport": "All major programming languages + AWS SDKs",
    "keyIntegrations": "AWS Console, VS Code, JetBrains, Visual Studio, CLI, AWS CDK, CloudFormation, Lambda",
-   "upgradeTriggers": "Agent capabilities; advanced security scanning; custom models; enterprise admin; SSO",
+   "upgradeTriggers": "Higher agentic and transformation limits; admin dashboard; IP indemnity; content not used for service improvement",
    "complementaryTools": [
     "Amazon Bedrock (AI models)",
     "AWS services",
@@ -840,16 +841,16 @@
    "company": "Microsoft",
    "website": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
    "description": null,
-   "primaryUse": "OpenAI models on Azure infrastructure",
+   "primaryUse": "OpenAI models on Azure infrastructure, now offered inside Microsoft Foundry",
    "primaryUseCases": "Enterprise-grade OpenAI models; Azure-integrated AI; compliant AI deployment; content filtering",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Pay-per-token via Azure",
-   "freeTierFeatures": "Azure free account: $200 credits for 30 days; OpenAI models included",
-   "usageLimits": "Free: $200 Azure credits (30 days); pay-per-use after; enterprise agreements available",
+   "currentPricing": "Pay as you go per token (Global, Data Zone and Regional deployments); provisioned throughput (PTU) by monthly or annual reservation; Batch pricing; per-token prices are on the Azure pricing page (as of 2026-10-29)",
+   "freeTierFeatures": "No permanent free tier: pay as you go, or try Azure free for up to 30 days; the credit amount is not stated on the pages read (as of 2026-10-29)",
+   "usageLimits": "Consumption-based billing; provisioned throughput (PTU) reserved monthly or annually (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "OpenAI API (direct)",
@@ -976,9 +977,9 @@
    "platformType": [
     "desktop"
    ],
-   "currentPricing": "~$24,000/year (Terminal)",
-   "freeTierFeatures": "No free tier; Bloomberg Terminal subscription required ($24K+/year)",
-   "usageLimits": "Unlimited within Bloomberg Terminal subscription",
+   "currentPricing": "Bloomberg Terminal: no public price, sold through an order or demo request; ASKB, the Terminal's AI, is sales-only. A separate Bloomberg.com consumer subscription is $399 a year ($180 for the first year) or $39.99 a month ($1.99 for the first month), and its page names no AI feature (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan stated for the Terminal; it is ordered or demoed through sales (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "AlphaSense",
@@ -988,7 +989,7 @@
     "AlphaSense",
     "Perplexity AI (basic research)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -1560,9 +1561,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (2 PDFs/day); Plus $5/mo",
-   "freeTierFeatures": "Free: 2 PDFs/day; 120 pages/PDF; 10 questions/day; basic features",
-   "usageLimits": "Free: 2 PDFs/day, 10 questions; Plus: 50 PDFs/day, 1000 questions, 2000 pages/PDF",
+   "currentPricing": "Free (2 documents a day); ChatPDF Plus for unlimited document analysis and more advanced features; the Plus price is not shown on the homepage (as of 2026-10-29)",
+   "freeTierFeatures": "Free plan: 2 documents a day, no account needed to start; a free account adds saved chat history and multi-document chats (as of 2026-10-29)",
+   "usageLimits": "Free: 2 documents a day; Plus: unlimited document analysis; page, file-size and question limits are not stated on the homepage (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Adobe Acrobat AI Assistant",
@@ -1598,7 +1599,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (follows PDF language)",
    "keyIntegrations": "PDF upload, URL import, API",
-   "upgradeTriggers": "Daily PDF/question limits; larger file support; more pages per PDF; API access; folder organization",
+   "upgradeTriggers": "More than 2 documents a day; more advanced features (Plus)",
    "complementaryTools": [
     "Semantic Scholar (paper discovery)",
     "Grammarly (writing)",
@@ -1712,9 +1713,9 @@
    "budgetAlternativeTo": [
     "Aider (free)",
     "OpenAI Codex CLI (free)",
-    "Gemini CLI (free)"
+    "Antigravity CLI (free for individuals)"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -1861,13 +1862,13 @@
    "platformType": [
     "desktop"
    ],
-   "currentPricing": "Open source free; pay for inference or BYOK; Enterprise contact sales",
-   "freeTierFeatures": "Full client is free; you supply model access (local or a key)",
-   "usageLimits": null,
+   "currentPricing": "Free for individual developers (VS Code extension and CLI); you pay for AI inference at cost or bring your own API keys; Enterprise is custom, by quote (as of 2026-10-29)",
+   "freeTierFeatures": "Open Source plan, free for individual developers: VS Code extension, CLI, MCP Marketplace and community support; no free AI credits are stated (as of 2026-10-29)",
+   "usageLimits": "No usage caps stated; AI inference is billed by usage (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-14",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -1887,7 +1888,7 @@
    "offlineCapable": true,
    "languageSupport": null,
    "keyIntegrations": null,
-   "upgradeTriggers": null,
+   "upgradeTriggers": "Enterprise: JetBrains extension, SSO, SLA and dedicated support, centralized billing, role-based access control, team dashboard",
    "complementaryTools": [],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -1963,13 +1964,13 @@
    "description": null,
    "primaryUse": "Enterprise LLM API with multilingual focus",
    "primaryUseCases": "Enterprise RAG; semantic search; text classification; embeddings; multilingual NLP; custom fine-tuning",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "api"
    ],
-   "currentPricing": "Free trial; Pay-per-use API; Enterprise custom",
-   "freeTierFeatures": "Free: trial API key; rate-limited; basic models; playground access",
+   "currentPricing": "Free Trial API key (rate limited; no production or commercial use); production is pay as you go; Model Vault is priced per instance (Rerank 5 Medium $4.00 an hour or $2,500 a month); North, Compass and private deployments are custom (as of 2026-10-29)",
+   "freeTierFeatures": "Free Trial API key: calls are free but rate limited, and trial keys may not be used for production or commercial purposes; a production key needs a Go to Production application (as of 2026-10-29)",
    "usageLimits": "Free: 1,000 API calls/mo; Production: pay-per-use; Enterprise: custom; generous trial for testing",
    "apiAvailable": true,
    "directAlternatives": [
@@ -1981,7 +1982,7 @@
    "budgetAlternativeTo": [
     "Ollama + open-source models (self-hosted)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "international-regional-ai",
     "name": "International & Regional AI"
@@ -2004,7 +2005,7 @@
     "search results",
     "reranked results"
    ],
-   "privacyLevel": "HIGH",
+   "privacyLevel": "MEDIUM",
    "timeToProductivity": "2 hours",
    "learningCurve": "Moderate",
    "offlineCapable": false,
@@ -2745,9 +2746,9 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free; Super $12.99/mo; Max $29.99/mo",
+   "currentPricing": "Free; Super and Max are paid subscriptions; Max is Super plus Roleplay and Video Call with Lily; prices are not stated on Duolingo's logged-out pages (as of 2026-10-29)",
    "freeTierFeatures": "Duolingo free: full lessons with ads; limited hearts; basic features",
-   "usageLimits": "Free: ad-supported + heart limits; Super: $7/mo no ads; Max: $14/mo adds AI features",
+   "usageLimits": "Free: ads and heart limits; Max includes all Super benefits plus Roleplay and Video Call with Lily; prices are not stated (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Speak (Language AI)",
@@ -2757,7 +2758,7 @@
    "budgetAlternativeTo": [
     "Speak (Language AI)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -2785,7 +2786,7 @@
    "offlineCapable": false,
    "languageSupport": "40+ languages available to learn",
    "keyIntegrations": "Standalone app; Family plan sharing; school dashboard",
-   "upgradeTriggers": "Removing ads; unlimited hearts; AI Roleplay conversations; AI Explain My Answer; no mistakes penalty",
+   "upgradeTriggers": "Removing ads; unlimited hearts; AI Roleplay conversations and Video Call with Lily (Max); no mistakes penalty",
    "complementaryTools": [
     "Speak (Language AI) (conversation practice)",
     "Khan Academy (Khanmigo) (other subjects)"
@@ -3913,14 +3914,14 @@
    "description": null,
    "primaryUse": "Multi-agent AI coding IDE",
    "primaryUseCases": "Cloud-based development; AI-assisted coding; project templates; Firebase integration; prototyping",
-   "costTier": "FREE",
+   "costTier": "FREEMIUM",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free (preview)",
-   "freeTierFeatures": "Free cloud-based IDE; AI features included; generous free tier",
-   "usageLimits": "Free tier generous; compute limited by Google Cloud free allowance",
+   "currentPricing": "$0 for individuals (quota refreshed weekly); Google AI Pro $19.99/mo and Google AI Ultra from $99.99/mo raise the limits; organisations: Gemini Enterprise from $30 per seat a month, or pay-as-you-go (as of 2026-10-29)",
+   "freeTierFeatures": "$0 for individuals with a personal Google account (18+, supported countries): a variety of agent models, unlimited Tab completions and Command requests, and a quota refreshed weekly. Numeric limits are not stated. (as of 2026-10-29)",
+   "usageLimits": "Free: a quota refreshed weekly; Google AI Pro: refreshed every five hours up to a weekly limit; Ultra: the highest quota; numeric requests per minute or per day are not stated (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Replit Agent",
@@ -3932,7 +3933,7 @@
     "Replit Agent",
     "VS Code (local)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -3952,13 +3953,13 @@
     "deployable apps",
     "web previews"
    ],
-   "privacyLevel": "HIGH",
+   "privacyLevel": "LOW",
    "timeToProductivity": "15 min",
    "learningCurve": "Easy",
    "offlineCapable": false,
    "languageSupport": "All major programming languages + Flutter/Dart emphasis",
    "keyIntegrations": "Google Cloud, Firebase, GitHub, Gemini AI, Flutter, multiple frameworks",
-   "upgradeTriggers": "Needing more compute; team features; production deployment; Google Cloud integration",
+   "upgradeTriggers": "Higher rate limits (Google AI Pro or Ultra); Google's newest Gemini and Claude models on paid plans; AI credits for overage",
    "complementaryTools": [
     "Gemini (AI)",
     "Google Cloud (hosting)",
@@ -4035,7 +4036,7 @@
    "slug": "google-veo-3-1",
    "name": "Google Veo 3.1",
    "company": "Google DeepMind",
-   "website": "https://deepmind.google/technologies/veo/",
+   "website": "https://deepmind.google/models/veo/",
    "description": null,
    "primaryUse": "AI video with native audio and Google integration",
    "primaryUseCases": "AI video generation; enterprise video pipelines; Google Cloud integration; cinematic quality clips",
@@ -4044,9 +4045,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Gemini subs; Vertex AI API",
-   "freeTierFeatures": "Limited access via Gemini Advanced or VideoFX; pay-per-use via Vertex AI",
-   "usageLimits": "Via Gemini: shared rate limits; Vertex AI: pay-per-second generated",
+   "currentPricing": "Video generation comes with Google AI plans: AI Plus $4.99, AI Pro $19.99 and AI Ultra from $99.99 a month; the Gemini API no longer lists Veo (its video model is Gemini Omni Flash, about $0.10 a second, paid tier only); Google Cloud pricing not confirmed (as of 2026-10-29)",
+   "freeTierFeatures": "The Free Gemini plan lists limited Google Flow access and no video generation; AI Pro includes a limited trial of Veo 3.1 Lite and AI Ultra includes Veo 3.1; a free daily Flow credit allowance is not confirmed on the plans page (as of 2026-10-29)",
+   "usageLimits": "Flow credits a month: AI Plus 200, AI Pro 1,000, AI Ultra 10,000 (a $199.99 tier has 25,000); per-plan Veo quotas are not stated; the Gemini API's Veo 3.1 previews were shut down on 2026-10-22 (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Runway",
@@ -4080,7 +4081,7 @@
    "offlineCapable": false,
    "languageSupport": "English prompts primarily",
    "keyIntegrations": "Gemini, Google Vertex AI, Google Cloud ecosystem, YouTube",
-   "upgradeTriggers": "Needing API access; higher volume; enterprise features; longer clips",
+   "upgradeTriggers": "Video generation beyond the Free plan (Google AI Plus, Pro or Ultra); Veo 3.1 itself (Ultra); more Flow credits; API use (Gemini Omni Flash)",
    "complementaryTools": [
     "Gemini (scripting)",
     "Nano Banana (stills)",
@@ -4574,9 +4575,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; enterprise contracts only",
-   "usageLimits": "Custom enterprise pricing per firm",
+   "currentPricing": "No public pricing; access starts with a demo request (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan or self-serve trial listed; access starts with a demo request (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "CoCounsel",
@@ -4586,7 +4587,7 @@
    "budgetAlternativeTo": [
     "CoCounsel"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "legal-ai",
     "name": "Legal AI"
@@ -5954,7 +5955,7 @@
     "PNG",
     "JPG (various resolutions up to 1536x1536)"
    ],
-   "privacyLevel": "MEDIUM",
+   "privacyLevel": "LOW",
    "timeToProductivity": "10 min",
    "learningCurve": "Easy",
    "offlineCapable": false,
@@ -6532,9 +6533,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Enterprise custom",
-   "freeTierFeatures": "No free tier; enterprise/firm contracts only",
-   "usageLimits": "Custom enterprise pricing",
+   "currentPricing": "No public pricing; access starts with a demo request (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan or trial listed; the site offers a demo request (as of 2026-10-29)",
+   "usageLimits": "Not published (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Harvey AI",
@@ -6542,7 +6543,7 @@
     "Kira"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "legal-ai",
     "name": "Legal AI"
@@ -7479,7 +7480,7 @@
    "name": "Murf AI",
    "company": "Murf Inc.",
    "website": "https://murf.ai",
-   "description": "AI voice generator for voiceovers, e-learning, and ads with multiple voices and languages.",
+   "description": "AI text-to-speech studio for multilingual voiceovers in videos, e-learning and ads, with a library of voices to choose from.",
    "primaryUse": "Text-to-speech, voice overs",
    "primaryUseCases": null,
    "costTier": "FREEMIUM",
@@ -7965,9 +7966,9 @@
    "platformType": [
     "local"
    ],
-   "currentPricing": "Free",
-   "freeTierFeatures": "Completely free and open-source (MIT)",
-   "usageLimits": "None (self-hosted, hardware-limited)",
+   "currentPricing": "Free to self-host; the Enterprise licence is quote only (as of 2026-10-29)",
+   "freeTierFeatures": "Free to self-host, no account required, with the Open WebUI branding intact; since v0.6.6 it uses the Open WebUI License (BSD-3 plus a branding clause), which the docs say is not an OSI-approved open source licence (as of 2026-10-29)",
+   "usageLimits": "Limited only by your hardware; keep the Open WebUI branding unless you have 50 or fewer end users in a rolling 30 days, written permission or an enterprise licence (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "TextGen",
@@ -8004,7 +8005,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (interface + models)",
    "keyIntegrations": "Ollama (native), OpenAI API, any OpenAI-compatible API, RAG pipelines, Web search, Image generation",
-   "upgradeTriggers": "N/A (fully free); optional managed hosting available",
+   "upgradeTriggers": "Removing Open WebUI branding at larger scale (enterprise licence); SSO and other enterprise features, by quote",
    "complementaryTools": [
     "Ollama (backend)",
     "Hugging Face (models)",
@@ -8108,7 +8109,7 @@
    ],
    "budgetAlternativeTo": [
     "Aider (truly free with own key)",
-    "Gemini CLI (free with Google account)"
+    "Antigravity CLI (free with a personal Google account)"
    ],
    "updatedAt": "2026-10-29",
    "category": {
@@ -9118,9 +9119,9 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free tier; Plus $35.99/year",
-   "freeTierFeatures": "Free: basic flashcards; limited AI features; ad-supported",
-   "usageLimits": "Free: limited AI explanations; Plus: $8/mo enhanced AI + no ads; Teachers: $4/mo",
+   "currentPricing": "Free tier; Quizlet Plus $35.99 a year, Plus Unlimited $44.99 a year and Family $83.99 a year (up to 5 accounts), all billed yearly; the monthly plan is not eligible for the free trial (as of 2026-10-29)",
+   "freeTierFeatures": "Ask Quizlet, the AI study chat, needs a login and is available only to users in the United States aged 14 or older; the help article names no plan requirement or usage limit (as of 2026-10-29)",
+   "usageLimits": "Plus: 20 Learn rounds a month; Plus Unlimited and Family: unlimited Learn rounds; limits on Ask Quizlet are not stated (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Khan Academy (Khanmigo)",
@@ -9130,7 +9131,7 @@
    "budgetAlternativeTo": [
     "Khan Academy (Khanmigo) (free AI tutoring)"
    ],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -9157,7 +9158,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (flashcards in any language; AI in English primary)",
    "keyIntegrations": "Google Classroom, Canvas LMS, export to various formats",
-   "upgradeTriggers": "Removing ads; full Q-Chat AI; enhanced study modes; practice tests; teacher analytics",
+   "upgradeTriggers": "More than 20 Learn rounds a month (Plus Unlimited or Family); practice tests; Expert Solutions; up to 5 accounts (Family)",
    "complementaryTools": [
     "Khan Academy (Khanmigo) (subject tutoring)",
     "Grammarly (writing)",
@@ -9713,10 +9714,10 @@
    "name": "Restb.ai",
    "company": "Restb.ai",
    "website": "https://restb.ai",
-   "description": null,
+   "description": "AI computer vision for property photos: names rooms, spots features and rates condition for listings, appraisals and lending. The API is sold through sales only (enterprise contracts); Restb Lens, its web tool, has self-serve plans (as of 2026-10-29).",
    "primaryUse": "AI computer vision for real estate",
    "primaryUseCases": "Property photo tagging; room detection; feature extraction; image quality scoring; virtual staging AI",
-   "costTier": "ENTERPRISE",
+   "costTier": "PAID",
    "difficultyLevel": "INTERMEDIATE",
    "platformType": [
     "api"
@@ -10357,7 +10358,7 @@
    "slug": "scispace",
    "name": "SciSpace",
    "company": "SciSpace (Typeset)",
-   "website": "https://typeset.io",
+   "website": "https://scispace.com",
    "description": null,
    "primaryUse": "AI paper reading, literature review, and writing",
    "primaryUseCases": "Paper comprehension; AI explanations of complex text; literature review; citation exploration",
@@ -10380,7 +10381,7 @@
     "Semantic Scholar (free)",
     "Scholarcy (free tier)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -10970,7 +10971,7 @@
    "slug": "spellbook",
    "name": "Spellbook",
    "company": "Spellbook (Rally Legal)",
-   "website": "https://spellbook.legal",
+   "website": "https://spellbook.com",
    "description": null,
    "primaryUse": "AI contract drafting and review for lawyers",
    "primaryUseCases": "Contract drafting; clause suggestion; contract review; redlining; risk identification; template creation",
@@ -10979,9 +10980,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "From $99/user/mo",
-   "freeTierFeatures": "Free trial; no permanent free tier",
-   "usageLimits": "Subscription-based; pricing per user/month",
+   "currentPricing": "No published prices: custom pricing set by the number of team members on a license; book a demo (as of 2026-10-29)",
+   "freeTierFeatures": "No permanent free tier; lawyers and legal teams can try Spellbook free for 7 days (as of 2026-10-29)",
+   "usageLimits": "Priced by the number of team members on a license (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Harvey AI",
@@ -10989,7 +10990,7 @@
     "Kira"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "legal-ai",
     "name": "Legal AI"
@@ -11701,14 +11702,14 @@
    "description": null,
    "primaryUse": "AI video/image upscaling and enhancement",
    "primaryUseCases": "AI photo upscaling; noise reduction; sharpening; video frame interpolation; video upscaling; deinterlace",
-   "costTier": "ENTERPRISE",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "desktop"
    ],
-   "currentPricing": "Video AI $299; Photo AI $199 (perpetual)",
-   "freeTierFeatures": "Free trial; no permanent free tier; one-time purchase or subscription",
-   "usageLimits": "Perpetual license: unlimited use; subscription: annual renewal",
+   "currentPricing": "Subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo, Studio bundle $399/yr or $69/mo; Pro versions and Enterprise cost more; list prices, sales are frequent (as of 2026-10-29)",
+   "freeTierFeatures": "No free plan listed; every plan shown is a subscription, and the pricing page does not mention a trial (as of 2026-10-29)",
+   "usageLimits": "Standard plans: limited commercial use for organisations under $1M annual revenue; Pro plans: full commercial use (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Adobe Enhance",
@@ -11719,7 +11720,7 @@
     "Adobe Enhance (included in CC)",
     "open-source upscalers"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "gaming-creative-ai",
     "name": "Gaming & Creative AI"
@@ -11750,7 +11751,7 @@
    "offlineCapable": false,
    "languageSupport": "English (interface)",
    "keyIntegrations": "Adobe Photoshop/Lightroom (plugin), standalone, batch processing, CLI",
-   "upgradeTriggers": "Trial expiry; needing specific enhancement types (photo/video/audio separate products)",
+   "upgradeTriggers": "Full commercial use (Pro plans); the all-apps Studio bundle; photo, video and enlargement are separate products",
    "complementaryTools": [
     "Adobe Firefly (Creative Cloud)",
     "Lightroom (workflow)",
@@ -12651,9 +12652,9 @@
     "mobile",
     "desktop"
    ],
-   "currentPricing": "From $79.99/year",
-   "freeTierFeatures": "Free trial with limited AI features; full PDF editing free (watermarked)",
-   "usageLimits": "Free: watermarked output; AI features limited; paid: full AI + no watermark",
+   "currentPricing": "Perpetual licences: Personal $129.99, Team $139, Cross Platform $139.99 (one user; promotional homepage prices); Education $39.99 a year (as of 2026-10-29)",
+   "freeTierFeatures": "Free downloads are offered for Windows, Mac, iOS and Android; trial terms, watermarking and AI limits are not stated on the homepage (as of 2026-10-29)",
+   "usageLimits": "AI credit or quota limits are not stated on the pages read (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
     "Adobe Acrobat AI Assistant",
@@ -12980,16 +12981,16 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free (consumer); Premier Agent paid",
-   "freeTierFeatures": "Completely free for consumers; Zestimate on all properties",
-   "usageLimits": "No limits for consumer use; agent tools have separate pricing",
+   "currentPricing": "Zillow states no cost for its AI features: the Zillow app in ChatGPT, the Zillow connector in Claude, the rentals feature in Gemini and AI mode on Zillow; Premier Agent is paid (as of 2026-10-29)",
+   "freeTierFeatures": "Not stated: Zillow's pages do not say whether the AI features are free or have limits (as of 2026-10-29)",
+   "usageLimits": "Not stated (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
     "Redfin Estimate",
     "Realtor.com"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
+   "updatedAt": "2026-10-29",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
