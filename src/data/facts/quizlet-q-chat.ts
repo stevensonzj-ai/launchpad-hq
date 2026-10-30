@@ -1,7 +1,8 @@
 import type { ToolFacts } from "./types";
 
 /**
- * Quizlet (row and slug keep the Q-Chat name): first fact file, from the
+ * Quizlet (listed as Ask Quizlet since catalog audit 22, 2026-10-30; the
+ * slug keeps the Q-Chat name): first fact file, from the
  * Research Analyst's browser check of 2026-10-29 (logged out, US, USD;
  * data/quote file lp-stale-batch3-browser.md). The batch-3 readers got 403
  * on every quizlet.com page, so nothing was readable until then.
@@ -16,6 +17,15 @@ import type { ToolFacts } from "./types";
 export default {
   slug: "quizlet-q-chat",
   lifecycle: "active",
+  displayName: {
+    value: "Ask Quizlet",
+    sourceUrl: "https://help.quizlet.com/hc/en-us/articles/42790350723725-Studying-with-Ask-Quizlet",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   plans: {
     value: [
       {
@@ -61,6 +71,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "displayName",
+      summary: "Listing renamed Quizlet Q-Chat -> Ask Quizlet, the AI study tool Quizlet's help centre documents today. Slug unchanged; Q-Chat is still not called retired.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

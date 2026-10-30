@@ -135,10 +135,10 @@ import relevanceAiFacts from "./relevance-ai";
 import replicateFacts from "./replicate";
 import researchRabbitFacts from "./research-rabbit";
 import sakanaAiFacts from "./sakana-ai";
-import salesforceEinsteinFacts from "./salesforce-einstein";
+import salesforceAgentforceFacts from "./salesforce-agentforce";
 import scenarioFacts from "./scenario";
 import semanticScholarFacts from "./semantic-scholar";
-import shopifyMagicSidekickFacts from "./shopify-magic-sidekick";
+import shopifySidekickFacts from "./shopify-sidekick";
 import slackAiFacts from "./slack-ai";
 import squarespaceAiFacts from "./squarespace-ai";
 import trayAiFacts from "./tray-ai";
@@ -345,10 +345,10 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [replicateFacts.slug]: replicateFacts,
   [researchRabbitFacts.slug]: researchRabbitFacts,
   [sakanaAiFacts.slug]: sakanaAiFacts,
-  [salesforceEinsteinFacts.slug]: salesforceEinsteinFacts,
+  [salesforceAgentforceFacts.slug]: salesforceAgentforceFacts,
   [scenarioFacts.slug]: scenarioFacts,
   [semanticScholarFacts.slug]: semanticScholarFacts,
-  [shopifyMagicSidekickFacts.slug]: shopifyMagicSidekickFacts,
+  [shopifySidekickFacts.slug]: shopifySidekickFacts,
   [slackAiFacts.slug]: slackAiFacts,
   [squarespaceAiFacts.slug]: squarespaceAiFacts,
   [trayAiFacts.slug]: trayAiFacts,

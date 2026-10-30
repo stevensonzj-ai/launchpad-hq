@@ -93,8 +93,8 @@ import { v0Tutorial } from "./v0-getting-started";
 import { figmaAiTutorial } from "./figma-ai-getting-started";
 import { hubspotAiTutorial } from "./hubspot-ai-getting-started";
 import { mailchimpAiTutorial } from "./mailchimp-ai-getting-started";
-import { salesforceEinsteinTutorial } from "./salesforce-einstein-getting-started";
-import { shopifyMagicSidekickTutorial } from "./shopify-magic-sidekick-getting-started";
+import { salesforceAgentforceTutorial } from "./salesforce-agentforce-getting-started";
+import { shopifySidekickTutorial } from "./shopify-sidekick-getting-started";
 import { squarespaceAiTutorial } from "./squarespace-ai-getting-started";
 import { wixAiTutorial } from "./wix-ai-getting-started";
 import { wordpressAiJetpackAiTutorial } from "./wordpress-ai-jetpack-ai-getting-started";
@@ -292,8 +292,8 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [figmaAiTutorial.platformSlug]: figmaAiTutorial,
   [hubspotAiTutorial.platformSlug]: hubspotAiTutorial,
   [mailchimpAiTutorial.platformSlug]: mailchimpAiTutorial,
-  [salesforceEinsteinTutorial.platformSlug]: salesforceEinsteinTutorial,
-  [shopifyMagicSidekickTutorial.platformSlug]: shopifyMagicSidekickTutorial,
+  [salesforceAgentforceTutorial.platformSlug]: salesforceAgentforceTutorial,
+  [shopifySidekickTutorial.platformSlug]: shopifySidekickTutorial,
   [squarespaceAiTutorial.platformSlug]: squarespaceAiTutorial,
   [wixAiTutorial.platformSlug]: wixAiTutorial,
   [wordpressAiJetpackAiTutorial.platformSlug]: wordpressAiJetpackAiTutorial,

@@ -3,7 +3,7 @@ import type { PlatformTutorialData } from "./types";
 export const quizletQChatTutorial: PlatformTutorialData = {
   slug: "quizlet-q-chat-getting-started",
   platformSlug: "quizlet-q-chat",
-  title: "Getting Started with Quizlet's AI Tutor",
+  title: "Getting Started with Ask Quizlet",
   tagline:
     "Q-Chat was Quizlet's earlier AI tutor. Here's the AI study chat inside Quizlet now — what it does, and who can actually use it.",
   archetype: "prompts",

@@ -36,6 +36,13 @@ export const PLATFORM_REDIRECTS: Readonly<Record<string, string>> = {
   "google-imagen-3": "nano-banana",
   "text-generation-webui-oobabooga": "textgen",
   notebooklm: "gemini-notebook",
+  // Slug renames, catalog audit 22 (2026-10-30); scripts/update-catalog-audit-22.ts
+  // moves each row, so deploy and run audit 22 together. Sources:
+  // shopify.com/magic redirects to shopify.com/sidekick ("Sidekick"); Salesforce's
+  // agent product page: "Agentforce (formerly Einstein Copilot)", and
+  // salesforce.com/einstein now redirects to its AI page.
+  "shopify-magic-sidekick": "shopify-sidekick",
+  "salesforce-einstein": "salesforce-agentforce",
 };
 
 export const RETIRED_GUIDE_SLUGS: readonly string[] = [

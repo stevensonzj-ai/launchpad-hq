@@ -299,8 +299,9 @@ describe("catalog audit 20: content rules", () => {
       assert.equal(patched.has(slug), false, slug);
     }
     assert.equal(snap("gemini-cli")?.costTier, "PAID");
-    assert.equal(snap("google-lyria-3")?.name, "Google Lyria 3");
-    assert.equal(snap("quizlet-q-chat")?.name, "Quizlet Q-Chat");
+    // Renamed later by catalog audit 22 (2026-10-30), not by audit 20.
+    assert.equal(snap("google-lyria-3")?.name, "Google Lyria 3.5");
+    assert.equal(snap("quizlet-q-chat")?.name, "Ask Quizlet");
     assert.equal(snap("duolingo-max")?.name, "Duolingo Max");
   });
 });
@@ -452,7 +453,7 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
     assert.match(JSON.stringify(facts.features!.value), /United States who are 14 years old or older/);
     assert.match(JSON.stringify(facts.features!.value), /needs a login/);
     const r = snap("quizlet-q-chat")!;
-    assert.equal(r.name, "Quizlet Q-Chat");
+    assert.equal(r.name, "Ask Quizlet"); // renamed by catalog audit 22 (2026-10-30)
     assert.match(r.currentPricing ?? "", /Plus \$35\.99 a year, Plus Unlimited \$44\.99 a year and Family \$83\.99 a year/);
     assert.match(r.freeTierFeatures ?? "", /Ask Quizlet/);
     assert.match(r.freeTierFeatures ?? "", /United States aged 14 or older/);
@@ -529,7 +530,7 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
     assert.equal(g.lastReviewedAt, CHECKED_AT);
     assert.match(JSON.stringify(g), /the current model is Lyria 3\.5/);
     assert.doesNotMatch(JSON.stringify(g), /from September 2026/);
-    assert.equal(snap("google-lyria-3")?.name, "Google Lyria 3");
+    assert.equal(snap("google-lyria-3")?.name, "Google Lyria 3.5"); // renamed by catalog audit 22 (2026-10-30)
     assert.equal(AUDIT_20_PATCHES.some((x) => x.slug === "google-lyria-3"), false);
   });
 

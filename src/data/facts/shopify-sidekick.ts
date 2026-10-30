@@ -11,9 +11,45 @@ import type { ToolFacts } from "./types";
  * other could not tell whether it redirects to /sidekick; the website is
  * left alone. The row name is unchanged.
  */
+/*
+ * Catalog audit 22 (2026-10-30): slug moved from shopify-magic-sidekick to shopify-sidekick and the listing
+ * renamed Shopify Sidekick (301 in src/lib/catalog-redirects.ts; DB row renamed by
+ * scripts/update-catalog-audit-22.ts). https://www.shopify.com/sidekick checked 2026-10-30.
+ */
 export default {
-  slug: "shopify-magic-sidekick",
-  lifecycle: "active",
+  slug: "shopify-sidekick",
+  lifecycle: "renamed",
+  status: {
+    value: {
+      headline: "Shopify now calls its built-in AI Sidekick; shopify.com/magic redirects to the Sidekick page.",
+      formerName: "Shopify Magic",
+      whatToDo: "Nothing changes for existing users. Old Shopify Magic pages here redirect to this one.",
+    },
+    sourceUrl: "https://www.shopify.com/sidekick",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
+  displayName: {
+    value: "Shopify Sidekick",
+    sourceUrl: "https://www.shopify.com/sidekick",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
+  officialUrl: {
+    value: "https://www.shopify.com/sidekick",
+    sourceUrl: "https://www.shopify.com/sidekick",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   company: {
     value: "Shopify",
     sourceUrl: "https://www.shopify.com/pricing",
@@ -95,6 +131,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "displayName",
+      summary: "Renamed Shopify Magic -> Shopify Sidekick; slug shopify-magic-sidekick -> shopify-sidekick; official link https://www.shopify.com/sidekick.",
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

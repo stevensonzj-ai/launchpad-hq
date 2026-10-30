@@ -1,9 +1,9 @@
 import type { PlatformTutorialData } from "./types";
 
-export const salesforceEinsteinTutorial: PlatformTutorialData = {
-  slug: "salesforce-einstein-getting-started",
-  platformSlug: "salesforce-einstein",
-  title: "Getting Started with Salesforce Einstein",
+export const salesforceAgentforceTutorial: PlatformTutorialData = {
+  slug: "salesforce-agentforce-getting-started",
+  platformSlug: "salesforce-agentforce",
+  title: "Getting Started with Salesforce Agentforce (formerly Einstein)",
   tagline:
     "The AI that already reads your customer records — under a name Salesforce keeps changing.",
   archetype: "recipes",

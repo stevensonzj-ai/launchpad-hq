@@ -7,7 +7,8 @@ import type { ToolFacts } from "./types";
  * API prices read twice. ChatGPT's plan prices and image limits could not
  * be read (chatgpt.com/pricing and the help centre returned 403), so the
  * row's ChatGPT text is left as it is and recorded here as unverified.
- * Renaming the row is left to the owner.
+ * Catalog audit 22 (2026-10-30) renames the listing GPT Image 2.5 (DALL-E
+ * successor); the slug stays as it is.
  *
  * The Research Analyst's browser check the same day (chatgpt.com/pricing,
  * marked PARTIAL) found the product at https://chatgpt.com (replacing
@@ -21,6 +22,15 @@ import type { ToolFacts } from "./types";
 export default {
   slug: "gpt-image-1-5-dall-e-successor",
   lifecycle: "active",
+  displayName: {
+    value: "GPT Image 2.5 (DALL-E successor)",
+    sourceUrl: "https://developers.openai.com/api/docs/models",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   officialUrl: {
     value: "https://chatgpt.com",
     note: "Browser check, 2026-10-29: the product is at chatgpt.com, which replaces chat.openai.com.",
@@ -73,6 +83,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "displayName",
+      summary: "Listing renamed GPT Image 1.5 -> GPT Image 2.5 (DALL-E successor): OpenAI's model list shows GPT-Image-2.5 Flare and Sunburst. Slug unchanged.",
+    },
     {
       date: "2026-10-29",
       field: "apiPricing",
