@@ -198,3 +198,10 @@ export function planAudit27(row: Audit27Row, patch: Audit27Patch): Audit27Plan[]
 export function audit27UpdateData(plans: readonly Audit27Plan[]): Partial<Record<Audit27Field, string>> {
   return Object.fromEntries(plans.filter((p) => p.action === "update").map((p) => [p.field, p.to]));
 }
+
+/** Fact-file entries re-read by audit 27 (2026-10-30) that override the row text on the page. */
+export const AUDIT_27_FACT_UPDATES: Record<string, readonly string[]> = {
+  paperpal: ["freeTier", "plans"],
+  "trinka-ai": ["freeTier", "plans"],
+  "wondershare-pdfelement-ai": ["plans"],
+};
