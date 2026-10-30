@@ -328,6 +328,13 @@ export default function ConnectorPage() {
             </a>
             .
           </p>
+          <p className="mt-2 text-sm text-gray-400">
+            Using the connector means you agree to our{" "}
+            <Link href="/terms" className="text-orange-400 hover:underline">
+              terms of use
+            </Link>
+            .
+          </p>
         </li>
       </ol>
     </div>
