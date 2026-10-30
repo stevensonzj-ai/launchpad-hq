@@ -1,4 +1,7 @@
 import anthropicApiFacts from "./anthropic-api";
+import mubertFacts from "./mubert";
+import elevenLabsFacts from "./elevenlabs";
+import deepgramFacts from "./deepgram";
 import apolloIoFacts from "./apollo-io";
 import briskTeachingFacts from "./brisk-teaching";
 import capcutFacts from "./capcut";
@@ -208,6 +211,9 @@ import type { ToolFacts } from "./types";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [anthropicApiFacts.slug]: anthropicApiFacts,
+  [mubertFacts.slug]: mubertFacts,
+  [elevenLabsFacts.slug]: elevenLabsFacts,
+  [deepgramFacts.slug]: deepgramFacts,
   [apolloIoFacts.slug]: apolloIoFacts,
   [briskTeachingFacts.slug]: briskTeachingFacts,
   [capcutFacts.slug]: capcutFacts,

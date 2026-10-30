@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -2339,7 +2339,7 @@
    "platformType": [
     "api"
    ],
-   "currentPricing": "Pay-as-you-go; Nova-3 Monolingual pre-recorded currently $0.0048/min promotional (strikethrough regular $0.0077/min). $200 credit on signup (as of 2026-10-14).",
+   "currentPricing": "Pay as you go with a $200 free credit (no card, no expiry): Nova-3 Monolingual $0.0077/min streaming, $0.0043/min pre-recorded; Aura-2 text to speech $0.030 per 1,000 characters; Voice Agent Standard $0.075/min. Growth from $4,000/yr pre-paid at lower rates; Enterprise custom (as of 2026-10-30)",
    "freeTierFeatures": "Free: $200 credit for new accounts; pay-per-use after",
    "usageLimits": "Free: $200 credits (generous for testing); pay-per-audio-hour after; volume discounts",
    "apiAvailable": true,
@@ -2352,7 +2352,7 @@
     "AssemblyAI",
     "Google Speech API"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -2809,9 +2809,9 @@
     "web",
     "api"
    ],
-   "currentPricing": "Free $0 (10k credits/mo); Starter $6/mo (30k credits; first-month promo $1 shown until Oct 18, 2026); Creator $22/mo (121k; first-month $11 shown); Pro $99 (600k); Scale $299 (1.8M, 3 seats); Business $990 (6M, 10 seats); Enterprise custom. Annual = 10 months (Starter $5 equivalent, Creator $18.33, Pro $82.50) (per the FAQ, as of 2026-10-14)",
-   "freeTierFeatures": "Free $0: 10,000 credits/month; 3 Studio projects (official, as of 2026-10-14)",
-   "usageLimits": "Free: 10K chars/mo; Starter: 30K; Creator: 100K; Pro: 500K; Scale: 2M",
+   "currentPricing": "Free $0 (10,000 credits/mo); Starter $6/mo (30,000 credits); Creator $22/mo (121,000); Pro $99/mo (600,000); Scale $299/mo (1.8M, 3 seats); Business $990/mo (6M, 10 seats); Enterprise custom. Annual billing charges 10 months for 12: Starter $5/mo, Creator $18.33/mo, Pro $82.50/mo, Scale $249.17/mo, Business $825/mo (as of 2026-10-30)",
+   "freeTierFeatures": "Free $0: 10,000 credits/month for text to speech, speech to text, sound effects, voice design, music and image; 3 Studio projects; no commercial license (as of 2026-10-30)",
+   "usageLimits": "Monthly credits: Free 10,000; Starter 30,000; Creator 121,000; Pro 600,000; Scale 1.8M; Business 6M. Text to speech uses about 1 credit per character; paid credits roll over for up to two months (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "Google Lyria 3.5 (music)",
@@ -5510,7 +5510,7 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Free with free customization options; Yearly $8/mo, Quarterly $18/mo, Monthly $24/mo regular prices, shown with a limited-time 20% discount (official, as of 2026-10-26)",
+   "currentPricing": "Free with free customization options; Premium Yearly $8/mo ($96 every 12 months), Quarterly $54 every 3 months, Monthly $24/mo; 14-day money-back guarantee (as of 2026-10-30)",
    "freeTierFeatures": "Free as long as you use only free customization options; 4 free resume templates; unlimited downloads; free for students verified via ISIC, ITIC or UNiDAYS (official, as of 2026-10-26)",
    "usageLimits": null,
    "apiAvailable": false,
@@ -5519,7 +5519,7 @@
     "Rezi"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "career-job-search",
     "name": "Career & Job Search"
@@ -5779,13 +5779,13 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free 100 units/day; paid ~$9/$5, $35/$21, $105/$63, $200/$160 per month (list/discounted; billing basis unverified)",
+   "currentPricing": "Free 100 units/day; Basic $9/mo (5,000 units), Pro $35/mo (20,000), Max $105/mo (60,000), Business $200/mo (80,000 units, up to 50 members); billed yearly: Basic $5.25/mo, Pro $21/mo, Max $63/mo, Business $160/mo; Enterprise custom (as of 2026-10-30)",
    "freeTierFeatures": "100 units/day (official, as of 2026-10-13)",
    "usageLimits": null,
    "apiAvailable": true,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-14",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -7426,9 +7426,9 @@
     "web",
     "api"
    ],
-   "currentPricing": "Ambassador Free; Creator $14/mo ($11.69 shown as discounted); Pro $39/mo commercial ($32.49 discounted); Business $199/mo ($149.29 discounted) (per the compare table, as of 2026-10-14)",
+   "currentPricing": "Ambassador free (non-commercial); Creator $14/mo; Pro $39/mo (commercial use); Business $199/mo (client, agency and app use); billed annually: $11.69, $32.49 and $149.29 a month (as of 2026-10-30)",
    "freeTierFeatures": "Ambassador free: 25 generations/mo, 5 downloads/mo, non-commercial (official, as of 2026-10-14)",
-   "usageLimits": "Free: 25 tracks/mo; Creator: unlimited; Business: commercial license + unlimited",
+   "usageLimits": "Ambassador: 25 tracks and 5 downloads a month; Creator and Pro: 500 generations a month; Business: 1,000 generations a month (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "Soundraw",
@@ -7440,7 +7440,7 @@
     "AIVA",
     "Beatoven.ai"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
