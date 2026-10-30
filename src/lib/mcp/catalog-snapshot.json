@@ -1,13 +1,14 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden)",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
   "canva-magic-studio",
   "clarifai",
   "kakao-brain-karlo",
-  "relay-app"
+  "relay-app",
+  "tabnine"
  ],
  "rows": [
   {
@@ -11324,65 +11325,6 @@
     "Descript (editing)",
     "Canva AI (graphics)",
     "Slack AI (distribution)"
-   ],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "tabnine",
-   "name": "Tabnine",
-   "company": "Tabnine",
-   "website": "https://tabnine.com",
-   "description": "Tabnine was an AI coding assistant for code completion and chat in the editor. Tricentis announced on July 30, 2026 that it had acquired Tabnine and would build Tabnine's Enterprise Context Engine into its Agentic Quality Engineering Platform.",
-   "primaryUse": "No longer sold on its own: former AI coding assistant, now part of Tricentis",
-   "primaryUseCases": "Private code completion; enterprise compliance; air-gapped environments; IP-safe suggestions",
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "INTERMEDIATE",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "No standalone plans or prices. Tabnine is now part of Tricentis, and tabnine.com redirects to Tricentis (as of 2026-10-29).",
-   "freeTierFeatures": "None: Tabnine is no longer sold as a standalone product",
-   "usageLimits": null,
-   "apiAvailable": true,
-   "directAlternatives": [
-    "GitHub Copilot",
-    "Cursor",
-    "Devin Desktop",
-    "Amazon Q Developer"
-   ],
-   "budgetAlternativeTo": [
-    "GitHub Copilot Free"
-   ],
-   "updatedAt": "2026-10-29",
-   "category": {
-    "slug": "ai-coding-development",
-    "name": "AI Coding & Development"
-   },
-   "idealUserTypes": [
-    "Enterprise developers prioritizing code privacy",
-    "regulated industries",
-    "on-premise teams"
-   ],
-   "contentTypes": [
-    "Code"
-   ],
-   "outputFormats": [
-    "Inline code completions",
-    "chat responses"
-   ],
-   "privacyLevel": "HIGH",
-   "timeToProductivity": "10 min",
-   "learningCurve": "Easy",
-   "offlineCapable": false,
-   "languageSupport": "All major programming languages",
-   "keyIntegrations": "VS Code, JetBrains, Neovim, Eclipse, Visual Studio, GitLab, Bitbucket",
-   "upgradeTriggers": "Better model quality; full chat; multi-repo context; team admin; on-premise deployment; IP safety",
-   "complementaryTools": [
-    "ChatGPT/Claude (general AI)",
-    "GitHub (version control)",
-    "JIRA (project management)"
    ],
    "hasMobileApp": false,
    "iosAppUrl": null,

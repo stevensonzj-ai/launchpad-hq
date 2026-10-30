@@ -74,8 +74,8 @@ describe("catalog snapshot", () => {
     const hidden = new Set(hiddenPlatformSlugs());
     assert.deepEqual(slugs.filter((s) => hidden.has(s)), []);
     assert.equal(snap.rows.length + snap.hidden_rows.length, snap.db_rows);
-    // 221 until guide PR D hid clarifai (2026-10-29).
-    assert.equal(snap.rows.length, 220);
+    // 221 until guide PR D hid clarifai (2026-10-29); 220 until audit 26 hid tabnine (2026-10-30).
+    assert.equal(snap.rows.length, 219);
   });
 
   it("reproduces every tool the live stress test returned", () => {
