@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
 import { getToolFacts } from "@/data/facts";
-import { AUDIT_27_NO_CHANGE, AUDIT_27_PATCHES, audit27UpdateData, planAudit27 } from "@/data/catalog-audits/audit-27";
+import { AUDIT_27_FACT_UPDATES, AUDIT_27_NO_CHANGE, AUDIT_27_PATCHES, audit27UpdateData, planAudit27 } from "@/data/catalog-audits/audit-27";
 import { catalogRedirects, HIDDEN_PAGE_REDIRECTS, PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
 
@@ -81,5 +81,18 @@ describe("catalog audit 27: rows audit 25 left catalog_only", () => {
     assert.match(source, /usageLimits: true, website: true, name: true/);
     assert.doesNotMatch(source, /\.delete(Many)?\(|\.create(Many)?\(/);
     assert.doesNotMatch(source, /console\.log\([^)]*DATABASE_URL/);
+  });
+
+  it("fact files that override the page carry the audit-27 values", () => {
+    const j = (slug: string) => JSON.stringify(getToolFacts(slug));
+    assert.match(j("paperpal"), /\$100\.80\/yr/);
+    assert.match(j("paperpal"), /\$243\.60\/yr/);
+    assert.doesNotMatch(JSON.stringify([getToolFacts("paperpal")?.plans, getToolFacts("paperpal")?.freeTier]), /limited-time|300 MB/i);
+    assert.match(j("trinka-ai"), /\$20 billed monthly/);
+    assert.match(j("trinka-ai"), /4 proofread files/);
+    assert.equal(getToolFacts("wondershare-pdfelement-ai")?.plans?.value.length, 1);
+    for (const [slug, keys] of Object.entries(AUDIT_27_FACT_UPDATES)) {
+      for (const key of keys) assert.equal((getToolFacts(slug) as unknown as Record<string, { checkedAt?: string } | undefined>)[key]?.checkedAt, "2026-10-30", `${slug}.${key}`);
+    }
   });
 });

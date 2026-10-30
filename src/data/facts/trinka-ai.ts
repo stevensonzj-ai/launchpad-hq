@@ -33,13 +33,13 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Basic plan, free and never expires, no card: 5,000 words a month of writing assistance, 5 AI writing requests and 4 credits a month.",
+      summary: "Basic plan (free): 5,000 words a month, 4 proofread files and 5 AI writing requests.",
     },
     sourceUrl: "https://www.trinka.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-10-30",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-10-30",
     status: "verified",
   },
   plans: {
@@ -48,13 +48,13 @@ export default {
         name: "Basic",
         price: "$0",
         period: "",
-        limits: "5,000 words, 5 AI writing requests and 4 credits a month",
+        limits: "5,000 words a month, 4 proofread files and 5 AI writing requests",
       },
       {
         name: "Premium",
         price: "$48",
         period: "year",
-        limits: "Shown struck through from $80 a year; full writing access",
+        limits: "Or $20 billed monthly",
       },
       {
         name: "Premium Plus",
@@ -66,15 +66,15 @@ export default {
         name: "Confidential Data",
         price: "$300",
         period: "year",
-        limits: "Shown struck through from $500 a year; no data storage and no AI training; for teams",
+        limits: "No data storage and no AI training; for teams",
       },
     ],
-    note: "USD, annual prices, browser check 2026-10-29 (logged out, US). Monthly prices: not captured (the billing toggle did not change the display).",
+    note: "USD, catalog audit 27 re-read 2026-10-30: Basic $0; Premium $48/yr or $20/mo; Premium Plus $125/yr; Confidential Data $300/yr.",
     sourceUrl: "https://www.trinka.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-10-30",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-10-30",
     status: "verified",
   },
   privacy: {
@@ -88,6 +88,12 @@ export default {
     status: "unverified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "plans",
+      summary:
+        "Catalog audit 27 re-read: Premium monthly price ($20) added; Basic free plan is 5,000 words, 4 proofread files and 5 AI writing requests a month.",
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

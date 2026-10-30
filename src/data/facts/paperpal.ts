@@ -17,39 +17,28 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary:
-        "Free plan: 200 grammar edits a month; 5 a day of paraphrase, trim, translate, AI Review and similar tools; 5 a day of Research Q&A and citation lookup; chat with 5 files a month; 300 MB library storage.",
+      summary: "Free plan: 200 grammar edits a month; 5 a day of the writing tools; chat with 5 files a month.",
     },
-    note: "Browser check, 2026-10-29: \"200 edits / mo Grammar\", \"5 / day Paraphrase, Trim, Translate, AI Review + more\", \"5 / day Research Q&A + Citation lookup\", \"5 files / mo Chat with papers\", \"300 MB Library storage\"; also lite plagiarism and journal-fit reports and an AI-detection preview.",
+    note: "Catalog audit 27 re-read, 2026-10-30: \"200 edits / mo Grammar\", \"5 / day\" writing tools, \"5 files / mo Chat with papers\".",
     sourceUrl: "https://paperpal.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-10-30",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-10-30",
     status: "verified",
   },
   plans: {
     value: [
-      { name: "Free", price: "$0", period: "", limits: "200 grammar edits a month; 5 a day of the AI writing tools" },
-      {
-        name: "Prime",
-        price: "$25",
-        period: "month",
-        limits: "Billed monthly; annual billing shown at $100.80/year on a limited-time offer (struck-through $144)",
-      },
-      {
-        name: "Pro",
-        price: "$59",
-        period: "month",
-        limits: "Billed monthly; annual billing shown at $243.60/year on a limited-time offer (struck-through $348)",
-      },
+      { name: "Free", price: "$0", period: "", limits: "200 grammar edits a month; 5 a day of the writing tools; chat with 5 files a month" },
+      { name: "Prime", price: "$25", period: "month", limits: "Billed monthly; billed annually $8.40/mo ($100.80/yr)" },
+      { name: "Pro", price: "$59", period: "month", limits: "Billed monthly; billed annually $20.30/mo ($243.60/yr)" },
     ],
-    note: "USD, as of 2026-10-29, browser-verified. Banner: \"Enjoy up to 30% OFF on select plans. Limited-time only!\" 2-year ($555) and 3-year ($699) one-time plans are also offered; the page does not say which plan they belong to.",
+    note: "USD, catalog audit 27 re-read 2026-10-30: Prime $25/mo and Pro $59/mo billed monthly; billed annually Prime $8.40/mo ($100.80/yr) and Pro $20.30/mo ($243.60/yr).",
     sourceUrl: "https://paperpal.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-10-30",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-10-30",
     status: "verified",
   },
   privacy: {
@@ -61,6 +50,12 @@ export default {
     status: "unverified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "plans",
+      summary:
+        "Catalog audit 27 re-read: annual prices added (Prime $8.40/mo, Pro $20.30/mo billed annually); free plan trimmed to the confirmed limits.",
+    },
     {
       date: "2026-10-29",
       field: "privacy",

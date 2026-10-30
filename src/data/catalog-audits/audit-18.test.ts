@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { AUDIT_27_FACT_UPDATES, CHECKED_AT as AUDIT_27_CHECKED_AT } from "./audit-27";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -144,6 +145,8 @@ describe("catalog audit 18: stale facts batch 2", () => {
         if (!fact || typeof fact !== "object" || !("sourceUrl" in fact)) continue;
         // Catalog audit 22 (2026-10-30) adds displayName / officialUrl / status to renamed rows.
         if (AUDIT_22_FACT_KEYS.has(key) && fact.checkedAt === AUDIT_22_CHECKED_AT) continue;
+        // Catalog audit 27 (2026-10-30) re-read these price facts.
+        if (AUDIT_27_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_27_CHECKED_AT) continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

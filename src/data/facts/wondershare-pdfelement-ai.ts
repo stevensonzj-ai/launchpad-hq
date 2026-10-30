@@ -23,37 +23,19 @@ export default {
   plans: {
     value: [
       {
-        name: "Personal",
+        name: "Personal (Windows)",
         price: "$129.99",
         period: "",
-        limits: "Perpetual licence, 1 user; promotional price (was $159)"
-      },
-      {
-        name: "Team",
-        price: "$139",
-        period: "",
-        limits: "Perpetual licence, 1 user; multi-user options"
-      },
-      {
-        name: "Cross Platform",
-        price: "$139.99",
-        period: "",
-        limits: "Perpetual licence, 1 user; promotional price"
-      },
-      {
-        name: "Education",
-        price: "$39.99",
-        period: "year",
-        limits: "1 user; promotional price"
+        limits: "Perpetual licence, 1 user"
       }
     ],
-    note: "USD, as of 2026-10-29, from the homepage during a release promotion (\"Up to 79% OFF\"). AI credit limits and any separate AI pricing are not stated.",
-    sourceUrl: "https://pdf.wondershare.com/",
+    note: "USD, catalog audit 27 re-read 2026-10-30 on the Windows individuals store page. Team and Education prices not confirmed.",
+    sourceUrl: "https://pdf.wondershare.com/store/windows-individuals.html",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-10-30",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-10-30",
     status: "verified"
   },
   features: {
@@ -68,6 +50,11 @@ export default {
     status: "verified"
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "plans",
+      summary: "Catalog audit 27 re-read: Windows perpetual licence $129.99 kept; unsourced Team, Cross Platform and Education prices removed."
+    },
     {
       date: "2026-10-29",
       field: "plans",
