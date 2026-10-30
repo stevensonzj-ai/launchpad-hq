@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead } from "@/lib/catalog-cache";
 import { platformLinkLabel } from "@/lib/related-links";
 

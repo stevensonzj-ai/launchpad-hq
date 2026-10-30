@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead } from "@/lib/catalog-cache";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { PUBLIC_HOURLY_CACHE } from "@/lib/public-data/http";
