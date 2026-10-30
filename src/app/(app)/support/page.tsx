@@ -10,7 +10,7 @@ export const metadata: Metadata = publicPageMetadata({
   path: "/support",
 });
 
-const SUPPORT_EMAIL = "zach@launchpadhq.io";
+const SUPPORT_EMAIL = "launchpadhq.admin@gmail.com";
 
 export default function SupportPage() {
   return (
