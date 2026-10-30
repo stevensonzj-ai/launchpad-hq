@@ -12,7 +12,7 @@ export const metadata: Metadata = publicPageMetadata({
   path: "/terms",
 });
 
-const CONTACT_EMAIL = "zach@launchpadhq.io";
+const CONTACT_EMAIL = "launchpadhq.admin@gmail.com";
 
 function ContactLink() {
   return <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
