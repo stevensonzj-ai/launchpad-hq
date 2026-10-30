@@ -27,35 +27,15 @@ export async function POST(
     return apiError("not_found", { message: "Not found" });
   }
 
-  const existing = await prisma.promptRating.findFirst({
-    where: { userId: user.id, promptId: id },
-  });
-
-  await prisma.$transaction(async (tx) => {
-    if (existing) {
-      await tx.prompt.update({
-        where: { id },
-        data: {
-          ratingSum: { increment: stars - existing.stars },
-        },
-      });
-      await tx.promptRating.update({
-        where: { id: existing.id },
-        data: { stars },
-      });
-    } else {
-      await tx.prompt.update({
-        where: { id },
-        data: {
-          ratingSum: { increment: stars },
-          ratingCount: { increment: 1 },
-        },
-      });
-      await tx.promptRating.create({
-        data: { userId: user.id, promptId: id, stars },
-      });
-    }
-  });
+  try {
+    await applyRating(id, user.id, stars);
+  } catch (error) {
+    // Two concurrent first ratings from the same user can still collide on
+    // the (userId, promptId) unique index. The other request won, so retry
+    // once: the second pass sees that row and applies an update instead.
+    if (!isUniqueViolation(error)) throw error;
+    await applyRating(id, user.id, stars);
+  }
 
   const updated = await prisma.prompt.findUnique({ where: { id } });
   return NextResponse.json({
@@ -65,6 +45,47 @@ export async function POST(
         : null,
     ratingCount: updated?.ratingCount ?? 0,
   });
+}
+
+/**
+ * Applies one user's rating inside a single transaction. The prompt row is
+ * locked first, so the read of the user's existing rating and the counter
+ * update cannot interleave with another rating of the same prompt.
+ */
+async function applyRating(promptId: string, userId: string, stars: number) {
+  await prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM "prompts" WHERE id = ${promptId} FOR UPDATE`;
+    const existing = await tx.promptRating.findUnique({
+      where: { userId_promptId: { userId, promptId } },
+    });
+    if (existing) {
+      await tx.prompt.update({
+        where: { id: promptId },
+        data: { ratingSum: { increment: stars - existing.stars } },
+      });
+      await tx.promptRating.update({
+        where: { id: existing.id },
+        data: { stars },
+      });
+    } else {
+      await tx.prompt.update({
+        where: { id: promptId },
+        data: {
+          ratingSum: { increment: stars },
+          ratingCount: { increment: 1 },
+        },
+      });
+      await tx.promptRating.create({ data: { userId, promptId, stars } });
+    }
+  });
+}
+
+function isUniqueViolation(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    (error as { code?: unknown }).code === "P2002"
+  );
 }
 
 export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);

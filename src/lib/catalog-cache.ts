@@ -103,7 +103,7 @@ export function cachedCatalogRead<A extends unknown[], R>(
  * Per-instance memory in front of a cached read: a warm function skips even
  * the data-cache round trip. Keep `ttlMs` short. After an on-demand
  * revalidation, a warm instance can serve its old copy for up to `ttlMs`.
- * A failed load is not stored.
+ * A failed load is not stored. Concurrent misses share one in-flight load.
  */
 export function withMemoryLayer<R>(
   load: () => Promise<R>,
@@ -111,11 +111,24 @@ export function withMemoryLayer<R>(
   clock: () => number = Date.now,
 ): () => Promise<R> {
   let entry: { value: R; loadedAt: number } | null = null;
+  // Concurrent callers on a cold or expired entry share one load instead of
+  // each starting their own (no thundering herd against the data cache/DB).
+  let pending: Promise<R> | null = null;
   return async () => {
     const now = clock();
     if (entry && now - entry.loadedAt < ttlMs) return entry.value;
-    const value = await load();
-    entry = { value, loadedAt: now };
-    return value;
+    if (pending) return pending;
+    const p = load().then(
+      (value) => {
+        entry = { value, loadedAt: now };
+        return value;
+      },
+    );
+    pending = p;
+    try {
+      return await p;
+    } finally {
+      if (pending === p) pending = null;
+    }
   };
 }

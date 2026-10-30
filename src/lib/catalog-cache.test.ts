@@ -111,6 +111,36 @@ describe("withMemoryLayer", () => {
     assert.equal(await load(), 3);
     assert.equal(loads, 3);
   });
+
+  it("coalesces concurrent misses into one in-flight load, and a failed one is not cached", async () => {
+    let loads = 0;
+    let release!: () => void;
+    let fail = false;
+    const load = withMemoryLayer(
+      () =>
+        new Promise<number>((resolve, reject) => {
+          loads += 1;
+          release = () => (fail ? reject(new Error("boom")) : resolve(loads));
+        }),
+      1000,
+      () => 0,
+    );
+    fail = true;
+    const a = load();
+    const b = load();
+    release();
+    await assert.rejects(a, /boom/);
+    await assert.rejects(b, /boom/);
+    assert.equal(loads, 1);
+    fail = false;
+    const c = load();
+    const d = load();
+    await Promise.resolve();
+    release();
+    assert.deepEqual(await Promise.all([c, d]), [2, 2]);
+    assert.equal(loads, 2);
+    assert.equal(await load(), 2);
+  });
 });
 
 describe("/mcp and /data/v1 read one cached catalog", () => {
