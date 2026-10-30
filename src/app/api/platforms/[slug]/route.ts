@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { isHiddenPlatform, listedPlatformWhere } from "@/lib/catalog-visibility";
 import { PUBLIC_REVIEW_SELECT } from "@/lib/public-reviews";
 import { apiError, methodsNotAllowed, withApiErrors } from "@/lib/api-error";

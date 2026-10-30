@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead } from "@/lib/catalog-cache";
 
 // Cached as an array: a Set does not survive the data cache's JSON round trip.

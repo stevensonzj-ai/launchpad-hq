@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead, withMemoryLayer } from "@/lib/catalog-cache";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import type { CatalogRow } from "./tools";

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PLATFORMS_MAX_LIMIT, PLATFORMS_MAX_PAGE, clampInt } from "@/lib/request-limits";
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { Prisma } from "@prisma/client";
 import { methodsNotAllowed, withApiErrors } from "@/lib/api-error";

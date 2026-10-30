@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { prisma } from "@/lib/db";
+import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead } from "@/lib/catalog-cache";
 
 // The root layout's metadata reads both counts on every render, so they sit
