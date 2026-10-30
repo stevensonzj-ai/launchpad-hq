@@ -39,7 +39,25 @@ export default {
     verifiedAt: "2026-10-20",
     status: "verified",
   },
+  plans: {
+    value: [
+      { name: "Free", price: "$0", period: "month", limits: "Limited AI usage and uploads, refreshing daily" },
+      { name: "Plus", price: "$10", period: "month", limits: "$8/month billed yearly" },
+      { name: "Pro", price: "$20", period: "month", limits: "$16/month billed yearly" },
+      { name: "Max 5x", price: "$100", period: "month", limits: "$80/month billed yearly" },
+      { name: "Max 20x", price: "$200", period: "month", limits: "$160/month billed yearly" },
+    ],
+    note: "USD. Unriddle is now Anara. As of 2026-10-30.",
+    sourceUrl: "https://anara.com/pricing",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude-sonnet",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://anara.com/pricing and price facts added with source and date." },
     {
       date: "2026-10-20",
       field: "displayName",

@@ -208,6 +208,29 @@ import googleVeo31Facts from "./google-veo-3-1";
 import openWebuiFacts from "./open-webui";
 import naverHyperclovaXCueFacts from "./naver-hyperclova-x-cue";
 import type { ToolFacts } from "./types";
+import activepiecesFacts from "./activepieces";
+import boltNewFacts from "./bolt-new";
+import pineconeFacts from "./pinecone";
+import replitAgentFacts from "./replit-agent";
+import togetherAiFacts from "./together-ai";
+import copyAiFacts from "./copy-ai";
+import fluxFacts from "./flux";
+import kiroFacts from "./kiro";
+import lumaDreamMachineRay3Facts from "./luma-dream-machine-ray3";
+import runwayFacts from "./runway";
+import stabilityAiFacts from "./stability-ai";
+import tactiqFacts from "./tactiq";
+import cursorFacts from "./cursor";
+import heygenFacts from "./heygen";
+import pictoryAiFacts from "./pictory-ai";
+import assemblyaiFacts from "./assemblyai";
+import descriptFacts from "./descript";
+import manusFacts from "./manus";
+import pikaFacts from "./pika";
+import synthesiaFacts from "./synthesia";
+import tlDvFacts from "./tl-dv";
+import v0Facts from "./v0";
+import zapierFacts from "./zapier";
 
 export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [anthropicApiFacts.slug]: anthropicApiFacts,
@@ -420,6 +443,29 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [googleVeo31Facts.slug]: googleVeo31Facts,
   [openWebuiFacts.slug]: openWebuiFacts,
   [naverHyperclovaXCueFacts.slug]: naverHyperclovaXCueFacts,
+  [activepiecesFacts.slug]: activepiecesFacts,
+  [boltNewFacts.slug]: boltNewFacts,
+  [pineconeFacts.slug]: pineconeFacts,
+  [replitAgentFacts.slug]: replitAgentFacts,
+  [togetherAiFacts.slug]: togetherAiFacts,
+  [copyAiFacts.slug]: copyAiFacts,
+  [fluxFacts.slug]: fluxFacts,
+  [kiroFacts.slug]: kiroFacts,
+  [lumaDreamMachineRay3Facts.slug]: lumaDreamMachineRay3Facts,
+  [runwayFacts.slug]: runwayFacts,
+  [stabilityAiFacts.slug]: stabilityAiFacts,
+  [tactiqFacts.slug]: tactiqFacts,
+  [cursorFacts.slug]: cursorFacts,
+  [heygenFacts.slug]: heygenFacts,
+  [pictoryAiFacts.slug]: pictoryAiFacts,
+  [assemblyaiFacts.slug]: assemblyaiFacts,
+  [descriptFacts.slug]: descriptFacts,
+  [manusFacts.slug]: manusFacts,
+  [pikaFacts.slug]: pikaFacts,
+  [synthesiaFacts.slug]: synthesiaFacts,
+  [tlDvFacts.slug]: tlDvFacts,
+  [v0Facts.slug]: v0Facts,
+  [zapierFacts.slug]: zapierFacts,
 };
 
 export function getToolFacts(slug: string): ToolFacts | undefined {

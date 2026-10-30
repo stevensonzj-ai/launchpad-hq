@@ -34,7 +34,23 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  plans: {
+    value: [
+      { name: "X Premium", price: "$30", period: "month", limits: "$300/year; includes Grok Bot" },
+      { name: "X Super", price: "$100", period: "month", limits: "$1,000/year" },
+      { name: "X Ultra", price: "$200", period: "month", limits: "$2,000/year" },
+    ],
+    note: "USD. No standalone price; not included on X Plus ($8/month). Team seats at the same prices. As of 2026-10-30.",
+    sourceUrl: "https://docs.x.ai/x-subscription/pricing",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude-sonnet",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://docs.x.ai/x-subscription/pricing and price facts added with source and date." },
     {
       date: "2026-10-14",
       field: "apps",

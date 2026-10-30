@@ -20,6 +20,7 @@ import {
 } from "./audit-10";
 import { audit11Slugs } from "./audit-11";
 import { AUDIT_23_FACT_SLUGS } from "./audit-23";
+import { AUDIT_25_FACT_SLUGS } from "./audit-25";
 
 const host = (url: string) => new URL(url).hostname.replace(/^www\./, "").replace(/^(docs|help|support)\./, "");
 const patchFor = (slug: string) => {
@@ -196,7 +197,8 @@ describe("catalog audit 10: \"official\" wording on catalog-only rows", () => {
   it("no wording entry touches a field a patch owns, and none has a price fact", () => {
     // Audit 11 later gave github-copilot owner-checked price facts and rewrote its text without "official".
     // Audit 23 (2026-10-30) gave elevenlabs, deepgram and mubert verified price facts; their text still has no "official".
-    const audit23 = new Set<string>(AUDIT_23_FACT_SLUGS);
+    // Audit 25 (2026-10-30, source verification) gave more rows verified price facts, also without "official".
+    const audit23 = new Set<string>([...AUDIT_23_FACT_SLUGS, ...AUDIT_25_FACT_SLUGS]);
     for (const { slug } of AUDIT_10_WORDING.filter((w) => (!audit11Slugs().includes(w.slug) || !getToolFacts(w.slug)?.plans) && !audit23.has(w.slug))) {
       const f = getToolFacts(slug);
       assert.ok(!f?.plans && !f?.freeTier && !f?.apiPricing, `${slug} has a price fact; fix the text through the fact file instead`);

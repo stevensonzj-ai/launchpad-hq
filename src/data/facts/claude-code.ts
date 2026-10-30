@@ -15,7 +15,25 @@ export default {
     verifiedAt: "2026-10-26",
     status: "verified",
   },
+  plans: {
+    value: [
+      { name: "Pro", price: "$20", period: "month", limits: "Includes Claude Code; $17/month billed annually ($200 up front)" },
+      { name: "Max", price: "$100", period: "month", limits: "Includes Claude Code" },
+      { name: "Ultra", price: "$200", period: "month", limits: "Includes Claude Code" },
+      { name: "Team standard seat", price: "$25", period: "seat_month", limits: "$20/seat/month billed annually" },
+      { name: "Team premium seat", price: "$125", period: "seat_month", limits: "$100/seat/month billed annually" },
+    ],
+    note: "USD. Claude Code is not included on the Free plan. As of 2026-10-30.",
+    sourceUrl: "https://claude.com/pricing",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude-sonnet",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://claude.com/pricing and price facts added with source and date." },
     {
       date: "2026-10-26",
       field: "features",

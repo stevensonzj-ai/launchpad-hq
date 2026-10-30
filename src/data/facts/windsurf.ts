@@ -39,7 +39,25 @@ export default {
     verifiedAt: "2026-10-20",
     status: "verified",
   },
+  plans: {
+    value: [
+      { name: "Free", price: "$0", period: "month", limits: "Light agent quota; unlimited inline edits and Tab completions" },
+      { name: "Pro", price: "$20", period: "month", limits: "" },
+      { name: "Max", price: "$200", period: "month", limits: "" },
+      { name: "Teams", price: "$80", period: "month", limits: "Team plan, plus $40/month per full seat" },
+      { name: "Enterprise", price: "Custom", period: "", limits: "" },
+    ],
+    note: "USD. windsurf.com/pricing redirects to devin.ai/pricing (Windsurf is now Devin Desktop). As of 2026-10-30.",
+    sourceUrl: "https://devin.ai/pricing",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude-sonnet",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://devin.ai/pricing and price facts added with source and date." },
     {
       date: "2026-10-20",
       field: "displayName",
