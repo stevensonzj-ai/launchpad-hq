@@ -140,7 +140,9 @@ export default function ConnectorPage() {
         </li>
 
         <li>
-          <h2 className="text-xl font-semibold text-white">2. Add Launchpad HQ to your assistant</h2>
+          <h2 id="add-to-assistant" className="scroll-mt-20 text-xl font-semibold text-white">
+            2. Add Launchpad HQ to your assistant
+          </h2>
           <p className="mt-2 text-sm text-gray-400">
             In each app below, add the URL from step 1 as a custom (remote) MCP connector. No
             sign-in or API key is needed, so pick &ldquo;None&rdquo; or leave authentication

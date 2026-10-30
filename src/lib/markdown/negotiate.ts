@@ -96,6 +96,7 @@ export const KNOWN_TOP_LEVEL = new Set([
   "sign-in",
   "sign-up",
   "sponsor-guidelines",
+  "support",
   "terms",
   "tutorials",
   "workflows",

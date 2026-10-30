@@ -18,6 +18,7 @@ export const SITEMAP_STATIC_PUBLIC_PATHS = [
   "/connector",
   "/about",
   "/contact",
+  "/support",
   "/developers",
 ] as const;
 
