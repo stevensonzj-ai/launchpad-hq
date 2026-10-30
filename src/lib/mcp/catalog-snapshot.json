@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -2341,7 +2341,7 @@
    ],
    "currentPricing": "Pay as you go with a $200 free credit (no card, no expiry): Nova-3 Monolingual $0.0077/min streaming, $0.0043/min pre-recorded; Aura-2 text to speech $0.030 per 1,000 characters; Voice Agent Standard $0.075/min. Growth from $4,000/yr pre-paid at lower rates; Enterprise custom (as of 2026-10-30)",
    "freeTierFeatures": "Free: $200 credit for new accounts; pay-per-use after",
-   "usageLimits": "Free: $200 credits (generous for testing); pay-per-audio-hour after; volume discounts",
+   "usageLimits": "Free: $200 credit, no expiry; then pay as you go, billed per second of audio with no rounding; Growth and Enterprise lower the rates (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "AssemblyAI",
@@ -2376,7 +2376,7 @@
    "timeToProductivity": "1 hour",
    "learningCurve": "Moderate",
    "offlineCapable": false,
-   "languageSupport": "36+ languages for transcription",
+   "languageSupport": "60+ languages for transcription with Nova models (as of 2026-10-30)",
    "keyIntegrations": "Python/JS/Go/.NET SDKs, Twilio, Zoom, WebSocket streaming, REST API",
    "upgradeTriggers": "Credit exhaustion; Growth plan features; enterprise SLA; on-premise; custom models",
    "complementaryTools": [
@@ -2845,9 +2845,9 @@
    "timeToProductivity": "10 min",
    "learningCurve": "Easy",
    "offlineCapable": false,
-   "languageSupport": "Multilingual (29+ languages, 100+ accents)",
+   "languageSupport": "70+ languages (as of 2026-10-30)",
    "keyIntegrations": "API, Zapier, Make, gaming engines (Unity/Unreal), various third-party tools",
-   "upgradeTriggers": "Character limits; removing attribution; professional voice cloning; API; commercial license",
+   "upgradeTriggers": "Credit limits; removing attribution; instant or professional voice cloning; commercial license; more Studio projects (as of 2026-10-30)",
    "complementaryTools": [
     "Synthesia (video avatars)",
     "Descript (audio editing)",
@@ -5771,7 +5771,7 @@
    "name": "Krea",
    "company": "Krea",
    "website": "https://www.krea.ai",
-   "description": "Multi-model image and video studio with LoRA training and an API. Official pricing (krea.ai/pricing, as of 2026-10-13): free 100 units/day; paid list/discounted monthly prices shown as $9/$5, $35/$21, $105/$63, $200/$160. The billing basis behind the two numbers is unverified.",
+   "description": "Multi-model image and video studio with LoRA training and an API. Free gives 100 units a day; Basic, Pro, Max and Business cost $9, $35, $105 and $200 a month, or $5.25, $21, $63 and $160 a month billed yearly (as of 2026-10-30).",
    "primaryUse": "Many image and video models in one studio",
    "primaryUseCases": "Beginners and designers iterating stills and short video in one place",
    "costTier": "FREEMIUM",
