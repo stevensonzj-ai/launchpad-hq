@@ -18,6 +18,7 @@ export type ApiErrorCode =
   | "forbidden"
   | "not_found"
   | "method_not_allowed"
+  | "rate_limited"
   | "unavailable"
   | "internal_error";
 
@@ -52,6 +53,11 @@ const DEFAULTS: Record<ApiErrorCode, { status: number; message: string; resoluti
     status: 405,
     message: "This URL does not accept this HTTP method.",
     resolution: "Retry with one of the methods in the Allow header.",
+  },
+  rate_limited: {
+    status: 429,
+    message: "Too many requests.",
+    resolution: "Wait a while, then retry.",
   },
   unavailable: {
     status: 503,

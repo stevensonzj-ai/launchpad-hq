@@ -5,6 +5,7 @@ import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { ModerationStatus } from "@prisma/client";
 import { sendModerationNotification } from "@/lib/email";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
+import { checkDailyPostQuota } from "@/lib/post-quota";
 
 export async function POST(
   request: NextRequest,
@@ -13,6 +14,10 @@ export async function POST(
   const user = await getOrCreateDbUser();
   if (!user) {
     return noDbUserResponse();
+  }
+  const limited = await checkDailyPostQuota(user.id);
+  if (limited) {
+    return limited;
   }
 
   const { id } = await params;
