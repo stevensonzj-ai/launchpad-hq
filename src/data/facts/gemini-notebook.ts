@@ -41,7 +41,22 @@ export default {
     verifiedAt: "2026-10-20",
     status: "verified",
   },
+  plans: {
+    value: [
+      { name: "Standard", price: "$0", period: "month", limits: "100 notebooks, 50 sources per notebook" },
+      { name: "Google AI Pro", price: "From $19.99", period: "month", limits: "Higher limits; also AI Plus, AI Ultra and qualifying Workspace plans" },
+    ],
+    note: "USD. As of 2026-10-30.",
+    sourceUrl: "https://support.google.com/notebooklm/answer/16213268",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude-sonnet",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://support.google.com/notebooklm/answer/16213268 and price facts added with source and date." },
     {
       date: "2026-10-29",
       field: "slug",

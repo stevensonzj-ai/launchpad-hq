@@ -41,7 +41,21 @@ export default {
     verifiedAt: "2026-10-29",
     status: "verified",
   },
+  plans: {
+    value: [
+      { name: "Open source", price: "$0", period: "", limits: "AGPL-3.0; runs locally" },
+    ],
+    note: "Free and open source. As of 2026-10-30.",
+    sourceUrl: "https://github.com/oobabooga/textgen",
+    sourceKind: "plans-page",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude-sonnet",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://github.com/oobabooga/textgen and price facts added with source and date." },
     {
       date: "2026-10-29",
       field: "displayName",
