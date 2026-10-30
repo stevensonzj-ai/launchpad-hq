@@ -1,0 +1,10 @@
+{
+  "name": "launchpad-hq",
+  "version": "1.0.0",
+  "description": "Search, compare and price AI tools with dated, sourced facts from Launchpad HQ. Free, read-only, no sign-in.",
+  "mcpServers": {
+    "launchpad-hq": {
+      "httpUrl": "https://www.launchpadhq.io/mcp"
+    }
+  }
+}
