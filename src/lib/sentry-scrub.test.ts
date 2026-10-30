@@ -1,0 +1,25 @@
+import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import type { ErrorEvent } from "@sentry/nextjs";
+import { scrubMcpEvent } from "./sentry-scrub";
+
+describe("scrubMcpEvent", () => {
+  it("strips the request body, query string, extras and console breadcrumbs from /mcp events", () => {
+    const event = {
+      type: undefined,
+      transaction: "POST /mcp",
+      request: { url: "https://www.launchpadhq.io/mcp?x=1", data: '{"task":"my SSN is 000-00-0000"}', query_string: "x=1" },
+      extra: { body: "my SSN is 000-00-0000" },
+      breadcrumbs: [{ category: "console", message: "my SSN is 000-00-0000" }, { category: "http" }],
+    } as unknown as ErrorEvent;
+    const out = scrubMcpEvent(event);
+    assert.ok(!JSON.stringify(out).includes("000-00-0000"));
+    assert.equal(out.request?.url, "https://www.launchpadhq.io/mcp");
+    assert.deepEqual(out.breadcrumbs, [{ category: "http" }]);
+  });
+
+  it("leaves other routes alone", () => {
+    const event = { request: { url: "https://www.launchpadhq.io/api/search", data: "keep" } } as unknown as ErrorEvent;
+    assert.equal(scrubMcpEvent(event).request?.data, "keep");
+  });
+});

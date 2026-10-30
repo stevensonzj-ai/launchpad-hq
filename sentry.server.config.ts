@@ -3,6 +3,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
+import { scrubMcpEvent } from "@/lib/sentry-scrub";
 
 Sentry.init({
   dsn: "https://ac58156bc0d4447e5297b1422d53b915@o4511463911849984.ingest.us.sentry.io/4511463922008064",
@@ -13,4 +14,8 @@ Sentry.init({
   // Enable sending user PII (Personally Identifiable Information)
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
   sendDefaultPii: false,
+
+  // Never store what was sent to the /mcp connector (see /privacy#mcp).
+  beforeSend: scrubMcpEvent,
+  beforeSendTransaction: scrubMcpEvent,
 });

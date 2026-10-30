@@ -55,15 +55,13 @@ Each tool call writes one log line with these fields only:
 | Field | Contents |
 |---|---|
 | `evt` | Always `mcp_call` |
-| `ts` | Timestamp |
+| `request_id` | Random UUID, new for each call |
 | `tool` | Tool name |
-| `query` | The task or platform input, truncated to 200 characters |
 | `result_count` | Number of results |
 | `latency_ms` | Response time |
 | `ok` | Whether the call succeeded |
-| `client` | The MCP client's self-reported name and version, if sent |
 
-It does **not** log IP addresses, headers, user agents, cookies or request bodies. See the [privacy policy](https://www.launchpadhq.io/privacy#mcp).
+It does **not** log what was sent to the tool (task text or tool names), the client's name, IP addresses, headers, user agents, cookies or request bodies. Sentry events for `/mcp` have the request body, query string, extras and console breadcrumbs removed (`src/lib/sentry-scrub.ts`). See the [privacy policy](https://www.launchpadhq.io/privacy#mcp).
 
 ## Code
 
