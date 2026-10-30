@@ -35,6 +35,31 @@ describe("search_tools relevance cutoff", () => {
     assert.deepEqual(s.slice(0, 3), ["speak-language-ai", "sarvam-ai", "duolingo-max"]);
   });
 
+  // A tool the search names exactly (name, slug or alias in names.ts) is a
+  // strong match: the cutoff never drops it.
+  it("ElevenLabs pricing returns ElevenLabs first", () => {
+    assert.equal(top5("ElevenLabs pricing")[0], "elevenlabs");
+  });
+  it("Speechify pricing returns Speechify first", () => {
+    assert.equal(top5("Speechify pricing")[0], "speechify");
+  });
+  it("named by slug or alias: 'eleven labs pricing', 'otter pricing'", () => {
+    assert.ok(top5("elevenlabs pricing").includes("elevenlabs"));
+    assert.ok(top5("otter pricing").includes("otter-ai"));
+  });
+  it("Otter vs Fireflies returns both named tools", () => {
+    const s = top5("Otter vs Fireflies");
+    assert.ok(s.includes("otter-ai") && s.includes("fireflies-ai"), s.join(", "));
+  });
+  it("alternatives to Notion AI: names Notion AI as the reference, never as a result", () => {
+    const out = search("alternatives to Notion AI");
+    assert.ok(out.results.length > 0);
+    assert.ok(!out.results.some((r) => r.slug === "notion-ai"));
+    assert.ok(out.results.slice(0, 5).every((r) => r.match_reasons.some((m: string) => /Notion AI/.test(m))), JSON.stringify(out.results.slice(0, 5).map((r) => r.match_reasons)));
+  });
+  it("filler words are never read as a tool name ('make slides' is not Make)", () => {
+    assert.ok(!top5("make slides").includes("make-integromat"));
+  });
   it("on-topic searches are unchanged", () => {
     const meeting = ["read-ai", "fathom", "fireflies-ai", "otter-ai", "tactiq"];
     assert.deepEqual(top5("transcribe my Zoom meetings", { budget: "free", skill_level: "beginner" }), meeting);
