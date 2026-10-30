@@ -15,6 +15,7 @@ import type { ToolFacts } from "./types";
 export default {
   slug: "tabnine",
   lifecycle: "discontinued",
+  visibility: "hidden",
   status: {
     value: {
       headline:
@@ -32,13 +33,19 @@ export default {
       additionalSources: ["https://www.tabnine.com/blog/a-new-chapter-for-tabnine/"],
     },
     sourceUrl: "https://www.tricentis.com/news/tricentis-acquires-tabnine",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-10-30",
     gatheredBy: "ra",
     verifiedBy: "claude",
     verifiedAt: "2026-10-29",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "visibility",
+      summary:
+        "Hidden (catalog audit 26): tabnine.com and its pricing page redirect to Tricentis (products / contact-us), app.tabnine.com returns 503, and Tricentis sells no standalone Tabnine plan. /platform/tabnine 301s to /compare/cursor-vs-github-copilot.",
+    },
     {
       date: "2026-10-29",
       field: "lifecycle",

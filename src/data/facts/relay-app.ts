@@ -15,13 +15,19 @@ export default {
       whatToDo: "There is nothing left to export: the company says the data has already been deleted.",
     },
     sourceUrl: "https://relay.app/",
-    checkedAt: "2026-10-20",
+    checkedAt: "2026-10-30",
     gatheredBy: "claude-subagent",
     verifiedBy: "claude",
     verifiedAt: "2026-10-20",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "visibility",
+      summary:
+        "Shutdown notice re-read on relay.app (catalog audit 26). /platform/relay-app now 301s to /alternatives/free-zapier-alternatives.",
+    },
     {
       date: "2026-10-20",
       field: "lifecycle",

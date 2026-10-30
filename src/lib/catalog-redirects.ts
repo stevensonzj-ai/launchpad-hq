@@ -50,10 +50,25 @@ export const RETIRED_GUIDE_SLUGS: readonly string[] = [
   // Shut down (final deprecation July 2026); page hidden,
   // guide kept in src/data/tutorials/retired/ (guide PR D, 2026-10-29).
   "clarifai",
-  // Acquired by Tricentis (2026-07-30) and no longer sold on its own; guide
-  // kept in src/data/tutorials/retired/ (guide PR D, 2026-10-29).
-  "tabnine",
 ];
+
+/**
+ * Hidden platforms whose whole /platform/<slug> tree 301s to the closest
+ * live listing page (catalog audit 26, 2026-10-30). Their fact files stay
+ * (visibility "hidden"), the DB rows stay, nothing is deleted.
+ * - relay-app: relay.app says "Relay.app shut down in September 2026. All
+ *   accounts, workflows, and run history have been permanently deleted."
+ *   (re-read 2026-10-30).
+ * - tabnine: acquired by Tricentis (tricentis.com/news/tricentis-acquires-tabnine,
+ *   2026-07-30); tabnine.com and /pricing now redirect to tricentis.com
+ *   (/products and /contact-us), app.tabnine.com returns 503, no standalone
+ *   plans or sign-up (re-checked 2026-10-30). Its retired guide moved here
+ *   from RETIRED_GUIDE_SLUGS so /platform/tabnine/guide does not chain.
+ */
+export const HIDDEN_PAGE_REDIRECTS: Readonly<Record<string, string>> = {
+  "relay-app": "/alternatives/free-zapier-alternatives",
+  tabnine: "/compare/cursor-vs-github-copilot",
+};
 
 export type CatalogRedirect = {
   source: string;
@@ -71,6 +86,10 @@ export function catalogRedirects(): CatalogRedirect[] {
       destination: `/platform/${to}/:path*`,
       statusCode: 301,
     });
+  }
+  for (const [slug, to] of Object.entries(HIDDEN_PAGE_REDIRECTS)) {
+    moves.push({ source: `/platform/${slug}`, destination: to, statusCode: 301 });
+    moves.push({ source: `/platform/${slug}/:path*`, destination: to, statusCode: 301 });
   }
   for (const slug of RETIRED_GUIDE_SLUGS) {
     moves.push({

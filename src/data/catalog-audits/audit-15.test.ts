@@ -198,14 +198,13 @@ describe("guide PR D: Clarifai unpublished reversibly", () => {
 
 describe("guide PR D: Tabnine retired to a what-happened note", () => {
   it("retires the guide with a 301 and keeps its text outside the registry", () => {
-    assert.ok(RETIRED_GUIDE_SLUGS.includes("tabnine"));
+    // Audit 26 (2026-10-30) superseded the listed note: the page is hidden and
+    // the whole /platform/tabnine tree 301s (see audit-26.test.ts).
+    assert.equal(RETIRED_GUIDE_SLUGS.includes("tabnine"), false);
     assert.equal(getStaticTutorialForPlatform("tabnine"), undefined);
-    assert.ok(
-      catalogRedirects().some((m) => m.source === "/platform/tabnine/guide" && m.destination === "/platform/tabnine"),
-    );
+    assert.ok(catalogRedirects().some((m) => m.source === "/platform/tabnine/:path*"));
     assert.match(read("src/data/tutorials/retired/tabnine-getting-started.ts"), /platformSlug: "tabnine"/);
-    // The page stays listed: it is the note readers land on.
-    assert.equal(isHiddenPlatform("tabnine"), false);
+    assert.equal(isHiddenPlatform("tabnine"), true);
   });
 
   it("states the acquisition, the integration and customer support, sourced to Tricentis", () => {
