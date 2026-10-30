@@ -71,6 +71,7 @@ describe("middleware matcher", () => {
       "/connector(.*)",
       "/about(.*)",
       "/contact(.*)",
+      "/support(.*)",
       "/developers(.*)",
       "/sign-in(.*)",
       "/sign-up(.*)",
