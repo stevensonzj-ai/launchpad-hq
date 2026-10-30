@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden)",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -8,6 +8,7 @@
   "clarifai",
   "kakao-brain-karlo",
   "relay-app",
+  "sora-2",
   "tabnine"
  ],
  "rows": [
@@ -401,7 +402,7 @@
   },
   {
    "slug": "aleph-alpha-luminous",
-   "name": "Aleph Alpha (Luminous)",
+   "name": "Aleph Alpha (Kolibri)",
    "company": "Aleph Alpha",
    "website": "https://aleph-alpha.com",
    "description": null,
@@ -425,7 +426,7 @@
     "Mistral AI (EU-based",
     "has free tier)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "international-regional-ai",
     "name": "International & Regional AI"
@@ -1386,7 +1387,7 @@
    ],
    "currentPricing": "Enterprise (via Thomson Reuters)",
    "freeTierFeatures": "Free trial available via Thomson Reuters; no permanent free tier",
-   "usageLimits": "Subscription-based; unlimited searches on paid plan",
+   "usageLimits": "Subscription-based; plan limits are not stated (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "Harvey AI",
@@ -1394,7 +1395,7 @@
     "Luminance"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "legal-ai",
     "name": "Legal AI"
@@ -3550,7 +3551,7 @@
     "api"
    ],
    "currentPricing": "Pay-per-use; various model pricing",
-   "freeTierFeatures": "$300 Google Cloud free trial credits; Gemini API free tier via AI Studio (1,500 req/day)",
+   "freeTierFeatures": "$300 Google Cloud free credits for new customers; Gemini API free tier via Google AI Studio (limited models) (as of 2026-10-30)",
    "usageLimits": "Free: $300 GCP credits + AI Studio free; pay-per-use after; enterprise agreements available",
    "apiAvailable": true,
    "directAlternatives": [
@@ -3563,7 +3564,7 @@
     "OpenAI API (simpler)",
     "Groq (free tier)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -5722,7 +5723,7 @@
    "slug": "kling-ai",
    "name": "Kling AI",
    "company": "Kuaishou",
-   "website": "https://klingai.com",
+   "website": "https://kling.ai",
    "description": "Kuaishou's Kling video and image studio. China-based company; hosted generations are processed by that service — review before uploading faces, brands, or confidential footage. International membership (kling.ai/llms.txt citing https://kling.ai/app/membership/membership-plan, re-checked 2026-10-14): Basic $0 (no monthly credits); Standard $8.80/mo after $6.99 first month (660 credits); Pro $32.56/mo (3,000 credits); Premier $80.96/mo (8,000); Ultra $159.99/mo (26,000). Credits policy: $1 USD = 66 credits. Blog states Basic-generated content is not for commercial use and carries a watermark.",
    "primaryUse": "AI video and image generation",
    "primaryUseCases": "Short-form video at a low monthly floor; image generation",
@@ -5731,13 +5732,13 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Basic $0; Standard $8.80/mo ($6.99 first month, 660 credits); Pro $32.56/mo; Premier $80.96/mo; Ultra $159.99/mo; $1 = 66 credits (as of 2026-10-14)",
-   "freeTierFeatures": "Basic free: no monthly credits; watermark; not for commercial use (official blog / membership, as of 2026-10-14)",
+   "currentPricing": "Basic free; billed monthly: Standard $8.80/mo (660 credits), Pro $32.56/mo (3,000 credits), Premier $181.99/mo (18,000 credits), Ultra+ $544.99/mo (57,000 credits) (as of 2026-10-30)",
+   "freeTierFeatures": "Basic free plan; its terms are not shown on the plans page (as of 2026-10-30)",
    "usageLimits": null,
    "apiAvailable": false,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "video-creation-editing",
     "name": "Video Creation & Editing"
@@ -5976,7 +5977,7 @@
    "slug": "lexis-plus-ai",
    "name": "Lexis+ with Protégé",
    "company": "LexisNexis",
-   "website": "https://www.lexisnexis.com/en-us/products/lexis-plus-ai.page",
+   "website": "https://www.lexisnexis.com/en-us/products/lexis-plus-protege.page",
    "description": "Legal research AI from LexisNexis. Product page (as of 2026-10-13): “Free trial available; pricing varies… contact for a quote.” No public list price. Typical use is enterprise legal data — treat outputs as research assistance, not legal advice, and follow your firm’s confidentiality rules.",
    "primaryUse": "Enterprise legal research AI (quote-based)",
    "primaryUseCases": "Law firms and legal teams already in the LexisNexis stack; not a consumer free tool",
@@ -5991,7 +5992,7 @@
    "apiAvailable": false,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "legal-ai",
     "name": "Legal AI"
@@ -6349,9 +6350,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free $0; Pro $25/mo (100 monthly credits, rollover); Business $50/mo (100 monthly credits, SSO); Enterprise volume-based. Yearly billing gives 2 months free; students up to 50% off Pro (as of 2026-10-25)",
-   "freeTierFeatures": "Free $0, no card: 5 build credits per day (up to 30/month), 20 Cloud credits/month, up to 5 lovable.app domains (official, as of 2026-10-25)",
-   "usageLimits": "Free: 5 build credits/day (max 30/month); Pro: 100 monthly credits with rollover; Business: 100 monthly credits; Enterprise: volume-based (official, as of 2026-10-25)",
+   "currentPricing": "Free $0; Pro $25/mo billed monthly or $21/mo billed annually (100 monthly credits); Business $50/mo (100 monthly credits); Enterprise volume-based; yearly billing gives 2 months free; student discount available (as of 2026-10-30)",
+   "freeTierFeatures": "Free $0: 5 build credits per day (up to 30/month), 20 Cloud credits/month, up to 5 lovable.app domains, unlimited collaborators (as of 2026-10-30)",
+   "usageLimits": "Free: 5 build credits/day (max 30/month); Pro: 100 monthly credits, unlimited lovable.app domains; Business: 100 monthly credits; Enterprise: volume-based (as of 2026-10-30)",
    "apiAvailable": false,
    "directAlternatives": [
     "Bolt.new",
@@ -6362,7 +6363,7 @@
     "Bolt.new",
     "v0"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -6823,7 +6824,7 @@
    ],
    "currentPricing": "Free $0; Plus $9/mo; Pro $29/mo; Pro 2× $49; Pro 5× $99; Pro 10× $149; Pro 20× $199; Extra Usage +$50 on Pro 20× (per the table, as of 2026-10-14)",
    "freeTierFeatures": "Free: 25 messages/mo, 25 new notes, task tracking on those notes, 15 open tasks/projects, 3 hours Voice Mode (official, as of 2026-10-14)",
-   "usageLimits": "Free: limited AI queries/month; Pro $10/mo: unlimited AI; team features",
+   "usageLimits": "Plan limits not confirmed; the pricing page needs a login (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "Notion AI",
@@ -6834,7 +6835,7 @@
     "Notion AI (free workspace)",
     "Apple Notes"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "meetings-notes",
     "name": "Meetings & Notes"
@@ -7595,9 +7596,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Via Gemini; Vertex AI API",
-   "freeTierFeatures": "Available via Gemini free tier (limited); via Vertex AI (pay-per-use)",
-   "usageLimits": "Via Gemini: shared rate limits; via Vertex AI: pay-per-image; via ImageFX: free with limits",
+   "currentPricing": "Free in the Gemini app (a Google AI plan unlocks more); Gemini API is paid only for image models: Nano Banana 2.1 about $0.034 per 1K image, Nano Banana 2 about $0.067 per 1K image, Nano Banana Pro about $0.134 per 1K/2K image; the original Nano Banana is $0.039 per image and shuts down March 15, 2027 (as of 2026-10-30)",
+   "freeTierFeatures": "Free in the Gemini app with limits; no free tier for image models in the Gemini API (as of 2026-10-30)",
+   "usageLimits": "Gemini app: limits not stated; Gemini API: billed per image; enterprise use via Gemini Enterprise Agent Platform (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "GPT Image 2.5",
@@ -8509,8 +8510,8 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free; Prime $25/mo and Pro $59/mo billed monthly; annual billing currently on a limited-time discount (as of 2026-10-29)",
-   "freeTierFeatures": "Free: 200 grammar edits a month; 5 a day of paraphrase, trim, translate, AI Review and similar; 5 a day of Research Q&A; chat with 5 files a month; 300 MB library (as of 2026-10-29)",
+   "currentPricing": "Free; Prime $25/mo and Pro $59/mo billed monthly; billed annually Prime $8.40/mo ($100.80/yr) and Pro $20.30/mo ($243.60/yr) (as of 2026-10-30)",
+   "freeTierFeatures": "Free: 200 grammar edits a month; 5 a day of the writing tools; chat with 5 files a month (as of 2026-10-30)",
    "usageLimits": "Free: 200 grammar edits a month and 5 a day of the AI tools; Prime and Pro limits not confirmed (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
@@ -8521,7 +8522,7 @@
     "Grammarly (broader)",
     "Trinka AI (free tier)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -8740,9 +8741,9 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Pro $7.50/mo billed yearly (8,000 AI credits, 1,000 exports). Max and Ultra are listed as yearly billed plans; their dollar amounts did not render on the fetched page — unverified. Enterprise custom (as of 2026-10-14). Monthly (non-yearly) prices unverified.",
-   "freeTierFeatures": "A free path is not priced on the paid-plan cards fetched 2026-10-14; do not quote the old $12.99/mo Pro figure.",
-   "usageLimits": "Free: limited exports; Pro: $10/mo unlimited; Enterprise: custom",
+   "currentPricing": "Pro $7.50/mo billed yearly (8,000 AI credits); Max $20.99/mo billed yearly (25,000 AI credits); Ultra $82.50/mo billed yearly (75,000 AI credits); Enterprise custom; monthly-billing prices not confirmed (as of 2026-10-30)",
+   "freeTierFeatures": "Free plan details are not shown on the pricing page (as of 2026-10-30)",
+   "usageLimits": "AI credits per month by plan (billed yearly): Pro 8,000, Max 25,000, Ultra 75,000 (as of 2026-10-30)",
    "apiAvailable": true,
    "directAlternatives": [
     "Canva AI (Magic Studio)",
@@ -9026,13 +9027,13 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Plans from $4.99/mo; higher tiers $19.99 / $49.99 / $99.99 / $249.99 (third-party point tables); free allowance unverified",
+   "currentPricing": "Free plan and paid subscriptions; prices not confirmed (pricing needs a login) (as of 2026-10-30)",
    "freeTierFeatures": "Free for most usage (official); exact daily points unverified as of 2026-10-13",
    "usageLimits": null,
    "apiAvailable": false,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "text-conversational-ai",
     "name": "Text & Conversational AI"
@@ -10368,7 +10369,7 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Premium $20/mo; Advanced $70/mo",
+   "currentPricing": "Free tier; billed annually: Premium $12/mo (1,200 credits/mo), Advanced $70/mo, Max $160/mo; billed monthly: Premium $20/mo, Advanced $90/mo (as of 2026-10-30)",
    "freeTierFeatures": "Free: limited paper reads; basic Q&A; limited highlights; Copilot queries",
    "usageLimits": "Free: limited Copilot queries/day; Premium: unlimited Copilot; bulk processing; higher limits",
    "apiAvailable": false,
@@ -10382,7 +10383,7 @@
     "Semantic Scholar (free)",
     "Scholarcy (free tier)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -10732,65 +10733,6 @@
     "Zoom AI (meetings)",
     "HubSpot AI (marketing)",
     "Notion AI (docs)"
-   ],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "sora-2",
-   "name": "Sora 2",
-   "company": "OpenAI",
-   "website": "https://sora.com",
-   "description": "Sora was OpenAI's text-to-video app and API for making short video clips, with sound, from a written prompt.",
-   "primaryUse": "Discontinued: former OpenAI text-to-video app and API",
-   "primaryUseCases": "High-quality video generation from text; cinematic clips; ad creatives; storyboarding; visual effects",
-   "costTier": "ENTERPRISE",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "Discontinued, no longer sold. OpenAI ended the Sora web and app experiences on April 26, 2026 and the Sora API on September 24, 2026 (OpenAI Help Center, as of 2026-10-25).",
-   "freeTierFeatures": "None: Sora is no longer available",
-   "usageLimits": "Plus: 50 videos/mo (720p 5s); Pro: 500 videos/mo (1080p 20s); rate-limited",
-   "apiAvailable": true,
-   "directAlternatives": [
-    "Runway",
-    "Pika",
-    "Google Veo 3.1",
-    "Luma Dream Machine (Ray3)"
-   ],
-   "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-30",
-   "category": {
-    "slug": "video-creation-editing",
-    "name": "Video Creation & Editing"
-   },
-   "idealUserTypes": [
-    "Filmmakers",
-    "advertisers",
-    "content creators",
-    "studios",
-    "creative professionals"
-   ],
-   "contentTypes": [
-    "Video"
-   ],
-   "outputFormats": [
-    "MP4 (720p/1080p)"
-   ],
-   "privacyLevel": "MEDIUM",
-   "timeToProductivity": "15 min",
-   "learningCurve": "Easy",
-   "offlineCapable": false,
-   "languageSupport": "English prompts primarily; multilingual partial",
-   "keyIntegrations": "ChatGPT (native), OpenAI API ecosystem",
-   "upgradeTriggers": "Needing 1080p; longer videos; no watermark; higher volume; concurrent generation",
-   "complementaryTools": [
-    "ChatGPT (script writing)",
-    "ElevenLabs (voiceover)",
-    "Descript (editing)",
-    "GPT Image 2.5 (stills)"
    ],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -11781,8 +11723,8 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free Basic; Premium $48/yr (shown struck through from $80) and Premium Plus $125/yr; Confidential Data $300/yr (from $500); monthly prices not confirmed (as of 2026-10-29)",
-   "freeTierFeatures": "Basic (free, never expires, no card): 5,000 words a month, 5 AI writing requests and 4 credits a month (as of 2026-10-29)",
+   "currentPricing": "Basic $0; Premium $48/yr or $20/mo; Premium Plus $125/yr; Confidential Data $300/yr (as of 2026-10-30)",
+   "freeTierFeatures": "Basic (free): 5,000 words a month, 4 proofread files and 5 AI writing requests (as of 2026-10-30)",
    "usageLimits": "Basic: 5,000 words, 5 AI writing requests and 4 credits a month; Premium: full writing access; Confidential Data plan (teams): no data storage and no AI training (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
@@ -11793,7 +11735,7 @@
     "Grammarly (broader use)",
     "Paperpal"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "research-academic-tools",
     "name": "Research & Academic Tools"
@@ -12532,9 +12474,9 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free tier; Pro plans",
-   "freeTierFeatures": "Free: limited credits; basic VFX shots; watermarked",
-   "usageLimits": "Free: limited credits; Pro/Enterprise: higher credits; per-project pricing",
+   "currentPricing": "Start for free; paid plan prices not confirmed (as of 2026-10-30)",
+   "freeTierFeatures": "Free to start; free-plan limits not confirmed (as of 2026-10-30)",
+   "usageLimits": "Plan limits not confirmed (as of 2026-10-30)",
    "apiAvailable": false,
    "directAlternatives": [
     "Runway (different approach)",
@@ -12543,7 +12485,7 @@
    "budgetAlternativeTo": [
     "Runway (cheaper for basic effects)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "gaming-creative-ai",
     "name": "Gaming & Creative AI"
@@ -12594,7 +12536,7 @@
     "mobile",
     "desktop"
    ],
-   "currentPricing": "Perpetual licences: Personal $129.99, Team $139, Cross Platform $139.99 (one user; promotional homepage prices); Education $39.99 a year (as of 2026-10-29)",
+   "currentPricing": "Perpetual licence (Windows, one user) $129.99; Team and Education prices not confirmed (as of 2026-10-30)",
    "freeTierFeatures": "Free downloads are offered for Windows, Mac, iOS and Android; trial terms, watermarking and AI limits are not stated on the homepage (as of 2026-10-29)",
    "usageLimits": "AI credit or quota limits are not stated on the pages read (as of 2026-10-29)",
    "apiAvailable": false,
@@ -12608,7 +12550,7 @@
     "ChatPDF (free)",
     "Gemini Notebook (free)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "document-pdf-processing",
     "name": "Document & PDF Processing"

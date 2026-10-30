@@ -8,11 +8,11 @@ import { buildPlatformMetadata, buildTutorialMetadata } from "@/lib/seo-metadata
 
 describe("catalog visibility", () => {
   it("hides the dead-and-obscure pages and the duplicate rows", () => {
-    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai"]) {
+    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai", "sora-2"]) {
       assert.equal(isHiddenPlatform(slug), true, slug);
     }
-    // "What happened" pages stay listed and indexed.
-    for (const slug of ["sora-2", "play-ht", "beatoven-ai"]) {
+    // "What happened" pages stay listed and indexed (sora-2 was hidden by audit 27, 2026-10-30).
+    for (const slug of ["play-ht", "beatoven-ai"]) {
       assert.equal(isHiddenPlatform(slug), false, slug);
     }
     assert.deepEqual(listedPlatformWhere(), { slug: { notIn: hiddenPlatformSlugs() } });
@@ -93,7 +93,8 @@ describe("status metadata", () => {
     });
     assert.match(String(meta.title), /^What Happened to Sora 2\?/);
     assert.match(String(meta.description), /April 26, 2026/);
-    assert.equal(meta.robots, undefined);
+    // Hidden by audit 27 (2026-10-30): the page 301s, and the metadata says noindex.
+    assert.deepEqual(meta.robots, { index: false, follow: false });
   });
 
   it("noindexes hidden platform and guide pages", () => {
