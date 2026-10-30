@@ -16,6 +16,90 @@ export const metadata: Metadata = publicPageMetadata({
 const MCP_URL = absoluteUrl("/mcp");
 const FEED_URL = absoluteUrl("/data/v1/index.json");
 
+type AssistantSetup = {
+  name: string;
+  steps: string[];
+  note?: string;
+  docsUrl: string;
+  docsLabel: string;
+};
+
+/** Self-serve setup steps, checked against each vendor's own docs on Oct 30, 2026. */
+const ASSISTANT_SETUPS: AssistantSetup[] = [
+  {
+    name: "Grok",
+    steps: [
+      "Go to grok.com/connectors.",
+      "Click New Connector, then select Custom.",
+      "Enter the URL from step 1. No authentication is needed.",
+    ],
+    note: "On Grok Business and Enterprise, an admin may need to set it up first.",
+    docsUrl: "https://docs.x.ai/grok/connectors",
+    docsLabel: "Grok's connectors guide",
+  },
+  {
+    name: "Gemini app",
+    steps: [
+      "On a computer, go to gemini.google.com and open Settings > Connected Apps.",
+      "Under Custom apps, choose Add a custom app.",
+      "Enter the URL from step 1. Once added on the web, it also works in the Gemini mobile app.",
+    ],
+    note: "Custom apps need a personal Google Account (not work or school), and you must be 18 or over, in the US, using Gemini in English, with Keep Activity on.",
+    docsUrl: "https://support.google.com/gemini/answer/17209137",
+    docsLabel: "Google's guide to custom apps in Gemini",
+  },
+  {
+    name: "Perplexity",
+    steps: [
+      "Open Plugins in the sidebar (or Customize > Connectors if you don't see Plugins).",
+      "Choose Add custom > Add MCP connector, then select Remote.",
+      "Enter a name, such as Launchpad HQ, and the URL from step 1. Set authentication to None.",
+    ],
+    note: "In an organization, an admin must allow members to add custom connectors.",
+    docsUrl: "https://www.perplexity.ai/help-center/en/articles/13915507-adding-custom-remote-connectors",
+    docsLabel: "Perplexity's guide to custom remote connectors",
+  },
+  {
+    name: "Mistral Le Chat",
+    steps: [
+      "Open the Connectors page and click + Add Connector.",
+      "Switch to the Custom MCP Connector tab.",
+      "Enter a connector name with no spaces (for example launchpadhq) and the URL from step 1, then click Connect. No sign-in is needed.",
+    ],
+    note: "Only admins can add connectors. On Free, Pro and Student plans, the account owner is the admin.",
+    docsUrl: "https://docs.mistral.ai/vibe/work/connectors/mcp-connectors",
+    docsLabel: "Mistral's guide to custom MCP connectors",
+  },
+  {
+    name: "ChatGPT",
+    steps: [
+      "On ChatGPT on the web, go to chatgpt.com/plugins.",
+      "Select the plus button, then Add custom MCP server.",
+      "Enter a name and the URL from step 1, and choose No authentication.",
+      "Review the warning, then select Create as a plugin.",
+    ],
+    note: "Custom MCP servers depend on your plan and, for workspaces, your admin's settings, so this option may not appear for every account.",
+    docsUrl: "https://developers.openai.com/api/docs/guides/custom-mcp-server",
+    docsLabel: "OpenAI's guide to custom MCP servers",
+  },
+  {
+    name: "VS Code",
+    steps: [
+      "Open the Command Palette and run MCP: Add Server.",
+      "Choose HTTP, then enter the URL from step 1.",
+      "Enter a server ID, such as launchpad-hq, then choose Global to use it in all your workspaces.",
+    ],
+    docsUrl: "https://code.visualstudio.com/docs/copilot/customization/mcp-servers",
+    docsLabel: "VS Code's MCP servers guide",
+  },
+];
+
+const CURSOR_CONFIG = JSON.stringify(
+  { mcpServers: { "launchpad-hq": { url: MCP_URL } } },
+  null,
+  2,
+);
+
 type ToolName = (typeof TOOL_SPECS)[number]["name"];
 
 /** Plain-English summaries; names and titles come from the live tool specs. */
@@ -56,7 +140,16 @@ export default function ConnectorPage() {
         </li>
 
         <li>
-          <h2 className="text-xl font-semibold text-white">2. Add it to Claude</h2>
+          <h2 className="text-xl font-semibold text-white">2. Add Launchpad HQ to your assistant</h2>
+          <p className="mt-2 text-sm text-gray-400">
+            In each app below, add the URL from step 1 as a custom (remote) MCP connector. No
+            sign-in or API key is needed, so pick &ldquo;None&rdquo; or leave authentication
+            empty. These are self-serve setups; Launchpad HQ isn&apos;t an official listing in
+            these apps&apos; directories. Menus change often, so each app links to its own
+            current guide.
+          </p>
+
+          <h3 className="mt-6 font-semibold text-gray-200">Claude</h3>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-gray-400">
             <li>
               In Claude, go to <strong className="text-gray-200">Customize &gt; Connectors</strong>.
@@ -73,14 +166,47 @@ export default function ConnectorPage() {
             <li>In a chat, turn the connector on from the chat&apos;s tools or connectors menu.</li>
           </ol>
           <p className="mt-2 text-sm text-gray-400">
-            Menu names vary between Claude apps and plans. See{" "}
+            On Team and Enterprise plans, an owner adds it first in Organization settings &gt;
+            Connectors. See{" "}
             <a
               href="https://claude.com/docs/connectors/custom/add-unlisted"
               className="text-orange-400 hover:underline"
             >
               Claude&apos;s guide to custom connectors
-            </a>{" "}
-            for the current steps.
+            </a>
+            .
+          </p>
+
+          {ASSISTANT_SETUPS.map((setup) => (
+            <div key={setup.name}>
+              <h3 className="mt-6 font-semibold text-gray-200">{setup.name}</h3>
+              <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-gray-400">
+                {setup.steps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+              {setup.note ? <p className="mt-2 text-sm text-gray-400">{setup.note}</p> : null}
+              <p className="mt-2 text-sm text-gray-400">
+                <a href={setup.docsUrl} className="text-orange-400 hover:underline">
+                  {setup.docsLabel}
+                </a>
+              </p>
+            </div>
+          ))}
+
+          <h3 className="mt-6 font-semibold text-gray-200">Cursor</h3>
+          <p className="mt-2 text-sm text-gray-400">
+            Add this to <code className="text-xs text-gray-300">~/.cursor/mcp.json</code> (all
+            projects) or <code className="text-xs text-gray-300">.cursor/mcp.json</code> (one
+            project):
+          </p>
+          <pre className="mt-2 overflow-x-auto rounded-md border border-gray-800 bg-gray-900 px-3 py-2 font-mono text-xs text-gray-100">
+            {CURSOR_CONFIG}
+          </pre>
+          <p className="mt-2 text-sm text-gray-400">
+            <a href="https://cursor.com/docs/context/mcp" className="text-orange-400 hover:underline">
+              Cursor&apos;s MCP guide
+            </a>
           </p>
         </li>
 
