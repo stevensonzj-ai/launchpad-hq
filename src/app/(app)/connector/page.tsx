@@ -163,10 +163,11 @@ export default function ConnectorPage() {
         <li>
           <h2 className="text-xl font-semibold text-white">8. Privacy</h2>
           <p className="mt-2 text-sm text-gray-400">
-            Each request logs one line: the tool used, the text sent to it (up to 200
-            characters), the result count, timing, success, and the assistant app&apos;s
-            self-reported name. These lines don&apos;t include IP addresses, cookies or your
-            conversation, though our host&apos;s own request logs record IP addresses.
+            Each request logs one line: a random request ID, the tool used, the number of
+            results, the response time and whether it succeeded. We don&apos;t log what you
+            sent to the tool, the assistant app&apos;s name, IP addresses, headers, cookies or
+            your conversation, though our host&apos;s own request logs record IP addresses.
+            Connector logs are kept about 90 days.
             Details are in the{" "}
             <Link href="/privacy#mcp" className="text-orange-400 hover:underline">
               privacy policy
