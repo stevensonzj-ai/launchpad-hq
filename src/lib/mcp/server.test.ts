@@ -96,7 +96,7 @@ describe("runTool", () => {
     assert.equal(result.content[0].text, JSON.stringify(result.structuredContent));
     assert.equal(logs.length, 1);
     assert.deepEqual(Object.keys(logs[0]).sort(), [
-      "client", "evt", "latency_ms", "ok", "query", "result_count", "tool", "ts",
+      "evt", "latency_ms", "ok", "request_id", "result_count", "tool",
     ]);
     assert.equal(logs[0].evt, "mcp_call");
     assert.equal(logs[0].ok, true);
@@ -116,11 +116,35 @@ describe("runTool", () => {
     assert.ok(!/at .*\.ts:\d+/.test(tooLong.content[0].text));
   });
 
-  it("truncates logged queries to 200 characters", async () => {
+  it("never logs what was sent to the tool, in the log entry or on stdout", async () => {
+    const sensitive = "my SSN is 000-00-0000 and I have diabetes";
     const logs: McpCallLog[] = [];
-    const spec = TOOL_SPECS.find((t) => t.name === "compare")!;
-    await runTool(spec, { platforms: ["notey", "freenote", "x".repeat(150)] }, deps(logs));
-    assert.ok((logs[0].query ?? "").length <= 200);
+    const printed: string[] = [];
+    const original = console.log;
+    console.log = (...parts: unknown[]) => {
+      printed.push(parts.map(String).join(" "));
+    };
+    try {
+      const search = TOOL_SPECS.find((t) => t.name === "search_tools")!;
+      await runTool(search, { task: sensitive }, deps(logs));
+      await runTool(search, { task: sensitive }, { ...deps(), log: undefined }); // default logger
+      const compare = TOOL_SPECS.find((t) => t.name === "compare")!;
+      await runTool(compare, { platforms: [sensitive, "notey"] }, deps(logs));
+      const pricing = TOOL_SPECS.find((t) => t.name === "get_pricing_facts")!;
+      await runTool(pricing, { platform: sensitive }, deps(logs));
+    } finally {
+      console.log = original;
+    }
+    assert.equal(printed.length, 1);
+    const everything = JSON.stringify(logs) + "\n" + printed.join("\n");
+    for (const fragment of ["000-00-0000", "SSN", "diabetes"]) {
+      assert.ok(!everything.includes(fragment), `log output contains ${fragment}`);
+    }
+    for (const entry of [...logs, JSON.parse(printed[0]) as McpCallLog]) {
+      assert.deepEqual(Object.keys(entry).sort(), ["evt", "latency_ms", "ok", "request_id", "result_count", "tool"]);
+      assert.match(entry.request_id, /^[0-9a-f-]{36}$/);
+    }
+    assert.notEqual(logs[0].request_id, logs[1].request_id);
   });
 });
 

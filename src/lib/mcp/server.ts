@@ -76,8 +76,6 @@ type ToolSpec<I extends z.ZodType, O extends z.ZodType> = {
   description: string;
   inputSchema: I;
   outputSchema: O;
-  /** Which input field is logged as `query`. */
-  queryOf: (input: z.infer<I>) => string;
   countOf: (output: z.infer<O>) => number;
   run: (input: z.infer<I>, rows: CatalogRow[], facts: FactsLookup) => z.infer<O>;
 };
@@ -94,7 +92,6 @@ export const TOOL_SPECS = [
       "Use this when the user wants to find AI tools for a task, optionally within a budget, skill level or platform. Returns Launchpad HQ catalog matches with dated, sourced free-tier facts where available. Items with fallback: true are popular tools, not direct matches; stale: true means the facts are over 90 days old.",
     inputSchema: searchToolsInput,
     outputSchema: searchToolsOutput,
-    queryOf: (i) => i.task,
     countOf: (o) => o.results.length,
     run: searchTools,
   }),
@@ -105,7 +102,6 @@ export const TOOL_SPECS = [
       "Use this when the user wants to compare 2 to 4 specific AI tools side by side: plans, API pricing, usage limits and platforms, each with its own as_of date and source.",
     inputSchema: compareInput,
     outputSchema: compareOutput,
-    queryOf: (i) => i.platforms.join(", "),
     countOf: (o) => o.items.length,
     run: compare,
   }),
@@ -116,7 +112,6 @@ export const TOOL_SPECS = [
       "Use this when the user asks what one AI tool costs or what its free tier includes. Returns verified pricing facts first; catalog text only when no verified price exists, labeled catalog_only.",
     inputSchema: getPricingFactsInput,
     outputSchema: getPricingFactsOutput,
-    queryOf: (i) => i.platform,
     countOf: () => 1,
     run: getPricingFacts,
   }),
@@ -127,7 +122,6 @@ export const TOOL_SPECS = [
       "Use this when the user wants a free or freemium alternative to a specific AI tool. Verified free tiers rank first; catalog-only matches are labeled unverified.",
     inputSchema: findFreeAlternativesInput,
     outputSchema: findFreeAlternativesOutput,
-    queryOf: (i) => i.platform,
     countOf: (o) => o.alternatives.length,
     run: findFreeAlternatives,
   }),
@@ -140,32 +134,18 @@ export type ServerDeps = {
   now?: () => number;
 };
 
-function clientInfo(server: McpServer): { name?: string; version?: string } | null {
-  try {
-    const info = (
-      server as unknown as { server?: { getClientVersion?: () => { name?: string; version?: string } | undefined } }
-    ).server?.getClientVersion?.();
-    return info ?? null;
-  } catch {
-    return null;
-  }
-}
-
 /** Runs one tool and shapes the MCP result. Exported for tests. */
 export async function runTool(
   toolSpec: (typeof TOOL_SPECS)[number],
   args: unknown,
   deps: ServerDeps,
-  client: { name?: string; version?: string } | null = null,
 ) {
   const now = deps.now ?? Date.now;
   const started = now();
   const facts = deps.facts ?? getToolFacts;
   const log = deps.log ?? logCall;
-  let query: string | null = null;
   try {
     const input = toolSpec.inputSchema.parse(args);
-    query = (toolSpec.queryOf as (i: unknown) => string)(input);
     const rows = await deps.loadCatalog();
     const output = (toolSpec.run as (i: unknown, r: CatalogRow[], f: FactsLookup) => unknown)(
       input,
@@ -176,11 +156,9 @@ export async function runTool(
     log(
       buildCallLog({
         tool: toolSpec.name,
-        query,
         resultCount: (toolSpec.countOf as (o: unknown) => number)(structured),
         latencyMs: now() - started,
         ok: true,
-        client,
       }),
     );
     return {
@@ -191,11 +169,9 @@ export async function runTool(
     log(
       buildCallLog({
         tool: toolSpec.name,
-        query,
         resultCount: 0,
         latencyMs: now() - started,
         ok: false,
-        client,
       }),
     );
     const message =
@@ -225,7 +201,7 @@ export function registerLaunchpadTools(server: McpServer, deps: ServerDeps): voi
       },
       // The SDK validates input against inputSchema before calling us; we
       // parse again in runTool so direct callers (tests) get the same caps.
-      (async (args: unknown) => runTool(toolSpec, args, deps, clientInfo(server))) as never,
+      (async (args: unknown) => runTool(toolSpec, args, deps)) as never,
     );
   }
 }
