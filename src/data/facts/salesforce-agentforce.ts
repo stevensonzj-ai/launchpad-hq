@@ -11,9 +11,45 @@ import type { ToolFacts } from "./types";
  * is left alone. Cost tier stays ENTERPRISE (judgment call,
  * REVIEW-SUMMARY.md).
  */
+/*
+ * Catalog audit 22 (2026-10-30): slug moved from salesforce-einstein to salesforce-agentforce and the listing
+ * renamed Salesforce Agentforce (301 in src/lib/catalog-redirects.ts; DB row renamed by
+ * scripts/update-catalog-audit-22.ts). https://www.salesforce.com/agentforce/ checked 2026-10-30.
+ */
 export default {
-  slug: "salesforce-einstein",
-  lifecycle: "active",
+  slug: "salesforce-agentforce",
+  lifecycle: "renamed",
+  status: {
+    value: {
+      headline: "Salesforce now sells its AI assistant and agents as Agentforce (formerly Einstein Copilot); its Einstein page now redirects to Salesforce's AI page.",
+      formerName: "Salesforce Einstein",
+      whatToDo: "Nothing changes for existing users. Old Salesforce Einstein pages here redirect to this one.",
+    },
+    sourceUrl: "https://www.salesforce.com/agentforce/",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
+  displayName: {
+    value: "Salesforce Agentforce",
+    sourceUrl: "https://www.salesforce.com/agentforce/",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
+  officialUrl: {
+    value: "https://www.salesforce.com/agentforce/",
+    sourceUrl: "https://www.salesforce.com/agentforce/",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   company: {
     value: "Salesforce",
     note: "The page is now titled \"AIforce: Salesforce AI, Wherever You Already Work | Salesforce\".",
@@ -111,6 +147,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "displayName",
+      summary: "Renamed Salesforce Einstein -> Salesforce Agentforce; slug salesforce-einstein -> salesforce-agentforce; official link https://www.salesforce.com/agentforce/.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

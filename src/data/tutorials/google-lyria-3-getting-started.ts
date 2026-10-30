@@ -3,7 +3,7 @@ import type { PlatformTutorialData } from "./types";
 export const googleLyria3Tutorial: PlatformTutorialData = {
   slug: "google-lyria-3-getting-started",
   platformSlug: "google-lyria-3",
-  title: "Getting Started with Google Lyria",
+  title: "Getting Started with Google Lyria 3.5",
   tagline:
     "Describe a song in a sentence and Google's Gemini app writes, sings and mixes it — free.",
   archetype: "prompts",

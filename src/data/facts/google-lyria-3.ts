@@ -13,11 +13,21 @@ import type { ToolFacts } from "./types";
  * page says "Introducing Lyria 3.5. Our newest music generation model
  * delivers significant advancements across musicality, lyrics, and vocal
  * quality" and "now up to 3 minutes long". The page gives no announcement
- * date, so none is stated here. The listing keeps its Google Lyria 3 name.
+ * date, so none is stated here. Catalog audit 22 (2026-10-30) renames the
+ * listing Google Lyria 3.5; the slug stays google-lyria-3.
  */
 export default {
   slug: "google-lyria-3",
   lifecycle: "active",
+  displayName: {
+    value: "Google Lyria 3.5",
+    sourceUrl: "https://deepmind.google/models/lyria/",
+    checkedAt: "2026-10-30",
+    gatheredBy: "claude",
+    verifiedBy: "claude",
+    verifiedAt: "2026-10-30",
+    status: "verified",
+  },
   officialUrl: {
     value: "https://deepmind.google/models/lyria/",
     sourceUrl: "https://deepmind.google/models/lyria/",
@@ -66,7 +76,7 @@ export default {
   },
   models: {
     value: ["Lyria 3.5 (current)"],
-    note: "The listing keeps its Google Lyria 3 name; Google presents Lyria 3.5 as its newest music generation model.",
+    note: "Google presents Lyria 3.5 as its newest music generation model; the listing is named Google Lyria 3.5 since catalog audit 22.",
     sourceUrl: "https://deepmind.google/models/lyria/",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
@@ -75,6 +85,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-10-30",
+      field: "displayName",
+      summary: "Listing renamed Google Lyria 3 -> Google Lyria 3.5 (page title \"Lyria 3.5 — Google DeepMind\"). Slug unchanged.",
+    },
     {
       date: "2026-10-29",
       field: "apiPricing",

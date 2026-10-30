@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
-import { getToolFacts } from "@/data/facts";
+import { getToolFacts as getRegisteredFacts } from "@/data/facts";
+import { PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { isPublishedVerified } from "@/data/facts/walk";
 import { claimsOfficial } from "@/lib/mcp/official-claim";
 import { saysTrialOnly } from "@/lib/mcp/label-consistency";
@@ -19,8 +20,12 @@ import {
   audit18PatchData,
   type Audit18Row,
 } from "./audit-18";
+import { CHECKED_AT as AUDIT_22_CHECKED_AT } from "./audit-22";
+const AUDIT_22_FACT_KEYS = new Set(["displayName", "officialUrl", "status"]);
+/** Batch-2 slugs renamed later (catalog audit 22) keep their fact file under the new slug. */
+const getToolFacts = (slug: string) => getRegisteredFacts(PLATFORM_REDIRECTS[slug] ?? slug);
 
-const snap = (slug: string) => snapshotRows().find((r) => r.slug === slug);
+const snap = (slug: string) => snapshotRows().find((r) => r.slug === (PLATFORM_REDIRECTS[slug] ?? slug));
 
 /** The prod-guard section every audit script shares, from getDirectUrl up to the Prisma client. */
 const guardSection = (file: string) => {
@@ -137,6 +142,8 @@ describe("catalog audit 18: stale facts batch 2", () => {
       const facts = getToolFacts(slug)!;
       for (const [key, fact] of Object.entries(facts)) {
         if (!fact || typeof fact !== "object" || !("sourceUrl" in fact)) continue;
+        // Catalog audit 22 (2026-10-30) adds displayName / officialUrl / status to renamed rows.
+        if (AUDIT_22_FACT_KEYS.has(key) && fact.checkedAt === AUDIT_22_CHECKED_AT) continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

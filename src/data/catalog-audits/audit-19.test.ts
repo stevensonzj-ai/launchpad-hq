@@ -31,6 +31,8 @@ import {
   type Audit19Patch,
   type Audit19Row,
 } from "./audit-19";
+import { CHECKED_AT as AUDIT_22_CHECKED_AT } from "./audit-22";
+const AUDIT_22_FACT_KEYS = new Set(["displayName", "officialUrl", "status"]);
 
 const snap = (slug: string) => snapshotRows().find((r) => r.slug === slug);
 const patch19 = (slug: string) => AUDIT_19_PATCHES.find((p) => p.slug === slug)!;
@@ -182,6 +184,8 @@ describe("catalog audit 19: content rules", () => {
       if (!facts) continue;
       for (const [key, fact] of Object.entries(facts)) {
         if (!fact || typeof fact !== "object" || !("sourceUrl" in fact)) continue;
+        // Catalog audit 22 (2026-10-30) adds displayName / officialUrl / status to renamed rows.
+        if (AUDIT_22_FACT_KEYS.has(key) && fact.checkedAt === AUDIT_22_CHECKED_AT) continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

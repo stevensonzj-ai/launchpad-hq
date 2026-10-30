@@ -1,9 +1,9 @@
 import type { PlatformTutorialData } from "./types";
 
-export const shopifyMagicSidekickTutorial: PlatformTutorialData = {
-  slug: "shopify-magic-sidekick-getting-started",
-  platformSlug: "shopify-magic-sidekick",
-  title: "Getting Started with Shopify Magic and Sidekick",
+export const shopifySidekickTutorial: PlatformTutorialData = {
+  slug: "shopify-sidekick-getting-started",
+  platformSlug: "shopify-sidekick",
+  title: "Getting Started with Shopify Sidekick (formerly Shopify Magic)",
   tagline:
     "Shopify's own AI, already switched on inside your store's dashboard — it writes the product page, fixes the photo, and answers \"how do I do that?\"",
   archetype: "recipes",

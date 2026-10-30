@@ -9,6 +9,7 @@ import { AUDIT_17_BATCH } from "@/data/catalog-audits/audit-17";
 import { AUDIT_18_BATCH } from "@/data/catalog-audits/audit-18";
 import { AUDIT_19_BATCH } from "@/data/catalog-audits/audit-19";
 import { AUDIT_20_BATCH } from "@/data/catalog-audits/audit-20";
+import { AUDIT_22_RENAMES } from "@/data/catalog-audits/audit-22";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
 import { loadSnapshot } from "./snapshot";
 import { toPlatformRef } from "./tools";
@@ -47,6 +48,13 @@ const AUDIT_15_MOVES = new Map(AUDIT_15_RENAMES.map((r) => [r.from, r.to]));
  * and Scite gained a fact file; those tools may differ on the same
  * fields fix P1.3 changed.
  */
+/**
+ * Catalog audit 22 (2026-10-30): two slug moves and five renamed listings;
+ * only slug, name and the reference columns may differ for them.
+ */
+const AUDIT_22_MOVES = new Map(AUDIT_22_RENAMES.filter((r) => r.from !== r.to).map((r) => [r.from, r.to]));
+const AUDIT_22_RENAMED = new Set(AUDIT_22_RENAMES.map((r) => r.to));
+const AUDIT_22_FIELDS = new Set(["slug", "name"]);
 const AUDIT_15_PATCHED = AUDIT_15_PATCHES.map((p) => p.slug);
 const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "source_url", "stale", "freshness_note"]);
 /**
@@ -78,7 +86,7 @@ describe("catalog snapshot", () => {
     const changedByP13 = new Set([...audit10Slugs(), ...P13_FACT_FILES, ...P13C_CHANGED, ...AUDIT_15_PATCHED, ...AUDIT_17_BATCH, ...AUDIT_18_BATCH, ...AUDIT_19_BATCH, ...AUDIT_20_BATCH]);
     const diffs: string[] = [];
     for (const o of observed) {
-      const moved = AUDIT_15_MOVES.get(o.slug as string);
+      const moved = AUDIT_15_MOVES.get(o.slug as string) ?? AUDIT_22_MOVES.get(o.slug as string);
       const row = bySlug.get(moved ?? (o.slug as string));
       if (!row) {
         diffs.push(`${o.slug}: missing`);
@@ -88,6 +96,7 @@ describe("catalog snapshot", () => {
       for (const key of Object.keys(o)) {
         if (changedByP13.has(row.slug) && P13_FIELDS.has(key)) continue;
         if (moved && AUDIT_15_FIELDS.has(key)) continue;
+        if (AUDIT_22_RENAMED.has(row.slug) && AUDIT_22_FIELDS.has(key)) continue;
         if (JSON.stringify(ref[key]) !== JSON.stringify(o[key])) diffs.push(`${o.slug}.${key}: ${JSON.stringify(ref[key])} != ${JSON.stringify(o[key])}`);
       }
     }

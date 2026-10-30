@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -160,16 +160,16 @@
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Ideogram",
     "Leonardo AI",
     "Canva AI"
    ],
    "budgetAlternativeTo": [
     "Midjourney",
-    "GPT Image 1.5"
+    "GPT Image 2.5"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -484,7 +484,7 @@
     "Perplexity AI (basic research)",
     "Semantic Scholar (academic)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"
@@ -518,7 +518,7 @@
    "upgradeTriggers": "Trial expiry; advanced analytics; custom dashboards; team collaboration; API",
    "complementaryTools": [
     "Bloomberg Terminal (data)",
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "Excel (analysis)"
    ],
    "hasMobileApp": false,
@@ -2814,12 +2814,12 @@
    "usageLimits": "Free: 10K chars/mo; Starter: 30K; Creator: 100K; Pro: 500K; Scale: 2M",
    "apiAvailable": true,
    "directAlternatives": [
-    "Google Lyria 3 (music)",
+    "Google Lyria 3.5 (music)",
     "Descript (editing)",
     "Otter AI (transcription)"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "voice-speech",
     "name": "Voice & Speech"
@@ -3264,7 +3264,7 @@
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Leonardo AI",
     "Adobe Firefly",
     "Ideogram"
@@ -3273,7 +3273,7 @@
     "Midjourney",
     "Adobe Firefly (FLUX Schnell is already free to self-host)"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -3865,7 +3865,7 @@
     "tl",
     "dv (meeting recording)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "sales-marketing-seo-ai",
     "name": "Sales, Marketing & SEO AI"
@@ -3896,7 +3896,7 @@
    "keyIntegrations": "Salesforce, HubSpot, Zoom, Microsoft Teams, Slack, Outreach, Google Meet, Webex, 100+ integrations",
    "upgradeTriggers": "N/A (enterprise from start)",
    "complementaryTools": [
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "Outreach (engagement)",
     "Slack AI (comms)",
     "HubSpot AI (CRM)",
@@ -3972,7 +3972,7 @@
   },
   {
    "slug": "google-lyria-3",
-   "name": "Google Lyria 3",
+   "name": "Google Lyria 3.5",
    "company": "Google DeepMind",
    "website": "https://deepmind.google/models/lyria/",
    "description": null,
@@ -3998,7 +3998,7 @@
     "Suno",
     "Udio"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "music-generation",
     "name": "Music Generation"
@@ -4058,7 +4058,7 @@
     "Runway",
     "Pika"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "video-creation-editing",
     "name": "Video Creation & Editing"
@@ -4085,7 +4085,7 @@
    "complementaryTools": [
     "Gemini (scripting)",
     "Nano Banana (stills)",
-    "Google Lyria 3 (audio)",
+    "Google Lyria 3.5 (audio)",
     "YouTube (distribution)"
    ],
    "hasMobileApp": false,
@@ -4094,7 +4094,7 @@
   },
   {
    "slug": "gpt-image-1-5-dall-e-successor",
-   "name": "GPT Image 1.5 (DALL-E successor)",
+   "name": "GPT Image 2.5 (DALL-E successor)",
    "company": "OpenAI",
    "website": "https://chatgpt.com",
    "description": null,
@@ -4120,7 +4120,7 @@
     "Midjourney",
     "Adobe Firefly"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -4853,11 +4853,11 @@
    "usageLimits": "AI agents use HubSpot credits. Included: Marketing Hub Starter 500, Professional 3,000, Enterprise 5,000; more credits can be bought (as of 2026-10-29)",
    "apiAvailable": true,
    "directAlternatives": [
-    "Salesforce Einstein (enterprise)",
+    "Salesforce Agentforce (enterprise)",
     "Zoho CRM"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -4985,7 +4985,7 @@
    "apiAvailable": true,
    "directAlternatives": [
     "Midjourney",
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Adobe Firefly",
     "Leonardo AI",
     "Recraft"
@@ -4994,7 +4994,7 @@
     "Midjourney",
     "Adobe Firefly"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -5454,11 +5454,11 @@
    "apiAvailable": false,
    "directAlternatives": [
     "Duolingo Max (language)",
-    "Quizlet Q-Chat (study)",
+    "Ask Quizlet (study)",
     "ChatGPT (general tutoring)"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -5489,7 +5489,7 @@
    "upgradeTriggers": "AI tutoring for a learner or a parent's children (paid); district-wide classroom access",
    "complementaryTools": [
     "Duolingo Max (languages)",
-    "Quizlet Q-Chat (flashcards)",
+    "Ask Quizlet (flashcards)",
     "Google Classroom (school LMS)"
    ],
    "hasMobileApp": false,
@@ -5931,12 +5931,12 @@
     "Adobe Firefly",
     "Ideogram",
     "FLUX",
-    "GPT Image 1.5"
+    "GPT Image 2.5"
    ],
    "budgetAlternativeTo": [
     "Midjourney"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -6650,7 +6650,7 @@
    "budgetAlternativeTo": [
     "HubSpot AI (free email marketing)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -6681,7 +6681,7 @@
    "keyIntegrations": "Shopify, WooCommerce, WordPress, Salesforce, Zapier, Canva, Google Ads, Facebook, Instagram",
    "upgradeTriggers": "Contact limits; removing branding; advanced AI features; A/B testing; journey builder; analytics",
    "complementaryTools": [
-    "Shopify Magic (e-commerce)",
+    "Shopify Sidekick (e-commerce)",
     "Canva AI (email design)",
     "Zapier (automation)",
     "Google Ads (advertising)"
@@ -7072,14 +7072,14 @@
    "directAlternatives": [
     "Canva AI",
     "Adobe Firefly",
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Ideogram"
    ],
    "budgetAlternativeTo": [
     "Canva AI",
     "Adobe Firefly (Microsoft Designer is already free)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -7200,14 +7200,14 @@
    "usageLimits": "Fast GPU time a month: Basic 3.3 hours, Standard 15, Pro 30, Mega 60; unlimited Relax images from Standard; unlimited SD video in Relax mode on Pro and Mega (official, as of 2026-10-26)",
    "apiAvailable": false,
    "directAlternatives": [
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Adobe Firefly",
     "Ideogram",
     "Leonardo AI",
     "FLUX"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -7599,16 +7599,16 @@
    "usageLimits": "Via Gemini: shared rate limits; via Vertex AI: pay-per-image; via ImageFX: free with limits",
    "apiAvailable": true,
    "directAlternatives": [
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Adobe Firefly",
     "Midjourney",
     "FLUX"
    ],
    "budgetAlternativeTo": [
-    "GPT Image 1.5",
+    "GPT Image 2.5",
     "Midjourney"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "image-generation-editing",
     "name": "Image Generation & Editing"
@@ -8393,7 +8393,7 @@
    "budgetAlternativeTo": [
     "HubSpot AI (free CRM + sequences)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "sales-marketing-seo-ai",
     "name": "Sales, Marketing & SEO AI"
@@ -8426,7 +8426,7 @@
    "upgradeTriggers": "N/A (enterprise from start)",
    "complementaryTools": [
     "Gong (call analytics)",
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "LinkedIn (prospecting)",
     "Slack AI (comms)"
    ],
@@ -8461,7 +8461,7 @@
     "Zapier",
     "Make (Pabbly is already the budget option with lifetime deals)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -8488,7 +8488,7 @@
    "upgradeTriggers": "Task volume; needing more integrations; team features; priority support",
    "complementaryTools": [
     "Mailchimp AI (email)",
-    "Shopify Magic (e-commerce)",
+    "Shopify Sidekick (e-commerce)",
     "Google Sheets (data)"
    ],
    "hasMobileApp": false,
@@ -8752,7 +8752,7 @@
     "Canva AI",
     "Microsoft Designer"
    ],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "sales-marketing-seo-ai",
     "name": "Sales, Marketing & SEO AI"
@@ -8778,7 +8778,7 @@
    "keyIntegrations": "Shopify, Etsy, Poshmark, API, batch processing",
    "upgradeTriggers": "Removing watermarks; high-res export; batch processing; brand kit; API; team features",
    "complementaryTools": [
-    "Shopify Magic (e-commerce)",
+    "Shopify Sidekick (e-commerce)",
     "Canva AI (design)",
     "Midjourney (creative images)"
    ],
@@ -9107,7 +9107,7 @@
   },
   {
    "slug": "quizlet-q-chat",
-   "name": "Quizlet Q-Chat",
+   "name": "Ask Quizlet",
    "company": "Quizlet",
    "website": "https://quizlet.com",
    "description": null,
@@ -9131,7 +9131,7 @@
    "budgetAlternativeTo": [
     "Khan Academy (Khanmigo) (free AI tutoring)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -10049,10 +10049,10 @@
    "androidAppUrl": null
   },
   {
-   "slug": "salesforce-einstein",
-   "name": "Salesforce Einstein",
+   "slug": "salesforce-agentforce",
+   "name": "Salesforce Agentforce",
    "company": "Salesforce",
-   "website": "https://salesforce.com/einstein",
+   "website": "https://www.salesforce.com/agentforce/",
    "description": null,
    "primaryUse": "AI-powered CRM features",
    "primaryUseCases": "Lead scoring; opportunity insights; email recommendations; case classification; predictive analytics",
@@ -10072,7 +10072,7 @@
    "budgetAlternativeTo": [
     "HubSpot AI (free CRM + AI)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -10614,10 +10614,10 @@
    "androidAppUrl": null
   },
   {
-   "slug": "shopify-magic-sidekick",
-   "name": "Shopify Magic / Sidekick",
+   "slug": "shopify-sidekick",
+   "name": "Shopify Sidekick",
    "company": "Shopify",
-   "website": "https://shopify.com/magic",
+   "website": "https://www.shopify.com/sidekick",
    "description": null,
    "primaryUse": "AI tools for Shopify merchants",
    "primaryUseCases": "Product description writing; customer reply suggestions; store design; email marketing; FAQ generation",
@@ -10636,7 +10636,7 @@
     "WooCommerce + WordPress AI"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -10699,7 +10699,7 @@
     "Otter AI (meeting summaries)",
     "ChatGPT (manual summarization)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -10727,7 +10727,7 @@
    "keyIntegrations": "Salesforce, Google Workspace, Microsoft 365, Zoom, GitHub, Jira, Asana, 2,600+ apps",
    "upgradeTriggers": "Needs Business+ or Enterprise Grid for AI features",
    "complementaryTools": [
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "Zoom AI (meetings)",
     "HubSpot AI (marketing)",
     "Notion AI (docs)"
@@ -10760,7 +10760,7 @@
     "Luma Dream Machine (Ray3)"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "video-creation-editing",
     "name": "Video Creation & Editing"
@@ -10789,7 +10789,7 @@
     "ChatGPT (script writing)",
     "ElevenLabs (voiceover)",
     "Descript (editing)",
-    "GPT Image 1.5 (stills)"
+    "GPT Image 2.5 (stills)"
    ],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -11590,7 +11590,7 @@
     "Tactiq (free tier)",
     "Zoom AI Companion (if on Zoom paid)"
    ],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "meetings-notes",
     "name": "Meetings & Notes"
@@ -11623,7 +11623,7 @@
    "upgradeTriggers": "More than 10 AI meetings; CRM integration; custom AI templates; team analytics; multi-meeting insights",
    "complementaryTools": [
     "HubSpot AI (CRM)",
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "Slack AI (sharing)",
     "Notion AI (notes)"
    ],
@@ -11789,7 +11789,7 @@
     "Make",
     "n8n"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -11817,7 +11817,7 @@
    "keyIntegrations": "600+ connectors: Salesforce, Marketo, Netsuite, Workday, Jira, ServiceNow, Snowflake, custom APIs",
    "upgradeTriggers": "N/A (enterprise-only from start); scaling connectors; adding users; premium support",
    "complementaryTools": [
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "Snowflake (data)",
     "Slack AI (notifications)",
     "ServiceNow (ITSM)"
@@ -12727,13 +12727,13 @@
    "directAlternatives": [
     "Wix AI",
     "Squarespace AI",
-    "Shopify Magic (for e-commerce)"
+    "Shopify Sidekick (for e-commerce)"
    ],
    "budgetAlternativeTo": [
     "ChatGPT (generate content",
     "paste into WordPress)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "ai-plugins-business-software",
     "name": "AI Plugins for Business Software"
@@ -12796,7 +12796,7 @@
     "Make",
     "n8n"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-10-30",
    "category": {
     "slug": "workflow-automation",
     "name": "Workflow & Automation"
@@ -12823,7 +12823,7 @@
    "keyIntegrations": "1,000+ connectors: SAP, Oracle, Salesforce, Workday, ServiceNow, Snowflake, AWS, Slack, JIRA",
    "upgradeTriggers": "N/A (enterprise pricing throughout); scaling recipes; adding connectors",
    "complementaryTools": [
-    "Salesforce Einstein (CRM)",
+    "Salesforce Agentforce (CRM)",
     "SAP (ERP)",
     "Snowflake (data)",
     "Slack AI (comms)"

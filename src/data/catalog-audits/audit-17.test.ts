@@ -17,6 +17,8 @@ import {
   audit17PatchData,
   type Audit17Row,
 } from "./audit-17";
+import { CHECKED_AT as AUDIT_22_CHECKED_AT } from "./audit-22";
+const AUDIT_22_FACT_KEYS = new Set(["displayName", "officialUrl", "status"]);
 
 const snap = (slug: string) => snapshotRows().find((r) => r.slug === slug);
 
@@ -66,6 +68,8 @@ describe("catalog audit 17: stale facts batch 1", () => {
       const facts = getToolFacts(slug)!;
       for (const [key, fact] of Object.entries(facts)) {
         if (!fact || typeof fact !== "object" || !("sourceUrl" in fact)) continue;
+        // Catalog audit 22 (2026-10-30) adds displayName / officialUrl / status to renamed rows.
+        if (AUDIT_22_FACT_KEYS.has(key) && fact.checkedAt === AUDIT_22_CHECKED_AT) continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|x\.com|twitter\.com/i, `${slug}.${key}`);

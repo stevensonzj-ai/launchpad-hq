@@ -370,7 +370,7 @@ export const TASK_TAGS: Readonly<Record<string, readonly TaskId[]>> = {
   "lm-studio": ["chatbot"], // row: "private AI chat"; offline AI
   "lindy-ai": ["customer-support"], // row use cases: "customer support"
   "relevance-ai": ["customer-support"], // row use cases: "customer support bots"
-  "shopify-magic-sidekick": ["small-business"], // idealUserTypes: "small businesses", "Shopify store owners"
+  "shopify-sidekick": ["small-business"], // idealUserTypes: "small businesses", "Shopify store owners"
   "mailchimp-ai": ["email-writing", "small-business"], // row: "AI email marketing assistant"; idealUserTypes "Small businesses"
 };
 
