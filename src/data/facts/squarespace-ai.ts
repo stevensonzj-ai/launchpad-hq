@@ -9,6 +9,11 @@ import type { ToolFacts } from "./types";
  * price as annual ("Pay annually to save up to 36%"). That mapping is on the
  * Browser-check list. Audit 11 owns this row's cost tier (PAID), so audit 18
  * patches text only.
+ *
+ * The Research Analyst's browser check the same day confirmed the mapping
+ * ("Pay annually to save up to 36%"; annual-billed / monthly-billed: Basic
+ * $19 / $25, Core $29 / $39, Plus $49 / $65, Advanced $99 / $139) and the AI
+ * credits. Nothing in the row changes.
  */
 export default {
   slug: "squarespace-ai",
@@ -52,7 +57,7 @@ export default {
         limits: "Billed annually ($139 paid monthly); 120 AI credits a month",
       },
     ],
-    note: "USD, as of 2026-10-29. Which price is annual and which monthly is inferred from the billing toggle (see the file comment). Extra AI credit packs can be bought.",
+    note: "USD, as of 2026-10-29. Annual-billed and monthly-billed prices confirmed in a browser the same day. Extra AI credit packs can be bought.",
     sourceUrl: "https://www.squarespace.com/pricing",
     checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",

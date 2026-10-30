@@ -31,8 +31,8 @@ snapshot (`src/lib/mcp/catalog-snapshot.json`, for the row text).
 | Batch | Rows | Status |
 |---|---|---|
 | 1 | 1–28 | Done in #117 (facts verified 2026-10-29, catalog audit 17); 18 rows browser-checked the same day and folded into the batch 2 PR (audit 18) |
-| 2 | 29–51 (23) | Stale facts batch 2 PR (facts verified 2026-10-29, catalog audit 18) |
-| 3 | 52–73 (22) | Open |
+| 2 | 29–51 (23) | Done in #118 (facts verified 2026-10-29, catalog audit 18); 9 rows browser-checked the same day and folded into the batch 3 PR (audit 19) |
+| 3 | 52–73 (22) | Stale facts batch 3 PR (facts verified 2026-10-29, catalog audit 19, which also adds the Antigravity CLI row); quizlet-q-chat unread (every page blocked) |
 | 4 | 74–92 (19, undated text) | Open |
 
 ## Full ordered list

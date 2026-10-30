@@ -98,6 +98,7 @@ export const geminiCliTutorial: PlatformTutorialData = {
   ],
 
   whereToNext: [
+    { label: "Antigravity CLI, Google's free route for individuals", href: "/platform/antigravity-cli" },
     { label: "Other AI coding tools", categorySlug: "ai-coding-development" },
     { label: "Google's assistant in a browser", categorySlug: "text-conversational-ai" },
     { label: "Build with an API directly", categorySlug: "ai-apis-developer-services" },

@@ -23,6 +23,11 @@
  * relevance-ai tier goes straight to ENTERPRISE, so the two converge in
  * either order. Gumloop's privacyLevel is the one new guarded field.
  *
+ * Audit 19 (stale facts batch 3, 2026-10-29) re-patches six batch-2 rows
+ * from the Research Analyst's browser check of batch 2. On the ten fields
+ * both audits write, this audit now writes audit 19's text (checked in
+ * audit-19.test.ts), so re-running this one after 19 cannot revert it.
+ *
  * Audit 10 touches none of these slugs. Audit 11 patches one of them
  * (squarespace-ai) on costTier only; this audit never writes that field for
  * it (audit-18.test.ts checks both), so a re-run of audits 10 or 11 cannot
@@ -192,12 +197,12 @@ export const AUDIT_18_PATCHES: Audit18Patch[] = [
   },
   {
     slug: "trinka-ai",
-    finding: "Free plan confirmed with AI writing and credit caps the row did not mention; Premium and Premium Plus prices render only in a browser (left as is)",
+    finding: "Free plan confirmed with AI writing and credit caps the row did not mention; Premium and Premium Plus prices render only in a browser (usageLimits text shared with audit 19, which applies the browser-checked prices)",
     sources: ["https://www.trinka.ai/pricing"],
     checkedAt: CHECKED_AT,
     fields: {
       freeTierFeatures: `Basic (free, never expires, no card): 5,000 words a month, 5 AI writing requests and 4 credits a month ${AS_OF}`,
-      usageLimits: `Basic: 5,000 words, 5 AI writing requests and 4 credits a month; Premium: full writing access; Confidential Data plan ($41.67/mo billed annually, teams): no data storage and no AI training ${AS_OF}`,
+      usageLimits: `Basic: 5,000 words, 5 AI writing requests and 4 credits a month; Premium: full writing access; Confidential Data plan (teams): no data storage and no AI training ${AS_OF}`,
     },
   },
   {
@@ -272,47 +277,47 @@ export const AUDIT_18_PATCHES: Audit18Patch[] = [
   },
   {
     slug: "openai-codex-cli",
-    finding: "Row was FREE and said it uses your own API key with unlimited use; sign-in with a ChatGPT plan is the main route, with plan usage limits, and API-key use is billed at API rates",
+    finding: "Row was FREE and said it uses your own API key with unlimited use; sign-in with a ChatGPT plan is the main route, with plan usage limits, and API-key use is billed at API rates (freeTierFeatures shared with audit 19: the CLI is on Free and Go)",
     sources: ["https://github.com/openai/codex", "https://learn.chatgpt.com/docs/pricing"],
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: `Open source (Apache 2.0). Use comes with ChatGPT plans (Free, Go $8, Plus $20, Pro from $100, Business $20/user/mo billed annually) or an API key billed at API rates ${AS_OF}`,
-      freeTierFeatures: `Sign in with ChatGPT; Codex is included in ChatGPT plans from Free up, with usage limits by plan; which plans include the CLI is not confirmed ${AS_OF}`,
+      freeTierFeatures: `Sign in with ChatGPT: the CLI is included from ChatGPT Free and Go up, with usage limits by plan; Codex cloud tasks are not included on Free and Go ${AS_OF}`,
       usageLimits: `With ChatGPT sign-in, limits follow the plan (5-hour windows on Plus; Pro has no five-hour limit); API-key use follows API pricing ${AS_OF}`,
     },
     guarded: { costTier: { from: "FREE", to: "FREEMIUM" } },
   },
   {
     slug: "leonardo-ai",
-    finding: "Row listed Pro $28 and Professional $56; the plans are now Essential, Premium, Ultimate and Teams. Prices read only once (pricing page behind a bot check), so the text names the plans without prices",
+    finding: "Row listed Pro $28 and Professional $56; the plans are now Essential, Premium, Ultimate and Teams. Prices and token amounts from the batch-2 browser check (text shared with audit 19)",
     sources: ["https://leonardo.ai/pricing", "https://intercom.help/leonardo-ai/en/articles/9044700-tokens-frequently-asked-questions"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Free (150 tokens a day); paid plans Essential, Premium and Ultimate, plus Teams; prices not confirmed ${AS_OF}`,
-      freeTierFeatures: `150 fast tokens a day, reset daily; unused tokens do not carry over ${AS_OF}`,
-      usageLimits: `Free: 150 tokens a day. Premium adds unlimited relaxed image generation on select models; Ultimate adds relaxed video; monthly token amounts not confirmed ${AS_OF}`,
+      currentPricing: `Free (150 tokens a day); billed monthly: Essential $12, Premium $30, Ultimate $60 a month (ex. tax); billed yearly: $12, $29 and $58 a month; Teams Starter $24 and Growth $48 per seat a month ${AS_OF}`,
+      freeTierFeatures: `150 fast tokens a day, reset daily; unused tokens do not carry over; content made on the free plan can be used to train Leonardo's models ${AS_OF}`,
+      usageLimits: `Fast tokens a month: Essential 8,500, Premium 25,000, Ultimate 60,000, with Token Bank caps of 25,500 / 75,000 / 180,000; Premium adds unlimited relaxed image generation on select models, Ultimate relaxed video ${AS_OF}`,
     },
   },
   {
     slug: "microsoft-designer",
-    finding: "Row was FREE with 15 boosts a day; AI use is now metered by monthly Microsoft 365 AI credits, with more usage on Microsoft 365 plans",
+    finding: "Row was FREE with 15 boosts a day; AI use is now metered by monthly Microsoft 365 AI credits, with more usage on Microsoft 365 plans (text shared with audit 19, from the batch-2 browser check)",
     sources: ["https://support.microsoft.com/en-us/office/understanding-ai-credits-68530f1a-4459-4d02-9818-8233c1f673b8"],
     checkedAt: CHECKED_AT,
     fields: {
-      currentPricing: `Free with a Microsoft account; more AI usage with Microsoft 365 Personal, Family, Premium or Pro ${AS_OF}`,
-      freeTierFeatures: `Free with a Microsoft account; AI generation uses a monthly AI credit allowance (the free amount was not confirmed) ${AS_OF}`,
-      usageLimits: `AI use counts against monthly AI credits shared across Microsoft 365 apps; Personal and Family get standard image-generation usage, Premium and Pro extensive ${AS_OF}`,
+      currentPricing: `Free, with monthly AI credits; Microsoft 365 Personal, Family or Premium give up to 4x more credits (Personal $9.99/mo) ${AS_OF}`,
+      freeTierFeatures: `Free, with a fresh set of AI credits each month (1 credit per AI action); the free amount is not stated ${AS_OF}`,
+      usageLimits: `1 credit per Copilot or Designer AI action, refreshed monthly; free amount not stated; Microsoft 365 Personal, Family or Premium up to 4x more; boosts are gone ${AS_OF}`,
     },
     guarded: { costTier: { from: "FREE", to: "FREEMIUM" } },
   },
   {
     slug: "microsoft-power-automate",
-    finding: "Row was broadly right; adds the paid-yearly terms, the Process plans and the free licence's limits, and moves the website to the current product page",
+    finding: "Row was broadly right; adds the paid-yearly terms, the Process plans and the free licence's limits, and moves the website to the current product page (freeTierFeatures shared with audit 19: 30-day trial)",
     sources: ["https://www.microsoft.com/en-us/power-platform/products/power-automate/pricing", "https://learn.microsoft.com/en-us/power-platform/admin/power-automate-licensing/types"],
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: `Free licence for work or school accounts; Premium $15/user/mo, Process $150/bot/mo, Hosted Process $215/bot/mo, all paid yearly; limited rights included in Microsoft 365 ${AS_OF}`,
-      freeTierFeatures: `Free licence (work or school account): cloud flows without sharing, attended desktop flows, standard connectors only; a premium trial is offered ${AS_OF}`,
+      freeTierFeatures: `Free licence (work or school account): cloud flows without sharing, attended desktop flows, standard connectors only; a 30-day premium trial is offered ${AS_OF}`,
       usageLimits: `Free and Microsoft 365: standard connectors only; Premium: premium and custom connectors, 40,000 actions a day, 5,000 AI Builder credits a month ${AS_OF}`,
     },
     guarded: {
@@ -324,13 +329,13 @@ export const AUDIT_18_PATCHES: Audit18Patch[] = [
   },
   {
     slug: "dragon-medical-one",
-    finding: "Row website was nuance.com and claimed unlimited dictation; the product page is now on microsoft.com, no limits are published, and Microsoft offers a migration to Dragon Copilot",
+    finding: "Row website was nuance.com and claimed unlimited dictation; the product page is now on microsoft.com, no limits are published, and Microsoft offers a migration to Dragon Copilot (usageLimits shared with audit 19: LTSR 2021.4.5 end of life)",
     sources: ["https://www.microsoft.com/en-us/health-solutions/clinical-workflow/dragon-medical-one"],
     checkedAt: CHECKED_AT,
     fields: {
       currentPricing: `Enterprise licences through Microsoft; no public prices. Microsoft offers a migration path to Dragon Copilot ${AS_OF}`,
       freeTierFeatures: `No free tier or trial listed; licences are sold through Microsoft ${AS_OF}`,
-      usageLimits: `Not published ${AS_OF}`,
+      usageLimits: `Not published. Dragon Medical One LTSR version 2021.4.5 and earlier stop working after December 31, 2026 ${AS_OF}`,
     },
     guarded: {
       website: {

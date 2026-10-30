@@ -168,8 +168,8 @@
    "skill_level": "beginner"
   },
   "top5": [
-   "gemini-notebook",
    "khan-academy-khanmigo",
+   "gemini-notebook",
    "quizlet-q-chat",
    "chatgpt",
    "chatpdf"
@@ -277,11 +277,11 @@
    "task": "make music"
   },
   "top5": [
-   "beatoven-ai",
    "google-lyria-3",
-   "mubert",
    "soundraw",
-   "udio"
+   "udio",
+   "beatoven-ai",
+   "mubert"
   ]
  },
  "A24": {
@@ -781,11 +781,11 @@
    "task": "learn a language"
   },
   "top5": [
-   "sarvam-ai",
    "speak-language-ai",
+   "sarvam-ai",
    "duolingo-max",
    "ai21-labs-jamba",
-   "trinka-ai"
+   "murf-ai"
   ]
  },
  "G38": {
@@ -867,10 +867,10 @@
   },
   "top5": [
    "beatoven-ai",
-   "soundraw",
    "google-lyria-3",
+   "udio",
    "mubert",
-   "udio"
+   "aiva"
   ]
  },
  "G46": {
@@ -881,8 +881,8 @@
    "suno",
    "udio",
    "aiva",
-   "beatoven-ai",
-   "google-lyria-3"
+   "google-lyria-3",
+   "soundraw"
   ]
  },
  "G47": {
@@ -1021,8 +1021,8 @@
   },
   "top5": [
    "wordpress-ai-jetpack-ai",
-   "copy-ai",
    "microsoft-designer",
+   "copy-ai",
    "hubspot-ai",
    "jasper"
   ]
@@ -1045,8 +1045,8 @@
    "task": "help me with my homework"
   },
   "top5": [
-   "gemini-notebook",
    "khan-academy-khanmigo",
+   "gemini-notebook",
    "quizlet-q-chat",
    "chatgpt",
    "chatpdf"
