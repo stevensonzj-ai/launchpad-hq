@@ -16,7 +16,7 @@ import { publicToolCore } from "@/lib/public-data/serialize";
 import { isStale } from "@/lib/public-data/staleness";
 import { costTiersForBudget } from "@/lib/recommendations-score";
 import { absoluteUrl } from "@/lib/site";
-import { correctWord, matchName, type NamedRow, type Suggestion } from "./names";
+import { correctWord, NAME_ALIASES, matchName, type NamedRow, type Suggestion } from "./names";
 import {
   detectPriceIntent,
   detectTasks,
@@ -490,6 +490,8 @@ const THIN_RESULTS = 3;
 const GATED_SLOTS = 3;
 export const STARTER_REASON = "fallback: popular starter, not a direct match";
 
+/** Points for a tool the search names exactly (namedInQuery). */
+const NAMED_EXACT = 30;
 const STOP = new Set([...STOPWORDS].map(stem));
 const WEAK = new Set([...WEAK_WORDS].map(stem));
 
@@ -591,18 +593,57 @@ type Scored = {
   job: boolean;
 };
 
-function scoreRow(
-  row: CatalogRow,
+/**
+ * Catalog tools the search names exactly, by display name, catalog name, slug
+ * or alias (names.ts), from any run of 1-4 query words ("ElevenLabs pricing",
+ * "Otter vs Fireflies"). A run made only of filler or weak words ("make") is
+ * not a name. A named tool counts as a strong match, so the relevance cutoff
+ * never drops it.
+ */
+const rawKey = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "");
+
+function namedInQuery(task: string, rows: CatalogRow[], facts: FactsLookup): Set<string> {
+  const byKey = new Map<string, string>();
+  // Exact keys only: the full name, the slug and names.ts aliases, letters and
+  // digits kept as typed. Looser keys ("Copy.ai" -> "copy") would read everyday
+  // words as names ("write marketing copy").
+  for (const tool of namedRows(rows, facts)) {
+    const keys = [...tool.names, tool.slug].map(rawKey);
+    for (const [alias, slug] of Object.entries(NAME_ALIASES)) if (slug === tool.slug) keys.push(alias);
+    for (const key of keys) if (key.length >= 3) byKey.set(key, tool.slug);
+  }
+  const tokens = task.toLowerCase().split(/[^a-z0-9.+]+/).filter(Boolean);
+  const named = new Set<string>();
+  for (let i = 0; i < tokens.length; i++) {
+    for (let n = 1; n <= 4 && i + n <= tokens.length; n++) {
+      const run = tokens.slice(i, i + n);
+      if (run.every((w) => STOP.has(stem(w)) || WEAK.has(stem(w)))) continue;
+      const slug = byKey.get(rawKey(run.join("")));
+      if (slug) named.add(slug);
+    }
+  }
+  return named;
+}
+
+function scoreRow(  row: CatalogRow,
   facts: FactsLookup,
   query: ParsedQuery,
   queryTasks: ReturnType<typeof detectTasks>,
   target: CatalogRow | undefined,
   useWeak: boolean,
+  namedSlugs: ReadonlySet<string> = new Set(),
 ): Scored {
   let score = 0;
   const reasons = new Set<string>();
   let strong = false;
   let job = false;
+  // The search names this tool exactly: a strong match the cutoff never drops.
+  if (namedSlugs.has(row.slug)) {
+    score += NAMED_EXACT;
+    reasons.add(`named in the search: ${facts(row.slug)?.displayName?.value ?? row.name}`);
+    strong = true;
+    job = true;
+  }
 
   const tagList = tagsOf(row);
   const tags = new Set(tagList);
@@ -829,9 +870,13 @@ export function searchTools(
     detectTasks(matchText(task)).filter((t) => !t.phrase.split(" ").every((w) => negated.has(w) || STOP.has(w))),
   );
 
+  const namedSlugs = namedInQuery(searched, rows, facts);
+  const comparison = /\b(?:vs\.?|versus|compare|compared)\b/i.test(searched);
   const eligible = rows
     .filter((row) => !isDiscontinued(facts(row.slug)))
-    .filter((row) => row.slug !== target?.slug) // "alternative to X" never returns X
+    // "alternative to X" never returns X; a comparison ("Otter vs Fireflies") names
+    // both tools, so X stays in.
+    .filter((row) => row.slug !== target?.slug || (comparison && namedSlugs.has(row.slug)))
     .filter((row) => !tiers || tiers.includes(row.costTier.toUpperCase()))
     // budget "free": a sourced "no free plan" overrides a FREE/FREEMIUM tier
     // the catalog row has not caught up with yet (same rule as hasFreeTier).
@@ -839,7 +884,7 @@ export function searchTools(
     .filter((row) => !priced || !budgetFit(row, facts(row.slug), priced).drop);
 
   const relevance = (useWeak: boolean) =>
-    eligible.map((row) => scoreRow(row, facts, query, queryTasks, target, useWeak));
+    eligible.map((row) => scoreRow(row, facts, query, queryTasks, target, useWeak, namedSlugs));
   let matched = relevance(false).filter((s) => s.score > 0);
   // Only filler-ish words matched anywhere: fall back to them, and say so.
   const looseOnly = matched.length === 0 && query.weak.length > 0;
@@ -850,6 +895,24 @@ export function searchTools(
   // nothing matched strongly, keep the single-word hits as best effort.
   const multiWord = query.strong.length + query.weak.length >= 2;
   if (multiWord && matched.some((s) => s.strong)) matched = matched.filter((s) => s.strong);
+  // Relevance cutoff: in a multi-word search where no tool matched strongly,
+  // a tool whose name or primary use names the job outranks stray words in
+  // other tools' descriptions, so only those are kept ("learn a language").
+  // When not one tool names the job and the search names no known task, every
+  // hit is a stray word ("book" for "book a flight"): nothing is relevant, so
+  // return no results and say so instead of padding with unrelated tools.
+  // Loose-only searches, a named tool and "write ..." searches (which get a
+  // labelled writing top-up) keep their best effort.
+  let offTopic = false;
+  if (multiWord && !looseOnly && !target && hintedTasks(searched).length === 0 && matched.length > 0 && !matched.some((s) => s.strong)) {
+    const jobs = matched.filter((s) => s.job);
+    if (jobs.length > 0) matched = jobs;
+    else if (queryTasks.length === 0) {
+      matched = [];
+      offTopic = true;
+    }
+  }
+
 
   const freeIntent = priceIntent === "free" || input.budget === "free";
   const spelling = corrections.map((c) => `spelling: ${c.from} → ${c.to}`);
@@ -910,7 +973,12 @@ export function searchTools(
       row,
       score,
       reasons: [...reasons],
-      alt: target ? alternativeRank(relation, freeIntent ? hasFreeTier(row, facts(row.slug)) : 0) : null,
+      // In a comparison the tools it names lead, above every alternative.
+      alt: target
+        ? comparison && namedSlugs.has(row.slug)
+          ? { level: 4, main: 1, free: 0 }
+          : alternativeRank(relation, freeIntent ? hasFreeTier(row, facts(row.slug)) : 0)
+        : null,
       misfits,
       job,
       evidence: evidenceOf(row, facts),
@@ -985,7 +1053,9 @@ export function searchTools(
   const notes: string[] = [];
   if (truncated) notes.push(`Only the first ${MAX_INPUT_CHARS} characters of your request were searched.`);
   if (corrections.length) notes.push(`Spelling corrected: ${corrections.map((c) => `${c.from} → ${c.to}`).join(", ")}.`);
-  if (results.length === 0) notes.push("No Launchpad HQ tools matched; try a broader task or remove filters.");
+  if (offTopic) {
+    notes.push("Nothing relevant: Launchpad HQ lists AI tools, and no tool in the catalog matches this request. Name a task an AI tool could help with (for example 'transcribe meetings' or 'make slides').");
+  } else if (results.length === 0) notes.push("No Launchpad HQ tools matched; try a broader task or remove filters.");
   else if (fallback === "starter") {
     notes.push("Your request names no task, so these are popular starter tools (labelled fallback), not direct matches; name a task (for example 'cover letter' or 'logo') for better results.");
   } else {
