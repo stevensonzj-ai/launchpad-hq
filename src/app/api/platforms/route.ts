@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { PLATFORMS_MAX_LIMIT, PLATFORMS_MAX_PAGE, clampInt } from "@/lib/request-limits";
 import { prisma } from "@/lib/db";
 import { listedPlatformWhere } from "@/lib/catalog-visibility";
 import { Prisma } from "@prisma/client";
@@ -36,8 +37,8 @@ export function GET(request: NextRequest) {
     const featured = params.get("featured");
     const hasMobileApp = params.get("hasMobileApp");
     const mobile = params.get("mobile");
-    const page = Math.max(1, parseInt(params.get("page") || "1"));
-    const limit = Math.min(50, parseInt(params.get("limit") || "20"));
+    const page = clampInt(params.get("page"), 1, 1, PLATFORMS_MAX_PAGE);
+    const limit = clampInt(params.get("limit"), 20, 1, PLATFORMS_MAX_LIMIT);
 
     const where: Prisma.PlatformWhereInput = { ...listedPlatformWhere() };
 

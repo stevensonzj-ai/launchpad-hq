@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
+import { MAX_QUIZ_JSON_BYTES, jsonByteLength } from "@/lib/request-limits";
 
 export async function GET() {
   const user = await getOrCreateDbUser();
@@ -25,10 +26,13 @@ export async function POST(request: NextRequest) {
     return noDbUserResponse();
   }
 
-  const body = await request.json();
-  const answers = body.answers;
+  const body = await request.json().catch(() => null);
+  const answers = body && typeof body === "object" ? body.answers : null;
   if (!answers || typeof answers !== "object") {
     return apiError("bad_request", { message: "Invalid answers" });
+  }
+  if (jsonByteLength(answers) > MAX_QUIZ_JSON_BYTES) {
+    return apiError("bad_request", { status: 413, message: `answers must be ${MAX_QUIZ_JSON_BYTES} bytes of JSON or fewer`, field: "answers" });
   }
 
   await prisma.userPreferences.upsert({

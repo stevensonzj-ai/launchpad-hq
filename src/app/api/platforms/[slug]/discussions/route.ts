@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { sendModerationNotification } from "@/lib/email";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
+import { checkDailyPostQuota } from "@/lib/post-quota";
 import { cachedCommunityRead, expireTag } from "@/lib/community-cache";
 import { expireIfCreatedApproved, handleCommunityList, privateNoStore } from "@/lib/community-lists";
 import { readApprovedDiscussions } from "@/lib/community-queries";
@@ -43,6 +44,10 @@ async function createDiscussion(
   const user = await getOrCreateDbUser();
   if (!user) {
     return noDbUserResponse();
+  }
+  const limited = await checkDailyPostQuota(user.id);
+  if (limited) {
+    return limited;
   }
 
   const body = await request.json().catch(() => null);

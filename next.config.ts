@@ -4,6 +4,37 @@ import { catalogRedirects } from "./src/lib/catalog-redirects";
 import { compareRedirects } from "./src/data/compare/pages";
 import { HTML_VARY_WITH_ACCEPT, MARKDOWN_VARY_SOURCES } from "./src/lib/markdown/negotiate";
 
+/**
+ * Security headers on every response (security review G5). The CSP is
+ * REPORT-ONLY for now: browsers log violations to the console and block
+ * nothing. Sources: Clerk (clerk.launchpadhq.io, *.clerk.accounts.dev on
+ * previews, img.clerk.com, Cloudflare Turnstile for bot checks), Sentry
+ * ingest, Vercel Analytics/Speed Insights and the Vercel preview toolbar.
+ * HSTS is left to Vercel's default; includeSubDomains is not added (see
+ * the PR for why).
+ */
+const CSP_REPORT_ONLY = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.launchpadhq.io https://*.clerk.accounts.dev https://challenges.cloudflare.com https://va.vercel-scripts.com https://vercel.live",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data: https://vercel.live",
+  "connect-src 'self' https://clerk.launchpadhq.io https://*.clerk.accounts.dev https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://vitals.vercel-insights.com https://vercel.live wss://ws-us3.pusher.com",
+  "frame-src 'self' https://challenges.cloudflare.com https://vercel.live",
+  "worker-src 'self' blob:",
+  "form-action 'self' https://checkout.stripe.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "object-src 'none'",
+].join("; ");
+
+const SECURITY_HEADERS = [
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Content-Security-Policy-Report-Only", value: CSP_REPORT_ONLY },
+];
+
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   poweredByHeader: false,
@@ -12,10 +43,13 @@ const nextConfig: NextConfig = {
     // shared caches the response depends on Accept. The value repeats the
     // Vary Next sets on app pages, so whichever header wins on the platform
     // the RSC variants stay keyed; Markdown itself is a separate /md route.
-    return MARKDOWN_VARY_SOURCES.map((source) => ({
-      source,
-      headers: [{ key: "Vary", value: HTML_VARY_WITH_ACCEPT }],
-    }));
+    return [
+      { source: "/:path*", headers: SECURITY_HEADERS },
+      ...MARKDOWN_VARY_SOURCES.map((source) => ({
+        source,
+        headers: [{ key: "Vary", value: HTML_VARY_WITH_ACCEPT }],
+      })),
+    ];
   },
   async redirects() {
     return [

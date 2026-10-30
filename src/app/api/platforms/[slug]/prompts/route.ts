@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import { getOrCreateDbUser, noDbUserResponse } from "@/lib/auth-db";
 import { sendModerationNotification } from "@/lib/email";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
+import { checkDailyPostQuota } from "@/lib/post-quota";
+import { isHttpUrl } from "@/lib/request-limits";
 import { cachedCommunityRead, expireTag } from "@/lib/community-cache";
 import { expireIfCreatedApproved, handleCommunityList, privateNoStore } from "@/lib/community-lists";
 import { readApprovedPrompts } from "@/lib/community-queries";
@@ -43,6 +45,10 @@ async function createPrompt(
   if (!user) {
     return noDbUserResponse();
   }
+  const limited = await checkDailyPostQuota(user.id);
+  if (limited) {
+    return limited;
+  }
 
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== "object") {
@@ -74,6 +80,9 @@ async function createPrompt(
     const trimmed = body.outputUrl.trim();
     if (trimmed.length > 500) {
       return apiError("bad_request", { message: "outputUrl must be 500 characters or fewer", field: "outputUrl" });
+    }
+    if (trimmed && !isHttpUrl(trimmed)) {
+      return apiError("bad_request", { message: "outputUrl must be an http(s) URL", field: "outputUrl" });
     }
     outputUrl = trimmed || null;
   }
