@@ -3,6 +3,7 @@ import { loadCatalog } from "@/lib/mcp/catalog";
 import { MCP_HANDLER_OPTIONS, registerLaunchpadTools } from "@/lib/mcp/server";
 import { withMcpErrorHints } from "@/lib/mcp/http-errors";
 import { capEventStream } from "@/lib/mcp/stream-cap";
+import { guardMcpRequest } from "@/lib/mcp/request-guard";
 
 /**
  * Launchpad HQ read-only MCP connector (v0.1): https://www.launchpadhq.io/mcp
@@ -20,9 +21,18 @@ const mcpHandler = createMcpHandler((server) => {
   registerLaunchpadTools(server, { loadCatalog });
 }, MCP_HANDLER_OPTIONS);
 
-async function handler(request: Request): Promise<Response> {
+async function handler(incoming: Request): Promise<Response> {
+  // Origin allow-list, 64 KB body cap and 10-message batch cap, before
+  // mcp-handler parses anything (src/lib/mcp/request-guard.ts).
+  const guarded = await guardMcpRequest(incoming);
+  if ("response" in guarded) return withNoIndex(guarded.response);
+  const request = guarded.request;
   // Transport errors (405, 400, 406) gain a resolution hint in error.data.
   const response = capEventStream(await withMcpErrorHints(await mcpHandler(request)), MCP_STREAM_CAP_MS);
+  return withNoIndex(response);
+}
+
+function withNoIndex(response: Response): Response {
   const headers = new Headers(response.headers);
   headers.set("X-Robots-Tag", "noindex, nofollow");
   return new Response(response.body, {
