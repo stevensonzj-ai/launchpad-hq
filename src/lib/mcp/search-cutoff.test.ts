@@ -65,7 +65,7 @@ describe("search_tools relevance cutoff", () => {
     assert.deepEqual(top5("transcribe my Zoom meetings", { budget: "free", skill_level: "beginner" }), meeting);
     assert.deepEqual(top5("free AI tool to transcribe my Zoom meetings", { skill_level: "beginner" }), meeting);
     assert.deepEqual(top5("transcribe meetings"), meeting);
-    assert.deepEqual(top5("make slides", { budget: "low" }), ["gamma", "genspark", "canva-ai-magic-studio", "napkin-ai"]);
+    assert.deepEqual(top5("make slides", { budget: "low" }), ["gamma", "canva-ai-magic-studio", "napkin-ai"]);
     assert.deepEqual(top5("Grammarly alternatives"), ["paperpal", "trinka-ai", "quillbot", "chatgpt", "gemini"]);
     assert.deepEqual(top5("write a cover letter", { budget: "free" }), ["kickresume", "rezi", "teal", "chatgpt", "claude"]);
   });

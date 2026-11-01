@@ -1,4 +1,11 @@
-import type { PlatformTutorialData } from "./types";
+import type { PlatformTutorialData } from "../types";
+
+/**
+ * RETIRED 2026-11-01 (catalog audit 28), kept for the record: the platform page is hidden (catalog audit 28): genspark.ai/pricing redirected to a login page on 2026-11-01, so no plan or free-tier fact could be verified. Not
+ * registered in ../index.ts: the whole /platform/genspark tree 301s
+ * (HIDDEN_PAGE_REDIRECTS in src/lib/catalog-redirects.ts). The text below is
+ * unchanged from its last review; re-verify everything before restoring it.
+ */
 
 export const gensparkTutorial: PlatformTutorialData = {
   slug: "genspark-getting-started",

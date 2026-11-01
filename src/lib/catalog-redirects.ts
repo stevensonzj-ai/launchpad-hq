@@ -71,6 +71,18 @@ export const HIDDEN_PAGE_REDIRECTS: Readonly<Record<string, string>> = {
   // Audit 27 (2026-10-30): Sora is discontinued (OpenAI Help Center). No AI-video
   // compare page exists yet, so the 301 goes to the first listed alternative.
   "sora-2": "/platform/google-veo-3-1",
+  // Audit 28 (2026-11-01). Each 301 goes to a listed page of the same kind:
+  // - naver-hyperclova-x-cue: Naver's Cue: page says Cue: and CLOVA X ended
+  //   service on April 9, 2026 (an AI-search assistant, so Perplexity).
+  // - genspark: genspark.ai/pricing redirects to a login page, so no plan can
+  //   be verified (an AI agent workspace, so Manus). Lifecycle stays active.
+  // - poe: poe.com and help.poe.com need a login or return 403, poe.com/pricing
+  //   is 404, and the API page shows no subscription prices (a multi-model
+  //   hub, so OpenRouter). Lifecycle stays active.
+  // Their guides moved to src/data/tutorials/retired/ so none chains.
+  "naver-hyperclova-x-cue": "/platform/perplexity-ai",
+  genspark: "/platform/manus",
+  poe: "/platform/openrouter",
 };
 
 export type CatalogRedirect = {

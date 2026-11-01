@@ -26,13 +26,18 @@ export default {
     ],
     note: "Help centre, \"What is Duolingo Max?\": \"Duolingo Max includes all the benefits of Super Duolingo, along with AI-powered features: Roleplay and Video Call with Lily.\" (browser check 2026-10-29). The blog post below, read by two readers, gives the same two features and the Roleplay languages.",
     sourceUrl: "https://blog.duolingo.com/duolingo-max/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-01",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-01",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-01",
+      field: "features",
+      summary: "Re-read the Duolingo Max blog post (catalog audit 28): Max = all Super benefits (unlimited energy, no ads, personalized review in Practice Hub) plus Video Call and Roleplay; Roleplay for English speakers learning Spanish, French, German, Italian and Portuguese; Video Call also covers Japanese, Korean and Chinese. duolingo.com/max is JavaScript-only and states no prices logged out. Free-tier text on the row corrected (hearts replaced by energy).",
+    },
     {
       date: "2026-10-29",
       field: "features",

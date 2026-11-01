@@ -194,7 +194,6 @@
   },
   "top5": [
    "gamma",
-   "genspark",
    "canva-ai-magic-studio",
    "napkin-ai"
   ]
@@ -478,7 +477,6 @@
   },
   "top5": [
    "gamma",
-   "genspark",
    "canva-ai-magic-studio",
    "microsoft-designer"
   ]
@@ -489,7 +487,6 @@
   },
   "top5": [
    "gamma",
-   "genspark",
    "canva-ai-magic-studio"
   ]
  },
@@ -710,8 +707,7 @@
    "task": "fact check a claim"
   },
   "top5": [
-   "perplexity-ai",
-   "genspark"
+   "perplexity-ai"
   ]
  },
  "G31": {

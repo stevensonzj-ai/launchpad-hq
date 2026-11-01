@@ -21,6 +21,7 @@ import {
 import { audit11Slugs } from "./audit-11";
 import { AUDIT_23_FACT_SLUGS } from "./audit-23";
 import { AUDIT_25_FACT_SLUGS } from "./audit-25";
+import { AUDIT_28_HIDDEN } from "./audit-28";
 
 const host = (url: string) => new URL(url).hostname.replace(/^www\./, "").replace(/^(docs|help|support)\./, "");
 const patchFor = (slug: string) => {
@@ -29,6 +30,8 @@ const patchFor = (slug: string) => {
   return patch;
 };
 const snap = (slug: string) => snapshotRows().find((r) => r.slug === slug)!;
+// Audit 28 (2026-11-01) hid some of these rows; they leave the snapshot rows, so the row checks skip them.
+const laterHidden = new Set(Object.keys(AUDIT_28_HIDDEN));
 
 const baseRow: Audit10Row = {
   description: "Old description",
@@ -182,7 +185,7 @@ describe("catalog audit 10: \"official\" wording on catalog-only rows", () => {
   });
 
   it("on every listed row: no claim left, same check dates, same page text apart from the word", () => {
-    for (const { slug, fields } of AUDIT_10_WORDING) {
+    for (const { slug, fields } of AUDIT_10_WORDING.filter((w) => !laterHidden.has(w.slug))) {
       for (const field of fields) {
         const after = snap(slug)[field];
         assert.ok(after, `${slug}.${field}`);
@@ -208,7 +211,7 @@ describe("catalog audit 10: \"official\" wording on catalog-only rows", () => {
 
 describe("catalog audit 10: idempotent, guarded, add-only", () => {
   it("applies once, then reports 0 on the post-audit snapshot", () => {
-    for (const slug of audit10Slugs()) {
+    for (const slug of audit10Slugs().filter((s) => !laterHidden.has(s))) {
       const row = snap(slug);
       assert.ok(row, slug);
       assert.deepEqual(diffAudit10Row(slug, row), [], `${slug}: re-run is a no-op`);

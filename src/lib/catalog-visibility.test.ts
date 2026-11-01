@@ -8,7 +8,7 @@ import { buildPlatformMetadata, buildTutorialMetadata } from "@/lib/seo-metadata
 
 describe("catalog visibility", () => {
   it("hides the dead-and-obscure pages and the duplicate rows", () => {
-    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai", "sora-2"]) {
+    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai", "sora-2", "naver-hyperclova-x-cue", "genspark", "poe"]) {
       assert.equal(isHiddenPlatform(slug), true, slug);
     }
     // "What happened" pages stay listed and indexed (sora-2 was hidden by audit 27, 2026-10-30).

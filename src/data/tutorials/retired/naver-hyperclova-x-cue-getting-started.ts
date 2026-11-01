@@ -1,4 +1,11 @@
-import type { PlatformTutorialData } from "./types";
+import type { PlatformTutorialData } from "../types";
+
+/**
+ * RETIRED 2026-11-01 (catalog audit 28), kept for the record: Naver says Cue: (closed beta since September 2023) and CLOVA X ended service on April 9, 2026 (cue.search.naver.com, re-read 2026-11-01), so there is nothing for a new reader to get started with. Not
+ * registered in ../index.ts: the whole /platform/naver-hyperclova-x-cue tree 301s
+ * (HIDDEN_PAGE_REDIRECTS in src/lib/catalog-redirects.ts). The text below is
+ * unchanged from its last review; re-verify everything before restoring it.
+ */
 
 export const naverHyperclovaXCueTutorial: PlatformTutorialData = {
   slug: "naver-hyperclova-x-cue-getting-started",
