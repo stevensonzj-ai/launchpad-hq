@@ -32,6 +32,8 @@ describe("catalog audit 29: Poe unhidden", () => {
     assert.equal(f.currentPricing?.from, "Free plan and paid subscriptions; prices not confirmed (pricing needs a login) (as of 2026-10-30)");
     assert.equal(f.freeTierFeatures?.from, "Free for most usage (official); exact daily points unverified as of 2026-10-13");
     assert.equal(f.usageLimits, undefined);
+    assert.match(f.description!.from!, /^Quora's multi-model chat app\. About page \(as of 2026-10-13\)/);
+    assert.equal(Object.keys(f).length, 3);
   });
 
   it("is applied to the snapshot and a re-run is a no-op", () => {
@@ -39,6 +41,7 @@ describe("catalog audit 29: Poe unhidden", () => {
     assert.ok(plans.every((x) => x.action === "already"));
     assert.deepEqual(audit29UpdateData(plans), {});
     assert.equal(poe().usageLimits, null);
+    assert.doesNotMatch(poe().description!, /\$\s?\d/);
     const patch = { slug: "s", outcome: "corrected" as const, source: "https://e.example", fields: { currentPricing: { from: "x", to: "y" } } };
     assert.deepEqual(audit29UpdateData(planAudit29({ currentPricing: "x" }, patch)), { currentPricing: "y" });
     assert.deepEqual(audit29UpdateData(planAudit29({ currentPricing: "z" }, patch)), {});
@@ -68,7 +71,7 @@ describe("catalog audit 29: Poe unhidden", () => {
     const source = read("scripts/update-catalog-audit-29.ts");
     assert.match(source, /checkTargetHost\(host, process\.argv, process\.env\)/);
     assert.match(source, /const dryRun = !apply \|\| process\.argv\.includes\("--dry-run"\)/);
-    assert.match(source, /select: \{ currentPricing: true, freeTierFeatures: true, usageLimits: true \}/);
+    assert.match(source, /select: \{ currentPricing: true, freeTierFeatures: true, usageLimits: true, description: true \}/);
     assert.doesNotMatch(source, /\.delete(Many)?\(|\.create(Many)?\(/);
     assert.doesNotMatch(source, /console\.log\([^)]*DATABASE_URL/);
   });

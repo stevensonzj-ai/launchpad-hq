@@ -8914,7 +8914,7 @@
    "name": "Poe",
    "company": "Quora",
    "website": "https://poe.com",
-   "description": "Quora's multi-model chat app. About page (as of 2026-10-13): free for most usage; plans from $4.99/mo. Prompts are sent to whichever third-party model provider you pick. Exact free daily points are unverified (third parties cite about 300 points/day). Third-party paid point allowances: $4.99 (10k points/day), $19.99 (660k points/mo), then $49.99, $99.99, $249.99.",
+   "description": "Quora's multi-model chat app: one account to chat with bots from many AI companies. Prompts are sent to whichever third-party model provider you pick. Poe shows its plans, prices and free daily points only after you sign in at poe.com, so we list no prices (as of 2026-11-01)",
    "primaryUse": "One app to try many third-party models",
    "primaryUseCases": "Beginners comparing models without signing up at each vendor",
    "costTier": "FREEMIUM",

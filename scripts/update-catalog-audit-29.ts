@@ -1,6 +1,6 @@
 /**
  * Catalog audit #29 — Poe unhidden, plans and prices need a sign-in, re-read 2026-11-01.
- * UPDATE-only: currentPricing / freeTierFeatures / usageLimits
+ * UPDATE-only: currentPricing / freeTierFeatures / usageLimits / description
  * on the rows listed in
  * AUDIT_29_PATCHES, each written only while the row still holds the exact
  * old value. Values and official sources live
@@ -125,7 +125,7 @@ async function main() {
     for (const patch of AUDIT_29_PATCHES) {
       const row = await prisma.platform.findUnique({
         where: { slug: patch.slug },
-        select: { currentPricing: true, freeTierFeatures: true, usageLimits: true },
+        select: { currentPricing: true, freeTierFeatures: true, usageLimits: true, description: true },
       });
       if (!row) {
         console.warn(`! skip missing slug: ${patch.slug}`);

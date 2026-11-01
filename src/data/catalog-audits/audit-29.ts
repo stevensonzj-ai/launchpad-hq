@@ -8,13 +8,13 @@
  * currentPricing), so a re-run reports 0 changes. Never creates or deletes
  * rows. Kept free of Prisma and dotenv.
  *
- * Outcomes (1): corrected 1. Unhiding is a fact-file change (no `visibility`)
+ * Outcomes (1): corrected 1 (3 fields: currentPricing, freeTierFeatures, description). Unhiding is a fact-file change (no `visibility`)
  * plus removing poe from HIDDEN_PAGE_REDIRECTS, not a database write.
  */
 
 export const CHECKED_AT = "2026-11-01";
 
-export type Audit29Field = "currentPricing" | "freeTierFeatures" | "usageLimits";
+export type Audit29Field = "currentPricing" | "freeTierFeatures" | "usageLimits" | "description";
 export type Audit29Outcome = "verified" | "corrected";
 
 export type Audit29Patch = {
@@ -37,6 +37,10 @@ export const AUDIT_29_PATCHES: Audit29Patch[] = [
       freeTierFeatures: {
         from: "Free for most usage (official); exact daily points unverified as of 2026-10-13",
         to: "Free account available; daily free points are shown only after signing in at poe.com (as of 2026-11-01)",
+      },
+      description: {
+        from: "Quora's multi-model chat app. About page (as of 2026-10-13): free for most usage; plans from $4.99/mo. Prompts are sent to whichever third-party model provider you pick. Exact free daily points are unverified (third parties cite about 300 points/day). Third-party paid point allowances: $4.99 (10k points/day), $19.99 (660k points/mo), then $49.99, $99.99, $249.99.",
+        to: "Quora's multi-model chat app: one account to chat with bots from many AI companies. Prompts are sent to whichever third-party model provider you pick. Poe shows its plans, prices and free daily points only after you sign in at poe.com, so we list no prices (as of 2026-11-01)",
       },
     },
   },
