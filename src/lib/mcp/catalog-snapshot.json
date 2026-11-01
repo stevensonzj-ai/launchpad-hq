@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden)",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -9,7 +9,6 @@
   "genspark",
   "kakao-brain-karlo",
   "naver-hyperclova-x-cue",
-  "poe",
   "relay-app",
   "sora-2",
   "tabnine"
@@ -8898,6 +8897,53 @@
    "idealUserTypes": [],
    "contentTypes": [],
    "outputFormats": [],
+   "privacyLevel": "MEDIUM",
+   "timeToProductivity": null,
+   "learningCurve": null,
+   "offlineCapable": false,
+   "languageSupport": null,
+   "keyIntegrations": null,
+   "upgradeTriggers": null,
+   "complementaryTools": [],
+   "hasMobileApp": false,
+   "iosAppUrl": null,
+   "androidAppUrl": null
+  },
+  {
+   "slug": "poe",
+   "name": "Poe",
+   "company": "Quora",
+   "website": "https://poe.com",
+   "description": "Quora's multi-model chat app. About page (as of 2026-10-13): free for most usage; plans from $4.99/mo. Prompts are sent to whichever third-party model provider you pick. Exact free daily points are unverified (third parties cite about 300 points/day). Third-party paid point allowances: $4.99 (10k points/day), $19.99 (660k points/mo), then $49.99, $99.99, $249.99.",
+   "primaryUse": "One app to try many third-party models",
+   "primaryUseCases": "Beginners comparing models without signing up at each vendor",
+   "costTier": "FREEMIUM",
+   "difficultyLevel": "BEGINNER",
+   "platformType": [
+    "web",
+    "mobile"
+   ],
+   "currentPricing": "Paid subscriptions exist, but Poe shows plans and prices only after you sign in at poe.com; we list no prices (as of 2026-11-01)",
+   "freeTierFeatures": "Free account available; daily free points are shown only after signing in at poe.com (as of 2026-11-01)",
+   "usageLimits": null,
+   "apiAvailable": false,
+   "directAlternatives": [],
+   "budgetAlternativeTo": [],
+   "updatedAt": "2026-11-01",
+   "category": {
+    "slug": "text-conversational-ai",
+    "name": "Text & Conversational AI"
+   },
+   "idealUserTypes": [
+    "beginners",
+    "model-shoppers"
+   ],
+   "contentTypes": [
+    "text"
+   ],
+   "outputFormats": [
+    "text"
+   ],
    "privacyLevel": "MEDIUM",
    "timeToProductivity": null,
    "learningCurve": null,

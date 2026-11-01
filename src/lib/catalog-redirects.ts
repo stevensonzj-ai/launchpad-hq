@@ -76,13 +76,10 @@ export const HIDDEN_PAGE_REDIRECTS: Readonly<Record<string, string>> = {
   //   service on April 9, 2026 (an AI-search assistant, so Perplexity).
   // - genspark: genspark.ai/pricing redirects to a login page, so no plan can
   //   be verified (an AI agent workspace, so Manus). Lifecycle stays active.
-  // - poe: poe.com and help.poe.com need a login or return 403, poe.com/pricing
-  //   is 404, and the API page shows no subscription prices (a multi-model
-  //   hub, so OpenRouter). Lifecycle stays active.
   // Their guides moved to src/data/tutorials/retired/ so none chains.
+  // (poe was hidden here by audit 28 and unhidden 2026-11-01.)
   "naver-hyperclova-x-cue": "/platform/perplexity-ai",
   genspark: "/platform/manus",
-  poe: "/platform/openrouter",
 };
 
 export type CatalogRedirect = {

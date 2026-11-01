@@ -1,11 +1,4 @@
-import type { PlatformTutorialData } from "../types";
-
-/**
- * RETIRED 2026-11-01 (catalog audit 28), kept for the record: the platform page is hidden (catalog audit 28): poe.com and help.poe.com send logged-out visitors to a login or 403 and poe.com/pricing is 404 (2026-11-01), so no plan or price could be verified. Not
- * registered in ../index.ts: the whole /platform/poe tree 301s
- * (HIDDEN_PAGE_REDIRECTS in src/lib/catalog-redirects.ts). The text below is
- * unchanged from its last review; re-verify everything before restoring it.
- */
+import type { PlatformTutorialData } from "./types";
 
 export const poeTutorial: PlatformTutorialData = {
   slug: "poe-getting-started",
