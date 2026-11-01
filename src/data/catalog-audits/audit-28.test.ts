@@ -14,12 +14,12 @@ const rows = snapshot.rows;
 const read = (p: string) => readFileSync(join(process.cwd(), p), "utf8");
 
 describe("catalog audit 28: rows audit 27 left open", () => {
-  it("covers 8 distinct rows with the planned outcome counts", () => {
+  it("covers 7 distinct rows with the planned outcome counts", () => {
     const all = [...AUDIT_28_PATCHES, ...AUDIT_28_NO_CHANGE];
-    assert.equal(all.length, 8);
-    assert.equal(new Set(all.map((r) => r.slug)).size, 8);
+    assert.equal(all.length, 7);
+    assert.equal(new Set(all.map((r) => r.slug)).size, 7);
     const count = (o: string) => all.filter((r) => r.outcome === o).length;
-    assert.deepEqual({ v: count("verified"), c: count("corrected"), h: count("hidden") }, { v: 2, c: 2, h: 4 });
+    assert.deepEqual({ v: count("verified"), c: count("corrected"), h: count("hidden") }, { v: 2, c: 2, h: 3 });
     for (const r of all) assert.match(r.source, /^https:\/\//, r.slug);
   });
 
@@ -53,7 +53,7 @@ describe("catalog audit 28: rows audit 27 left open", () => {
     assert.match(mem.usageLimits ?? "", /Free 3 hours, Plus 10 hours/);
   });
 
-  it("hides naver, genspark and poe with single-hop 301s to listed pages and keeps their facts", () => {
+  it("hides naver and genspark with single-hop 301s to listed pages and keeps their facts", () => {
     const moves = catalogRedirects();
     for (const [slug, to] of Object.entries(AUDIT_28_HIDDEN)) {
       assert.equal(isHiddenPlatform(slug), true, slug);
@@ -79,14 +79,14 @@ describe("catalog audit 28: rows audit 27 left open", () => {
     }
   });
 
-  it("naver is discontinued with a dated what-happened notice; genspark and poe stay active", () => {
+  it("naver is discontinued with a dated what-happened notice; genspark stays active", () => {
     const naver = getToolFacts("naver-hyperclova-x-cue")!;
     assert.equal(naver.lifecycle, "discontinued");
     assert.equal(naver.status?.checkedAt, "2026-11-01");
     assert.match(naver.status!.value.headline, /April 9, 2026/);
     assert.equal(naver.status!.sourceUrl, "https://cue.search.naver.com");
     for (const a of naver.status!.value.alternatives ?? []) assert.ok(rows.some((r) => r.slug === a.slug), a.slug);
-    for (const slug of ["genspark", "poe"]) assert.equal(getToolFacts(slug)?.lifecycle, "active", slug);
+    assert.equal(getToolFacts("genspark")?.lifecycle, "active");
     assert.equal(isHiddenPlatform("clarifai"), true);
   });
 

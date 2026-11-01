@@ -7,6 +7,7 @@ import { AUDIT_27_FACT_UPDATES, AUDIT_27_NO_CHANGE, AUDIT_27_PATCHES, audit27Upd
 import { catalogRedirects, HIDDEN_PAGE_REDIRECTS, PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
 import { AUDIT_28_HIDDEN, AUDIT_28_PATCHES } from "@/data/catalog-audits/audit-28";
+import { AUDIT_29_PATCHES } from "@/data/catalog-audits/audit-29";
 
 type Row = Record<string, string | null> & { slug: string };
 const rows = (JSON.parse(readFileSync(join(process.cwd(), "src/lib/mcp/catalog-snapshot.json"), "utf8")) as { rows: Row[] }).rows;
@@ -42,14 +43,14 @@ describe("catalog audit 27: rows audit 25 left catalog_only", () => {
         continue;
       }
       if (p.slug in AUDIT_28_HIDDEN) {
-        // Audit 28 (2026-11-01) hid poe, so its row moved to hidden_rows.
+        // Audit 28 (2026-11-01) hid some of these rows, so they moved to hidden_rows.
         assert.equal(row, undefined, `${p.slug} moved to hidden_rows`);
         continue;
       }
       assert.ok(row, p.slug);
       const plans = planAudit27(row as never, p);
-      // Audit 28 later rewrote some of these fields from a fresh vendor read; only the rest must match.
-      const later = Object.keys(AUDIT_28_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {});
+      // Audits 28 and 29 later rewrote some of these fields from a fresh vendor read; only the rest must match.
+      const later = [...Object.keys(AUDIT_28_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {}), ...Object.keys(AUDIT_29_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {})];
       assert.ok(plans.filter((x) => !later.includes(x.field)).every((x) => x.action === "already"), p.slug);
       assert.deepEqual(audit27UpdateData(plans.filter((x) => !later.includes(x.field))), {});
     }

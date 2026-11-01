@@ -5,9 +5,10 @@
  * (the audit-27 value where audit 27 changed it), so a re-run reports 0
  * changes. Never creates or deletes rows.
  *
- * Outcomes (8): verified 2, corrected 2, hidden 4 (naver-hyperclova-x-cue,
- * genspark and poe hidden in this audit with 301s and their guides retired;
- * clarifai was already hidden). Hiding is a fact-file `visibility: "hidden"`
+ * Outcomes (7): verified 2, corrected 2, hidden 3 (naver-hyperclova-x-cue and
+ * genspark hidden in this audit with 301s and their guides retired; clarifai
+ * was already hidden). Poe was also hidden here and unhidden the same day
+ * (audit 29, Zach), so it is no longer listed. Hiding is a fact-file `visibility: "hidden"`
  * plus HIDDEN_PAGE_REDIRECTS, not a database write. Rows with nothing to write
  * are listed in AUDIT_28_NO_CHANGE. Kept free of Prisma and dotenv.
  */
@@ -67,14 +68,13 @@ export const AUDIT_28_PATCHES: Audit28Patch[] = [
 ];
 
 /**
- * Rows checked in this audit with nothing to write to the database. The three
+ * Rows checked in this audit with nothing to write to the database. The two
  * newly hidden rows are hidden through their fact files and the redirect map;
  * their database text is left as it was.
  */
 export const AUDIT_28_NO_CHANGE: { slug: string; outcome: Audit28Outcome; source: string }[] = [
   { slug: "naver-hyperclova-x-cue", outcome: "hidden", source: "https://cue.search.naver.com" },
   { slug: "genspark", outcome: "hidden", source: "https://www.genspark.ai/pricing" },
-  { slug: "poe", outcome: "hidden", source: "https://poe.com/" },
   { slug: "clarifai", outcome: "hidden", source: "https://www.clarifai.com/pricing" },
 ];
 
@@ -82,7 +82,6 @@ export const AUDIT_28_NO_CHANGE: { slug: string; outcome: Audit28Outcome; source
 export const AUDIT_28_HIDDEN: Record<string, string> = {
   "naver-hyperclova-x-cue": "/platform/perplexity-ai",
   genspark: "/platform/manus",
-  poe: "/platform/openrouter",
 };
 
 export type Audit28Row = Partial<Record<Audit28Field, string | null>>;
