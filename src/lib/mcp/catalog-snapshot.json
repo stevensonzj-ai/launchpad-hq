@@ -1,12 +1,15 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden)",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
   "canva-magic-studio",
   "clarifai",
+  "genspark",
   "kakao-brain-karlo",
+  "naver-hyperclova-x-cue",
+  "poe",
   "relay-app",
   "sora-2",
   "tabnine"
@@ -2749,7 +2752,7 @@
     "mobile"
    ],
    "currentPricing": "Free; Super and Max are paid subscriptions; Max is Super plus Roleplay and Video Call with Lily; prices are not stated on Duolingo's logged-out pages (as of 2026-10-29)",
-   "freeTierFeatures": "Duolingo free: full lessons with ads; limited hearts; basic features",
+   "freeTierFeatures": "Duolingo free: full lessons with ads and a limited energy meter; Super removes ads and gives unlimited energy (as of 2026-11-01)",
    "usageLimits": "Free: ads and heart limits; Max includes all Super benefits plus Roleplay and Video Call with Lily; prices are not stated (as of 2026-10-29)",
    "apiAvailable": false,
    "directAlternatives": [
@@ -2760,7 +2763,7 @@
    "budgetAlternativeTo": [
     "Speak (Language AI)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-11-01",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -3665,54 +3668,6 @@
     "Semantic Scholar (find papers)"
    ],
    "hasMobileApp": true,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "genspark",
-   "name": "Genspark",
-   "company": "Genspark",
-   "website": "https://www.genspark.ai",
-   "description": "AI workspace / super-agent product. Official pricing as of 2026-10-14 is unverified (JavaScript-only page). Category is Workflow & Automation because it is sold as an always-on work surface rather than a single chat box.",
-   "primaryUse": "AI workspace that mixes search, slides, and agents",
-   "primaryUseCases": "People who want one tab for research plus generated artifacts, not a classic Zapier-style builder",
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "Plan prices unverified as of 2026-10-14 (official page JavaScript-only)",
-   "freeTierFeatures": "Free path unverified as of 2026-10-14",
-   "usageLimits": null,
-   "apiAvailable": false,
-   "directAlternatives": [],
-   "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-14",
-   "category": {
-    "slug": "workflow-automation",
-    "name": "Workflow & Automation"
-   },
-   "idealUserTypes": [
-    "researchers",
-    "operators"
-   ],
-   "contentTypes": [
-    "web",
-    "documents"
-   ],
-   "outputFormats": [
-    "text",
-    "slides"
-   ],
-   "privacyLevel": "MEDIUM",
-   "timeToProductivity": null,
-   "learningCurve": null,
-   "offlineCapable": false,
-   "languageSupport": null,
-   "keyIntegrations": null,
-   "upgradeTriggers": null,
-   "complementaryTools": [],
-   "hasMobileApp": false,
    "iosAppUrl": null,
    "androidAppUrl": null
   },
@@ -6822,9 +6777,9 @@
     "mobile",
     "browser_extension"
    ],
-   "currentPricing": "Free $0; Plus $9/mo; Pro $29/mo; Pro 2× $49; Pro 5× $99; Pro 10× $149; Pro 20× $199; Extra Usage +$50 on Pro 20× (per the table, as of 2026-10-14)",
-   "freeTierFeatures": "Free: 25 messages/mo, 25 new notes, task tracking on those notes, 15 open tasks/projects, 3 hours Voice Mode (official, as of 2026-10-14)",
-   "usageLimits": "Plan limits not confirmed; the pricing page needs a login (as of 2026-10-30)",
+   "currentPricing": "Free $0; Mem Plus $9/mo; Mem Pro $29/mo; Pro 2× $49; Pro 5× $99; Pro 10× $149; Pro 20× $199; Extra Usage +$50 on Pro 20× (as of 2026-11-01)",
+   "freeTierFeatures": "Free $0: 25 messages to Mem and 25 new notes per month, 15 open tasks, 3 hours of Voice Mode (as of 2026-11-01)",
+   "usageLimits": "Messages to Mem and new notes per month: Free 25, Plus 50, Pro 100, Pro 2× 200, Pro 5× 500, Pro 10× 1,000, Pro 20× 2,000 (+500 extra); open tasks: 15 / 25 / 50 / 100 / 250 / 500 / 1,000 in the same order; custom routines and connections: Pro 1, 2× 2, 5× 5, 10× 10, 20× 20, none on Free or Plus; Voice Mode: Free 3 hours, Plus 10 hours (as of 2026-11-01)",
    "apiAvailable": true,
    "directAlternatives": [
     "Notion AI",
@@ -6835,7 +6790,7 @@
     "Notion AI (free workspace)",
     "Apple Notes"
    ],
-   "updatedAt": "2026-10-30",
+   "updatedAt": "2026-11-01",
    "category": {
     "slug": "meetings-notes",
     "name": "Meetings & Notes"
@@ -7756,64 +7711,6 @@
    "keyIntegrations": null,
    "upgradeTriggers": null,
    "complementaryTools": [],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "naver-hyperclova-x-cue",
-   "name": "Naver (HyperCLOVA X / Cue:)",
-   "company": "Naver",
-   "website": "https://clova.ai",
-   "description": null,
-   "primaryUse": "Korean AI assistant and search",
-   "primaryUseCases": "Korean-language AI assistant; Naver search enhancement; Korean content creation; e-commerce",
-   "costTier": "FREE",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web",
-    "api"
-   ],
-   "currentPricing": "Free; Enterprise via Naver Cloud",
-   "freeTierFeatures": "Free: Cue: chatbot for Korean users; integrated into Naver ecosystem",
-   "usageLimits": "Free for consumer use; API pricing for developers",
-   "apiAvailable": true,
-   "directAlternatives": [
-    "ChatGPT (Korean-capable)",
-    "Gemini"
-   ],
-   "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
-   "category": {
-    "slug": "international-regional-ai",
-    "name": "International & Regional AI"
-   },
-   "idealUserTypes": [
-    "Korean-speaking users",
-    "Korean businesses",
-    "Naver ecosystem users"
-   ],
-   "contentTypes": [
-    "Text",
-    "images (Karlo)"
-   ],
-   "outputFormats": [
-    "Text",
-    "search results",
-    "Naver integrations"
-   ],
-   "privacyLevel": "HIGH",
-   "timeToProductivity": "5 min",
-   "learningCurve": "Instant",
-   "offlineCapable": false,
-   "languageSupport": "Korean (primary), English, Japanese",
-   "keyIntegrations": "Naver Search, Naver Shopping, Naver Map, LINE, CLOVA Studio",
-   "upgradeTriggers": "API access; enterprise features; higher volume",
-   "complementaryTools": [
-    "Naver ecosystem (search",
-    "shopping",
-    "maps)"
-   ],
    "hasMobileApp": false,
    "iosAppUrl": null,
    "androidAppUrl": null
@@ -9001,53 +8898,6 @@
    "idealUserTypes": [],
    "contentTypes": [],
    "outputFormats": [],
-   "privacyLevel": "MEDIUM",
-   "timeToProductivity": null,
-   "learningCurve": null,
-   "offlineCapable": false,
-   "languageSupport": null,
-   "keyIntegrations": null,
-   "upgradeTriggers": null,
-   "complementaryTools": [],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "poe",
-   "name": "Poe",
-   "company": "Quora",
-   "website": "https://poe.com",
-   "description": "Quora's multi-model chat app. About page (as of 2026-10-13): free for most usage; plans from $4.99/mo. Prompts are sent to whichever third-party model provider you pick. Exact free daily points are unverified (third parties cite about 300 points/day). Third-party paid point allowances: $4.99 (10k points/day), $19.99 (660k points/mo), then $49.99, $99.99, $249.99.",
-   "primaryUse": "One app to try many third-party models",
-   "primaryUseCases": "Beginners comparing models without signing up at each vendor",
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web",
-    "mobile"
-   ],
-   "currentPricing": "Free plan and paid subscriptions; prices not confirmed (pricing needs a login) (as of 2026-10-30)",
-   "freeTierFeatures": "Free for most usage (official); exact daily points unverified as of 2026-10-13",
-   "usageLimits": null,
-   "apiAvailable": false,
-   "directAlternatives": [],
-   "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-30",
-   "category": {
-    "slug": "text-conversational-ai",
-    "name": "Text & Conversational AI"
-   },
-   "idealUserTypes": [
-    "beginners",
-    "model-shoppers"
-   ],
-   "contentTypes": [
-    "text"
-   ],
-   "outputFormats": [
-    "text"
-   ],
    "privacyLevel": "MEDIUM",
    "timeToProductivity": null,
    "learningCurve": null,
@@ -10814,9 +10664,9 @@
    "platformType": [
     "mobile"
    ],
-   "currentPricing": "Premium and Premium Plus; US web offer $99.99 and $234.99 a year (promotional); prices vary by region and are shown in the app (as of 2026-10-29)",
-   "freeTierFeatures": "No free plan: a 7-day free trial, then a paid subscription (as of 2026-10-29)",
-   "usageLimits": "Plan limits are not published; Premium Plus is the higher tier (as of 2026-10-29)",
+   "currentPricing": "Premium and Premium Plus; US web offer $99.99 and $234.99 a year (promotional); prices vary by region and are shown in the app (as of 2026-11-01)",
+   "freeTierFeatures": "No free plan: a 7-day free trial, then a paid subscription (as of 2026-11-01)",
+   "usageLimits": "Plan limits are not published; Premium Plus is the higher tier (as of 2026-11-01)",
    "apiAvailable": false,
    "directAlternatives": [
     "Duolingo Max",
@@ -10825,7 +10675,7 @@
    "budgetAlternativeTo": [
     "Duolingo Max (free tier)"
    ],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-11-01",
    "category": {
     "slug": "education-learning-ai",
     "name": "Education & Learning AI"
@@ -12865,16 +12715,16 @@
     "web",
     "mobile"
    ],
-   "currentPricing": "Zillow states no cost for its AI features: the Zillow app in ChatGPT, the Zillow connector in Claude, the rentals feature in Gemini and AI mode on Zillow; Premier Agent is paid (as of 2026-10-29)",
-   "freeTierFeatures": "Not stated: Zillow's pages do not say whether the AI features are free or have limits (as of 2026-10-29)",
-   "usageLimits": "Not stated (as of 2026-10-29)",
+   "currentPricing": "Zillow states no cost for its AI features: the Zillow app in ChatGPT, the Zillow connector in Claude, the rentals feature in Gemini and AI mode on Zillow; Premier Agent is paid (as of 2026-11-01)",
+   "freeTierFeatures": "Not stated: Zillow's pages do not say whether the AI features are free or have limits (as of 2026-11-01)",
+   "usageLimits": "Not stated (as of 2026-11-01)",
    "apiAvailable": true,
    "directAlternatives": [
     "Redfin Estimate",
     "Realtor.com"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-29",
+   "updatedAt": "2026-11-01",
    "category": {
     "slug": "finance-real-estate-ai",
     "name": "Finance & Real Estate AI"

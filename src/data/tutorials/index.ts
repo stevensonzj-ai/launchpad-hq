@@ -7,7 +7,6 @@ import { midjourneyTutorial } from "./midjourney-getting-started";
 import { comfyuiTutorial } from "./comfyui-getting-started";
 import { firefliesAiTutorial } from "./fireflies-ai-getting-started";
 import { manusTutorial } from "./manus-getting-started";
-import { gensparkTutorial } from "./genspark-getting-started";
 import { stabilityAiTutorial } from "./stability-ai-getting-started";
 // PR 6 batch, 2026-10-24
 import { fathomTutorial } from "./fathom-getting-started";
@@ -134,7 +133,6 @@ import { microsoftDesignerTutorial } from "./microsoft-designer-getting-started"
 import { ai21LabsJambaTutorial } from "./ai21-labs-jamba-getting-started";
 import { alephAlphaLuminousTutorial } from "./aleph-alpha-luminous-getting-started";
 import { cohereTutorial } from "./cohere-getting-started";
-import { naverHyperclovaXCueTutorial } from "./naver-hyperclova-x-cue-getting-started";
 import { sakanaAiTutorial } from "./sakana-ai-getting-started";
 import { casetextCocounselTutorial } from "./casetext-cocounsel-getting-started";
 import { clioManageTutorial } from "./clio-manage-getting-started";
@@ -190,7 +188,6 @@ import { metaAiTutorial } from "./meta-ai-getting-started";
 import { gammaTutorial } from "./gamma-getting-started";
 import { capcutTutorial } from "./capcut-getting-started";
 import { perplexityCometTutorial } from "./perplexity-comet-getting-started";
-import { poeTutorial } from "./poe-getting-started";
 import { qwenTutorial } from "./qwen-getting-started";
 import { kimiTutorial } from "./kimi-getting-started";
 import { quillbotTutorial } from "./quillbot-getting-started";
@@ -333,7 +330,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [ai21LabsJambaTutorial.platformSlug]: ai21LabsJambaTutorial,
   [alephAlphaLuminousTutorial.platformSlug]: alephAlphaLuminousTutorial,
   [cohereTutorial.platformSlug]: cohereTutorial,
-  [naverHyperclovaXCueTutorial.platformSlug]: naverHyperclovaXCueTutorial,
   [sakanaAiTutorial.platformSlug]: sakanaAiTutorial,
   [casetextCocounselTutorial.platformSlug]: casetextCocounselTutorial,
   [clioManageTutorial.platformSlug]: clioManageTutorial,
@@ -388,7 +384,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [gammaTutorial.platformSlug]: gammaTutorial,
   [capcutTutorial.platformSlug]: capcutTutorial,
   [perplexityCometTutorial.platformSlug]: perplexityCometTutorial,
-  [poeTutorial.platformSlug]: poeTutorial,
   [qwenTutorial.platformSlug]: qwenTutorial,
   [kimiTutorial.platformSlug]: kimiTutorial,
   [quillbotTutorial.platformSlug]: quillbotTutorial,
@@ -396,7 +391,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [comfyuiTutorial.platformSlug]: comfyuiTutorial,
   [firefliesAiTutorial.platformSlug]: firefliesAiTutorial,
   [manusTutorial.platformSlug]: manusTutorial,
-  [gensparkTutorial.platformSlug]: gensparkTutorial,
   [stabilityAiTutorial.platformSlug]: stabilityAiTutorial,
   // PR 6 batch, 2026-10-24
   [fathomTutorial.platformSlug]: fathomTutorial,

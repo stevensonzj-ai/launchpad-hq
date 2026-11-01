@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { AUDIT_27_FACT_UPDATES, CHECKED_AT as AUDIT_27_CHECKED_AT } from "./audit-27";
 import { AUDIT_27_PATCHES } from "./audit-27";
+import { AUDIT_28_FACT_UPDATES, AUDIT_28_PATCHES, CHECKED_AT as AUDIT_28_CHECKED_AT } from "./audit-28";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -109,7 +110,8 @@ describe("catalog audit 20: stale facts batch 4", () => {
     assert.deepEqual(tracker.map(([n]) => n), Array.from({ length: 19 }, (_, i) => 74 + i));
     assert.deepEqual(tracker.map(([, slug]) => slug).sort(), [...AUDIT_20_BATCH].sort());
     for (const slug of AUDIT_20_BATCH) {
-      assert.ok(snap(slug), `${slug}: row exists`);
+      // Audit 28 (2026-11-01) hid naver-hyperclova-x-cue, so its row left the snapshot rows.
+      if (slug !== "naver-hyperclova-x-cue") assert.ok(snap(slug), `${slug}: row exists`);
       // clio-manage and scholarcy had none when this audit ran; audit 21's browser check added theirs.
       assert.ok(getToolFacts(slug), `${slug}: fact file registered`);
       if (AUDIT_20_NO_FACT_FILE[slug]) assert.match(JSON.stringify(getToolFacts(slug)?.changelog), /browser check/i, slug);
@@ -178,7 +180,8 @@ describe("catalog audit 20: no conflict with earlier audits", () => {
         for (const key of Object.keys(data)) assert.equal(owned.has(key), false, `${p.slug}.${key} would be reverted`);
       }
       // Audit 27 (2026-10-30) later rewrote some of these fields from a fresh vendor read; only the rest must match.
-      const later = Object.keys(AUDIT_27_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {});
+      // Audit 28 (2026-11-01) re-dated some of the same fields.
+      const later = [...Object.keys(AUDIT_27_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {}), ...Object.keys(AUDIT_28_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {})];
       const left = Object.fromEntries(Object.entries(audit20PatchData(after, p)).filter(([k]) => !later.includes(k)));
       assert.deepEqual(left, {}, `${p.slug}: snapshot already has audit 20 applied`);
     }
@@ -221,6 +224,8 @@ describe("catalog audit 20: content rules", () => {
         if (!fact || typeof fact !== "object" || !("sourceUrl" in fact)) continue;
         // Catalog audit 27 (2026-10-30) re-read these price facts.
         if (AUDIT_27_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_27_CHECKED_AT) continue;
+        // Catalog audit 28 (2026-11-01) re-read these facts.
+        if (AUDIT_28_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_28_CHECKED_AT) continue;
         if (slug !== "google-antigravity" || key !== "officialUrl") assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

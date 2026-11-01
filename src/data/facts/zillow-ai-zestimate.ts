@@ -26,13 +26,18 @@ export default {
     ],
     note: "News post, October 21, 2026: \"a Zillow app in ChatGPT, a Zillow Rentals feature inside Google's Gemini and a Zillow connector in Anthropic's Claude\"; \"Zillow is putting AI technology into its built-in conversational experience, AI mode.\" Separately, Zillow Group's Zestimates API is available by request and is \"really for commercial use cases by businesses\"; its cost is not stated (https://www.zillowgroup.com/developers/api/zestimate/zestimates-api/).",
     sourceUrl: "https://www.zillow.com/news/when-people-ask-ai-about-housing-chatgpt-gemini-and-claude-all-connect-to-zillow/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-01",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-01",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-01",
+      field: "features",
+      summary: "Re-read Zillow's October 21, 2026 news post (catalog audit 28): still no cost stated; the Claude connector launched October 19 and needs no Zillow account.",
+    },
     {
       date: "2026-10-29",
       field: "features",

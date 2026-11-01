@@ -229,10 +229,12 @@ describe("search_tools with the new Career & Job Search rows (catalog audit 9)",
     const rows = [...WITH_CAREER, ...SEARCH_WORD_ROWS];
     // A single-word search is never thresholded.
     const single = slugs(searchTools({ task: "search", limit: 10 }, rows, facts));
-    for (const slug of ["read-ai", "naver-hyperclova-x-cue"]) assert.ok(single.includes(slug), single.join(", "));
+    // naver-hyperclova-x-cue was the second hit until audit 28 (2026-11-01) hid it as discontinued.
+    assert.ok(single.includes("read-ai"), single.join(", "));
+    assert.equal(single.includes("naver-hyperclova-x-cue"), false, single.join(", "));
     // Only one word of "quantum search" matches anything: best effort, not empty.
     const weakOnly = slugs(searchTools({ task: "quantum search", limit: 10 }, rows, facts));
-    for (const slug of ["read-ai", "naver-hyperclova-x-cue"]) assert.ok(weakOnly.includes(slug), weakOnly.join(", "));
+    assert.ok(weakOnly.includes("read-ai"), weakOnly.join(", "));
   });
 
   it("a single word that is itself the named task still counts as a strong match", () => {

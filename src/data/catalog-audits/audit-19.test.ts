@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { AUDIT_27_FACT_UPDATES, CHECKED_AT as AUDIT_27_CHECKED_AT } from "./audit-27";
 import { AUDIT_27_PATCHES } from "./audit-27";
+import { AUDIT_28_FACT_UPDATES, AUDIT_28_PATCHES, CHECKED_AT as AUDIT_28_CHECKED_AT } from "./audit-28";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -148,7 +149,8 @@ describe("catalog audit 19: no conflict with earlier audits", () => {
         for (const key of Object.keys(data)) assert.equal(owned.has(key), false, `${p.slug}.${key} would be reverted`);
       }
       // Audit 27 (2026-10-30) later rewrote some of these fields from a fresh vendor read; only the rest must match.
-      const later = Object.keys(AUDIT_27_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {});
+      // Audit 28 (2026-11-01) re-dated some of the same fields.
+      const later = [...Object.keys(AUDIT_27_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {}), ...Object.keys(AUDIT_28_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {})];
       const left = Object.fromEntries(Object.entries(audit19PatchData(after, p)).filter(([k]) => !later.includes(k)));
       assert.deepEqual(left, {}, `${p.slug}: snapshot already has audit 19 applied`);
     }
@@ -193,6 +195,8 @@ describe("catalog audit 19: content rules", () => {
         if (AUDIT_22_FACT_KEYS.has(key) && fact.checkedAt === AUDIT_22_CHECKED_AT) continue;
         // Catalog audit 27 (2026-10-30) re-read these price facts.
         if (AUDIT_27_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_27_CHECKED_AT) continue;
+        // Catalog audit 28 (2026-11-01) re-read these facts.
+        if (AUDIT_28_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_28_CHECKED_AT) continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

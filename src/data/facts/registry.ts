@@ -21,6 +21,7 @@ import firefliesAiFacts from "./fireflies-ai";
 import freepikAiFacts from "./freepik-ai";
 import gammaFacts from "./gamma";
 import gensparkFacts from "./genspark";
+import poeFacts from "./poe";
 import granolaFacts from "./granola";
 import grokFacts from "./grok";
 import grokBotFacts from "./grok-bot";
@@ -256,6 +257,7 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [freepikAiFacts.slug]: freepikAiFacts,
   [gammaFacts.slug]: gammaFacts,
   [gensparkFacts.slug]: gensparkFacts,
+  [poeFacts.slug]: poeFacts,
   [granolaFacts.slug]: granolaFacts,
   [grokFacts.slug]: grokFacts,
   [grokBotFacts.slug]: grokBotFacts,

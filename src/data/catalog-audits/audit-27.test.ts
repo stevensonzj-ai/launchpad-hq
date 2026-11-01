@@ -6,6 +6,7 @@ import { getToolFacts } from "@/data/facts";
 import { AUDIT_27_FACT_UPDATES, AUDIT_27_NO_CHANGE, AUDIT_27_PATCHES, audit27UpdateData, planAudit27 } from "@/data/catalog-audits/audit-27";
 import { catalogRedirects, HIDDEN_PAGE_REDIRECTS, PLATFORM_REDIRECTS } from "@/lib/catalog-redirects";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
+import { AUDIT_28_HIDDEN, AUDIT_28_PATCHES } from "@/data/catalog-audits/audit-28";
 
 type Row = Record<string, string | null> & { slug: string };
 const rows = (JSON.parse(readFileSync(join(process.cwd(), "src/lib/mcp/catalog-snapshot.json"), "utf8")) as { rows: Row[] }).rows;
@@ -40,10 +41,17 @@ describe("catalog audit 27: rows audit 25 left catalog_only", () => {
         assert.equal(row, undefined, "sora-2 moved to hidden_rows");
         continue;
       }
+      if (p.slug in AUDIT_28_HIDDEN) {
+        // Audit 28 (2026-11-01) hid poe, so its row moved to hidden_rows.
+        assert.equal(row, undefined, `${p.slug} moved to hidden_rows`);
+        continue;
+      }
       assert.ok(row, p.slug);
       const plans = planAudit27(row as never, p);
-      assert.ok(plans.every((x) => x.action === "already"), p.slug);
-      assert.deepEqual(audit27UpdateData(plans), {});
+      // Audit 28 later rewrote some of these fields from a fresh vendor read; only the rest must match.
+      const later = Object.keys(AUDIT_28_PATCHES.find((x) => x.slug === p.slug)?.fields ?? {});
+      assert.ok(plans.filter((x) => !later.includes(x.field)).every((x) => x.action === "already"), p.slug);
+      assert.deepEqual(audit27UpdateData(plans.filter((x) => !later.includes(x.field))), {});
     }
     assert.deepEqual(audit27UpdateData(planAudit27({ currentPricing: "x" }, { slug: "s", outcome: "corrected", source: "https://e.example", fields: { currentPricing: { from: "x", to: "y" } } })), { currentPricing: "y" });
     assert.deepEqual(audit27UpdateData(planAudit27({ currentPricing: "z" }, { slug: "s", outcome: "corrected", source: "https://e.example", fields: { currentPricing: { from: "x", to: "y" } } })), {});
