@@ -31,6 +31,7 @@ export const AUDIT_28_PATCHES: Audit28Patch[] = [
     source: "https://blog.duolingo.com/duolingo-max/",
     fields: {
       freeTierFeatures: { from: "Duolingo free: full lessons with ads; limited hearts; basic features", to: "Duolingo free: full lessons with ads and a limited energy meter; Super removes ads and gives unlimited energy (as of 2026-11-01)" },
+      usageLimits: { from: "Free: ads and heart limits; Max includes all Super benefits plus Roleplay and Video Call with Lily; prices are not stated (as of 2026-10-29)", to: "Free: ads and a limited energy meter; Max includes all Super benefits plus Roleplay and Video Call with Lily; prices are not stated (as of 2026-11-01)" },
     },
   },
   {
