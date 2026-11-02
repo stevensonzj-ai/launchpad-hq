@@ -81,6 +81,7 @@ export default {
       "K3.1 Pro has a 1-million-token context window.",
       "Kimi says the full K3.1 Pro model weights will be released by 2026-11-04 (stated plan, as of 2026-10-26).",
       "Kimi Enterprise: K3.1 Pro is off by default at launch; administrators can enable it.",
+      "Kimi 3D Make is Kimi's AI 3D creation product, powered by K3.1 Pro (kimi.com, as of 2026-11-02). It uses the same unified membership quota as the rest of Kimi. Modes: 3D Web, 3D Modeling and 3D Printing; 3D Printing produces print-ready files and does not control printers.",
     ],
     sourceUrl: KIMI_K3_1_BLOG_URL,
     checkedAt: "2026-10-26",
@@ -90,6 +91,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-02",
+      field: "features",
+      summary: "Catalog audit 31: added Kimi 3D Make (3D web pages, 3D models and print-ready files), powered by K3.1 Pro and using the unified membership quota.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

@@ -43,11 +43,28 @@ export default {
     ...antigravityCliFacts.plans,
     note: `${antigravityCliFacts.plans.note} The same plans cover the desktop app and the CLI.`,
   },
+  features: {
+    value: [
+      "Since 2026-10-29 a Plugin Marketplace in Antigravity lists Google-built and third-party plugins, for the Antigravity App and the Antigravity CLI alike (Google, as of 2026-11-02).",
+    ],
+    note: "Google's launch announcement, 2026-10-29. Plugins install with `agy plugin install`.",
+    sourceUrl: "https://antigravity.google/",
+    checkedAt: "2026-11-02",
+    gatheredBy: "claude",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-11-02",
+    status: "verified",
+  },
   privacy: {
     ...antigravityCliFacts.privacy,
     note: `${antigravityCliFacts.privacy.note} The IDE guide says the IDE and the CLI fall under the same terms.`,
   },
   changelog: [
+    {
+      date: "2026-11-02",
+      field: "features",
+      summary: "Catalog audit 31: Google launched a Plugin Marketplace on 2026-10-29 for the Antigravity App and CLI.",
+    },
     {
       date: "2026-10-20",
       field: "officialUrl",

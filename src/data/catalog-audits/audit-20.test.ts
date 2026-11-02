@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { AUDIT_27_FACT_UPDATES, CHECKED_AT as AUDIT_27_CHECKED_AT } from "./audit-27";
 import { AUDIT_27_PATCHES } from "./audit-27";
 import { AUDIT_28_FACT_UPDATES, AUDIT_28_PATCHES, CHECKED_AT as AUDIT_28_CHECKED_AT } from "./audit-28";
+import { AUDIT_31_FACT_UPDATES, CHECKED_AT as AUDIT_31_CHECKED_AT } from "./audit-31";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -226,6 +227,8 @@ describe("catalog audit 20: content rules", () => {
         if (AUDIT_27_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_27_CHECKED_AT) continue;
         // Catalog audit 28 (2026-11-01) re-read these facts.
         if (AUDIT_28_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_28_CHECKED_AT) continue;
+        // Catalog audit 31 (2026-11-02) added the Plugin Marketplace note.
+        if (AUDIT_31_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_31_CHECKED_AT) continue;
         if (slug !== "google-antigravity" || key !== "officialUrl") assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);
