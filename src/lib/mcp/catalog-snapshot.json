@@ -1,12 +1,13 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden)",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
   "canva-magic-studio",
   "clarifai",
   "genspark",
+  "hedra",
   "kakao-brain-karlo",
   "naver-hyperclova-x-cue",
   "relay-app",
@@ -4632,54 +4633,6 @@
     "Slack AI (workplace)",
     "HubSpot AI (HR comms)"
    ],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
-  },
-  {
-   "slug": "hedra",
-   "name": "Hedra",
-   "company": "Hedra",
-   "website": "https://www.hedra.com",
-   "description": "Avatar and talking-head video. Official pricing (hedra.com/pricing, as of 2026-10-13): Basic $20/mo (2,000 credits); Ultra $100/mo (18,000); Teams $75/mo (14,400); Enterprise custom. Page title states a free plan with no credit card; free-plan limits are unverified. You upload faces and voices — confirm consent and likeness rights for anyone depicted.",
-   "primaryUse": "Talking-head and avatar video from face and voice uploads",
-   "primaryUseCases": "Avatar and talking-head clips; check likeness and recording consent before uploading others",
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "Basic $20/mo (2,000 credits); Ultra $100/mo; Teams $75/mo; Enterprise custom; free-plan limits unverified",
-   "freeTierFeatures": "Free plan advertised, no credit card (page title); limits unverified as of 2026-10-13",
-   "usageLimits": null,
-   "apiAvailable": false,
-   "directAlternatives": [],
-   "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-14",
-   "category": {
-    "slug": "video-creation-editing",
-    "name": "Video Creation & Editing"
-   },
-   "idealUserTypes": [
-    "creators",
-    "marketers"
-   ],
-   "contentTypes": [
-    "images",
-    "audio",
-    "video"
-   ],
-   "outputFormats": [
-    "video"
-   ],
-   "privacyLevel": "MEDIUM",
-   "timeToProductivity": null,
-   "learningCurve": null,
-   "offlineCapable": false,
-   "languageSupport": null,
-   "keyIntegrations": null,
-   "upgradeTriggers": null,
-   "complementaryTools": [],
    "hasMobileApp": false,
    "iosAppUrl": null,
    "androidAppUrl": null

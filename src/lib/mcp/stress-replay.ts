@@ -77,7 +77,7 @@ export const RULES: Record<string, (r: CallResult) => Verdict> = {
   A05: (r) => pass(count(top(r), ["ideogram", "canva-ai-magic-studio", "recraft"]) === 3, "Ideogram, Canva, Recraft"),
   A06: (r) => pass(tagged(top(r), "image-generation").length >= 4, "4+ image generators"),
   A07: (r) => pass(count(top(r), ["captions", "capcut"]) >= 1 && !has(top(r, 3), "midjourney"), "a mobile video editor; Midjourney not top 3"),
-  A08: (r) => pass(count(top(r), ["heygen", "synthesia", "hedra"]) >= 2, "avatar video tools"),
+  A08: (r) => pass(count(top(r), ["heygen", "synthesia", "captions"]) >= 2, "avatar video tools"),
   A09: (r) => pass(direct(top(r)).length >= 3 && has(top(r), "descript"), "3+ podcast tools incl. Descript (catalog lacks Riverside/Podcastle)"),
   A10: (r) => pass(tagged(top(r), "transcription").length >= 4, "4+ transcription tools"),
   A11: (r) => pass(tagged(top(r, 10), "meeting-notes").length >= 8, "8+ meeting-notes tools in 10"),

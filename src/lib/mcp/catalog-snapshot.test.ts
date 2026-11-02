@@ -12,6 +12,7 @@ import { AUDIT_20_BATCH } from "@/data/catalog-audits/audit-20";
 import { AUDIT_22_RENAMES } from "@/data/catalog-audits/audit-22";
 import { AUDIT_27_PATCHES } from "@/data/catalog-audits/audit-27";
 import { AUDIT_28_HIDDEN, AUDIT_28_PATCHES } from "@/data/catalog-audits/audit-28";
+import { AUDIT_30_HIDDEN } from "@/data/catalog-audits/audit-30";
 import { AUDIT_29_PATCHES } from "@/data/catalog-audits/audit-29";
 import { AUDIT_25_FACT_SLUGS } from "@/data/catalog-audits/audit-25";
 import { hiddenPlatformSlugs } from "@/lib/catalog-visibility";
@@ -80,8 +81,8 @@ describe("catalog snapshot", () => {
     // 221 until guide PR D hid clarifai (2026-10-29); 220 until audit 26 hid tabnine (2026-10-30);
     // 219 until audit 27 hid sora-2 (2026-10-30); 218 until audit 28 hid
     // naver-hyperclova-x-cue, genspark and poe (215, 2026-11-01); 216 after
-    // audit 29 unhid poe the same day.
-    assert.equal(snap.rows.length, 216);
+    // audit 29 unhid poe the same day; 215 after audit 30 hid hedra.
+    assert.equal(snap.rows.length, 215);
   });
 
   it("reproduces every tool the live stress test returned", () => {
@@ -96,8 +97,8 @@ describe("catalog snapshot", () => {
       const moved = AUDIT_15_MOVES.get(o.slug as string) ?? AUDIT_22_MOVES.get(o.slug as string);
       const row = bySlug.get(moved ?? (o.slug as string));
       if (!row) {
-        // Audit 28 (2026-11-01) hid genspark; it left the snapshot rows.
-        if (o.slug as string in AUDIT_28_HIDDEN) continue;
+        // Audit 28 (2026-11-01) hid genspark and audit 30 hid hedra; they left the snapshot rows.
+        if (o.slug as string in AUDIT_28_HIDDEN || o.slug as string in AUDIT_30_HIDDEN) continue;
         diffs.push(`${o.slug}: missing`);
         continue;
       }

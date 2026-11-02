@@ -1,8 +1,16 @@
 import type { ToolFacts } from "./types";
 
+/**
+ * Hedra: hidden, catalog audit 30 (2026-11-01), at the vendor's request to
+ * remove its name and trademark from the site. Lifecycle stays "active":
+ * nothing says the product is gone. Reversible: delete `visibility`, remove
+ * "hedra" from HIDDEN_PAGE_REDIRECTS and restore the guide from
+ * src/data/tutorials/retired/. No database change hides it.
+ */
 export default {
   slug: "hedra",
   lifecycle: "active",
+  visibility: "hidden",
   freeTier: {
     value: {
       available: true,
