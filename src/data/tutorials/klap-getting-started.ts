@@ -7,7 +7,7 @@ export const klapTutorial: PlatformTutorialData = {
   tagline:
     "Paste a long video and get back short vertical clips for TikTok, Reels and Shorts, captioned and reframed, priced by the clip.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-29",
+  lastReviewedAt: "2026-11-02",
   changelogUrl: "https://klap.app/blog",
   accessTier: "FREE",
 
@@ -17,15 +17,15 @@ export const klapTutorial: PlatformTutorialData = {
   whatItIs: [
     "Klap turns one long video — a podcast, a webinar, a YouTube episode — into many short vertical clips. It picks the moments, reframes a wide shot into a tall one so the speaker stays in frame, adds captions, and gives each clip a score for how likely it is to go viral.",
     "It is built for talking footage. Klap's own FAQ says it \"works best for videos that incorporate speaking\" because its algorithm \"relies heavily on speech detection,\" and gives a rule of thumb of about five clips for every minute of video. Music videos, gameplay without commentary or silent footage give it much less to go on.",
-    "Each clip opens in an editor. On its comparison page Klap says every plan includes the full editor: precise cuts, importing your own media and B-roll, and frame-accurate caption editing, plus a brand kit for fonts, colours and logos. Its reframing (Klap calls it AI Reframe) picks a layout per scene, such as split screen or a screen-recording layout, and Klap says it uses active speaker detection to keep whoever is talking in frame. Klap says exports go up to 4K.",
-    "It is made by a small company in France, ZIGG SAS, which trades as Klap. Besides the website it offers an **API** (a way for programs to talk to each other without a person clicking), ready-made Zapier, Make and n8n integrations, and an **MCP server** (a connector that lets AI assistants such as ChatGPT, Claude or Cursor use it), so the same clipping can be run from a chat window or an automation. Support is through Discord or live chat.",
+    "Each clip opens in an editor. On its comparison page Klap says every plan includes the full editor: precise cuts, importing your own media and B-roll, and frame-accurate caption editing, plus a brand kit for fonts, colours and logos. Its reframing (Klap calls it AI Reframe) picks a layout per scene, such as split screen or a screen-recording layout, and Klap says it uses active speaker detection to keep whoever is talking in frame. Klap's homepage says you export clips \"in high-resolution\", and its OpusClip comparison page lists 4K as the maximum export quality.",
+    "It is made by a small company in France, ZIGG SAS, which trades as Klap. Besides the website it offers an **API** (a way for programs to talk to each other without a person clicking), ready-made Zapier, Make and n8n integrations, and an **MCP server** (a connector that lets AI assistants such as ChatGPT, Claude or Cursor use it), so the same clipping can be run from a chat window or an automation. Klap's pricing page doesn't say which plans include the API. Support is through Discord or live chat.",
   ],
 
   beforeYouStart: [
-    "You can try it on one video with no credit card, and Klap's own FAQ is plain about the catch: you can preview and edit those clips, but \"downloading and posting clips needs a paid plan.\" Treat the free video as a test of whether its picks suit your footage, not as a free way to publish.",
-    "Paid plans are sold by the number of clips you can make each month, not by minutes of video uploaded: Basic is {{price:klap:Basic}}, Pro {{price:klap:Pro}} and Pro+ (sold for teams) {{price:klap:Pro+}}, each with a bigger monthly clip allowance than the one before. Paying yearly costs roughly half as much a month, and the pricing page shows the yearly figure first, so check which one you are looking at. Klap's FAQ says paid exports carry no Klap branding, and every plan includes AI clipping, unlimited connected social accounts and analytics. The clip allowances are on its Launchpad page.",
+    "You can try it on one video with no credit card, and Klap's own FAQ is plain about the catch: you can preview and edit those clips, but \"downloading and posting clips needs a paid plan.\" Paid exports carry no Klap branding. Treat the free video as a test of whether its picks suit your footage, not as a free way to publish.",
+    "Paid plans are capped by the number of clips you make each month, not by minutes of video uploaded; the pricing page's headline is \"Only pay for clips you generate.\" Month to month, Basic is {{price:klap:Basic}}, Pro {{price:klap:Pro}} and Pro+ (sold for teams) {{price:klap:Pro+}}, and each step up gives a bigger monthly clip allowance. Billing yearly is marked \"Save 50%\", and the pricing page shows that yearly figure first, so check which one you are looking at. The exact clip allowances and yearly prices are on its Launchpad page. Every plan includes AI clipping, unlimited connected social accounts and analytics.",
     "If you pay and change your mind, the terms of service allow a refund request before the end of your first month; on a yearly plan, a full refund is only available in that first month. You start the refund yourself from your billing page after cancelling.",
-    "Language support is stated two ways on Klap's own site: the homepage FAQ says the app edits and transcribes videos in 52 languages, while the API page says captions added through the API work in over 100. If your videos are not in English, check yours on the free video before paying.",
+    "Klap's homepage FAQ says it edits and transcribes videos in 52 languages. If your videos are not in English, check yours on the free video before paying.",
   ],
 
   security: [
@@ -94,9 +94,9 @@ export const klapTutorial: PlatformTutorialData = {
     {
       title: "Run it from an AI assistant, if you already use one",
       whatItDoes:
-        "Klap's MCP server page shows how to connect it to Claude Code, Cursor or ChatGPT by signing in with your Klap account, so you can ask the assistant to clip a video or cut a moment you describe.",
+        "Klap's MCP server page shows how to connect it to Claude Code, Cursor or ChatGPT: add the server at api.klap.app/mcp/agents and sign in with your Klap account. It gives the assistant 18 tools, so you can ask it to clip a video or cut a moment you describe.",
       whyHere:
-        "Klap's page says the connector needs no API key and \"uses your Klap plan,\" so clips you make from a chat count against the same monthly allowance as clips made on the website.",
+        "Klap's page says the connector needs no API key and \"uses your Klap plan\" and includes a free trial, so clips you make from a chat count against the same monthly allowance as clips made on the website.",
     },
   ],
 

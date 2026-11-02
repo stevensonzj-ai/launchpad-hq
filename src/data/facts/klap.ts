@@ -6,59 +6,63 @@ const KLAP_PRIVACY_URL = "https://klap.app/privacy-policy";
 const KLAP_API_URL = "https://klap.app/api";
 
 /**
- * Klap (new catalog row, catalog audit 13). Gathered 2026-10-29 from
- * klap.app only. The pricing page shows the yearly-billed monthly prices
- * ($14 / $39 / $94); the month-to-month prices are in the same page's
- * structured data ($29 / $79 / $189) and in the homepage FAQ, which states
- * both sets. The yearly totals in that structured data ($174 / $474 /
- * $1,134) work out to $14.50 / $39.50 / $94.50 a month, so the page rounds
- * down; the plan limits say so.
+ * Klap (new catalog row, catalog audit 13; rechecked in catalog audit 34 on
+ * 2026-11-02 against klap.app only). The pricing page shows the
+ * yearly-billed monthly prices ($14 / $39 / $94, "Save 50%"); the homepage
+ * FAQ states both those and the month-to-month prices ($29 / $79 / $189).
+ * Plans are capped by clips a month, not minutes.
  */
 export default {
   slug: "klap",
   lifecycle: "active",
   company: {
     value: "ZIGG SAS (doing business as Klap)",
-    note: "Site footer: \"ZIGG SAS doing business as Klap\". The privacy policy says ZIGG SAS is registered in France.",
+    note: "Site footer: \"ZIGG SAS doing business as Klap\". The privacy policy says Klap is operated by ZIGG SAS, \"a company registered in France, 65 rue Roger Francois, 94700 Maisons-Alfort, France.\" Support (homepage FAQ): \"contact us on Discord or by live chat.\"",
     sourceUrl: KLAP_PRIVACY_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-02",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude",
+    verifiedAt: "2026-11-02",
+    status: "verified",
   },
   freeTier: {
     value: {
       available: false,
       summary:
-        "No free plan for downloads: you can try Klap free on 1 video with no credit card and preview and edit the clips, but downloading and posting clips needs a paid plan.",
+        "No free plan for downloads: you can try Klap free on 1 video with no credit card and preview and edit the clips, but downloading and posting clips needs a paid plan. Paid exports carry no Klap branding.",
     },
-    note: "Homepage FAQ, as of 2026-10-29: \"You can try Klap free on 1 video with no credit card ... Downloading and posting clips needs a paid plan.\"",
+    note: "Homepage FAQ, as of 2026-11-02: \"You can try Klap free on 1 video with no credit card: create a free account and Klap turns that video into clips you can preview and edit. Downloading and posting clips needs a paid plan. Paid exports carry no Klap branding.\"",
     sourceUrl: KLAP_HOME_URL,
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-02",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude",
+    verifiedAt: "2026-11-02",
+    status: "verified",
   },
   plans: {
     value: [
-      { name: "Basic", price: "$29", period: "month", limits: "Billed monthly; $14/month billed yearly ($174 a year); 100 clips a month" },
-      { name: "Pro", price: "$79", period: "month", limits: "Billed monthly; $39/month billed yearly ($474 a year); 300 clips a month" },
-      { name: "Pro+", price: "$189", period: "month", limits: "Billed monthly; $94/month billed yearly ($1,134 a year); 1,000 clips a month" },
+      { name: "Basic", price: "$29", period: "month", limits: "100 clips a month; billed monthly, or $14/month billed yearly" },
+      { name: "Pro", price: "$79", period: "month", limits: "300 clips a month; billed monthly, or $39/month billed yearly" },
+      { name: "Pro+", price: "$189", period: "month", limits: "1,000 clips a month; billed monthly, or $94/month billed yearly" },
     ],
-    note: "USD, as of 2026-10-29. The pricing page displays the yearly-billed monthly prices; the monthly prices and yearly totals are from the same page's structured data and match the homepage FAQ. The yearly totals divide to $14.50, $39.50 and $94.50 a month. All plans include AI clipping, unlimited social accounts and analytics. Paid exports carry no Klap branding (homepage FAQ). Caps are clips a month; neither page states a minute, upload-length, file-size or export cap. Neither page states a customer discount. Research Analyst verify 2026-10-29: klap.app/pricing and the homepage FAQ (https://klap.app/).",
+    note: "USD, as of 2026-11-02. Pricing page: \"Only pay for clips you generate.\" With \"Yearly\" selected (\"Save 50%\") it shows Basic 100 clips /mo $14 /mo, Pro 300 clips /mo $39 /mo and Pro+ 1000 clips /mo $94 /mo, each \"Billed yearly\". The homepage FAQ gives the month-to-month prices: \"($29, $79 and $189 month to month)\". Plans are capped by clips a month, not minutes of video; neither page states a minute, upload-length or file-size cap. All plans include AI clipping, unlimited social accounts and analytics. Paid exports carry no Klap branding (homepage FAQ). Neither page states a customer discount.",
     sourceUrl: KLAP_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-02",
     gatheredBy: "claude",
-    verifiedBy: "research-analyst",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "claude",
+    verifiedAt: "2026-11-02",
     status: "verified",
   },
   platforms: {
     value: ["Web", "API", "MCP server"],
-    note: "klap.app links an API (klap.app/api) and an MCP server (klap.app/mcp) for Claude Code, Cursor, ChatGPT and other agents, plus Zapier, Make and n8n integrations. The API page says the API key comes from your Klap account dashboard; the pricing page does not list the API as a plan feature, so which plans include API access is not stated.",
-    sourceUrl: KLAP_HOME_URL,
-    checkedAt: "2026-10-29",
+    note: "klap.app links an API (klap.app/api) and an MCP server (klap.app/mcp) for Claude Code, Cursor, ChatGPT and other agents, plus Zapier, Make and n8n integrations. The API page says the API key comes from your Klap account dashboard; the pricing page does not list the API as a plan feature, so which plans include API access is not stated. The MCP page gives the server URL https://api.klap.app/mcp/agents and \"18 tools your agent can call\", and says: \"No API key: sign in with your Klap account · Uses your Klap plan · Free trial included\".",
+    sourceUrl: "https://klap.app/mcp",
+    checkedAt: "2026-11-02",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "claude",
+    verifiedAt: "2026-11-02",
+    status: "verified",
   },
   privacy: {
     value: {
@@ -75,18 +79,22 @@ export default {
   features: {
     value: [
       "The app edits and transcribes videos in 52 languages (homepage FAQ, https://klap.app/).",
-      "The API adds captions in over 100 languages (API page, https://klap.app/api); Klap does not reconcile this with the app figure.",
       "The API accepts MP4, MOV or WebM files, or a YouTube URL.",
     ],
-    note: "Each language figure applies only to the scope its page gives: 52 for editing and transcription in the app, over 100 for captions through the API. No maximum upload length or file size is stated on klap.app, /pricing or /api.",
+    note: "Language support is cited only from the homepage FAQ: \"Klap edits and transcribes videos in 52 languages\". The API page gives a different, larger figure for API captions, which we do not cite. No maximum upload length or file size is stated on klap.app, /pricing or /api.",
     sourceUrl: KLAP_API_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-02",
     gatheredBy: "research-analyst",
     verifiedBy: "research-analyst",
     verifiedAt: "2026-10-29",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-02",
+      field: "plans",
+      summary: "Catalog audit 34, rechecked on klap.app: yearly-billed prices are $14 / $39 / $94 a month (\"Save 50%\"), month-to-month $29 / $79 / $189; plans are capped at 100 / 300 / 1,000 clips a month, not minutes. Free try on 1 video, paid exports unbranded, 52 languages, MCP server details and company verified.",
+    },
     {
       date: "2026-10-29",
       field: "privacy",
@@ -95,7 +103,7 @@ export default {
     {
       date: "2026-10-29",
       field: "features",
-      summary: "Research Analyst verify: plans verified; language figures scoped (52 in the app, 100+ for API captions); no upload-length, file-size or API-on-every-plan claim.",
+      summary: "Research Analyst verify: plans verified; language figures scoped to the app's 52; no upload-length, file-size or API-on-every-plan claim.",
     },
     {
       date: "2026-10-29",
