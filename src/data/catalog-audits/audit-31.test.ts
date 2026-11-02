@@ -113,7 +113,9 @@ describe("catalog audit 31", () => {
   it("lists the reviewed no-change items and adds no Daily / Pipecat rows", () => {
     assert.deepEqual(AUDIT_31_NO_CHANGE.map((r) => r.slug), ["jules", "astra-for-law", "openai-private-intelligence", "runway-agent", "daily", "pipecat"]);
     for (const r of AUDIT_31_NO_CHANGE) assert.ok(r.reason.length > 10, r.slug);
-    for (const s of ["daily", "pipecat", "jules", "runway-agent"]) assert.equal(snapshot.rows.some((x) => x.slug === s), false, s);
+    // Audit 31 added no Pipecat row; audit 32 (2026-11-02) added one afterwards, so pipecat is
+    // no longer asserted absent here (audit-32.test.ts asserts it is present).
+    for (const s of ["daily", "jules", "runway-agent"]) assert.equal(snapshot.rows.some((x) => x.slug === s), false, s);
   });
 
   it("the runner defaults to dry-run, uses the prod guard and never deletes or creates", () => {

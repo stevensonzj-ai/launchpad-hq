@@ -1,7 +1,7 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make)",
- "db_rows": 225,
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools)",
+ "db_rows": 226,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
   "canva-magic-studio",
@@ -2357,7 +2357,7 @@
     "AssemblyAI",
     "Google Speech API"
    ],
-   "updatedAt": "2026-10-30",
+   "updatedAt": "2026-11-02",
    "category": {
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
@@ -2388,7 +2388,8 @@
     "ElevenLabs (TTS)",
     "Twilio (voice)",
     "any LLM (processing transcripts)",
-    "Pinecone (search)"
+    "Pinecone (search)",
+    "Pipecat"
    ],
    "hasMobileApp": false,
    "iosAppUrl": null,
@@ -8822,6 +8823,64 @@
    "hasMobileApp": false,
    "iosAppUrl": null,
    "androidAppUrl": null
+  },
+  {
+   "slug": "pipecat",
+   "name": "Pipecat",
+   "company": "Daily",
+   "website": "https://pipecat.ai",
+   "description": "An open-source Python framework for building voice and multimodal AI agents that you can talk to in real time. You pick the speech-to-text, language-model and text-to-speech services from more than 200 integrated providers, and Pipecat handles interruptions, turn detection and conversation context over WebRTC, SIP or phone (PSTN). It is free under the BSD 2-Clause license and runs wherever Python runs; Pipecat Cloud, run by Daily, is an optional paid host. Maintained by Daily: Deepgram announced on 2026-10-29 that it is acquiring Daily (announced, not completed, as of 2026-11-02) and says Pipecat will stay open source under an independent Pipecat Foundation. Your own provider accounts bill separately (as of 2026-11-02).",
+   "primaryUse": "Open-source Python framework for building real-time voice and multimodal AI agents",
+   "primaryUseCases": "Voice assistants and phone agents; real-time conversation with interruption handling; voice-and-video agents; multi-agent workflows with Pipecat Flows",
+   "costTier": "FREEMIUM",
+   "difficultyLevel": "INTERMEDIATE",
+   "platformType": [
+    "api",
+    "local"
+   ],
+   "currentPricing": "Free and open source (BSD 2-Clause). Optional Pipecat Cloud hosting (by Daily): agent-1x $0.01/min active ($0.0005/min reserved), agent-2x $0.02/min, agent-3x $0.03/min; WebRTC voice transport free for 1:1 sessions; telephony and recording extra; your LLM, STT and TTS providers bill separately (as of 2026-11-02)",
+   "freeTierFeatures": "Free and open source (BSD 2-Clause): build and run voice agents yourself at no charge; your speech, language and voice providers bill separately and Pipecat Cloud hosting is optional (as of 2026-11-02)",
+   "usageLimits": "Pipecat Cloud: unlimited concurrency; Krisp VIVA noise filtering free up to 10,000 active session minutes a month; provider accounts have their own limits (as of 2026-11-02)",
+   "apiAvailable": false,
+   "directAlternatives": [
+    "Vapi",
+    "Retell AI"
+   ],
+   "budgetAlternativeTo": [],
+   "idealUserTypes": [
+    "Python developers",
+    "teams building voice agents",
+    "developers prototyping phone and voice assistants"
+   ],
+   "contentTypes": [
+    "Audio (speech)",
+    "Text",
+    "Video"
+   ],
+   "outputFormats": [
+    "Real-time spoken replies",
+    "streaming audio and video sessions"
+   ],
+   "privacyLevel": "MEDIUM",
+   "timeToProductivity": null,
+   "learningCurve": "Moderate",
+   "offlineCapable": false,
+   "languageSupport": "Depends on the speech and language providers you connect",
+   "keyIntegrations": "200+ integrated speech, language and vision providers (the quickstart uses Deepgram, OpenAI and Cartesia); WebRTC, SIP and PSTN transports; client SDKs for JavaScript, React, React Native, iOS, Android and C++; Pipecat Flows",
+   "upgradeTriggers": "Having Daily host the agent on Pipecat Cloud (billed per active minute); phone calling over PSTN or SIP and recording; Pipecat Enterprise to run Pipecat Cloud in your own AWS, Azure or GCP account",
+   "complementaryTools": [
+    "Deepgram",
+    "OpenAI API",
+    "ElevenLabs"
+   ],
+   "hasMobileApp": false,
+   "iosAppUrl": null,
+   "androidAppUrl": null,
+   "updatedAt": "2026-11-02",
+   "category": {
+    "slug": "ai-apis-developer-services",
+    "name": "AI APIs & Developer Services"
+   }
   },
   {
    "slug": "play-ht",

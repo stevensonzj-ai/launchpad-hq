@@ -11,10 +11,10 @@ export default {
     },
     note: "Usage limits reset on a rolling five-hour window, per the pricing FAQ (as of 2026-10-26).",
     sourceUrl: "https://claude.com/pricing",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-02",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-02",
     status: "verified",
   },
   plans: {

@@ -200,6 +200,8 @@ import { apolloIoTutorial } from "./apollo-io-getting-started";
 import { magicschoolTutorial } from "./magicschool-getting-started";
 // Catalog audit 16, 2026-10-29
 import { hermesAgentTutorial } from "./hermes-agent-getting-started";
+// Catalog audit 32, 2026-11-02
+import { pipecatTutorial } from "./pipecat-getting-started";
 import { antigravityCliTutorial } from "./antigravity-cli-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
@@ -400,6 +402,8 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [readAiTutorial.platformSlug]: readAiTutorial,
   // Catalog audit 16, 2026-10-29
   [hermesAgentTutorial.platformSlug]: hermesAgentTutorial,
+  // Catalog audit 32, 2026-11-02
+  [pipecatTutorial.platformSlug]: pipecatTutorial,
   [antigravityCliTutorial.platformSlug]: antigravityCliTutorial,
 };
 
