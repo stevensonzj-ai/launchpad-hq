@@ -28,9 +28,15 @@ export default {
       },
       {
         name: "Max",
-        price: "From $100",
+        price: "$100",
         period: "month",
-        limits: "Choose 5x or 20x more usage than Pro; billed monthly",
+        limits: "5x Pro usage every 5 hours and every week; includes $100/month in API credits; billed monthly",
+      },
+      {
+        name: "Ultra",
+        price: "$200",
+        period: "month",
+        limits: "10x Pro usage every week, no 5-hour limit for verified accounts; includes $200/month in API credits; billed monthly. Formerly Max 20x; existing Max 20x subscribers moved over with no price change",
       },
       {
         name: "Team Standard seat",
@@ -51,12 +57,12 @@ export default {
         limits: "Billed annually, 20 seat minimum, plus usage at API rates",
       },
     ],
-    note: "USD, as of 2026-10-26. Prices exclude applicable tax, per the page.",
+    note: "USD, as of 2026-11-02. Prices exclude applicable tax, per the page. Max and Ultra per https://support.claude.com/en/articles/11049741-what-is-the-max-plan (as of 2026-11-02).",
     sourceUrl: "https://claude.com/pricing",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-02",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-02",
     status: "verified",
   },
   features: {
@@ -71,6 +77,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-02",
+      field: "plans",
+      summary:
+        "Catalog audit 31: Max is $100/month (5x Pro usage); the former Max 20x is now Ultra at $200/month (10x Pro weekly usage, no 5-hour limit for verified accounts), per claude.com/pricing and Anthropic's Max plan help article.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

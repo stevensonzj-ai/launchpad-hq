@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make)",
  "db_rows": 225,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -1631,9 +1631,9 @@
     "desktop",
     "api"
    ],
-   "currentPricing": "Free $0; Pro $20/mo billed monthly or $17/mo billed annually ($200 up front); Max from $100/mo (5x or 20x Pro usage); Team 2-150 seats; Enterprise $20/seat plus usage at API rates (official, as of 2026-10-25)",
+   "currentPricing": "Free $0; Pro $20/mo billed monthly or $17/mo billed annually ($200 up front); Max $100/mo (5x Pro usage); Ultra $200/mo (formerly Max 20x: 10x Pro weekly usage, no 5-hour limit for verified accounts); Team 2-150 seats; Enterprise $20/seat plus usage at API rates (official, as of 2026-11-02)",
    "freeTierFeatures": "Free $0: chat on web, desktop and mobile, web search, file and code tools, memory, connectors, Artifacts, up to 5 Projects (official, as of 2026-10-25)",
-   "usageLimits": "Free: usage limits reset on a rolling 5-hour window; Pro: at least 5x Free usage, includes Claude Code; Max: 5x or 20x Pro (official, as of 2026-10-25)",
+   "usageLimits": "Free: usage limits reset on a rolling 5-hour window; Pro: at least 5x Free usage, includes Claude Code; Max: 5x Pro every 5 hours and every week; Ultra: 10x Pro weekly, no 5-hour limit for verified accounts (official, as of 2026-11-02)",
    "apiAvailable": true,
    "directAlternatives": [
     "ChatGPT",
@@ -1643,7 +1643,7 @@
     "Mistral Vibe"
    ],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-25",
+   "updatedAt": "2026-11-02",
    "category": {
     "slug": "text-conversational-ai",
     "name": "Text & Conversational AI"
@@ -1706,7 +1706,7 @@
    ],
    "currentPricing": "Claude Code is included on paid Claude plans: Pro $17/mo billed annually ($200 up front) or $20 billed monthly; Max $100/mo; Ultra $200/mo; Team standard seat $20/mo annual ($25 monthly), premium seat $100/mo annual ($125 monthly); not included on Free (as of 2026-10-30)",
    "freeTierFeatures": "No Claude Code on the Free plan; available from Pro ($17/mo annual, $20 monthly) (as of 2026-10-30)",
-   "usageLimits": "Max plan: Opus usage subject to rate limits; API: pay-per-token; rate limits apply",
+   "usageLimits": "Max and Ultra plans: usage limits apply (Max 5x Pro; Ultra 10x Pro weekly, no 5-hour limit for verified accounts); API: pay-per-token; rate limits apply (as of 2026-11-02)",
    "apiAvailable": true,
    "directAlternatives": [
     "Cursor",
@@ -1720,7 +1720,7 @@
     "OpenAI Codex CLI (free)",
     "Antigravity CLI (free for individuals)"
    ],
-   "updatedAt": "2026-10-30",
+   "updatedAt": "2026-11-02",
    "category": {
     "slug": "ai-coding-development",
     "name": "AI Coding & Development"
@@ -5460,7 +5460,7 @@
    "name": "Kimi",
    "company": "Moonshot AI",
    "website": "https://www.kimi.ai",
-   "description": "Moonshot AI's Kimi assistant (K3.1 Pro is the newest model as of 2026-10-26). China-based company. Membership (official pricing page, as of 2026-10-26): Plus $15/mo, Pro $31/mo, Max $79/mo, Ultra $159/mo, billed annually; the Free plan includes limited K3.1 Pro use. Pay-as-you-go API at platform.kimi.ai. Review data-handling before sending sensitive inputs.",
+   "description": "Moonshot AI's Kimi assistant (K3.1 Pro is the newest model as of 2026-10-26). Kimi 3D Make (3D web pages, 3D models and print-ready files) runs on K3.1 Pro and uses the same membership quota. China-based company. Membership (official pricing page, as of 2026-10-26): Plus $15/mo, Pro $31/mo, Max $79/mo, Ultra $159/mo, billed annually; the Free plan includes limited K3.1 Pro use. Pay-as-you-go API at platform.kimi.ai. Review data-handling before sending sensitive inputs.",
    "primaryUse": "Long-document and agentic chat",
    "primaryUseCases": "Long-context reading and agent tasks for users comfortable with a China-based service",
    "costTier": "FREEMIUM",
@@ -5474,7 +5474,7 @@
    "apiAvailable": true,
    "directAlternatives": [],
    "budgetAlternativeTo": [],
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-11-02",
    "category": {
     "slug": "international-regional-ai",
     "name": "International & Regional AI"
@@ -8711,7 +8711,7 @@
    "platformType": [
     "web"
    ],
-   "currentPricing": "Free $0 (0 monthly credits, credit packs only); Starter $10/mo ($8 annual, 900 credits/mo); Creator $35/mo ($28 annual, 3,150 credits/mo); Fancy $95-$880/mo ($76-$704 annual, 8,550+ credits) (as of 2026-10-30)",
+   "currentPricing": "Free $0 (0 monthly credits, credit packs only); Starter $10/mo ($8 annual, 900 credits/mo); Creator $35/mo ($28 annual, 3,150 credits/mo); Fancy $95-$880/mo ($76-$704 annual, 8,550+ credits); API: Pika H3 Flex (open weights) from $0.02/sec at 480p (launch price $0.01/sec for Pika API Club members through Nov 5, 2026) (as of 2026-11-02)",
    "freeTierFeatures": "Free $0: 0 monthly credits (credit packs only: $25 for 1,500 credits); 2 parallel video and 2 parallel image/audio generations; no commercial license (as of 2026-10-30)",
    "usageLimits": "Free: 150 credits/mo (about 30 videos); Standard: 700/mo; Pro: 2000/mo; Unlimited option",
    "apiAvailable": false,
@@ -8723,7 +8723,7 @@
    "budgetAlternativeTo": [
     "Runway"
    ],
-   "updatedAt": "2026-10-30",
+   "updatedAt": "2026-11-02",
    "category": {
     "slug": "video-creation-editing",
     "name": "Video Creation & Editing"

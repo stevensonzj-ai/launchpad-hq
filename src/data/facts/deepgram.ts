@@ -22,6 +22,18 @@ export default {
     verifiedAt: "2026-10-30",
     status: "verified",
   },
+  features: {
+    value: [
+      "Deepgram announced on 2026-10-29 that it is acquiring Daily, the company behind Pipecat, an open-source framework for building voice agents. The deal is announced, not completed (as of 2026-11-02). Deepgram says Pipecat will remain fully open source and free under its existing BSD license, with an independent Pipecat Foundation.",
+    ],
+    note: "From Deepgram's announcement on its blog. It does not change Deepgram's prices.",
+    sourceUrl: "https://deepgram.com/blog/daily-pipecat-deepgram",
+    checkedAt: "2026-11-02",
+    gatheredBy: "claude",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-11-02",
+    status: "verified",
+  },
   plans: {
     value: [
       { name: "Pay as you go", price: "Usage-based", period: "", limits: "$200 free credit; Nova-3 Monolingual $0.0077/min streaming, $0.0043/min pre-recorded; Aura-2 TTS $0.030 per 1k characters; Voice Agent Standard $0.075/min" },
@@ -37,6 +49,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-02",
+      field: "features",
+      summary:
+        "Deepgram announced on 2026-10-29 that it is acquiring Daily, the company behind the open-source Pipecat voice-agent framework (announced, not completed, as of 2026-11-02). Deepgram says Pipecat stays open source and free under its BSD license, with an independent Pipecat Foundation. No change to Deepgram's prices. Source: https://deepgram.com/blog/daily-pipecat-deepgram",
+    },
     {
       date: "2026-10-30",
       field: "plans",

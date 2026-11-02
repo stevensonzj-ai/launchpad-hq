@@ -141,6 +141,7 @@ export default {
       "Terminal-first surface for Antigravity agents; the command is `agy`. It shares the agent harness of the Antigravity 2.0 desktop app.",
       "Subagents, slash commands, plugins, MCP servers, skills and hooks; Gemini CLI extensions carry over as Antigravity plugins.",
       "Replaced Gemini CLI for free individual use and for Google AI Pro and Ultra on 2026-06-18 (announced 2026-05-19); Google says there is no 1:1 feature parity.",
+      "Since 2026-10-29 a Plugin Marketplace lists Google-built and third-party plugins for the Antigravity App and the Antigravity CLI; install one with `agy plugin install` (Google, as of 2026-11-02).",
       "No bring-your-own-key support.",
       "Not open source: no public source repository or licence; it is distributed as a binary under the Antigravity terms.",
     ],
@@ -165,6 +166,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-02",
+      field: "features",
+      summary: "Catalog audit 31: Google launched a Plugin Marketplace on 2026-10-29 for the Antigravity App and CLI (`agy plugin install`).",
+    },
     {
       date: "2026-10-29",
       field: "plans",

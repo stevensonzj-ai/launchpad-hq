@@ -24,7 +24,20 @@ export default {
     verifiedAt: "2026-10-30",
     status: "verified",
   },
+  apiPricing: {
+    value:
+      "Pika H3 Flex (open-weight video model) API, USD per second of video: 480p $0.02 ($0.01 launch price for Pika API Club members from 2026-10-29 through 2026-11-05), 768p $0.04, 1080p $0.07, 2K $0.08, 4K $0.16 (as of 2026-11-02).",
+    note: "Per-second API prices from pika.art, read 2026-11-02. The $0.01 launch rate is time-limited and for Pika API Club members only.",
+    sourceUrl: "https://pika.art/",
+    sourceKind: "plans-page",
+    checkedAt: "2026-11-02",
+    gatheredBy: "claude",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-11-02",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-11-02", field: "apiPricing", summary: "Catalog audit 31: added Pika H3 Flex (open weights) API per-second prices, 480p $0.02 up to 4K $0.16, with the Pika API Club launch rate through 2026-11-05." },
     { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://pika.art/pricing and price facts added with source and date." },
   ],
 } satisfies ToolFacts;
