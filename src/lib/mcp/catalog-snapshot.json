@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools) + audit 33 (Pipecat description)",
  "db_rows": 226,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -8829,7 +8829,7 @@
    "name": "Pipecat",
    "company": "Daily",
    "website": "https://pipecat.ai",
-   "description": "An open-source Python framework for building voice and multimodal AI agents that you can talk to in real time. You pick the speech-to-text, language-model and text-to-speech services from more than 200 integrated providers, and Pipecat handles interruptions, turn detection and conversation context over WebRTC, SIP or phone (PSTN). It is free under the BSD 2-Clause license and runs wherever Python runs; Pipecat Cloud, run by Daily, is an optional paid host. Maintained by Daily: Deepgram announced on 2026-10-29 that it is acquiring Daily (announced, not completed, as of 2026-11-02) and says Pipecat will stay open source under an independent Pipecat Foundation. Your own provider accounts bill separately (as of 2026-11-02).",
+   "description": "An open-source Python framework for building voice and multimodal AI agents that you can talk to in real time. It is not a voice generator itself: you plug in the transcription, language-model and voice-synthesis services you choose from more than 200 integrated providers, and Pipecat handles interruptions, turn detection and conversation context over WebRTC, SIP or phone (PSTN). It is free under the BSD 2-Clause license and runs wherever Python runs; Pipecat Cloud, run by Daily, is an optional paid host. Maintained by Daily: Deepgram announced on 2026-10-29 that it is acquiring Daily (announced, not completed, as of 2026-11-02) and says Pipecat will stay open source under an independent Pipecat Foundation. Your own provider accounts bill separately (as of 2026-11-02).",
    "primaryUse": "Open-source Python framework for building real-time voice and multimodal AI agents",
    "primaryUseCases": "Voice assistants and phone agents; real-time conversation with interruption handling; voice-and-video agents; multi-agent workflows with Pipecat Flows",
    "costTier": "FREEMIUM",
