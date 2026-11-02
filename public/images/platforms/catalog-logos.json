@@ -957,6 +957,14 @@
     "source": "https://www.pinecone.io/favicon.ico?favicon.16aah0kd0o17q.ico"
   },
   {
+    "slug": "pipecat",
+    "name": "Pipecat",
+    "file": "pipecat.png",
+    "website": "https://pipecat.ai",
+    "source": "https://github.com/pipecat-ai",
+    "note": "Avatar of the pipecat-ai GitHub organization (the project's own org), fetched 2026-11-02; black mark on white, unmodified"
+  },
+  {
     "slug": "poe",
     "name": "Poe",
     "file": "poe.ico",

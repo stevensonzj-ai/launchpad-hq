@@ -60,7 +60,8 @@ const AUDIT_15_MOVES = new Map(AUDIT_15_RENAMES.map((r) => [r.from, r.to]));
 const AUDIT_22_MOVES = new Map(AUDIT_22_RENAMES.filter((r) => r.from !== r.to).map((r) => [r.from, r.to]));
 const AUDIT_22_RENAMED = new Set(AUDIT_22_RENAMES.map((r) => r.to));
 const AUDIT_22_FIELDS = new Set(["slug", "name"]);
-const AUDIT_15_PATCHED = AUDIT_15_PATCHES.map((p) => p.slug);
+const AUDIT_32_AS_OF_MOVED = new Set(["claude"]);
+const AUDIT_15_PATCHED =AUDIT_15_PATCHES.map((p) => p.slug);
 const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "source_url", "stale", "freshness_note"]);
 /**
  * Stale facts batch 1 (catalog audit 17, 2026-10-29): 28 rows gained fact
@@ -81,8 +82,9 @@ describe("catalog snapshot", () => {
     // 221 until guide PR D hid clarifai (2026-10-29); 220 until audit 26 hid tabnine (2026-10-30);
     // 219 until audit 27 hid sora-2 (2026-10-30); 218 until audit 28 hid
     // naver-hyperclova-x-cue, genspark and poe (215, 2026-11-01); 216 after
-    // audit 29 unhid poe the same day; 215 after audit 30 hid hedra.
-    assert.equal(snap.rows.length, 215);
+    // audit 29 unhid poe the same day; 215 after audit 30 hid hedra; 216 after
+    // audit 32 added pipecat (2026-11-02).
+    assert.equal(snap.rows.length, 216);
   });
 
   it("reproduces every tool the live stress test returned", () => {
@@ -105,6 +107,9 @@ describe("catalog snapshot", () => {
       const ref = toPlatformRef(row, getToolFacts(row.slug)) as unknown as Record<string, unknown>;
       for (const key of Object.keys(o)) {
         if (changedByP13.has(row.slug) && P13_FIELDS.has(key)) continue;
+        // Audit 32 (2026-11-02): claude's free-tier fact was re-dated to the audit 31 pricing check, so its
+        // as_of moved from 2026-10-26 to 2026-11-02. Only that one field, only for claude.
+        if (AUDIT_32_AS_OF_MOVED.has(row.slug) && key === "as_of") continue;
         if (moved && AUDIT_15_FIELDS.has(key)) continue;
         if (AUDIT_22_RENAMED.has(row.slug) && AUDIT_22_FIELDS.has(key)) continue;
         if (JSON.stringify(ref[key]) !== JSON.stringify(o[key])) diffs.push(`${o.slug}.${key}: ${JSON.stringify(ref[key])} != ${JSON.stringify(o[key])}`);

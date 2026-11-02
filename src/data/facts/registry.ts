@@ -110,6 +110,8 @@ import clarifaiFacts from "./clarifai";
 import sciteFacts from "./scite";
 // Catalog audit 16, 2026-10-29: Hermes Agent (new row).
 import hermesAgentFacts from "./hermes-agent";
+// Catalog audit 32, 2026-11-02: Pipecat (new row, next to Deepgram).
+import pipecatFacts from "./pipecat";
 // Stale facts batch 1, 2026-10-29 (catalog audit 17).
 import ai21LabsJambaFacts from "./ai21-labs-jamba";
 import connectedPapersFacts from "./connected-papers";
@@ -347,6 +349,8 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   [sciteFacts.slug]: sciteFacts,
   // Catalog audit 16, 2026-10-29: Hermes Agent (new row, provisional pricing).
   [hermesAgentFacts.slug]: hermesAgentFacts,
+  // Catalog audit 32, 2026-11-02: Pipecat (new row).
+  [pipecatFacts.slug]: pipecatFacts,
   // Stale facts batch 1, 2026-10-29 (catalog audit 17).
   [ai21LabsJambaFacts.slug]: ai21LabsJambaFacts,
   [connectedPapersFacts.slug]: connectedPapersFacts,
