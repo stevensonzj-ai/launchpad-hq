@@ -19,7 +19,6 @@ import { klingAiTutorial } from "./kling-ai-getting-started";
 import { kreaTutorial } from "./krea-getting-started";
 import { freepikAiTutorial } from "./freepik-ai-getting-started";
 import { higgsfieldTutorial } from "./higgsfield-getting-started";
-import { hedraTutorial } from "./hedra-getting-started";
 import { captionsTutorial } from "./captions-getting-started";
 import { veedTutorial } from "./veed-getting-started";
 import { napkinAiTutorial } from "./napkin-ai-getting-started";
@@ -213,7 +212,6 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [kreaTutorial.platformSlug]: kreaTutorial,
   [freepikAiTutorial.platformSlug]: freepikAiTutorial,
   [higgsfieldTutorial.platformSlug]: higgsfieldTutorial,
-  [hedraTutorial.platformSlug]: hedraTutorial,
   [captionsTutorial.platformSlug]: captionsTutorial,
   [veedTutorial.platformSlug]: veedTutorial,
   [napkinAiTutorial.platformSlug]: napkinAiTutorial,

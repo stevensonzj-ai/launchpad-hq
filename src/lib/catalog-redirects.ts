@@ -80,6 +80,10 @@ export const HIDDEN_PAGE_REDIRECTS: Readonly<Record<string, string>> = {
   // (poe was hidden here by audit 28 and unhidden 2026-11-01.)
   "naver-hyperclova-x-cue": "/platform/perplexity-ai",
   genspark: "/platform/manus",
+  // Audit 30 (2026-11-01): hedra is hidden at the vendor's request. The 301 goes
+  // to its category page (there is no avatar category). The guide moved to
+  // src/data/tutorials/retired/ so /platform/hedra/guide does not chain.
+  hedra: "/discover?category=video-creation-editing",
 };
 
 export type CatalogRedirect = {

@@ -1,4 +1,11 @@
-import type { PlatformTutorialData } from "./types";
+import type { PlatformTutorialData } from "../types";
+
+/**
+ * RETIRED 2026-11-01 (catalog audit 30), kept for the record: the platform page is hidden at the
+ * vendor's request. Not registered in ../index.ts: the whole /platform/hedra
+ * tree 301s (HIDDEN_PAGE_REDIRECTS in src/lib/catalog-redirects.ts). The text
+ * below is unchanged from its last review; re-verify everything before restoring it.
+ */
 
 export const hedraTutorial: PlatformTutorialData = {
   slug: "hedra-getting-started",
