@@ -434,3 +434,19 @@ model FirstTouchAttribution {
   @@index([createdAt])
   @@map("first_touch_attributions")
 }
+
+// Aggregate log of unmet WEBSITE searches (2 or fewer results). One row per
+// normalized query; counters only. No IP, user, device, session or timestamp
+// finer than a date. Written by raw SQL upsert (src/lib/search/unmet-record.ts).
+model UnmetSearch {
+  normalizedQuery String   @id
+  searchCount     Int      @default(0)
+  noClickCount    Int      @default(0)
+  lastResultCount Int
+  minResultCount  Int
+  firstSeen       DateTime @db.Date
+  lastSeen        DateTime @db.Date
+
+  @@index([lastSeen])
+  @@map("unmet_searches")
+}

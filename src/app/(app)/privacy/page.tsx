@@ -91,6 +91,15 @@ export default function PrivacyPage() {
             information or referrer is stored with it.
           </li>
           <li>
+            <strong>Searches with few results.</strong> When a search on our website returns
+            no or few results, we log the search in aggregate: the normalized search text,
+            how many times it was searched, result counts, whether a result was clicked, and
+            the first and last dates seen. We store no IP address, account, device or session
+            identifiers with it, skip it when your browser sends Do Not Track or Global
+            Privacy Control or you are in the EU, EEA, UK or Switzerland, and delete entries
+            12 months after they were last seen.
+          </li>
+          <li>
             <strong>Email (Resend).</strong> When someone posts a discussion, reply, or
             prompt, we can send a moderation notice to admins. The post content is included
             in that admin email. There is no marketing email or newsletter sign-up in the
@@ -154,7 +163,7 @@ export default function PrivacyPage() {
         <h2>Do Not Track</h2>
         <p>
           We honor Do Not Track and Global Privacy Control. When your browser sends either
-          signal, we capture no first-touch campaign data. We do not use ad networks or
+          signal, we capture no first-touch campaign data and log no search. We do not use ad networks or
           tracking cookies of our own.
         </p>
       </section>
@@ -177,7 +186,9 @@ export default function PrivacyPage() {
           user record is deleted (cascade). Prompts, discussions, and replies are kept,
           with the author field set to null (anonymized). Quiz answers in the browser last
           only for the tab session. First-touch campaign data is kept 12 months, in your
-          browser and, if you create an account, in our database, then deleted.
+          browser and, if you create an account, in our database, then deleted. Aggregate
+          search-log entries (searches with few results) are deleted 12 months after they
+          were last seen.
         </p>
       </section>
 

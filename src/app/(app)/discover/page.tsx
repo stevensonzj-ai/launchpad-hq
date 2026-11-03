@@ -13,6 +13,7 @@ import Image from "next/image";
 import { MatchingBanner } from "@/components/brand/matching-banner";
 import { getToolFacts } from "@/data/facts";
 import { DiscoverFilterBar } from "./discover-filter-bar";
+import { UnmetSearchBeacon } from "@/components/search/unmet-search-beacon";
 import {
   buildDiscoverQuery,
   normalizeSort,
@@ -311,7 +312,7 @@ export default async function DiscoverPage({
 
       {/* Grid */}
       {sort === "alpha" ? (
-        <div className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
+        <div data-unmet-results className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
           {orderedGroupKeys.flatMap((letter) => [
             <h2
               key={`header-${letter}`}
@@ -342,7 +343,7 @@ export default async function DiscoverPage({
           ])}
         </div>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
+        <div data-unmet-results className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
           {platforms.map((p) => (
             <PlatformCard
               key={p.id}
@@ -372,6 +373,9 @@ export default async function DiscoverPage({
             Clear filters
           </Link>
         </p>
+      )}
+      {query && !params.category && !params.cost && !params.difficulty && !params.mobile && (
+        <UnmetSearchBeacon query={query} resultCount={platforms.length} />
       )}
       <MatchingBanner />
       <p className="mt-5 text-center text-sm text-gray-400">Want to combine your tools? <Link href="/workflows" className="inline-flex min-h-11 items-center text-orange-300 hover:underline">Explore workflow templates →</Link></p>
