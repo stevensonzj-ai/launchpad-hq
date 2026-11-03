@@ -4,7 +4,7 @@
  *   - schema for everything in public; data only for catalog tables; user tables get fake rows
  *   - refuses any target in the production project (static list + Neon API proof)
  * Inputs (env only): PREVIEW_RO_URL, TEST_PROJECT_URL, TEST_PROJECT_ID, NEON_API_KEY, RESET_TARGET=true|false.
- * Meant to run in the "neon-test-copy" GitHub environment (see .github/workflows/test-project-copy.yml).
+ * Meant to run in the "guarded-sql-test" GitHub environment (see .github/workflows/test-project-copy.yml).
  * Never prints a URL, password or key.
  */
 import { execFileSync } from "node:child_process";

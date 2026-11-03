@@ -50,7 +50,8 @@ jobs:
         env:
           PREVIEW_RO_URL: ${{ secrets.PREVIEW_RO_URL }}
           TEST_PROJECT_URL: ${{ secrets.GUARDED_DATABASE_URL }}
-          TEST_PROJECT_ID: ${{ vars.TEST_PROJECT_ID }}
+          # Accept either a variable or a secret (Zach saved it as a secret on Nov 3).
+          TEST_PROJECT_ID: ${{ vars.TEST_PROJECT_ID || secrets.TEST_PROJECT_ID }}
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
           RESET_TARGET: ${{ inputs.reset_target }}
         run: npx --no-install tsx scripts/test-project/copy-preview-to-test.ts
