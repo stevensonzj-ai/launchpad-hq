@@ -26,7 +26,7 @@ import * as path from "path";
 import "dotenv/config";
 
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../src/lib/catalog/guarded-prisma";
 
 if (!process.argv.includes("--force-legacy-import")) {
   console.error(

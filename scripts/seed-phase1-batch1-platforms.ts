@@ -20,7 +20,9 @@
  */
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient, type CostTier, type Difficulty, type PrivacyLevel } from "@prisma/client";
+import type { CostTier, Difficulty, PrivacyLevel } from "@prisma/client";
+import { PrismaClient } from "../src/lib/catalog/guarded-prisma";
+import { isRemovedPlatformSlug } from "../src/lib/catalog/removed-slugs";
 
 const PRODUCTION_ENDPOINT_ID = "ep-odd-mud-ajdk8f99";
 
@@ -588,6 +590,10 @@ async function main() {
     let updated = 0;
 
     for (const row of ROWS) {
+      if (isRemovedPlatformSlug(row.slug)) {
+        console.log(`- skip ${row.slug}: removed-platform denylist`);
+        continue;
+      }
       const categoryId = categoryIdBySlug.get(row.categorySlug)!;
       const existing = await prisma.platform.findUnique({
         where: { slug: row.slug },

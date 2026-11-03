@@ -54,7 +54,7 @@
  */
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../src/lib/catalog/guarded-prisma";
 import {
   CONFIRM_PROD_HOST_ENV,
   CONFIRM_PRODUCTION_FLAG,
