@@ -52,7 +52,8 @@ jobs:
       IN_SNAPSHOT: ${{ inputs.snapshot_id }}
       IN_DRY_RUN: ${{ inputs.dry_run }}
       IN_MAX_AGE: ${{ inputs.max_snapshot_age_hours }}
-      GUARDED_SQL_LOG: ${{ runner.temp }}/guarded-sql-runs.jsonl
+      # Fixed workspace-relative path (logs/ is gitignored). The runner, summary and upload steps all use it.
+      GUARDED_SQL_LOG: logs/guarded-sql-runs.jsonl
     steps:
       - name: Validate inputs
         shell: bash
@@ -119,6 +120,6 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: guarded-sql-run-log-${{ github.run_id }}
-          path: ${{ runner.temp }}/guarded-sql-runs.jsonl
+          path: logs/guarded-sql-runs.jsonl
           retention-days: 3
           if-no-files-found: ignore
