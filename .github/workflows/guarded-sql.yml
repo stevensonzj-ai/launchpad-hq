@@ -1,0 +1,124 @@
+# Guarded SQL runner, GitHub Actions route. See docs/guarded-sql.md.
+# Manual trigger only. Every run waits for Zach's approval in a protected
+# environment; secrets live ONLY in those environments (never repo-level).
+name: Guarded SQL
+
+on:
+  workflow_dispatch:
+    inputs:
+      sql_file:
+        description: "SQL file under scripts/sql/ (e.g. scripts/sql/guarded-sql-selftest.sql)"
+        required: true
+        type: string
+      target:
+        description: "Environment to run against"
+        required: true
+        type: choice
+        options: [test, production]
+        default: test
+      snapshot_id:
+        description: "Neon snapshot branch id (br-...). Required for production; verified on test if given."
+        required: false
+        type: string
+        default: ""
+      dry_run:
+        description: "Dry run (no DB connection)"
+        required: true
+        type: boolean
+        default: true
+      max_snapshot_age_hours:
+        description: "Max snapshot age in hours (default 24)"
+        required: false
+        type: string
+        default: "24"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guarded-sql
+  cancel-in-progress: false
+
+jobs:
+  run:
+    name: guarded-sql (${{ inputs.target }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # target is a choice input, so this resolves only to one of the two names.
+    environment: ${{ inputs.target == 'production' && 'guarded-sql-production' || 'guarded-sql-test' }}
+    env:
+      IN_SQL_FILE: ${{ inputs.sql_file }}
+      IN_TARGET: ${{ inputs.target }}
+      IN_SNAPSHOT: ${{ inputs.snapshot_id }}
+      IN_DRY_RUN: ${{ inputs.dry_run }}
+      IN_MAX_AGE: ${{ inputs.max_snapshot_age_hours }}
+      GUARDED_SQL_LOG: ${{ runner.temp }}/guarded-sql-runs.jsonl
+    steps:
+      - name: Validate inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$IN_SQL_FILE" in
+            *..*) echo "::error::sql_file must not contain '..'"; exit 2 ;;
+          esac
+          if ! [[ "$IN_SQL_FILE" =~ ^scripts/sql/[A-Za-z0-9._-]+\.sql$ ]]; then
+            echo "::error::sql_file must match scripts/sql/<name>.sql"; exit 2
+          fi
+          if [[ -n "$IN_SNAPSHOT" && ! "$IN_SNAPSHOT" =~ ^br-[a-z0-9-]+$ ]]; then
+            echo "::error::snapshot_id must look like br-..."; exit 2
+          fi
+          if ! [[ "$IN_MAX_AGE" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+            echo "::error::max_snapshot_age_hours must be a positive number"; exit 2
+          fi
+          if [[ "$IN_TARGET" == "production" && -z "$IN_SNAPSHOT" ]]; then
+            echo "::error::production requires snapshot_id"; exit 2
+          fi
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Install
+        run: npm ci
+
+      - name: Check file exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$IN_SQL_FILE" || { echo "::error::sql_file not found in this commit"; exit 2; }
+
+      - name: Run guarded SQL
+        shell: bash
+        env:
+          GUARDED_DATABASE_URL: ${{ secrets.GUARDED_DATABASE_URL }}
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          CONFIRM_PROD_HOST: ${{ secrets.CONFIRM_PROD_HOST || vars.CONFIRM_PROD_HOST }}
+        run: |
+          set -euo pipefail
+          args=("$IN_SQL_FILE" --max-snapshot-age-hours "$IN_MAX_AGE")
+          if [[ "$IN_DRY_RUN" == "true" ]]; then args+=(--dry-run); fi
+          if [[ -n "$IN_SNAPSHOT" ]]; then args+=(--snapshot "$IN_SNAPSHOT"); fi
+          if [[ "$IN_TARGET" == "production" ]]; then args+=(--confirm-production); fi
+          npx --no-install tsx scripts/run-guarded-sql.ts "${args[@]}"
+
+      - name: Job summary and log secret check
+        if: always()
+        id: summary
+        shell: bash
+        env:
+          GUARDED_DATABASE_URL: ${{ secrets.GUARDED_DATABASE_URL }}
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+        run: node scripts/guarded-sql-gha-summary.mjs
+
+      - name: Upload redacted run log
+        if: always() && steps.summary.outputs.log_clean == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: guarded-sql-run-log-${{ github.run_id }}
+          path: ${{ runner.temp }}/guarded-sql-runs.jsonl
+          retention-days: 3
+          if-no-files-found: ignore
