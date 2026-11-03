@@ -2,9 +2,10 @@
 
 import { UserButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Search, Menu, X, Rocket } from "lucide-react"
 import { PRO_PLAN_ENABLED } from "@/lib/site"
+import { getUnmetTracker } from "@/lib/search/unmet-client"
 
 export function Header() {
   const { isSignedIn, isLoaded } = useAuth()
@@ -14,16 +15,23 @@ export function Header() {
     { id: string; slug: string; name: string; company: string | null }[]
   >([])
 
+  const latestQuery = useRef("")
+
   async function handleSearch(q: string) {
     setSearchQuery(q)
+    latestQuery.current = q
     if (q.length < 2) {
       setSearchResults([])
+      getUnmetTracker().abandon()
       return
     }
     try {
       const res = await fetch("/api/search?q=" + encodeURIComponent(q))
       const data = await res.json()
-      setSearchResults(data.results || [])
+      const results = data.results || []
+      setSearchResults(results)
+      // Aggregate unmet-search log: only the answer to the latest keystroke counts.
+      if (latestQuery.current === q) getUnmetTracker().observe(q, results.length)
     } catch {
       setSearchResults([])
     }
@@ -55,6 +63,7 @@ export function Header() {
                   href={"/platform/" + r.slug}
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800"
                   onClick={() => {
+                    getUnmetTracker().click(latestQuery.current)
                     setSearchQuery("")
                     setSearchResults([])
                   }}

@@ -1,0 +1,1 @@
+SELECT "normalizedQuery" AS query, "searchCount" AS searches, "noClickCount" AS no_click_searches, "lastResultCount" AS last_result_count, "firstSeen" AS first_seen, "lastSeen" AS last_seen FROM "unmet_searches" WHERE "lastSeen" >= current_date - 7 ORDER BY "searchCount" DESC LIMIT 50
