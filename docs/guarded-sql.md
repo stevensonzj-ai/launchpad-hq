@@ -66,7 +66,7 @@ The runner reads the process environment only. It never loads `.env*` files (no 
    - the snapshot ID is not the production branch itself.
 
    A missing `NEON_API_KEY`, network error, non-200 response or malformed body is a refusal.
-6. Non-production hosts need no snapshot.
+6. Non-production hosts need no snapshot (a given --snapshot is still verified).
 
 ## Dry run
 
@@ -74,7 +74,7 @@ The runner reads the process environment only. It never loads `.env*` files (no 
 
 ## Execution
 
-`BEGIN` → `SET LOCAL statement_timeout = 60000` → each statement in order → `COMMIT`. Any error triggers `ROLLBACK` and a non-zero exit. The connection uses TLS (certificate verified) and `application_name = guarded-sql`. The timeout is set with `SET LOCAL` rather than a startup parameter so it also works through Neon's pooler.
+`BEGIN` â†’ `SET LOCAL statement_timeout = 60000` â†’ each statement in order â†’ `COMMIT`. Any error triggers `ROLLBACK` and a non-zero exit. The connection uses TLS (certificate verified) and `application_name = guarded-sql`. The timeout is set with `SET LOCAL` rather than a startup parameter so it also works through Neon's pooler.
 
 SQL splitting handles semicolons inside single-quoted strings (including `E''`), double-quoted identifiers, `--` and nested `/* */` comments, and dollar-quoted bodies (`$$` and `$tag$`).
 
@@ -83,7 +83,7 @@ SQL splitting handles semicolons inside single-quoted strings (including `E''`),
 One JSON line is appended to the log and printed for every run once the file has been read, including refusals and failures:
 
 ```json
-{"timestamp":"2026-11-03T10:20:00-06:00","file":"change.sql","file_sha256":"…","endpoint_id":"ep-…","production":false,"snapshot_id":null,"statement_count":2,"dry_run":false,"success":true,"error":null,"duration_ms":412}
+{"timestamp":"2026-11-03T10:20:00-06:00","file":"change.sql","file_sha256":"â€¦","endpoint_id":"ep-â€¦","production":false,"snapshot_id":null,"statement_count":2,"dry_run":false,"success":true,"error":null,"duration_ms":412}
 ```
 
 - `timestamp` is America/Chicago with a numeric offset (DST-aware).
@@ -100,10 +100,29 @@ One JSON line is appended to the log and printed for every run once the file has
 | 2 | Bad input: arguments, unreadable/empty/unparseable file, transaction control, missing or unparseable database URL |
 | 3 | Refused by the production guard or snapshot check |
 
-## Credential source options (undecided — Zach to choose)
+## Credential source options (undecided â€” Zach to choose)
 
 Listed without a recommendation. In every option the runner itself only reads `process.env`.
 
 1. **Zach sets the variables in his own PowerShell session.** `GUARDED_DATABASE_URL` and `NEON_API_KEY` via `$env:...`, then clears them after the run.
 2. **A dedicated env file that agents never read.** It lives outside the repo and is loaded by Zach's shell (for example a dot-sourced PowerShell file). The runner still never loads files.
 3. **A manually triggered GitHub Action** (`workflow_dispatch`) using a protected environment with required reviewers and secrets. This needs a workflow file that is **not included in this PR**.
+
+## GitHub Actions route (`.github/workflows/guarded-sql.yml`)
+
+For running from a phone: trigger **Guarded SQL** from the Actions tab (web or GitHub Mobile), then approve the pending deployment from the GitHub Mobile notification.
+
+- Trigger: `workflow_dispatch` only. Inputs: `sql_file` (must match `scripts/sql/<name>.sql`, no `..`), `target` (`test` | `production`), `snapshot_id` (required for production; verified on test if given), `dry_run` (default true), `max_snapshot_age_hours` (default 24).
+- Each target runs in its own protected environment: `guarded-sql-test` or `guarded-sql-production`. Both require Zach's review. Secrets exist only there: `GUARDED_DATABASE_URL`, `NEON_API_KEY`, and `CONFIRM_PROD_HOST` (production only; secret or environment variable). No repo-level secrets; no other workflow references these environments.
+- Hardening: `permissions: contents: read`, actions pinned by SHA, `persist-credentials: false`, one concurrency group, 15-minute timeout, inputs passed through `env` (never interpolated into `run:`), no `set -x`.
+- Production passes `--confirm-production --snapshot <id>`; every runner guard still applies.
+- The job summary shows only endpoint ID, file, SHA-256, statement count and result. The redacted JSONL run log is uploaded as a 3-day artifact only after a check confirms it contains neither the database URL/password nor the Neon API key.
+- `workflow_dispatch` only appears once the workflow file is on the default branch (`main`).
+
+### Snapshot check on non-production targets
+
+If `--snapshot` is given on a non-production target, the runner performs the same Neon API validation as on production (exists, direct child of production, not production itself, within the age limit) and refuses if it fails. This lets the snapshot check be exercised against a test branch.
+
+### Test-only files
+
+A file containing a line `-- guarded-sql: test-only` is refused on production (dry run included). `scripts/sql/guarded-sql-selftest.sql` is such a file: it creates `guarded_sql_selftest`, inserts one row and selects the count.

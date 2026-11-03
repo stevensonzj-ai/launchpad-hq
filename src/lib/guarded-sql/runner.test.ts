@@ -313,3 +313,100 @@ describe("input handling", () => {
     assert.match(h.err.join("\n"), /could not write run log/);
   });
 });
+
+describe("snapshot validation on non-production targets", () => {
+  const devEnv = { GUARDED_DATABASE_URL: DEV_URL, NEON_API_KEY: API_KEY };
+
+  it("verifies a given --snapshot via the Neon API and then runs", async () => {
+    const h = harness({ env: devEnv });
+    const r = await runGuardedSql(["change.sql", "--snapshot", "br-snap-111111"], h.deps);
+    assert.equal(r.exitCode, EXIT_OK);
+    assert.equal(h.fetchCalls, 1);
+    assert.equal(r.record?.production, false);
+    assert.equal(r.record?.snapshot_id, "br-snap-111111");
+    assert.ok(h.out.some((l) => /verified \(non-production target\)/.test(l)));
+    assert.ok(!allText(h).includes(API_KEY));
+    assert.ok(!allText(h).includes("secretpw"));
+  });
+
+  it("fails closed on a missing API key", async () => {
+    const h = harness({ env: { GUARDED_DATABASE_URL: DEV_URL } });
+    const r = await runGuardedSql(["change.sql", "--snapshot", "br-snap-111111"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+    assert.equal(h.factoryCalls, 0);
+  });
+
+  it("refuses a snapshot that is not a child of production", async () => {
+    const h = harness({
+      env: devEnv,
+      fetchFn: async () => ({
+        ok: true,
+        status: 200,
+        json: async () => ({ branch: { id: "br-snap-111111", parent_id: "br-other", created_at: "2026-11-03T12:00:00Z" } }),
+      }),
+    });
+    const r = await runGuardedSql(["change.sql", "--snapshot", "br-snap-111111"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+    assert.equal(h.factoryCalls, 0);
+  });
+
+  it("refuses the production branch id itself as a snapshot", async () => {
+    const h = harness({
+      env: devEnv,
+      fetchFn: async () => ({
+        ok: true,
+        status: 200,
+        json: async () => ({ branch: { id: FAKE_PROD_BRANCH, parent_id: null, created_at: "2026-11-03T12:00:00Z" } }),
+      }),
+    });
+    const r = await runGuardedSql(["change.sql", "--snapshot", FAKE_PROD_BRANCH], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+  });
+
+  it("applies the age limit and honors --max-snapshot-age-hours", async () => {
+    const old = harness({ env: devEnv });
+    // fixture snapshot is 4.3h old at NOW
+    const r1 = await runGuardedSql(["change.sql", "--snapshot", "br-snap-111111", "--max-snapshot-age-hours", "2"], old.deps);
+    assert.equal(r1.exitCode, EXIT_REFUSED);
+    const ok = harness({ env: devEnv });
+    const r2 = await runGuardedSql(["change.sql", "--snapshot", "br-snap-111111", "--max-snapshot-age-hours", "6"], ok.deps);
+    assert.equal(r2.exitCode, EXIT_OK);
+  });
+
+  it("dry run still validates and reports a refused snapshot", async () => {
+    const h = harness({ env: { GUARDED_DATABASE_URL: DEV_URL } });
+    const r = await runGuardedSql(["change.sql", "--snapshot", "br-x", "--dry-run"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+    assert.equal(h.factoryCalls, 0);
+  });
+});
+
+describe("test-only SQL files", () => {
+  const SELFTEST = "-- guarded-sql: test-only\ncreate table if not exists x (id int);\nselect 1;\n";
+
+  it("runs on a non-production target", async () => {
+    const h = harness({ sql: SELFTEST });
+    assert.equal((await runGuardedSql(["selftest.sql"], h.deps)).exitCode, EXIT_OK);
+  });
+
+  it("is refused on production even with every production confirmation", async () => {
+    const h = harness({ env: prodEnv(), sql: SELFTEST });
+    const r = await runGuardedSql(["selftest.sql", "--confirm-production", "--snapshot", "br-snap-111111"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+    assert.equal(h.factoryCalls, 0);
+    assert.match(r.record?.error ?? "", /test-only/);
+  });
+
+  it("is refused on production in a dry run too", async () => {
+    const h = harness({ env: prodEnv(), sql: SELFTEST });
+    const r = await runGuardedSql(["selftest.sql", "--confirm-production", "--snapshot", "br-snap-111111", "--dry-run"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+  });
+
+  it("the repo self-test file carries the marker", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { isTestOnlySql } = await import("./runner");
+    assert.ok(isTestOnlySql(readFileSync("scripts/sql/guarded-sql-selftest.sql", "utf8")));
+    assert.ok(!isTestOnlySql("select 1; -- guarded-sql: test-only is mentioned inline"));
+  });
+});

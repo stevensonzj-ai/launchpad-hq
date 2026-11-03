@@ -21,7 +21,7 @@ export interface GuardInput {
 
 /**
  * Production needs ALL of: --confirm-production, CONFIRM_PROD_HOST equal to the
- * endpoint, and a verified --snapshot. Non-production needs nothing.
+ * endpoint, and a verified --snapshot. Non-production needs nothing, but a --snapshot, if given, is verified the same way.
  */
 export async function evaluateGuard(input: GuardInput): Promise<GuardResult> {
   const { endpointId, productionEndpointId = PRODUCTION_ENDPOINT_ID } = input;
@@ -37,7 +37,21 @@ export async function evaluateGuard(input: GuardInput): Promise<GuardResult> {
   }
   const notes = host.note ? [host.note] : [];
   if (!host.production) {
-    if (input.snapshotId) notes.push("--snapshot ignored: target is not production.");
+    if (input.snapshotId) {
+      // Same Neon API validation as production, so the check is exercisable on a test branch.
+      // Fail closed: a given-but-invalid snapshot refuses even on non-production.
+      const snap = await verifySnapshot({
+        snapshotId: input.snapshotId,
+        apiKey: input.env.NEON_API_KEY,
+        projectId: input.neonProjectId,
+        productionBranchId: input.productionBranchId,
+        maxAgeHours: input.maxSnapshotAgeHours,
+        now: input.now,
+        fetchFn: input.fetchFn,
+      });
+      if (!snap.ok) return { ok: false, production: false, reason: snap.reason };
+      notes.push(`Snapshot ${input.snapshotId} verified (non-production target).`);
+    }
     return { ok: true, production: false, notes };
   }
 

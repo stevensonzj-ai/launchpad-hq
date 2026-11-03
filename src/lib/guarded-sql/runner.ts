@@ -11,6 +11,10 @@ import { DEFAULT_NEON_PROJECT_ID, PRODUCTION_BRANCH_ID, type FetchLike } from ".
 import { findTransactionControl, splitSql } from "./split";
 import { formatChicagoTimestamp } from "./time";
 
+/** A line `-- guarded-sql: test-only` anywhere in the file marks it as never-on-production. */
+export const TEST_ONLY_MARKER = /^\s*--\s*guarded-sql:\s*test-only\s*$/im;
+export const isTestOnlySql = (sql: string): boolean => TEST_ONLY_MARKER.test(sql);
+
 export const EXIT_OK = 0;
 export const EXIT_EXECUTION_FAILED = 1;
 export const EXIT_BAD_INPUT = 2;
@@ -151,7 +155,11 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
     neonProjectId: deps.env.NEON_PROJECT_ID || DEFAULT_NEON_PROJECT_ID,
   });
   state.production = guard.production;
-  if (guard.production) state.snapshotId = args.snapshot;
+  if (args.snapshot && (guard.production || guard.ok)) state.snapshotId = args.snapshot;
+  const testOnlyRefusal =
+    guard.production && isTestOnlySql(bytes.toString("utf8"))
+      ? "Refusing: this file is marked '-- guarded-sql: test-only' and the target is production."
+      : null;
 
   deps.out(`Target endpoint: ${endpointId} (${guard.production ? "PRODUCTION" : "non-production"})`);
   if (guard.ok) for (const n of guard.notes) deps.out(n);
@@ -160,9 +168,11 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
     deps.out(`Guard: ${guard.ok ? "PASS" : "REFUSED"}`);
     statements.forEach((s, i) => deps.out(`--- statement ${i + 1}/${statements.length} ---\n${s}`));
     deps.out("Dry run: nothing was executed and no database connection was made.");
-    return guard.ok ? finish(EXIT_OK, null) : finish(EXIT_REFUSED, guard.reason);
+    if (!guard.ok) return finish(EXIT_REFUSED, guard.reason);
+    return testOnlyRefusal ? finish(EXIT_REFUSED, testOnlyRefusal) : finish(EXIT_OK, null);
   }
   if (!guard.ok) return finish(EXIT_REFUSED, guard.reason);
+  if (testOnlyRefusal) return finish(EXIT_REFUSED, testOnlyRefusal);
 
   // --- execute -------------------------------------------------------------
   const client = deps.clientFactory({
