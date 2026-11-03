@@ -1,0 +1,57 @@
+# Copy preview -> the separate launchpad-test Neon project (Option C).
+# Manual trigger only. Runs in the protected "guarded-sql-test" environment (Zach approves each run);
+# secrets live ONLY in that environment. Reads preview as launchpad_ro; never touches the production project.
+name: Test project copy
+
+on:
+  workflow_dispatch:
+    inputs:
+      reset_target:
+        description: "Drop and replace the target's public schema if it already has tables"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guarded-sql
+  cancel-in-progress: false
+
+jobs:
+  copy:
+    name: copy preview -> launchpad-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: guarded-sql-test
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Install
+        run: npm ci
+
+      - name: Postgres 16 client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-16 >/dev/null
+          echo "/usr/lib/postgresql/16/bin" >> "$GITHUB_PATH"
+
+      - name: Copy
+        shell: bash
+        env:
+          PREVIEW_RO_URL: ${{ secrets.PREVIEW_RO_URL }}
+          TEST_PROJECT_URL: ${{ secrets.GUARDED_DATABASE_URL }}
+          # Accept either a variable or a secret (Zach saved it as a secret on Nov 3).
+          TEST_PROJECT_ID: ${{ vars.TEST_PROJECT_ID || secrets.TEST_PROJECT_ID }}
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          RESET_TARGET: ${{ inputs.reset_target }}
+        run: npx --no-install tsx scripts/test-project/copy-preview-to-test.ts
