@@ -27,14 +27,23 @@ export type TargetHostCheck =
   | { ok: false; reason: string };
 
 /** True for the production compute, its `-pooler` variant, and full FQDNs. */
-export function isProductionHost(host: string): boolean {
-  return host.toLowerCase().startsWith(PRODUCTION_ENDPOINT_ID);
+export function isProductionHost(
+  host: string,
+  productionEndpointId: string = PRODUCTION_ENDPOINT_ID,
+): boolean {
+  return host.toLowerCase().startsWith(productionEndpointId);
 }
 
+/**
+ * `productionEndpointId` defaults to PRODUCTION_ENDPOINT_ID; existing callers
+ * are unaffected. It is a parameter so the guarded SQL runner's tests can use
+ * a fake endpoint instead of the real production one.
+ */
 export function checkTargetHost(
   host: string | null,
   argv: readonly string[],
   env: Record<string, string | undefined>,
+  productionEndpointId: string = PRODUCTION_ENDPOINT_ID,
 ): TargetHostCheck {
   if (!host) {
     return { ok: false, reason: "Could not parse a hostname from DATABASE_URL. Aborting before connect." };
@@ -42,7 +51,7 @@ export function checkTargetHost(
 
   const flag = argv.includes(CONFIRM_PRODUCTION_FLAG);
 
-  if (!isProductionHost(host)) {
+  if (!isProductionHost(host, productionEndpointId)) {
     return flag
       ? {
           ok: true,
@@ -52,17 +61,17 @@ export function checkTargetHost(
       : { ok: true, production: false };
   }
 
-  const envMatches = env[CONFIRM_PROD_HOST_ENV] === PRODUCTION_ENDPOINT_ID;
+  const envMatches = env[CONFIRM_PROD_HOST_ENV] === productionEndpointId;
   if (flag && envMatches) return { ok: true, production: true };
 
   const missing: string[] = [];
   if (!flag) missing.push(`the ${CONFIRM_PRODUCTION_FLAG} flag`);
-  if (!envMatches) missing.push(`${CONFIRM_PROD_HOST_ENV}=${PRODUCTION_ENDPOINT_ID}`);
+  if (!envMatches) missing.push(`${CONFIRM_PROD_HOST_ENV}=${productionEndpointId}`);
   return {
     ok: false,
     reason:
-      `Refusing to run: hostname ${host} starts with ${PRODUCTION_ENDPOINT_ID} (production compute or pooler). ` +
+      `Refusing to run: hostname ${host} starts with ${productionEndpointId} (production compute or pooler). ` +
       `Point DATABASE_URL at a Neon branch, or to target production deliberately supply both ` +
-      `${CONFIRM_PRODUCTION_FLAG} and ${CONFIRM_PROD_HOST_ENV}=${PRODUCTION_ENDPOINT_ID}. Missing: ${missing.join(" and ")}.`,
+      `${CONFIRM_PRODUCTION_FLAG} and ${CONFIRM_PROD_HOST_ENV}=${productionEndpointId}. Missing: ${missing.join(" and ")}.`,
   };
 }
