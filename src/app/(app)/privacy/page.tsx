@@ -13,7 +13,7 @@ export const metadata: Metadata = publicPageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" lastUpdated="30 October 2026">
+    <LegalPage title="Privacy Policy" lastUpdated="November 3, 2026">
       <section>
         <h2>Who we are</h2>
         <p>
@@ -76,10 +76,19 @@ export default function PrivacyPage() {
           <li>
             <strong>Browser storage.</strong> For signed-out quiz takers we store answers in
             the browser for that tab only, under a key we control. That stash is cleared
-            after save, or when the tab closes. We do not use first-party long-term browser
-            storage, and we do not set first-party cookies besides Clerk’s essential
-            authentication cookies (and Stripe’s on Stripe checkout pages used only for
-            sponsor invoices). We do not show a cookie banner.
+            after save, or when the tab closes. We do not set first-party cookies besides
+            Clerk’s essential authentication cookies (and Stripe’s on Stripe checkout pages
+            used only for sponsor invoices). We do not show a cookie banner. The one other
+            thing we keep in your browser is described next.
+          </li>
+          <li>
+            <strong>First-touch campaign data.</strong> We store first-touch campaign data
+            (utm_source, utm_medium, utm_campaign, landing page path, signup source) in your
+            browser’s local storage, expiring after 12 months. If you create an account, we
+            store those values once, not linked to your account, kept 12 months then
+            deleted. We honor Do Not Track and Global Privacy Control by capturing nothing.
+            We don’t capture this in the EU, EEA, UK or Switzerland. No IP address, device
+            information or referrer is stored with it.
           </li>
           <li>
             <strong>Email (Resend).</strong> When someone posts a discussion, reply, or
@@ -144,9 +153,9 @@ export default function PrivacyPage() {
       <section>
         <h2>Do Not Track</h2>
         <p>
-          Some browsers send a Do Not Track signal. There is no consistent standard for how
-          sites should respond, so we do not change our practices based on that signal. We
-          do not use ad networks or tracking cookies of our own.
+          We honor Do Not Track and Global Privacy Control. When your browser sends either
+          signal, we capture no first-touch campaign data. We do not use ad networks or
+          tracking cookies of our own.
         </p>
       </section>
 
@@ -167,7 +176,8 @@ export default function PrivacyPage() {
           progress, preferences, reviews, votes, ratings, and reports are deleted if the
           user record is deleted (cascade). Prompts, discussions, and replies are kept,
           with the author field set to null (anonymized). Quiz answers in the browser last
-          only for the tab session.
+          only for the tab session. First-touch campaign data is kept 12 months, in your
+          browser and, if you create an account, in our database, then deleted.
         </p>
       </section>
 

@@ -419,3 +419,18 @@ model DiscussionReport {
   @@index([discussionId])
   @@map("discussion_reports")
 }
+
+// Privacy-light first-touch attribution. Deliberately has NO user relation, IP,
+// user agent, referrer URL or email: five short sanitized strings and a timestamp.
+model FirstTouchAttribution {
+  id           String   @id @default(cuid())
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
+  landingPath  String?
+  signupSource String?
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("first_touch_attributions")
+}

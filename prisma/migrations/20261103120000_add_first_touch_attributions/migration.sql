@@ -1,0 +1,15 @@
+-- CreateTable
+CREATE TABLE IF NOT EXISTS "first_touch_attributions" (
+    "id" TEXT NOT NULL,
+    "utmSource" TEXT,
+    "utmMedium" TEXT,
+    "utmCampaign" TEXT,
+    "landingPath" TEXT,
+    "signupSource" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "first_touch_attributions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE INDEX IF NOT EXISTS "first_touch_attributions_createdAt_idx" ON "first_touch_attributions"("createdAt");
