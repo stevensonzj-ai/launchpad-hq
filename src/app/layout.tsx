@@ -8,6 +8,7 @@ import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platfo
 import { DEFAULT_OG_IMAGE, SITE_IS_PUBLIC, SITE_URL } from "@/lib/site"
 import { BackToTop } from "@/components/layout/back-to-top"
 import { Footer } from "@/components/layout/footer"
+import { FirstTouchCapture } from "@/components/analytics/first-touch-capture"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
           <Footer />
           <BackToTop />
           <Analytics />
+          <FirstTouchCapture />
           <SpeedInsights />
         </body>
       </html>

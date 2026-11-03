@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getOrCreateDbUser } from "@/lib/auth-db";
 import { prisma } from "@/lib/db";
+import { SignupAttribution } from "@/components/analytics/signup-attribution";
 
 import { privatePageMetadata } from "@/lib/seo-metadata";
 
@@ -59,6 +60,7 @@ export default async function OnboardingPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+      <SignupAttribution />
       <div className="mb-8 flex justify-center">
         <div className="relative">
           <div className="absolute -inset-4 animate-pulse rounded-full bg-orange-500/20 blur-xl" />
