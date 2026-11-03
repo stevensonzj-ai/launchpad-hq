@@ -37,7 +37,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../src/lib/catalog/guarded-prisma";
 
 function getDirectUrl(): string {
   const raw = process.env.DATABASE_URL || "";

@@ -15,6 +15,7 @@
  * Fact file src/data/facts/pipecat.ts is not touched: search does not read it
  * for ranking, and it carries no description.
  */
+import { assertNoRemovedSlugs } from "@/lib/catalog/removed-slugs";
 import { PIPECAT_ROW } from "./audit-32";
 
 export const CHECKED_AT = "2026-11-02";
@@ -74,6 +75,7 @@ const q = (s: string) => `${TAG}${s}${TAG}`;
 
 /** One guarded UPDATE per patch: matches only the exact old value, so a re-run changes nothing. */
 export function audit33Sql(): string[] {
+  assertNoRemovedSlugs(audit33Slugs(), "audit 33 SQL");
   return AUDIT_33_PATCHES.map(
     (p) =>
       `UPDATE platforms SET "${p.field}" = ${q(p.to)}, "updatedAt" = now() ` +

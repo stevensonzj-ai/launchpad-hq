@@ -23,7 +23,8 @@
  */
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient, type CostTier, type Difficulty, type PrivacyLevel } from "@prisma/client";
+import type { CostTier, Difficulty, PrivacyLevel } from "@prisma/client";
+import { PrismaClient } from "../src/lib/catalog/guarded-prisma";
 
 const PRODUCTION_ENDPOINT_ID = "ep-odd-mud-ajdk8f99";
 

@@ -23,6 +23,8 @@
  * and can be unit-tested (audit-32.test.ts).
  */
 
+import { assertNoRemovedSlugs } from "@/lib/catalog/removed-slugs";
+
 export const CHECKED_AT = "2026-11-02";
 
 export const PIPECAT_SLUG = "pipecat";
@@ -136,6 +138,7 @@ const COLUMNS = [
 /** One complete, guarded statement per line, each ending in `;`. */
 export function audit32Sql(): string[] {
   const r = PIPECAT_ROW;
+  assertNoRemovedSlugs([r.slug, PIPECAT_SLUG, DEEPGRAM_SLUG], "audit 32 SQL");
   const values = [
     lit(PIPECAT_ID), lit(r.slug), lit(r.name), lit(r.company), lit(r.website), lit(r.logoUrl), lit(r.description),
     lit(PIPECAT_CATEGORY_ID), lit(r.primaryUse), `${lit(r.costTier)}::"CostTier"`,
