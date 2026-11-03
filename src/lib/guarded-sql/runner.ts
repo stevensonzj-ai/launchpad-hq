@@ -1,5 +1,7 @@
 import { createHash } from "node:crypto";
-import { basename } from "node:path";
+import { win32 } from "node:path";
+/** Basename that strips both / and \ separators on every OS, so no directory path ever reaches the log. */
+const basename = (p: string): string => win32.basename(p);
 import { PRODUCTION_ENDPOINT_ID } from "../prod-guard";
 import { parseArgs, USAGE } from "./args";
 import { parseEndpointId } from "./endpoint";
