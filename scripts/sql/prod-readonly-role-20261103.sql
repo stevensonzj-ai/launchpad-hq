@@ -1,8 +1,19 @@
--- Prod read-only for bots (Zach, Nov 3 2026): harden the EXISTING SELECT-only role launchpad_ro.
--- Idempotent. Creates no role, sets no password, changes no other role. Run only via the
--- Guarded SQL Action (test env first, then guarded-sql-production with a fresh snapshot).
--- launchpad_ro already exists on prod (LOGIN, not in neon_superuser, SELECT on all 19 tables,
--- default SELECT on future neondb_owner tables, default_transaction_read_only=on, statement_timeout=15s).
+-- Prod read-only for bots (Zach, Nov 3 2026; Option C approved 2:46 PM CT).
+-- Idempotent. Safe on BOTH targets:
+--   * production: launchpad_ro already exists (LOGIN, not in neon_superuser) -> the DO block is a no-op.
+--   * the new launchpad-test project: launchpad_ro is missing -> created with LOGIN and NO password.
+--     A role with a NULL password can never pass password auth (Neon's proxy only does password/SCRAM),
+--     so it cannot log in until Zach resets it in the Console; a reset does not add neon_superuser
+--     (the final check SELECT proves that on every run).
+-- Sets no password, changes no other role. Run only via the Guarded SQL Action:
+-- guarded-sql-test (launchpad-test project) first, then guarded-sql-production with a fresh snapshot.
+DO $ro$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'launchpad_ro') THEN
+    CREATE ROLE launchpad_ro LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOREPLICATION NOBYPASSRLS;
+  END IF;
+END
+$ro$;
 GRANT CONNECT ON DATABASE neondb TO launchpad_ro;
 GRANT USAGE ON SCHEMA public TO launchpad_ro;
 REVOKE CREATE ON SCHEMA public FROM launchpad_ro;
