@@ -7,7 +7,8 @@ import {
   analyticsProperties,
   buildSignupPayload,
   markSent,
-  readFirstTouch,
+  privacySignalOn,
+  readLiveFirstTouch,
 } from "@/lib/attribution/first-touch";
 
 /**
@@ -22,7 +23,9 @@ export function SignupAttribution() {
       try {
         const store = window.localStorage;
         if (alreadySent(store)) return;
-        const touch = readFirstTouch(store);
+        const nav = navigator as Navigator & { globalPrivacyControl?: boolean };
+        if (privacySignalOn(nav)) return;
+        const touch = readLiveFirstTouch(store);
         if (!touch) return;
         const payload = buildSignupPayload(touch, "onboarding");
         const res = await fetch("/api/attribution/first-touch", {

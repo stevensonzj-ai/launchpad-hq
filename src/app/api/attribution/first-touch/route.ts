@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db";
 import { apiError, methodsNotAllowed } from "@/lib/api-error";
 import { persistFirstTouch } from "@/lib/attribution/persist";
+import { decideForRequest } from "@/lib/attribution/eligibility";
 
 export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);
 
@@ -13,6 +14,11 @@ export const { GET, PUT, PATCH, DELETE } = methodsNotAllowed(["POST"]);
  * could be joined back to an account, IP or device.
  */
 export async function POST(request: NextRequest) {
+  // DNT / Sec-GPC, EU/EEA/UK/CH and unknown country: no write, no error.
+  if (!decideForRequest(request.headers).allowed) {
+    return new NextResponse(null, { status: 204, headers: { "Cache-Control": "no-store" } });
+  }
+
   const { userId } = await auth();
   if (!userId) return apiError("unauthorized");
 
