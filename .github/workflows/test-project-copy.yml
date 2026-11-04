@@ -22,7 +22,8 @@ concurrency:
 jobs:
   copy:
     name: copy preview -> launchpad-test
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-26.04 (ubuntu-latest) lacks postgresql-client-16 in its default apt repos.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment: guarded-sql-test
     steps:
