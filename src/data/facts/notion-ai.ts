@@ -57,6 +57,7 @@ export default {
     value: [
       "Notion AI runs on Notion credits: Free and Plus get a limited trial, and Business includes 1,500 Standard credits (Notion Agent on Auto, AI Meeting Notes, Database Autofill) and 500 Select credits (work where you pick the model, plus Custom Agents you own) per seat a month, per the plan comparison (as of 2026-10-26).",
       "Admins can buy extra Notion credits to cover additional AI usage, per the pricing page (as of 2026-10-26).",
+      "Notion Agents and Custom Agents can connect to Google Drive (beta, as of 2026-11-05) to search, read and write Drive files in real time. Notion does not index the files, and access follows the permissions of the user who connected Drive.",
       "Notion's pricing FAQ says Notion AI will not use your data to train its models unless you opt in, and that AI subprocessors are contractually barred from training on customer data.",
     ],
     sourceUrl: NOTION_PRICING_URL,
@@ -67,6 +68,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-05",
+      field: "features",
+      summary: "X-watch: added the Notion Agents Google Drive connection (beta). Feature source: https://www.notion.com/help/connect-your-agents-to-google-drive",
+    },
     {
       date: "2026-10-26",
       field: "plans",

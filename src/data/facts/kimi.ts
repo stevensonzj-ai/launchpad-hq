@@ -81,6 +81,8 @@ export default {
       "K3.1 Pro has a 1-million-token context window.",
       "Kimi says the full K3.1 Pro model weights will be released by 2026-11-04 (stated plan, as of 2026-10-26).",
       "Kimi Enterprise: K3.1 Pro is off by default at launch; administrators can enable it.",
+      "Kimi K3.1 Pro open weights are on Hugging Face (moonshotai/Kimi-K3.1-Pro), about 2.8T-parameter mixture-of-experts with about 104B active, 1M-token context (as of 2026-11-05). The API model is kimi-k3.1-pro on platform.kimi.ai.",
+      "The weights use the \"Kimi K3.1 Pro License\", which is not a standard open-source license. Per its LICENSE (as of 2026-11-05), Model-as-a-Service organizations with more than US$20 million aggregate revenue over any consecutive 12 months need a separate agreement with Moonshot before commercial use, and products with more than 100M monthly active users or more than US$20 million monthly revenue must display \"Kimi K3.1-Pro\" prominently. Read the LICENSE: https://huggingface.co/moonshotai/Kimi-K3.1-Pro/blob/main/LICENSE",
       "Kimi 3D Make is Kimi's AI 3D creation product, powered by K3.1 Pro (kimi.com, as of 2026-11-02). It uses the same unified membership quota as the rest of Kimi. Modes: 3D Web, 3D Modeling and 3D Printing; 3D Printing produces print-ready files and does not control printers.",
     ],
     sourceUrl: KIMI_K3_1_BLOG_URL,
@@ -91,6 +93,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-05",
+      field: "features",
+      summary: "X-watch: K3.1 Pro open weights now on Hugging Face under the Kimi K3.1 Pro License (not standard open source; Model-as-a-Service and large-product terms apply). The earlier \"weights due by 2026-11-04\" plan note is superseded.",
+    },
     {
       date: "2026-11-02",
       field: "features",

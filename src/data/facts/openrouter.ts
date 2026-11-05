@@ -80,7 +80,20 @@ export default {
     verifiedAt: "2026-10-14",
     status: "verified",
   },
+  features: {
+    value: [
+      "Stealth model stealth/crouton-alpha: free, multimodal, 1M-token context, from an anonymous provider, released 2026-11-03 (as of 2026-11-05). Stealth models can be renamed or withdrawn without notice. It is a listing on OpenRouter, not a separate catalog row.",
+    ],
+    note: "OpenRouter model page, as of 2026-11-05.",
+    sourceUrl: "https://openrouter.ai/stealth/crouton-alpha",
+    checkedAt: "2026-11-05",
+    gatheredBy: "claude",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-11-05",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-11-05", field: "features", summary: "X-watch: noted the free stealth model stealth/crouton-alpha (may be withdrawn); not a separate catalog row." },
     {
       date: "2026-10-14",
       field: "plans",
