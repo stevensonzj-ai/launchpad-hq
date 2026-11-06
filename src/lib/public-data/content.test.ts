@@ -419,8 +419,9 @@ describe("feed index and alternates", () => {
     ]);
     const hidden = buildTutorialMetadata({ platformSlug: "relay-app", name: "Relay", tagline: "t", lastReviewedAt: "2026-10-01" });
     assert.equal(hidden.alternates?.types, undefined);
+    // Audit 34 hid play-ht, so it has no feed record (same as other hidden tools).
     const gone = buildTutorialMetadata({ platformSlug: "play-ht", name: "PlayHT", tagline: "t", lastReviewedAt: "2026-10-01" });
-    assert.equal(gone.alternates?.types?.["application/json"], `${SITE_URL}/data/v1/tools/play-ht.json`);
+    assert.equal(gone.alternates?.types, undefined);
   });
 });
 

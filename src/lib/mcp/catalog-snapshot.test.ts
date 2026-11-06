@@ -83,8 +83,8 @@ describe("catalog snapshot", () => {
     // 219 until audit 27 hid sora-2 (2026-10-30); 218 until audit 28 hid
     // naver-hyperclova-x-cue, genspark and poe (215, 2026-11-01); 216 after
     // audit 29 unhid poe the same day; 215 after audit 30 hid hedra; 216 after
-    // audit 32 added pipecat (2026-11-02).
-    assert.equal(snap.rows.length, 216);
+    // audit 32 added pipecat (2026-11-02); 215 after audit 34 hid play-ht (2026-11-06).
+    assert.equal(snap.rows.length, 215);
   });
 
   it("reproduces every tool the live stress test returned", () => {

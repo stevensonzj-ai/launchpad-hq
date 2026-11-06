@@ -175,7 +175,7 @@ describe("JSON feed alternate link", () => {
       json(buildTutorialMetadata({ platformSlug: "chatgpt", name: "ChatGPT", tagline: "t", lastReviewedAt: "2026-10-01" })),
       [{ url: "https://www.launchpadhq.io/data/v1/guides/chatgpt.json" }, { url }],
     );
-    assert.ok(json(buildPlatformMetadata({ slug: "play-ht", name: "PlayHT", facts: getToolFacts("play-ht") })));
+    // play-ht was the listed discontinued example until audit 34 hid it; the loop below covers it.
     for (const slug of hiddenPlatformSlugs()) {
       assert.equal(json(buildPlatformMetadata({ slug, name: slug, facts: getToolFacts(slug) })), undefined, slug);
     }

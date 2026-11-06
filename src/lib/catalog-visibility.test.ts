@@ -8,11 +8,11 @@ import { buildPlatformMetadata, buildTutorialMetadata } from "@/lib/seo-metadata
 
 describe("catalog visibility", () => {
   it("hides the dead-and-obscure pages and the duplicate rows", () => {
-    for (const slug of ["relay-app", "kakao-brain-karlo", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai", "sora-2", "naver-hyperclova-x-cue", "genspark"]) {
+    for (const slug of ["relay-app", "kakao-brain-karlo", "play-ht", "canva-magic-studio", "adobe-sensei-firefly-in-cc", "clarifai", "sora-2", "naver-hyperclova-x-cue", "genspark"]) {
       assert.equal(isHiddenPlatform(slug), true, slug);
     }
-    // "What happened" pages stay listed and indexed (sora-2 was hidden by audit 27, 2026-10-30).
-    for (const slug of ["play-ht", "beatoven-ai"]) {
+    // beatoven-ai stays listed. play-ht was hidden by audit 34 (2026-11-06).
+    for (const slug of ["beatoven-ai"]) {
       assert.equal(isHiddenPlatform(slug), false, slug);
     }
     assert.deepEqual(listedPlatformWhere(), { slug: { notIn: hiddenPlatformSlugs() } });
@@ -53,8 +53,16 @@ describe("catalog visibility", () => {
     }
     assert.ok(
       moves.some(
+        (m) =>
+          m.source === "/platform/kakao-brain-karlo/:path*" &&
+          m.destination === "/discover?category=image-generation-editing",
+      ),
+    );
+    assert.equal(
+      moves.some(
         (m) => m.source === "/platform/kakao-brain-karlo/guide" && m.destination === "/platform/kakao-brain-karlo",
       ),
+      false,
     );
   });
 

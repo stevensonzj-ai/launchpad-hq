@@ -46,7 +46,6 @@ export const PLATFORM_REDIRECTS: Readonly<Record<string, string>> = {
 };
 
 export const RETIRED_GUIDE_SLUGS: readonly string[] = [
-  "kakao-brain-karlo",
   // Shut down (final deprecation July 2026); page hidden,
   // guide kept in src/data/tutorials/retired/ (guide PR D, 2026-10-29).
   "clarifai",
@@ -84,6 +83,22 @@ export const HIDDEN_PAGE_REDIRECTS: Readonly<Record<string, string>> = {
   // to its category page (there is no avatar category). The guide moved to
   // src/data/tutorials/retired/ so /platform/hedra/guide does not chain.
   hedra: "/discover?category=video-creation-editing",
+  // Audit 34 (2026-11-06): shut down / unusable, rechecked. Whole-tree 301s.
+  // Neither slug stays in RETIRED_GUIDE_SLUGS, so /guide does not chain
+  // through the platform page. No live guide is registered for either.
+  // - play-ht: no public A record for play.ht or www.play.ht (name servers
+  //   are Meta/Facebook's); app.play.ht returns Vercel DEPLOYMENT_NOT_FOUND
+  //   and its TLS certificate had already expired. docs.play.ht still serves
+  //   stale ReadMe docs. No primary PlayHT or Meta shutdown notice; secondary
+  //   sources only (Bloomberg, migration guides). Voice & Speech category.
+  // - kakao-brain-karlo: already hidden. Kakao's DevTalk notice is still live
+  //   (API support ended 2024-09-30:
+  //   https://devtalk.kakao.com/t/kogpt-karlo-api-notice-end-of-support-for-kogpt-karlo-apis/139024).
+  //   karlo.ai has no reachable DNS authority. GitHub kakaobrain/karlo still
+  //   hosts the weights; that does not make the product usable. Image
+  //   generation category.
+  "play-ht": "/discover?category=voice-speech",
+  "kakao-brain-karlo": "/discover?category=image-generation-editing",
 };
 
 export type CatalogRedirect = {
