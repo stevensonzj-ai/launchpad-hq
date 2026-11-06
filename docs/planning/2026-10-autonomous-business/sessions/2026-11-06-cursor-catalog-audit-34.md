@@ -2,7 +2,7 @@
 
 **Decided:** Hide `play-ht` and `kakao-brain-karlo` after the Nov 6 2026 recheck. Same pattern as relay-app / hedra: fact-file `visibility: "hidden"` plus `HIDDEN_PAGE_REDIRECTS`. Never delete rows, fact files, or history. Code-only: no Neon branch, no database script, no prod write.
 
-**Changed:**
+**Changed (PR #162, branch `cursor/catalog-audit-34-hide-playht-karlo-b8ba`):**
 - `src/data/facts/play-ht.ts`: `visibility: "hidden"`, lifecycle stays `discontinued`, `status.checkedAt` / `verifiedAt` `2026-11-06`, changelog notes no apex A record, `app.play.ht` `DEPLOYMENT_NOT_FOUND`, and the 301. Secondary-source framing kept (Bloomberg).
 - `src/data/facts/kakao-brain-karlo.ts`: already hidden. Dates refreshed; changelog notes the Kakao DevTalk recheck and the whole-tree 301. `sourceUrl` stays the DevTalk notice.
 - `src/lib/catalog-redirects.ts`: `play-ht` → `/discover?category=voice-speech`; `kakao-brain-karlo` → `/discover?category=image-generation-editing`. Karlo removed from `RETIRED_GUIDE_SLUGS` so `/guide` does not chain. Neither slug has a live or retired guide file.
