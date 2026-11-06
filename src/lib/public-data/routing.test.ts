@@ -107,4 +107,22 @@ describe("robots", () => {
       }
     }
   });
+
+  it("does not disallow discussions or prompts path pages", () => {
+    const rules = [robots().rules].flat();
+    const paths = [
+      "/platform/chatgpt/discussions",
+      "/platform/chatgpt/prompts",
+      "/platform/activepieces/discussions",
+      "/platform/activepieces/prompts",
+    ];
+    for (const path of paths) {
+      for (const rule of rules) {
+        const disallow = [rule.disallow ?? []].flat();
+        for (const prefix of disallow) {
+          assert.equal(path.startsWith(prefix), false, `${path} blocked by ${prefix}`);
+        }
+      }
+    }
+  });
 });

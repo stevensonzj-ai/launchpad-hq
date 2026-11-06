@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { SITE_URL } from "@/lib/site";
 import { getActivePlacement } from "@/data/sponsors";
@@ -71,6 +72,20 @@ describe("sitemap coverage", () => {
         [AOTW_BOOKING],
       ),
     );
+  });
+
+  it("keeps /platform/{slug}/discussions and /prompts out of the sitemap", () => {
+    const communityPath = /\/platform\/[^/]+\/(discussions|prompts)\/?$/;
+    const src = readFileSync("src/app/sitemap.ts", "utf8");
+    assert.doesNotMatch(src, /\/discussions/);
+    assert.doesNotMatch(src, /\/prompts/);
+    const paths = sitemapStaticPublicPaths({ proPlanEnabled: true, includeAiOfTheWeek: true });
+    for (const path of paths) {
+      assert.equal(communityPath.test(path), false, path);
+    }
+    for (const path of SITEMAP_STATIC_PUBLIC_PATHS) {
+      assert.equal(communityPath.test(path), false, path);
+    }
   });
 
   it("builds production-host URLs", () => {

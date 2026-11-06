@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { apiErrorMessage } from "@/lib/api-error";
+import { communityEmbedShowsFullLink } from "@/lib/community-pages";
+import { EmptyCommunityCta, START_DISCUSSION_LABEL } from "@/components/community/empty-community-cta";
 import { useAuth } from "@clerk/nextjs";
 import { ChevronUp, Flag, Loader2, MessageCircle } from "lucide-react";
 
@@ -25,12 +27,7 @@ type DiscussionRow = {
   replies: Reply[];
 };
 
-export function PlatformDiscussions({
-  platformName,
-  platformSlug,
-  showFullLink = true,
-  approvedCount,
-}: {
+export function PlatformDiscussions(props: {
   platformName: string;
   platformSlug: string;
   showFullLink?: boolean;
@@ -39,6 +36,34 @@ export function PlatformDiscussions({
    * list fetch (there is nothing to show). undefined always fetches.
    */
   approvedCount?: number;
+}) {
+  const knownEmpty = props.approvedCount === 0;
+  const [composerOpen, setComposerOpen] = useState(false);
+  if (knownEmpty && !composerOpen) {
+    return <EmptyCommunityCta label={START_DISCUSSION_LABEL} onOpen={() => setComposerOpen(true)} />;
+  }
+  return (
+    <DiscussionsPanel
+      {...props}
+      showFullLink={communityEmbedShowsFullLink(props.showFullLink, props.approvedCount)}
+      hideListing={knownEmpty}
+    />
+  );
+}
+
+function DiscussionsPanel({
+  platformName,
+  platformSlug,
+  showFullLink = true,
+  approvedCount,
+  hideListing = false,
+}: {
+  platformName: string;
+  platformSlug: string;
+  showFullLink?: boolean;
+  approvedCount?: number;
+  /** Empty sections open straight into the composer, with no "none yet" list. */
+  hideListing?: boolean;
 }) {
   const { isSignedIn, isLoaded } = useAuth();
   const [items, setItems] = useState<DiscussionRow[]>([]);
@@ -205,6 +230,7 @@ export function PlatformDiscussions({
         </form>
       )}
 
+      {!hideListing && (
       <div className="mt-8 border-t border-gray-800 pt-6">
         <p className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-400">
           <MessageCircle className="h-4 w-4" /> Threads
@@ -325,6 +351,7 @@ export function PlatformDiscussions({
           </ul>
         )}
       </div>
+      )}
 
       {showFullLink && (
         <p className="mt-6 text-center text-xs text-gray-600">
