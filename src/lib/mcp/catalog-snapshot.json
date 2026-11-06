@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools) + audit 33 (Pipecat description)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools) + audit 33 (Pipecat description) + audit 34 (play-ht hidden)",
  "db_rows": 226,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -10,6 +10,7 @@
   "hedra",
   "kakao-brain-karlo",
   "naver-hyperclova-x-cue",
+  "play-ht",
   "relay-app",
   "sora-2",
   "tabnine"
@@ -8881,45 +8882,6 @@
     "slug": "ai-apis-developer-services",
     "name": "AI APIs & Developer Services"
    }
-  },
-  {
-   "slug": "play-ht",
-   "name": "PlayHT",
-   "company": null,
-   "website": null,
-   "description": "PlayHT was an AI text-to-speech and voice-cloning service for voiceovers, podcasts, e-learning and apps.",
-   "primaryUse": "Discontinued: former AI text-to-speech and voice-cloning service",
-   "primaryUseCases": null,
-   "costTier": "FREEMIUM",
-   "difficultyLevel": "BEGINNER",
-   "platformType": [
-    "web"
-   ],
-   "currentPricing": "Discontinued, no longer sold. Bloomberg reported in July 2025 that Meta acquired PlayAI, the company behind PlayHT. We found no official shutdown notice from PlayHT or Meta, and the play.ht website no longer loads (as of 2026-10-25).",
-   "freeTierFeatures": "None: PlayHT is no longer available",
-   "usageLimits": null,
-   "apiAvailable": false,
-   "directAlternatives": [],
-   "budgetAlternativeTo": [],
-   "updatedAt": "2026-05-12",
-   "category": {
-    "slug": "voice-speech",
-    "name": "Voice & Speech"
-   },
-   "idealUserTypes": [],
-   "contentTypes": [],
-   "outputFormats": [],
-   "privacyLevel": "MEDIUM",
-   "timeToProductivity": null,
-   "learningCurve": null,
-   "offlineCapable": false,
-   "languageSupport": null,
-   "keyIntegrations": null,
-   "upgradeTriggers": null,
-   "complementaryTools": [],
-   "hasMobileApp": false,
-   "iosAppUrl": null,
-   "androidAppUrl": null
   },
   {
    "slug": "poe",
