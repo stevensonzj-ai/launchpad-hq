@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { getToolFacts } from "@/data/facts";
 import { SITE_URL } from "@/lib/site";
@@ -7,6 +8,7 @@ import {
   buildPlatformMetadata,
   buildTutorialMetadata,
   clipMetaDescription,
+  communityPathMetadata,
   publicPageMetadata,
 } from "@/lib/seo-metadata";
 
@@ -85,10 +87,69 @@ describe("seo metadata", () => {
     assert.equal(chatgpt.alternates?.canonical, `${SITE_URL}/platform/chatgpt`);
     assert.equal(grok.alternates?.canonical, `${SITE_URL}/platform/grok`);
     assert.equal(home.alternates?.canonical, SITE_URL);
+    assert.equal(home.robots, undefined);
     for (const desc of descriptions) {
       assert.ok(desc.length <= 160, desc);
       assert.ok(desc.length >= 80, desc);
     }
+  });
+});
+
+describe("community path metadata", () => {
+  const description = "Community discussion about ChatGPT. Read approved threads on Launchpad HQ before you decide whether the tool fits.";
+
+  it("noindexes an empty discussions or prompts page and still lets crawlers follow links", () => {
+    for (const path of ["/platform/chatgpt/discussions", "/platform/chatgpt/prompts"]) {
+      const meta = communityPathMetadata({
+        title: "ChatGPT discussions | Launchpad HQ",
+        description,
+        path,
+        approvedCount: 0,
+      });
+      assert.deepEqual(meta.robots, { index: false, follow: true });
+      assert.equal(meta.alternates?.canonical, `${SITE_URL}${path}`);
+    }
+  });
+
+  it("is indexable once there is at least one approved post", () => {
+    for (const approvedCount of [1, 2]) {
+      const meta = communityPathMetadata({
+        title: "Activepieces discussions | Launchpad HQ",
+        description,
+        path: "/platform/activepieces/discussions",
+        approvedCount,
+      });
+      assert.equal(meta.robots, undefined, `count ${approvedCount}`);
+      assert.equal(meta.alternates?.canonical, `${SITE_URL}/platform/activepieces/discussions`);
+    }
+  });
+
+  it("keeps a plain noindex page nofollow, including hidden platform overviews", () => {
+    const plain = publicPageMetadata({
+      title: "T",
+      description: "A private page description that is long enough to keep.",
+      path: "/account",
+      index: false,
+    });
+    assert.deepEqual(plain.robots, { index: false, follow: false });
+
+    const hidden = buildPlatformMetadata({
+      slug: "play-ht",
+      name: "PlayHT",
+      facts: getToolFacts("play-ht"),
+    });
+    assert.deepEqual(hidden.robots, { index: false, follow: false });
+  });
+
+  it("wires both path pages to the approved count and does not redirect them", () => {
+    const discussions = readFileSync("src/app/(app)/platform/[slug]/discussions/page.tsx", "utf8");
+    const prompts = readFileSync("src/app/(app)/platform/[slug]/prompts/page.tsx", "utf8");
+    assert.match(discussions, /approvedCount: p\._count\.discussions/);
+    assert.match(prompts, /approvedCount: p\._count\.prompts/);
+    assert.match(discussions, /communityPathMetadata\(/);
+    assert.match(prompts, /communityPathMetadata\(/);
+    assert.doesNotMatch(discussions, /redirect\(/);
+    assert.doesNotMatch(prompts, /redirect\(/);
   });
 });
 

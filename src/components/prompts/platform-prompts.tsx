@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { apiErrorMessage } from "@/lib/api-error";
+import { communityEmbedShowsFullLink } from "@/lib/community-pages";
+import { EmptyCommunityCta, SHARE_FIRST_PROMPT_LABEL } from "@/components/community/empty-community-cta";
+import { UserPostedLink } from "@/components/community/user-posted-link";
 import { useAuth } from "@clerk/nextjs";
 import { Loader2, Star, Flag } from "lucide-react";
 
@@ -17,12 +20,7 @@ type PromptRow = {
   createdAt: string;
 };
 
-export function PlatformPrompts({
-  platformName,
-  platformSlug,
-  showFullLink = true,
-  approvedCount,
-}: {
+export function PlatformPrompts(props: {
   platformName: string;
   platformSlug: string;
   showFullLink?: boolean;
@@ -31,6 +29,34 @@ export function PlatformPrompts({
    * list fetch (there is nothing to show). undefined always fetches.
    */
   approvedCount?: number;
+}) {
+  const knownEmpty = props.approvedCount === 0;
+  const [composerOpen, setComposerOpen] = useState(false);
+  if (knownEmpty && !composerOpen) {
+    return <EmptyCommunityCta label={SHARE_FIRST_PROMPT_LABEL} onOpen={() => setComposerOpen(true)} />;
+  }
+  return (
+    <PromptsPanel
+      {...props}
+      showFullLink={communityEmbedShowsFullLink(props.showFullLink, props.approvedCount)}
+      hideListing={knownEmpty}
+    />
+  );
+}
+
+function PromptsPanel({
+  platformName,
+  platformSlug,
+  showFullLink = true,
+  approvedCount,
+  hideListing = false,
+}: {
+  platformName: string;
+  platformSlug: string;
+  showFullLink?: boolean;
+  approvedCount?: number;
+  /** Empty sections open straight into the composer, with no "none yet" list. */
+  hideListing?: boolean;
 }) {
   const { isSignedIn, isLoaded } = useAuth();
   const [items, setItems] = useState<PromptRow[]>([]);
@@ -184,6 +210,7 @@ export function PlatformPrompts({
         </form>
       )}
 
+      {!hideListing && (
       <div className="mt-8 border-t border-gray-800 pt-6">
         <p className="mb-4 text-sm font-medium text-gray-400">Community prompts</p>
         {loading ? (
@@ -208,14 +235,12 @@ export function PlatformPrompts({
                 </div>
                 <pre className="mt-3 whitespace-pre-wrap font-sans text-sm text-gray-300">{p.prompt}</pre>
                 {p.outputUrl && (
-                  <a
+                  <UserPostedLink
                     href={p.outputUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="mt-2 inline-block text-xs text-orange-400 hover:underline"
                   >
                     Output link
-                  </a>
+                  </UserPostedLink>
                 )}
                 {isLoaded && isSignedIn && (
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -243,6 +268,7 @@ export function PlatformPrompts({
           </ul>
         )}
       </div>
+      )}
 
       {showFullLink && (
         <p className="mt-6 text-center text-xs text-gray-600">

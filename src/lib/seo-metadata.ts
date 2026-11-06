@@ -27,10 +27,17 @@ export function publicPageMetadata(input: {
   description: string;
   path: string;
   index?: boolean;
+  /**
+   * When the page is noindex, whether crawlers may follow links on it.
+   * Defaults to the resolved index value, so a plain `index: false` stays
+   * noindex, nofollow. Pass true for noindex, follow.
+   */
+  follow?: boolean;
 }): Metadata {
   const description = clipMetaDescription(input.description);
   const url = absoluteUrl(input.path);
   const index = input.index ?? SITE_IS_PUBLIC;
+  const follow = input.follow ?? index;
   return {
     title: input.title,
     description,
@@ -47,8 +54,28 @@ export function publicPageMetadata(input: {
       title: input.title,
       description,
     },
-    ...(!index ? { robots: { index: false, follow: false } } : {}),
+    ...(index && follow ? {} : { robots: { index, follow } }),
   };
+}
+
+/**
+ * Discussions and prompts path pages are indexable only once they have at
+ * least one approved post. Empty pages are noindex, follow while the site is
+ * public (a site-wide noindex stays nofollow). They stay self-canonical.
+ */
+export function communityPathMetadata(input: {
+  title: string;
+  description: string;
+  path: string;
+  approvedCount: number;
+}): Metadata {
+  const page = {
+    title: input.title,
+    description: input.description,
+    path: input.path,
+  };
+  if (input.approvedCount >= 1) return publicPageMetadata(page);
+  return publicPageMetadata({ ...page, index: false, follow: SITE_IS_PUBLIC });
 }
 
 export function privatePageMetadata(input: {
