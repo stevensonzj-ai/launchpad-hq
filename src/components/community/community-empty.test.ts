@@ -12,16 +12,15 @@ import { communityEmbedShowsFullLink, USER_POSTED_LINK_REL } from "@/lib/communi
 describe("empty community sections", () => {
   it("collapses an empty discussions tab behind a start CTA and does not link the path page", () => {
     const html = renderToStaticMarkup(
-      createElement(
-        PlatformDetailTabs,
-        {
-          platformName: "ChatGPT",
-          platformSlug: "chatgpt",
-          counts: { discussions: 0, prompts: 0 },
-          initialTab: "discussions",
-        },
-        "Overview body",
-      ),
+      // PlatformDetailTabs requires children on its props, so createElement needs it in the props object (.ts file, no JSX).
+      // eslint-disable-next-line react/no-children-prop
+      createElement(PlatformDetailTabs, {
+        platformName: "ChatGPT",
+        platformSlug: "chatgpt",
+        counts: { discussions: 0, prompts: 0 },
+        initialTab: "discussions",
+        children: "Overview body",
+      }),
     );
     assert.match(html, /Start the discussion/);
     assert.equal(html.includes("No discussions yet"), false);
@@ -33,16 +32,15 @@ describe("empty community sections", () => {
 
   it("collapses an empty prompts tab behind a share CTA and does not link the path page", () => {
     const html = renderToStaticMarkup(
-      createElement(
-        PlatformDetailTabs,
-        {
-          platformName: "ChatGPT",
-          platformSlug: "chatgpt",
-          counts: { discussions: 0, prompts: 0 },
-          initialTab: "prompts",
-        },
-        "Overview body",
-      ),
+      // PlatformDetailTabs requires children on its props, so createElement needs it in the props object (.ts file, no JSX).
+      // eslint-disable-next-line react/no-children-prop
+      createElement(PlatformDetailTabs, {
+        platformName: "ChatGPT",
+        platformSlug: "chatgpt",
+        counts: { discussions: 0, prompts: 0 },
+        initialTab: "prompts",
+        children: "Overview body",
+      }),
     );
     assert.match(html, /Share the first prompt/);
     assert.equal(html.includes("No prompts yet"), false);
@@ -99,14 +97,13 @@ describe("empty community sections", () => {
 describe("user-posted links", () => {
   it("marks a user-submitted URL ugc nofollow", () => {
     const html = renderToStaticMarkup(
-      createElement(
-        UserPostedLink,
-        {
-          href: "https://example.com/output?id=1",
-          className: "mt-2 inline-block text-xs text-orange-400 hover:underline",
-        },
-        "Output link",
-      ),
+      // UserPostedLink requires children on its props, so createElement needs it in the props object (.ts file, no JSX).
+      // eslint-disable-next-line react/no-children-prop
+      createElement(UserPostedLink, {
+        href: "https://example.com/output?id=1",
+        className: "mt-2 inline-block text-xs text-orange-400 hover:underline",
+        children: "Output link",
+      }),
     );
     assert.equal(USER_POSTED_LINK_REL, "ugc nofollow noopener noreferrer");
     assert.ok(html.includes('href="https://example.com/output?id=1"'));
