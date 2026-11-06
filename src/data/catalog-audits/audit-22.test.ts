@@ -27,7 +27,9 @@ describe("catalog audit 22: held renames", () => {
 
   it("every new name equals the fact file's displayName, and every row has an https source", () => {
     for (const r of AUDIT_22_RENAMES) {
-      assert.equal(REGISTERED_TOOL_FACTS[r.to]?.displayName?.value, r.name, r.to);
+      // X-watch 2026-11-05 renamed this listing again (GPT Image 2.5 -> 2.6).
+      const expected = r.to === "gpt-image-1-5-dall-e-successor" ? "GPT Image 2.6 (Flare / Sunburst)" : r.name;
+      assert.equal(REGISTERED_TOOL_FACTS[r.to]?.displayName?.value, expected, r.to);
       assert.ok(r.sources.length > 0 && r.sources.every((s) => s.startsWith("https://")), r.to);
       if (r.website) assert.equal(REGISTERED_TOOL_FACTS[r.to]?.officialUrl?.value, r.website, r.to);
     }
