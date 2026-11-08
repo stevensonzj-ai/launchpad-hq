@@ -25,18 +25,37 @@ describe("/mcp request guard: Origin (G8)", () => {
   it("allows our own preview deployment origin", () => {
     assert.ok(isAllowedOrigin("https://launchpad-abc.vercel.app", { VERCEL_URL: "launchpad-abc.vercel.app" }));
   });
-  it("rejects other origins with 403 JSON-RPC and logs only the host", async () => {
+  it("rejects other origins with 403 JSON-RPC and logs no header data", async () => {
     const lines: string[] = [];
+    const origin = "https://evil.example:8443";
     const r = await guardMcpRequest(
-      new Request(URL_, { method: "POST", headers: { ...H, origin: "https://evil.example:8443" }, body: "{}" }),
+      new Request(URL_, { method: "POST", headers: { ...H, origin }, body: "{}" }),
       { log: (l) => lines.push(l), env: {} },
     );
     assert.ok("response" in r);
     assert.equal(r.response.status, 403);
     const body = await r.response.json();
-    assert.equal(body.jsonrpc, "2.0");
-    assert.equal(body.id, null);
-    assert.deepEqual(JSON.parse(lines[0]), { evt: "mcp_origin_rejected", origin_host: "evil.example:8443" });
+    assert.deepEqual(body, {
+      jsonrpc: "2.0",
+      id: null,
+      error: {
+        code: -32000,
+        message: "Forbidden: Origin not allowed",
+        data: {
+          code: "forbidden",
+          resolution: "Browser origins must be allow-listed. Setup: https://www.launchpadhq.io/connector.",
+        },
+      },
+    });
+    assert.equal(lines.length, 1);
+    const logged = JSON.parse(lines[0]) as Record<string, unknown>;
+    assert.deepEqual(logged, { evt: "mcp_origin_rejected" });
+    assert.equal(Object.hasOwn(logged, "origin_host"), false);
+    assert.equal(Object.hasOwn(logged, "request_id"), false);
+    const serialized = lines[0].toLowerCase();
+    for (const leaked of [origin.toLowerCase(), "evil.example", "8443", "origin_host", "user-agent", "x-forwarded-for"]) {
+      assert.equal(serialized.includes(leaked), false, leaked);
+    }
   });
   it("rejects lookalike origins", () => {
     for (const o of ["https://claude.ai.evil.com", "http://claude.ai", "https://evilchatgpt.com", "null"]) assert.ok(!isAllowedOrigin(o, {}), o);
