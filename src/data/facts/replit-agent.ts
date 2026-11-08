@@ -23,7 +23,20 @@ export default {
     verifiedAt: "2026-10-30",
     status: "verified",
   },
+  features: {
+    value: [
+      "Replit Agent can be used from Slack through the Replit workspace bot (mention @Replit), per Replit's Slack docs (as of 2026-11-05).",
+    ],
+    note: "Replit docs, as of 2026-11-05. Plan requirements for the Slack integration were not checked.",
+    sourceUrl: "https://docs.replit.com/features/platforms/slack",
+    checkedAt: "2026-11-05",
+    gatheredBy: "claude",
+    verifiedBy: "claude-recheck",
+    verifiedAt: "2026-11-05",
+    status: "verified",
+  },
   changelog: [
+    { date: "2026-11-05", field: "features", summary: "X-watch: added Replit Agent in Slack (@Replit workspace bot)." },
     { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://replit.com/pricing and price facts added with source and date." },
   ],
 } satisfies ToolFacts;

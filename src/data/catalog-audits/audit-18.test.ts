@@ -147,6 +147,8 @@ describe("catalog audit 18: stale facts batch 2", () => {
         if (AUDIT_22_FACT_KEYS.has(key) && fact.checkedAt === AUDIT_22_CHECKED_AT) continue;
         // Catalog audit 27 (2026-10-30) re-read these price facts.
         if (AUDIT_27_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_27_CHECKED_AT) continue;
+        // X-watch 2026-11-05 superseded this slug's GPT Image facts (2.5 -> 2.6).
+        if (slug === "gpt-image-1-5-dall-e-successor" && fact.checkedAt === "2026-11-05") continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);
