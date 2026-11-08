@@ -107,6 +107,7 @@ export const KNOWN_TOP_LEVEL = new Set([
   "robots.txt",
   "sitemap.xml",
   // public/
+  ".well-known",
   "brand",
   "images",
   "sponsors",

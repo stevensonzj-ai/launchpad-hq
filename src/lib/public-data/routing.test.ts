@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import robots from "@/app/robots";
+import { SITEMAP_STATIC_PUBLIC_PATHS } from "@/lib/sitemap-coverage";
 
 /**
  * proxy.ts must keep literal matcher strings (Next analyzes `config`
@@ -80,6 +81,7 @@ describe("middleware matcher", () => {
       "/robots.txt",
       "/llms.txt",
       "/llms-full.txt",
+      "/.well-known/openai-apps-challenge",
       "/mcp",
       "/data(.*)",
       "/md(.*)",
@@ -94,6 +96,31 @@ describe("middleware matcher", () => {
 
   it("lists /data as a public route", () => {
     assert.match(proxySource, /"\/data\(\.\*\)"/);
+  });
+
+  it("lets the OpenAI apps challenge through unauthenticated", () => {
+    const path = "/.well-known/openai-apps-challenge";
+    assert.equal(runsMiddleware(path), false, path);
+    assert.ok(proxySource.includes(`"${path}",`), path);
+    assert.equal(runsMiddleware("/discover"), true);
+    const body = readFileSync(`public${path}`);
+    assert.deepEqual(body, Buffer.from("REPLACE_WITH_OPENAI_TOKEN"));
+    const config = readFileSync("next.config.ts", "utf8");
+    assert.match(
+      config,
+      /source:\s*"\/\.well-known\/openai-apps-challenge",\s*headers:\s*\[\{\s*key:\s*"Content-Type",\s*value:\s*"text\/plain"\s*\}\]/,
+    );
+    assert.equal(
+      (SITEMAP_STATIC_PUBLIC_PATHS as readonly string[]).includes(path),
+      false,
+    );
+    const rules = [robots().rules].flat();
+    for (const rule of rules) {
+      const disallow = [rule.disallow ?? []].flat();
+      for (const prefix of disallow) {
+        assert.equal(path.startsWith(prefix), false, `blocked by ${prefix}`);
+      }
+    }
   });
 });
 
