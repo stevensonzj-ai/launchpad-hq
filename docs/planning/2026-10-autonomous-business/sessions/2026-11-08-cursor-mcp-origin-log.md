@@ -9,4 +9,4 @@
 
 **Checks:** `npm test` 1463 pass, 0 fail. `npm run typecheck` pass. `npm run lint` exit 0 (5 pre-existing warnings in quiz results, discussions, and prompts). `next build` not run; `/privacy` prerender without `DATABASE_URL` is a known failure.
 
-**Open / Zach:** Nothing to decide. Do not merge until you review the preview. PR number filled in after open.
+**Open / Zach:** Nothing to decide. Do not merge until you review. PR #165 (https://github.com/stevensonzj-ai/launchpad-hq/pull/165). Privacy change: `4b33462`.
