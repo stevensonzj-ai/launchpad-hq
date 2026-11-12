@@ -1,9 +1,9 @@
 import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead } from "@/lib/catalog-cache";
 import { recommendablePlatformWhere } from "@/lib/catalog-visibility";
+import { rankQuizRecommendations } from "./quiz-ranking";
 import {
   costTiersForBudget,
-  rankScoredPlatforms,
   type RecommendationInput,
 } from "./recommendations-score";
 
@@ -38,7 +38,8 @@ export async function computeRecommendations(body: RecommendationInput) {
 
   const candidates = await readCandidates(costFilter);
 
-  const recommendations = rankScoredPlatforms(candidates, body);
+  // Default picks first, then guard-approved tools by score (name breaks ties).
+  const recommendations = rankQuizRecommendations(candidates, body);
 
   const byCategory: Record<string, typeof recommendations> = {};
   for (const rec of recommendations) {

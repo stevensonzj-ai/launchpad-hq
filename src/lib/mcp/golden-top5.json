@@ -34,7 +34,7 @@
    "rezi",
    "teal",
    "chatgpt",
-   "gemini"
+   "claude"
   ]
  },
  "A04": {
@@ -239,9 +239,9 @@
   "top5": [
    "meta-ai",
    "chatgpt",
+   "claude",
    "gemini",
-   "grok",
-   "microsoft-copilot"
+   "grok"
   ]
  },
  "A21": {
@@ -960,9 +960,9 @@
   "top5": [
    "meta-ai",
    "chatgpt",
+   "claude",
    "gemini",
-   "grok",
-   "microsoft-copilot"
+   "grok"
   ]
  },
  "G54": {

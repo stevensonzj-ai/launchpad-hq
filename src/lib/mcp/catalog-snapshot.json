@@ -1,6 +1,6 @@
 {
  "note": "TESTS ONLY. Offline reconstruction of the listed catalog (see scripts/mcp-snapshot/build-catalog-snapshot.ts). Not a production export; regenerate from a real /data/v1 pull when one is taken.",
- "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools) + audit 33 (Pipecat description) + audit 34 (play-ht hidden)",
+ "built_from": "xlsx + seed scripts + catalog audits 1-11 + audits 15, 17, 18, 19, 20 and 21 + local export 2026-10-15 + audit 22 + audit 23 + audit 24 + audit 25 + audit 26 (tabnine hidden) + audit 27 (sora-2 hidden) + audit 28 (naver-hyperclova-x-cue, genspark, poe hidden) + audit 29 (poe unhidden) + audit 30 (hedra hidden) + audit 31 (Claude Max/Ultra, Pika H3 Flex, Antigravity plugins, Kimi 3D Make) + audit 32 (pipecat added, deepgram complementaryTools) + audit 33 (Pipecat description) + audit 34 (play-ht hidden) + copyfix 2026-11-12 (claude BEGINNER)",
  "db_rows": 226,
  "hidden_rows": [
   "adobe-sensei-firefly-in-cc",
@@ -1625,7 +1625,7 @@
    "primaryUse": "Conversational AI, coding, analysis, long-document processing",
    "primaryUseCases": "Long document analysis; agentic coding (Claude Code); complex writing; research; safety-sensitive tasks",
    "costTier": "FREEMIUM",
-   "difficultyLevel": "INTERMEDIATE",
+   "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",
     "mobile",

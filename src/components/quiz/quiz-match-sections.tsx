@@ -19,9 +19,14 @@ export type QuizMatchRec = {
   freeTierFeatures: string | null;
   hasMobileApp?: boolean;
   mobileWebFriendly?: boolean;
+  /** Internal ordering score. Never shown: it is a raw sum, not a percentage. */
   matchScore: number;
   aboveDifficulty?: boolean;
   matchReasons?: MatchReason[];
+  /** Hand-set default pick (src/data/quiz-defaults.ts). */
+  defaultPick?: boolean;
+  /** One plain sentence for a default pick. */
+  why?: string | null;
 };
 
 function ReasonChips({ reasons }: { reasons?: MatchReason[] }) {
@@ -85,11 +90,11 @@ function MatchCard({
         freeTierFeatures={rec.freeTierFeatures}
         hasMobileApp={rec.hasMobileApp}
         mobileWebFriendly={rec.mobileWebFriendly}
-        matchScore={rec.matchScore}
         aboveDifficulty={rec.aboveDifficulty}
         isFavorited={favoriteIds?.has(rec.id)}
         isSignedIn={isSignedIn}
       />
+      {rec.why && <p className="mt-2 text-sm text-gray-300">{rec.why}</p>}
       <ReasonChips reasons={rec.matchReasons} />
       <CardLinks slug={rec.slug} />
     </div>
