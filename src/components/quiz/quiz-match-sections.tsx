@@ -161,12 +161,9 @@ export function QuizMatchSections({
 
       {advanced.length > 0 && (
         <section>
-          <h2 className="text-xl font-semibold text-white">
-            Advanced{" "}
-            <span className="ml-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-400">
-              Advanced
-            </span>
-          </h2>
+          {/* One label, not "Advanced Advanced": this section holds tools above
+              the level chosen in the quiz, which may be intermediate, not advanced. */}
+          <h2 className="text-xl font-semibold text-white">Above your selected level</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {advanced.map((p) => (
               <MatchCard

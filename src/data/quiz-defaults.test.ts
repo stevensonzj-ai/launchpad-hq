@@ -9,6 +9,7 @@ import {
   EXPERIENCED_ONLY_CATEGORIES,
   LOCAL_CATEGORY,
   LOCAL_CHAT,
+  LOCAL_CODING,
   LOCAL_IMAGE,
   NEVER_ALLOWED_CATEGORIES,
   QUIZ_DEFAULTS,
@@ -61,6 +62,7 @@ describe("quiz default picks (data)", () => {
     }
     assert.deepEqual(LOCAL_CHAT.map((p) => p.slug), ["ollama", "lm-studio", "jan"]);
     assert.deepEqual(LOCAL_IMAGE.map((p) => p.slug), ["comfyui"]);
+    assert.deepEqual(LOCAL_CODING.map((p) => p.slug), ["ollama", "lm-studio", "jan"]);
   });
 
   it("every why is one plain sentence with a dated vendor source and no prices", () => {

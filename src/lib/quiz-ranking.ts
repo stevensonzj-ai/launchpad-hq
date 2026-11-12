@@ -21,12 +21,15 @@ import {
   LOCAL_CATEGORY,
   LOCAL_CHAT,
   LOCAL_CHAT_GOALS,
+  LOCAL_CODING,
+  LOCAL_CODING_GOALS,
   LOCAL_IMAGE,
   LOCAL_IMAGE_GOALS,
   NEVER_ALLOWED_CATEGORIES,
   QUIZ_DEFAULTS,
   type DefaultPick,
 } from "@/data/quiz-defaults";
+import { QUIZ_GOAL_OPTIONS } from "./quiz-options";
 import {
   scorePlatform,
   type MatchReason,
@@ -62,13 +65,32 @@ export function isLocalRuntime(input: RecommendationInput): boolean {
   return input.runtime === "local";
 }
 
+/** runtime=local default picks for one goal; empty for video, audio and automation. */
+export function localPicksForGoal(goal: string): readonly DefaultPick[] {
+  if ((LOCAL_CHAT_GOALS as readonly string[]).includes(goal)) return LOCAL_CHAT;
+  if ((LOCAL_CODING_GOALS as readonly string[]).includes(goal)) return LOCAL_CODING;
+  if ((LOCAL_IMAGE_GOALS as readonly string[]).includes(goal)) return LOCAL_IMAGE;
+  return [];
+}
+
+const GOAL_LABELS: Record<string, string> = Object.fromEntries(QUIZ_GOAL_OPTIONS.map((o) => [o.id, o.label]));
+
+/**
+ * runtime=local only: a one-line notice when a chosen goal has no local
+ * picks, so its results are cloud tools. Null otherwise. Wording pending
+ * Zach's approval.
+ */
+export function localRuntimeNotice(input: RecommendationInput): string | null {
+  if (!isLocalRuntime(input)) return null;
+  const missing = (input.goals ?? []).filter((g) => localPicksForGoal(g).length === 0);
+  if (missing.length === 0) return null;
+  const names = missing.map((g) => GOAL_LABELS[g] ?? g).join(" or ");
+  return `We don't list any beginner-friendly tools for ${names} that run on your own computer, so these results are cloud tools.`;
+}
+
 /** The ordered default picks for one goal, before any eligibility check. */
 export function defaultPicksForGoal(goal: string, input: RecommendationInput): readonly DefaultPick[] {
-  if (isLocalRuntime(input)) {
-    if ((LOCAL_CHAT_GOALS as readonly string[]).includes(goal)) return LOCAL_CHAT;
-    if ((LOCAL_IMAGE_GOALS as readonly string[]).includes(goal)) return LOCAL_IMAGE;
-    return [];
-  }
+  if (isLocalRuntime(input)) return localPicksForGoal(goal);
   const entry = QUIZ_DEFAULTS[goal as keyof typeof QUIZ_DEFAULTS];
   if (!entry) return [];
   return isExperienced(input.experienceLevel) ? entry.experienced : entry.beginner;
@@ -104,7 +126,10 @@ export function orderedDefaultPicks(
 /** Categories a non-default tool may come from, for these answers. */
 export function allowedCategories(input: RecommendationInput): Set<string> {
   const allowed = new Set<string>();
+  const local = isLocalRuntime(input);
   for (const goal of input.goals ?? []) {
+    // A visitor who chose local sees no cloud tools for a goal that has local picks.
+    if (local && localPicksForGoal(goal).length > 0) continue;
     const key = goal as keyof typeof GOAL_CATEGORIES;
     for (const c of GOAL_CATEGORIES[key] ?? []) allowed.add(c);
     if (isExperienced(input.experienceLevel)) {
@@ -112,7 +137,7 @@ export function allowedCategories(input: RecommendationInput): Set<string> {
     }
   }
   // The only way local-open-source-ai is ever allowed.
-  if (isLocalRuntime(input)) allowed.add(LOCAL_CATEGORY);
+  if (local) allowed.add(LOCAL_CATEGORY);
   for (const c of NEVER_ALLOWED_CATEGORIES) allowed.delete(c);
   return allowed;
 }

@@ -380,6 +380,8 @@ export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
 export const LOCAL_CHAT_GOALS = ["content_creation", "research", "business", "education", "data_analysis"] as const;
 /** runtime=local: these goals lead with local image tools. */
 export const LOCAL_IMAGE_GOALS = ["image_generation"] as const;
+/** runtime=local: these goals lead with local apps described for coding. */
+export const LOCAL_CODING_GOALS = ["coding"] as const;
 
 export const LOCAL_CHAT: readonly DefaultPick[] = [
   pick(
@@ -396,6 +398,25 @@ export const LOCAL_CHAT: readonly DefaultPick[] = [
     "jan",
     "An open-source desktop app that runs open models on your own computer and can also connect to online model providers.",
     "https://www.jan.ai/",
+  ),
+];
+
+/** Same three apps as LOCAL_CHAT; each sentence names the setup coding needs. */
+export const LOCAL_CODING: readonly DefaultPick[] = [
+  pick(
+    "ollama",
+    "Runs open models on your computer; once you install it and download a model, you can connect it to VS Code or to coding agents such as Claude Code.",
+    "https://docs.ollama.com/integrations",
+  ),
+  pick(
+    "lm-studio",
+    "A desktop app that runs open models on your computer; once you download a model and start its local server, coding tools such as Codex can use it.",
+    "https://lmstudio.ai/docs/integrations/codex",
+  ),
+  pick(
+    "jan",
+    "An open-source desktop app that runs open models on your computer; download a model and start its local server, and coding tools that accept an OpenAI-compatible address can use it.",
+    "https://docs.jan.ai/desktop/api-server",
   ),
 ];
 
@@ -443,7 +464,11 @@ export const EXPERIENCED_ONLY_CATEGORIES: Partial<Record<QuizGoalId, readonly st
   coding: ["ai-apis-developer-services"],
 };
 
-/** Allowed for every goal when runtime=local, and never otherwise. */
+/**
+ * Allowed for every goal when runtime=local, and never otherwise. For a goal
+ * with local picks it is the ONLY category allowed (no cloud tools); goals
+ * without local picks keep their cloud categories and show a notice.
+ */
 export const LOCAL_CATEGORY = "local-open-source-ai";
 
 /** Specialist categories no goal allows. */
@@ -459,6 +484,7 @@ export function allDefaultPicks(): DefaultPick[] {
   return [
     ...Object.values(QUIZ_DEFAULTS).flatMap((g) => [...g.beginner, ...g.experienced]),
     ...LOCAL_CHAT,
+    ...LOCAL_CODING,
     ...LOCAL_IMAGE,
   ];
 }

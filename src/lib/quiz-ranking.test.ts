@@ -8,6 +8,7 @@ import { NEVER_ALLOWED_CATEGORIES, QUIZ_DEFAULTS } from "@/data/quiz-defaults";
 import { quizToRecommendationInput, type QuizAnswers } from "./quiz-map";
 import {
   allowedCategories,
+  localRuntimeNotice,
   orderedDefaultPicks,
   rankQuizRecommendations,
   type RankableCandidate,
@@ -109,6 +110,44 @@ describe("quiz ranking: Zach's list corrections (2026-11-12)", () => {
           if (["khan-academy-khanmigo", "invideo-ai", "notion-ai"].includes(r.slug)) assert.equal(r.defaultPick, false, r.slug);
         }
       }
+    }
+  });
+});
+
+describe("quiz ranking: runtime=local (preview bug 2026-11-12)", () => {
+  it("golden: coding / beginner / free / local leads with ollama, lm-studio, jan and contains no cloud tool", () => {
+    const { input, out } = rank(answers({ goal: "coding", runtime: "local" }));
+    assert.deepEqual(out.slice(0, 3).map((r) => r.slug), ["ollama", "lm-studio", "jan"]);
+    for (const r of out) assert.equal(r.category.slug, "local-open-source-ai", r.slug);
+    assert.equal(localRuntimeNotice(input), null);
+  });
+
+  it("goals with local picks return only local-open-source-ai tools", () => {
+    for (const goal of ["content_creation", "coding", "research", "image_generation", "business", "education", "data_analysis"]) {
+      for (const experience of ["beginner", "advanced"]) {
+        const { input, out } = rank(answers({ goal, experience, runtime: "local" }));
+        assert.deepEqual([...allowedCategories(input)], ["local-open-source-ai"], goal);
+        for (const r of out) assert.equal(r.category.slug, "local-open-source-ai", `${goal}: ${r.slug}`);
+      }
+    }
+  });
+
+  it("golden: video / beginner / free / local shows the notice, then cloud results", () => {
+    const { input, out } = rank(answers({ goal: "video", runtime: "local" }));
+    assert.equal(
+      localRuntimeNotice(input),
+      "We don't list any beginner-friendly tools for Video that run on your own computer, so these results are cloud tools.",
+    );
+    assert.ok(out.length > 0);
+    assert.ok(out.some((r) => r.category.slug === "video-creation-editing"));
+  });
+
+  it("audio and automation show the notice too; cloud runtime never does", () => {
+    for (const goal of ["audio", "automation"]) {
+      assert.ok(localRuntimeNotice(quizToRecommendationInput(answers({ goal, runtime: "local" }))), goal);
+    }
+    for (const { id: goal } of QUIZ_GOAL_OPTIONS) {
+      assert.equal(localRuntimeNotice(quizToRecommendationInput(answers({ goal }))), null, goal);
     }
   });
 });

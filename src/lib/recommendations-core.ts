@@ -1,7 +1,7 @@
 import { prismaRead as prisma } from "@/lib/db";
 import { cachedCatalogRead } from "@/lib/catalog-cache";
 import { recommendablePlatformWhere } from "@/lib/catalog-visibility";
-import { rankQuizRecommendations } from "./quiz-ranking";
+import { localRuntimeNotice, rankQuizRecommendations } from "./quiz-ranking";
 import {
   costTiersForBudget,
   type RecommendationInput,
@@ -50,6 +50,8 @@ export async function computeRecommendations(body: RecommendationInput) {
 
   return {
     recommendations,
+    /** runtime=local only: one line shown above the results, else null. */
+    notice: localRuntimeNotice(body),
     byCategory,
     totalCandidates: candidates.length,
     totalScored: candidates.length,
