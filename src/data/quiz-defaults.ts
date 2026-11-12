@@ -36,8 +36,6 @@ const pick = (slug: string, why: string, source: string): DefaultPick => ({ slug
 // ---------- picks ----------
 // "(snippet)": the vendor page blocked automated fetches, so the wording was
 // confirmed from that page's own search-result snippet.
-// DECISION NEEDED: the sentence cannot be made true of a free plan, or could
-// not be confirmed on a vendor page. Listed in the PR description.
 
 const CHATGPT_WRITING = pick(
   "chatgpt",
@@ -59,13 +57,6 @@ const NOTEBOOK_RESEARCH = pick(
   "Answers questions from the sources you add to a notebook and cites the passages behind each answer; it can also help you find web sources.",
   "https://support.google.com/gemininotebook/answer/16215270",
 );
-// DECISION NEEDED: Khanmigo is free for teachers only; learners need a paid
-// subscription. The catalog row is FREEMIUM, so it passes "Free only".
-const KHANMIGO = pick(
-  "khan-academy-khanmigo",
-  "A tutor from Khan Academy that guides you to the answer instead of giving it away.",
-  "https://www.khanmigo.ai/pricing",
-);
 // (snippet) quizlet.com returned 403 on every page; weakest evidence here.
 const QUIZLET = pick(
   "quizlet-q-chat",
@@ -77,6 +68,11 @@ const NOTEBOOK_STUDY = pick(
   "Answers questions about your study material and course notes, using the sources you add to a notebook.",
   "https://support.google.com/gemininotebook/answer/16215270",
 );
+const CHATGPT_STUDY = pick(
+  "chatgpt",
+  "Explains a topic step by step and answers your follow-up questions in a chat window.",
+  "https://chatgpt.com/pricing",
+);
 const CHATGPT_DATA = pick(
   "chatgpt",
   "Reads a spreadsheet you upload, runs calculations and draws charts from it.",
@@ -86,13 +82,6 @@ const GEMINI_DATA = pick(
   "gemini",
   "Analyzes spreadsheets and other files you upload, and in the web app can draw charts from that data.",
   "https://support.google.com/gemini/answer/14903178",
-);
-// DECISION NEEDED: spreadsheet upload on free Copilot is not confirmed; this
-// article could not be opened (search snippet only).
-const COPILOT_DATA = pick(
-  "microsoft-copilot",
-  "Reads a spreadsheet you upload and answers questions about the data in chat.",
-  "https://support.microsoft.com/en-us/topic/file-upload-in-microsoft-copilot-8b7bf432-9576-4b16-9dee-6c19a4169e62",
 );
 
 export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
@@ -225,17 +214,15 @@ export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
         "A video editor on phone, desktop and web, with templates and basic editing tools.",
         "https://www.capcut.com/pricing",
       ),
-      // DECISION NEEDED: invideo.io/pricing lists no free plan, but the
-      // catalog row is FREEMIUM, so it still passes "Free only".
-      pick(
-        "invideo-ai",
-        "Builds and edits videos from a script or idea, adding stock footage and AI voiceover.",
-        "https://invideo.io/pricing",
-      ),
       pick(
         "veed",
         "Edits video in your browser, with automatic subtitles and audio cleanup.",
         "https://www.veed.io/learn/veed-vs-capcut",
+      ),
+      pick(
+        "heygen",
+        "Makes presenter videos with AI avatars and translates videos into other languages.",
+        "https://www.heygen.com/pricing",
       ),
     ],
     experienced: [
@@ -249,11 +236,6 @@ export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
         "google-veo-3-1",
         "Google's video model; anyone with a Google account can generate a small number of short clips each month in Google Vids.",
         "https://blog.google/products-and-platforms/products/workspace/google-vids-updates-lyria-veo/",
-      ),
-      pick(
-        "heygen",
-        "Makes presenter videos with AI avatars and translates videos into other languages.",
-        "https://www.heygen.com/pricing",
       ),
     ],
   },
@@ -312,12 +294,6 @@ export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
       ),
     ],
     experienced: [
-      // DECISION NEEDED: Notion's free plan includes only a trial of Notion AI.
-      pick(
-        "notion-ai",
-        "Writes, summarizes and answers questions using the pages in your Notion workspace.",
-        "https://www.notion.com/pricing",
-      ),
       pick(
         "otter-ai",
         "Transcribes meetings live and produces notes you can search afterwards.",
@@ -367,11 +343,8 @@ export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
     ],
   },
   education: {
-    beginner: [KHANMIGO, QUIZLET, NOTEBOOK_STUDY],
+    beginner: [QUIZLET, NOTEBOOK_STUDY, CHATGPT_STUDY],
     experienced: [
-      KHANMIGO,
-      QUIZLET,
-      NOTEBOOK_STUDY,
       pick(
         "magicschool",
         "A set of tools for teachers: lesson plans, rubrics and feedback on student work.",
@@ -382,21 +355,23 @@ export const QUIZ_DEFAULTS: Record<QuizGoalId, GoalDefaults> = {
         "A browser extension that adds AI tools for teachers inside Google Docs and Classroom.",
         "https://chromewebstore.google.com/detail/brisk-teaching/pcblbflgdkdfdjpjifeppkljdnaekohj",
       ),
+      QUIZLET,
+      NOTEBOOK_STUDY,
+      CHATGPT_STUDY,
     ],
   },
   data_analysis: {
-    beginner: [CHATGPT_DATA, GEMINI_DATA, COPILOT_DATA],
+    beginner: [CHATGPT_DATA, GEMINI_DATA],
     experienced: [
-      // DECISION NEEDED: julius.ai returned 403; snippets of its pricing page
-      // list spreadsheet analysis and charts under paid tiers.
+      // Describes the product only: julius.ai returned 403, and snippets of its
+      // pricing page put analysis under paid tiers, so no plan is implied.
       pick(
         "julius-ai",
-        "Upload a dataset and ask questions in plain English; it runs the analysis and draws charts.",
+        "A data analysis assistant: you give it a dataset and ask questions in plain English, and it runs the analysis and draws charts.",
         "https://julius.ai/pricing",
       ),
       CHATGPT_DATA,
       GEMINI_DATA,
-      COPILOT_DATA,
     ],
   },
 };

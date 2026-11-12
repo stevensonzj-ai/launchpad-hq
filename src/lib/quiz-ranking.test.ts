@@ -74,6 +74,45 @@ describe("quiz ranking: golden beginner / free / cloud cases", () => {
   }
 });
 
+describe("quiz ranking: Zach's list corrections (2026-11-12)", () => {
+  const slugs = (goal: keyof typeof QUIZ_DEFAULTS, level: "beginner" | "experienced") =>
+    QUIZ_DEFAULTS[goal][level].map((p) => p.slug);
+
+  it("the corrected default lists, exactly", () => {
+    assert.deepEqual(slugs("education", "beginner"), ["quizlet-q-chat", "gemini-notebook", "chatgpt"]);
+    assert.deepEqual(slugs("education", "experienced"), ["magicschool", "brisk-teaching", "quizlet-q-chat", "gemini-notebook", "chatgpt"]);
+    assert.deepEqual(slugs("video", "beginner"), ["capcut", "veed", "heygen"]);
+    assert.deepEqual(slugs("video", "experienced"), ["runway", "google-veo-3-1"]);
+    assert.deepEqual(slugs("business", "experienced"), ["otter-ai", "gamma"]);
+    assert.deepEqual(slugs("data_analysis", "beginner"), ["chatgpt", "gemini"]);
+    assert.deepEqual(slugs("data_analysis", "experienced"), ["julius-ai", "chatgpt", "gemini"]);
+  });
+
+  it("removed picks are no longer defaults anywhere", () => {
+    const all = Object.values(QUIZ_DEFAULTS).flatMap((g) => [...g.beginner, ...g.experienced]).map((p) => p.slug);
+    for (const gone of ["khan-academy-khanmigo", "invideo-ai", "notion-ai"]) assert.ok(!all.includes(gone), gone);
+    assert.ok(!slugs("data_analysis", "beginner").includes("microsoft-copilot"));
+    assert.ok(!slugs("data_analysis", "experienced").includes("microsoft-copilot"));
+  });
+
+  it("goldens: education leads with Quizlet, video with CapCut, data with ChatGPT then Gemini", () => {
+    assert.equal(rank(answers({ goal: "education" })).out[0]?.slug, "quizlet-q-chat");
+    assert.equal(rank(answers({ goal: "video" })).out[0]?.slug, "capcut");
+    assert.deepEqual(rank(answers({ goal: "data_analysis" })).out.slice(0, 2).map((r) => r.slug), ["chatgpt", "gemini"]);
+    assert.equal(rank(answers({ goal: "education", experience: "intermediate" })).out[0]?.slug, "magicschool");
+  });
+
+  it("removed picks can still appear as ordinary scored results, never as defaults", () => {
+    for (const goal of ["education", "video", "business", "data_analysis"]) {
+      for (const experience of ["beginner", "intermediate"]) {
+        for (const r of rank(answers({ goal, experience })).out) {
+          if (["khan-academy-khanmigo", "invideo-ai", "notion-ai"].includes(r.slug)) assert.equal(r.defaultPick, false, r.slug);
+        }
+      }
+    }
+  });
+});
+
 describe("quiz ranking: the production failure (2026-11-12)", () => {
   it("content_creation / beginner / free / cloud keeps HubSpot, Doximity, InVideo and HeyGen out of the top five", () => {
     const { out } = rank(answers({ goal: "content_creation" }));
