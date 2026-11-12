@@ -30,10 +30,11 @@ test("Cards prefer sourced fact-file limits over legacy catalog copy", () => {
 });
 
 test("Cards retain real catalog details and quiz difficulty signals without fact files", () => {
-  const html = renderToStaticMarkup(createElement(PlatformCard, { ...platform, aboveDifficulty: true, matchScore: 82 }));
+  const html = renderToStaticMarkup(createElement(PlatformCard, { ...platform, aboveDifficulty: true }));
   assert.ok(html.includes("legacy catalog limits"));
   assert.ok(!html.includes("Free: Free:"));
-  assert.ok(html.includes("82% match"));
+  // The quiz score is a raw sum, not a percentage, so no card shows "% match".
+  assert.doesNotMatch(html, /% match/);
   assert.ok(html.includes("Above the difficulty level you selected in the quiz"));
   assert.ok(html.includes("Advanced"));
 });

@@ -34,6 +34,7 @@ export function ResultsClient() {
   const [stash, setStash] = useState<QuizAnswers | null | undefined>(undefined);
   const [recs, setRecs] = useState<Rec[] | null>(null);
   const [recsError, setRecsError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [saveError, setSaveError] = useState<string | null>(null);
   const saveAttempted = useRef(false);
@@ -65,7 +66,10 @@ export function ResultsClient() {
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        if (!cancelled) setRecs(data.recommendations ?? []);
+        if (!cancelled) {
+          setNotice(typeof data.notice === "string" ? data.notice : null);
+          setRecs(data.recommendations ?? []);
+        }
       } catch (e) {
         if (!cancelled) setRecsError(e instanceof Error ? e.message : "Failed to load");
       }
@@ -170,6 +174,9 @@ export function ResultsClient() {
       )}
 
       <section className="mt-8">
+        {notice && recs !== null && !recsError && (
+          <p className="mb-6 text-sm text-gray-300">{notice}</p>
+        )}
         {recsError ? (
           <p className="text-sm text-red-400">Couldn&apos;t load matches: {recsError}.</p>
         ) : recs === null ? (

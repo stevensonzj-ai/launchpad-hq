@@ -52,6 +52,12 @@ export type RecommendationInput = {
   budget?: string;
   experienceLevel?: string;
   priorities?: string[];
+  /**
+   * Quiz runtime answer (cloud | browser | mobile | local). Optional: when it
+   * is missing the quiz ordering behaves as cloud. scorePlatform ignores it;
+   * scoring still reads the `offline` / `mobile` / `browser` priorities.
+   */
+  runtime?: string;
 };
 
 export type MatchReason =

@@ -6,8 +6,10 @@ import { apiError, methodsNotAllowed, withApiErrors } from "@/lib/api-error";
  * Recommendation engine — returns personalized platform suggestions
  * based on user preferences from onboarding survey or quiz.
  *
- * POST body: { goals, budget, experienceLevel, priorities }
- * Each recommendation includes matchReasons chips derived from score parts.
+ * POST body: { goals, budget, experienceLevel, priorities, runtime? }
+ * `runtime` is optional; when it is missing the ordering behaves as cloud.
+ * Each recommendation includes matchReasons chips derived from score parts,
+ * plus `defaultPick` and `why` for hand-set default picks.
  */
 export function POST(request: NextRequest) {
   return withApiErrors("api/recommendations", async () => {
@@ -15,13 +17,14 @@ export function POST(request: NextRequest) {
     if (!body || typeof body !== "object") {
       return apiError("bad_request", { message: "Send a JSON object body: { goals, budget, experienceLevel, priorities }." });
     }
-    const { goals, budget, experienceLevel, priorities } = body;
+    const { goals, budget, experienceLevel, priorities, runtime } = body;
 
     const result = await computeRecommendations({
       goals: goals || [],
       budget,
       experienceLevel,
       priorities: priorities || [],
+      ...(typeof runtime === "string" && runtime ? { runtime } : {}),
     });
 
     return NextResponse.json(result);

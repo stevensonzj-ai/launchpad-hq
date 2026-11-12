@@ -413,7 +413,7 @@ export function toPublicQuiz(): PublicQuizT {
     })),
     mapping: {
       note:
-        "How answers become recommendation inputs: goals match tools by these keywords, budget limits the cost tiers considered, and the other answers add ranking priorities. Scoring also weighs each tool's difficulty against the experience answer, plus an editorial featured flag that is not a sponsor flag.",
+        "How answers become recommendation inputs: goals match tools by these keywords, budget limits the cost tiers considered, and the other answers add ranking priorities. Scoring also weighs each tool's difficulty against the experience answer, plus an editorial featured flag that is not a sponsor flag. Hand-picked default tools for each goal and experience level lead the results when they fit the budget; no affiliate tool is ever a default pick. Other tools must match a goal keyword and come from a category that goal allows, and ties are ordered by name.",
       goals: Object.fromEntries(optionsOf("goals").map((o) => [o.id, { keywords: [...(goalKeywords[o.id] ?? [])] }])),
       experience: Object.fromEntries(
         optionsOf("experience").map((o) => [o.id, { priorities: prioritiesFor({ experience: o.id }) }]),

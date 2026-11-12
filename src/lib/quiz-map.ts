@@ -46,5 +46,6 @@ export function quizToRecommendationInput(
     budget: answers.budget || "free",
     experienceLevel: answers.experience || "beginner",
     priorities,
+    ...(answers.runtime ? { runtime: answers.runtime } : {}),
   };
 }

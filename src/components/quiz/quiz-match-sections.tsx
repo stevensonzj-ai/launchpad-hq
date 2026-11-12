@@ -19,9 +19,14 @@ export type QuizMatchRec = {
   freeTierFeatures: string | null;
   hasMobileApp?: boolean;
   mobileWebFriendly?: boolean;
+  /** Internal ordering score. Never shown: it is a raw sum, not a percentage. */
   matchScore: number;
   aboveDifficulty?: boolean;
   matchReasons?: MatchReason[];
+  /** Hand-set default pick (src/data/quiz-defaults.ts). */
+  defaultPick?: boolean;
+  /** One plain sentence for a default pick. */
+  why?: string | null;
 };
 
 function ReasonChips({ reasons }: { reasons?: MatchReason[] }) {
@@ -85,11 +90,11 @@ function MatchCard({
         freeTierFeatures={rec.freeTierFeatures}
         hasMobileApp={rec.hasMobileApp}
         mobileWebFriendly={rec.mobileWebFriendly}
-        matchScore={rec.matchScore}
         aboveDifficulty={rec.aboveDifficulty}
         isFavorited={favoriteIds?.has(rec.id)}
         isSignedIn={isSignedIn}
       />
+      {rec.why && <p className="mt-2 text-sm text-gray-300">{rec.why}</p>}
       <ReasonChips reasons={rec.matchReasons} />
       <CardLinks slug={rec.slug} />
     </div>
@@ -156,12 +161,9 @@ export function QuizMatchSections({
 
       {advanced.length > 0 && (
         <section>
-          <h2 className="text-xl font-semibold text-white">
-            Advanced{" "}
-            <span className="ml-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-400">
-              Advanced
-            </span>
-          </h2>
+          {/* One label, not "Advanced Advanced": this section holds tools above
+              the level chosen in the quiz, which may be intermediate, not advanced. */}
+          <h2 className="text-xl font-semibold text-white">Above your selected level</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {advanced.map((p) => (
               <MatchCard

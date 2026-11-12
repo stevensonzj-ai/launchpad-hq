@@ -21,7 +21,6 @@ interface PlatformCardProps {
   difficultyLevel: string;
   category: { name: string; slug: string };
   freeTierFeatures: string | null;
-  matchScore?: number;
   /** True when the platform sits above the user's selected difficulty. */
   aboveDifficulty?: boolean;
   hasMobileApp?: boolean;
@@ -57,7 +56,6 @@ export function PlatformCard({
   difficultyLevel,
   category,
   freeTierFeatures,
-  matchScore,
   aboveDifficulty,
   hasMobileApp,
   mobileWebFriendly,
@@ -97,11 +95,6 @@ export function PlatformCard({
           </div>
         </div>
         <div className="relative z-10 flex shrink-0 flex-wrap items-start justify-end gap-2">
-          {matchScore !== undefined && matchScore > 0 && (
-            <span className="rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-400">
-              {matchScore}% match
-            </span>
-          )}
           {showFavorite && (
             <FavoriteButton
               slug={slug}
