@@ -4,13 +4,20 @@
  *
  * Usage:
  *   npm run export:content-tracker -- [--out <path>] [--audit <file.json|file.csv>]
+ *                                     [--db-json <file.json>]
  *                                     [--sitemap-url <url>] [--no-sitemap]
  *                                     [--confirm-production]
  *
- * Read-only. Opens one transaction with SET TRANSACTION READ ONLY and runs
- * SELECTs only. Gate G1 (src/lib/prod-guard.ts) still applies: production
- * needs --confirm-production plus CONFIRM_PROD_HOST, same as the write
- * scripts. DATABASE_URL is never printed.
+ * Read-only. Without --db-json, opens one transaction with SET TRANSACTION
+ * READ ONLY and runs the three SELECTs in
+ * scripts/sql/readonly/content-tracker-queries.sql (documentation; not a
+ * Guarded SQL file). Gate G1 (src/lib/prod-guard.ts) still applies on that
+ * path: production needs --confirm-production plus CONFIRM_PROD_HOST.
+ * DATABASE_URL is never printed.
+ *
+ * --db-json reads { platforms, prompts, discussions } from a file instead.
+ * That path does not connect, and does not require DATABASE_URL or the
+ * prod-guard host check.
  *
  * Default output: ../launchpadhq/docs/planning/launchpad-content-tracker-YYYY-MM-DD.xlsx
  * (relative to the repo root) when that folder exists, else ./docs/planning/.
@@ -23,6 +30,14 @@ import "dotenv/config";
 import ExcelJS from "exceljs";
 import { Client } from "pg";
 
+import {
+  CONTENT_TRACKER_QUERIES_PATH,
+  contentTrackerQueriesFromSql,
+  mapContentTrackerRows,
+  platformRecordsFromDbJson,
+  type ContentTrackerCountRow,
+  type ContentTrackerPlatformRow,
+} from "../src/lib/content-tracker-db";
 import { checkTargetHost } from "../src/lib/prod-guard";
 import { listRegisteredToolFacts } from "../src/data/facts";
 import type { ToolFacts } from "../src/data/facts/types";
@@ -58,7 +73,13 @@ const FILE_PREFIX = "launchpad-content-tracker-";
 
 // ── Args ────────────────────────────────────────────────────
 
-type Args = { out: string | null; audit: string | null; sitemapUrl: string; noSitemap: boolean };
+type Args = {
+  out: string | null;
+  audit: string | null;
+  sitemapUrl: string;
+  noSitemap: boolean;
+  dbJson: string | null;
+};
 
 function argValue(argv: readonly string[], flag: string): string | null {
   const i = argv.indexOf(flag);
@@ -74,6 +95,7 @@ function parseArgs(argv: readonly string[]): Args {
     audit: argValue(argv, "--audit"),
     sitemapUrl: argValue(argv, "--sitemap-url") ?? DEFAULT_SITEMAP_URL,
     noSitemap: argv.includes("--no-sitemap"),
+    dbJson: argValue(argv, "--db-json"),
   };
 }
 
@@ -115,14 +137,25 @@ function hostnameOnly(url: string | undefined): string | null {
   }
 }
 
-type PlatformSql = Omit<
-  PlatformRecord,
-  "approvedPrompts" | "pendingPrompts" | "approvedDiscussions" | "pendingDiscussions"
-> & { id: string };
-
-type CountSql = { platformId: string; status: string; n: number };
+function loadTrackerQueries() {
+  const file = path.join(REPO_ROOT, CONTENT_TRACKER_QUERIES_PATH);
+  let text: string;
+  try {
+    text = fs.readFileSync(file, "utf8");
+  } catch (err) {
+    fail(
+      `Could not read content tracker SQL (${CONTENT_TRACKER_QUERIES_PATH}): ${err instanceof Error ? err.message : String(err)}`,
+    );
+  }
+  try {
+    return contentTrackerQueriesFromSql(text);
+  } catch (err) {
+    fail(`Could not parse content tracker SQL: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
 
 async function readDatabase(connectionString: string): Promise<PlatformRecord[]> {
+  const queries = loadTrackerQueries();
   const client = new Client({ connectionString });
   await client.connect();
   try {
@@ -130,37 +163,33 @@ async function readDatabase(connectionString: string): Promise<PlatformRecord[]>
     await client.query("SET TRANSACTION READ ONLY");
     await client.query("SET LOCAL statement_timeout = '60s'");
 
-    const platforms = await client.query<PlatformSql>(`
-      SELECT p.id, p.slug, p.name, p.website, p.description,
-             c.name AS "categoryName", c.slug AS "categorySlug",
-             p."costTier"::text AS "costTier", p."currentPricing",
-             p."apiAvailable", p.verified, p."updatedAt"
-      FROM platforms p
-      JOIN categories c ON c.id = p."categoryId"
-      ORDER BY p.name`);
-    const prompts = await client.query<CountSql>(
-      `SELECT "platformId", status::text AS status, count(*)::int AS n FROM prompts GROUP BY 1, 2`,
-    );
-    const discussions = await client.query<CountSql>(
-      `SELECT "platformId", status::text AS status, count(*)::int AS n FROM discussions GROUP BY 1, 2`,
-    );
+    const platforms = await client.query<ContentTrackerPlatformRow>(queries.platforms);
+    const prompts = await client.query<ContentTrackerCountRow>(queries.prompts);
+    const discussions = await client.query<ContentTrackerCountRow>(queries.discussions);
     await client.query("ROLLBACK");
 
-    const count = (rows: CountSql[], id: string, status: string) =>
-      rows.find((r) => r.platformId === id && r.status === status)?.n ?? 0;
-
-    return platforms.rows.map(({ id, ...p }) => ({
-      ...p,
-      approvedPrompts: count(prompts.rows, id, "APPROVED"),
-      pendingPrompts: count(prompts.rows, id, "PENDING"),
-      approvedDiscussions: count(discussions.rows, id, "APPROVED"),
-      pendingDiscussions: count(discussions.rows, id, "PENDING"),
-    }));
+    return mapContentTrackerRows(platforms.rows, prompts.rows, discussions.rows);
   } catch (err) {
     await client.query("ROLLBACK").catch(() => undefined);
     throw err;
   } finally {
     await client.end();
+  }
+}
+
+function readJsonPlatforms(fileArg: string): PlatformRecord[] {
+  const file = path.resolve(fileArg);
+  if (!fs.existsSync(file)) fail(`DB JSON file not found: ${file}`);
+  let text: string;
+  try {
+    text = fs.readFileSync(file, "utf8");
+  } catch (err) {
+    fail(`Could not read --db-json file: ${err instanceof Error ? err.message : String(err)}`);
+  }
+  try {
+    return platformRecordsFromDbJson(text);
+  } catch (err) {
+    fail(`Could not parse --db-json file: ${err instanceof Error ? err.message : String(err)}`);
   }
 }
 
@@ -329,11 +358,16 @@ async function main() {
   const args = parseArgs(argv);
   const now = new Date();
 
-  if (!process.env.DATABASE_URL) fail("DATABASE_URL is not set. Aborting.");
-  const directUrl = getDirectUrl();
-  const host = hostnameOnly(directUrl) ?? hostnameOnly(process.env.DATABASE_URL);
-  const target = checkTargetHost(host, process.argv, process.env);
-  if (!target.ok) fail(target.reason);
+  // --db-json supplies the three result sets from a file. No connection,
+  // so DATABASE_URL and the prod-guard host check do not apply.
+  let directUrl: string | undefined;
+  if (!args.dbJson) {
+    if (!process.env.DATABASE_URL) fail("DATABASE_URL is not set. Aborting.");
+    directUrl = getDirectUrl();
+    const host = hostnameOnly(directUrl) ?? hostnameOnly(process.env.DATABASE_URL);
+    const target = checkTargetHost(host, process.argv, process.env);
+    if (!target.ok) fail(target.reason);
+  }
 
   let audit: Map<string, string> | null = null;
   if (args.audit) {
@@ -358,11 +392,16 @@ async function main() {
   }
 
   let platforms: PlatformRecord[];
-  try {
-    platforms = await readDatabase(directUrl);
-  } catch (err) {
-    // pg error messages do not include the connection string.
-    fail(`Database read failed: ${err instanceof Error ? err.message : String(err)}`);
+  if (args.dbJson) {
+    platforms = readJsonPlatforms(args.dbJson);
+  } else {
+    if (!directUrl) fail("DATABASE_URL is not set. Aborting.");
+    try {
+      platforms = await readDatabase(directUrl);
+    } catch (err) {
+      // pg error messages do not include the connection string.
+      fail(`Database read failed: ${err instanceof Error ? err.message : String(err)}`);
+    }
   }
 
   const input = {
