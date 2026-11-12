@@ -77,8 +77,8 @@ const GOAL_LABELS: Record<string, string> = Object.fromEntries(QUIZ_GOAL_OPTIONS
 
 /**
  * runtime=local only: a one-line notice when a chosen goal has no local
- * picks, so its results are cloud tools. Null otherwise. Wording pending
- * Zach's approval.
+ * picks, so its results are cloud tools. Null otherwise. Wording approved
+ * by Zach, 2026-11-12.
  */
 export function localRuntimeNotice(input: RecommendationInput): string | null {
   if (!isLocalRuntime(input)) return null;
@@ -90,7 +90,12 @@ export function localRuntimeNotice(input: RecommendationInput): string | null {
 
 /** The ordered default picks for one goal, before any eligibility check. */
 export function defaultPicksForGoal(goal: string, input: RecommendationInput): readonly DefaultPick[] {
-  if (isLocalRuntime(input)) return localPicksForGoal(goal);
+  if (isLocalRuntime(input)) {
+    const local = localPicksForGoal(goal);
+    // Goals with no local picks (video, audio, automation) get the cloud
+    // defaults a cloud visitor would get, under the runtime notice.
+    if (local.length > 0) return local;
+  }
   const entry = QUIZ_DEFAULTS[goal as keyof typeof QUIZ_DEFAULTS];
   if (!entry) return [];
   return isExperienced(input.experienceLevel) ? entry.experienced : entry.beginner;

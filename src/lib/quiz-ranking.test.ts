@@ -138,8 +138,26 @@ describe("quiz ranking: runtime=local (preview bug 2026-11-12)", () => {
       localRuntimeNotice(input),
       "We don't list any beginner-friendly tools for Video that run on your own computer, so these results are cloud tools.",
     );
-    assert.ok(out.length > 0);
-    assert.ok(out.some((r) => r.category.slug === "video-creation-editing"));
+    assert.deepEqual(out.slice(0, 3).map((r) => r.slug), ["capcut", "veed", "heygen"]);
+    assert.ok(out.slice(0, 3).every((r) => r.defaultPick));
+  });
+
+  it("golden: audio / beginner / free / local shows the notice, then ElevenLabs, Suno, Speechify", () => {
+    const { input, out } = rank(answers({ goal: "audio", runtime: "local" }));
+    assert.equal(
+      localRuntimeNotice(input),
+      "We don't list any beginner-friendly tools for Audio & voice that run on your own computer, so these results are cloud tools.",
+    );
+    assert.deepEqual(out.slice(0, 3).map((r) => r.slug), ["elevenlabs", "suno", "speechify"]);
+  });
+
+  it("goals without local picks get exactly the cloud default picks", () => {
+    for (const goal of ["video", "audio", "automation"]) {
+      for (const experience of ["beginner", "advanced"]) {
+        const picks = (runtime: string) => rank(answers({ goal, experience, runtime })).out.filter((r) => r.defaultPick).map((r) => r.slug);
+        assert.deepEqual(picks("local"), picks("cloud"), `${goal}/${experience}`);
+      }
+    }
   });
 
   it("audio and automation show the notice too; cloud runtime never does", () => {
@@ -185,10 +203,10 @@ describe("quiz ranking: rules", () => {
     );
   });
 
-  it("runtime=local leads chat goals with local apps, image with ComfyUI, and gives other goals no defaults", () => {
+  it("runtime=local leads chat goals with local apps, image with ComfyUI, and video keeps its cloud defaults", () => {
     assert.deepEqual(rank(answers({ goal: "research", runtime: "local" })).out.slice(0, 3).map((r) => r.slug), ["ollama", "lm-studio", "jan"]);
     assert.equal(rank(answers({ goal: "image_generation", runtime: "local" })).out[0]?.slug, "comfyui");
-    assert.equal(rank(answers({ goal: "video", runtime: "local" })).out.some((r) => r.defaultPick), false);
+    assert.equal(rank(answers({ goal: "video", runtime: "local" })).out[0]?.slug, "capcut");
   });
 
   it("local-open-source-ai is allowed for every goal when runtime=local and for none otherwise", () => {
