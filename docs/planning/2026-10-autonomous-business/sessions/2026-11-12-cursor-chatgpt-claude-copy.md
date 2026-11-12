@@ -12,4 +12,4 @@
 
 **Checks:** `npm test` 1483 pass, 0 fail. No database connection.
 
-**Open / Zach:** Run the Guarded SQL on a Neon branch, then production. Do not merge until you review.
+**Open / Zach:** launchpad-test is already clean. Merge to main, snapshot, then run Guarded SQL from main.

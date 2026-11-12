@@ -78,7 +78,6 @@ describe("copyfix 2026-11-12 guarded SQL", () => {
     assert.equal(assigned(statement, "difficultyLevel"), "BEGINNER");
     assert.match(statement, /\$cf\$BEGINNER\$cf\$::"Difficulty"/);
     assert.match(statement, /"difficultyLevel"\s*<>\s*\$cf\$BEGINNER\$cf\$::"Difficulty"/);
-    assert.equal("INTERMEDIATE" !== "BEGINNER", true);
-    assert.equal("BEGINNER" !== "BEGINNER", false);
+    assert.doesNotMatch(statement, /"difficultyLevel"\s*=\s*\$cf\$INTERMEDIATE\$cf\$/);
   });
 });
