@@ -41,6 +41,18 @@ export default {
     verifiedAt: "2026-10-26",
     status: "verified",
   },
+  apiPricing: {
+    value:
+      "Gemini 4 Carbon, per 1M tokens: introductory $2 input and $10 output through 2026-11-30, then $4 input and $20 output. Available via the Gemini API in Google AI Studio and Gemini for business to all paying developers and enterprises. Also rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search.",
+    note: "Google's 2026-11-10 availability post, checked 2026-11-12. The introductory price ends 2026-11-30. The post says the later price applies to the Carbon model intended for public access only, and that a Fairwind release to some cybersecurity defenders was about two weeks earlier. A Carbon context window is not stated on this post. Consumer plan prices are the plans above, not this API rate.",
+    sourceUrl: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-12",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-12",
+    status: "verified",
+  },
   features: {
     value: [
       "Gemini app usage limits are compute-based: they factor in prompt complexity, the features used and chat length, refresh every 5 hours until a weekly limit is reached, and can be extended by buying AI credits.",
@@ -54,6 +66,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-12",
+      field: "apiPricing",
+      summary:
+        "X-watch: Gemini 4 Carbon is available to all paying API developers and is rolling out to Google AI Ultra. Introductory $2 / $10 per 1M through 2026-11-30, then $4 / $20.",
+    },
     {
       date: "2026-10-26",
       field: "plans",
