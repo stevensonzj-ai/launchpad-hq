@@ -67,16 +67,25 @@ export default {
   },
   features: {
     value: [
-      "Auto mode becomes the default for new sessions in most Claude apps on Pro, Max and Team plans: Anthropic's 2026-10-22 update says it rolls out the following week (stated plan, as of 2026-10-26). In auto mode a classifier reviews each action, so safe ones go ahead without an approval prompt and risky ones are blocked.",
+      "Auto mode becomes the default for new sessions in most Claude apps on Pro, Max and Team plans: Anthropic's 2026-10-22 update says it rolls out the following week (stated plan, as of 2026-10-26). In auto mode a classifier reviews each action, so safe ones go ahead without an approval prompt and risky ones are blocked. Source for this item: https://claude.com/resources/articles/auto-mode-default-in-claude-code",
+      "Claude Fable 5.2 (released 2026-11-09) is available on the Claude Platform as claude-fable-5-2, and on AWS, Google Cloud, and Microsoft Azure. The launch post says Fable is available to users generally because of its safeguards. Claude Mythos 5.2 is the same underlying model, with access through the Life Sciences and Cyber Verification Programs. API price on that post: $8 per million input tokens and $40 per million output tokens (optional fast mode $16 and $80).",
     ],
-    sourceUrl: "https://claude.com/resources/articles/auto-mode-default-in-claude-code",
-    checkedAt: "2026-10-26",
-    gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    note: "Auto mode is from Anthropic's 2026-10-22 article. Fable 5.2 and Mythos 5.2 are from the 2026-11-09 launch post, checked 2026-11-12.",
+    sourceUrl: "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-12",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-12",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-12",
+      field: "features",
+      summary:
+        "X-watch: Fable 5.2 is available generally; Mythos 5.2 is the same model through the Life Sciences and Cyber Verification Programs. API price $8 / $40 per 1M tokens.",
+    },
     {
       date: "2026-11-02",
       field: "plans",

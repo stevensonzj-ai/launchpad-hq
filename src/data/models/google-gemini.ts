@@ -3,6 +3,7 @@ import type { PlatformModelFamily } from "./types";
 const MODELS = "https://ai.google.dev/gemini-api/docs/models";
 const PRICING = "https://ai.google.dev/gemini-api/docs/pricing";
 const PLANS = "https://ai.google.dev/gemini-api/docs/google-ai-plans";
+const CARBON = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/";
 const ARGON = "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon";
 const FLASH = "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash";
 
@@ -11,18 +12,58 @@ export const googleGemini: PlatformModelFamily = {
   displayName: "Gemini",
   vendor: "Google",
   platformSlugs: ["gemini"],
-  lastVerifiedAt: "2026-10-24",
+  lastVerifiedAt: "2026-11-12",
   whichToUse: [
     "Exact Gemini-app picker for 3.8 Flash is unverified on Google's plan pages.",
-    "For the Gemini API, use 3.8 Flash for most production work (it is on the API free tier). Use 4 Argon only when you need the flagship and can pay (not on the API free tier).",
+    "Google's 2026-11-10 post says Argon remains the usual choice for most software engineering and knowledge work, and Carbon is for tasks that test the limits of the model.",
+    "Carbon is available via the Gemini API to all paying developers and enterprises, and is rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search.",
+    "For the Gemini API, use 3.8 Flash for most production work (it is on the API free tier). Argon and Flash prices below were not re-read on 2026-11-12.",
     "3.6 Flash is the previous Flash generation at the same listed paid price as 3.8 Flash through 2026 — Google still documents it as previous-generation.",
   ],
   sources: [
+    { label: "Gemini 4 Carbon availability", url: CARBON },
     { label: "Gemini models", url: MODELS },
     { label: "API pricing", url: PRICING },
     { label: "Google AI plans", url: PLANS },
   ],
   versions: [
+    {
+      id: "gemini-4-carbon",
+      name: "Gemini 4 Carbon",
+      releaseDate: "2026-11-10",
+      releaseDateVerified: true,
+      status: "current",
+      role: "flagship",
+      contextWindow: { tokens: null, verified: false, note: "The 2026-11-10 availability post does not state a context window." },
+      maxOutput: { tokens: null, verified: false, note: "The 2026-11-10 availability post does not state a max output." },
+      apiPriceInput: {
+        usdPerMillion: 2,
+        verified: true,
+        note: "Introductory price through 2026-11-30. $4 per 1M input tokens from 2026-12-01. The post says the later price applies to the Carbon model intended for public access only.",
+      },
+      apiPriceOutput: {
+        usdPerMillion: 10,
+        verified: true,
+        note: "Introductory price through 2026-11-30. $20 per 1M output tokens from 2026-12-01. The post says the later price applies to the Carbon model intended for public access only.",
+      },
+      consumerAccess: {
+        summary:
+          "Available via the Gemini API in Google AI Studio and Gemini for business to all paying developers and enterprises. Rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search.",
+        verified: true,
+      },
+      strengths: [
+        "Google's 2026-11-10 wider release of Carbon, after an earlier Fairwind release to some cybersecurity defenders.",
+        "The post positions it for the hardest multi-step coding, research, and long-horizon agent work.",
+      ],
+      bestFor: "Paid API work and Google AI Ultra subscribers who need the strongest Gemini the post describes.",
+      caveats: [
+        "Introductory API price ends 2026-11-30.",
+        "The post does not state a context window, and it does not use the words generally available.",
+        "The later list price is limited, on the post, to the Carbon model intended for public access.",
+      ],
+      sourceUrls: [{ label: "Gemini 4 Carbon availability", url: CARBON }],
+      verified: { specs: false, apiPricing: true, consumerAccess: true },
+    },
     {
       id: "gemini-4-argon",
       name: "Gemini 4 Argon",

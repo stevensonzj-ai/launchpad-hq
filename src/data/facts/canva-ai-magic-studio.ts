@@ -52,16 +52,23 @@ export default {
       "AI Pass gives Canva Pro, Teams and Nonprofits subscribers 40x more AI, and Canva Business subscribers 20x more AI.",
       "The pricing page lists AI top-ups as available on Business, not on Pro.",
       "AI Pass is not available on Canva Free, Education or Enterprise, on free trials or prepaid plans, or on subscriptions managed through the Apple App Store or Google Play.",
+      "Canva Craft (model id craft_v1_2k) is Canva's image-generation model, available through the preview Image generation API. The preview can change without notice, and apps that use it cannot pass public-app review. Each generation uses the user's AI credit allowance. Noted on this row, not a new row. https://www.canva.dev/blog/developers/image-gen-with-craft/",
     ],
-    note: "AI Pass price and availability from the Canva Help Center (2026-10-29); top-ups from the pricing page.",
+    note: "AI Pass price and availability from the Canva Help Center (2026-10-29); top-ups from the pricing page. The Craft line is from the Canva Developers post, checked 2026-11-12.",
     sourceUrl: CANVA_AI_PASS_URL,
-    checkedAt: "2026-10-29",
-    gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    checkedAt: "2026-11-12",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-12",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-12",
+      field: "features",
+      summary:
+        "X-watch: Canva Craft (craft_v1_2k) is in the preview Image generation API. Noted on this row instead of a new row. No separate API price on the post.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

@@ -59,15 +59,23 @@ export default {
       "Admins can buy extra Notion credits to cover additional AI usage, per the pricing page (as of 2026-10-26).",
       "Notion Agents and Custom Agents can connect to Google Drive (beta, as of 2026-11-05) to search, read and write Drive files in real time. Notion does not index the files, and access follows the permissions of the user who connected Drive.",
       "Notion's pricing FAQ says Notion AI will not use your data to train its models unless you opt in, and that AI subprocessors are contractually barred from training on customer data.",
+      "OpenAI's Sign in with ChatGPT partners directory lists Notion among apps where eligible ChatGPT Go, Plus, Pro, and Business subscribers can use their ChatGPT plan for AI requests. Signing in and using the plan are separate permissions, and a Business admin has to allow the app (checked 2026-11-12). https://learn.chatgpt.com/docs/sign-in-with-chatgpt",
     ],
+    note: "Plan and credit lines are from notion.com/pricing (2026-10-26). The Drive line is from Notion's help center (2026-11-05). The Sign in with ChatGPT line is from OpenAI's partners directory, checked 2026-11-12.",
     sourceUrl: NOTION_PRICING_URL,
-    checkedAt: "2026-10-26",
-    gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    checkedAt: "2026-11-12",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-12",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-12",
+      field: "features",
+      summary:
+        "X-watch: Sign in with ChatGPT lists Notion for ChatGPT Go, Plus, Pro, and Business plan usage. v0 is not named on that directory (it lists Vercel).",
+    },
     {
       date: "2026-11-05",
       field: "features",

@@ -115,13 +115,14 @@ export default {
       "Tool Gateway (web search, scraping, image generation, browser use, speech) is priced per use from Nous Portal credits.",
       "Hermes Marketplace lists community plugins and skills you install from the command line (hermes plugins install <name>). It lists hundreds of plugins, and the count changes (as of 2026-11-05). Community plugins are third-party code; review one before installing it.",
       "A public Hermes Agent API: not stated (Nous Portal has an API section; details not verified).",
+      "OpenAI's Sign in with ChatGPT partners directory lists Hermes Agent among apps where eligible ChatGPT Go, Plus, Pro, and Business subscribers can use their ChatGPT plan for AI requests. Signing in and using the plan are separate permissions, and a Business admin has to allow the app (checked 2026-11-12). https://learn.chatgpt.com/docs/sign-in-with-chatgpt",
     ],
-    note: "From the README, as of 2026-10-29, except the Tool Gateway line (Nous Portal, browser-verified 2026-10-29), the Marketplace line (https://hermes-agent.nousresearch.com/marketplace, as of 2026-11-05) and the API line.",
+    note: "From the README, as of 2026-10-29, except the Tool Gateway line (Nous Portal, browser-verified 2026-10-29), the Marketplace line (https://hermes-agent.nousresearch.com/marketplace, as of 2026-11-05), the API line, and the Sign in with ChatGPT line (OpenAI partners directory, 2026-11-12).",
     sourceUrl: HERMES_REPO_URL,
-    checkedAt: "2026-10-29",
-    gatheredBy: "research-analyst",
-    verifiedBy: "research-analyst",
-    verifiedAt: "2026-10-29",
+    checkedAt: "2026-11-12",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-12",
     status: "verified",
   },
   privacy: {
@@ -138,6 +139,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-12",
+      field: "features",
+      summary:
+        "X-watch: Sign in with ChatGPT lists Hermes Agent for ChatGPT Go, Plus, Pro, and Business plan usage.",
+    },
     {
       date: "2026-11-05",
       field: "features",
