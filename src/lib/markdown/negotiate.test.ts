@@ -107,9 +107,13 @@ describe("classifyMarkdownPath", () => {
   });
 
   it("treats unknown top-level paths as certain 404s", () => {
-    for (const path of ["/__ora-404-probe-zoip3n12", "/docs", "/.well-known/thing", "/wp-login.php"]) {
+    for (const path of ["/__ora-404-probe-zoip3n12", "/docs", "/.not-a-route/thing", "/wp-login.php"]) {
       assert.equal(classifyMarkdownPath(path), "not_found", path);
     }
+    // public/.well-known exists, so a Markdown client must not be rewritten
+    // away from the file (the challenge token, or a normal static 404).
+    assert.equal(classifyMarkdownPath("/.well-known/openai-apps-challenge"), "passthrough");
+    assert.equal(classifyMarkdownPath("/.well-known/thing"), "passthrough");
   });
 });
 
@@ -156,7 +160,11 @@ describe("route coverage", () => {
     const proxy = readFileSync("src/proxy.ts", "utf8");
     const body = proxy.slice(proxy.indexOf("export default function proxy"));
     assert.ok(body.indexOf("markdownRewriteTarget") < body.indexOf("return clerk(request, event)"));
-    assert.ok(proxy.includes(String.raw`"/((?!_next|data/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",`));
+    assert.ok(
+      proxy.includes(
+        String.raw`"/((?!_next|data/|\\.well-known/openai-apps-challenge|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",`,
+      ),
+    );
     assert.ok(proxy.includes(`"/(api|trpc)(.*)",`));
   });
 });

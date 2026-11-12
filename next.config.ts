@@ -44,6 +44,15 @@ const nextConfig: NextConfig = {
     // Vary Next sets on app pages, so whichever header wins on the platform
     // the RSC variants stay keyed; Markdown itself is a separate /md route.
     return [
+      // Extensionless public file. Next's static server would send
+      // application/octet-stream; OpenAI requires text/plain. This header is
+      // applied before the file is served, and the static server keeps a
+      // Content-Type that is already set. A route handler would not run:
+      // public/ is matched first.
+      {
+        source: "/.well-known/openai-apps-challenge",
+        headers: [{ key: "Content-Type", value: "text/plain" }],
+      },
       { source: "/:path*", headers: SECURITY_HEADERS },
       ...MARKDOWN_VARY_SOURCES.map((source) => ({
         source,

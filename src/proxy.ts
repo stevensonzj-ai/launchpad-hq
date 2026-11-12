@@ -33,6 +33,9 @@ const isPublicRoute = createRouteMatcher([
   "/robots.txt",
   "/llms.txt",
   "/llms-full.txt",
+  // OpenAI apps domain check. Also excluded from the matcher below, so Clerk
+  // never redirects it or attaches auth headers. Body is the public file.
+  "/.well-known/openai-apps-challenge",
   // Read-only MCP connector: anonymous by design (no auth in v0.1).
   // Without this, auth.protect() would block signed-out MCP clients.
   "/mcp",
@@ -100,7 +103,9 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
 
 export const config = {
   matcher: [
-    "/((?!_next|data/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
+    // `\\.well-known/openai-apps-challenge` is the extensionless domain file.
+    // It has no skipped extension, so without this it would hit Clerk.
+    "/((?!_next|data/|\\.well-known/openai-apps-challenge|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };
