@@ -217,6 +217,52 @@ Clerk *_AFTER_SIGN_IN/UP_URL names are ignored by @clerk/nextjs 7. Production re
 *Where:* the old comment in `src/app/sitemap.ts`, and the "same catalog visibility" assumption in § 9.
 *Truth (2026-10-20, catalog accuracy cleanup PR):* fact files can now set `visibility: "hidden"`, and `src/lib/catalog-redirects.ts` lists duplicate rows that 301 elsewhere. `hiddenPlatformSlugs()` (`src/lib/catalog-visibility.ts`) drops both from the sitemap, Discover, search, recommendations, `/api/platforms` and same-category related links; hidden pages stay reachable by URL but are noindexed. Fact files also gained `status` (a sourced "what happened" notice), `officialUrl` (overrides `website`) and the lifecycle values `acquired` / `renamed`. A `discontinued` product with a status gets a "What Happened to X?" title and drops its pricing, apps and guide link. `scripts/update-catalog-audit-3.ts` (operator-only, dry-run by default) syncs the renamed rows' `name` / `website` / `company` into the database; until it runs, the overlay already shows the corrected values on platform and guide pages, but Discover cards and search still use the old database names.
 
+### Added 2026-11-12 (quiz default picks, #169)
+
+**4.35 — "The quiz ranks results purely by keyword score, and each card shows a '% match'."**
+*Where:* § 8 "What is shipped and live" (quiz bullet, corrected in place below), and any handoff before 2026-11-12.
+*Truth:* Since #169 (`10713146`, live 2026-11-12):
+- Hand-set **default picks** per goal and experience level lead the results whenever they pass the budget and visibility filters. They live in `src/data/quiz-defaults.ts`, each with one sourced "why" sentence, and no affiliate slug can be a default.
+- Below them, a tool must match a goal keyword **and** sit in a category that goal allows. The allow-list is `GOAL_CATEGORIES`. `ai-apis-developer-services` is allowed for coding at intermediate/advanced only, and four specialist categories are never allowed.
+- With `runtime=local`, a goal that has local picks shows only `local-open-source-ai` tools. Video, audio and automation show a one-line notice, then their normal cloud defaults.
+- The "% match" badge is gone: the score is a raw sum, not a percentage.
+- `/quiz/results` now lives in the `(app)` route group. The URL is unchanged.
+- `scorePlatform` and `rankScoredPlatforms` are unchanged, and MCP does not use `src/lib/quiz-ranking.ts`.
+
+**4.36 — The catalog's free-tier flag is wrong for four platforms.**
+*Not superseded — an open data gap, logged 2026-11-12, not acted on.* `invideo-ai`, `julius-ai`, `notion-ai` and `khan-academy-khanmigo` are all FREEMIUM in the catalog, so they pass a "Free only" quiz budget. On 2026-11-12 the vendor pages showed something narrower:
+- invideo.io/pricing listed no free plan.
+- Julius's pricing page (seen as a search snippet; the site returned 403) put analysis under paid tiers.
+- Notion's free plan includes only a trial of Notion AI.
+- Khanmigo is free for teachers only; learners pay.
+
+#169 removed all four from the quiz default picks, but they can still appear as ordinary results. They need a catalog recheck through the numbered catalog-audit process.
+
+**4.37 — `src/lib/mcp/catalog-snapshot.json` is behind production.**
+*Not superseded — an open gap, logged 2026-11-12, not acted on.* The snapshot is an offline reconstruction used only by tests, and it has drifted from production in more than one place. Example: it has `opus-clip` in `gaming-creative-ai`, while the live `/data/v1` feed has it in `video-creation-editing`. Tests built on the snapshot (the quiz goldens, MCP goldens) can pass against a catalog that production no longer has. Regenerate it from a real `/data/v1` pull, as its own `note` field says.
+
+**4.38 — Several API platforms are marked `BEGINNER` in the catalog.**
+*Not superseded — an open data gap, logged 2026-11-12, not acted on.* In the catalog snapshot, 12 of the 19 rows in `ai-apis-developer-services` carry `difficultyLevel: BEGINNER`, among them `openai-api`, `anthropic-api`, `amazon-bedrock`, `azure-openai-service` and `pinecone`. That isn't true for a first-time user of a cloud API console. #169 works around it: `EXPERIENCED_ONLY_CATEGORIES` keeps that category out of beginner coding results. The data itself is unchanged and still feeds Discover's difficulty filter.
+
+**4.39 — The local Windows production build crashes in "Collecting page data".**
+*Not superseded — an open environment defect, logged 2026-11-12, not acted on.* On the owner's machine, `npm run build` compiled and passed TypeScript, then a page-data worker died with exit code `3221226505` (`0xC0000409`, `STATUS_STACK_BUFFER_OVERRUN`). It logged no "heap out of memory" message, and it ran with 11 workers. It was not retried. The Vercel build of the same commit passed. Until this is diagnosed, the Vercel preview build is the build gate for changes made on Windows. Do not read a local crash as a code fault without checking Vercel.
+
+**4.40 — Below the default picks, quiz results are still ordered by keyword count.**
+*Not superseded — a known limitation, logged 2026-11-12, not acted on.* The category guard decides *which* tools may appear. Their *order* still comes from `scorePlatform`, which rewards matching more goal keywords. A tool with keyword-dense copy outranks a better fit with terse copy. Structured signals (outbound-click data was the plan) are the intended replacement. See also 4.41, and the rejected idea of enriching descriptions in § 11.
+
+**4.41 — Quiz keyword matching is substring matching: "ide" fires inside "guide" and "video".**
+*Not superseded — an open defect, logged 2026-11-12, not acted on. It extends the "keyword substring false-positives" entries in § 8 and § 11.* Two live examples from #169:
+- The coding keyword `ide` matched `gemini-notebook` through "Study gu**ide** creation". That let a notebook tool into a coding result on the preview.
+- The same keyword matched `comfyui` through "image and v**ide**o generation". As of 2026-11-12, production's coding / beginner / free / local result lists ComfyUI fourth.
+
+The fix is word-boundary matching in `scorePlatform`. That changes the scorer, so it needs its own PR and re-baselined quiz goldens. `text-conversational-ai` stays allowed for coding (owner decision, 2026-11-12).
+
+**4.42 — Any page without its own dark wrapper renders white for light-mode visitors.**
+*Not superseded — an open defect, logged 2026-11-12, not acted on.* `src/app/globals.css` has an unlayered `body { background: var(--background); color: var(--foreground) }`, with `--background: #ffffff` outside `prefers-color-scheme: dark`. Unlayered CSS beats Tailwind's layered utilities, so the `bg-gray-950 text-white` classes on `<body>` in `src/app/layout.tsx` lose. Pages inside `(app)` are hidden from this by `<main className="bg-gray-950">`. `/quiz/results` sat outside the group and rendered white, with an invisible heading, until #169 moved it. Fix at the root (remove the rule or put it in a layer), then check the pages outside `(app)`: sign-in, sign-up, the error pages.
+
+**4.43 — With `runtime=local`, video/audio/automation results can include a local tool under a notice that says "these results are cloud tools".**
+*Not superseded — an open wording/rule mismatch, logged 2026-11-12, not acted on.* Goals without local picks keep `local-open-source-ai` in their allowed categories. On production on 2026-11-12, video / beginner / free / local listed ComfyUI twelfth. The owner-approved notice ("…so these results are cloud tools") is then slightly untrue. Fix either side: drop the local category for those goals, or reword the notice.
+
 ## 4b. Credentials
 
 **A full scan of every file added by this handoff, and of every file tracked in git, found no live credentials.** Specifically checked for: Stripe live and test keys, Stripe webhook secrets, Resend API keys, Postgres connection strings containing a password, AWS access key IDs, GitHub personal access tokens, and PEM private key blocks.
@@ -396,7 +442,7 @@ The working tree carries no untracked items beyond the handoff documents themsel
 - 170-platform catalog (operator-confirmed; not verifiable from this repository — the database is not here and `data/ai_platforms_enhanced_metadata.xlsx` is import history, not a current export) across a 20-category taxonomy, with a Discover page whose filters are a compact native-`<select>` bar with removable pills and a reactive count.
 - Platform detail pages with Overview, Tutorials, Prompts and Discussions tabs.
 - **183 tutorial pages** (as of 2026-10-20), static TypeScript in `src/data/tutorials/`, across three archetypes, each at `/platform/{slug}/guide`, indexed from `/tutorials`.
-- A four-question matching quiz with a public results page for signed-out users, a soft difficulty penalty with an "Advanced" badge, and a goal-relevance floor.
+- A four-question matching quiz with a public results page for signed-out users. Hand-set default picks lead, a goal-to-category guard filters the rest, and tools above the chosen level sit under "Above your selected level". *(Corrected in place 2026-11-12; see 4.35.)*
 - Workflows, favourites, a For You page, account and pricing pages.
 - Authentication via Clerk (development instance), payments plumbing via raw Stripe, both fully wired.
 - A moderation pipeline: submissions default to `PENDING`, an email fires with HMAC-signed magic links, the link renders a confirmation page, and a button POST commits the decision. Replays are idempotent.
