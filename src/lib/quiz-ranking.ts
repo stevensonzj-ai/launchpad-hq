@@ -60,8 +60,7 @@ export function isExperienced(experienceLevel?: string): boolean {
   return experienceLevel === "intermediate" || experienceLevel === "advanced";
 }
 
-/** A missing runtime behaves exactly like cloud: no local defaults, no local category. */
-export function isLocalRuntime(input: RecommendationInput): boolean {
+/** A missing runtime behaves exactly like cloud: no local defaults, no local category. */export function isLocalRuntime(input: RecommendationInput): boolean {
   return input.runtime === "local";
 }
 
@@ -77,14 +76,20 @@ const GOAL_LABELS: Record<string, string> = Object.fromEntries(QUIZ_GOAL_OPTIONS
 
 /**
  * runtime=local only: a one-line notice when a chosen goal has no local
- * picks, so its results are cloud tools. Null otherwise. Wording approved
- * by Zach, 2026-11-12.
+ * picks, so its results are cloud tools. Null otherwise. When the answer
+ * mixes goals with and without local picks, the sentence names only the
+ * cloud goals' picks, because local tools lead the same list. Wording
+ * approved by Zach, 2026-11-12 (all-cloud) and 2026-11-14 (mixed).
  */
 export function localRuntimeNotice(input: RecommendationInput): string | null {
   if (!isLocalRuntime(input)) return null;
-  const missing = (input.goals ?? []).filter((g) => localPicksForGoal(g).length === 0);
+  const goals = input.goals ?? [];
+  const missing = goals.filter((g) => localPicksForGoal(g).length === 0);
   if (missing.length === 0) return null;
   const names = missing.map((g) => GOAL_LABELS[g] ?? g).join(" or ");
+  if (missing.length < goals.length) {
+    return `We don't list any beginner-friendly tools for ${names} that run on your own computer, so the ${names} picks below are cloud tools.`;
+  }
   return `We don't list any beginner-friendly tools for ${names} that run on your own computer, so these results are cloud tools.`;
 }
 
@@ -132,17 +137,23 @@ export function orderedDefaultPicks(
 export function allowedCategories(input: RecommendationInput): Set<string> {
   const allowed = new Set<string>();
   const local = isLocalRuntime(input);
+  let anyLocalPicks = false;
   for (const goal of input.goals ?? []) {
     // A visitor who chose local sees no cloud tools for a goal that has local picks.
-    if (local && localPicksForGoal(goal).length > 0) continue;
+    if (local && localPicksForGoal(goal).length > 0) {
+      anyLocalPicks = true;
+      continue;
+    }
     const key = goal as keyof typeof GOAL_CATEGORIES;
     for (const c of GOAL_CATEGORIES[key] ?? []) allowed.add(c);
     if (isExperienced(input.experienceLevel)) {
       for (const c of EXPERIENCED_ONLY_CATEGORIES[key] ?? []) allowed.add(c);
     }
   }
-  // The only way local-open-source-ai is ever allowed.
-  if (local) allowed.add(LOCAL_CATEGORY);
+  // The only way local-open-source-ai is ever allowed: runtime=local AND at
+  // least one chosen goal has local picks. Video, audio and automation alone
+  // get cloud tools only, which keeps the runtime notice true.
+  if (anyLocalPicks) allowed.add(LOCAL_CATEGORY);
   for (const c of NEVER_ALLOWED_CATEGORIES) allowed.delete(c);
   return allowed;
 }

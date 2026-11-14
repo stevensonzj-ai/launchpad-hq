@@ -465,9 +465,10 @@ export const EXPERIENCED_ONLY_CATEGORIES: Partial<Record<QuizGoalId, readonly st
 };
 
 /**
- * Allowed for every goal when runtime=local, and never otherwise. For a goal
- * with local picks it is the ONLY category allowed (no cloud tools); goals
- * without local picks keep their cloud categories and show a notice.
+ * Allowed only when runtime=local and at least one chosen goal has local
+ * picks. For a goal with local picks it is the ONLY category allowed (no
+ * cloud tools); goals without local picks keep their cloud categories, show
+ * a notice, and on their own never allow this category.
  */
 export const LOCAL_CATEGORY = "local-open-source-ai";
 
