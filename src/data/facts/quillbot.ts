@@ -35,7 +35,7 @@ export default {
         limits: "",
       },
     ],
-    note: "Browser-verified 2026-10-14. On 2026-10-26 the RA could not confirm it on a vendor page that renders prices to a fetch: quillbot.com/premium is bot-protected, and the Help Center says the price depends on your region without giving figures. Monthly-billed price unpublished. No derived monthly figure.",
+    note: "Browser-verified 2026-10-14. On 2026-10-26 the RA could not confirm it on a vendor page that renders prices to a fetch: quillbot.com/premium is bot-protected, and the Help Center says the price depends on your region without giving figures. Monthly-billed price unpublished. No derived monthly figure. Recheck 2026-11-14: quillbot.com/premium returned 403 and did not show a Premium dollar price. The $8.33/mo figure stays unverified.",
     sourceUrl: "https://quillbot.com/premium",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",

@@ -18,13 +18,11 @@ export default {
       available: true,
       summary: "$0. 400 credits at signup, 10 slides per prompt.",
     },
-    note: "Browser-verified 2026-10-14 on gamma.app/pricing.",
+    note: "Browser-verified 2026-10-14 on gamma.app/pricing. Recheck 2026-11-14: gamma.app/pricing returned 403, so the free-tier line was not reconfirmed.",
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   plans: {
     value: [
@@ -53,13 +51,11 @@ export default {
         limits: "$90 billed annually; 20,000 credits a month",
       },
     ],
-    note: "Browser-verified 2026-10-14 on gamma.app/pricing. USD per seat per month. API on Pro and above, using credits (no dollar API price).",
+    note: "Browser-verified 2026-10-14 on gamma.app/pricing. USD per seat per month. API on Pro and above, using credits (no dollar API price). Recheck 2026-11-14: gamma.app/pricing returned 403, so these plan prices were not reconfirmed.",
     sourceUrl: "https://gamma.app/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   apps: {
     value: {

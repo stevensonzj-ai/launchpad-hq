@@ -16,14 +16,14 @@ export default {
     value: {
       available: true,
       summary:
-        "Meta AI is free to use for everyday use. Meta is testing usage limits, and a subscription is available for more.",
+        "Meta AI is free to use for everyday use. Meta is testing usage limits on some compute-intensive features, and a subscription can unlock more usage before the free limit resets. No subscription price is stated.",
     },
     sourceUrl: "https://ai.meta.com/meta-ai/assistant/",
     sourceKind: "product-page",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -59,6 +59,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "FAQ: free for everyday use, with usage limits under test and a subscription for more. No subscription price is stated.",
+    },
     {
       date: "2026-10-17",
       field: "models",

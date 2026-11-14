@@ -8,13 +8,11 @@ export default {
       available: true,
       summary: "2,000 words/week on desktop, 1,000/week on mobile.",
     },
-    note: "Free word limits confirmed by fetch 2026-10-14. Dollar prices omitted: fetch and browser toggles conflict.",
+    note: "Free word limits confirmed by fetch 2026-10-14. Dollar prices omitted: fetch and browser toggles conflict. Recheck 2026-11-14: wisprflow.ai/pricing did not state 2,000 or 1,000 words per week. Those limits stay as last recorded on 2026-10-14.",
     sourceUrl: "https://wisprflow.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   platforms: {
     value: [

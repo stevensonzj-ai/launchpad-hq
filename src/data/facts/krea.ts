@@ -19,10 +19,10 @@ export default {
       summary: "100 units/day, $0/month.",
     },
     sourceUrl: "https://www.krea.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
@@ -98,6 +98,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

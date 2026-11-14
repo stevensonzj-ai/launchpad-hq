@@ -30,10 +30,10 @@ export default {
     ],
     note: "USD. FAQ recommends signing up on the web rather than through the app stores. No yearly-to-monthly conversion. Free tier and trial length unpublished.",
     sourceUrl: "https://www.monarch.com/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -58,6 +58,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "plans",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

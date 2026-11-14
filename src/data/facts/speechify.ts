@@ -19,10 +19,10 @@ export default {
       summary: "Speeds up to 1.5x, 10 robotic-sounding voices, text-to-speech features only.",
     },
     sourceUrl: "https://speechify.com/pricing/",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
@@ -36,10 +36,10 @@ export default {
     ],
     note: "USD. Yearly toggle says SAVE 60%; yearly dollar price unpublished. Per user unpublished.",
     sourceUrl: "https://speechify.com/pricing/",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -72,6 +72,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

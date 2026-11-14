@@ -36,10 +36,10 @@ export default {
     ],
     note: "USD per month. There is no free plan. “Without subscribing” refers only to requesting a cash advance, not a free tier. Express fees $4.49–$14.99. Builder $14.99/mo is browser-verified 2026-10-14 on web.meetcleo.com/products/pricing (Plus $5.99 and Pro $8.99 also shown there).",
     sourceUrl: "https://web.meetcleo.com/products/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -65,6 +65,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "plans",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "freeTier",

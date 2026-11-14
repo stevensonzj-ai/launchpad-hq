@@ -25,14 +25,15 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Free for verified US clinicians",
+      summary: "Free for users with a verified Doximity account.",
     },
-    sourceUrl: "https://www.doximity.com/",
+    note: "The Doximity Ask FAQ says Ask is free for all users with a verified Doximity account. Enterprise licenses exist; no enterprise price is stated.",
+    sourceUrl: "https://support.doximity.com/hc/en-us/articles/55381817186195-Doximity-Ask-FAQs",
     sourceKind: "product-page",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -46,6 +47,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Doximity Ask FAQ: free for users with a verified Doximity account.",
+    },
     {
       date: "2026-10-14",
       field: "displayName",
