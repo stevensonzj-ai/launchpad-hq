@@ -25,13 +25,18 @@ export default {
     note: "No list prices published. Also listed on https://www.evenuplaw.com/about/.",
     sourceUrl: "https://www.evenuplaw.com/",
     sourceKind: "product-page",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "plans",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

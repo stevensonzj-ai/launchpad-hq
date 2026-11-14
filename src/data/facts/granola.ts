@@ -19,10 +19,10 @@ export default {
       summary: "Basic, $0 per user per month, with limited meeting history.",
     },
     sourceUrl: "https://www.granola.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
@@ -48,10 +48,10 @@ export default {
     ],
     note: 'USD. Cards say "per user per month". Billing period (monthly vs annual) unconfirmed: browser-verified 2026-10-14, no toggle. API access (Business+) and Audit API (Enterprise); no separate API price.',
     sourceUrl: "https://www.granola.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -65,6 +65,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

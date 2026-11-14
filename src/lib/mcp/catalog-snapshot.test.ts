@@ -63,6 +63,29 @@ const AUDIT_22_FIELDS = new Set(["slug", "name"]);
 const AUDIT_32_AS_OF_MOVED = new Set(["claude"]);
 /** Copy fix 2026-11-12 (#168): claude's difficultyLevel INTERMEDIATE -> BEGINNER after the stress run. */
 const COPYFIX_20261112_DIFFICULTY = new Set(["claude"]);
+/**
+ * Audit 35 (2026-11-14) rechecked price facts. as_of is that fact's checkedAt.
+ * deepl and gamma are unverified because a pricing page could not be read.
+ * fathom's starting price and jenni-ai's billing period changed with the page.
+ */
+const AUDIT_35_AS_OF = new Set([
+  "capcut",
+  "captions",
+  "deepl",
+  "fathom",
+  "fireflies-ai",
+  "granola",
+  "grok",
+  "jenni-ai",
+  "krea",
+  "meta-ai",
+  "napkin-ai",
+  "speechify",
+  "vapi",
+  "warp",
+]);
+const AUDIT_35_VERIFICATION = new Set(["deepl", "gamma"]);
+const AUDIT_35_STARTING_PRICE = new Set(["fathom", "jenni-ai"]);
 const AUDIT_15_PATCHED =AUDIT_15_PATCHES.map((p) => p.slug);
 const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "source_url", "stale", "freshness_note"]);
 /**
@@ -115,6 +138,9 @@ describe("catalog snapshot", () => {
         // Copy fix 2026-11-12 (#168, run on production that day): claude is BEGINNER now; the
         // 2026-10-26 stress run recorded INTERMEDIATE. Only that one field, only for claude.
         if (COPYFIX_20261112_DIFFICULTY.has(row.slug) && key === "difficulty") continue;
+        if (AUDIT_35_AS_OF.has(row.slug) && key === "as_of") continue;
+        if (AUDIT_35_VERIFICATION.has(row.slug) && key === "verification") continue;
+        if (AUDIT_35_STARTING_PRICE.has(row.slug) && key === "starting_price") continue;
         if (moved && AUDIT_15_FIELDS.has(key)) continue;
         if (AUDIT_22_RENAMED.has(row.slug) && AUDIT_22_FIELDS.has(key)) continue;
         if (JSON.stringify(ref[key]) !== JSON.stringify(o[key])) diffs.push(`${o.slug}.${key}: ${JSON.stringify(ref[key])} != ${JSON.stringify(o[key])}`);

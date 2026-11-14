@@ -16,12 +16,11 @@ export default {
       available: true,
       summary: "Free Plan, No Credit Card. Credit amount unpublished.",
     },
+    note: "Recheck 2026-11-14: hedra.com/pricing is GPU rates and hedra.com/play/pricing does not state a free plan. The free-plan line stays as last recorded on 2026-10-14.",
     sourceUrl: "https://www.hedra.com/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   plans: {
     value: [
@@ -39,9 +38,9 @@ export default {
       },
       {
         name: "Ultra",
-        price: "$100",
+        price: "from $100",
         period: "month",
-        limits: "18,000 credits",
+        limits: "18,000 credits; allowances up to 57,600 credits/month",
       },
       {
         name: "Teams",
@@ -56,12 +55,12 @@ export default {
         limits: "",
       },
     ],
-    note: "USD/mo, billed monthly. These are Hedra Studio subscriptions (the pricing page's own summary, re-read 2026-10-29, says \"Hedra Studio plans from $20/month\"); tier names were not re-read on 2026-10-29 because the Studio tab renders in the browser only. The developer API is billed separately (see apiPricing).",
-    sourceUrl: "https://www.hedra.com/pricing",
-    checkedAt: "2026-10-14",
+    note: "USD, billed monthly, from hedra.com/play/pricing. Ultra is from $100 and lists allowances up to 57,600 credits/month. hedra.com/pricing itself lists GPU rates, not these credit plans.",
+    sourceUrl: "https://www.hedra.com/play/pricing",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   apiPricing: {
@@ -99,6 +98,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "plans",
+      summary: "Ultra is from $100/month, with allowances up to 57,600 credits. The free plan was not on the pages checked.",
+    },
     {
       date: "2026-10-29",
       field: "apiPricing",

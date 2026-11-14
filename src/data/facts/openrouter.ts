@@ -20,10 +20,10 @@ export default {
         "25+ free models; free-model rate limits are 50 requests/day, rising to 1,000/day once you've bought at least $10 of credits.",
     },
     sourceUrl: "https://openrouter.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
@@ -55,10 +55,10 @@ export default {
     ],
     note: 'Fee on credit purchases: "5.5% on Standard and 8% on Business, never on individual requests".',
     sourceUrl: "https://openrouter.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -96,6 +96,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-11-12",
       field: "features",

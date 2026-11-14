@@ -14,6 +14,7 @@ import { validExampleFacts } from "./fixtures/valid-example";
 import { overlayPlatformWithFacts } from "./overlay";
 import { REGISTERED_TOOL_FACTS, listRegisteredToolFacts } from "./registry";
 import { isPublishedVerified, publishedUsageLimits } from "./walk";
+import { AUDIT_35_UNVERIFIED } from "@/data/catalog-audits/audit-35";
 
 const NOW = new Date("2026-10-14T12:00:00.000Z");
 
@@ -253,7 +254,21 @@ describe("fact-file audit", () => {
 
   it("keeps the registered catalog clean against the real current date", () => {
     const issues = auditToolFactsList(listRegisteredToolFacts(), new Date());
-    assert.deepEqual(issues, []);
+    const allowed = new Set(AUDIT_35_UNVERIFIED.map((row) => `${row.slug}:${row.field}`));
+    const unexpected = issues.filter((issue) => !allowed.has(`${issue.slug}:${issue.field}`));
+    assert.deepEqual(
+      unexpected,
+      [],
+      unexpected.map((issue) => `${issue.slug}.${issue.field}: ${issue.message}`).join("\n"),
+    );
+    for (const row of AUDIT_35_UNVERIFIED) {
+      assert.ok(
+        issues.some(
+          (issue) => issue.slug === row.slug && issue.field === row.field && issue.kind === "stale",
+        ),
+        `${row.slug}.${row.field} should stay stale until its page can be checked`,
+      );
+    }
   });
 
   it("fails if a fact file is not registered", () => {
