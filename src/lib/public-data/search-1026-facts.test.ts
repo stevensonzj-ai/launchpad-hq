@@ -79,12 +79,14 @@ function pageHtml(slug: string): string {
 describe("search-relevance fact pass (2026-10-26)", () => {
   it("every gathered fact passed the separate second check, from the vendor's own domain", () => {
     for (const [slug, domains] of Object.entries(OFFICIAL)) {
-      // X-watch 2026-11-12 moved Claude's only 2026-10-26 feature fact onto the
-      // Fable 5.2 launch post. Plans and the free tier were already dated later.
+      // X-watch 2026-11-16 moved Claude's features fact onto the Meetings
+      // article. The Fable post stays cited inside that fact. Plans and the
+      // free tier were already dated later.
       if (slug === "claude") {
         const features = facts(slug).features;
-        assert.equal(features?.checkedAt, "2026-11-12");
-        assert.match(features?.sourceUrl ?? "", /anthropic\.com\/claude-fable-and-mythos-5-2/);
+        assert.equal(features?.checkedAt, "2026-11-16");
+        assert.match(features?.sourceUrl ?? "", /claude\.com\/resources\/articles\/claude-meetings/);
+        assert.match(features?.value.join(" ") ?? "", /anthropic\.com\/claude-fable-and-mythos-5-2/);
         assert.ok(facts(slug).changelog?.some((c) => c.date === DATE), "claude changelog");
         continue;
       }

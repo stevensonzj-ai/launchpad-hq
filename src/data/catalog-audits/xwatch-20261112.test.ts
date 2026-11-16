@@ -1,3 +1,4 @@
+import "./audit-36.test.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
@@ -59,7 +60,7 @@ describe("xwatch 2026-11-12 fact overlays", () => {
     assert.match(api.value, /\$2 input and \$10 output through 2026-11-30/);
     assert.match(api.value, /then \$4 input and \$20 output/);
     assert.match(api.note ?? "", /ends 2026-11-30/);
-    assert.equal(api.sourceKind, "announcement");
+    assert.match(api.sourceUrl, /\/pricing$/);
     const carbon = googleGemini.versions.find((v) => v.id === "gemini-4-carbon");
     assert.equal(carbon?.apiPriceInput.usdPerMillion, 2);
     assert.equal(carbon?.apiPriceOutput.usdPerMillion, 10);

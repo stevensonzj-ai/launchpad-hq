@@ -43,14 +43,13 @@ export default {
   },
   apiPricing: {
     value:
-      "Gemini 4 Carbon, per 1M tokens: introductory $2 input and $10 output through 2026-11-30, then $4 input and $20 output. Available via the Gemini API in Google AI Studio and Gemini for business to all paying developers and enterprises. Also rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search.",
-    note: "Google's 2026-11-10 availability post, checked 2026-11-12. The introductory price ends 2026-11-30. The post says the later price applies to the Carbon model intended for public access only, and that a Fairwind release to some cybersecurity defenders was about two weeks earlier. A Carbon context window is not stated on this post. Consumer plan prices are the plans above, not this API rate.",
-    sourceUrl: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
-    sourceKind: "announcement",
-    checkedAt: "2026-11-12",
+      "Gemini 4 Carbon, per 1M tokens: introductory $2 input and $10 output through 2026-11-30, then $4 input and $20 output. Available via the Gemini API in Google AI Studio and Gemini for business to all paying developers and enterprises. Also rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search. Gemini 4 Hydrogen, per 1M tokens on the Standard paid tier: $1.50 input and $7.50 output, flat across its 1 million-token context window. Context caching is $0.075 per 1M tokens (implicit caching only). Batch and Flex are $0.75 input and $3.75 output per 1M tokens. On the Standard tier the free tier lists Hydrogen input, output, and context caching as free of charge.",
+    note: "Hydrogen prices were read on the Gemini API pricing page on 2026-11-16. The Carbon introductory price ends 2026-11-30; those Carbon terms were checked on 2026-11-12 and were not re-read on 2026-11-16. The Hydrogen launch post (https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/) states the $1.50 / $7.50 rate and does not state the cache, Batch, or Flex prices. Consumer plan prices are the plans above, not this API rate.",
+    sourceUrl: "https://ai.google.dev/gemini-api/docs/pricing",
+    checkedAt: "2026-11-16",
     gatheredBy: "cursor",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-12",
+    verifiedAt: "2026-11-16",
     status: "verified",
   },
   features: {
@@ -66,6 +65,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "apiPricing",
+      summary:
+        "X-watch: Gemini 4 Hydrogen Standard paid price is $1.50 / $7.50 per 1M, cache $0.075, Batch and Flex $0.75 / $3.75. Carbon's introductory terms were not re-read.",
+    },
     {
       date: "2026-11-12",
       field: "apiPricing",

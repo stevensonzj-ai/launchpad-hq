@@ -65,12 +65,14 @@ function batchFacts(f: ToolFacts): Fact<unknown>[] {
 describe("catalog batch 2026-10-26: one source for every surface", () => {
   it("every touched slug has batch facts with an official https source and the batch date", () => {
     for (const slug of TOUCHED) {
-      // X-watch 2026-11-12 moved Claude's 2026-10-26 features fact onto the
-      // Fable 5.2 launch post. The batch changelog entry stays.
+      // X-watch 2026-11-16 moved Claude's features fact onto the Meetings
+      // article. The Fable post stays cited inside that fact, and the batch
+      // changelog entry stays.
       if (slug === "claude") {
         const features = facts(slug).features;
-        assert.equal(features?.checkedAt, "2026-11-12");
-        assert.match(features?.sourceUrl ?? "", /^https:\/\/www\.anthropic\.com\/claude-fable-and-mythos-5-2/);
+        assert.equal(features?.checkedAt, "2026-11-16");
+        assert.match(features?.sourceUrl ?? "", /^https:\/\/claude\.com\/resources\/articles\/claude-meetings/);
+        assert.match(features?.value.join(" ") ?? "", /claude-fable-and-mythos-5-2/);
         assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), slug);
         continue;
       }

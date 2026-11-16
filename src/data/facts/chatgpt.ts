@@ -49,7 +49,26 @@ export default {
     verifiedAt: "2026-10-26",
     status: "verified",
   },
+  features: {
+    value: [
+      "ChatGPT Wallet, announced 2026-11-13, lets a dot complete a purchase after the user reviews it and approves it with a security check. The payment network then provides a payment token instead of the card details. It is rolling out to ChatGPT Pro subscribers aged 18 and older in the US with eligible US-issued cards.",
+    ],
+    note: "OpenAI's launch post, checked 2026-11-16. Plan prices above were not re-read.",
+    sourceUrl: "https://openai.com/index/introducing-chatgpt-wallet/",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-16",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-16",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "features",
+      summary:
+        "X-watch: ChatGPT Wallet is rolling out to US Pro subscribers aged 18 and older with an eligible US-issued card. A dot pays only after the user approves, using a payment token.",
+    },
     {
       date: "2026-10-24",
       field: "plans",
