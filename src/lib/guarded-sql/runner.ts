@@ -8,6 +8,7 @@ import { parseEndpointId } from "./endpoint";
 import { evaluateGuard } from "./guard";
 import { errorMessage, redactAndCap, redactSecrets, secretsFromConnectionString } from "./redact";
 import { DEFAULT_NEON_PROJECT_ID, PRODUCTION_BRANCH_ID, type FetchLike } from "./snapshot";
+import { guardCatalogSql } from "./statement-guard";
 import { findTransactionControl, splitSql } from "./split";
 import { formatChicagoTimestamp } from "./time";
 
@@ -88,6 +89,7 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
   const secrets: string[] = [
     ...(dbUrl ? secretsFromConnectionString(dbUrl) : []),
     ...(deps.env.NEON_API_KEY ? [deps.env.NEON_API_KEY] : []),
+    ...(deps.env.NEON_PROD_API_KEY ? [deps.env.NEON_PROD_API_KEY] : []),
   ];
   const endpointId = dbUrl ? parseEndpointId(dbUrl) : null;
   const productionEndpointId = deps.productionEndpointId ?? PRODUCTION_ENDPOINT_ID;
@@ -137,6 +139,12 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
       `Refusing file with explicit transaction control (${where}). The runner wraps everything in one transaction.`,
     );
   }
+  // Automated production runs set this. It refuses before any connection,
+  // including a dry run. allow_schema_change leaves the variable unset.
+  if (deps.env.GUARDED_SQL_CATALOG_GUARD === "1") {
+    const catalog = guardCatalogSql(bytes.toString("utf8"));
+    if (!catalog.ok) return finish(EXIT_REFUSED, catalog.reason);
+  }
 
   // --- target + guard ------------------------------------------------------
   if (!dbUrl) return finish(EXIT_BAD_INPUT, "Neither GUARDED_DATABASE_URL nor DATABASE_URL is set");
@@ -151,7 +159,8 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
     now: deps.now(),
     fetchFn: deps.fetchFn,
     productionEndpointId,
-    productionBranchId: deps.productionBranchId ?? PRODUCTION_BRANCH_ID,
+    productionBranchId:
+      deps.env.GUARDED_SQL_SNAPSHOT_PARENT?.trim() || deps.productionBranchId || PRODUCTION_BRANCH_ID,
     neonProjectId: deps.env.NEON_PROJECT_ID || DEFAULT_NEON_PROJECT_ID,
   });
   state.production = guard.production;

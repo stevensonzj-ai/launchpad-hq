@@ -12,6 +12,7 @@ const URL_LIKE = /[a-z][a-z0-9+.-]*:\/\/[^\s'"<>]+/gi;
 const KV_PASSWORD = /\b(password|passwd|pwd)\s*=\s*[^\s&;,'"]+/gi;
 const NEON_API_KEY = /\bnapi_[A-Za-z0-9]+/g;
 const NEON_PASSWORD = /\bnpg_[A-Za-z0-9]+/g;
+const JWT = /\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/g;
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -26,7 +27,7 @@ export function redactSecrets(text: string, secrets: readonly (string | undefine
   for (const s of known) out = out.replace(new RegExp(escapeRegExp(s), "g"), REDACTED);
   out = out.replace(URL_LIKE, REDACTED);
   out = out.replace(KV_PASSWORD, (_m, key: string) => `${key}=${REDACTED}`);
-  out = out.replace(NEON_API_KEY, REDACTED).replace(NEON_PASSWORD, REDACTED);
+  out = out.replace(NEON_API_KEY, REDACTED).replace(NEON_PASSWORD, REDACTED).replace(JWT, REDACTED);
   return out;
 }
 

@@ -38,7 +38,7 @@ Remove-Item Env:GUARDED_DATABASE_URL, Env:NEON_API_KEY, Env:CONFIRM_PROD_HOST
 | `<file.sql>` | Required. One file. |
 | `--dry-run` | Print the guard result, target endpoint ID and numbered statements. Executes nothing and makes **no database connection**. |
 | `--confirm-production` | First of the three production confirmations. Harmless (noted and ignored) on non-production hosts. |
-| `--snapshot <branch-id>` | Neon branch used as the restore point. Required for production. |
+| `--snapshot <branch-id>` | Neon branch used as the restore point. Required for production. The GitHub Action creates one when `snapshot_id` is left empty, then passes it here. |
 | `--max-snapshot-age-hours N` | Snapshot freshness limit. Default 24. |
 
 ## Environment variables
@@ -47,8 +47,12 @@ Remove-Item Env:GUARDED_DATABASE_URL, Env:NEON_API_KEY, Env:CONFIRM_PROD_HOST
 |---|---|
 | `GUARDED_DATABASE_URL` | Target connection string. Falls back to `DATABASE_URL`. |
 | `CONFIRM_PROD_HOST` | Must equal the production endpoint ID for production runs. |
-| `NEON_API_KEY` | Needed only to verify a production snapshot. Never printed. |
-| `NEON_PROJECT_ID` | Neon project; default `billowing-river-00654156`. |
+| `NEON_API_KEY` | Verifies a snapshot. On the test target it also creates the pre-run branch. Never printed. |
+| `NEON_PROD_API_KEY` | Production self-snapshot only. Project-scoped key, stored only in the `guarded-sql-production` environment. Never printed. A supplied `snapshot_id` does not need it. |
+| `NEON_PROJECT_ID` | Production Neon project; default `billowing-river-00654156`. |
+| `TEST_PROJECT_ID` | Test-target self-snapshot only. Same variable or secret the test-project copy workflow uses. |
+| `GUARDED_SQL_SNAPSHOT_PARENT` | Set by the workflow after it creates a branch, so the snapshot check expects that parent. Unset for a supplied snapshot id, which must still be a child of `br-purple-band-ajks38xk`. |
+| `GUARDED_SQL_CATALOG_GUARD` | `1` on automated production runs unless `allow_schema_change` is true. Refuses the file before any database connection. |
 | `GUARDED_SQL_LOG` | Run-log path; default `logs/guarded-sql-runs.jsonl` (`logs/` is gitignored). |
 
 The runner reads the process environment only. It never loads `.env*` files (no dotenv, no `--env-file`).
@@ -106,22 +110,38 @@ Listed without a recommendation. In every option the runner itself only reads `p
 
 1. **Zach sets the variables in his own PowerShell session.** `GUARDED_DATABASE_URL` and `NEON_API_KEY` via `$env:...`, then clears them after the run.
 2. **A dedicated env file that agents never read.** It lives outside the repo and is loaded by Zach's shell (for example a dot-sourced PowerShell file). The runner still never loads files.
-3. **A manually triggered GitHub Action** (`workflow_dispatch`) using a protected environment with required reviewers and secrets. This needs a workflow file that is **not included in this PR**.
+3. **A manually triggered GitHub Action** (`workflow_dispatch`) using a protected environment with required reviewers and secrets. That workflow is `.github/workflows/guarded-sql.yml`, described below.
 
 ## GitHub Actions route (`.github/workflows/guarded-sql.yml`)
 
 For running from a phone: trigger **Guarded SQL** from the Actions tab (web or GitHub Mobile), then approve the pending deployment from the GitHub Mobile notification.
 
-- Trigger: `workflow_dispatch` only. Inputs: `sql_file` (must match `scripts/sql/<name>.sql`, no `..`), `target` (`test` | `production`), `snapshot_id` (required for production; verified on test if given), `dry_run` (default true), `max_snapshot_age_hours` (default 24).
-- Each target runs in its own protected environment: `guarded-sql-test` or `guarded-sql-production`. Both require Zach's review. Secrets exist only there: `GUARDED_DATABASE_URL`, `NEON_API_KEY`, and `CONFIRM_PROD_HOST` (production only; secret or environment variable). No repo-level secrets; no other workflow references these environments.
-- Hardening: `permissions: contents: read`, actions pinned by SHA, `persist-credentials: false`, one concurrency group, 15-minute timeout, inputs passed through `env` (never interpolated into `run:`), no `set -x`.
-- Production passes `--confirm-production --snapshot <id>`; every runner guard still applies.
-- The job summary shows only endpoint ID, file, SHA-256, statement count and result. The redacted JSONL run log is uploaded as a 3-day artifact only after a check confirms it contains neither the database URL/password nor the Neon API key.
+- Trigger: `workflow_dispatch` only. Inputs: `sql_file` (must match `scripts/sql/<name>.sql`, no `..`), `target` (`test` | `production`), `snapshot_id` (optional; empty means the job creates the branch), `dry_run` (default true), `max_snapshot_age_hours` (default 24), `allow_schema_change` (default false).
+- Each target runs in its own protected environment: `guarded-sql-test` or `guarded-sql-production`. Both require Zach's review. This workflow does not change those environment rules. Secrets exist only there: `GUARDED_DATABASE_URL`, `NEON_API_KEY`, `CONFIRM_PROD_HOST` (production only; secret or environment variable), and `NEON_PROD_API_KEY` (production self-snapshot; Zach adds this project-scoped key to `guarded-sql-production` only). Test self-snapshot uses the existing `NEON_API_KEY` and `TEST_PROJECT_ID`. No repo-level secrets.
+- Hardening: `permissions: contents: read`, actions pinned by SHA, `persist-credentials: false`, one concurrency group, 15-minute timeout, inputs passed through `env` (never interpolated into `run:`), no `set -x`. API keys are masked with `::add-mask::`. The job never prints keys, connection strings, or JWTs.
+- Production runs only when `github.ref` is `refs/heads/main`. Any other ref fails before a branch is created.
+- The SQL file must exist on the checked-out ref, under `scripts/sql/`.
+- When `snapshot_id` is empty, the job lists the target project's branches, finds the single primary branch, and `POST`s `/api/v2/projects/{project_id}/branches` with `parent_id` set to that primary and no `endpoints` array (no compute). The name is `pre-<sql basename without .sql>-<YYYYMMDD>` in UTC, truncated to Neon's 256-character API limit. If that name exists, the job appends `-2`, `-3`, and so on. It waits until `current_state` is `ready`, then passes the new id into the existing snapshot check. A dry run still creates this branch; it does not connect to the database.
+- Production self-snapshot refuses unless the primary branch is `br-purple-band-ajks38xk`, and it uses `NEON_PROD_API_KEY` plus the existing production project id (`NEON_PROJECT_ID`, or `billowing-river-00654156`). A missing `NEON_PROD_API_KEY` fails before any Neon call. A supplied `snapshot_id` skips creation and keeps the previous check: the branch must be a direct child of `br-purple-band-ajks38xk` in the production project, verified with `NEON_API_KEY`.
+- Test self-snapshot uses `TEST_PROJECT_ID` and `NEON_API_KEY`, parents the new branch on that project's primary, and points the same snapshot check at that project and parent (exists, direct child, not the primary itself, within the age limit).
+- Automated production runs reject the file before creating a branch and before connecting if, once comments and string literals are removed, it contains `DROP`, `TRUNCATE`, `DELETE`, `ALTER`, `CREATE`, `GRANT`, or `REVOKE`, or it touches a table other than `platforms` or `categories` (the tables in `scripts/sql/catalog-*.sql` and `scripts/sql/catalog-audit-*.sql`). Dollar-quoted `DO` / `EXECUTE` / `AS` bodies are still scanned. `allow_schema_change: true` skips only that guard, writes a warning at the top of the job summary, and still waits for the `guarded-sql-production` reviewer.
+- The job summary shows endpoint ID, file, SHA-256, statement count, result, snapshot name, and snapshot branch id. The redacted JSONL run log is uploaded as a 3-day artifact only after a check confirms it contains neither the database URL/password, nor either Neon API key, nor a JWT.
 - `workflow_dispatch` only appears once the workflow file is on the default branch (`main`).
+
+### Operator checklist
+
+1. Zach says yes in chat and names the file under `scripts/sql/`. The file is already on `main`.
+2. The bot triggers **Guarded SQL** from `main` with `target: production`, that `sql_file`, and `snapshot_id` left empty (`dry_run` true first, when a rehearsal is wanted).
+3. Zach taps **Approve** on `guarded-sql-production`. The required-reviewer gate holds the whole job, so no step runs before that approval, including the Neon call.
+4. After approval the job creates `pre-<file>-<YYYYMMDD>` from the production primary, waits until the branch is ready, and passes that branch id into the existing snapshot check.
+5. Rollback is restoring the database from that `pre-*` branch in the Neon console.
+6. Deleting a `pre-*` branch needs Zach's OK, and the OK names the branch id.
+
+The CLI (`npm run db:guarded-sql`) does not create branches. Production from the CLI still needs a snapshot id Zach already has.
 
 ### Snapshot check on non-production targets
 
-If `--snapshot` is given on a non-production target, the runner performs the same Neon API validation as on production (exists, direct child of production, not production itself, within the age limit) and refuses if it fails. This lets the snapshot check be exercised against a test branch.
+A supplied `--snapshot` on a non-production target is checked the same way as on production (exists, direct child of the production branch, not the production branch itself, within the age limit) and refuses if it fails. A branch this workflow just created for the test target is checked against that test project's primary instead, because `GUARDED_SQL_SNAPSHOT_PARENT` and `NEON_PROJECT_ID` are set to the parent and project the branch was created from.
 
 ### Test-only files
 

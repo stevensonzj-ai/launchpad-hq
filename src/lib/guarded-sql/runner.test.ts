@@ -403,6 +403,25 @@ describe("test-only SQL files", () => {
     assert.equal(r.exitCode, EXIT_REFUSED);
   });
 
+  it("refuses forbidden SQL before connecting when the catalog guard is on", async () => {
+    const h = harness({
+      env: { GUARDED_DATABASE_URL: DEV_URL, GUARDED_SQL_CATALOG_GUARD: "1" },
+      sql: "DROP TABLE users;\n",
+    });
+    const r = await runGuardedSql(["change.sql"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+    assert.equal(h.factoryCalls, 0);
+    assert.equal(h.fetchCalls, 0);
+    assert.match(r.record?.error ?? "", /DROP/);
+  });
+
+  it("leaves the catalog guard off unless the workflow sets it", async () => {
+    const h = harness({ sql: "DROP TABLE users;\n" });
+    const r = await runGuardedSql(["change.sql", "--dry-run"], h.deps);
+    assert.equal(r.exitCode, EXIT_OK);
+    assert.equal(h.factoryCalls, 0);
+  });
+
   it("the repo self-test file carries the marker", async () => {
     const { readFileSync } = await import("node:fs");
     const { isTestOnlySql } = await import("./runner");

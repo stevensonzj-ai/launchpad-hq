@@ -23,7 +23,9 @@ if (url) {
   }
 }
 if (process.env.NEON_API_KEY) needles.push(process.env.NEON_API_KEY);
-const clean = raw.length > 0 && !needles.some((n) => n && n.length >= 4 && raw.includes(n));
+if (process.env.NEON_PROD_API_KEY) needles.push(process.env.NEON_PROD_API_KEY);
+const jwt = /eyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/;
+const clean = raw.length > 0 && !needles.some((n) => n && n.length >= 4 && raw.includes(n)) && !jwt.test(raw);
 setOut("log_clean", clean ? "true" : "false");
 
 const lines = raw.trim().split("\n").filter(Boolean);
@@ -34,9 +36,26 @@ try {
   rec = null;
 }
 const esc = (s) => String(s ?? "").replace(/[|<>`\r\n]/g, "");
+const snapName = process.env.GUARDED_SQL_SNAPSHOT_NAME || "";
+const snapId = process.env.GUARDED_SQL_SNAPSHOT_ID || (rec && rec.snapshot_id) || "";
+const snapLabel = snapName || (snapId ? "(supplied)" : "(none)");
+const override = process.env.GUARDED_SQL_SCHEMA_OVERRIDE === "true";
+const warning = override
+  ? [
+      "## WARNING: allow_schema_change is true",
+      "",
+      "The catalog statement guard was **skipped**. This production run may include DROP, TRUNCATE, DELETE, ALTER, CREATE, GRANT, REVOKE, or tables other than platforms and categories.",
+      "Reviewer approval on `guarded-sql-production` is still required.",
+      "",
+    ].join("\n")
+  : "";
+const snapRows = [
+  `| Snapshot name | ${esc(snapLabel)} |`,
+  `| Snapshot branch ID | ${esc(snapId) || "(none)"} |`,
+];
 const md = rec
   ? [
-      "## Guarded SQL",
+      (warning ? warning + "\n" : "") + "## Guarded SQL",
       "",
       "| Field | Value |",
       "|---|---|",
@@ -44,10 +63,21 @@ const md = rec
       `| File | ${esc(rec.file)} |`,
       `| SHA-256 | ${esc(rec.file_sha256)} |`,
       `| Statements | ${esc(rec.statement_count)} |`,
+      ...snapRows,
       `| Result | ${rec.success ? (rec.dry_run ? "PASS (dry run)" : "PASS") : "FAILED / REFUSED"} |`,
       "",
       clean ? "Run log uploaded as a 3-day artifact." : "Run log NOT uploaded (missing or failed the secret check).",
     ].join("\n")
-  : "## Guarded SQL\n\nNo run record was written (run did not reach the runner).";
+  : [
+      (warning ? warning + "\n" : "") + "## Guarded SQL",
+      "",
+      "No run record was written (run did not reach the runner).",
+      "",
+      "| Field | Value |",
+      "|---|---|",
+      ...snapRows,
+    ].join("\n");
+console.log(`snapshot name: ${snapLabel}`);
+console.log(`snapshot branch id: ${snapId || "(none)"}`);
 if (summary) appendFileSync(summary, md + "\n");
 console.log(clean ? "log secret check: clean" : "log secret check: not uploaded");

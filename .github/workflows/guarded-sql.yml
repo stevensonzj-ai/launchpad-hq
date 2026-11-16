@@ -17,12 +17,12 @@ on:
         options: [test, production]
         default: test
       snapshot_id:
-        description: "Neon snapshot branch id (br-...). Required for production; verified on test if given."
+        description: "Neon branch id (br-...). Leave empty to create a pre-run branch. A supplied id is used as before."
         required: false
         type: string
         default: ""
       dry_run:
-        description: "Dry run (no DB connection)"
+        description: "Dry run (no DB connection). An empty snapshot_id still creates the pre-run branch."
         required: true
         type: boolean
         default: true
@@ -31,6 +31,11 @@ on:
         required: false
         type: string
         default: "24"
+      allow_schema_change:
+        description: "Production only: skip the catalog statement guard. Reviewer approval is still required."
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -57,8 +62,14 @@ jobs:
     steps:
       - name: Validate inputs
         shell: bash
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROD_API_KEY: ${{ secrets.NEON_PROD_API_KEY }}
+          TEST_PROJECT_ID: ${{ vars.TEST_PROJECT_ID || secrets.TEST_PROJECT_ID }}
         run: |
           set -euo pipefail
+          if [[ -n "${NEON_API_KEY:-}" ]]; then echo "::add-mask::$NEON_API_KEY"; fi
+          if [[ -n "${NEON_PROD_API_KEY:-}" ]]; then echo "::add-mask::$NEON_PROD_API_KEY"; fi
           case "$IN_SQL_FILE" in
             *..*) echo "::error::sql_file must not contain '..'"; exit 2 ;;
           esac
@@ -71,8 +82,21 @@ jobs:
           if ! [[ "$IN_MAX_AGE" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
             echo "::error::max_snapshot_age_hours must be a positive number"; exit 2
           fi
-          if [[ "$IN_TARGET" == "production" && -z "$IN_SNAPSHOT" ]]; then
-            echo "::error::production requires snapshot_id"; exit 2
+          if [[ "$IN_TARGET" == "production" && "${GITHUB_REF:-}" != "refs/heads/main" ]]; then
+            echo "::error::production target only runs from refs/heads/main (github.ref is ${GITHUB_REF:-unset})"
+            exit 2
+          fi
+          if [[ -z "$IN_SNAPSHOT" && "$IN_TARGET" == "production" && -z "${NEON_PROD_API_KEY:-}" ]]; then
+            echo "::error::NEON_PROD_API_KEY is not set. Add this project-scoped key to the guarded-sql-production environment before a production run that creates its own snapshot."
+            exit 2
+          fi
+          if [[ -z "$IN_SNAPSHOT" && "$IN_TARGET" == "test" && -z "${NEON_API_KEY:-}" ]]; then
+            echo "::error::NEON_API_KEY is not set. The guarded-sql-test environment must provide it when snapshot_id is empty."
+            exit 2
+          fi
+          if [[ -z "$IN_SNAPSHOT" && "$IN_TARGET" == "test" && -z "${TEST_PROJECT_ID:-}" ]]; then
+            echo "::error::TEST_PROJECT_ID is not set. The guarded-sql-test environment must provide it when snapshot_id is empty."
+            exit 2
           fi
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -92,17 +116,44 @@ jobs:
           set -euo pipefail
           test -f "$IN_SQL_FILE" || { echo "::error::sql_file not found in this commit"; exit 2; }
 
+      - name: Catalog statement guard
+        if: inputs.target == 'production' && inputs.allow_schema_change == false
+        shell: bash
+        run: npx --no-install tsx scripts/guarded-sql-statement-guard.ts
+
+      - name: Create pre-run snapshot
+        id: snap
+        shell: bash
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROD_API_KEY: ${{ secrets.NEON_PROD_API_KEY }}
+          TEST_PROJECT_ID: ${{ vars.TEST_PROJECT_ID || secrets.TEST_PROJECT_ID }}
+          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID || secrets.NEON_PROJECT_ID }}
+        run: npx --no-install tsx scripts/guarded-sql-self-snapshot.ts
+
       - name: Run guarded SQL
         shell: bash
         env:
           GUARDED_DATABASE_URL: ${{ secrets.GUARDED_DATABASE_URL }}
-          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_API_KEY: ${{ steps.snap.outputs.key_slot == 'prod' && secrets.NEON_PROD_API_KEY || secrets.NEON_API_KEY }}
+          NEON_PROD_API_KEY: ${{ secrets.NEON_PROD_API_KEY }}
+          NEON_PROJECT_ID: ${{ steps.snap.outputs.snapshot_project }}
+          GUARDED_SQL_SNAPSHOT_PARENT: ${{ steps.snap.outputs.snapshot_parent }}
+          RESOLVED_SNAPSHOT: ${{ steps.snap.outputs.snapshot_id }}
           CONFIRM_PROD_HOST: ${{ secrets.CONFIRM_PROD_HOST || vars.CONFIRM_PROD_HOST }}
+          GUARDED_SQL_CATALOG_GUARD: ${{ inputs.target == 'production' && inputs.allow_schema_change == false && '1' || '' }}
         run: |
           set -euo pipefail
-          args=("$IN_SQL_FILE" --max-snapshot-age-hours "$IN_MAX_AGE")
+          if [[ -n "${NEON_API_KEY:-}" ]]; then echo "::add-mask::$NEON_API_KEY"; fi
+          if [[ -n "${NEON_PROD_API_KEY:-}" ]]; then echo "::add-mask::$NEON_PROD_API_KEY"; fi
+          if [[ -z "${RESOLVED_SNAPSHOT:-}" ]]; then
+            echo "::error::no snapshot id (create step did not return one)"; exit 2
+          fi
+          if [[ ! "$RESOLVED_SNAPSHOT" =~ ^br-[a-z0-9-]+$ ]]; then
+            echo "::error::snapshot id must look like br-..."; exit 2
+          fi
+          args=("$IN_SQL_FILE" --max-snapshot-age-hours "$IN_MAX_AGE" --snapshot "$RESOLVED_SNAPSHOT")
           if [[ "$IN_DRY_RUN" == "true" ]]; then args+=(--dry-run); fi
-          if [[ -n "$IN_SNAPSHOT" ]]; then args+=(--snapshot "$IN_SNAPSHOT"); fi
           if [[ "$IN_TARGET" == "production" ]]; then args+=(--confirm-production); fi
           npx --no-install tsx scripts/run-guarded-sql.ts "${args[@]}"
 
@@ -113,6 +164,10 @@ jobs:
         env:
           GUARDED_DATABASE_URL: ${{ secrets.GUARDED_DATABASE_URL }}
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROD_API_KEY: ${{ secrets.NEON_PROD_API_KEY }}
+          GUARDED_SQL_SNAPSHOT_NAME: ${{ steps.snap.outputs.snapshot_name }}
+          GUARDED_SQL_SNAPSHOT_ID: ${{ steps.snap.outputs.snapshot_id }}
+          GUARDED_SQL_SCHEMA_OVERRIDE: ${{ inputs.target == 'production' && inputs.allow_schema_change && 'true' || 'false' }}
         run: node scripts/guarded-sql-gha-summary.mjs
 
       - name: Upload redacted run log
