@@ -53,6 +53,11 @@ const PROJECT_ID = /^[A-Za-z0-9][A-Za-z0-9-]*$/;
 const TEST_PROJECT_ID = /^[a-z0-9-]{1,60}$/;
 const BRANCH_ID = /^br-[a-z0-9-]+$/;
 
+/** A real Neon branch is created only for a live run that was not given a snapshot id. */
+export function shouldCreatePreRunSnapshot(dryRun: boolean, snapshotId: string | undefined): boolean {
+  return !dryRun && !(snapshotId ?? "").trim();
+}
+
 const PROD_KEY_MISSING =
   "NEON_PROD_API_KEY is not set. Add this project-scoped key to the guarded-sql-production environment before a production run that creates its own snapshot.";
 const TEST_KEY_MISSING =

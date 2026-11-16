@@ -4,14 +4,21 @@
  */
 import { appendFileSync } from "node:fs";
 import { errorMessage, redactSecrets } from "../src/lib/guarded-sql/redact";
-import { createPreRunSnapshot, SnapshotSetupError } from "../src/lib/guarded-sql/self-snapshot";
+import { createPreRunSnapshot, shouldCreatePreRunSnapshot, SnapshotSetupError } from "../src/lib/guarded-sql/self-snapshot";
 
 function mask(value: string | undefined) {
   if (value) console.log(`::add-mask::${value}`);
 }
 
 function writeOutput(key: string, value: string) {
-  if (key !== "snapshot_id" && key !== "snapshot_name" && key !== "snapshot_parent" && key !== "snapshot_project" && key !== "key_slot") {
+  if (
+    key !== "snapshot_id" &&
+    key !== "snapshot_name" &&
+    key !== "snapshot_parent" &&
+    key !== "snapshot_project" &&
+    key !== "key_slot" &&
+    key !== "snapshot_note"
+  ) {
     throw new Error("refusing to write an unexpected output");
   }
   if (/[\r\n=]/.test(value) && key !== "snapshot_name") throw new Error(`refusing unsafe ${key}`);
@@ -29,8 +36,19 @@ async function main(): Promise<number> {
   const target = process.env.IN_TARGET;
   const sqlFile = process.env.IN_SQL_FILE || "";
   const supplied = (process.env.IN_SNAPSHOT || "").trim();
+  const dryRun = process.env.IN_DRY_RUN === "true";
 
   try {
+    if (!shouldCreatePreRunSnapshot(dryRun, supplied) && !supplied) {
+      writeOutput("snapshot_id", "");
+      writeOutput("snapshot_name", "");
+      writeOutput("snapshot_parent", "");
+      writeOutput("snapshot_project", "");
+      writeOutput("key_slot", "skipped");
+      writeOutput("snapshot_note", "dry-run");
+      console.log("Dry run: no pre-run Neon branch was created.");
+      return 0;
+    }
     if (supplied) {
       if (!/^br-[a-z0-9-]+$/.test(supplied)) {
         console.error("::error::snapshot_id must look like br-...");

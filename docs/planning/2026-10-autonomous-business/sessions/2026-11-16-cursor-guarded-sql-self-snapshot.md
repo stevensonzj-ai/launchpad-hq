@@ -10,3 +10,5 @@
 - `docs/guarded-sql.md` — checklist: chat yes names the file, bot triggers from `main`, Zach approves `guarded-sql-production` before any step (including the Neon call), the job then creates `pre-*`, rollback is that branch, deleting a `pre-*` branch needs Zach's OK naming the branch id.
 
 **Open:** Zach adds `NEON_PROD_API_KEY` (project-scoped, production project only) to the `guarded-sql-production` environment. Do not mark the PR ready or run the workflow until that secret exists. `pre-*` branches are not deleted from here.
+
+**Review fix:** statements must start with `UPDATE` or `INSERT INTO`; forbidden words and non-allowlisted calls (including `set_config`, `query_to_xml`, `dblink_exec`, `pg_read_file`, `pg_sleep`, and any schema-qualified call) are refused; quoted table names keep their case. A production host refuses `GUARDED_SQL_SNAPSHOT_PARENT` unless it is the production branch. A dry run with an empty snapshot id does not create a Neon branch.

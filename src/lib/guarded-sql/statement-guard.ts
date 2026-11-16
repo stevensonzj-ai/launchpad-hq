@@ -1,22 +1,71 @@
 /**
  * Catalog statement guard for automated production Guarded SQL runs.
  *
- * Rejects the file before any database connection when it contains
- * DROP, TRUNCATE, DELETE, ALTER, CREATE, GRANT or REVOKE, or when it
- * touches a table other than the catalog tables the scripts/sql/catalog-*.sql
- * files actually write (platforms and categories).
- *
- * Comments and string literals (including dollar quotes used as values) are
- * removed before matching. Dollar-quoted bodies after DO / EXECUTE / AS are
- * still scanned, because those run as SQL. Comment text is not executed, so a
- * forbidden word that exists only inside a comment does not fire; a comment
- * stuck inside a real keyword (DROP, then a block comment, then TABLE) still does.
+ * splitSql, then strip comments and string literals. Every statement must
+ * start with UPDATE or INSERT INTO. Unquoted forbidden words are refused
+ * anywhere outside comments and strings. A call outside the INSERT column
+ * list must be on the function allowlist, and a schema-qualified call is
+ * refused. Quoted identifiers keep their case, so "PLATFORMS" is not platforms.
  */
+import { splitSql } from "./split";
 
 export const CATALOG_SQL_TABLES = ["categories", "platforms"] as const;
 const ALLOWED = new Set<string>(CATALOG_SQL_TABLES);
 
-const FORBIDDEN = new Set(["alter", "create", "delete", "drop", "grant", "revoke", "truncate"]);
+const FORBIDDEN = new Set([
+  "alter",
+  "authorization",
+  "call",
+  "copy",
+  "create",
+  "declare",
+  "delete",
+  "do",
+  "drop",
+  "execute",
+  "grant",
+  "import",
+  "listen",
+  "load",
+  "lock",
+  "merge",
+  "notify",
+  "perform",
+  "prepare",
+  "refresh",
+  "reset",
+  "revoke",
+  "role",
+  "truncate",
+  "vacuum",
+]);
+
+/** Calls allowed outside an INSERT column list. Compared case-insensitively for unquoted names. */
+export const ALLOWED_FUNCTIONS = new Set([
+  "array_append",
+  "array_cat",
+  "array_remove",
+  "btrim",
+  "coalesce",
+  "concat",
+  "concat_ws",
+  "greatest",
+  "jsonb_build_array",
+  "jsonb_build_object",
+  "jsonb_set",
+  "least",
+  "length",
+  "lower",
+  "now",
+  "nullif",
+  "replace",
+  "to_jsonb",
+  "trim",
+  "upper",
+]);
+
+/** Words that may be followed by "(" without being a function call. */
+const CALL_KEYWORDS = new Set(["all", "and", "any", "array", "cast", "exists", "in", "not", "or", "values"]);
 
 /** Words that start a clause, so they are not table aliases. */
 const CLAUSE = new Set([
@@ -46,28 +95,17 @@ interface Tok {
 }
 
 /**
- * Left-to-right strip. Comments and value-literals become a space.
- * Double-quoted identifiers are kept. Executable dollar-quote bodies are kept
- * (and themselves stripped) so a DO block cannot hide a DROP.
+ * Left-to-right strip. Comments and value-literals, including every dollar
+ * quote, become a space. Double-quoted identifiers are kept. A comment stuck
+ * inside a real keyword (DROP, then a block comment, then TABLE) still leaves
+ * the keyword in the result.
  */
 export function stripCommentsAndStrings(sql: string): string {
   let out = "";
-  let lastWord = "";
-  let pending = "";
   const n = sql.length;
   let i = 0;
-
-  const flushWord = () => {
-    if (!pending) return;
-    lastWord = pending.toLowerCase();
-    pending = "";
-  };
   const emit = (chunk: string) => {
     out += chunk;
-    for (const ch of chunk) {
-      if (/[A-Za-z0-9_$]/.test(ch)) pending += ch;
-      else flushWord();
-    }
   };
 
   while (i < n) {
@@ -127,12 +165,8 @@ export function stripCommentsAndStrings(sql: string): string {
         const tag = m[0];
         const close = sql.indexOf(tag, i + tag.length);
         if (close < 0) throw new GuardParseError(`Unterminated dollar-quoted body ${tag}`);
-        const body = sql.slice(i + tag.length, close);
         i = close + tag.length;
-        flushWord();
-        const executable = lastWord === "do" || lastWord === "execute" || lastWord === "as";
-        if (executable) emit(stripCommentsAndStrings(body));
-        else emit(" ");
+        emit(" ");
         continue;
       }
     }
@@ -217,16 +251,20 @@ function readRelations(tokens: Tok[], start: number): { names: string[]; next: n
     if (!isIdent(first)) return false;
     if (first.kind === "word" && CLAUSE.has(first.value.toLowerCase())) return false;
     i++;
-    let schema: string | null = null;
-    let name = first.value;
+    let schemaTok: Tok | null = null;
+    let nameTok = first;
     if (tokens[i]?.kind === "sym" && tokens[i]?.value === "." && isIdent(tokens[i + 1])) {
-      schema = first.value;
-      name = tokens[i + 1]!.value;
+      schemaTok = first;
+      nameTok = tokens[i + 1]!;
       i += 2;
     }
-    const schemaLc = schema?.toLowerCase() ?? null;
-    const nameLc = name.toLowerCase();
-    names.push(schemaLc && schemaLc !== "public" ? `${schemaLc}.${nameLc}` : nameLc);
+    const table = nameTok.kind === "quoted" ? nameTok.value : nameTok.value.toLowerCase();
+    if (!schemaTok) names.push(table);
+    else {
+      const pub = schemaTok.kind === "quoted" ? schemaTok.value === "public" : schemaTok.value.toLowerCase() === "public";
+      const schema = schemaTok.kind === "quoted" ? schemaTok.value : schemaTok.value.toLowerCase();
+      names.push(pub ? table : `${schema}.${table}`);
+    }
     i = skipAlias(tokens, i);
     return true;
   };
@@ -252,30 +290,98 @@ export function tablesTouched(sql: string): string[] {
   return [...new Set(found)];
 }
 
+function wordIs(t: Tok | undefined, word: string): boolean {
+  return t?.kind === "word" && t.value.toLowerCase() === word;
+}
+
+function matchParen(tokens: Tok[], open: number): number {
+  let depth = 0;
+  for (let i = open; i < tokens.length; i++) {
+    if (tokens[i]?.kind === "sym" && tokens[i]?.value === "(") depth++;
+    else if (tokens[i]?.kind === "sym" && tokens[i]?.value === ")") {
+      depth--;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+}
+
+function statementHead(tokens: Tok[]): { ok: true; columnList: { open: number; close: number } | null } | { ok: false; reason: string } {
+  const refuse = "Catalog statement guard: refusing a statement that does not start with UPDATE or INSERT INTO.";
+  if (wordIs(tokens[0], "update")) return { ok: true, columnList: null };
+  if (!(wordIs(tokens[0], "insert") && wordIs(tokens[1], "into"))) return { ok: false, reason: refuse };
+  let i = 2;
+  while (wordIs(tokens[i], "only") || wordIs(tokens[i], "lateral")) i++;
+  if (!isIdent(tokens[i])) return { ok: false, reason: refuse };
+  i++;
+  if (tokens[i]?.kind === "sym" && tokens[i]?.value === "." && isIdent(tokens[i + 1])) i += 2;
+  if (wordIs(tokens[i], "as")) {
+    i++;
+    if (isIdent(tokens[i])) i++;
+  } else if (isIdent(tokens[i]) && !(tokens[i]!.kind === "word" && CLAUSE.has(tokens[i]!.value.toLowerCase()))) {
+    i++;
+  }
+  if (tokens[i]?.kind === "sym" && tokens[i]?.value === "(") {
+    const close = matchParen(tokens, i);
+    if (close < 0) return { ok: false, reason: "Catalog statement guard: Unterminated column list" };
+    return { ok: true, columnList: { open: i, close } };
+  }
+  return { ok: true, columnList: null };
+}
+
+function checkCalls(tokens: Tok[], columnList: { open: number; close: number } | null): string | null {
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i]?.kind !== "sym" || tokens[i]?.value !== "(") continue;
+    if (columnList && i >= columnList.open && i <= columnList.close) continue;
+    const name = tokens[i - 1];
+    if (!isIdent(name)) continue;
+    if (name.kind === "word" && CALL_KEYWORDS.has(name.value.toLowerCase())) continue;
+    const dot = tokens[i - 2];
+    if (dot?.kind === "sym" && dot.value === ".") {
+      return "Catalog statement guard: refusing schema-qualified call.";
+    }
+    const key = name.kind === "quoted" ? name.value : name.value.toLowerCase();
+    if (!ALLOWED_FUNCTIONS.has(key)) {
+      return `Catalog statement guard: refusing function ${key}.`;
+    }
+  }
+  return null;
+}
+
 export function guardCatalogSql(sql: string): CatalogGuardResult {
-  let tokens: Tok[];
+  let statements: string[];
   try {
-    tokens = tokenize(stripCommentsAndStrings(sql));
+    statements = splitSql(sql);
   } catch (err) {
     const reason = err instanceof Error ? err.message : "could not parse SQL";
     return { ok: false, reason: `Catalog statement guard: ${reason}` };
   }
-  for (const t of tokens) {
-    if (t.kind === "word" && FORBIDDEN.has(t.value.toLowerCase())) {
-      return {
-        ok: false,
-        reason: `Catalog statement guard: refusing forbidden SQL keyword ${t.value.toUpperCase()}.`,
-      };
-    }
-  }
   const tables: string[] = [];
-  for (let i = 0; i < tokens.length; i++) {
-    const t = tokens[i]!;
-    if (t.kind !== "word" || !INTRODUCERS.has(t.value.toLowerCase())) continue;
-    const rel = readRelations(tokens, i + 1);
-    if (!rel) continue;
-    tables.push(...rel.names);
-    i = rel.next - 1;
+  for (const statement of statements) {
+    let tokens: Tok[];
+    try {
+      tokens = tokenize(stripCommentsAndStrings(statement));
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : "could not parse SQL";
+      return { ok: false, reason: `Catalog statement guard: ${reason}` };
+    }
+    const head = statementHead(tokens);
+    if (!head.ok) return head;
+    for (const t of tokens) {
+      if (t.kind === "word" && FORBIDDEN.has(t.value.toLowerCase())) {
+        return { ok: false, reason: `Catalog statement guard: refusing forbidden SQL keyword ${t.value.toUpperCase()}.` };
+      }
+    }
+    for (let i = 0; i < tokens.length; i++) {
+      const t = tokens[i]!;
+      if (t.kind !== "word" || !INTRODUCERS.has(t.value.toLowerCase())) continue;
+      const rel = readRelations(tokens, i + 1);
+      if (!rel) continue;
+      tables.push(...rel.names);
+      i = rel.next - 1;
+    }
+    const call = checkCalls(tokens, head.columnList);
+    if (call) return { ok: false, reason: call };
   }
   const unique = [...new Set(tables)];
   const bad = unique.filter((name) => !ALLOWED.has(name));

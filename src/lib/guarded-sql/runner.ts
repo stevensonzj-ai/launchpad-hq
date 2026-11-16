@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { win32 } from "node:path";
 /** Basename that strips both / and \ separators on every OS, so no directory path ever reaches the log. */
 const basename = (p: string): string => win32.basename(p);
-import { PRODUCTION_ENDPOINT_ID } from "../prod-guard";
+import { checkTargetHost, CONFIRM_PRODUCTION_FLAG, isProductionHost, PRODUCTION_ENDPOINT_ID } from "../prod-guard";
 import { parseArgs, USAGE } from "./args";
 import { parseEndpointId } from "./endpoint";
 import { evaluateGuard } from "./guard";
@@ -150,6 +150,43 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
   if (!dbUrl) return finish(EXIT_BAD_INPUT, "Neither GUARDED_DATABASE_URL nor DATABASE_URL is set");
   if (!endpointId) return finish(EXIT_BAD_INPUT, "Could not parse a hostname from the database URL");
 
+  const parentOverride = deps.env.GUARDED_SQL_SNAPSHOT_PARENT?.trim() ?? "";
+  if (
+    endpointId &&
+    isProductionHost(endpointId, productionEndpointId) &&
+    parentOverride !== "" &&
+    parentOverride !== PRODUCTION_BRANCH_ID
+  ) {
+    return finish(
+      EXIT_REFUSED,
+      "Refusing GUARDED_SQL_SNAPSHOT_PARENT on a production host unless it equals the production branch.",
+    );
+  }
+  const snapshotParent = parentOverride || deps.productionBranchId || PRODUCTION_BRANCH_ID;
+
+  // A dry run with no snapshot must not call Neon. Real execution still requires one.
+  if (args.dryRun && !args.snapshot) {
+    const host = checkTargetHost(
+      endpointId,
+      args.confirmProduction ? [CONFIRM_PRODUCTION_FLAG] : [],
+      deps.env,
+      productionEndpointId,
+    );
+    state.production = isProductionHost(endpointId!, productionEndpointId);
+    const testOnlyRefusal =
+      state.production && isTestOnlySql(bytes.toString("utf8"))
+        ? "Refusing: this file is marked '-- guarded-sql: test-only' and the target is production."
+        : null;
+    deps.out(`Target endpoint: ${endpointId} (${state.production ? "PRODUCTION" : "non-production"})`);
+    if (host.ok && host.note) deps.out(host.note);
+    deps.out(`Guard: ${host.ok ? "PASS" : "REFUSED"}`);
+    statements.forEach((s, i) => deps.out(`--- statement ${i + 1}/${statements.length} ---\n${s}`));
+    deps.out("Dry run: no pre-run Neon branch was created.");
+    deps.out("Dry run: nothing was executed and no database connection was made.");
+    if (!host.ok) return finish(EXIT_REFUSED, host.reason);
+    return testOnlyRefusal ? finish(EXIT_REFUSED, testOnlyRefusal) : finish(EXIT_OK, null);
+  }
+
   const guard = await evaluateGuard({
     endpointId,
     confirmProduction: args.confirmProduction,
@@ -159,8 +196,7 @@ export async function runGuardedSql(argv: readonly string[], deps: RunnerDeps): 
     now: deps.now(),
     fetchFn: deps.fetchFn,
     productionEndpointId,
-    productionBranchId:
-      deps.env.GUARDED_SQL_SNAPSHOT_PARENT?.trim() || deps.productionBranchId || PRODUCTION_BRANCH_ID,
+    productionBranchId: snapshotParent,
     neonProjectId: deps.env.NEON_PROJECT_ID || DEFAULT_NEON_PROJECT_ID,
   });
   state.production = guard.production;

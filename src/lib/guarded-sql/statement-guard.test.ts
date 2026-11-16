@@ -79,6 +79,48 @@ describe("catalog statement guard", () => {
     assert.equal(other.ok, false);
   });
 
+  it("refuses statement and function bypasses", () => {
+    const samples: Array<[string, RegExp]> = [
+      ["DO $$ BEGIN EXECUTE 'drop table users'; END $$;", /UPDATE or INSERT INTO|DO/],
+      ["COPY platforms TO PROGRAM 'id';", /UPDATE or INSERT INTO|COPY/],
+      ["CALL refresh_catalog();", /UPDATE or INSERT INTO|CALL/],
+      ["SET ROLE postgres;", /UPDATE or INSERT INTO|ROLE/],
+      ["SET SESSION AUTHORIZATION postgres;", /UPDATE or INSERT INTO|AUTHORIZATION/],
+      ["RESET ROLE;", /UPDATE or INSERT INTO|RESET|ROLE/],
+      ["SET search_path TO public;", /UPDATE or INSERT INTO/],
+      ["UPDATE platforms SET name = name WHERE id = set_config('search_path', 'public', true);", /function set_config/],
+      ["UPDATE platforms SET name = query_to_xml('select 1', true, false, '');", /function query_to_xml/],
+      ["UPDATE platforms SET name = dblink_exec('host=x', 'drop table users');", /function dblink_exec/],
+      ["UPDATE platforms SET name = pg_read_file('/etc/passwd');", /function pg_read_file/],
+      ["UPDATE platforms SET name = pg_sleep(10);", /function pg_sleep/],
+      ["UPDATE platforms SET name = pg_catalog.now();", /schema-qualified/],
+      ["LOCK TABLE platforms;", /UPDATE or INSERT INTO|LOCK/],
+      ["VACUUM platforms;", /UPDATE or INSERT INTO|VACUUM/],
+      ["COMMENT ON TABLE platforms IS 'x';", /UPDATE or INSERT INTO/],
+      ["SECURITY LABEL ON TABLE platforms IS 'x';", /UPDATE or INSERT INTO/],
+      ["REFRESH MATERIALIZED VIEW platforms;", /UPDATE or INSERT INTO|REFRESH/],
+      ["NOTIFY platforms;", /UPDATE or INSERT INTO|NOTIFY/],
+      ["DECLARE c CURSOR FOR SELECT 1;", /UPDATE or INSERT INTO|DECLARE/],
+      ["REASSIGN OWNED BY CURRENT_USER TO CURRENT_USER;", /UPDATE or INSERT INTO/],
+      ["DISCARD ALL;", /UPDATE or INSERT INTO/],
+      ["SET TRANSACTION READ WRITE;", /UPDATE or INSERT INTO/],
+      ["SELECT 1;", /UPDATE or INSERT INTO/],
+      ["WITH x AS (SELECT 1) UPDATE platforms SET name = name;", /UPDATE or INSERT INTO/],
+      ['UPDATE "PLATFORMS" SET name = name;', /PLATFORMS/],
+      ["MERGE INTO platforms USING platforms ON true WHEN MATCHED THEN UPDATE SET name = name;", /UPDATE or INSERT INTO|MERGE/],
+    ];
+    for (const [sql, pattern] of samples) {
+      const result = guardCatalogSql(sql);
+      assert.equal(result.ok, false, sql);
+      if (!result.ok) assert.match(result.reason, pattern, sql);
+    }
+  });
+
+  it("allows a quoted platforms table and now()", () => {
+    const result = guardCatalogSql('UPDATE "platforms" SET "updatedAt" = now() WHERE slug = \'a\';');
+    assert.equal(result.ok, true, result.ok ? "" : result.reason);
+  });
+
   it("rejects an unterminated comment instead of guessing", () => {
     const result = guardCatalogSql("UPDATE platforms SET name = name; /* DROP");
     assert.equal(result.ok, false);

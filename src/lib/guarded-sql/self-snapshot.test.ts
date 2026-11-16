@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { DEFAULT_NEON_PROJECT_ID, PRODUCTION_BRANCH_ID } from "./snapshot";
-import { createPreRunSnapshot, SnapshotSetupError, type NeonFetch } from "./self-snapshot";
+import { createPreRunSnapshot, shouldCreatePreRunSnapshot, SnapshotSetupError, type NeonFetch } from "./self-snapshot";
 
 const NOW = new Date("2026-11-16T18:04:00Z");
 const FILE = "scripts/sql/catalog-xwatch-20261116.sql";
@@ -98,6 +98,17 @@ async function refused(run: () => Promise<unknown>): Promise<string> {
   }
   assert.fail("expected a refusal");
 }
+
+describe("shouldCreatePreRunSnapshot", () => {
+  it("creates only for a live run with an empty snapshot id", () => {
+    assert.equal(shouldCreatePreRunSnapshot(false, ""), true);
+    assert.equal(shouldCreatePreRunSnapshot(false, "   "), true);
+    assert.equal(shouldCreatePreRunSnapshot(true, ""), false);
+    assert.equal(shouldCreatePreRunSnapshot(true, undefined), false);
+    assert.equal(shouldCreatePreRunSnapshot(false, "br-snap-111111"), false);
+    assert.equal(shouldCreatePreRunSnapshot(true, "br-snap-111111"), false);
+  });
+});
 
 describe("createPreRunSnapshot", () => {
   it("fails fast when NEON_PROD_API_KEY is missing and does not call Neon", async () => {

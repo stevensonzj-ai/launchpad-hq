@@ -412,7 +412,7 @@ describe("test-only SQL files", () => {
     assert.equal(r.exitCode, EXIT_REFUSED);
     assert.equal(h.factoryCalls, 0);
     assert.equal(h.fetchCalls, 0);
-    assert.match(r.record?.error ?? "", /DROP/);
+    assert.match(r.record?.error ?? "", /UPDATE or INSERT INTO/);
   });
 
   it("leaves the catalog guard off unless the workflow sets it", async () => {
@@ -420,6 +420,39 @@ describe("test-only SQL files", () => {
     const r = await runGuardedSql(["change.sql", "--dry-run"], h.deps);
     assert.equal(r.exitCode, EXIT_OK);
     assert.equal(h.factoryCalls, 0);
+  });
+
+  it("a confirmed production dry run with no snapshot does not call Neon", async () => {
+    const h = harness({ env: prodEnv() });
+    const r = await runGuardedSql(["c.sql", "--dry-run", "--confirm-production"], h.deps);
+    assert.equal(r.exitCode, EXIT_OK);
+    assert.equal(h.fetchCalls, 0);
+    assert.equal(h.factoryCalls, 0);
+    assert.match(h.out.join("\n"), /no pre-run Neon branch was created/);
+  });
+
+  it("refuses a snapshot parent override on production unless it is the production branch", async () => {
+    const h = harness({
+      env: { ...prodEnv(), GUARDED_SQL_SNAPSHOT_PARENT: "br-not-the-production-branch" },
+    });
+    const r = await runGuardedSql(["c.sql", "--confirm-production", "--snapshot", "br-snap-111111"], h.deps);
+    assert.equal(r.exitCode, EXIT_REFUSED);
+    assert.equal(h.fetchCalls, 0);
+    assert.equal(h.factoryCalls, 0);
+    assert.match(r.record?.error ?? "", /GUARDED_SQL_SNAPSHOT_PARENT/);
+
+    const allowed = harness({
+      env: { ...prodEnv(), GUARDED_SQL_SNAPSHOT_PARENT: PRODUCTION_BRANCH_ID },
+      fetchFn: async () => ({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          branch: { id: "br-snap-111111", parent_id: PRODUCTION_BRANCH_ID, created_at: "2026-11-03T12:00:00Z" },
+        }),
+      }),
+    });
+    const ok = await runGuardedSql(["c.sql", "--confirm-production", "--snapshot", "br-snap-111111"], allowed.deps);
+    assert.equal(ok.exitCode, EXIT_OK);
   });
 
   it("the repo self-test file carries the marker", async () => {

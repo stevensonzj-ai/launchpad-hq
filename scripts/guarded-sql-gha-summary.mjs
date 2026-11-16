@@ -40,6 +40,10 @@ const snapName = process.env.GUARDED_SQL_SNAPSHOT_NAME || "";
 const snapId = process.env.GUARDED_SQL_SNAPSHOT_ID || (rec && rec.snapshot_id) || "";
 const snapLabel = snapName || (snapId ? "(supplied)" : "(none)");
 const override = process.env.GUARDED_SQL_SCHEMA_OVERRIDE === "true";
+const dryRunNote =
+  process.env.GUARDED_SQL_SNAPSHOT_NOTE === "dry-run"
+    ? "No pre-run Neon branch was created because this is a dry run.\n\n"
+    : "";
 const warning = override
   ? [
       "## WARNING: allow_schema_change is true",
@@ -55,7 +59,7 @@ const snapRows = [
 ];
 const md = rec
   ? [
-      (warning ? warning + "\n" : "") + "## Guarded SQL",
+      (warning ? warning + "\n" : "") + dryRunNote + "## Guarded SQL",
       "",
       "| Field | Value |",
       "|---|---|",
@@ -69,7 +73,7 @@ const md = rec
       clean ? "Run log uploaded as a 3-day artifact." : "Run log NOT uploaded (missing or failed the secret check).",
     ].join("\n")
   : [
-      (warning ? warning + "\n" : "") + "## Guarded SQL",
+      (warning ? warning + "\n" : "") + dryRunNote + "## Guarded SQL",
       "",
       "No run record was written (run did not reach the runner).",
       "",
