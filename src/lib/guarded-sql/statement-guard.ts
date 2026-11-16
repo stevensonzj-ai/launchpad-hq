@@ -139,8 +139,8 @@ export function stripCommentsAndStrings(sql: string): string {
         break;
       }
       case "line": {
-        if (c === "\n") {
-          out += "\n";
+        if (c === "\n" || c === "\r") {
+          out += c;
           i++;
           state = { kind: "normal" };
           break;
@@ -232,6 +232,9 @@ export function stripCommentsAndStrings(sql: string): string {
             state = { kind: "dollar", tag: m[0] };
             break;
           }
+        }
+        if (c.charCodeAt(0) > 0x7f) {
+          throw new GuardParseError("non-ASCII character outside a string, comment, or quoted identifier");
         }
         out += c;
         i++;

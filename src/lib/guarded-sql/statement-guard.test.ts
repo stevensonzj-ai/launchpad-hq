@@ -164,6 +164,30 @@ describe("catalog statement guard", () => {
     if (!escapedResult.ok) assert.match(escapedResult.reason, /pg_read_file/);
   });
 
+  it("refuses a carriage return that ends a line comment, and non-ASCII outside literals", () => {
+    const samples: Array<[string, RegExp]> = [
+      ["UPDATE platforms SET name='a' -- c\r, slug = pg_sleep(1)::text\n;", /pg_sleep/],
+      [
+        "UPDATE platforms SET name = $é$'$é$, slug = pg_read_file('/etc/passwd') WHERE id = $é$'$é$;",
+        /non-ASCII/,
+      ],
+      ["UPDATE platforms AS é$a$ SET name = pg_read_file('/x') WHERE é$a$.id IS NOT NULL;", /non-ASCII/],
+      [
+        "UPDATE platforms AS é$a$ SET name = (SELECT email FROM users LIMIT 1) WHERE é$a$.id IS NOT NULL;",
+        /non-ASCII/,
+      ],
+    ];
+    for (const [sql, pattern] of samples) {
+      const result = guardCatalogSql(sql);
+      assert.equal(result.ok, false, sql);
+      if (!result.ok) assert.match(result.reason, pattern, `${sql} => ${result.reason}`);
+    }
+    const kept = guardCatalogSql("UPDATE platforms SET name = 'é', description = $xw$café$xw$ WHERE slug = 'a'; -- é\n");
+    assert.equal(kept.ok, true, kept.ok ? "" : kept.reason);
+    const quoted = guardCatalogSql('UPDATE "platforms" SET name = name WHERE slug = \'a\' /* é */;');
+    assert.equal(quoted.ok, true, quoted.ok ? "" : quoted.reason);
+  });
+
   it("allows a quoted platforms table and now()", () => {
     const result = guardCatalogSql('UPDATE "platforms" SET "updatedAt" = now() WHERE slug = \'a\';');
     assert.equal(result.ok, true, result.ok ? "" : result.reason);
