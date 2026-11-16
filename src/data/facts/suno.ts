@@ -32,7 +32,26 @@ export default {
     verifiedAt: "2026-10-26",
     status: "verified",
   },
+  features: {
+    value: [
+      "Suno Bridge (beta), announced 2026-11-13, is a standalone Mac app for Ableton Live 12, included with Premier subscriptions. Both apps have to be open. The post says Bridge uploads the Ableton session to Suno so it can match tempo, key, and groove. The post does not say that Bridge spends credits.",
+    ],
+    note: "Suno's Bridge post, checked 2026-11-16. Plan prices above were not re-read.",
+    sourceUrl: "https://suno.com/blog/introducing-bridge",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-16",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-16",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "features",
+      summary:
+        "X-watch: Suno Bridge is a beta Mac app for Ableton Live 12, included with Premier. The post does not say it spends credits.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

@@ -67,7 +67,26 @@ export default {
     verifiedAt: "2026-10-26",
     status: "verified",
   },
+  features: {
+    value: [
+      "GitHub's supported AI models page lists Gemini 4 Hydrogen (Google) with release status GA, and marks it Included on Copilot Pro, Pro+, Max, Business, and Enterprise. The same page says Copilot Free and Copilot Student reach models through auto model selection only, and Hydrogen is not in that auto-selection table.",
+    ],
+    note: "GitHub Docs supported-models page, checked 2026-11-16. Plan prices above were not re-read.",
+    sourceUrl: "https://docs.github.com/en/copilot/reference/ai-models/supported-models",
+    sourceKind: "product-page",
+    checkedAt: "2026-11-16",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-16",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "features",
+      summary:
+        "X-watch: Gemini 4 Hydrogen is GA in GitHub Copilot and Included on Pro, Pro+, Max, Business, and Enterprise. It is not in the auto-selection table used by Free and Student.",
+    },
     {
       date: "2026-10-26",
       field: "plans",

@@ -1,6 +1,8 @@
 import type { PlatformModelFamily } from "./types";
 
 const PRICING = "https://www.alibabacloud.com/help/en/model-studio/model-pricing";
+const QWEN4 = "https://www.alibabacloud.com/help/en/model-studio/qwen4-max";
+const QWEN4_PRICE = "https://docs.qwencloud.com/developer-guides/getting-started/pricing";
 const MAX = "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max";
 const FLASH = "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash";
 
@@ -9,19 +11,66 @@ export const alibabaQwen: PlatformModelFamily = {
   displayName: "Qwen",
   vendor: "Alibaba (Qwen / Tongyi)",
   platformSlugs: ["qwen"],
-  lastVerifiedAt: "2026-10-14",
+  lastVerifiedAt: "2026-11-16",
   whichToUse: [
-    "On Alibaba Cloud Model Studio (International / Singapore), qwen3.8-max is the current flagship at $2 / $6 per 1M tokens.",
+    "Qwen4-Max (qwen4-max) is the production flagship as of 2026-11-16. Singapore and the other listed regions do not share one rate. qwen3.8-max prices below were not re-read that day.",
     "qwen3.8-flash is the cheap current multimodal model at $0.15 / $0.47 per 1M (International).",
     "qwen3.7-max is the previous Max, still listed at $2.50 / $7.50 (International).",
     "Qwen Chat being free with no subscription is stated in our catalog seed; exact chat limits remain unverified on Model Studio docs.",
   ],
   sources: [
+    { label: "Qwen4-Max", url: QWEN4 },
+    { label: "QwenCloud pricing", url: QWEN4_PRICE },
     { label: "Model Studio pricing", url: PRICING },
     { label: "qwen3.8-max", url: MAX },
     { label: "qwen3.8-flash", url: FLASH },
   ],
   versions: [
+    {
+      id: "qwen4-max",
+      name: "Qwen4-Max",
+      apiId: "qwen4-max",
+      releaseDate: null,
+      releaseDateVerified: false,
+      status: "current",
+      role: "flagship",
+      contextWindow: { tokens: 1_000_000, verified: true, note: "The model page lists context length as 1,000,000 tokens." },
+      maxOutput: {
+        tokens: 131_072,
+        verified: true,
+        note: "Non-thinking maximum output. Thinking mode's combined thinking-plus-answer cap is 262,144 tokens.",
+      },
+      apiPriceInput: {
+        usdPerMillion: 1.5,
+        verified: true,
+        note: "International (Singapore). Beijing and Global regions list $1.413. Cache read is $0.075 in Singapore and $0.071 elsewhere on the pricing page.",
+      },
+      apiPriceOutput: {
+        usdPerMillion: 4.5,
+        verified: true,
+        note: "International (Singapore), thinking plus answer. Beijing and Global regions list $4.24.",
+      },
+      consumerAccess: {
+        summary:
+          "Model Studio pay-as-you-go. Singapore has a 1 million token free quota for 90 days from the later of activation, model release, or application approval. Other regions have no free quota. Qwen Chat limits were not on these pages.",
+        verified: false,
+      },
+      strengths: [
+        "Production Qwen4-Max, replacing the preview that retires at 24:00 on 2026-11-25 (UTC+8).",
+        "Text, image, and video in; text out. 1,000,000-token context.",
+      ],
+      bestFor: "Current Qwen API work after you pick a region, because the price is not the same everywhere.",
+      caveats: [
+        "The model page was last updated 2026-11-16. It does not print a separate release date.",
+        "The model page says batch inference is not supported.",
+        "Qwen4-Max-Preview is still Token Plan only until 24:00 on 2026-11-25 (UTC+8).",
+      ],
+      sourceUrls: [
+        { label: "Qwen4-Max", url: QWEN4 },
+        { label: "Pricing", url: QWEN4_PRICE },
+      ],
+      verified: { specs: true, apiPricing: true, consumerAccess: false },
+    },
     {
       id: "qwen3.8-max",
       name: "Qwen3.8-Max",
@@ -47,7 +96,7 @@ export const alibabaQwen: PlatformModelFamily = {
         verified: false,
       },
       strengths: [
-        "Current Qwen flagship on Model Studio.",
+        "Previous flagship on Model Studio. Qwen4-Max is newer as of 2026-11-16; this row's price was not re-read that day.",
         "1M context window and 131,072 max output.",
         "Image, text, and video in; text out.",
       ],
@@ -124,7 +173,7 @@ export const alibabaQwen: PlatformModelFamily = {
       },
       strengths: ["Previous Max still listed on the official pricing table."],
       bestFor: "Existing 3.7-Max callers.",
-      caveats: ["3.8-Max is the current flagship. Max output unverified on the pricing table."],
+      caveats: ["Qwen4-Max is the newer flagship as of 2026-11-16. This row's price was not re-read that day. Max output unverified on the pricing table."],
       sourceUrls: [{ label: "Pricing", url: PRICING }],
       verified: { specs: true, apiPricing: true, consumerAccess: false },
     },

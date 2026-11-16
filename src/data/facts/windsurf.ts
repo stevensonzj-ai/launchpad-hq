@@ -70,16 +70,24 @@ export default {
     value: [
       "SWE-2 Flash is Cognition's fast coding model, available in Devin Desktop and Devin CLI only (as of 2026-11-05). There is no public API and no public weights; Cognition says it is building a secure weight-share program.",
       "Cognition says SWE-2 Flash costs about one fifth as much as SWE-2 and runs about 3x faster (Cognition's own claim). Promotional pricing may apply; check the in-app model selector. Any end date for a Flash promotion is unverified.",
+      "Devin Apps, announced 2026-11-13, are private web apps hosted on Devin's cloud computer. Everyone who opens one signs in to Devin, and the apps are never public. Sharing can be limited to people you add, your organization, or your enterprise. The post says billing is based on how long the machine is awake and does not publish a dollar price.",
     ],
-    note: "Cognition blog, as of 2026-11-05. A \"free through November 30\" claim for Flash came from X and secondary sources and is not confirmed by Cognition's pages, so it is not recorded.",
-    sourceUrl: "https://cognition.com/blog/swe-2-flash",
-    checkedAt: "2026-11-05",
-    gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    note: "Devin Apps was checked 2026-11-16. The SWE-2 Flash items were checked 2026-11-05 and were not re-read. A \"free through November 30\" claim for Flash came from X and secondary sources and is not confirmed by Cognition's pages, so it is not recorded.",
+    sourceUrl: "https://devin.ai/blog/devin-apps",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-16",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-16",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "features",
+      summary:
+        "X-watch: Devin Apps are private web apps on Devin's cloud computer. The post does not publish a dollar price. Billing follows how long the machine is awake.",
+    },
     { date: "2026-11-05", field: "features", summary: "X-watch: added SWE-2 Flash (Devin Desktop and Devin CLI only; no public API or weights) and company Cognition. Free-through-Nov-30 claim not recorded (unverified)." },
     { date: "2026-10-30", field: "plans", summary: "Source-verification batch (audit 25): plans read on https://devin.ai/pricing and price facts added with source and date." },
     {

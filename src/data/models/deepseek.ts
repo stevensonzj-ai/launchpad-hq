@@ -3,19 +3,22 @@ import type { PlatformModelFamily } from "./types";
 const PRICING = "https://api-docs.deepseek.com/quick_start/pricing";
 const QUICKSTART = "https://api-docs.deepseek.com/";
 const UPDATES = "https://api-docs.deepseek.com/updates";
+const NEWS = "https://api-docs.deepseek.com/news/news261113/";
 
 export const deepseek: PlatformModelFamily = {
   familySlug: "deepseek",
   displayName: "DeepSeek",
   vendor: "DeepSeek",
   platformSlugs: ["deepseek"],
-  lastVerifiedAt: "2026-10-17",
+  lastVerifiedAt: "2026-11-16",
   whichToUse: [
+    "As of the 2026-11-13 API news, deepseek-flash also has built-in web search, file input, URL reading, and safety checks. Search, Fetch, OCR, ASR, and TTS are standalone APIs. That post does not restate the dollar amounts, so the prices below were not changed.",
     "API: use deepseek-flash (DeepSeek-V4.1-Flash-1017) for most work. It is cheaper, has vision, and is the name DeepSeek currently documents as the Flash model.",
     "Use deepseek-v4-pro when you want the Pro checkpoint. DeepSeek says it will keep serving V4 Pro after 14 Sep 2026 with the same billing until further notice.",
     "Consumer chat-app daily limits are unverified on the API docs. Hosted DeepSeek processes data in China — see the catalog privacy note.",
   ],
   sources: [
+    { label: "API news, 2026-11-13", url: NEWS },
     { label: "API docs updates", url: UPDATES },
     { label: "Models & pricing", url: PRICING },
     { label: "API quickstart", url: QUICKSTART },
