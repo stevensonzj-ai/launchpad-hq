@@ -2,7 +2,7 @@
 
 **Decided:** Update existing rows only. No new slugs. Gemini 4 Hydrogen, Qwen4-Max, Claude Meetings, ChatGPT Wallet, DeepSeek's Nov 13 API tools, Devin Apps, Suno Bridge, and Gemini 4 Hydrogen in GitHub Copilot are notes or price facts on `gemini`, `qwen`, `claude`, `chatgpt`, `deepseek`, `windsurf`, `suno`, and `github-copilot`. Claude `upgradeTriggers` drops the Opus 4.6 phrase and names no model, matching the ChatGPT copy fix. Cache, Batch, and Flex prices for Hydrogen come from the Gemini API pricing page, not the launch post. Qwen4-Max-Preview still retires at 24:00 on 2026-11-25 (UTC+8).
 
-**Changed:** branch `catalog/xwatch-20261116`, draft PR, not merged. SQL was not run.
+**Changed:** branch `catalog/xwatch-20261116`, draft PR #173 (https://github.com/stevensonzj-ai/launchpad-hq/pull/173), not merged. SQL was not run.
 
 - `scripts/sql/catalog-xwatch-20261116.sql` — 9 idempotent `UPDATE`s. Slugs: gemini, qwen, claude (twice), chatgpt, deepseek, windsurf, suno, github-copilot.
 - `src/data/catalog-audits/audit-36.ts` and `audit-36.test.ts`. The test is imported from `xwatch-20261112.test.ts` so `npm test` runs it. `package.json` was not edited.
