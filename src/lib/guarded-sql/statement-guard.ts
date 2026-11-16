@@ -95,84 +95,155 @@ interface Tok {
 }
 
 /**
- * Left-to-right strip. Comments and value-literals, including every dollar
- * quote, become a space. Double-quoted identifiers are kept. A comment stuck
- * inside a real keyword (DROP, then a block comment, then TABLE) still leaves
- * the keyword in the result.
+ * One left-to-right state machine. A state never looks for a different
+ * construct, so a quote, comment, or dollar tag inside another construct
+ * cannot hide the code that follows. States: normal, line comment, nested
+ * block comment, single-quoted string (including E'' escapes), dollar quote,
+ * and double-quoted identifier (including U&"..."). "" inside an identifier
+ * is one escaped quote. The identifier is copied through verbatim.
  */
 export function stripCommentsAndStrings(sql: string): string {
+  type State =
+    | { kind: "normal" }
+    | { kind: "line" }
+    | { kind: "block"; depth: number }
+    | { kind: "single"; escape: boolean }
+    | { kind: "dollar"; tag: string }
+    | { kind: "quoted" };
+
   let out = "";
   const n = sql.length;
   let i = 0;
-  const emit = (chunk: string) => {
-    out += chunk;
-  };
+  let state: State = { kind: "normal" };
+  const identBoundary = (idx: number) => idx <= 0 || !/[A-Za-z0-9_$]/.test(sql[idx - 1]!);
 
   while (i < n) {
     const c = sql[i]!;
     const next = sql[i + 1];
 
-    if (c === "-" && next === "-") {
-      while (i < n && sql[i] !== "\n") i++;
-      emit(" ");
-      continue;
-    }
-    if (c === "/" && next === "*") {
-      let depth = 1;
-      i += 2;
-      while (i < n && depth > 0) {
-        if (sql[i] === "/" && sql[i + 1] === "*") {
-          depth++;
-          i += 2;
-        } else if (sql[i] === "*" && sql[i + 1] === "/") {
-          depth--;
-          i += 2;
-        } else i++;
-      }
-      if (depth > 0) throw new GuardParseError("Unterminated block comment");
-      emit(" ");
-      continue;
-    }
-    if (c === "'") {
-      const prev = sql[i - 1];
-      const escapeString = (prev === "E" || prev === "e") && (i < 2 || !/[A-Za-z0-9_$]/.test(sql[i - 2]!));
-      i++;
-      let closed = false;
-      while (i < n) {
-        const ch = sql[i]!;
-        if (escapeString && ch === "\\") {
-          i += 2;
-          continue;
-        }
-        if (ch === "'") {
-          if (sql[i + 1] === "'") {
+    switch (state.kind) {
+      case "quoted": {
+        if (c === '"') {
+          if (next === '"') {
+            out += '""';
             i += 2;
-            continue;
+            break;
           }
+          out += '"';
           i++;
-          closed = true;
+          state = { kind: "normal" };
+          break;
+        }
+        out += c;
+        i++;
+        break;
+      }
+      case "line": {
+        if (c === "\n") {
+          out += "\n";
+          i++;
+          state = { kind: "normal" };
           break;
         }
         i++;
+        break;
       }
-      if (!closed) throw new GuardParseError("Unterminated single-quoted string");
-      emit(" ");
-      continue;
-    }
-    if (c === "$" && (i === 0 || !/[A-Za-z0-9_$]/.test(sql[i - 1]!))) {
-      const m = /^\$([A-Za-z_][A-Za-z0-9_]*)?\$/.exec(sql.slice(i, i + 130));
-      if (m) {
-        const tag = m[0];
-        const close = sql.indexOf(tag, i + tag.length);
-        if (close < 0) throw new GuardParseError(`Unterminated dollar-quoted body ${tag}`);
-        i = close + tag.length;
-        emit(" ");
-        continue;
+      case "block": {
+        if (c === "/" && next === "*") {
+          state = { kind: "block", depth: state.depth + 1 };
+          i += 2;
+          break;
+        }
+        if (c === "*" && next === "/") {
+          i += 2;
+          if (state.depth === 1) {
+            out += " ";
+            state = { kind: "normal" };
+          } else {
+            state = { kind: "block", depth: state.depth - 1 };
+          }
+          break;
+        }
+        i++;
+        break;
+      }
+      case "single": {
+        if (state.escape && c === "\\") {
+          i += 2;
+          break;
+        }
+        if (c === "'") {
+          if (next === "'") {
+            i += 2;
+            break;
+          }
+          i++;
+          out += " ";
+          state = { kind: "normal" };
+          break;
+        }
+        i++;
+        break;
+      }
+      case "dollar": {
+        if (sql.startsWith(state.tag, i)) {
+          i += state.tag.length;
+          out += " ";
+          state = { kind: "normal" };
+          break;
+        }
+        i++;
+        break;
+      }
+      case "normal": {
+        const unicodeIdent = (c === "U" || c === "u") && next === "&" && sql[i + 2] === '"' && identBoundary(i);
+        if (c === '"' || unicodeIdent) {
+          if (unicodeIdent) {
+            out += `${c}&`;
+            i += 2;
+          }
+          out += '"';
+          i++;
+          state = { kind: "quoted" };
+          break;
+        }
+        if (c === "-" && next === "-") {
+          i += 2;
+          out += " ";
+          state = { kind: "line" };
+          break;
+        }
+        if (c === "/" && next === "*") {
+          i += 2;
+          state = { kind: "block", depth: 1 };
+          break;
+        }
+        if (c === "'") {
+          const prev = i > 0 ? sql[i - 1] : "";
+          const escape = (prev === "E" || prev === "e") && identBoundary(i - 1);
+          i++;
+          state = { kind: "single", escape };
+          break;
+        }
+        if (c === "$" && identBoundary(i)) {
+          const m = /^\$([A-Za-z_][A-Za-z0-9_]*)?\$/.exec(sql.slice(i, i + 130));
+          if (m) {
+            i += m[0].length;
+            state = { kind: "dollar", tag: m[0] };
+            break;
+          }
+        }
+        out += c;
+        i++;
+        break;
       }
     }
-    emit(c);
-    i++;
   }
+
+  if (state.kind === "quoted") throw new GuardParseError("Unterminated double-quoted identifier");
+  if (state.kind === "block") throw new GuardParseError("Unterminated block comment");
+  if (state.kind === "single") throw new GuardParseError("Unterminated single-quoted string");
+  if (state.kind === "dollar") throw new GuardParseError(`Unterminated dollar-quoted body ${state.tag}`);
   return out;
 }
 

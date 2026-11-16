@@ -116,6 +116,54 @@ describe("catalog statement guard", () => {
     }
   });
 
+  it("refuses code hidden by a quoted alias that looks like a string or comment", () => {
+    const samples: Array<[string, RegExp]> = [
+      [
+        `UPDATE platforms AS "$a$" SET name = (SELECT set_config('role','neon_superuser',false)) WHERE "$a$".id IS NOT NULL;`,
+        /set_config/,
+      ],
+      [
+        `UPDATE platforms AS "a'" SET name = pg_read_file('/etc/passwd') WHERE "a'".id IS NOT NULL;`,
+        /pg_read_file/,
+      ],
+      [
+        `UPDATE platforms AS "a--" SET name = pg_read_file('/etc/passwd')\nWHERE "a--".id IS NOT NULL;`,
+        /pg_read_file/,
+      ],
+      [
+        `UPDATE platforms AS "a/*" SET name = (SELECT email FROM users) WHERE "a/*".id IS NOT NULL;`,
+        /users/,
+      ],
+    ];
+    for (const [sql, pattern] of samples) {
+      const result = guardCatalogSql(sql);
+      assert.equal(result.ok, false, sql);
+      if (!result.ok) assert.match(result.reason, pattern, `${sql} => ${result.reason}`);
+    }
+  });
+
+  it("still sees code after any of those tokens inside a quoted alias", () => {
+    const aliases = ["$a$", "$$", "$tag$", "a'", "a--", "a/*", "a*/", "/*", "--", "'", "U&"];
+    for (const alias of aliases) {
+      const call = `UPDATE platforms AS "${alias}" SET name = pg_read_file('/etc/passwd') WHERE "${alias}".id IS NOT NULL;`;
+      const hidden = guardCatalogSql(call);
+      assert.equal(hidden.ok, false, call);
+      if (!hidden.ok) assert.match(hidden.reason, /pg_read_file/, call);
+      const unicode = `UPDATE platforms AS U&"${alias}" SET name = pg_read_file('/etc/passwd') WHERE U&"${alias}".id IS NOT NULL;`;
+      const unicodeResult = guardCatalogSql(unicode);
+      assert.equal(unicodeResult.ok, false, unicode);
+      if (!unicodeResult.ok) assert.match(unicodeResult.reason, /pg_read_file/, unicode);
+      const table = `UPDATE platforms AS "${alias}" SET name = name WHERE id IN (SELECT id FROM users);`;
+      const tableResult = guardCatalogSql(table);
+      assert.equal(tableResult.ok, false, table);
+      if (!tableResult.ok) assert.match(tableResult.reason, /users/, table);
+    }
+    const escaped = `UPDATE platforms AS "a""b" SET name = pg_read_file('x') WHERE "a""b".id IS NOT NULL;`;
+    const escapedResult = guardCatalogSql(escaped);
+    assert.equal(escapedResult.ok, false);
+    if (!escapedResult.ok) assert.match(escapedResult.reason, /pg_read_file/);
+  });
+
   it("allows a quoted platforms table and now()", () => {
     const result = guardCatalogSql('UPDATE "platforms" SET "updatedAt" = now() WHERE slug = \'a\';');
     assert.equal(result.ok, true, result.ok ? "" : result.reason);
