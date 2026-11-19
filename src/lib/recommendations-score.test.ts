@@ -3,6 +3,8 @@ import { describe, it } from "node:test";
 import type { CostTier, Difficulty } from "@prisma/client";
 import {
   costTiersForBudget,
+  goalKeywords,
+  keywordMatches,
   rankScoredPlatforms,
   scorePlatform,
   type ScoreablePlatform,
@@ -222,5 +224,62 @@ describe("sample answer sets (fixture catalog — live catalog unverified)", () 
       }),
     );
     assert.ok(ranked.some((r) => r.costTier === "ENTERPRISE"));
+  });
+});
+
+describe("goal keywords match words, not substrings (START-HERE 4.41)", () => {
+  it("a keyword of three characters or fewer must be a whole word", () => {
+    assert.equal(keywordMatches("A desktop IDE with AI", "ide"), true);
+    assert.equal(keywordMatches("Study guide creation", "ide"), false);
+    assert.equal(keywordMatches("image and video generation", "ide"), false);
+    assert.equal(keywordMatches("concept art for games", "art"), true);
+    assert.equal(keywordMatches("artificial intelligence", "art"), false);
+    assert.equal(keywordMatches("smart replies", "art"), false);
+  });
+
+  it("a longer keyword must start a word", () => {
+    assert.equal(keywordMatches("Language learning", "learn"), true);
+    assert.equal(keywordMatches("learn a language", "learn"), true);
+    assert.equal(keywordMatches("Voice cloning", "voice"), true);
+    assert.equal(keywordMatches("invoice parsing", "voice"), false);
+    assert.equal(keywordMatches("text-to-speech", "speech"), true);
+  });
+
+  it("is case-insensitive", () => {
+    assert.equal(keywordMatches("VIDEO EDITING", "video"), true);
+    assert.equal(keywordMatches("Ide", "ide"), true);
+  });
+
+  it("coding lists \"ides\", so a tool that names IDEs in the plural still matches coding", () => {
+    assert.ok(goalKeywords.coding.includes("ides"));
+    const input = quizToRecommendationInput({ goal: "coding", experience: "beginner", budget: "free", runtime: "cloud" });
+    const jetbrainsLike = platform({ primaryUse: "AI assistant inside JetBrains IDEs" });
+    assert.equal(scorePlatform(jetbrainsLike, input).goalScore, 10);
+  });
+
+  it("the 2026-11-12 false positives no longer match coding", () => {
+    const input = quizToRecommendationInput({ goal: "coding", experience: "beginner", budget: "free", runtime: "cloud" });
+    const notebook = platform({ primaryUse: "AI Q&A grounded in your uploaded documents", primaryUseCases: "Study guide creation; source-grounded Q&A" });
+    const comfy = platform({ primaryUse: "Node-based image and video generation" });
+    assert.equal(scorePlatform(notebook, input).goalScore, 0);
+    assert.equal(scorePlatform(comfy, input).goalScore, 0);
+    assert.ok(!scorePlatform(comfy, input).matchReasons.includes("Matches goal"));
+  });
+});
+
+describe("each chosen goal counts once (START-HERE 4.40)", () => {
+  const input = quizToRecommendationInput({ goal: "research", experience: "beginner", budget: "free", runtime: "cloud" });
+
+  it("many keywords for one goal score the same as one keyword", () => {
+    const dense = platform({ primaryUse: "research papers with citations for academic analysis" });
+    const terse = platform({ primaryUse: "research assistant" });
+    assert.equal(scorePlatform(dense, input).goalScore, 10);
+    assert.equal(scorePlatform(dense, input).score, scorePlatform(terse, input).score);
+  });
+
+  it("two chosen goals that both match score 10 each", () => {
+    const tool = platform({ primaryUse: "video editing with music" });
+    const both = scorePlatform(tool, { goals: ["video", "audio"], budget: "free", experienceLevel: "beginner", priorities: [] });
+    assert.equal(both.goalScore, 20);
   });
 });

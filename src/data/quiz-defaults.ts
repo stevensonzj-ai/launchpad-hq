@@ -457,6 +457,27 @@ export const GOAL_CATEGORIES: Record<QuizGoalId, readonly string[]> = {
 };
 
 /**
+ * The specialist categories within GOAL_CATEGORIES, per goal (approved by
+ * Zach, 2026-11-19). Among non-default tools with equal scores, a tool from
+ * a primary category of any chosen goal comes first, so specialists sit
+ * ahead of general assistants. With runtime=local, LOCAL_CATEGORY also
+ * counts as primary. Ordering only: this list never admits a category the
+ * guard does not allow.
+ */
+export const PRIMARY_GOAL_CATEGORIES: Record<QuizGoalId, readonly string[]> = {
+  content_creation: ["text-conversational-ai", "research-academic-tools"],
+  coding: ["ai-coding-development"],
+  research: ["research-academic-tools"],
+  image_generation: ["image-generation-editing"],
+  video: ["video-creation-editing"],
+  audio: ["voice-speech", "music-generation"],
+  business: ["meetings-notes", "ai-plugins-business-software", "sales-marketing-seo-ai"],
+  automation: ["workflow-automation"],
+  education: ["education-learning-ai"],
+  data_analysis: ["research-academic-tools"],
+};
+
+/**
  * Added only for intermediate and advanced answers. A first-time coder should
  * not be sent to a cloud API console (several API rows are marked BEGINNER).
  */
