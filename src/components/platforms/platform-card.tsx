@@ -8,6 +8,7 @@ import { costBadge } from "@/lib/public-data/pricing";
 import { cn } from "@/lib/utils";
 import { COST_TIER_TOOLTIP, DIFFICULTY_LABEL } from "@/lib/labels";
 import { FavoriteButton } from "@/components/platforms/favorite-button";
+import type { MatchReason } from "@/lib/recommendations-score";
 import { Tooltip } from "@/components/ui/tooltip";
 
 interface PlatformCardProps {
@@ -30,9 +31,19 @@ interface PlatformCardProps {
   /**
    * "compact" is Discover's grid card: logo, name, maker, a two-line
    * description, cost and difficulty pills, and the date its facts were
-   * checked. The default card (For You, quiz results, tool pages) is unchanged.
+   * checked. The default card serves For You, quiz results and tool pages.
    */
   variant?: "default" | "compact";
+  /**
+   * Default variant only (quiz results, For You). A one-line reason shown
+   * under the description, match-reason chips and extra links (guide,
+   * workflow) shown in the footer. The compact variant ignores them.
+   */
+  why?: string | null;
+  matchReasons?: MatchReason[];
+  extraLinks?: { href: string; label: string }[];
+  /** Default variant only: extra classes on the <article> (e.g. a column span). */
+  className?: string;
 }
 
 const tierColors: Record<string, string> = {
@@ -44,7 +55,7 @@ const tierColors: Record<string, string> = {
   DISCONTINUED: "bg-amber-500/10 text-amber-100 border-amber-500/40",
 };
 
-// Compact variant only: difficulty as a pill matching the cost badge.
+// Difficulty as a pill matching the cost badge (both variants).
 const diffPillColors: Record<string, string> = {
   BEGINNER: "bg-green-500/10 text-green-400 border-green-500/20",
   INTERMEDIATE: "bg-blue-500/10 text-blue-400 border-blue-500/20",
@@ -63,13 +74,6 @@ export function compactCheckedDate(
   return dates.sort()[0];
 }
 
-const diffColors: Record<string, string> = {
-  BEGINNER: "text-green-400",
-  INTERMEDIATE: "text-blue-400",
-  ADVANCED: "text-amber-400",
-  EXPERT: "text-red-400",
-};
-
 export function PlatformCard({
   facts,
   slug,
@@ -87,6 +91,10 @@ export function PlatformCard({
   isFavorited,
   isSignedIn,
   variant = "default",
+  why,
+  matchReasons,
+  extraLinks,
+  className,
 }: PlatformCardProps) {
   const showFavorite = isSignedIn !== undefined;
   const badge = costBadge(costTier, facts);
@@ -150,7 +158,7 @@ export function PlatformCard({
   };
 
   return (
-    <article className="group relative flex min-w-0 flex-col rounded-2xl border border-gray-700/70 bg-gradient-to-br from-gray-900/80 to-gray-900/30 p-5 transition-colors hover:border-gray-500 hover:bg-gray-900">
+    <article className={cn("group relative flex min-w-0 flex-col rounded-2xl border border-gray-700/70 bg-gradient-to-br from-gray-900/80 to-gray-900/30 p-5 transition-colors hover:border-gray-500 hover:bg-gray-900", className)}>
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-start gap-3">
           <PlatformLogo slug={slug} name={name} logoUrl={logoUrl} />
@@ -179,24 +187,23 @@ export function PlatformCard({
           {primaryUse}
         </p>
       )}
+      {why && <p className="mb-3 text-sm text-gray-300">{why}</p>}
 
-      <div className="mb-3 flex flex-wrap gap-2">
-        <Tooltip content={badge.tooltip ?? COST_TIER_TOOLTIP[costTier] ?? ""}>
-          <span
-            className={cn(
-              "relative z-10 rounded-md border px-2 py-0.5 text-xs font-medium",
-              tierColors[badge.tone] || tierColors.FREEMIUM,
-            )}
-          >
+      {/* Every badge uses the shared pill class and the row centres them.
+          The cost badge is block-level `flex` inside the tooltip's wrapper
+          spans, so no line box offsets it from its neighbours. */}
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <Tooltip className="relative z-10" content={badge.tooltip ?? COST_TIER_TOOLTIP[costTier] ?? ""}>
+          <span className={cn(pillClass, "flex", tierColors[badge.tone] || tierColors.FREEMIUM)}>
             {badge.label}
           </span>
         </Tooltip>
-        <span className={cn("text-xs", diffColors[difficultyLevel] || "text-gray-400")}>
+        <span className={cn(pillClass, diffPillColors[difficultyLevel] || "border-gray-600 bg-gray-800/60 text-gray-300")}>
           {DIFFICULTY_LABEL[difficultyLevel] ?? difficultyLevel}
         </span>
         {aboveDifficulty && (
           <span
-            className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-400"
+            className={cn(pillClass, "border-amber-500/30 bg-amber-500/10 text-amber-400")}
             title="Above the difficulty level you selected in the quiz"
           >
             Advanced
@@ -204,7 +211,7 @@ export function PlatformCard({
         )}
         {hasMobileApp && (
           <span
-            className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs font-medium text-emerald-400"
+            className={cn(pillClass, "gap-1 border-emerald-500/30 bg-emerald-500/10 text-emerald-400")}
             title="Native iOS and/or Android app"
           >
             <Smartphone className="h-3 w-3" />
@@ -213,7 +220,7 @@ export function PlatformCard({
         )}
         {!hasMobileApp && mobileWebFriendly && (
           <span
-            className="inline-flex items-center gap-1 rounded-md border border-gray-600 bg-gray-800/60 px-2 py-0.5 text-xs font-medium text-gray-300"
+            className={cn(pillClass, "gap-1 border-gray-600 bg-gray-800/60 text-gray-300")}
             title="Works in mobile browsers"
           >
             <Globe className="h-3 w-3" />
@@ -230,6 +237,28 @@ export function PlatformCard({
         {price && <p className="mt-2 text-xs text-gray-300">Paid options: {price}</p>}
         {source && <OutboundLink href={source.sourceUrl} platform={slug} surface="discover_card_source" eventName="source_clickout" target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 inline-flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Source · checked {source.checkedAt}{source.status !== "verified" ? ` · ${source.status}` : ""} ↗</OutboundLink>}
         {pricingSource && <OutboundLink href={pricingSource.sourceUrl} platform={slug} surface="discover_card_pricing_source" eventName="source_clickout" target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Pricing source · checked {pricingSource.checkedAt}{pricingSource.status !== "verified" ? ` · ${pricingSource.status}` : ""} ↗</OutboundLink>}
+        {matchReasons && matchReasons.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {matchReasons.map((reason) => (
+              <span key={reason} className="rounded-full border border-gray-700 bg-gray-900 px-2 py-0.5 text-[11px] text-gray-300">
+                {reason}
+              </span>
+            ))}
+          </div>
+        )}
+        {extraLinks && extraLinks.length > 0 && (
+          // relative z-10 lifts each link above the title link's full-card overlay.
+          <p className="mt-2 text-xs text-gray-500">
+            {extraLinks.map((link, index) => (
+              <span key={link.href}>
+                {index > 0 && <span className="mx-1.5 text-gray-600" aria-hidden="true">·</span>}
+                <Link href={link.href} className="relative z-10 text-orange-400 hover:underline">
+                  {link.label}
+                </Link>
+              </span>
+            ))}
+          </p>
+        )}
         <span className="mt-4 flex items-center gap-2 text-sm font-semibold text-orange-400">Meet the tool <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
       </div>
     </article>

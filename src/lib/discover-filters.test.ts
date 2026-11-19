@@ -11,6 +11,9 @@ import {
   discoverPageBounds,
   discoverPageCount,
   letterPages,
+  compareDiscoverNames,
+  discoverLetter,
+  sortByDiscoverName,
   sortDiscoverCatalog,
   DISCOVER_PAGE_SIZE,
 } from "./discover-filters";
@@ -83,7 +86,7 @@ test("Popular and A–Z share one orderBy (one cache entry); featured no longer 
 });
 
 test("A–Z and Recent are unchanged by the popular list", () => {
-  assert.deepEqual(sortDiscoverCatalog(sample, "alpha").map((p) => p.name), ["AI21 Labs", "AIVA", "Activepieces", "ChatGPT", "Claude", "Zapier"].sort((a, b) => a.localeCompare(b)));
+  assert.deepEqual(sortDiscoverCatalog(sample, "alpha").map((p) => p.name), ["Activepieces", "AI21 Labs", "AIVA", "ChatGPT", "Claude", "Zapier"]);
   const recent = [tool("chatgpt", "ChatGPT", "text", "2026-01-01"), tool("new-tool", "New", "text", "2026-06-01")];
   assert.deepEqual(sortDiscoverCatalog(recent, "recent").map((p) => p.slug), ["new-tool", "chatgpt"]);
 });
@@ -136,7 +139,7 @@ test("A–Z letters map to the page holding their first tool", () => {
     "Beta",
     ...Array.from({ length: 20 }, (_, i) => `Cobalt ${i}`),
     "Zed",
-  ].map((name) => ({ name }));
+  ].map((name) => ({ name, slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-") }));
   const pages = letterPages(names);
   assert.equal(pages.get("#"), 1);
   assert.equal(pages.get("A"), 1);
@@ -165,4 +168,55 @@ test("Discover's cached read has no row cap, so every matching tool is reachable
   const body = source.slice(start, end === -1 ? undefined : end);
   assert.ok(body.includes("prisma.platform.findMany"), "getDiscoverPlatforms body not isolated");
   assert.doesNotMatch(body, /\btake\s*:/);
+});
+
+// ---------------------------------------------------------------------------
+// Case-insensitive name order (Package 2b, 2026-11-19)
+// ---------------------------------------------------------------------------
+const named = (name: string, slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-")) => ({ name, slug });
+
+test("Name order ignores case: Activepieces before AI21 Labs before AIVA", () => {
+  const order = sortByDiscoverName([named("AIVA"), named("Activepieces"), named("AI21 Labs")]).map((p) => p.name);
+  assert.deepEqual(order, ["Activepieces", "AI21 Labs", "AIVA"]);
+});
+
+test("Equal names fall back to slug order", () => {
+  assert.ok(compareDiscoverNames(named("Jasper", "jasper"), named("jasper", "jasper-ai")) < 0);
+  assert.ok(compareDiscoverNames(named("jasper", "jasper-ai"), named("Jasper", "jasper")) > 0);
+});
+
+test("The tail after the Popular list uses the same name order", () => {
+  const rows = [tool("aiva", "AIVA"), tool("v0", "v0"), tool("claude", "Claude"), tool("activepieces", "Activepieces"), tool("vllm", "vLLM"), tool("vapi", "Vapi")];
+  assert.deepEqual(sortDiscoverCatalog(rows, "popular").map((p) => p.slug), ["claude", "activepieces", "aiva", "v0", "vapi", "vllm"]);
+});
+
+const LOWERCASE_INITIALS = ["llama.cpp", "n8n", "tl;dv", "v0", "vLLM"];
+const catalogNames = [
+  "3D Tool", "Activepieces", "AIVA", "Lovable", "LM Studio", "Notion AI", "Ollama",
+  "Tabnine", "Tome", "Vapi", "Veed", "Zapier", ...LOWERCASE_INITIALS,
+].map((name) => named(name));
+
+test("Lowercase-initial names sort under their letter, with one heading per letter", () => {
+  const order = sortByDiscoverName(catalogNames);
+  for (const name of LOWERCASE_INITIALS) {
+    const index = order.findIndex((p) => p.name === name);
+    const letter = discoverLetter(name);
+    assert.equal(letter, name[0].toUpperCase(), name);
+    assert.equal(discoverLetter(order[index - 1].name) === letter || discoverLetter(order[index + 1]?.name ?? "") === letter, true, `${name} sits next to its letter`);
+  }
+  // Headings are the runs of equal letters in A–Z order: each letter is one run.
+  const runs = order.map((p) => discoverLetter(p.name)).filter((letter, i, all) => i === 0 || all[i - 1] !== letter);
+  assert.equal(new Set(runs).size, runs.length, `duplicate letter heading in ${runs.join(",")}`);
+  assert.equal(order.at(-1)?.name, "Zapier");
+});
+
+test("Letter-to-page mapping follows the case-insensitive order", () => {
+  const pages = letterPages(catalogNames, 4);
+  // Order: 3D Tool, Activepieces, AIVA, llama.cpp | LM Studio, Lovable, n8n, Notion AI | Ollama, Tabnine, tl;dv, Tome | v0, Vapi, Veed, vLLM | Zapier
+  assert.equal(pages.get("#"), 1);
+  assert.equal(pages.get("L"), 1);
+  assert.equal(pages.get("N"), 2);
+  assert.equal(pages.get("T"), 3);
+  assert.equal(pages.get("V"), 4);
+  assert.equal(pages.get("Z"), 5);
 });

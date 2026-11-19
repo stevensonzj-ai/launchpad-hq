@@ -131,3 +131,82 @@ test("Discontinued compact cards keep the discontinued rules", () => {
   assert.ok(!/Freemium|Free plan|legacy catalog limits|Paid options/.test(html));
   assert.ok(!html.includes("checked "));
 });
+
+// ---------------------------------------------------------------------------
+// Default card tidy-up (Package 2b, 2026-11-19)
+// ---------------------------------------------------------------------------
+
+test("Default card shows difficulty as a pill matching the cost badge, in a centred row", () => {
+  for (const [level, colour] of [["BEGINNER", "green"], ["INTERMEDIATE", "blue"], ["ADVANCED", "amber"], ["EXPERT", "red"]] as const) {
+    const html = renderToStaticMarkup(createElement(PlatformCard, { ...platform, difficultyLevel: level, hasMobileApp: true }));
+    const pills = [...html.matchAll(/<span class="([^"]*rounded-md border px-2 py-0\.5 text-xs font-medium leading-5[^"]*)"/g)].map((m) => m[1]);
+    // Cost badge, difficulty, App: all on the one shared pill class.
+    assert.equal(pills.length, 3, level);
+    assert.ok(pills[1].includes(`text-${colour}-400`) && pills[1].includes(`border-${colour}-500/20`), level);
+    assert.ok(html.includes("mb-3 flex flex-wrap items-center gap-2"), level);
+  }
+});
+
+test("A default card given a why sentence, chips and links renders them inside its article", () => {
+  const html = renderToStaticMarkup(createElement(PlatformCard, {
+    ...platform,
+    why: "Fixture why sentence.",
+    matchReasons: ["Matches goal", "Free tier"],
+    extraLinks: [
+      { href: "/platform/fixture-tool/guide", label: "Getting-started tutorial" },
+      { href: "/workflows/fixture-flow", label: "Workflow: Fixture flow" },
+    ],
+    className: "sm:col-span-2",
+  }));
+  const article = html.match(/^<article\b[^>]*>[\s\S]*<\/article>$/);
+  assert.ok(article, "card output is one article element");
+  assert.ok(html.startsWith('<article class="group relative flex min-w-0 flex-col') && html.includes("sm:col-span-2"));
+  for (const text of ["Fixture why sentence.", "Matches goal", "Free tier", "Getting-started tutorial", "Workflow: Fixture flow"]) {
+    assert.ok(html.includes(text), text);
+  }
+  // The why sentence sits directly under the description, at the same contrast as before.
+  assert.ok(html.indexOf("A fixture for checking card behavior") < html.indexOf("Fixture why sentence."));
+  assert.ok(html.includes('<p class="mb-3 text-sm text-gray-300">Fixture why sentence.</p>'));
+  // Chips and links sit in the footer, before "Meet the tool".
+  assert.ok(html.indexOf("Matches goal") > html.indexOf("border-t border-gray-700/60"));
+  assert.ok(html.indexOf("Workflow: Fixture flow") < html.indexOf("Meet the tool"));
+  // Inner links are lifted above the title link's overlay and never nested in another link.
+  assert.match(html, /<a class="relative z-10 text-orange-400 hover:underline" href="\/platform\/fixture-tool\/guide">/);
+  assert.match(html, /<a class="relative z-10 text-orange-400 hover:underline" href="\/workflows\/fixture-flow">/);
+  assert.doesNotMatch(html, /<a\b[^>]*>(?:(?!<\/a>)[\s\S])*<a\b/);
+});
+
+test("Without the new props the default card renders no why, chips or extra links", () => {
+  const html = renderToStaticMarkup(createElement(PlatformCard, platform));
+  assert.ok(!html.includes("rounded-full border border-gray-700 bg-gray-900"));
+  assert.ok(!html.includes("relative z-10 text-orange-400"));
+});
+
+test("Quiz match sections render every extra inside a card, with cards as the grid items", async () => {
+  const { QuizMatchSections } = await import("@/components/quiz/quiz-match-sections");
+  const rec = (id: string, why?: string) => ({
+    ...platform,
+    id,
+    slug: id,
+    name: id,
+    matchScore: 1,
+    matchReasons: ["Matches goal" as const],
+    why: why ?? null,
+  });
+  const html = renderToStaticMarkup(createElement(QuizMatchSections, {
+    recs: [rec("chatgpt", "Default pick reason."), rec("claude"), rec("gemini")],
+    goals: [],
+  }));
+  // Every grid's direct children are cards: nothing renders between or below them.
+  const grids = [...html.matchAll(/<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">([\s\S]*?)<\/section>/g)];
+  assert.equal(grids.length, 2, "Best first pick and Also good grids");
+  for (const grid of grids) {
+    const inner = grid[1].replace(/<\/div>$/, "");
+    const withoutArticles = inner.replace(/<article\b[\s\S]*?<\/article>/g, "");
+    assert.equal(withoutArticles.trim(), "", "only cards inside the grid");
+  }
+  const best = html.match(/<article\b[^>]*sm:col-span-2 lg:col-span-3[^>]*>[\s\S]*?<\/article>/)?.[0] ?? "";
+  assert.ok(best.includes("Default pick reason."), "why sits inside the Best first pick card");
+  assert.ok(best.includes("Matches goal"));
+  assert.ok(best.includes("Getting-started tutorial"), "tutorial link sits inside the card");
+});

@@ -19,6 +19,7 @@ import {
   normalizeSort,
   discoverOrderBy,
   applyPopularOrder,
+  sortByDiscoverName,
   clampDiscoverPage,
   discoverCanonicalPath,
   discoverLetter,
@@ -147,7 +148,10 @@ export default async function DiscoverPage({
   ]);
   const favoriteIds = new Set(favorites.map((f) => f.platformId));
   // `platforms` is every match (in display order); `pageTools` is this page.
-  const platforms = sort === "popular" ? applyPopularOrder(matched) : matched;
+  // Name order is re-sorted in memory (case-insensitive, src/lib/discover-filters.ts);
+  // the database's own name order compares by character code.
+  const byName = sort === "recent" ? matched : sortByDiscoverName(matched);
+  const platforms = sort === "popular" ? applyPopularOrder(byName) : byName;
   const total = platforms.length;
   const page = clampDiscoverPage(params.page, total);
   const pageCount = discoverPageCount(total);
