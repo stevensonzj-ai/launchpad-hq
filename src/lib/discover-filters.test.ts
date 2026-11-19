@@ -1,4 +1,5 @@
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import {
   buildDiscoverQuery,
@@ -154,4 +155,14 @@ test("Only the unfiltered default list at page 2+ is self-canonical", () => {
   assert.equal(discoverCanonicalPath({ q: "  " }, 2), "/discover?page=2");
   assert.equal(discoverCanonicalPath({ category: "voice-speech" }, 3), "/discover");
   assert.equal(discoverCanonicalPath({ cost: "free" }, 1), "/discover");
+});
+
+test("Discover's cached read has no row cap, so every matching tool is reachable", () => {
+  const source = readFileSync("src/lib/catalog-queries.ts", "utf8");
+  const start = source.indexOf("export const getDiscoverPlatforms");
+  assert.ok(start >= 0, "getDiscoverPlatforms not found");
+  const end = source.indexOf("\nexport ", start + 1);
+  const body = source.slice(start, end === -1 ? undefined : end);
+  assert.ok(body.includes("prisma.platform.findMany"), "getDiscoverPlatforms body not isolated");
+  assert.doesNotMatch(body, /\btake\s*:/);
 });

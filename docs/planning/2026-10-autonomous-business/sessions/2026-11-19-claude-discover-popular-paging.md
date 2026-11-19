@@ -18,6 +18,10 @@ Branch `feat/discover-popular-paging`, cut from `origin/main` at `490a2577`. One
 - Tests: `discover-filters.test.ts`, `platform-card.test.ts`, `seo-jsonld.test.ts`; `sponsors/ordering.test.ts` (popular exact-value check and sample slugs only).
 - `CLAUDE.md`: the stale site-wide noindex line now matches `SITE_IS_PUBLIC = true`.
 
+## Fix in the second commit
+- The first commit (`108dc2f5`) missed removing `take: 200` from `getDiscoverPlatforms` in `src/lib/catalog-queries.ts`. On the preview, Discover showed "1–24 of 200" against 215 listed tools. Zapier was also missing from page 1, because the cap cut the name-ordered list before the popular sort ran. Zach caught it in review.
+- The second commit removes the cap. It also adds a source-level test in `discover-filters.test.ts` that fails if `getDiscoverPlatforms` has a `take`. I confirmed the test fails with the cap in place. Nothing else relied on the cap: the "first 200" copy was already gone, and no test referenced it.
+
 ## Notes
 - Slugs checked against the production feed `/data/v1/catalog.json` (222 listed): all 30 present; `gemini-notebook` has lifecycle `renamed` (live).
 - The compact cost badge's tooltip uses the generic tier text, not the free-plan summary, so no free-plan copy ships in the card HTML.
