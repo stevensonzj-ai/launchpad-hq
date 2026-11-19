@@ -25,6 +25,9 @@ export function normalizeSort(value: string | undefined): SortMode {
  * "popular" reads by name (the same cache entry as A–Z); the editorial
  * popular order is applied in memory afterwards by `applyPopularOrder`, so
  * the cached read never depends on the popular list or a page number.
+ * The database's name order is only a starting point: it compares by
+ * character code ("AIVA" before "Activepieces", lowercase names after "Z"),
+ * so the page re-sorts with `compareDiscoverNames` after the read.
  */
 export function discoverOrderBy(sort: SortMode) {
   if (sort === "recent") return [{ createdAt: "desc" as const }];
@@ -39,9 +42,30 @@ export type DiscoverSortable = {
   createdAt: Date;
 };
 
+const NAME_COLLATOR = new Intl.Collator("en", { sensitivity: "base" });
+
+/**
+ * Discover's one name comparison: case- and accent-insensitive English
+ * order, slug as the tie-break. Used for A–Z, the tail after the Popular
+ * list, `sortDiscoverCatalog` and `letterPages`.
+ */
+export function compareDiscoverNames(
+  a: { name: string; slug: string },
+  b: { name: string; slug: string },
+): number {
+  const byName = NAME_COLLATOR.compare(a.name, b.name);
+  if (byName !== 0) return byName;
+  return a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0;
+}
+
+/** A copy of `platforms` in Discover name order. */
+export function sortByDiscoverName<T extends { name: string; slug: string }>(platforms: readonly T[]): T[] {
+  return [...platforms].sort(compareDiscoverNames);
+}
+
 /**
  * Popular order: tools in `popular` first, in list order; every other tool
- * after, in the order given (by name from the cached read). Stable.
+ * after, in the order given (by Discover name order on the page). Stable.
  */
 export function applyPopularOrder<T extends { slug: string }>(
   platforms: readonly T[],
@@ -53,33 +77,21 @@ export function applyPopularOrder<T extends { slug: string }>(
   return [...listed, ...platforms.filter((p) => !rank.has(p.slug))];
 }
 
-/** In-memory sort matching `discoverOrderBy` + `applyPopularOrder` (used by tests and must stay aligned). */
+/**
+ * The order Discover shows for each sort mode (the page applies the same
+ * steps to the cached read). "popular" and "alpha" use the name order;
+ * "recent" is newest first, as `discoverOrderBy` reads it.
+ */
 export function sortDiscoverCatalog<T extends DiscoverSortable>(
   platforms: readonly T[],
   sort: SortMode,
   popular: readonly string[] = DISCOVER_POPULAR_SLUGS,
 ): T[] {
-  const copy = [...platforms];
-  const clauses = discoverOrderBy(sort);
-  copy.sort((a, b) => {
-    for (const clause of clauses) {
-      const [key, direction] = Object.entries(clause)[0] as [
-        "name" | "createdAt",
-        "asc" | "desc",
-      ];
-      const av = a[key];
-      const bv = b[key];
-      let cmp = 0;
-      if (typeof av === "string" && typeof bv === "string") {
-        cmp = av.localeCompare(bv);
-      } else if (av instanceof Date && bv instanceof Date) {
-        cmp = av.getTime() - bv.getTime();
-      }
-      if (cmp !== 0) return direction === "desc" ? -cmp : cmp;
-    }
-    return 0;
-  });
-  return sort === "popular" ? applyPopularOrder(copy, popular) : copy;
+  if (sort === "recent") {
+    return [...platforms].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+  const byName = sortByDiscoverName(platforms);
+  return sort === "popular" ? applyPopularOrder(byName, popular) : byName;
 }
 
 /** Tools per Discover page. */
@@ -113,13 +125,16 @@ export function discoverLetter(name: string): string {
   return /^[A-Z]$/.test(first) ? first : "#";
 }
 
-/** For an A–Z-ordered list: each letter's bucket → the page holding its first tool. */
+/**
+ * Each letter's bucket → the page holding its first tool in A–Z. Sorts with
+ * `compareDiscoverNames` itself, so the mapping always matches the A–Z page.
+ */
 export function letterPages(
-  platforms: readonly { name: string }[],
+  platforms: readonly { name: string; slug: string }[],
   pageSize = DISCOVER_PAGE_SIZE,
 ): Map<string, number> {
   const pages = new Map<string, number>();
-  platforms.forEach((p, index) => {
+  sortByDiscoverName(platforms).forEach((p, index) => {
     const letter = discoverLetter(p.name);
     if (!pages.has(letter)) pages.set(letter, Math.floor(index / pageSize) + 1);
   });
