@@ -60,7 +60,8 @@ export function isExperienced(experienceLevel?: string): boolean {
   return experienceLevel === "intermediate" || experienceLevel === "advanced";
 }
 
-/** A missing runtime behaves exactly like cloud: no local defaults, no local category. */export function isLocalRuntime(input: RecommendationInput): boolean {
+/** A missing runtime behaves exactly like cloud: no local defaults, no local category. */
+export function isLocalRuntime(input: RecommendationInput): boolean {
   return input.runtime === "local";
 }
 
