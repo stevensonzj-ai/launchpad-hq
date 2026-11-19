@@ -4,11 +4,13 @@ import { UserButton, useAuth } from "@clerk/nextjs"
 import Link from "next/link"
 import { useRef, useState } from "react"
 import { Search, Menu, X, Rocket } from "lucide-react"
-import { PRO_PLAN_ENABLED } from "@/lib/site"
 import { getUnmetTracker } from "@/lib/search/unmet-client"
+import { headerLinks } from "./nav-links"
 
 export function Header() {
   const { isSignedIn, isLoaded } = useAuth()
+  // "For you" appears only once Clerk has confirmed a signed-in session.
+  const navLinks = headerLinks(isLoaded && isSignedIn === true)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<
@@ -79,29 +81,11 @@ export function Header() {
         </div>
 
         <nav aria-label="Main navigation" className="hidden items-center gap-4 lg:flex">
-          <Link href="/discover" className="text-sm text-gray-400 hover:text-white">
-            Discover
-          </Link>
-          <Link href="/workflows" className="text-sm text-gray-400 hover:text-white">
-            Workflows
-          </Link>
-          <Link href="/models" className="text-sm text-gray-400 hover:text-white">
-            Models
-          </Link>
-          <Link href="/quiz" className="text-sm text-gray-400 hover:text-white">
-            Get matched
-          </Link>
-          <Link href="/for-you" className="text-sm text-gray-400 hover:text-white">
-            For you
-          </Link>
-          <Link href="/advertise" className="text-sm text-gray-400 hover:text-white">
-            Advertise
-          </Link>
-          {PRO_PLAN_ENABLED && (
-            <Link href="/pricing" className="text-sm text-gray-400 hover:text-white">
-              Pricing
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="text-sm text-gray-400 hover:text-white">
+              {link.label}
             </Link>
-          )}
+          ))}
           {isLoaded && !isSignedIn && (
             <>
               <Link
@@ -143,29 +127,11 @@ export function Header() {
 
       {mobileOpen && (
         <nav id="mobile-navigation" aria-label="Mobile navigation" className="border-t border-gray-800 px-5 pb-4 pt-2 lg:hidden">
-          <Link href="/discover" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            Discover
-          </Link>
-          <Link href="/workflows" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            Workflows
-          </Link>
-          <Link href="/models" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            Models
-          </Link>
-          <Link href="/quiz" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            Get matched
-          </Link>
-          <Link href="/for-you" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            For you
-          </Link>
-          <Link href="/advertise" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-            Advertise
-          </Link>
-          {PRO_PLAN_ENABLED && (
-            <Link href="/pricing" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
-              Pricing
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>
+              {link.label}
             </Link>
-          )}
+          ))}
           {isLoaded && !isSignedIn && (
             <>
               <Link href="/sign-in" className="block py-2 text-gray-300" onClick={() => setMobileOpen(false)}>

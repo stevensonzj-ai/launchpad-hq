@@ -429,3 +429,12 @@ export function compareRedirects(pages: readonly ComparePage[] = COMPARE_PAGES):
       statusCode: 301 as const,
     }));
 }
+
+/**
+ * The bare /alternatives path has no index page (only /alternatives/<slug>
+ * exists), so it sends readers to the compare hub. Exact match: the
+ * /alternatives/* pages are not caught.
+ */
+export function alternativesIndexRedirects(): { source: string; destination: string; permanent: true }[] {
+  return [{ source: "/alternatives", destination: COMPARE_HUB_PATH, permanent: true }];
+}

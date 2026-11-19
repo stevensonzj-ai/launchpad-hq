@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LegalPage } from "@/components/legal/legal-page";
 
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 
 export const metadata: Metadata = publicPageMetadata({
   title: "Privacy Policy | Launchpad HQ",
@@ -19,7 +20,7 @@ export default function PrivacyPage() {
         <p>
           Launchpad HQ is operated by Lakeside Innovation Labs LLC, a Texas limited
           liability company. Contact:{" "}
-          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>.
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         </p>
         <p>
           This site is a free directory of AI tools. You can browse without an account. You
@@ -199,7 +200,7 @@ export default function PrivacyPage() {
         </p>
         <p>
           There is no self-serve account-deletion button in the product. Email{" "}
-          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> to
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> to
           ask us to delete your account. We handle deletion requests within 30 days.
         </p>
         <p>
@@ -217,7 +218,7 @@ export default function PrivacyPage() {
           non-discrimination for exercising these rights. We do not sell or share personal
           information as those terms are used in the CCPA/CPRA. To exercise these rights,
           email{" "}
-          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>.
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
         </p>
       </section>
 
@@ -236,7 +237,7 @@ export default function PrivacyPage() {
           We use established providers (Clerk, Neon, Vercel, and Stripe — used only for
           sponsor invoices) and do not collect visitor card numbers for a site plan. No
           method of transmission or storage is perfectly secure. Tell us at{" "}
-          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a> if
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> if
           you think something has gone wrong.
         </p>
       </section>
@@ -254,7 +255,7 @@ export default function PrivacyPage() {
         <p>
           Lakeside Innovation Labs LLC
           <br />
-          <a href="mailto:launchpadhq.admin@gmail.com">launchpadhq.admin@gmail.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
       </section>
     </LegalPage>

@@ -1,7 +1,7 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import { catalogRedirects } from "./src/lib/catalog-redirects";
-import { compareRedirects } from "./src/data/compare/pages";
+import { alternativesIndexRedirects, compareRedirects } from "./src/data/compare/pages";
 import { HTML_VARY_WITH_ACCEPT, MARKDOWN_VARY_SOURCES } from "./src/lib/markdown/negotiate";
 
 /**
@@ -83,6 +83,10 @@ const nextConfig: NextConfig = {
       // /compare/<b>-vs-<a> -> alphabetical /compare/<a>-vs-<b> (301).
       // Data: src/data/compare/pages.ts.
       ...compareRedirects(),
+
+      // Bare /alternatives (no index page) -> /compare hub (308, exact match).
+      // Data: src/data/compare/pages.ts.
+      ...alternativesIndexRedirects(),
     ];
   },
 };

@@ -3,9 +3,11 @@
  * so the two never drift. Plain text only: renderers add the markup. Facts here
  * describe how the site works; keep them in step with the code they describe.
  *
- * No postal address anywhere. The contact email appears only on /contact,
- * /about and the homepage JSON-LD (see seo-jsonld.ts), never in the feed,
- * the MCP connector or llms*.txt.
+ * No postal address anywhere. CONTACT_EMAIL is the only place the contact
+ * address is written in src/app and src/components (contact-email.test.ts):
+ * pages that show it (/contact, /support, /privacy, /terms, /advertise,
+ * /connector, /how-we-make-money) and the homepage JSON-LD import it. It is
+ * never put in the feed, the MCP tool output or llms*.txt.
  */
 
 export type CopyLink = { label: string; href: string };

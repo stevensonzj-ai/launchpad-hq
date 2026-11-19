@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LegalPage } from "@/components/legal/legal-page";
 
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 import { DAILY_POST_LIMIT } from "@/lib/request-limits";
 
 export const metadata: Metadata = publicPageMetadata({
@@ -12,7 +13,6 @@ export const metadata: Metadata = publicPageMetadata({
   path: "/terms",
 });
 
-const CONTACT_EMAIL = "launchpadhq.admin@gmail.com";
 
 function ContactLink() {
   return <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
