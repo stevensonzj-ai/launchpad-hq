@@ -160,6 +160,48 @@ describe("quiz ranking: runtime=local (preview bug 2026-11-12)", () => {
     }
   });
 
+  it("video, audio and automation with runtime=local return no local-open-source-ai tool (START-HERE 4.43)", () => {
+    for (const goal of ["video", "audio", "automation"]) {
+      for (const experience of ["beginner", "advanced"]) {
+        for (const budget of ["free", "enterprise"]) {
+          const input = quizToRecommendationInput(answers({ goal, experience, budget, runtime: "local" }));
+          assert.equal(allowedCategories(input).has("local-open-source-ai"), false, goal);
+          // Uncut list, so a local tool cannot hide below the twelve shown.
+          const all = rankQuizRecommendations(candidatesFor(budget), input, Number.MAX_SAFE_INTEGER);
+          for (const r of all) assert.notEqual(r.category.slug, "local-open-source-ai", `${goal}/${experience}/${budget}: ${r.slug}`);
+        }
+      }
+    }
+  });
+
+  it("golden: coding + video / beginner / free / local alternates local and cloud picks, and may list local tools", () => {
+    const input: RecommendationInput = { goals: ["coding", "video"], experienceLevel: "beginner", budget: "free", runtime: "local" };
+    const out = rankQuizRecommendations(candidatesFor("free"), input);
+    assert.deepEqual(
+      out.map((r) => r.slug),
+      ["ollama", "capcut", "lm-studio", "veed", "jan", "heygen", "runway", "captions", "google-veo-3-1", "higgsfield", "wonder-dynamics-wonder-studio", "invideo-ai"],
+    );
+    assert.ok(out.slice(0, 6).every((r) => r.defaultPick));
+    // Coding has local picks, so the local category stays allowed next to video's cloud categories.
+    assert.deepEqual([...allowedCategories(input)].sort(), ["gaming-creative-ai", "local-open-source-ai", "video-creation-editing"]);
+    assert.equal(
+      localRuntimeNotice(input),
+      "We don't list any beginner-friendly tools for Video that run on your own computer, so the Video picks below are cloud tools.",
+    );
+  });
+
+  it("the notice keeps the approved sentence when no chosen goal has local picks, with one goal or two", () => {
+    assert.equal(
+      localRuntimeNotice({ goals: ["automation"], runtime: "local" }),
+      "We don't list any beginner-friendly tools for Automation & workflows that run on your own computer, so these results are cloud tools.",
+    );
+    assert.equal(
+      localRuntimeNotice({ goals: ["video", "audio"], runtime: "local" }),
+      "We don't list any beginner-friendly tools for Video or Audio & voice that run on your own computer, so these results are cloud tools.",
+    );
+    assert.equal(localRuntimeNotice({ goals: ["coding", "research"], runtime: "local" }), null);
+  });
+
   it("audio and automation show the notice too; cloud runtime never does", () => {
     for (const goal of ["audio", "automation"]) {
       assert.ok(localRuntimeNotice(quizToRecommendationInput(answers({ goal, runtime: "local" }))), goal);
@@ -209,13 +251,14 @@ describe("quiz ranking: rules", () => {
     assert.equal(rank(answers({ goal: "video", runtime: "local" })).out[0]?.slug, "capcut");
   });
 
-  it("local-open-source-ai is allowed for every goal when runtime=local and for none otherwise", () => {
+  it("local-open-source-ai is allowed only when runtime=local and the goal has local picks", () => {
+    const noLocalPicks = ["video", "audio", "automation"];
     for (const { id: goal } of QUIZ_GOAL_OPTIONS) {
       for (const experience of ["beginner", "advanced"]) {
         const cloud = quizToRecommendationInput(answers({ goal, experience }));
         const local = quizToRecommendationInput(answers({ goal, experience, runtime: "local" }));
         assert.equal(allowedCategories(cloud).has("local-open-source-ai"), false, goal);
-        assert.equal(allowedCategories(local).has("local-open-source-ai"), true, goal);
+        assert.equal(allowedCategories(local).has("local-open-source-ai"), !noLocalPicks.includes(goal), goal);
       }
     }
   });
