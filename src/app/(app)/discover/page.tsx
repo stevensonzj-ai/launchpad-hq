@@ -8,7 +8,7 @@ import { PlatformCard } from "@/components/platforms/platform-card";
 import Link from "next/link";
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms";
 import { getOrCreateDbUser } from "@/lib/auth-db";
-import { X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { MatchingBanner } from "@/components/brand/matching-banner";
 import { getToolFacts } from "@/data/facts";
@@ -18,6 +18,13 @@ import {
   buildDiscoverQuery,
   normalizeSort,
   discoverOrderBy,
+  applyPopularOrder,
+  clampDiscoverPage,
+  discoverCanonicalPath,
+  discoverLetter,
+  discoverPageBounds,
+  discoverPageCount,
+  letterPages,
   COST_TIERS,
   DIFFICULTIES,
   COST_FILTERS,
@@ -29,14 +36,41 @@ import { ROCKET_DEMO_PLACEMENT } from "@/data/sponsors/rocket-demo";
 import { HourlyRocket } from "@/components/sponsors/hourly-rocket";
 import { SponsoredSpotlight } from "@/components/sponsors/sponsored-spotlight";
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { buildDiscoverItemListStructuredData } from "@/lib/seo-jsonld";
 
-export async function generateMetadata(): Promise<Metadata> {
+type DiscoverSearchParams = {
+  q?: string;
+  category?: string;
+  cost?: string;
+  difficulty?: string;
+  mobile?: string;
+  sort?: string;
+  page?: string;
+  rocket?: string;
+};
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<DiscoverSearchParams>;
+}): Promise<Metadata> {
+  const params = await searchParams;
   const [platformCount, categoryCount] = await Promise.all([getPlatformCount(), getCategoryCount()]);
   const count = roundDownToTen(platformCount);
+  // Only the unfiltered, default-sort list at page 2+ is self-canonical, so
+  // only there is the page number resolved (same cached read as the page).
+  let pageNumber = 1;
+  if (params.page && discoverCanonicalPath(params, 2) !== "/discover") {
+    const total = (await getDiscoverPlatforms(listedPlatformWhere(), discoverOrderBy("popular"))).length;
+    pageNumber = clampDiscoverPage(params.page, total);
+  }
+  const path = discoverCanonicalPath(params, pageNumber);
+  const paged = path !== "/discover";
   return publicPageMetadata({
-    title: "Discover AI tools | Launchpad HQ",
-    description: `Browse ${count}+ vetted AI platforms across ${categoryCount} categories. Filter by cost, difficulty, and mobile — free to explore, no account needed.`,
-    path: "/discover",
+    title: paged ? `Discover AI tools, page ${pageNumber} | Launchpad HQ` : "Discover AI tools | Launchpad HQ",
+    description: `${paged ? `Page ${pageNumber}. ` : ""}Browse ${count}+ vetted AI platforms across ${categoryCount} categories. Filter by cost, difficulty, and mobile — free to explore, no account needed.`,
+    path,
   });
 }
 
@@ -45,15 +79,7 @@ const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 export default async function DiscoverPage({
   searchParams,
 }: {
-  searchParams: Promise<{
-    q?: string;
-    category?: string;
-    cost?: string;
-    difficulty?: string;
-    mobile?: string;
-    sort?: string;
-    rocket?: string;
-  }>;
+  searchParams: Promise<DiscoverSearchParams>;
 }) {
   const params = await searchParams;
   const isRocketDemo = params.rocket === "demo";
@@ -98,15 +124,13 @@ export default async function DiscoverPage({
     where.mobileWebFriendly = true;
   }
 
-  // TODO: "popular" currently uses [featured desc, name asc] as a placeholder
-  // until a real engagement score exists (e.g., aggregated from prompts/
-  // discussions/favorites counts, or a view/click tracker). Revisit when
-  // that signal lands.
+  // "popular" reads by name (sharing A–Z's cache entry); the editorial order
+  // and the page slice are applied in memory below, so neither adds entries.
   const orderBy = discoverOrderBy(sort);
 
   const user = await getOrCreateDbUser();
 
-  const [platforms, categories, favorites] = await Promise.all([
+  const [matched, categories, favorites] = await Promise.all([
     // Shared catalog cache (src/lib/catalog-queries.ts), keyed by the URL
     // filters. Favorites are per visitor and stay uncached.
     getDiscoverPlatforms(where, orderBy),
@@ -122,16 +146,24 @@ export default async function DiscoverPage({
       : Promise.resolve([]),
   ]);
   const favoriteIds = new Set(favorites.map((f) => f.platformId));
+  // `platforms` is every match (in display order); `pageTools` is this page.
+  const platforms = sort === "popular" ? applyPopularOrder(matched) : matched;
+  const total = platforms.length;
+  const page = clampDiscoverPage(params.page, total);
+  const pageCount = discoverPageCount(total);
+  const { start, end } = discoverPageBounds(page, total);
+  const pageTools = platforms.slice(start, end);
   const isSignedIn = user !== null;
   const discoverSpotlight = getActivePlacement("discover");
 
-  // Group into A–Z + "#" bucket when alphabetical. Empty letter buckets still
-  // render in the strip (disabled); the "#" bucket is hidden entirely if empty.
-  const groups = new Map<string, typeof platforms>();
+  // Group this page's tools into A–Z + "#" buckets when alphabetical. The
+  // strip covers the whole result: each letter links to the page holding its
+  // first tool; letters with no tools render disabled; "#" is hidden if empty.
+  const groups = new Map<string, typeof pageTools>();
+  const letterPage = sort === "alpha" ? letterPages(platforms) : new Map<string, number>();
   if (sort === "alpha") {
-    for (const p of platforms) {
-      const firstChar = p.name[0]?.toUpperCase() ?? "#";
-      const key = /^[A-Z]$/.test(firstChar) ? firstChar : "#";
+    for (const p of pageTools) {
+      const key = discoverLetter(p.name);
       const bucket = groups.get(key);
       if (bucket) {
         bucket.push(p);
@@ -140,9 +172,9 @@ export default async function DiscoverPage({
       }
     }
   }
-  const hasHashBucket = groups.has("#");
+  const hasHashBucket = letterPage.has("#");
   const orderedGroupKeys: string[] = [];
-  if (hasHashBucket) orderedGroupKeys.push("#");
+  if (groups.has("#")) orderedGroupKeys.push("#");
   for (const L of ALPHABET) if (groups.has(L)) orderedGroupKeys.push(L);
 
   // Active-filter pills. Sort is a mode, not a filter, so it's excluded here.
@@ -207,6 +239,17 @@ export default async function DiscoverPage({
   }
   const hasActiveFilter = activeFilters.length > 0;
 
+  // Paging and letter links keep every active filter, search and sort.
+  const pageHref = (n: number, hash = "") =>
+    "/discover" +
+    buildDiscoverQuery({ q: query, category: params.category, cost: costQs, difficulty: difficultyQs, mobile: params.mobile, sort, page: n }) +
+    hash;
+  const letterHref = (letter: string) => {
+    const hash = letter === "#" ? "#letter-hash" : `#letter-${letter}`;
+    const target = letterPage.get(letter) ?? page;
+    return target === page ? hash : pageHref(target, hash);
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 min-[100rem]:max-w-[108rem]">
       <section className="lp-stars lp-discover-sky relative isolate mb-7 overflow-hidden rounded-2xl border-b border-amber-100/10 py-7 pr-2 sm:py-10 sm:pr-72">
@@ -245,8 +288,7 @@ export default async function DiscoverPage({
         }}
       />
       <p className="mb-5 text-sm text-gray-300" aria-live="polite">
-        Showing {platforms.length === 200 ? "the first " : ""}{platforms.length} {platforms.length === 1 ? "tool" : "tools"}{query ? ` for “${query}”` : ""}{!hasActiveFilter && !query ? ` across ${categories.length} categories` : ""}.
-        {platforms.length === 200 ? " Narrow your search or choose a category to explore more." : ""}
+        Showing {pageCount > 1 ? `${start + 1}–${end} of ${total}` : total} {total === 1 ? "tool" : "tools"}{query ? ` for “${query}”` : ""}{!hasActiveFilter && !query ? ` across ${categories.length} categories` : ""}.
       </p>
 
       {/* Active-filter pills — server-rendered; each removes just its own param */}
@@ -280,18 +322,18 @@ export default async function DiscoverPage({
           <div className="flex flex-wrap gap-x-0.5 gap-y-1">
             {hasHashBucket && (
               <a
-                href="#letter-hash"
+                href={letterHref("#")}
                 className="rounded px-1.5 py-0.5 text-sm text-gray-300 hover:text-orange-400"
               >
                 #
               </a>
             )}
             {ALPHABET.map((letter) => {
-              const available = groups.has(letter);
+              const available = letterPage.has(letter);
               return available ? (
                 <a
                   key={letter}
-                  href={`#letter-${letter}`}
+                  href={letterHref(letter)}
                   className="rounded px-1.5 py-0.5 text-sm text-gray-300 hover:text-orange-400"
                 >
                   {letter}
@@ -338,13 +380,14 @@ export default async function DiscoverPage({
                 mobileWebFriendly={p.mobileWebFriendly}
                 isFavorited={favoriteIds.has(p.id)}
                 isSignedIn={isSignedIn}
+                variant="compact"
               />
             )),
           ])}
         </div>
       ) : (
         <div data-unmet-results className="grid gap-5 md:grid-cols-2 min-[100rem]:grid-cols-3">
-          {platforms.map((p) => (
+          {pageTools.map((p) => (
             <PlatformCard
               key={p.id}
               facts={getToolFacts(p.slug)}
@@ -361,12 +404,41 @@ export default async function DiscoverPage({
               mobileWebFriendly={p.mobileWebFriendly}
               isFavorited={favoriteIds.has(p.id)}
               isSignedIn={isSignedIn}
+              variant="compact"
             />
           ))}
         </div>
       )}
 
-      {platforms.length === 0 && (
+      {pageCount > 1 && (
+        <nav aria-label="Pages" className="mt-8 flex items-center justify-between gap-3 text-sm">
+          {page > 1 ? (
+            <Link href={pageHref(page - 1)} rel="prev" className="inline-flex min-h-11 items-center gap-1 rounded-lg border border-gray-700 px-3 text-gray-200 hover:border-gray-500 hover:text-white">
+              <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              Previous
+            </Link>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+          <span className="text-gray-400">
+            Page {page} of {pageCount}
+          </span>
+          {page < pageCount ? (
+            <Link href={pageHref(page + 1)} rel="next" className="inline-flex min-h-11 items-center gap-1 rounded-lg border border-gray-700 px-3 text-gray-200 hover:border-gray-500 hover:text-white">
+              Next
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+        </nav>
+      )}
+
+      {pageTools.length > 0 && (
+        <JsonLd data={buildDiscoverItemListStructuredData(pageTools, start + 1)} />
+      )}
+
+      {total === 0 && (
         <p className="py-12 text-center text-gray-400">
           No platforms match your filters.{" "}
           <Link href="/discover" className="text-orange-400">

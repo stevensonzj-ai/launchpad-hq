@@ -27,6 +27,12 @@ interface PlatformCardProps {
   mobileWebFriendly?: boolean;
   isFavorited?: boolean;
   isSignedIn?: boolean;
+  /**
+   * "compact" is Discover's grid card: logo, name, maker, a two-line
+   * description, cost and difficulty pills, and the date its facts were
+   * checked. The default card (For You, quiz results, tool pages) is unchanged.
+   */
+  variant?: "default" | "compact";
 }
 
 const tierColors: Record<string, string> = {
@@ -37,6 +43,25 @@ const tierColors: Record<string, string> = {
   // Same treatment as the page's discontinued notice.
   DISCONTINUED: "bg-amber-500/10 text-amber-100 border-amber-500/40",
 };
+
+// Compact variant only: difficulty as a pill matching the cost badge.
+const diffPillColors: Record<string, string> = {
+  BEGINNER: "bg-green-500/10 text-green-400 border-green-500/20",
+  INTERMEDIATE: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  ADVANCED: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+  EXPERT: "bg-red-500/10 text-red-400 border-red-500/20",
+};
+
+const pillClass = "inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium leading-5";
+
+/** The oldest checkedAt among the card's facts, so the date never overstates freshness. */
+export function compactCheckedDate(
+  facts: PlatformCardProps["facts"],
+): string | undefined {
+  if (!facts || facts.lifecycle === "discontinued") return undefined;
+  const dates = [facts.freeTier?.checkedAt, facts.plans?.checkedAt].filter((d): d is string => Boolean(d));
+  return dates.sort()[0];
+}
 
 const diffColors: Record<string, string> = {
   BEGINNER: "text-green-400",
@@ -61,9 +86,51 @@ export function PlatformCard({
   mobileWebFriendly,
   isFavorited,
   isSignedIn,
+  variant = "default",
 }: PlatformCardProps) {
   const showFavorite = isSignedIn !== undefined;
   const badge = costBadge(costTier, facts);
+  if (variant === "compact") {
+    const checked = compactCheckedDate(facts);
+    return (
+      <article className="group relative flex h-full min-w-0 flex-col rounded-2xl border border-gray-700/70 bg-gradient-to-br from-gray-900/80 to-gray-900/30 p-4 transition-colors hover:border-gray-500 hover:bg-gray-900">
+        <div className="mb-2 flex items-start justify-between gap-3">
+          <div className="flex min-w-0 items-start gap-3">
+            <PlatformLogo slug={slug} name={name} logoUrl={logoUrl} />
+            <div className="min-w-0">
+              <h3 className="text-base font-semibold leading-snug text-white group-hover:text-orange-300">
+                <Link href={`/platform/${slug}`} className="after:absolute after:inset-0 after:rounded-2xl">{name}</Link>
+              </h3>
+              {company && <p className="mt-0.5 text-xs text-gray-300">by {company}</p>}
+            </div>
+          </div>
+          {showFavorite && (
+            <div className="relative z-10 shrink-0">
+              <FavoriteButton
+                slug={slug}
+                initialFavorited={isFavorited ?? false}
+                isSignedIn={isSignedIn ?? false}
+                variant="icon"
+                className="-mr-1 -mt-1 flex min-h-11 min-w-11 items-center justify-center"
+              />
+            </div>
+          )}
+        </div>
+        {primaryUse && <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-gray-300">{primaryUse}</p>}
+        <div className="mt-auto flex flex-wrap items-center gap-2">
+          {/* Block-level `flex` inside the tooltip's wrapper spans, so no line box
+              offsets the badge from its neighbours. */}
+          <Tooltip className="relative z-10" content={badge.tone === "DISCONTINUED" ? (badge.tooltip ?? "") : (COST_TIER_TOOLTIP[costTier] ?? "")}>
+            <span className={cn(pillClass, "flex", tierColors[badge.tone] || tierColors.FREEMIUM)}>{badge.label}</span>
+          </Tooltip>
+          <span className={cn(pillClass, diffPillColors[difficultyLevel] || "border-gray-600 bg-gray-800/60 text-gray-300")}>
+            {DIFFICULTY_LABEL[difficultyLevel] ?? difficultyLevel}
+          </span>
+          {checked && <span className="ml-auto text-xs text-gray-400">checked {checked}</span>}
+        </div>
+      </article>
+    );
+  }
   // A discontinued tool shows no free-plan details or prices (same as its page).
   const retired = facts?.lifecycle === "discontinued";
   const freeDetails = retired ? null : (facts?.freeTier?.value.summary ?? freeTierFeatures);
