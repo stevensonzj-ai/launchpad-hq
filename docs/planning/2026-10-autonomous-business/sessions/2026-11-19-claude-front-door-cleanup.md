@@ -1,6 +1,6 @@
 # 2026-11-19 — Claude — Front-door cleanup (Package 3)
 
-Branch `feat/front-door-cleanup`, cut from `origin/main` at `15a183e5`. Draft PR: see the PR list (opened at the end of this session; not merged).
+Branch `feat/front-door-cleanup`, cut from `origin/main` at `15a183e5`. Draft PR #179 (not merged). Commit `69f641b0`.
 
 ## Decided (Zach, after recon)
 
