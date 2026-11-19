@@ -68,18 +68,25 @@ export default {
   features: {
     value: [
       "Auto mode becomes the default for new sessions in most Claude apps on Pro, Max and Team plans: Anthropic's 2026-10-22 update says it rolls out the following week (stated plan, as of 2026-10-26). In auto mode a classifier reviews each action, so safe ones go ahead without an approval prompt and risky ones are blocked. Source for this item: https://claude.com/resources/articles/auto-mode-default-in-claude-code",
-      "Claude Fable 5.2 (released 2026-11-09) is available on the Claude Platform as claude-fable-5-2, and on AWS, Google Cloud, and Microsoft Azure. The launch post says Fable is available to users generally because of its safeguards. Claude Mythos 5.2 is the same underlying model, with access through the Life Sciences and Cyber Verification Programs. API price on that post: $8 per million input tokens and $40 per million output tokens (optional fast mode $16 and $80).",
+      "Claude Fable 5.2 (released 2026-11-09) is available on the Claude Platform as claude-fable-5-2, and on AWS, Google Cloud, and Microsoft Azure. The launch post says Fable is available to users generally because of its safeguards. Claude Mythos 5.2 is the same underlying model, with access through the Life Sciences and Cyber Verification Programs. API price on that post: $8 per million input tokens and $40 per million output tokens (optional fast mode $16 and $80). Source for this item: https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "Claude Meetings is in beta on Team and Enterprise plans, with Google Meet first and other platforms coming soon. During the beta, notes and transcripts are free, and answers in the call are free unless an answer uses a connected tool, which counts toward plan usage. Docs, whiteboards, and other artifacts made in a call are free through 2027-02-10. It is not available to some organizations, including those with zero data retention, a HIPAA-ready configuration, or customer-managed encryption keys.",
     ],
-    note: "Auto mode is from Anthropic's 2026-10-22 article. Fable 5.2 and Mythos 5.2 are from the 2026-11-09 launch post, checked 2026-11-12.",
-    sourceUrl: "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+    note: "Claude Meetings was checked 2026-11-16. The auto-mode item is from Anthropic's 2026-10-22 article. Fable 5.2 and Mythos 5.2 were checked 2026-11-12 and were not re-read on 2026-11-16.",
+    sourceUrl: "https://claude.com/resources/articles/claude-meetings",
     sourceKind: "announcement",
-    checkedAt: "2026-11-12",
+    checkedAt: "2026-11-16",
     gatheredBy: "cursor",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-12",
+    verifiedAt: "2026-11-16",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "features",
+      summary:
+        "X-watch: Claude Meetings is in beta on Team and Enterprise, Google Meet first. In-call docs and whiteboards are free through 2027-02-10. The Fable note was not re-read.",
+    },
     {
       date: "2026-11-12",
       field: "features",

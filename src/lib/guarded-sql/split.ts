@@ -35,7 +35,7 @@ export function splitSql(sql: string): string[] {
     const next = sql[i + 1];
 
     if (c === "-" && next === "-") {
-      while (i < n && sql[i] !== "\n") i++;
+      while (i < n && sql[i] !== "\n" && sql[i] !== "\r") i++;
       continue;
     }
     if (c === "/" && next === "*") {
