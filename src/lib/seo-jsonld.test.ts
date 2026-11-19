@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import {
   buildPlatformStructuredData,
   buildTutorialIndexStructuredData,
+  buildDiscoverItemListStructuredData,
   buildTutorialStructuredData,
   officialSiteHref,
   serializeJsonLd,
@@ -105,5 +106,24 @@ describe("tutorial guide JSON-LD", () => {
     assert.equal(items.length, 2);
     assert.equal(items[1]?.position, 2);
     assert.equal(items[1]?.url, "https://www.launchpadhq.io/platform/b/guide");
+  });
+});
+
+describe("Discover ItemList JSON-LD", () => {
+  it("lists the page's tools in order, with positions continuing across pages", () => {
+    const data = buildDiscoverItemListStructuredData(
+      [
+        { name: "ChatGPT", slug: "chatgpt" },
+        { name: "Claude", slug: "claude" },
+      ],
+      25,
+    );
+    assert.equal(data["@type"], "ItemList");
+    const items = data.itemListElement as Array<Record<string, unknown>>;
+    assert.equal(items.length, 2);
+    assert.equal(items[0]?.position, 25);
+    assert.equal(items[1]?.position, 26);
+    assert.equal(items[1]?.name, "Claude");
+    assert.equal(items[1]?.url, "https://www.launchpadhq.io/platform/claude");
   });
 });

@@ -50,7 +50,7 @@ The project is further along than earlier specs suggest. Auth and payments are a
 
 - **Sentry gotcha:** serverless functions must `await Sentry.flush(2000)` before returning, or events are lost.
 
-- **Site-wide `noindex` is currently set** (intentional friends-and-family protection). GSC shows all pages excluded until launch lifts it.
+- **The site is indexable:** `SITE_IS_PUBLIC = true` in `src/lib/site.ts`, so there is no site-wide `noindex` and `robots.txt` allows the public catalog (flipping it to `false` restores the friends-and-family noindex).
 
 - **Tech stack confirmed:**
   - Next.js 16.2.2 with App Router, using an `(app)/` route group for the authenticated app surface
