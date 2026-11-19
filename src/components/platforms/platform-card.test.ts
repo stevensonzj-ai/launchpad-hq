@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import test from "node:test";
 import { getToolFacts } from "@/data/facts";
-import { PlatformCard } from "./platform-card";
+import { PlatformCard, visibleMatchReasons } from "./platform-card";
 
 const platform = {
   slug: "fixture-tool",
@@ -151,7 +151,7 @@ test("A default card given a why sentence, chips and links renders them inside i
   const html = renderToStaticMarkup(createElement(PlatformCard, {
     ...platform,
     why: "Fixture why sentence.",
-    matchReasons: ["Matches goal", "Free tier"],
+    matchReasons: ["Works on mobile", "Runs offline"],
     extraLinks: [
       { href: "/platform/fixture-tool/guide", label: "Getting-started tutorial" },
       { href: "/workflows/fixture-flow", label: "Workflow: Fixture flow" },
@@ -161,14 +161,14 @@ test("A default card given a why sentence, chips and links renders them inside i
   const article = html.match(/^<article\b[^>]*>[\s\S]*<\/article>$/);
   assert.ok(article, "card output is one article element");
   assert.ok(html.startsWith('<article class="group relative flex min-w-0 flex-col') && html.includes("sm:col-span-2"));
-  for (const text of ["Fixture why sentence.", "Matches goal", "Free tier", "Getting-started tutorial", "Workflow: Fixture flow"]) {
+  for (const text of ["Fixture why sentence.", "Works on mobile", "Runs offline", "Getting-started tutorial", "Workflow: Fixture flow"]) {
     assert.ok(html.includes(text), text);
   }
   // The why sentence sits directly under the description, at the same contrast as before.
   assert.ok(html.indexOf("A fixture for checking card behavior") < html.indexOf("Fixture why sentence."));
   assert.ok(html.includes('<p class="mb-3 text-sm text-gray-300">Fixture why sentence.</p>'));
   // Chips and links sit in the footer, before "Meet the tool".
-  assert.ok(html.indexOf("Matches goal") > html.indexOf("border-t border-gray-700/60"));
+  assert.ok(html.indexOf("Works on mobile") > html.indexOf("border-t border-gray-700/60"));
   assert.ok(html.indexOf("Workflow: Fixture flow") < html.indexOf("Meet the tool"));
   // Inner links are lifted above the title link's overlay and never nested in another link.
   assert.match(html, /<a class="relative z-10 text-orange-400 hover:underline" href="\/platform\/fixture-tool\/guide">/);
@@ -190,7 +190,7 @@ test("Quiz match sections render every extra inside a card, with cards as the gr
     slug: id,
     name: id,
     matchScore: 1,
-    matchReasons: ["Matches goal" as const],
+    matchReasons: ["Works on mobile" as const],
     why: why ?? null,
   });
   const html = renderToStaticMarkup(createElement(QuizMatchSections, {
@@ -207,6 +207,22 @@ test("Quiz match sections render every extra inside a card, with cards as the gr
   }
   const best = html.match(/<article\b[^>]*sm:col-span-2 lg:col-span-3[^>]*>[\s\S]*?<\/article>/)?.[0] ?? "";
   assert.ok(best.includes("Default pick reason."), "why sits inside the Best first pick card");
-  assert.ok(best.includes("Matches goal"));
+  assert.ok(best.includes("Works on mobile"));
   assert.ok(best.includes("Getting-started tutorial"), "tutorial link sits inside the card");
+});
+
+test("Quiz cards hide the goal, beginner and free-tier chips but keep mobile, browser and offline", () => {
+  const reasons = ["Matches goal", "Free tier", "Beginner-friendly", "Works on mobile", "Works in the browser", "Runs offline"] as const;
+  assert.deepEqual(visibleMatchReasons([...reasons]), ["Works on mobile", "Works in the browser", "Runs offline"]);
+  assert.deepEqual(visibleMatchReasons(undefined), []);
+  // Chips only: the difficulty pill also reads "Beginner-friendly", so read the chip spans.
+  const chips = (html: string) =>
+    [...html.matchAll(/<span class="rounded-full border border-gray-700 bg-gray-900[^"]*">([^<]*)<\/span>/g)].map((m) => m[1]);
+  const html = renderToStaticMarkup(createElement(PlatformCard, { ...platform, matchReasons: [...reasons] }));
+  assert.deepEqual(chips(html), ["Works on mobile", "Works in the browser", "Runs offline"]);
+  assert.ok(!html.includes("Matches goal"));
+  // Only hidden reasons: no empty chip row is rendered.
+  const none = renderToStaticMarkup(createElement(PlatformCard, { ...platform, matchReasons: ["Matches goal", "Free tier", "Beginner-friendly"] }));
+  assert.deepEqual(chips(none), []);
+  assert.ok(!none.includes("mt-3 flex flex-wrap gap-1.5"));
 });

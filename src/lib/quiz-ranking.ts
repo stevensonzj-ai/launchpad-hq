@@ -8,13 +8,19 @@
  * 2. Every other tool must match a goal keyword (goalScore > 0, as before)
  *    AND sit in a category the chosen goals allow (the category guard). The
  *    guard runs on the full scored list, before the cut.
- * 3. Non-default tools follow in score order; ties break by name, then slug,
- *    so the order never depends on database row order.
+ * 3. Non-default tools follow in score order. Equal scores break by: a
+ *    primary category of any chosen goal first (PRIMARY_GOAL_CATEGORIES;
+ *    specialists ahead of general assistants), then position in Discover's
+ *    Popular list (listed ahead of unlisted), then name, then slug, so the
+ *    order never depends on database row order.
  *
- * scorePlatform and rankScoredPlatforms are deliberately untouched (the
- * sponsor ordering test pins them). MCP does not use this module.
+ * scorePlatform matches goal keywords as words and counts each chosen goal
+ * once (START-HERE 4.40, 4.41, 2026-11-19). rankScoredPlatforms keeps its
+ * plain score sort: it has no production caller and the sponsor ordering
+ * test pins it. MCP does not use this module.
  * Pure: no Prisma, no React.
  */
+import { DISCOVER_POPULAR_SLUGS } from "@/data/discover-popular";
 import {
   GOAL_CATEGORIES,
   EXPERIENCED_ONLY_CATEGORIES,
@@ -26,6 +32,7 @@ import {
   LOCAL_IMAGE,
   LOCAL_IMAGE_GOALS,
   NEVER_ALLOWED_CATEGORIES,
+  PRIMARY_GOAL_CATEGORIES,
   QUIZ_DEFAULTS,
   type DefaultPick,
 } from "@/data/quiz-defaults";
@@ -159,9 +166,39 @@ export function allowedCategories(input: RecommendationInput): Set<string> {
   return allowed;
 }
 
+/** Primary (specialist) categories for these answers; ordering only, never admission. */
+export function primaryCategories(input: RecommendationInput): Set<string> {
+  const primary = new Set<string>();
+  for (const goal of input.goals ?? []) {
+    for (const c of PRIMARY_GOAL_CATEGORIES[goal as keyof typeof PRIMARY_GOAL_CATEGORIES] ?? []) primary.add(c);
+  }
+  if (isLocalRuntime(input)) primary.add(LOCAL_CATEGORY);
+  return primary;
+}
+
 /** Stable, explainable tie-break: name, then slug. */
 export function compareByName(a: { name: string; slug: string }, b: { name: string; slug: string }): number {
   return a.name.localeCompare(b.name, "en", { sensitivity: "base" }) || (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0);
+}
+
+const POPULAR_POSITION = new Map(DISCOVER_POPULAR_SLUGS.map((slug, i) => [slug, i]));
+
+/** Discover Popular position; unlisted tools sort after every listed one. */
+function popularPosition(slug: string): number {
+  return POPULAR_POSITION.get(slug) ?? Number.MAX_SAFE_INTEGER;
+}
+
+/**
+ * Tie-break for non-default tools with equal scores: primary category
+ * first, then Discover Popular position, then name and slug.
+ */
+export function compareTied(
+  a: { name: string; slug: string; category: { slug: string } },
+  b: { name: string; slug: string; category: { slug: string } },
+  primary: ReadonlySet<string>,
+): number {
+  const rank = (c: { category: { slug: string } }) => (primary.has(c.category.slug) ? 0 : 1);
+  return rank(a) - rank(b) || popularPosition(a.slug) - popularPosition(b.slug) || compareByName(a, b);
 }
 
 export function rankQuizRecommendations<T extends RankableCandidate>(
@@ -188,11 +225,12 @@ export function rankQuizRecommendations<T extends RankableCandidate>(
   });
 
   const allowed = allowedCategories(input);
+  const primary = primaryCategories(input);
   const rest = candidates
     .filter((c) => !pickSlugs.has(c.slug) && allowed.has(c.category.slug))
     .map((platform) => ({ platform, ...scorePlatform(platform, input) }))
     .filter((s) => s.goalScore > 0)
-    .sort((a, b) => b.score - a.score || compareByName(a.platform, b.platform))
+    .sort((a, b) => b.score - a.score || compareTied(a.platform, b.platform, primary))
     .map((s) => ({
       ...s.platform,
       matchScore: s.score,

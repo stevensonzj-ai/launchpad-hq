@@ -46,6 +46,17 @@ interface PlatformCardProps {
   className?: string;
 }
 
+/**
+ * Match reasons the card does not show as chips: every result matches a
+ * goal, and the cost and difficulty pills already say free and beginner.
+ * The API still returns them. Mobile, browser and offline chips still show.
+ */
+const HIDDEN_CARD_REASONS: ReadonlySet<MatchReason> = new Set<MatchReason>(["Matches goal", "Beginner-friendly", "Free tier"]);
+
+export function visibleMatchReasons(reasons: readonly MatchReason[] | undefined): MatchReason[] {
+  return (reasons ?? []).filter((r) => !HIDDEN_CARD_REASONS.has(r));
+}
+
 const tierColors: Record<string, string> = {
   FREE: "bg-green-500/10 text-green-400 border-green-500/20",
   FREEMIUM: "bg-blue-500/10 text-blue-400 border-blue-500/20",
@@ -98,6 +109,7 @@ export function PlatformCard({
 }: PlatformCardProps) {
   const showFavorite = isSignedIn !== undefined;
   const badge = costBadge(costTier, facts);
+  const shownReasons = visibleMatchReasons(matchReasons);
   if (variant === "compact") {
     const checked = compactCheckedDate(facts);
     return (
@@ -237,9 +249,9 @@ export function PlatformCard({
         {price && <p className="mt-2 text-xs text-gray-300">Paid options: {price}</p>}
         {source && <OutboundLink href={source.sourceUrl} platform={slug} surface="discover_card_source" eventName="source_clickout" target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 inline-flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Source · checked {source.checkedAt}{source.status !== "verified" ? ` · ${source.status}` : ""} ↗</OutboundLink>}
         {pricingSource && <OutboundLink href={pricingSource.sourceUrl} platform={slug} surface="discover_card_pricing_source" eventName="source_clickout" target="_blank" rel="noopener noreferrer" className="relative z-10 mt-2 flex min-h-8 items-center text-xs text-gray-400 underline decoration-gray-600 underline-offset-4 hover:text-white">Pricing source · checked {pricingSource.checkedAt}{pricingSource.status !== "verified" ? ` · ${pricingSource.status}` : ""} ↗</OutboundLink>}
-        {matchReasons && matchReasons.length > 0 && (
+        {shownReasons.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5">
-            {matchReasons.map((reason) => (
+            {shownReasons.map((reason) => (
               <span key={reason} className="rounded-full border border-gray-700 bg-gray-900 px-2 py-0.5 text-[11px] text-gray-300">
                 {reason}
               </span>

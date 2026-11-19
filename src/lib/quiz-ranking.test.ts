@@ -10,6 +10,7 @@ import {
   allowedCategories,
   localRuntimeNotice,
   orderedDefaultPicks,
+  primaryCategories,
   rankQuizRecommendations,
   type RankableCandidate,
 } from "./quiz-ranking";
@@ -179,7 +180,9 @@ describe("quiz ranking: runtime=local (preview bug 2026-11-12)", () => {
     const out = rankQuizRecommendations(candidatesFor("free"), input);
     assert.deepEqual(
       out.map((r) => r.slug),
-      ["ollama", "capcut", "lm-studio", "veed", "jan", "heygen", "runway", "captions", "google-veo-3-1", "higgsfield", "wonder-dynamics-wonder-studio", "invideo-ai"],
+      // Re-baselined 2026-11-19 (word matching, goal counts once, primary-category tie-break):
+      // wonder-dynamics-wonder-studio (gaming-creative-ai, not primary for video) drops out; kling-ai enters.
+      ["ollama", "capcut", "lm-studio", "veed", "jan", "heygen", "runway", "captions", "google-veo-3-1", "higgsfield", "invideo-ai", "kling-ai"],
     );
     assert.ok(out.slice(0, 6).every((r) => r.defaultPick));
     // Coding has local picks, so the local category stays allowed next to video's cloud categories.
@@ -335,5 +338,79 @@ describe("quiz ranking: the optional runtime field", () => {
     assert.equal(quizToRecommendationInput(answers({ goal: "video", runtime: "local" })).runtime, "local");
     const legacy = quizToRecommendationInput({ goal: "video", experience: "beginner", budget: "free", runtime: "" });
     assert.equal("runtime" in legacy, false);
+  });
+});
+
+describe("quiz ranking: equal scores, specialists first (2026-11-19)", () => {
+  const base = candidatesFor("free")[0]!;
+  const tool = (slug: string, name: string, category: string, primaryUse: string): Candidate => ({
+    ...base,
+    slug,
+    name,
+    category: { slug: category, name: category },
+    primaryUse,
+    primaryUseCases: null,
+    difficultyLevel: "BEGINNER",
+    costTier: "FREEMIUM",
+    featured: false,
+    offlineCapable: false,
+    hasMobileApp: false,
+    mobileWebFriendly: false,
+    freeTierFeatures: "limited",
+  });
+  const research: RecommendationInput = { goals: ["research"], experienceLevel: "beginner", budget: "free", priorities: [] };
+
+  it("a primary-category tool beats a popular general assistant on equal score", () => {
+    // "claude" is on the Popular list; the unlisted specialist still comes first.
+    const rows = [
+      tool("claude", "Claude", "text-conversational-ai", "research helper"),
+      tool("zz-specialist", "Zz Specialist", "research-academic-tools", "research helper"),
+    ];
+    const out = rankQuizRecommendations(rows, research).map((r) => r.slug);
+    assert.deepEqual(out, ["zz-specialist", "claude"]);
+  });
+
+  it("within the same primary status, Popular position beats name, and listed tools beat unlisted", () => {
+    const rows = [
+      tool("a-unlisted", "Aardvark", "text-conversational-ai", "research helper"),
+      tool("grok", "Grok", "text-conversational-ai", "research helper"),
+      tool("gemini", "Gemini", "text-conversational-ai", "research helper"),
+    ];
+    // gemini is 3rd on the Popular list, grok 10th; the unlisted tool comes last despite its name.
+    assert.deepEqual(rankQuizRecommendations(rows, research).map((r) => r.slug), ["gemini", "grok", "a-unlisted"]);
+  });
+
+  it("score still comes first: a higher-scoring secondary tool stays above a primary tool", () => {
+    const rows = [
+      tool("zz-specialist", "Zz Specialist", "research-academic-tools", "research helper"),
+      { ...tool("free-general", "Free General", "text-conversational-ai", "research helper"), costTier: "FREE" as CostTier },
+    ];
+    // The "free" priority adds 10 for a FREE tool, so the secondary tool outscores the specialist.
+    const input = { ...research, priorities: ["free"] };
+    assert.deepEqual(rankQuizRecommendations(rows, input).map((r) => r.slug), ["free-general", "zz-specialist"]);
+  });
+
+  it("primary categories: research and data_analysis use research-academic-tools only; local adds the local category", () => {
+    assert.deepEqual([...primaryCategories(research)], ["research-academic-tools"]);
+    assert.deepEqual([...primaryCategories({ goals: ["data_analysis"] })], ["research-academic-tools"]);
+    assert.deepEqual([...primaryCategories({ goals: ["coding"], runtime: "local" })].sort(), ["ai-coding-development", "local-open-source-ai"]);
+    assert.deepEqual([...primaryCategories({ goals: ["audio", "coding"] })].sort(), ["ai-coding-development", "music-generation", "voice-speech"]);
+  });
+
+  it("every primary category is one its goal allows", () => {
+    for (const { id: goal } of QUIZ_GOAL_OPTIONS) {
+      const allowed = allowedCategories({ goals: [goal], experienceLevel: "beginner" });
+      for (const c of primaryCategories({ goals: [goal] })) assert.ok(allowed.has(c), `${goal}: ${c}`);
+    }
+  });
+
+  it("real catalog: coding beginner puts the coding specialist v0 above chatgpt and claude, and gemini-notebook is gone", () => {
+    const out = rank(answers({ goal: "coding" })).out.map((r) => r.slug);
+    assert.ok(out.indexOf("v0") < out.indexOf("chatgpt"), out.join(","));
+    assert.ok(!out.includes("gemini-notebook"));
+  });
+
+  it("real catalog: coding / beginner / free / local is the three local defaults, no ComfyUI (START-HERE 4.41)", () => {
+    assert.deepEqual(rank(answers({ goal: "coding", runtime: "local" })).out.map((r) => r.slug), ["ollama", "lm-studio", "jan"]);
   });
 });
