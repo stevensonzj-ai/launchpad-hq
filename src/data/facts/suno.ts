@@ -26,10 +26,10 @@ export default {
     ],
     note: "USD, as of 2026-10-26.",
     sourceUrl: SUNO_PRICING_URL,
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

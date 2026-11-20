@@ -16,10 +16,10 @@ export default {
       summary: "$200 free credit, no credit card, no expiry; then pay as you go.",
     },
     sourceUrl: PRICING_URL,
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

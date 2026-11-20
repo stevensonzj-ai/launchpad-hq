@@ -78,10 +78,10 @@ export default {
     ],
     note: "USD (en-us page), as of 2026-10-29.",
     sourceUrl: "https://www.microsoft.com/en-us/power-platform/products/power-automate/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

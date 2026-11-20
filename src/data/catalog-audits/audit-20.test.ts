@@ -229,6 +229,8 @@ describe("catalog audit 20: content rules", () => {
         if (AUDIT_28_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_28_CHECKED_AT) continue;
         // Catalog audit 31 (2026-11-02) added the Plugin Marketplace note.
         if (AUDIT_31_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_31_CHECKED_AT) continue;
+        // Price re-verification 2026-11-20 moved checkedAt when the vendor page still showed the recorded price.
+        if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-20") continue;
         if (slug !== "google-antigravity" || key !== "officialUrl") assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

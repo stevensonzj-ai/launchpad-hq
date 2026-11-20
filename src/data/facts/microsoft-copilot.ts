@@ -50,10 +50,10 @@ export default {
     note: "USD, US page, as of 2026-10-26. Personal, Family and Premium show \"Try free for 1 month\". AI credits and daily Voice and Vision limits are from Microsoft Support (https://support.microsoft.com/en-us/Microsoft-365-Copilot/ai-credits-and-limits-for-microsoft-365-subscriptions, last updated July 2026), checked by the RA on 2026-10-26.",
     sourceUrl: COPILOT_INDIVIDUALS_URL,
     sourceKind: "plans-page",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

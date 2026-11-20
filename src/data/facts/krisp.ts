@@ -50,10 +50,10 @@ export default {
     ],
     note: "Meeting AI plans, USD, as of 2026-10-26 (owner-checked on the official page). The trial's price cell is written as \"7-day trial\", not $0, so it never reads as a free plan.",
     sourceUrl: "https://krisp.ai/pricing/",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "owner",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   apps: {

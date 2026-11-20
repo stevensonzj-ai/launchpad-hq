@@ -26,10 +26,10 @@ export default {
     note: "USD. Claude Code is not included on the Free plan. As of 2026-10-30.",
     sourceUrl: "https://claude.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

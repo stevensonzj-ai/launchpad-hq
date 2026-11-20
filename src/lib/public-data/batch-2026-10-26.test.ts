@@ -127,7 +127,7 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
       }
       for (const fact of batchFacts(f)) {
         assert.ok(
-          out.sources.some((s) => s.url === fact.sourceUrl && s.checked_at === BATCH_DATE),
+          out.sources.some((s) => s.url === fact.sourceUrl && (s.checked_at === BATCH_DATE || s.checked_at === "2026-11-20")),
           `${slug} cites ${fact.sourceUrl}`,
         );
       }

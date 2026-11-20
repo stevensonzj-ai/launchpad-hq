@@ -27,10 +27,10 @@ export default {
     },
     note: "Pricing page: \"Free Trial: $10 credits for 7 days.\" \"No credit card needed\". Open weights: Jamba docs (Jamba Open Model License; newer Jamba2 files under Apache 2.0 per the guide).",
     sourceUrl: "https://www.ai21.com/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
@@ -59,10 +59,10 @@ export default {
   apiPricing: {
     value: "Per 1M tokens: Jamba Mini $0.2 input / $0.4 output; Jamba Large $2 input / $8 output.",
     sourceUrl: "https://www.ai21.com/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {

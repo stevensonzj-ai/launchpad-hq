@@ -19,10 +19,10 @@ export default {
     note: "USD, annual billing; monthly prices are not shown. As of 2026-10-30.",
     sourceUrl: "https://tactiq.io/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

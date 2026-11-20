@@ -32,10 +32,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29. The pricing page shows yearly billing only and does not print a month-to-month price. Teams buy Pro seats on one bill. The 7-day trial's MCP credits are not stated.",
     sourceUrl: SCITE_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "ra",
     verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

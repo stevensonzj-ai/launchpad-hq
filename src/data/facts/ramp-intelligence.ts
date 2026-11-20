@@ -46,10 +46,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29.",
     sourceUrl: "https://ramp.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

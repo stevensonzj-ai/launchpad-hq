@@ -62,10 +62,10 @@ export default {
     ],
     note: "USD, sales tax not included, as of 2026-10-29. Paid plans: US residents with a US billing address, 18 or older.",
     sourceUrl: "https://www.khanmigo.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

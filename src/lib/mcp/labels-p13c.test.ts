@@ -68,7 +68,7 @@ describe("P1.3c: Krisp is never offered as free (A11, D04)", () => {
     assert.equal(out.verification, "verified");
     assert.equal(out.platform.verification, "verified");
     assert.equal(out.plans?.source_url, "https://krisp.ai/pricing/");
-    assert.equal(out.plans?.as_of, "2026-10-26");
+    assert.equal(out.plans?.as_of, "2026-11-20");
     assert.doesNotMatch(out.platform.starting_price ?? "", /free/i);
   });
 

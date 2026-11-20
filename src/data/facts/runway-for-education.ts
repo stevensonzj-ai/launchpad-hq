@@ -63,10 +63,10 @@ export default {
     ],
     sourceUrl: EDUCATORS_URL,
     sourceKind: "product-page",
-    checkedAt: "2026-10-25",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

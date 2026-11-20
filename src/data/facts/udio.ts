@@ -21,10 +21,10 @@ export default {
       summary: "Free: 10 credits a day, with a monthly limit of 100; credits do not roll over. Downloads are disabled for all users.",
     },
     sourceUrl: "https://help.udio.com/en/articles/10739134-credits-and-credit-limits",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

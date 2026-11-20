@@ -63,7 +63,7 @@ export const alibabaQwen: PlatformModelFamily = {
       caveats: [
         "The model page was last updated 2026-11-16. It does not print a separate release date.",
         "The model page says batch inference is not supported.",
-        "Qwen4-Max-Preview is still Token Plan only until 24:00 on 2026-11-25 (UTC+8).",
+        "Qwen4-Max-Preview is Token Plan only until 24:00 on 2026-11-25 (UTC+8). The preview page, re-read 2026-11-20, says production Qwen4-Max is available and recommended.",
       ],
       sourceUrls: [
         { label: "Qwen4-Max", url: QWEN4 },

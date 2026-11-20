@@ -35,10 +35,10 @@ export default {
     ],
     note: "USD, monthly billing, excluding taxes. Annual billing is 10 months' price for 12 (FAQ): $5, $18.33, $82.50, $249.17 and $825 a month for Starter, Creator, Pro, Scale and Business. Paid credits roll over for up to two months. First-month offers shown on Starter and Creator are not recorded (their end date is unclear on the page).",
     sourceUrl: PRICING_URL,
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

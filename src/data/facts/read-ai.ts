@@ -25,10 +25,10 @@ export default {
     ],
     note: "USD, as of 2026-10-26. Annual billing is listed as 25% off the monthly rate. read.ai/pricing redirects to read.ai/plans-pricing. The RA confirmed every price and the free plan's 5 transcripts a month on 2026-10-26; upload minutes and meeting lengths are as gathered from the same page.",
     sourceUrl: "https://www.read.ai/plans-pricing",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-recheck",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

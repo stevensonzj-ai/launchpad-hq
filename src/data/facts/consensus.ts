@@ -54,10 +54,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29, from the help centre article (updated 2026-09-12); the pricing page matches (browser check). API and MCP use past the allowance is $0.05 per use; students, faculty and clinicians get up to 40% off.",
     sourceUrl: "https://intercom.help/consensus-d118a252369c/en/articles/10087865-subscription-plans",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

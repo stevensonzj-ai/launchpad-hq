@@ -52,10 +52,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29. Higher Slackbot limits are sold as Flex Credits through sales (no price shown). A 50%-off promotion on monthly plans for new teams was showing.",
     sourceUrl: "https://slack.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

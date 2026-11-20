@@ -51,10 +51,10 @@ export default {
     ],
     note: "Individual plans, USD, as of 2026-10-26. 1 AI credit = $0.01. On paid plans, code completions and next-edit suggestions do not use AI credits. Business and Enterprise were not checked in this pass.",
     sourceUrl: COPILOT_PLANS_URL,
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "owner",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {

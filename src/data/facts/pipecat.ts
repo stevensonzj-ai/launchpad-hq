@@ -78,10 +78,10 @@ export default {
     ],
     note: "USD, from Daily's Pipecat Cloud pricing page, as of 2026-11-02. The framework itself is free; Pipecat Cloud hosting is optional. Unlimited concurrency. Daily WebRTC voice transport is free for 1:1 voice sessions on Pipecat Cloud; voice plus video is $0.004 per participant minute; PSTN is $0.018 per minute; SIP is $0.003 to $0.02 per minute. Krisp VIVA noise filtering is free up to 10,000 active session minutes a month. You bring your own LLM, STT and TTS providers, which bill you directly. Pipecat Enterprise (Pipecat Cloud in your own AWS, Azure or GCP account) is also offered; its price is not stated.",
     sourceUrl: CLOUD_PRICING_URL,
-    checkedAt: "2026-11-02",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-02",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {

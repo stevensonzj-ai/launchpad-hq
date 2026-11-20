@@ -105,10 +105,10 @@ export default {
     value: "Per 1M tokens, input / output: Command R+ 08-2024 $2.50 / $10.00; Aya Expanse 8B and 32B $0.50 / $1.50. The page lists older models only for existing customers and shows no prices for the current Command A models.",
     sourceUrl: "https://cohere.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   privacy: {

@@ -32,10 +32,10 @@ export default {
     },
     sourceUrl: "https://aws.amazon.com/free/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
@@ -72,10 +72,10 @@ export default {
     value: "Per 1M tokens, input / output, US On-Demand Standard: Mistral Large 3 $0.50 / $1.50; DeepSeek v3.2 $0.62 / $1.85; Gemma 4 31B $0.14 / $0.40. Anthropic and Amazon Nova prices were not visible in the text read.",
     sourceUrl: "https://aws.amazon.com/bedrock/pricing/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   privacy: {

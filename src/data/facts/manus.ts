@@ -18,10 +18,10 @@ export default {
     note: "USD; 17% off with annual billing. As of 2026-10-30.",
     sourceUrl: "https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

@@ -28,10 +28,10 @@ export default {
     ],
     note: "USD, monthly prices as listed on the official pricing page.",
     sourceUrl: "https://inworld.ai/pricing",
-    checkedAt: "2026-10-25",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

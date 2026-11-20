@@ -37,10 +37,10 @@ export default {
     value: "Pay as you go. Most models are billed by the time they take to run, per second of hardware (for example gpu-h100 $0.001525/sec); some are billed per token or per output image.",
     note: "\"Most models are billed by the time they take to run.\" No minimum spend is stated.",
     sourceUrl: "https://replicate.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

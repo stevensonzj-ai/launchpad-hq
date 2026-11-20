@@ -91,12 +91,12 @@ export const googleGemini: PlatformModelFamily = {
       apiPriceInput: {
         usdPerMillion: 2,
         verified: true,
-        note: "Introductory price through 2026-11-30. $4 per 1M input tokens from 2026-12-01. The post says the later price applies to the Carbon model intended for public access only.",
+        note: "$4 per 1M input tokens regular from 2026-12-01; introductory $2 per 1M through 2026-11-30. The post says the later price applies to the Carbon model intended for public access only.",
       },
       apiPriceOutput: {
         usdPerMillion: 10,
         verified: true,
-        note: "Introductory price through 2026-11-30. $20 per 1M output tokens from 2026-12-01. The post says the later price applies to the Carbon model intended for public access only.",
+        note: "$20 per 1M output tokens regular from 2026-12-01; introductory $10 per 1M through 2026-11-30. The post says the later price applies to the Carbon model intended for public access only.",
       },
       consumerAccess: {
         summary:

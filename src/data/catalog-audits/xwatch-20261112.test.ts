@@ -57,15 +57,15 @@ describe("xwatch 2026-11-12 fact overlays", () => {
 
   it("records Gemini 4 Carbon's introductory price through 2026-11-30", () => {
     const api = getToolFacts("gemini")!.apiPricing!;
-    assert.match(api.value, /\$2 input and \$10 output through 2026-11-30/);
-    assert.match(api.value, /then \$4 input and \$20 output/);
-    assert.match(api.note ?? "", /ends 2026-11-30/);
+    assert.match(api.value, /\$4 input and \$20 output regular/);
+    assert.match(api.value, /introductory \$2 input and \$10 output through 2026-11-30/);
+    assert.match(api.note ?? "", /through 2026-11-30/);
     assert.match(api.sourceUrl, /\/pricing$/);
     const carbon = googleGemini.versions.find((v) => v.id === "gemini-4-carbon");
     assert.equal(carbon?.apiPriceInput.usdPerMillion, 2);
     assert.equal(carbon?.apiPriceOutput.usdPerMillion, 10);
     assert.match(carbon?.apiPriceInput.note ?? "", /2026-11-30/);
-    assert.match(carbon?.apiPriceInput.note ?? "", /\$4 per 1M/);
+    assert.match(carbon?.apiPriceInput.note ?? "", /\$4 per 1M input tokens regular/);
     assert.doesNotMatch(carbon?.consumerAccess.summary ?? "", /generally available/i);
   });
 
@@ -89,7 +89,8 @@ describe("xwatch 2026-11-12 fact overlays", () => {
     const minimax = getToolFacts("minimax")!.features!.value.join(" ");
     assert.match(minimax, /H3-Image/);
     assert.match(minimax, /under 10 seconds/);
-    assert.match(minimax, /does not give a calendar end date/);
+    assert.match(minimax, /does not state an end date/);
+    assert.doesNotMatch(minimax, /launch week/i);
     assert.doesNotMatch(minimax, /2026-11-17/);
     const canva = getToolFacts("canva-ai-magic-studio")!.features!.value.join(" ");
     assert.match(canva, /craft_v1_2k/);

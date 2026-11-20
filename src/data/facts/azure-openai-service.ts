@@ -35,10 +35,10 @@ export default {
     note: "Both batch-4 readers saw \"Pay as you go or try Azure free for up to 30 days\" on the Foundry page; the $200 credit amount is from the browser check of 2026-10-29 (azure-account page).",
     sourceUrl: "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {

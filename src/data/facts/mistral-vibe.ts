@@ -52,10 +52,10 @@ export default {
     ],
     note: "USD as shown on mistral.ai/pricing (EUR also selectable).",
     sourceUrl: "https://mistral.ai/pricing",
-    checkedAt: "2026-10-25",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

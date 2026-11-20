@@ -57,10 +57,10 @@ export default {
     ],
     note: "EUR, as of 2026-10-29; no USD shown. Monthly-billing prices (one reader, from the page script): Standard €15, Pro €49 + VAT.",
     sourceUrl: "https://www.aiva.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

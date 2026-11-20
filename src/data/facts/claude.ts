@@ -59,10 +59,10 @@ export default {
     ],
     note: "USD, as of 2026-11-02. Prices exclude applicable tax, per the page. Max and Ultra per https://support.claude.com/en/articles/11049741-what-is-the-max-plan (as of 2026-11-02).",
     sourceUrl: "https://claude.com/pricing",
-    checkedAt: "2026-11-02",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-02",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

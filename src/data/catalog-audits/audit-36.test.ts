@@ -62,7 +62,8 @@ describe("catalog audit 36 fact overlays", () => {
   it("prices Gemini 4 Hydrogen from the API pricing page and keeps Carbon's intro date", () => {
     const api = getToolFacts("gemini")!.apiPricing!;
     assert.equal(api.checkedAt, CHECKED_AT);
-    assert.match(api.value, /\$2 input and \$10 output through 2026-11-30/);
+    assert.match(api.value, /\$4 input and \$20 output regular/);
+    assert.match(api.value, /introductory \$2 input and \$10 output through 2026-11-30/);
     assert.match(api.value, /Gemini 4 Hydrogen/);
     assert.match(api.value, /\$1\.50 input and \$7\.50 output/);
     assert.match(api.value, /\$0\.075 per 1M tokens/);
@@ -81,12 +82,12 @@ describe("catalog audit 36 fact overlays", () => {
 
   it("records Qwen4-Max prices and keeps the preview end date", () => {
     const api = getToolFacts("qwen")!.apiPricing!;
-    assert.equal(api.checkedAt, CHECKED_AT);
+    assert.equal(api.checkedAt, "2026-11-20");
     assert.match(api.value, /\$1\.50 input and \$4\.50 output/);
     assert.match(api.value, /\$1\.413 input and \$4\.24 output/);
     assert.match(api.value, /cache read \$0\.075/);
     assert.match(api.value, /cache read \$0\.071/);
-    assert.match(api.value, /1 million tokens, valid for 90 days/);
+    assert.match(api.value, /1,000,000 tokens, valid for 90 days/);
     assert.equal(getToolFacts("qwen")!.freeTier!.checkedAt, "2026-10-14");
     assert.equal(getToolFacts("qwen")!.freeTier!.status, "unverified");
     const features = getToolFacts("qwen")!.features!.value.join(" ");
@@ -109,7 +110,7 @@ describe("catalog audit 36 fact overlays", () => {
     const deepseekFeatures = getToolFacts("deepseek")!.features!.value.join(" ");
     assert.match(deepseekFeatures, /built-in web search, file input, URL reading, and safety checks/);
     assert.match(deepseekFeatures, /Search, Fetch, OCR, ASR, and TTS/);
-    assert.equal(getToolFacts("deepseek")!.apiPricing!.checkedAt, "2026-10-24");
+    assert.equal(getToolFacts("deepseek")!.apiPricing!.checkedAt, "2026-11-20");
     assert.match(deepseek.whichToUse.join(" "), /does not restate the dollar amounts/);
     assert.match(getToolFacts("windsurf")!.features!.value.join(" "), /Devin Apps/);
     assert.match(getToolFacts("windsurf")!.features!.value.join(" "), /does not publish a dollar price/);

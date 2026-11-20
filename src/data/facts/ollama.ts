@@ -67,10 +67,10 @@ export default {
     ],
     note: "\"$\", as of 2026-10-29. Monthly prices; only Pro shows a yearly price.",
     sourceUrl: "https://ollama.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   apiPricing: {

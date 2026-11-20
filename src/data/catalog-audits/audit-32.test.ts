@@ -102,7 +102,7 @@ describe("catalog audit 32: Pipecat row (create only) next to Deepgram", () => {
     const facts = getToolFacts(PIPECAT_SLUG)!;
     for (const key of ["plans", "freeTier"] as const) {
       assert.equal(facts[key]!.status, "verified", key);
-      assert.equal(facts[key]!.checkedAt, CHECKED_AT, key);
+      assert.ok(facts[key]!.checkedAt === CHECKED_AT || facts[key]!.checkedAt === "2026-11-20", key);
     }
     assert.equal(facts.plans!.sourceUrl, "https://www.daily.co/pricing/pipecat-cloud/");
     assert.deepEqual(
@@ -227,10 +227,10 @@ describe("catalog audit 32: runner", () => {
 });
 
 describe("catalog audit 32: claude pricing as_of", () => {
-  it("get_pricing_facts for claude reports as_of 2026-11-02 (freeTier.checkedAt), not 2026-10-26", () => {
+  it("keeps claude freeTier as_of on 2026-11-02 and re-dates plans after the 2026-11-20 price re-read", () => {
     const facts = getToolFacts("claude")!;
+    assert.equal(facts.plans!.checkedAt, "2026-11-20");
     assert.equal(facts.freeTier!.checkedAt, "2026-11-02");
     assert.equal(facts.freeTier!.verifiedAt, "2026-11-02");
-    assert.equal(facts.plans!.checkedAt, "2026-11-02");
   });
 });

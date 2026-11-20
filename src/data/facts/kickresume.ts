@@ -38,10 +38,10 @@ export default {
     ],
     note: "USD, as of 2026-10-30: Yearly $8/month (\"Pay $96 every 12 months\"), Quarterly \"Pay $54 every 3 months\", Monthly $24/month. The limited-time 20% discount shown on 2026-10-26 is no longer on the page. All paid plans list a 14-day money-back guarantee.",
     sourceUrl: KICKRESUME_PRICING_URL,
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
     verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {

@@ -38,7 +38,7 @@ export default {
     value: "Prepaid, per token for serverless models (for example embeddings up to 150M parameters at $0.008 per 1M input tokens); on-demand GPUs per hour (H100 or H200 $8.00, B200 $13.00).",
     note: "Region-restricted deployments cost 1.5x.",
     sourceUrl: "https://fireworks.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
     status: "unverified",
   },
