@@ -39,7 +39,7 @@ export default {
   },
   freeTier: {
     value: {
-      available: true,
+      available: false,
       summary: "The Gemini music-generation help page requires users to be 18 or older and says limits apply (upgrade or wait). It does not state that music generation is free in the Gemini app, and it does not mention daily credits or Google Flow Music being free to start.",
     },
     note: "Gemini help: \"There are limits for how many tracks you can create with Lyria… You can upgrade your subscription or wait for your limit to refresh.\" Full-length tracks use the Pro model.",

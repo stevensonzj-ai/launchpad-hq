@@ -65,7 +65,7 @@ WHERE slug = $ra$mubert$ra$
   AND "currentPricing" = $ra$Ambassador free (non-commercial); Creator $14/mo; Pro $39/mo (commercial use); Business $199/mo (client, agency and app use); billed annually: $11.69, $32.49 and $149.29 a month (as of 2026-10-30)$ra$;
 
 UPDATE platforms SET
-  "currentPricing" = $ra$Pay as you go with a $200 free credit. Aura-2 text to speech $0.030 per 1,000 characters. Voice Agent Standard $0.075/min. Speech-to-text list price shown as the struck was price: $0.0077/min. Growth from $4,000/yr (as of 2026-11-20)$ra$,
+  "currentPricing" = $ra$Pay as you go with a $200 free credit. Aura-2 text to speech $0.030 per 1,000 characters. Voice Agent Standard $0.075/min. Growth from $4,000/yr (as of 2026-11-20)$ra$,
   "updatedAt" = now()
 WHERE slug = $ra$deepgram$ra$
   AND "currentPricing" = $ra$Pay as you go with a $200 free credit (no card, no expiry): Nova-3 Monolingual $0.0077/min streaming, $0.0043/min pre-recorded; Aura-2 text to speech $0.030 per 1,000 characters; Voice Agent Standard $0.075/min. Growth from $4,000/yr pre-paid at lower rates; Enterprise custom (as of 2026-10-30)$ra$;
@@ -89,7 +89,7 @@ WHERE slug = $ra$upstage-solar$ra$
   AND "currentPricing" = $ra$Pay as you go: Solar Pro 4 $0.30 / $1.20 and Solar Mini 4 $0.10 / $0.40 per 1M input / output tokens; Document Parse $0.01-$0.03 a page; prepaid plans from $100/mo with bonus credits; prices exclude 10% VAT (as of 2026-10-29)$ra$;
 
 UPDATE platforms SET
-  "currentPricing" = $ra$Free plan includes 20 AI requests. Pro list $29.00/mo and Complete list $49.00/mo, billed yearly. First-year sale is 50% off ($14.50 and $24.50) through Dec 2, 2026, 11:59 PM UTC, then the regular price (as of 2026-11-20)$ra$,
+  "currentPricing" = $ra$Pro list $29.00/mo and Complete list $49.00/mo, billed yearly. First-year sale is 50% off ($14.50 and $24.50) through Dec 2, 2026, 11:59 PM UTC, then the regular price (as of 2026-11-20)$ra$,
   "updatedAt" = now()
 WHERE slug = $ra$wordpress-ai-jetpack-ai$ra$
   AND "currentPricing" = $ra$Free plan includes 20 AI requests; Jetpack AI $4.95/mo for the first year, then $9.95 (billed yearly); Complete $24.95/mo first year, then $49.95 (as of 2026-10-29)$ra$;
@@ -101,7 +101,7 @@ WHERE slug = $ra$wondershare-pdfelement-ai$ra$
   AND "currentPricing" = $ra$Perpetual licence (Windows, one user) $129.99; Team and Education prices not confirmed (as of 2026-10-30)$ra$;
 
 UPDATE platforms SET
-  "currentPricing" = $ra$AI Assistant is included in Acrobat Studio (US$24.99/mo annual billed monthly; US$299.88/yr prepaid; US$34.99/mo monthly), not in Standard (US$14.99/mo annual billed monthly) or Pro (US$19.99/mo annual billed monthly). No Express plan is on the Individuals page (as of 2026-11-20)$ra$,
+  "currentPricing" = $ra$AI Assistant is listed under Acrobat Studio (US$24.99/mo annual billed monthly; US$299.88/yr prepaid; US$34.99/mo monthly). Standard is US$14.99/mo annual billed monthly. Pro is US$19.99/mo annual billed monthly. No Express plan is on the Individuals page (as of 2026-11-20)$ra$,
   "updatedAt" = now()
 WHERE slug = $ra$adobe-acrobat-ai-assistant$ra$
   AND "currentPricing" = $ra$AI Assistant is included in Acrobat Studio ($24.99/mo, annual plan billed monthly), not in Acrobat Standard ($14.99) or Pro ($19.99); Acrobat Express ($9.99/mo) is marketed as AI-powered document insights; no standalone AI Assistant price was seen (US, individuals) (as of 2026-10-29)$ra$;
@@ -141,3 +141,23 @@ UPDATE platforms SET
   "updatedAt" = now()
 WHERE slug = $ra$hubspot-ai$ra$
   AND "currentPricing" = $ra$Free CRM; Marketing Hub Starter $7/seat/mo paid annually or $10 monthly (new-customer offer; list $20), Professional $800/mo, Enterprise $3,600/mo (as of 2026-10-29)$ra$;
+
+-- Free-tier column. Same guard: the WHERE is the text currently in prod.
+
+UPDATE platforms SET
+  "freeTierFeatures" = $ra$For Individuals, $0/month: experience Antigravity without a subscription plan, with a baseline agent quota refreshed weekly. Numeric quota amounts are not stated on this page. (as of 2026-11-20)$ra$,
+  "updatedAt" = now()
+WHERE slug = $ra$google-antigravity$ra$
+  AND "freeTierFeatures" = $ra$$0 for individuals with a personal Google account (18+, supported countries): a variety of agent models, unlimited Tab completions and Command requests, and a quota refreshed weekly. Numeric limits are not stated. (as of 2026-10-29)$ra$;
+
+UPDATE platforms SET
+  "freeTierFeatures" = $ra$For Individuals, $0/month: experience Antigravity without a subscription plan, with a baseline agent quota refreshed weekly. Numeric quota amounts are not stated on this page. (as of 2026-11-20)$ra$,
+  "updatedAt" = now()
+WHERE slug = $ra$antigravity-cli$ra$
+  AND "freeTierFeatures" = $ra$$0 for individuals with a personal Google account (18+, supported countries): a variety of agent models, unlimited Tab completions and Command requests, and a quota refreshed weekly. Numeric limits are not stated. (as of 2026-10-29)$ra$;
+
+UPDATE platforms SET
+  "freeTierFeatures" = $ra$The Gemini music-generation help page requires users to be 18 or older and says limits apply (upgrade or wait). It does not state that music generation is free in the Gemini app, and it does not mention daily credits or Google Flow Music being free to start. (as of 2026-11-20)$ra$,
+  "updatedAt" = now()
+WHERE slug = $ra$google-lyria-3$ra$
+  AND "freeTierFeatures" = $ra$Gemini app (18+): music generation on the free plan, with limits Google does not publish; Google Flow Music: free to start, with daily credits; MusicFX now redirects to Flow Music (as of 2026-10-29)$ra$;

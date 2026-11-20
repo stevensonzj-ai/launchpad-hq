@@ -25,12 +25,6 @@ export default {
   plans: {
     value: [
       {
-        name: "Free",
-        price: "$0",
-        period: "",
-        limits: "Jetpack AI: 20 requests",
-      },
-      {
         name: "Pro",
         price: "$29.00",
         period: "month",

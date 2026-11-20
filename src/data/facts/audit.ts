@@ -165,7 +165,8 @@ function isZeroPrice(price: string): boolean {
 }
 
 function extractLikelyPlanNames(summary: string): string[] {
-  const matches = summary.match(/\b(?:Plus|Pro|Team|Enterprise|Premium|Max|Ultra|Business)\b/g);
+  // "Premium AI" is a Canva feature name, not a plan called Premium.
+  const matches = summary.replace(/\bPremium AI\b/g, "").match(/\b(?:Plus|Pro|Team|Enterprise|Premium|Max|Ultra|Business)\b/g);
   return matches ?? [];
 }
 

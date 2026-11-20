@@ -27,7 +27,7 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Free plan $0/month (ex. tax): 150 Fast Tokens a day. The pricing page does not state that unused daily tokens do not carry over, or that free-plan content is used to train Leonardo's models.",
+      summary: "Free plan $0/month (ex. tax): 150 Fast Tokens a day. Content made on the free plan can be used to train Leonardo's models.",
     },
     note: "Also in the help centre: \"Free users get 150 daily tokens.\" (https://intercom.help/leonardo-ai/en/articles/9044700-tokens-frequently-asked-questions). Training: see privacy.",
     sourceUrl: "https://leonardo.ai/pricing",

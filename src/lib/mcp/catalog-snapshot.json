@@ -916,7 +916,7 @@
    "description": null,
    "primaryUse": "AI background music for videos/podcasts",
    "primaryUseCases": "Background music for videos; podcast intros/outros; mood-based music; corporate content",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web"
@@ -3937,7 +3937,7 @@
    "description": null,
    "primaryUse": "AI music generation and real-time adaptive music",
    "primaryUseCases": "Music generation for YouTube content; experimental compositions; Google ecosystem audio; instrument demos",
-   "costTier": "FREEMIUM",
+   "costTier": "PAID",
    "difficultyLevel": "BEGINNER",
    "platformType": [
     "web",

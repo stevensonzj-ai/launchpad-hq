@@ -226,6 +226,12 @@ describe("catalog audit 19: content rules", () => {
       const tier = AUDIT_19_PATCHES.find((p) => p.slug === slug)?.guarded?.costTier?.to ?? snap(slug)?.costTier;
       const free = getToolFacts(slug)?.freeTier?.value;
       if (!free) continue;
+      // The Nov 20 re-check found no stated free tier. The Oct 29 patch still records FREEMIUM.
+      if (slug === "google-lyria-3" || slug === "beatoven-ai") {
+        assert.equal(free.available, false, slug);
+        assert.equal(snap(slug)?.costTier, "PAID", slug);
+        continue;
+      }
       if (free.available) assert.ok(tier === "FREE" || tier === "FREEMIUM" || tier === "ENTERPRISE", `${slug}: ${tier}`);
       else assert.ok(tier === "PAID" || tier === "ENTERPRISE", `${slug}: ${tier}`);
     }
@@ -242,8 +248,9 @@ describe("catalog audit 19: content rules", () => {
     // Speak: trial only, trains on audio.
     assert.equal(snap("speak-language-ai")?.costTier, "PAID");
     assert.equal(snap("speak-language-ai")?.privacyLevel, "LOW");
-    // Glasp, Lyria, Beatoven: no longer FREE.
-    for (const slug of ["glasp", "google-lyria-3", "beatoven-ai"]) assert.equal(snap(slug)?.costTier, "FREEMIUM", slug);
+    // Glasp: no longer FREE. Lyria and Beatoven: the Nov 20 re-check found no stated free tier.
+    assert.equal(snap("glasp")?.costTier, "FREEMIUM");
+    for (const slug of ["google-lyria-3", "beatoven-ai"]) assert.equal(snap(slug)?.costTier, "PAID", slug);
     // Lyria: MusicFX is gone.
     assert.doesNotMatch(snap("google-lyria-3")?.currentPricing ?? "", /^Free \(MusicFX\)/);
     // Udio: downloads disabled.

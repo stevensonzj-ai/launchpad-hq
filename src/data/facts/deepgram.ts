@@ -36,10 +36,10 @@ export default {
   },
   plans: {
     value: [
-      { name: "Pay as you go", price: "Usage-based", period: "", limits: "$200 free credit, then usage-based. Aura-2 TTS $0.030 per 1,000 characters. Voice Agent Standard $0.075 per minute. Speech-to-text list price shown as the struck was price: $0.0077 per minute." },
+      { name: "Pay as you go", price: "Usage-based", period: "", limits: "$200 free credit, then usage-based. Aura-2 TTS $0.030 per 1,000 characters. Voice Agent Standard $0.075 per minute." },
       { name: "Growth", price: "$4,000+", period: "year", limits: "Pre-paid annual credits, up to 20% off and higher streaming concurrency" },
     ],
-    note: "Read 2026-11-20. Speech-to-text offer rates have no stated end date, so they are not recorded. The stored pre-recorded $0.0043 figure is not on the page.",
+    note: "Read 2026-11-20. Speech-to-text rates on the page are promotional. $0.0077 appears only as a struck was price, so it is not recorded as the list price. The stored pre-recorded $0.0043 figure is not on the page.",
     sourceUrl: PRICING_URL,
     checkedAt: "2026-11-20",
     gatheredBy: "claude",

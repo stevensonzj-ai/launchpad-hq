@@ -10,12 +10,9 @@ export default {
   lifecycle: "active",
   plans: {
     value: [
-      { name: "Starter", price: "$29", period: "month", limits: "$25/month billed annually" },
-      { name: "Professional", price: "$59", period: "month", limits: "$35/month billed annually" },
-      { name: "Teams", price: "$199", period: "month", limits: "$119/month billed annually" },
-      { name: "Enterprise", price: "Custom", period: "", limits: "" },
+      { name: "Starter", price: "$29", period: "month", limits: "List price, shown on the page as the struck was-price. A 14-day trial is still mentioned." },
     ],
-    note: "USD list prices. A 14-day trial is still on the page. Read 2026-11-20: a sale is on the page and has no stated end date, so the sale prices are not the list price. Starter's struck was-price is $29.",
+    note: "Read 2026-11-20. Only Starter's $29 list price was confirmed. The annual offer and the Professional and Teams figures were not confirmed, so they are not recorded.",
     sourceUrl: "https://pictory.ai/pricing",
     sourceKind: "plans-page",
     checkedAt: "2026-11-20",

@@ -348,7 +348,7 @@ describe("catalog audit 21: the corrections", () => {
     assert.doesNotMatch(`${r.currentPricing} ${r.freeTierFeatures}`, /25 (?:generative )?credits|monthly free/i);
     const facts = getToolFacts("adobe-firefly")!;
     assert.equal(facts.freeTier?.value.available, true);
-    assert.deepEqual(facts.plans?.value.map((p) => [p.name, p.price]), [["Free", "$0"], ["Firefly Standard", "$9.99"], ["Firefly Pro", "$19.99"], ["Firefly Pro Plus", "$49.99"], ["Firefly Premium", "$199.99"]]);
+    assert.deepEqual(facts.plans?.value.map((p) => [p.name, p.price]), [["Firefly Standard", "$9.99"], ["Firefly Pro", "$19.99"], ["Firefly Pro Plus", "$49.99"], ["Firefly Premium", "$199.99"]]);
     assert.ok(isPublishedVerified(facts.plans!));
     assert.equal(facts.plans?.sourceUrl, "https://www.adobe.com/products/firefly/plans.html");
   });
@@ -423,8 +423,8 @@ describe("catalog audit 21: the corrections", () => {
     const plans = facts.plans!.value;
     assert.equal(plans.some((p) => p.name === "Acrobat Express"), false);
     assert.match(plans.find((p) => p.name === "Acrobat Studio")!.limits, /Includes everything in Acrobat Pro, plus AI Assistant/);
-    assert.match(plans.find((p) => p.name === "Acrobat Standard")!.limits, /AI Assistant is not included/);
-    assert.match(plans.find((p) => p.name === "Acrobat Pro")!.limits, /AI Assistant is not included/);
+    assert.match(plans.find((p) => p.name === "Acrobat Standard")!.limits, /AI Assistant is listed under Studio/);
+    assert.match(plans.find((p) => p.name === "Acrobat Pro")!.limits, /AI Assistant is listed under Studio/);
     assert.equal(facts.privacy?.value.trainsOnData, false);
     assert.ok(isPublishedVerified(facts.privacy!));
     const g = guide("adobe-acrobat-ai-assistant");

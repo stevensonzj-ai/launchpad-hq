@@ -45,13 +45,13 @@ export default {
         name: "Acrobat Standard",
         price: "US$14.99",
         period: "month",
-        limits: "Annual billed monthly. Annual prepaid US$179.88/yr. Monthly US$24.99/mo, cancel anytime, no fee. AI Assistant is not included."
+        limits: "Annual billed monthly. Annual prepaid US$179.88/yr. Monthly US$24.99/mo, cancel anytime, no fee. AI Assistant is listed under Studio."
       },
       {
         name: "Acrobat Pro",
         price: "US$19.99",
         period: "month",
-        limits: "Annual billed monthly. Annual prepaid US$239.88/yr. Monthly US$29.99/mo, cancel anytime, no fee. AI Assistant is not included."
+        limits: "Annual billed monthly. Annual prepaid US$239.88/yr. Monthly US$29.99/mo, cancel anytime, no fee. AI Assistant is listed under Studio."
       },
       {
         name: "Acrobat Studio",
@@ -71,7 +71,7 @@ export default {
   },
   features: {
     value: [
-      "AI Assistant is included in Acrobat Studio and not in Acrobat Standard or Pro; Acrobat Express is marketed as AI-powered document insights, and the page also mentions an AI Assistant add-on (price not confirmed)."
+      "AI Assistant is listed under Acrobat Studio."
     ],
     sourceUrl: "https://www.adobe.com/acrobat/generative-ai-pdf.html",
     checkedAt: "2026-10-29",

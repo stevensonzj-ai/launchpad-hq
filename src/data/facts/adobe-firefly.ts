@@ -44,12 +44,6 @@ export default {
   plans: {
     value: [
       {
-        name: "Free",
-        price: "$0",
-        period: "",
-        limits: "Limited free daily generations; count not stated"
-      },
-      {
         name: "Firefly Standard",
         price: "$9.99",
         period: "month",

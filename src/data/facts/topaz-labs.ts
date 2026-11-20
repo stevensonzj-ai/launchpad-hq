@@ -75,12 +75,6 @@ export default {
         limits: "$59 a month, or $39 a month on a 12-month commitment"
       },
       {
-        name: "Topaz Studio",
-        price: "$399",
-        period: "year",
-        limits: "$69 a month, or $45 a month on a 12-month commitment; the all-apps bundle; 300 monthly video cloud credits"
-      },
-      {
         name: "Topaz Studio Pro",
         price: "$799",
         period: "year",
@@ -99,14 +93,12 @@ export default {
         limits: "Contact sales"
       }
     ],
-    note: "List prices kept. Read 2026-11-20: the page is a first-year sale (billed annually, first year only) and does not state an end date, so the sale prices are not recorded.",
+    note: "Unchecked on 2026-11-20. The page is a first-year sale and does not confirm these list prices. Studio is shown as \"$499 $299/yr SALE\", which does not confirm the stored $399, so that row was removed.",
     sourceUrl: "https://www.topazlabs.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra-recheck",
-    verifiedAt: "2026-11-20",
-    status: "verified"
+    status: "unverified"
   },
   privacy: {
     value: {

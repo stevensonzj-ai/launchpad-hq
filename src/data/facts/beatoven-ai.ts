@@ -25,17 +25,15 @@ export default {
   },
   freeTier: {
     value: {
-      available: true,
-      summary: "Downloads are bought per track or by subscribing for additional download minutes (MP3 or WAV). A 5-free-generations allowance is not stated on the homepage.",
+      available: false,
+      summary: "Downloads are bought per track or by subscribing for additional download minutes (MP3 or WAV). A free-generation allowance is not stated on the homepage.",
     },
-    note: "Homepage, read 2026-11-20. The pricing path is still not used.",
+    note: "Homepage read 2026-11-20 did not show a free-generation allowance, so available is false. Left unverified.",
     sourceUrl: "https://www.beatoven.ai/",
     sourceKind: "product-page",
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-10-29",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra-recheck",
-    verifiedAt: "2026-11-20",
-    status: "verified",
+    status: "unverified",
   },
   features: {
     value: [
