@@ -161,3 +161,9 @@ UPDATE platforms SET
   "updatedAt" = now()
 WHERE slug = $ra$google-lyria-3$ra$
   AND "freeTierFeatures" = $ra$Gemini app (18+): music generation on the free plan, with limits Google does not publish; Google Flow Music: free to start, with daily credits; MusicFX now redirects to Flow Music (as of 2026-10-29)$ra$;
+
+UPDATE platforms SET "costTier" = 'PAID', "updatedAt" = now()
+WHERE slug = $ra$beatoven-ai$ra$ AND "costTier" = 'FREEMIUM';
+
+UPDATE platforms SET "costTier" = 'PAID', "updatedAt" = now()
+WHERE slug = $ra$google-lyria-3$ra$ AND "costTier" = 'FREEMIUM';
