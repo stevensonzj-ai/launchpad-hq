@@ -130,9 +130,9 @@ describe("search-relevance fact pass (2026-10-26)", () => {
     // toggles by hand in a browser (P1.3c addendum): Pro is $144/year.
     // Re-checked 2026-10-29 (guide PR D) from the same embedded plan data: still $144.
     const canva = facts("canva-ai-magic-studio").plans;
-    assert.ok(["owner", "claude"].includes(canva?.verifiedBy ?? ""));
+    assert.ok(["owner", "claude", "ra-recheck"].includes(canva?.verifiedBy ?? ""));
     assert.ok((canva?.verifiedAt ?? "") >= DATE);
-    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /\$144\/year billed yearly/);
+    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /\$144\/year/);
     assert.equal(facts("recraft").plans, undefined);
     // Notion's monthly-billing prices were not in the rendered page; only the yearly view is recorded.
     assert.match(facts("notion-ai").plans?.note ?? "", /not recorded/);

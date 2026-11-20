@@ -37,10 +37,10 @@ export default {
     note: "Browser check, 2026-10-29: \"Create with Designer for free\", \"with monthly credits\"; \"You will receive a fresh set of credits at the start of each month, and 1 credit will be deducted … each time you interact with Copilot … or Designer's AI features.\" Boosts are gone: \"every image is now automatically boosted.\" Microsoft 365 Personal, Family or Premium give \"up to 4X more credits\" (Personal $9.99/mo).",
     sourceUrl: "https://www.microsoft.com/en-us/microsoft-365/microsoft-designer",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

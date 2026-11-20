@@ -20,10 +20,10 @@ export default {
     },
     note: "Help Center, as of 2026-10-26 (article updated 2026-10-14). The summarizer FAQ (https://help.quillbot.com/hc/en-us/articles/35700052994071) also gives 1,200 words per input on Free and 6,000 on Premium; an older 600-word table is no longer in the article.",
     sourceUrl: "https://help.quillbot.com/hc/en-us/articles/360058341753-What-s-the-difference-between-a-free-and-a-premium-account",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

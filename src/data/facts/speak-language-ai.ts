@@ -55,10 +55,10 @@ export default {
     note: "USD, US offer page, as of 2026-11-01. \"Pricing varies by plan, region, and any current promotions, so the most accurate pricing is always within the app.\" No monthly price shown.",
     sourceUrl: "https://www.speak.com/us/getstarted",
     sourceKind: "plans-page",
-    checkedAt: "2026-11-01",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-01",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {

@@ -24,14 +24,14 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "No free plan: billing is prepaid and usage-based. Without a payment method and credits, an account is limited to 10 requests a minute.",
+      summary: "No free plan is listed. Serverless billing is pay per token and draws down prepaid credits (from $0.05 / 1M input tokens). A 10-requests-a-minute cap without a payment method is not stated on this page.",
     },
-    note: "Pricing: \"Pay per token with pre-paid, usage-based billing. Simply add a payment method to buy credits, and usage is then deducted from your balance.\" No starting credit is stated (browser check, 2026-10-29). Rate limits: 10 RPM without a payment method or credits, up to 6,000 RPM with them.",
+    note: "Read 2026-11-20. \"Pay per token · From $0.05 / 1M input tokens.\" Usage draws down prepaid credits. Monthly spend limits and Auto Reload are on the page.",
     sourceUrl: "https://fireworks.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   apiPricing: {

@@ -50,14 +50,14 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "A free Trial API key: calls are free but capped at 1,000 API calls a month and rate limited, and trial keys may not be used for production or commercial purposes. The key has no expiry date."
+      summary: "A Trial API key is created automatically with an account. Calls from a Trial API key are free, but trial keys are rate limited and may not be used for production or commercial purposes. A monthly call cap and key expiry are not stated on this page."
     },
     sourceUrl: "https://cohere.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {

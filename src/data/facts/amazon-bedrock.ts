@@ -62,10 +62,10 @@ export default {
     note: "As of 2026-10-29. Guardrails, Knowledge Bases and Model Evaluation are billed by unit.",
     sourceUrl: "https://aws.amazon.com/bedrock/pricing/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   apiPricing: {

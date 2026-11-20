@@ -16,13 +16,13 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "No free plan listed; you can try it free, and commercial use is on paid plans.",
+      summary: "No free plan is listed. The page is headed Paid Plans, and commercial use is included on those paid plans.",
     },
     sourceUrl: "https://soundraw.io/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

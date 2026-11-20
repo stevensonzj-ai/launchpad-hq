@@ -10,17 +10,15 @@ export default {
   lifecycle: "active",
   plans: {
     value: [
-      { name: "Community License", price: "$0", period: "", limits: "Open models; free for individuals and organizations under $1M annual revenue" },
-      { name: "Developer Platform API", price: "$0.01", period: "credit", limits: "Pay as you go; 25 free credits for new accounts" },
-      { name: "Enterprise License", price: "Custom", period: "", limits: "Over $1M annual revenue" },
+      { name: "Developer Platform API", price: "$0.01", period: "credit", limits: "1 credit equals $0.01. New accounts get 25 free credits." },
     ],
-    note: "USD. As of 2026-10-30.",
+    note: "Read 2026-11-20 on https://docs.stability.ai/pricing. Community License and Enterprise License terms are not on this page.",
     sourceUrl: "https://docs.stability.ai/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

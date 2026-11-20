@@ -41,10 +41,10 @@ export default {
     note: "Site FAQ: \"Hermes Agent is free and open source under the MIT license. Model providers and optional hosted services have their own pricing.\" Nous Portal, browser-verified 2026-10-29: Free $0, \"free models only\", standard rate limits, $0 monthly credits; an eligible ChatGPT account can be connected for supported inference with no paid Nous subscription, with tools and Hermes Cloud hosting charged separately.",
     sourceUrl: PORTAL_HOME_URL,
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "owner",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

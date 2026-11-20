@@ -23,19 +23,37 @@ export default {
   plans: {
     value: [
       {
-        name: "Personal (Windows)",
-        price: "$129.99",
-        period: "",
-        limits: "Perpetual licence, 1 user"
+        name: "Perpetual, cross-platform",
+        price: "US$695",
+        period: "one-time",
+        limits: "Struck price on the Windows Individuals store"
+      },
+      {
+        name: "Perpetual, single-platform",
+        price: "US$159",
+        period: "one-time",
+        limits: "Struck price. One-time fee for perpetual access to PDFelement 13"
+      },
+      {
+        name: "Yearly, cross-platform",
+        price: "US$305",
+        period: "year",
+        limits: "Struck price on the Windows Individuals store"
+      },
+      {
+        name: "Yearly, single-platform",
+        price: "US$129",
+        period: "year",
+        limits: "Struck yearly price. The stored US$129.99 perpetual price is not on the page"
       }
     ],
-    note: "USD, catalog audit 27 re-read 2026-10-30 on the Windows individuals store page. Team and Education prices not confirmed.",
+    note: "Read 2026-11-20. The page is an offer view (up to 91% off) and does not state an end date, so the offer prices are not the list price.",
     sourceUrl: "https://pdf.wondershare.com/store/windows-individuals.html",
     sourceKind: "product-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   features: {

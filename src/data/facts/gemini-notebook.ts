@@ -49,10 +49,10 @@ export default {
     note: "USD. As of 2026-10-30.",
     sourceUrl: "https://support.google.com/notebooklm/answer/16213268",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

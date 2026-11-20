@@ -26,10 +26,10 @@ export default {
     },
     note: "One reader also read 500MB storage, 1GB bandwidth and Wix ads on the free plan (support article); not recorded.",
     sourceUrl: "https://www.wix.com/plans",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

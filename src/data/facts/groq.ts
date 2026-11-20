@@ -25,14 +25,14 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "A free tier with per-model rate limits: GPT OSS 120B, GPT OSS 20B and Qwen3.8-27B each 30 requests a minute, 1,000 a day, 8,000 tokens a minute and 200,000 a day; Whisper large v3 20 requests a minute, 2,000 a day. The paid Developer tier is pay as you go and needs a payment method.",
+      summary: "The rate-limits docs have a Free Plan Limits tab. GPT OSS 120B and GPT OSS 20B are 30 requests a minute, 1,000 a day, 8,000 tokens a minute and 200,000 a day. A page note also describes the table as Developer plan base limits.",
     },
-    note: "Rate limits, Free Plan tab (browser check, 2026-10-29); the docs note \"there may be exceptions to these limits.\" Billing FAQ: you \"can downgrade to the Free tier at any time\"; Developer needs \"a valid payment method\".",
+    note: "Read 2026-11-20. Qwen and Whisper rows were not in the extracted table and are not recorded.",
     sourceUrl: "https://console.groq.com/docs/rate-limits",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   apiPricing: {

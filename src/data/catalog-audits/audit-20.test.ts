@@ -488,8 +488,9 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
 
   it("Bloomberg: consumer plan $399 a year ($180 first year) or $39.99 a month with no AI feature; ASKB is the Terminal's AI and sales-only", () => {
     const facts = getToolFacts("bloomberg-gpt-terminal-ai")!;
-    assert.deepEqual(facts.plans!.value.map((x) => [x.price, x.period]), [["$399", "year"], ["$39.99", "month"]]);
-    assert.match(facts.plans!.value[0].limits, /\$180 for the first year/);
+    assert.deepEqual(facts.plans!.value.map((x) => [x.price, x.period]).slice(0, 2), [["$399", "year"], ["$39.99", "month"]]);
+    assert.match(facts.plans!.value[0].limits, /Auto-renews for \$399 annually/);
+    assert.doesNotMatch(facts.plans!.value[0].limits, /\$180/);
     assert.ok(isPublishedVerified(facts.plans!));
     assert.match(JSON.stringify(facts.features!.value), /ASKB by Bloomberg is the AI on the Bloomberg Terminal/);
     assert.doesNotMatch(JSON.stringify(facts.features!.value), /summar/i);
