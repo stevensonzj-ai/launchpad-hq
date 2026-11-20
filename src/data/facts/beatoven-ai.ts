@@ -26,14 +26,16 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "Downloads are bought per track or by subscribing for additional download minutes (MP3 or WAV). A free-generation allowance is not stated on the homepage.",
+      summary: "Download in MP3 or WAV formats. Pay per track or subscribe for additional download minutes. The pricing page currently returns Page Not Found, and no public page mentions a free plan.",
     },
-    note: "Homepage read 2026-11-20 did not show a free-generation allowance, so available is false. Left unverified.",
+    note: "Homepage, read 2026-11-20. https://www.beatoven.ai/pricing returns Page Not Found. No public page mentions a free plan.",
     sourceUrl: "https://www.beatoven.ai/",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    status: "unverified",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   features: {
     value: [

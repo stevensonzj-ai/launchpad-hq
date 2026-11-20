@@ -376,8 +376,8 @@ describe("catalog audit 21: the corrections", () => {
     assert.equal(facts.freeTier?.value.available, false);
     const studioPro = facts.plans!.value.find((p) => p.name === "Topaz Studio Pro")!;
     assert.equal(studioPro.price, "$799");
-    assert.doesNotMatch(JSON.stringify(studioPro), /\$75|\$79 /);
-    assert.match(studioPro.limits, /conflicting monthly prices, so none is given/);
+    assert.match(studioPro.limits, /\$79\/month billed annually/);
+    assert.equal(facts.plans!.value.find((p) => p.name === "Topaz Studio")?.price, "$499");
   });
 
   it("Cohere: the trial key is free but capped at 1,000 calls a month and not for production or commercial use; tier stays FREEMIUM", () => {

@@ -167,3 +167,9 @@ WHERE slug = $ra$beatoven-ai$ra$ AND "costTier" = 'FREEMIUM';
 
 UPDATE platforms SET "costTier" = 'PAID', "updatedAt" = now()
 WHERE slug = $ra$google-lyria-3$ra$ AND "costTier" = 'FREEMIUM';
+
+UPDATE platforms SET
+  "currentPricing" = $ra$No free plan. List prices are the struck was-prices: Topaz Studio $499/yr, $49/mo billed annually, or $79/mo monthly; Studio Pro $799/yr or $79/mo billed annually; Photo $199, Gigapixel $149, Video $299, Topaz for Web - Image $199, Topaz for Web - Video $299, Topaz for Web Pro $599 per year; Photo Pro $599, Gigapixel Pro $499, Video Pro $699 per year. A Black Friday sale is running and the page states no end date. The Monthly view says Studio includes all 7 apps; the other views say all 5 apps. (as of 2026-11-20)$ra$,
+  "updatedAt" = now()
+WHERE slug = $ra$topaz-labs$ra$
+  AND "currentPricing" = $ra$No free plan; subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo; Topaz Studio (all apps) $399/yr, $45/mo billed annually or $69/mo month to month; Pro versions and Enterprise cost more; list prices, sales are frequent (as of 2026-10-29)$ra$;
