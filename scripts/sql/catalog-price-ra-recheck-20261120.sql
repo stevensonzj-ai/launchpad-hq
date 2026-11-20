@@ -173,3 +173,9 @@ UPDATE platforms SET
   "updatedAt" = now()
 WHERE slug = $ra$topaz-labs$ra$
   AND "currentPricing" = $ra$No free plan; subscriptions only, no perpetual licence listed: Photo $199/yr or $39/mo, Gigapixel $149/yr or $29/mo, Video $299/yr or $59/mo; Topaz Studio (all apps) $399/yr, $45/mo billed annually or $69/mo month to month; Pro versions and Enterprise cost more; list prices, sales are frequent (as of 2026-10-29)$ra$;
+
+UPDATE platforms SET
+  "freeTierFeatures" = $ra$No free plan is published: pay per track or subscribe for additional download minutes (MP3 or WAV). The pricing page returns Page Not Found (as of 2026-11-20)$ra$,
+  "updatedAt" = now()
+WHERE slug = $ra$beatoven-ai$ra$
+  AND "freeTierFeatures" = $ra$A free start is listed in the site's data (5 generations) but not confirmed; downloads are bought per track or with a subscription (as of 2026-10-29)$ra$;
