@@ -8,4 +8,6 @@
 
 **Follow-up:** Re-read https://otter.ai/pricing. Annual Pro is still $8.33/user/month. $8.49* is only on the India monthly Pro card. Business $24 is the monthly "20% off for 3 months" first-time offer; annual Business is still $19.99. No calendar end date. Facts and SQL were not changed. Otter stays on the PR's Research Analyst list.
 
+**SQL add:** Guarded updates for Windsurf `currentPricing` and the description Plans sentence (Teams $80/mo for up to 100 users, no $40 seat line) and Hugging Face `currentPricing` (Enterprise $500/user/mo). Both stamp `(as of 2026-11-20)`. Not run.
+
 **Tests:** `npm test` — 1610 passed. `npm run typecheck` passed.

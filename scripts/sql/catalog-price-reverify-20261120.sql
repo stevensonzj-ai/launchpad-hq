@@ -105,3 +105,27 @@ UPDATE platforms SET description = CASE
 END, "updatedAt" = now()
 WHERE slug = $pr$minimax$pr$
   AND COALESCE(description, $pr$$pr$) NOT LIKE $pr$%MiniMax-H3-Image standard rates are $2.30%$pr$;
+
+-- Windsurf Teams is $80/mo for up to 100 users. The $40 per-seat line is not on the pricing page.
+-- currentPricing is the catalog snapshot string. The description sentence is the Plans line
+-- written by catalog-xwatch-20261105.sql. Neither replacement contains the old Teams clause.
+UPDATE platforms SET
+  "currentPricing" = $pr$Free $0; Pro $20/mo; Max $200/mo; Teams $80/mo for up to 100 users; Enterprise custom (as of 2026-11-20)$pr$,
+  "updatedAt" = now()
+WHERE slug = $pr$windsurf$pr$
+  AND "currentPricing" = $pr$Free $0; Pro $20/mo; Max $200/mo; Teams $80/mo team plan + $40/mo per full seat; Enterprise custom (as of 2026-10-30)$pr$;
+
+UPDATE platforms SET
+  description = replace(description,
+    $pr$Plans: Free $0; Pro $20/mo; Max $200/mo; Teams $80/mo team plan + $40/mo per full seat; Enterprise custom (as of 2026-10-30).$pr$,
+    $pr$Plans: Free $0; Pro $20/mo; Max $200/mo; Teams $80/mo for up to 100 users; Enterprise custom (as of 2026-11-20).$pr$),
+  "updatedAt" = now()
+WHERE slug = $pr$windsurf$pr$
+  AND description LIKE $pr$%Plans: Free $0; Pro $20/mo; Max $200/mo; Teams $80/mo team plan + $40/mo per full seat; Enterprise custom (as of 2026-10-30).%$pr$;
+
+-- Hugging Face Enterprise is $500/user/mo. Equality, not a substring match: "$500" contains "$50".
+UPDATE platforms SET
+  "currentPricing" = $pr$Free; PRO $9/mo; Team $20/user/mo; Enterprise $500/user/mo; compute (Spaces hardware, Inference Endpoints) billed by usage (as of 2026-11-20)$pr$,
+  "updatedAt" = now()
+WHERE slug = $pr$hugging-face$pr$
+  AND "currentPricing" = $pr$Free; PRO $9/mo; Team $20/user/mo; Enterprise $50/user/mo; compute (Spaces hardware, Inference Endpoints) billed by usage (as of 2026-10-29)$pr$;
