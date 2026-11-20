@@ -16,10 +16,10 @@ export default {
       summary: "Ambassador plan: free, non-commercial, 25 tracks and 5 downloads a month, MP3, fixed duration, attribution and audible watermark.",
     },
     sourceUrl: PRICING_URL,
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

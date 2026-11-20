@@ -9,7 +9,7 @@ import type { ToolFacts } from "./types";
  * 3-yearly figures were caught mid-animation and the lifetime prices were
  * not read. So the plans fact records the USD figures as unverified, and the
  * row's pricing text names the plans without prices (audit 18). Whether the
- * free plan's 100 tasks reset monthly is not stated.
+ * free plan is 100 tasks a month. Paid USD prices are still unverified.
  */
 export default {
   slug: "pabbly-connect",
@@ -17,14 +17,14 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Free plan with 100 tasks, no card; limited to 2 workflows of up to 2 steps each. Whether the tasks reset monthly is not stated.",
+      summary: "Free plan: 100 tasks a month, no card; limited to 2 workflows of up to 2 steps each.",
     },
-    note: "\"Start for free and get 100 tasks - no credit card required.\" Browser check, 2026-10-29: the Free card reads \"Get 100 Tasks … $0 /mo … No credit card needed\"; paid plans say \"Every Month\", the Free card does not.",
+    note: "Re-read 2026-11-20. The free card says \"Get 100 tasks\", \"100 tasks /mo\", and \"No credit card needed.\" The same page still says you can create up to 2 workflows with up to 2 steps. Paid prices on this fetch were in rupees, so the plans fact was not re-dated.",
     sourceUrl: "https://www.pabbly.com/connect/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
@@ -56,6 +56,12 @@ export default {
     status: "unverified",
   },
   changelog: [
+    {
+      date: "2026-11-20",
+      field: "freeTier",
+      summary:
+        "Pricing page re-read: the free card is 100 tasks a month, with no credit card, and still limits you to 2 workflows of up to 2 steps. Paid prices on this fetch were in rupees, so the plans fact stays unverified.",
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

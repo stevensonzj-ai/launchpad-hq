@@ -177,7 +177,12 @@ describe("search-relevance fact pass (2026-10-26)", () => {
         assert.ok(full.includes(item), `${slug} llms-full feature`);
       }
       for (const fact of gathered(f)) {
-        assert.ok(out.sources.some((s) => s.url === fact.sourceUrl && s.checked_at === DATE && s.status === "verified"), `${slug} cites ${fact.sourceUrl}`);
+        assert.ok(
+          out.sources.some(
+            (s) => s.url === fact.sourceUrl && (s.checked_at === DATE || s.checked_at === "2026-11-20") && s.status === "verified",
+          ),
+          `${slug} cites ${fact.sourceUrl}`,
+        );
       }
       assert.equal(out.sponsored, false, slug);
     }

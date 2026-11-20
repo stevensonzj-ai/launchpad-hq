@@ -101,7 +101,10 @@ describe("catalog audit 27: rows audit 25 left catalog_only", () => {
     assert.match(j("trinka-ai"), /4 proofread files/);
     assert.equal(getToolFacts("wondershare-pdfelement-ai")?.plans?.value.length, 1);
     for (const [slug, keys] of Object.entries(AUDIT_27_FACT_UPDATES)) {
-      for (const key of keys) assert.equal((getToolFacts(slug) as unknown as Record<string, { checkedAt?: string } | undefined>)[key]?.checkedAt, "2026-10-30", `${slug}.${key}`);
+      for (const key of keys) {
+        const checkedAt = (getToolFacts(slug) as unknown as Record<string, { checkedAt?: string } | undefined>)[key]?.checkedAt;
+        assert.ok(checkedAt === "2026-10-30" || checkedAt === "2026-11-20", `${slug}.${key}`);
+      }
     }
   });
 });

@@ -52,7 +52,8 @@ describe("catalog audit 35 price recheck", () => {
     assert.equal(getToolFacts("captions")!.plans!.value.some((plan) => plan.name === "Frontier 2x"), false);
     assert.equal(getToolFacts("jetbrains-ai")!.plans!.value.find((plan) => plan.name === "AI Pro")?.limits.includes("$10/user/month"), true);
     assert.equal(factCheckedAt("apollo-io", "plans"), CHECKED_AT);
-    assert.equal(factCheckedAt("krea", "freeTier"), CHECKED_AT);
+    assert.equal(factCheckedAt("krea", "freeTier"), "2026-11-20");
+    assert.match(getToolFacts("krea")!.freeTier!.value.summary, /100 units\/day/);
   });
 });
 

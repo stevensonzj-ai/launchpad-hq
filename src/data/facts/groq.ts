@@ -40,10 +40,10 @@ export default {
     note: "Browser-verified on the models page, 2026-10-29; groq.com/pricing redirects to the homepage.",
     sourceUrl: "https://console.groq.com/docs/models",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {

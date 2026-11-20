@@ -78,10 +78,10 @@ export default {
     note: "USD, as of 2026-10-29. North, Compass and private deployments are custom (contact sales). Model Vault is priced per instance, for example Rerank 5 (Medium) $4.00 an hour or $2,500 a month and Parse 5 (XL) $7.00 an hour or $4,300 a month.",
     sourceUrl: "https://cohere.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   usageLimits: {
@@ -105,10 +105,10 @@ export default {
     value: "Per 1M tokens, input / output: Command R+ 08-2024 $2.50 / $10.00; Aya Expanse 8B and 32B $0.50 / $1.50. The page lists older models only for existing customers and shows no prices for the current Command A models.",
     sourceUrl: "https://cohere.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   privacy: {

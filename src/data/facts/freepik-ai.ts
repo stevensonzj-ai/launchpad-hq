@@ -35,10 +35,10 @@ export default {
     ],
     note: "The pricing page labels the third plan \"Pro Starter\" (renamed from \"Pro\" here on 2026-10-29). Its card lists two credit levels, 1.5M and 4M credits a year; the price shown is the card's listed price.",
     sourceUrl: "https://www.magnific.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-subagent",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {

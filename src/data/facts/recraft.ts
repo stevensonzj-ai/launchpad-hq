@@ -17,10 +17,10 @@ export default {
         "Free plan available. Images made on it are owned by Recraft, shown publicly in the community gallery, and not licensed for commercial use.",
     },
     sourceUrl: RECRAFT_PRICING_URL,
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   usageLimits: {

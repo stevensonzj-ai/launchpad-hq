@@ -36,10 +36,10 @@ export default {
       summary: "Basic plan (free): 5,000 words a month, 4 proofread files and 5 AI writing requests.",
     },
     sourceUrl: "https://www.trinka.ai/pricing",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

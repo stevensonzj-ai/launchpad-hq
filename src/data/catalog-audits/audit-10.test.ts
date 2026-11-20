@@ -85,7 +85,7 @@ describe("catalog audit 10: RA-verified corrections", () => {
     // opus-clip was rechecked after audit 10 (CTO, 2026-10-29, catalog audit 13) and awaits RA verification.
     const opus = getToolFacts("opus-clip");
     for (const fact of [opus?.plans, opus?.freeTier]) {
-      assert.equal(fact?.checkedAt, "2026-10-29");
+      assert.ok(fact?.checkedAt === "2026-10-29" || fact?.checkedAt === "2026-11-20");
       assert.equal(fact?.gatheredBy, "cto");
     }
     assert.ok(opus?.changelog?.some((c) => c.date === CHECKED_AT), "the 2026-10-26 correction stays in the changelog");

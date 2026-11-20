@@ -60,10 +60,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29. \"Get up to 67% off with Annual\"; the page does not label which price is annual.",
     sourceUrl: "https://soundraw.io/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

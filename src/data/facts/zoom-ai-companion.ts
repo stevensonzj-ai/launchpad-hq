@@ -45,10 +45,10 @@ export default {
     },
     sourceUrl: ZOOM_AI_PAGE_URL,
     sourceKind: "product-page",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

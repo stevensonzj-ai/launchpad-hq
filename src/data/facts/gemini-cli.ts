@@ -31,10 +31,10 @@ export default {
     note: "README: \"No free tier or Google AI plans: Free individual access and Google AI Pro / Ultra (Google One) moved to Antigravity CLI ... on June 18, 2026\".",
     sourceUrl: "https://github.com/google-gemini/gemini-cli",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

@@ -37,10 +37,10 @@ export default {
     note: "Repository licence: MIT. nomic.ai/gpt4all: \"no data leaves your machine\"; \"right on your device—no cloud required\". Nomic's separate paid plans are a different product.",
     sourceUrl: "https://github.com/nomic-ai/gpt4all",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

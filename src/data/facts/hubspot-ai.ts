@@ -30,10 +30,10 @@ export default {
     note: "\"With up to two users, 1,000 contacts, and no limits on customer data\"; \"Breeze Assistant is included in the free CRM.\"",
     sourceUrl: "https://www.hubspot.com/products/crm",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

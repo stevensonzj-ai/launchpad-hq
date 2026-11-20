@@ -31,10 +31,10 @@ export default {
     ],
     note: "EUR, billed annually, from n8n.io/pricing. Community edition terms from docs.n8n.io.",
     sourceUrl: "https://n8n.io/pricing/",
-    checkedAt: "2026-10-25",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

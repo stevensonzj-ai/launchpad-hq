@@ -30,10 +30,10 @@ export default {
     note: "USD, as of 2026-10-29. Fugu is a model that orchestrates several frontier models, used through an OpenAI-compatible API. \"Not yet available in the EU/EEA.\"",
     sourceUrl: "https://sakana.ai/fugu/",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   apiPricing: {

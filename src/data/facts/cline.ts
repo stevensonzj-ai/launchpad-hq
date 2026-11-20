@@ -40,10 +40,10 @@ export default {
     },
     sourceUrl: "https://cline.bot/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
@@ -58,10 +58,10 @@ export default {
     note: "USD, as of 2026-10-29. No dollar amounts appear on the pricing page. Enterprise (custom, by quote) adds a JetBrains extension, SSO, SLA, dedicated support, centralized billing, role-based access control and a team dashboard; advanced config management and fine-grained permissioning are marked \"Coming Soon\".",
     sourceUrl: "https://cline.bot/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   privacy: {

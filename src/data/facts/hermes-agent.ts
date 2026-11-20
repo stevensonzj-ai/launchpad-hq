@@ -72,10 +72,10 @@ export default {
     note: "USD, browser-verified 2026-10-29 on Nous Portal (portal.nousresearch.com). Optional; Hermes Agent itself is free and open source (MIT). Paid plans: any model can be used, but large models have their own monthly limit; API keys always use pay-as-you-go credits, not included usage. Bigger cloud-agent sizes and extra agents use credits. Credit top-ups from $10 to $200, or a custom amount. Tool Gateway (web search, scraping, image generation, browser use, speech) is priced per use from credits. 300+ models are priced per 1M tokens. Cloud hosting provider and region: not stated. Annual pricing: not stated. Free trial: not stated.",
     sourceUrl: PORTAL_HOME_URL,
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "owner",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {

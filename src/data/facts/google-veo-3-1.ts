@@ -64,10 +64,10 @@ export default {
     note: "USD, monthly prices as of 2026-10-29; annual billing was not shown. No per-plan Veo quotas are stated. The Free plan lists limited Google Flow access and no video generation. Google AI Plus ($4.99, 200 Flow credits) lists \"more features like video generation\" without naming a model, so it is not shown as a Veo plan.",
     sourceUrl: "https://gemini.google/subscriptions/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   apiPricing: {

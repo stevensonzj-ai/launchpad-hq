@@ -31,10 +31,10 @@ export default {
     note: "\"Speak offers a 7-day free trial so you can explore the app before your subscription begins.\"",
     sourceUrl: "https://www.speak.com/",
     sourceKind: "product-page",
-    checkedAt: "2026-11-01",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-01",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
