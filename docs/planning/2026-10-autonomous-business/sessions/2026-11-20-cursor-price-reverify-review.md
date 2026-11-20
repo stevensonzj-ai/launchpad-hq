@@ -1,0 +1,9 @@
+# 2026-11-20 — cursor — price re-verification review
+
+**Decided:** Stay on draft PR #180. Do not merge. Do not run the SQL. Production Krea and Gemini wording differs from the test-branch text the first SQL targeted, so each statement now matches one of those texts and does not match its own replacement. Qwen's production description already has the Nov 16 rate note, so the SQL replaces the preview and free-quota sentences instead of appending another note.
+
+**Changed:** `scripts/sql/catalog-price-reverify-20261120.sql`. Fact files: `verifiedBy` is `cursor-recheck` where `verifiedAt` moved to 2026-11-20. 91 price facts were confirmed on 2026-11-20 (88 date-only, plus Hugging Face Enterprise at $500 per user per month, Windsurf Teams without the $40 seat line, and Pabbly's free plan at 100 tasks a month). 81 facts stay on their old dates for the Research Analyst. Hedra was not edited. Model: Grok 4.7.
+
+**Open / Zach:** Run the SQL on a Neon branch, then production, if the notes look right. The PR's remaining list is the set still expiring between 2026-11-25 and 2026-12-03.
+
+**Tests:** `npm test` — 1610 passed. `npm run typecheck` passed.

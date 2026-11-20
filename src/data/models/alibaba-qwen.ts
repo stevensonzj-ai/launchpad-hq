@@ -52,7 +52,7 @@ export const alibabaQwen: PlatformModelFamily = {
       },
       consumerAccess: {
         summary:
-          "Model Studio pay-as-you-go. Singapore has a 1 million token free quota for 90 days from the later of activation, model release, or application approval. Other regions have no free quota. Qwen Chat limits were not on these pages.",
+          "Model Studio pay-as-you-go. The free-quota page, re-read 2026-11-20, says Singapore typically has 1,000,000 tokens for 90 days from account activation or from the model release date. Other regions have no free quota. Qwen Chat limits were not on these pages.",
         verified: false,
       },
       strengths: [

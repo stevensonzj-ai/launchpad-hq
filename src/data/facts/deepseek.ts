@@ -20,7 +20,7 @@ export default {
     sourceUrl: "https://api-docs.deepseek.com/quick_start/pricing",
     checkedAt: "2026-11-20",
     gatheredBy: "claude-subagent",
-    verifiedBy: "claude",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified",
   },

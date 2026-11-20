@@ -23,10 +23,10 @@ export default {
     ],
     note: 'USD. Billed monthly; the pricing page lists no annual plan. "$50 in credits for free… Free credits last 7 days" (no card) is a 7-day trial, not a permanent free plan, so no free tier is recorded. Company omitted (footer names no legal entity).',
     sourceUrl: "https://www.lindy.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {

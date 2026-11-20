@@ -61,10 +61,10 @@ export default {
     ],
     note: "USD per seat, as of 2026-10-29. One credit pool covers all Figma AI features; extra credits can be bought. Annual-billing prices read twice; the monthly view (Professional only) was browser-verified on 2026-10-29.",
     sourceUrl: "https://www.figma.com/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {

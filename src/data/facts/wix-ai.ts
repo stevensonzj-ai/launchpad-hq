@@ -44,7 +44,7 @@ export default {
     sourceUrl: "https://www.wix.com/plans",
     checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified",
   },

@@ -80,7 +80,7 @@ export default {
     sourceUrl: "https://www.microsoft.com/en-us/power-platform/products/power-automate/pricing",
     checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified",
   },

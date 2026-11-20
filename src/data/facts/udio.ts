@@ -23,7 +23,7 @@ export default {
     sourceUrl: "https://help.udio.com/en/articles/10739134-credits-and-credit-limits",
     checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified",
   },

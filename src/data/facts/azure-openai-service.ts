@@ -37,7 +37,7 @@ export default {
     sourceKind: "plans-page",
     checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified"
   },
@@ -65,10 +65,10 @@ export default {
     note: "As of 2026-10-29. The price fields on the page show \"$-\"; actual per-token prices were not readable.",
     sourceUrl: "https://azure.microsoft.com/en-us/pricing/details/azure-openai/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   features: {

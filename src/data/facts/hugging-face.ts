@@ -23,10 +23,10 @@ export default {
       summary: "A free account covers public models and datasets, free CPU Basic and ZeroGPU Spaces, and community features. It has no monthly inference credits: Inference Providers usage on a free account needs purchased credits.",
     },
     sourceUrl: "https://huggingface.co/docs/inference-providers/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
@@ -51,17 +51,17 @@ export default {
       },
       {
         name: "Enterprise",
-        price: "$50",
+        price: "$500",
         period: "month per user",
-        limits: "SCIM; managed billing with annual commitments",
+        limits: "SCIM provisioning; managed billing with annual commitments",
       },
     ],
-    note: "USD, as of 2026-10-29. Compute (Spaces hardware, Inference Endpoints, Jobs) is billed separately by usage.",
+    note: "USD, re-read 2026-11-20 on huggingface.co/pricing. PRO is $9/month and Team is $20/month per user. Enterprise is $500/month per user. Compute (Spaces hardware, Inference Endpoints, Jobs) is billed separately by usage.",
     sourceUrl: "https://huggingface.co/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {
@@ -84,6 +84,12 @@ export default {
       field: "plans",
       summary:
         "First fact file: PRO $9/mo ($2 inference credits), Team $20/user/mo, Enterprise $50/user/mo (the catalog said custom); free accounts get no monthly inference credits.",
+    },
+    {
+      date: "2026-11-20",
+      field: "plans",
+      summary:
+        "Pricing page re-read: PRO stays $9/month and Team stays $20/month per user. Enterprise is $500/month per user, with SCIM provisioning and managed billing on annual commitments.",
     },
   ],
 } satisfies ToolFacts;

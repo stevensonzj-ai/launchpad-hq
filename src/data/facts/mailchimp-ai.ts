@@ -27,10 +27,10 @@ export default {
     },
     note: "Plan table: \"Limit of 250 contacts\", \"Max of 500/mo or 250/day\", \"Generative AI Features: Not included\".",
     sourceUrl: "https://mailchimp.com/pricing/marketing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

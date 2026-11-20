@@ -12,9 +12,11 @@ export default {
       summary: "Free plan: 60 credits a month, clips up to 1080p with a watermark, no editing, and clips stop being exportable after 3 days.",
     },
     sourceUrl: OPUS_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "cto",
-    status: "unverified",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   plans: {
     value: [
@@ -27,7 +29,7 @@ export default {
     sourceUrl: OPUS_PRICING_URL,
     checkedAt: "2026-11-20",
     gatheredBy: "cto",
-    verifiedBy: "research-analyst",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified",
   },

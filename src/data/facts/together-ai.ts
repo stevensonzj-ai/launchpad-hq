@@ -18,7 +18,7 @@ export default {
     sourceKind: "plans-page",
     checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
+    verifiedBy: "cursor-recheck",
     verifiedAt: "2026-11-20",
     status: "verified",
   },

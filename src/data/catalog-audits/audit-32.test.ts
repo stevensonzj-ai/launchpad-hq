@@ -227,10 +227,11 @@ describe("catalog audit 32: runner", () => {
 });
 
 describe("catalog audit 32: claude pricing as_of", () => {
-  it("keeps claude freeTier as_of on 2026-11-02 and re-dates plans after the 2026-11-20 price re-read", () => {
+  it("re-dates claude plans and freeTier after the 2026-11-20 price re-read", () => {
     const facts = getToolFacts("claude")!;
     assert.equal(facts.plans!.checkedAt, "2026-11-20");
-    assert.equal(facts.freeTier!.checkedAt, "2026-11-02");
-    assert.equal(facts.freeTier!.verifiedAt, "2026-11-02");
+    assert.equal(facts.freeTier!.checkedAt, "2026-11-20");
+    assert.equal(facts.freeTier!.verifiedAt, "2026-11-20");
+    assert.equal(facts.freeTier!.verifiedBy, "cursor-recheck");
   });
 });

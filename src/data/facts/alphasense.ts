@@ -30,10 +30,10 @@ export default {
     note: "One reader found \"AlphaSense offers a free two-week trial of its platform\" in a vendor blog post (alpha-sense.com/resources/product-articles/market-intelligence-tools/); not confirmed by the second reader.",
     sourceUrl: "https://www.alpha-sense.com/trial-request/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

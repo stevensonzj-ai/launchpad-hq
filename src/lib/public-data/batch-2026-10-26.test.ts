@@ -76,21 +76,27 @@ describe("catalog batch 2026-10-26: one source for every surface", () => {
         assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), slug);
         continue;
       }
+      // The free-tier fact was the batch's only 2026-10-26 fact, and the
+      // gatherer had left it unverified. A later re-read on 2026-11-20
+      // confirmed it, so it no longer carries the batch date.
+      if (slug === "anthropic-api") {
+        const free = facts(slug).freeTier;
+        assert.equal(free?.checkedAt, "2026-11-20");
+        assert.equal(free?.status, "verified");
+        assert.equal(free?.gatheredBy, "claude-recheck");
+        assert.equal(free?.verifiedBy, "cursor-recheck");
+        assert.equal(free?.verifiedAt, "2026-11-20");
+        assert.ok(isPublishedVerified(free!), slug);
+        assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), slug);
+        continue;
+      }
       const changed = batchFacts(facts(slug));
       assert.ok(changed.length > 0, slug);
       for (const fact of changed) {
         assert.match(fact.sourceUrl, /^https:\/\//, slug);
         assert.doesNotMatch(fact.sourceUrl, /(twitter|x)\.com\//, slug);
-        // A separate second-check session re-read every same-day fact against
-        // the live page. All passed except the one it corrected itself, which
-        // stays unverified until someone else checks it.
-        if (slug === "anthropic-api" && fact === facts(slug).freeTier) {
-          assert.deepEqual([fact.status, fact.gatheredBy, fact.verifiedBy, fact.verifiedAt], ["unverified", "claude-recheck", undefined, undefined], slug);
-          assert.equal(isPublishedVerified(fact), false, slug);
-        } else {
-          assert.deepEqual([fact.status, fact.verifiedBy, fact.verifiedAt], ["verified", "claude-recheck", BATCH_DATE], slug);
-          assert.ok(isPublishedVerified(fact), slug);
-        }
+        assert.deepEqual([fact.status, fact.verifiedBy, fact.verifiedAt], ["verified", "claude-recheck", BATCH_DATE], slug);
+        assert.ok(isPublishedVerified(fact), slug);
       }
       assert.ok(facts(slug).changelog?.some((c) => c.date === BATCH_DATE), `${slug} changelog`);
     }
