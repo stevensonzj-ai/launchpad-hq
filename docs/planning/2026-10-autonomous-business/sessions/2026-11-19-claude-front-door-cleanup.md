@@ -21,11 +21,17 @@ Branch `feat/front-door-cleanup`, cut from `origin/main` at `15a183e5`. Draft PR
 - Existing tests adjusted: `compliance.test.ts` (one check: privacy page uses `CONTACT_EMAIL`), `site-identity.test.ts` (footer hrefs now read from `nav-links.ts`)
 - `START-HERE.md`: 4.42 note updated (error pages done); new 4.44 open defect plus a line under Known and accepted defects
 
+## Preview fixes (second commit on PR #179)
+
+- **Double header on the 404.** `notFound()` inside the `(app)` group rendered `src/app/not-found.tsx` inside the `(app)` layout, which already has the Header. Added `src/app/(app)/not-found.tsx` that renders only `NotFoundContent` (no Header, no `<main>`). The root `not-found.tsx` keeps its Header for unmatched URLs, which get only the root layout. Chosen over removing the Header from the root file because unmatched URLs would then have none; over `global-not-found` because that is experimental and bypasses the layout.
+- **Tab title flipping to "Not Found".** Ours: the pages' `generateMetadata` returned `{ title: "Not Found" }` (or "Not found", "Models | …", "Workflow | …") when the item was missing, and that streamed in after the 404 UI. New `NOT_FOUND_METADATA` in `src/lib/seo-metadata.ts` is used by the root not-found page and by the fallbacks in platform, guide, prompts, discussions, models/[family], workflows/[slug] and `src/lib/compare-page.ts`. Not covered: `/advertise` and `/models/compare/claude-vs-gpt` use static metadata, so a 404 there keeps that page's title.
+- Test: `not-found-content.test.ts` checks the header count from source on both paths and that every fallback uses `NOT_FOUND_METADATA`. It is a source check, not a render of the full layout (Header needs Clerk); the preview is the real check.
+- The four other new test files are now in the `npm test` list (appended).
+
 ## Still open
 
 - **Unknown non-public URLs redirect signed-out browsers to `/sign-in`, not to the 404** (START-HERE 4.44). Production probe 2026-11-19: 307 to sign-in with `X-Clerk-Auth-Status: signed-out`. The fix is a middleware change and needs its own PR.
 - The new 404 and error pages were not viewed in a browser; the Vercel preview is the first visual check (light and dark OS settings).
-- Only `discontinued-names.test.ts` was added to the `npm test` list (as instructed). The four other new test files run on their own with `npx tsx --test`.
 
 ## For the catalog lane
 
@@ -35,4 +41,3 @@ Branch `feat/front-door-cleanup`, cut from `origin/main` at `15a183e5`. Draft PR
 ## For Zach to decide
 
 - When to schedule the middleware PR for 4.44.
-- Whether the other four new test files should join the `npm test` list.

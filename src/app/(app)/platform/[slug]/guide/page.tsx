@@ -13,7 +13,12 @@ import { getPlatformPageRow } from "@/lib/catalog-queries";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
-import { buildTutorialMetadata, stripInlineMarkup, verifiedDisplayName } from "@/lib/seo-metadata";
+import {
+  buildTutorialMetadata,
+  NOT_FOUND_METADATA,
+  stripInlineMarkup,
+  verifiedDisplayName,
+} from "@/lib/seo-metadata";
 import { getAffiliateLink } from "@/data/affiliates";
 import { buildTutorialStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
 import { toGuideView } from "@/lib/public-data/content-view";
@@ -28,9 +33,9 @@ import { loadFeed } from "@/lib/public-data/load";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const tutorial = getStaticTutorialForPlatform(slug);
-  if (!tutorial) return { title: "Not Found" };
+  if (!tutorial) return NOT_FOUND_METADATA;
   const platform = await getPlatformPageRow(slug);
-  if (!platform) return { title: "Not Found" };
+  if (!platform) return NOT_FOUND_METADATA;
   return buildTutorialMetadata({
     platformSlug: slug,
     name: verifiedDisplayName(getToolFacts(slug), platform.name),

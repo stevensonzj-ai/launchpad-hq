@@ -5,12 +5,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PlatformPrompts } from "@/components/prompts/platform-prompts";
 
-import { communityPathMetadata } from "@/lib/seo-metadata";
+import { communityPathMetadata, NOT_FOUND_METADATA } from "@/lib/seo-metadata";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const p = await getPlatformPageRow(slug);
-  if (!p) return { title: "Not found" };
+  if (!p) return NOT_FOUND_METADATA;
   return communityPathMetadata({
     title: `${p.name} prompts | Launchpad HQ`,
     description: `Community prompts for ${p.name}. Browse approved prompts on Launchpad HQ, then try them on the official site.`,

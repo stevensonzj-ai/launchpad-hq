@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getModelFamilyBySlug, listModelFamilySlugs } from "@/data/models";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
-import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
+import { NOT_FOUND_METADATA, publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { platformCatalogLinks } from "@/lib/catalog-names";
 
@@ -14,7 +14,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ family: string }> }) {
   const { family: familySlug } = await params;
   const family = getModelFamilyBySlug(familySlug);
-  if (!family) return { title: "Models | Launchpad HQ" };
+  if (!family) return NOT_FOUND_METADATA;
   return withFeedAlternate(
     publicPageMetadata({
       title: `${family.displayName} models | Launchpad HQ`,

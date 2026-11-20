@@ -9,10 +9,10 @@ import {
   type CompareView,
 } from "@/data/compare/view";
 import { loadCompareRows } from "@/lib/compare-data";
-import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
+import { NOT_FOUND_METADATA, publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 
 export function comparePageMetadata(page: ComparePage | undefined): Metadata {
-  if (!page) return { title: "Not Found" };
+  if (!page) return NOT_FOUND_METADATA;
   return withFeedAlternate(
     publicPageMetadata({
       title: `${page.title} | Launchpad HQ`,

@@ -5,7 +5,7 @@ import { getWorkflowBySlug } from "@/data/workflows";
 import { WorkflowTierComparison } from "@/components/workflows/workflow-tier-comparison";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
 import { listRegisteredTutorials } from "@/data/tutorials";
-import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
+import { NOT_FOUND_METADATA, publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 import { workflowPlatformSlugs, workflowToolDisplayName } from "@/lib/related-links";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { toWorkflowView } from "@/lib/public-data/content-view";
@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const w = getWorkflowBySlug(slug);
-  if (!w) return { title: "Workflow | Launchpad HQ" };
+  if (!w) return NOT_FOUND_METADATA;
   return withFeedAlternate(
     publicPageMetadata({
       title: `${w.title} workflow | Launchpad HQ`,
