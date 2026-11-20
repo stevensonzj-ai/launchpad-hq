@@ -6,4 +6,6 @@
 
 **Open / Zach:** Run the SQL on a Neon branch, then production, if the notes look right. The PR's remaining list is the set still expiring between 2026-11-25 and 2026-12-03.
 
+**Follow-up:** Re-read https://otter.ai/pricing. Annual Pro is still $8.33/user/month. $8.49* is only on the India monthly Pro card. Business $24 is the monthly "20% off for 3 months" first-time offer; annual Business is still $19.99. No calendar end date. Facts and SQL were not changed. Otter stays on the PR's Research Analyst list.
+
 **Tests:** `npm test` — 1610 passed. `npm run typecheck` passed.
