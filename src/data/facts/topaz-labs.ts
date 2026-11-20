@@ -48,10 +48,10 @@ export default {
     },
     sourceUrl: "https://www.topazlabs.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
@@ -99,13 +99,13 @@ export default {
         limits: "Contact sales"
       }
     ],
-    note: "USD list prices, as of 2026-10-29. Sale and struck-through prices appear on the page, so figures may be promotional. Standard plans list limited commercial use for organizations under $1M USD annual revenue; Pro plans list full commercial use.",
+    note: "List prices kept. Read 2026-11-20: the page is a first-year sale (billed annually, first year only) and does not state an end date, so the sale prices are not recorded.",
     sourceUrl: "https://www.topazlabs.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   privacy: {

@@ -86,10 +86,10 @@ describe("catalog audit 11: owner-checked Krisp and GitHub Copilot", () => {
     assert.equal(f.plans?.status, "verified");
     const plan = (name: string) => f.plans!.value.find((p) => p.name === name)!;
     assert.deepEqual([plan("Pro").price, plan("Pro").period], ["$18", "month"]);
-    assert.match(plan("Pro").limits, /\$144\/year billed yearly; 1 person/);
+    assert.match(plan("Pro").limits, /\$144\/year billed yearly/);
     assert.deepEqual([plan("Business").price, plan("Business").period], ["$25", "person/month"]);
     assert.match(plan("Business").limits, /\$250\/year per person/);
-    assert.equal(plan("Enterprise").price, "Contact sales");
+    assert.equal(plan("Enterprise").price, "Let's talk");
     assert.equal(snap("canva-ai-magic-studio").costTier, "FREEMIUM");
   });
 

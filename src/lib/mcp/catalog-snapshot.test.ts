@@ -69,7 +69,7 @@ const COPYFIX_20261112_DIFFICULTY = new Set(["claude"]);
  * fathom's starting price and jenni-ai's billing period changed with the page.
  */
 /** Price re-verification 2026-11-20 moved free-tier checkedAt, which is the card as_of. */
-const PRICE_REVERIFY_20261120_AS_OF = new Set(["chatgpt", "grammarly", "kickresume", "notion-ai", "recraft", "rezi"]);
+const PRICE_REVERIFY_20261120_AS_OF = new Set(["chatgpt", "grammarly", "ideogram", "kickresume", "notion-ai", "recraft", "rezi", "teal"]);
 const AUDIT_35_AS_OF = new Set([
   "capcut",
   "captions",

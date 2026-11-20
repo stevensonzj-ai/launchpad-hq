@@ -57,11 +57,13 @@ export default {
       { name: "Zoom Workplace (paid)", price: "$14.16", period: "user/month", limits: "Billed annually; core AI features included at no extra cost" },
       { name: "ZoomMate", price: "$20", period: "user/month", limits: "Billed monthly; $16.67/user/month billed annually; 2,200 AI credits per user a month" },
     ],
-    note: "USD, as of 2026-10-26. The paid Workplace starting price is from https://www.zoom.com/en/compare/zoom-vs-other-ai-tools/. The ZoomMate price was read from a search-index copy of Zoom's pricing page, not the page fetched directly, so these prices stay unverified; the product page confirms the 2,200 credits.",
+    note: "USD, read 2026-11-20. ZoomMate prices are from https://zoom.us/pricing/aic. Workplace Pro is $14.16/user/month billed annually on https://zoom.us/pricing.",
     sourceUrl: ZOOM_AIC_PRICING_URL,
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    status: "unverified",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   changelog: [
     {

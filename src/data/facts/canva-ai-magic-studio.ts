@@ -19,31 +19,31 @@ export default {
     value: {
       available: true,
       summary:
-        "Canva Free includes up to 20 AI uses a month, shared across Canva's AI tools, plus 1 Brand Kit and 5 GB of storage; paid plans raise the AI allowance.",
+        "Canva Free is US$0 and gives limited access to Canva's AI tools. No numeric monthly AI cap is stated on this page.",
     },
     sourceUrl: CANVA_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "ra",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
     value: [
-      { name: "Free", price: "$0", period: "", limits: "Up to 20 Standard or Premium AI uses a month; 5 GB storage" },
-      { name: "Pro", price: "$18", period: "month", limits: "Billed monthly, or $144/year billed yearly; 1 person; 10x Free's AI; optional AI Pass add-on; 100 GB storage" },
-      { name: "Business", price: "$25", period: "person/month", limits: "Billed monthly, or $250/year per person billed yearly; for individuals and teams; 20x Free's AI; AI Pass and AI top-ups available; 500 GB storage" },
-      { name: "Enterprise", price: "Contact sales", period: "", limits: "1 TB storage" },
+      { name: "Free", price: "$0", period: "", limits: "Limited access to Canva's AI tools. No numeric monthly cap is stated." },
+      { name: "Pro", price: "$18", period: "month", limits: "US$18/month, or US$144/year billed yearly. 10x more AI than Canva Free." },
+      { name: "Business", price: "$25", period: "person/month", limits: "US$25 per person/month, or US$250/year per person. 20x more AI than Canva Free." },
+      { name: "Enterprise", price: "Let's talk", period: "", limits: "20x more AI than Canva Free." },
     ],
-    note: "USD, US page, as of 2026-10-29. Prices exclude applicable tax. All AI tools draw on one shared monthly allowance, at different rates for Standard, Premium and Ultra AI. Canva Teams is no longer available for new sign-ups or upgrades (Business covers individuals and teams); existing Teams subscribers keep it.",
+    note: "US$, read 2026-11-20. Prices exclude applicable tax. A first-3-months discount is on the page and has no stated end date, so it is not the list price.",
     sourceUrl: CANVA_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "ra",
     // Re-read from the page's embedded plan data 2026-10-29: Pro 14400 / 1800
     // cents (year / month), Business 25000 / 2500. Owner verified the same
     // prices in browser 2026-10-26.
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

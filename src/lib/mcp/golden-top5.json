@@ -275,11 +275,11 @@
    "task": "make music"
   },
   "top5": [
+   "beatoven-ai",
    "google-lyria-3",
    "mubert",
    "soundraw",
-   "udio",
-   "beatoven-ai"
+   "udio"
   ]
  },
  "A24": {
@@ -877,8 +877,8 @@
    "suno",
    "udio",
    "aiva",
-   "google-lyria-3",
-   "mubert"
+   "beatoven-ai",
+   "google-lyria-3"
   ]
  },
  "G47": {

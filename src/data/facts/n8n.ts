@@ -15,10 +15,10 @@ export default {
     },
     sourceUrl: "https://docs.n8n.io/hosting/community-edition-features/",
     sourceKind: "product-page",
-    checkedAt: "2026-10-25",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

@@ -12,13 +12,13 @@ export default {
     value: {
       available: true,
       summary:
-        "30 credits a week for accounts that sign in with Google, Apple or Microsoft (email-and-password accounts get no free credits). Everything generated on the free plan is public.",
+        "30 credits a week for accounts that signed up with Google or Apple (Microsoft and email-and-password accounts get no free credits, unless you later link a Google or Apple sign-in that uses the same verified email). Credits reset every Saturday at 00:00 UTC. Everything generated on the free plan is public.",
     },
     sourceUrl: IDEOGRAM_PLANS_URL,
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {

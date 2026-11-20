@@ -76,13 +76,13 @@ export default {
     status: "verified",
   },
   apiPricing: {
-    value: "Per 1M input / cached input / output tokens: Solar Pro 4 $0.30 / $0.06 / $1.20; Solar Mini 4 $0.10 / $0.01 / $0.40; Solar Pro 3 and Pro 2 $0.15 / $0.015 / $0.60. Document Parse $0.01 a page (Standard) or $0.03 (Enhanced). Time-limited promotional rates also appear.",
-    note: "Token rates are shown without a currency symbol; the page's plans are in $. Prices exclude 10% VAT.",
+    value: "Solar Pro 4: 0.30 input / 0.06 cached input / 1.20 output per 1M tokens. Solar Mini 4: 0.10 input per 1M tokens. Document Parse: 0.03 (Enhanced). Solar Pro 3 and Solar Pro 2 are marked end of service on 2026-10-30 (KST) and are not current rates. Rates are shown without a currency symbol.",
+    note: "Read 2026-11-20. Mini cached and output rates, and Parse Standard, were not uniquely confirmed and are not repeated.",
     sourceUrl: "https://www.upstage.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

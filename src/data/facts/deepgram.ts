@@ -36,16 +36,15 @@ export default {
   },
   plans: {
     value: [
-      { name: "Pay as you go", price: "Usage-based", period: "", limits: "$200 free credit; Nova-3 Monolingual $0.0077/min streaming, $0.0043/min pre-recorded; Aura-2 TTS $0.030 per 1k characters; Voice Agent Standard $0.075/min" },
-      { name: "Growth", price: "$4,000+", period: "year", limits: "Pre-paid annual credits, up to 20% off pay-as-you-go rates" },
-      { name: "Enterprise", price: "Custom", period: "", limits: "Volume pricing, self-hosting" },
+      { name: "Pay as you go", price: "Usage-based", period: "", limits: "$200 free credit, then usage-based. Aura-2 TTS $0.030 per 1,000 characters. Voice Agent Standard $0.075 per minute. Speech-to-text list price shown as the struck was price: $0.0077 per minute." },
+      { name: "Growth", price: "$4,000+", period: "year", limits: "Pre-paid annual credits, up to 20% off and higher streaming concurrency" },
     ],
-    note: "USD, as of 2026-10-30. Billed per second of audio, per 1,000 characters (TTS) or per minute of connection (Voice Agent).",
+    note: "Read 2026-11-20. Speech-to-text offer rates have no stated end date, so they are not recorded. The stored pre-recorded $0.0043 figure is not on the page.",
     sourceUrl: PRICING_URL,
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

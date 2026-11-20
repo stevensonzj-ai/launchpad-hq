@@ -50,10 +50,10 @@ export default {
     note: "USD, browser check 2026-10-29, annual view (\"Annually (Save 62%)\"). The monthly price is not shown, and \"*Monthly plan not eligible for free trial\". The upgrade page names no AI feature.",
     sourceUrl: "https://quizlet.com/upgrade",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

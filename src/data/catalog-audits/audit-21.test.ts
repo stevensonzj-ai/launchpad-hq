@@ -360,7 +360,7 @@ describe("catalog audit 21: the corrections", () => {
     const free = getToolFacts("adobe-firefly")!.freeTier!;
     assert.equal(free.value.available, true);
     assert.ok(isPublishedVerified(free));
-    assert.match(free.value.summary, /no plan needed/);
+    assert.match(free.value.summary, /don't need a plan/);
     assert.equal(snap("midjourney")?.costTier === "FREE" || snap("midjourney")?.costTier === "FREEMIUM", false);
     const stress = readFileSync(join(process.cwd(), "src/lib/mcp/stress-replay.ts"), "utf8");
     assert.match(stress, /"adobe-firefly"\]\) >= 2/);
@@ -392,8 +392,8 @@ describe("catalog audit 21: the corrections", () => {
     assert.equal(AUDIT_20_PATCHES.find((p) => p.slug === "cohere")!.guarded!.costTier!.to, "FREEMIUM");
     const facts = getToolFacts("cohere")!;
     assert.equal(facts.freeTier?.value.available, true);
-    assert.match(facts.freeTier!.value.summary, /1,000 API calls a month/);
-    assert.match(facts.freeTier!.value.summary, /no expiry date/);
+    assert.match(facts.freeTier!.value.summary, /rate limited/);
+    assert.match(facts.freeTier!.value.summary, /not stated on this page/);
     assert.match(JSON.stringify(facts.usageLimits?.value), /Trial keys: 1,000 API calls a month/);
     assert.ok(isPublishedVerified(facts.usageLimits!));
     assert.equal(facts.usageLimits?.sourceUrl, "https://docs.cohere.com/docs/rate-limits");
@@ -421,10 +421,10 @@ describe("catalog audit 21: the corrections", () => {
     assert.doesNotMatch(r.currentPricing ?? "", /built into Acrobat Express|22\.99/);
     const facts = getToolFacts("adobe-acrobat-ai-assistant")!;
     const plans = facts.plans!.value;
-    assert.match(plans.find((p) => p.name === "Acrobat Studio")!.limits, /includes everything in Acrobat Pro, plus AI Assistant/);
-    assert.match(plans.find((p) => p.name === "Acrobat Standard")!.limits, /AI Assistant not included/);
-    assert.match(plans.find((p) => p.name === "Acrobat Pro")!.limits, /AI Assistant not included/);
-    assert.doesNotMatch(plans.find((p) => p.name === "Acrobat Express")!.limits, /AI Assistant features included/);
+    assert.equal(plans.some((p) => p.name === "Acrobat Express"), false);
+    assert.match(plans.find((p) => p.name === "Acrobat Studio")!.limits, /Includes everything in Acrobat Pro, plus AI Assistant/);
+    assert.match(plans.find((p) => p.name === "Acrobat Standard")!.limits, /AI Assistant is not included/);
+    assert.match(plans.find((p) => p.name === "Acrobat Pro")!.limits, /AI Assistant is not included/);
     assert.equal(facts.privacy?.value.trainsOnData, false);
     assert.ok(isPublishedVerified(facts.privacy!));
     const g = guide("adobe-acrobat-ai-assistant");
