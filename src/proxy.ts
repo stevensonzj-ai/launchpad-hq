@@ -7,6 +7,9 @@ import { PROTECTED_ROUTE_PATTERNS } from "@/lib/protected-routes";
  * Browse-first: everything is public except the few pages that need a
  * signed-in user (see src/lib/protected-routes.ts). Unknown addresses fall
  * through to the 404 page instead of sign-in.
+ *
+ * /.well-known is not listed here. It is excluded from the matcher below, so
+ * this function never runs for the OpenAI apps domain file.
  */
 const isProtectedRoute = createRouteMatcher(PROTECTED_ROUTE_PATTERNS);
 
@@ -65,7 +68,10 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
 
 export const config = {
   matcher: [
-    "/((?!_next|data/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
+    // `\\.well-known/` is the OpenAI apps domain file. It has no skipped
+    // extension, so without this the proxy would run on it and Clerk could
+    // attach auth headers. Same treatment as the public JSON feed under data/.
+    "/((?!_next|data/|\\.well-known/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };

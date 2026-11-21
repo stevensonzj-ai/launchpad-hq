@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import robots from "@/app/robots";
+import { classifyMarkdownPath, markdownRewriteTarget } from "@/lib/markdown/negotiate";
 import { PROTECTED_ROUTE_PATTERNS } from "@/lib/protected-routes";
+import { SITEMAP_STATIC_PUBLIC_PATHS } from "@/lib/sitemap-coverage";
 
 /**
  * proxy.ts must keep literal matcher strings (Next analyzes `config`
@@ -18,6 +20,9 @@ function matcherPatterns(): RegExp[] {
 }
 
 const runsMiddleware = (path: string) => matcherPatterns().some((re) => re.test(path));
+
+const isProtected = (path: string) =>
+  PROTECTED_ROUTE_PATTERNS.some((pattern) => new RegExp(`^${pattern}$`).test(path));
 
 describe("middleware matcher", () => {
   it("never runs Clerk on the JSON feed", () => {
@@ -44,7 +49,7 @@ describe("middleware matcher", () => {
   it("never runs Clerk on llms.txt or llms-full.txt, and never asks for sign-in there", () => {
     for (const path of ["/llms.txt", "/llms-full.txt"]) {
       assert.equal(runsMiddleware(path), false, path);
-      assert.ok(!PROTECTED_ROUTE_PATTERNS.some((p) => p.startsWith(path)), path);
+      assert.equal(isProtected(path), false, path);
     }
   });
 
@@ -62,7 +67,42 @@ describe("middleware matcher", () => {
   });
 
   it("never asks for sign-in on /data", () => {
-    assert.ok(!PROTECTED_ROUTE_PATTERNS.some((p) => p.startsWith("/data")));
+    assert.equal(isProtected("/data"), false);
+  });
+
+  it("serves the OpenAI apps challenge outside Clerk, unrewritten, as text/plain", () => {
+    const path = "/.well-known/openai-apps-challenge";
+    assert.equal(runsMiddleware(path), false, path);
+    assert.equal(runsMiddleware(`${path}/`), false, path);
+    assert.equal(isProtected(path), false, path);
+    assert.equal(classifyMarkdownPath(path), "passthrough");
+    assert.equal(
+      markdownRewriteTarget({
+        method: "GET",
+        pathname: path,
+        accept: "text/markdown",
+        isRscRequest: false,
+      }),
+      null,
+    );
+    assert.equal(runsMiddleware("/discover"), true);
+    const body = readFileSync(`public${path}`);
+    assert.equal(body.length, 43);
+    assert.equal(body.includes(0x0a), false);
+    assert.deepEqual(body, Buffer.from("pq3qGj1KJHmSIIOFiiHVTJRqugISf_NpFdFWx5C06-Y"));
+    const config = readFileSync("next.config.ts", "utf8");
+    assert.match(
+      config,
+      /source:\s*"\/\.well-known\/openai-apps-challenge",\s*headers:\s*\[\{\s*key:\s*"Content-Type",\s*value:\s*"text\/plain"\s*\}\]/,
+    );
+    assert.equal((SITEMAP_STATIC_PUBLIC_PATHS as readonly string[]).includes(path), false);
+    const rules = [robots().rules].flat();
+    for (const rule of rules) {
+      const disallow = [rule.disallow ?? []].flat();
+      for (const prefix of disallow) {
+        assert.equal(path.startsWith(prefix), false, `blocked by ${prefix}`);
+      }
+    }
   });
 });
 

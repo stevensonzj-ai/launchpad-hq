@@ -84,6 +84,7 @@ describe("protected routes", () => {
       "/data/v1/catalog.json",
       "/md/discover",
       "/accounting-tools",
+      "/.well-known/openai-apps-challenge",
       "/this-page-does-not-exist",
     ]) {
       assert.equal(requiresSignIn(p), false, p);
