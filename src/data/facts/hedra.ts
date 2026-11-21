@@ -63,16 +63,6 @@ export default {
     verifiedAt: "2026-11-14",
     status: "verified",
   },
-  apiPricing: {
-    value:
-      "Developer API: pay per output and per token from a prepaid dollar balance, with no subscription, seats or minimum; for example video generation from 1.13¢/second, avatar lip-sync from 2.5¢/second, image generation from 0.59¢ per image, speech from 5¢ per 1,000 characters. The API wallet is separate from Studio subscription credits.",
-    sourceUrl: "https://www.hedra.com/pricing",
-    checkedAt: "2026-10-29",
-    gatheredBy: "claude-subagent",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
-    status: "verified",
-  },
   platforms: {
     value: ["Web (Creative Studio)", "API"],
     note: "No apps linked.",
@@ -98,6 +88,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-20",
+      field: "apiPricing",
+      summary: "Removed. The owner decided to drop the Hedra API pricing fact. No other Hedra fact was re-checked.",
+    },
     {
       date: "2026-11-14",
       field: "plans",

@@ -21,9 +21,11 @@ export default {
     },
     note: "Free-credits line from the pricing FAQ (\"Are there free tiers or trials?\") on platform.claude.com, as of 2026-10-26. claude.com/pricing lists no monthly API credits on the Free consumer plan.",
     sourceUrl: "https://platform.claude.com/docs/en/about-claude/pricing",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-recheck",
-    status: "unverified",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   plans: {
     value: [

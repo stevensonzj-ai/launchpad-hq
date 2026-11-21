@@ -8,7 +8,7 @@ import { guardMcpRequest } from "@/lib/mcp/request-guard";
 /**
  * Launchpad HQ read-only MCP connector (v0.1): https://www.launchpadhq.io/mcp
  * Stateless Streamable HTTP via mcp-handler v2. No auth, no writes.
- * Public in src/proxy.ts (isPublicRoute) and disallowed in robots.ts.
+ * Not on the sign-in list in src/lib/protected-routes.ts and disallowed in robots.ts.
  */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

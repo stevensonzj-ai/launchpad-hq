@@ -16,10 +16,10 @@ export default {
       summary: "No free tier or self-serve plan; the pricing page leads to a demo request.",
     },
     sourceUrl: "https://scale.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

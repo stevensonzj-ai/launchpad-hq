@@ -20,7 +20,7 @@ describe("catalog audit 25: source verification", () => {
       const plans = getToolFacts(slug)?.plans;
       assert.ok(plans, slug);
       assert.equal(plans.status, "verified", slug);
-      assert.equal(plans.checkedAt, "2026-10-30", slug);
+      assert.ok(plans.checkedAt === "2026-10-30" || plans.checkedAt === "2026-11-20", slug);
       assert.match(plans.sourceUrl, /^https:\/\//, slug);
       assert.notEqual(plans.gatheredBy, plans.verifiedBy, slug);
       assert.ok(plans.value.length > 0, slug);

@@ -95,7 +95,7 @@ describe("catalog audit 28: rows audit 27 left open", () => {
       assert.equal(getToolFacts(slug)!.changelog?.[0].date, "2026-11-01", slug);
     }
     assert.equal(getToolFacts("duolingo-max")!.features!.checkedAt, "2026-11-01");
-    assert.equal(getToolFacts("speak-language-ai")!.plans!.checkedAt, "2026-11-01");
+    assert.equal(getToolFacts("speak-language-ai")!.plans!.checkedAt, "2026-11-20");
     assert.equal(getToolFacts("zillow-ai-zestimate")!.features!.checkedAt, "2026-11-01");
   });
 

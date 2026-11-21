@@ -57,9 +57,11 @@ export default {
     },
     note: "Browser check, 2026-10-29 (partial): the Free plan card says \"Limited image creation\"; the Free Tier FAQ (help.openai.com/en/articles/9275245) says images have \"usage limits separate from the main chat limit\", with no numbers. Numeric caps are not stated on any page checked.",
     sourceUrl: "https://chatgpt.com/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    status: "unverified",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   apiPricing: {
     value: "Per 1M tokens, same for gpt-image-2.6 Flare and Sunburst: $5 text input, $1.25 cached text input, $8 image input, $2 cached image input, $30 image output. Batch is not supported on either model.",

@@ -24,10 +24,10 @@ export default {
     note: "Decisions API only. Other OpenAI API models are priced on OpenAI's pricing page.",
     sourceUrl: DECISIONS_API_URL,
     sourceKind: "announcement",
-    checkedAt: "2026-10-26",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-26",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

@@ -12,9 +12,11 @@ export default {
       summary: "Free plan: 60 credits a month, clips up to 1080p with a watermark, no editing, and clips stop being exportable after 3 days.",
     },
     sourceUrl: OPUS_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "cto",
-    status: "unverified",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   plans: {
     value: [
@@ -25,10 +27,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29. Usage is counted in credits, not upload minutes. Animated captions in 20+ languages (Starter and up). Research Analyst verify 2026-10-29 on https://www.opus.pro/pricing: Starter is $15 billed monthly with 150 credits a month and AI animated captions in 20+ languages. The free plan lists multi-language transcription without a language count. The verify covered the Starter row and caption languages only; the Free, Pro and Business rows are the CTO recheck of the same day.",
     sourceUrl: OPUS_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "cto",
-    verifiedBy: "research-analyst",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

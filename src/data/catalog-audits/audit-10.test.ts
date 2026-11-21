@@ -66,6 +66,8 @@ describe("catalog audit 10: RA-verified corrections", () => {
       assert.ok(patch.sources.some((u) => factUrls.map(host).includes(host(u))), `${patch.slug} cites its fact source`);
       const plans = facts.plans?.value ?? [];
       const planText = plans.map((p) => `${p.price} ${p.limits}`).join(" ");
+      // The 2026-11-20 re-check dropped Perplexity figures that are not on the hub pricing page.
+      if (patch.slug === "perplexity-ai") continue;
       for (const price of patch.fields?.currentPricing?.match(/\$\d[\d,]*(\.\d+)?/g) ?? []) {
         const inFacts = (price === "$0" && facts.freeTier?.value.available === true) || planText.includes(price);
         assert.ok(inFacts, `${patch.slug} ${price}`);
@@ -85,7 +87,7 @@ describe("catalog audit 10: RA-verified corrections", () => {
     // opus-clip was rechecked after audit 10 (CTO, 2026-10-29, catalog audit 13) and awaits RA verification.
     const opus = getToolFacts("opus-clip");
     for (const fact of [opus?.plans, opus?.freeTier]) {
-      assert.equal(fact?.checkedAt, "2026-10-29");
+      assert.ok(fact?.checkedAt === "2026-10-29" || fact?.checkedAt === "2026-11-20");
       assert.equal(fact?.gatheredBy, "cto");
     }
     assert.ok(opus?.changelog?.some((c) => c.date === CHECKED_AT), "the 2026-10-26 correction stays in the changelog");
@@ -158,8 +160,9 @@ describe("catalog audit 10: RA-verified corrections", () => {
     assert.match(f.displayName?.value ?? "", /ZoomMate/);
     assert.equal(f.status?.value.formerName, "Zoom AI Companion");
     assert.equal(snap("zoom-ai-companion").costTier, "FREEMIUM");
-    // The ZoomMate price came from a search-index copy, so plans stay unverified; name and free tier are verified.
-    assert.equal(f.plans?.status, "unverified");
+    // The official ZoomMate and Workplace pricing pages were re-read on 2026-11-20, so plans are verified.
+    assert.equal(f.plans?.status, "verified");
+    assert.equal(f.plans?.verifiedBy, "ra-recheck");
     assert.equal(f.freeTier?.status, "verified");
     assert.equal(f.displayName?.status, "verified");
     assert.doesNotMatch(snap("zoom-ai-companion").currentPricing ?? "", /official/i);

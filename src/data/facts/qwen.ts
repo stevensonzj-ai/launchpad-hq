@@ -36,30 +36,36 @@ export default {
   },
   apiPricing: {
     value:
-      "Qwen4-Max (qwen4-max), per 1M tokens, same price in thinking and non-thinking modes, with no input-length tiers. International (Singapore): $1.50 input and $4.50 output; cache read $0.075. Beijing and Global (Frankfurt, Hong Kong, Tokyo, and US Virginia): $1.413 input and $4.24 output; cache read $0.071. The Singapore free quota is 1 million tokens, valid for 90 days from the later of Model Studio activation, model release, or application approval. The pricing page says other regions have no free quota.",
-    note: "QwenCloud pricing page, checked 2026-11-16. The model page agrees on the $1.50 / $4.50 and $1.413 / $4.24 rates and says batch inference is not supported. Cache-write prices on the same table were not copied here.",
+      "Qwen4-Max (qwen4-max), per 1M tokens, same price in thinking and non-thinking modes, with no input-length tiers. International (Singapore): $1.50 input and $4.50 output; cache read $0.075. Beijing and Global (Frankfurt, Hong Kong, Tokyo, and US Virginia): $1.413 input and $4.24 output; cache read $0.071. Free quota is Singapore only. The free-quota page says each model typically has 1,000,000 tokens, valid for 90 days from account activation when the model was already listed, or from the model's release date when it is released later. The pricing page says other regions have no free quota.",
+    note: "QwenCloud pricing page and the free-quota page, both read 2026-11-20. The model page agrees on the $1.50 / $4.50 and $1.413 / $4.24 rates and says batch inference is not supported. Cache-write prices on the same table were not copied here. The earlier 'application approval' start date was not on the free-quota page.",
     sourceUrl: "https://docs.qwencloud.com/developer-guides/getting-started/pricing",
-    checkedAt: "2026-11-16",
+    checkedAt: "2026-11-20",
     gatheredBy: "cursor",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-16",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {
     value: [
-      "Qwen4-Max (model id qwen4-max) is the production model. The preview page, re-read 2026-11-16, says it is available and recommended. Context length is 1,000,000 tokens. Input is text, image, and video; output is text. The model page says batch inference is not supported. Recorded on this row, not as a new row.",
-      "Qwen4-Max-Preview (model id qwen4-max-preview) is a time-limited preview on Alibaba Cloud Model Studio, Token Plan only. Pay-as-you-go is not supported. The preview runs from 10:00 on 2026-11-11 to 24:00 on 2026-11-25 (UTC+8), and the page says the model is retired after it ends. Context length is 1M tokens. Maximum output is 393,216 tokens, shared by thinking and the final answer. Recorded here, not as a new row, because the preview ends.",
+      "Qwen4-Max (model id qwen4-max) is the production model. The preview page, re-read 2026-11-20, says production Qwen4-Max is available and recommended. Context length is 1,000,000 tokens. Input is text, image, and video; output is text. The model page says batch inference is not supported. Recorded on this row, not as a new row.",
+      "Qwen4-Max-Preview (model id qwen4-max-preview) ran from 10:00 on 2026-11-11 and ends at 24:00 on 2026-11-25 (UTC+8). It is Token Plan only. Pay-as-you-go is not supported. The preview page says the model is retired after that window. Context length is 1M tokens. Maximum output is 393,216 tokens, shared by thinking and the final answer. Recorded here, not as a new row, because the preview ends. Use production Qwen4-Max.",
     ],
-    note: "Production model page and the preview page, both re-read 2026-11-16. The preview end is still 24:00 on 2026-11-25 (UTC+8). Prices are on apiPricing.",
+    note: "Production model page and the preview page, both re-read 2026-11-20. The preview page was last updated 2026-11-16. The preview end is 24:00 on 2026-11-25 (UTC+8). Prices are on apiPricing.",
     sourceUrl: "https://www.alibabacloud.com/help/en/model-studio/qwen4-max",
     sourceKind: "announcement",
-    checkedAt: "2026-11-16",
+    checkedAt: "2026-11-20",
     gatheredBy: "cursor",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-16",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-20",
+      field: "features",
+      summary:
+        "Preview page re-read: Qwen4-Max-Preview is Token Plan only from 2026-11-11 10:00 through 2026-11-25 24:00 (UTC+8), then retired. Production Qwen4-Max is available and recommended. Singapore and other-region rates were re-read and unchanged.",
+    },
     {
       date: "2026-11-16",
       field: "apiPricing",

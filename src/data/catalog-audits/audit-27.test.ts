@@ -94,14 +94,17 @@ describe("catalog audit 27: rows audit 25 left catalog_only", () => {
 
   it("fact files that override the page carry the audit-27 values", () => {
     const j = (slug: string) => JSON.stringify(getToolFacts(slug));
-    assert.match(j("paperpal"), /\$100\.80\/yr/);
-    assert.match(j("paperpal"), /\$243\.60\/yr/);
+    assert.match(JSON.stringify(getToolFacts("paperpal")?.plans), /\$7\.20\/mo/);
+    assert.match(JSON.stringify(getToolFacts("paperpal")?.plans), /\$17\.40\/mo/);
     assert.doesNotMatch(JSON.stringify([getToolFacts("paperpal")?.plans, getToolFacts("paperpal")?.freeTier]), /limited-time|300 MB/i);
-    assert.match(j("trinka-ai"), /\$20 billed monthly/);
+    assert.match(JSON.stringify(getToolFacts("trinka-ai")?.plans), /5,000 words a month/);
     assert.match(j("trinka-ai"), /4 proofread files/);
-    assert.equal(getToolFacts("wondershare-pdfelement-ai")?.plans?.value.length, 1);
+    assert.equal(getToolFacts("wondershare-pdfelement-ai")?.plans?.value.length, 4);
     for (const [slug, keys] of Object.entries(AUDIT_27_FACT_UPDATES)) {
-      for (const key of keys) assert.equal((getToolFacts(slug) as unknown as Record<string, { checkedAt?: string } | undefined>)[key]?.checkedAt, "2026-10-30", `${slug}.${key}`);
+      for (const key of keys) {
+        const checkedAt = (getToolFacts(slug) as unknown as Record<string, { checkedAt?: string } | undefined>)[key]?.checkedAt;
+        assert.ok(checkedAt === "2026-10-30" || checkedAt === "2026-11-20", `${slug}.${key}`);
+      }
     }
   });
 });

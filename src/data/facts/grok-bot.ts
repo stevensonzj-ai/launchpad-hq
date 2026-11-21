@@ -43,10 +43,10 @@ export default {
     note: "USD. No standalone price; not included on X Plus ($8/month). Team seats at the same prices. As of 2026-10-30.",
     sourceUrl: "https://docs.x.ai/x-subscription/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

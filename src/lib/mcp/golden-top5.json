@@ -102,10 +102,10 @@
    "budget": "low"
   },
   "top5": [
-   "beatoven-ai",
    "descript",
    "elevenlabs",
-   "opus-clip"
+   "opus-clip",
+   "beatoven-ai"
   ]
  },
  "A10": {
@@ -275,11 +275,11 @@
    "task": "make music"
   },
   "top5": [
+   "beatoven-ai",
    "google-lyria-3",
    "mubert",
    "soundraw",
-   "udio",
-   "beatoven-ai"
+   "udio"
   ]
  },
  "A24": {
@@ -531,7 +531,7 @@
    "krea",
    "capcut",
    "kling-ai",
-   "higgsfield"
+   "opus-clip"
   ]
  },
  "G16": {
@@ -862,11 +862,11 @@
    "budget": "free"
   },
   "top5": [
-   "beatoven-ai",
-   "google-lyria-3",
    "mubert",
    "udio",
-   "aiva"
+   "aiva",
+   "suno",
+   "elevenlabs"
   ]
  },
  "G46": {
@@ -877,8 +877,8 @@
    "suno",
    "udio",
    "aiva",
-   "google-lyria-3",
-   "mubert"
+   "beatoven-ai",
+   "google-lyria-3"
   ]
  },
  "G47": {

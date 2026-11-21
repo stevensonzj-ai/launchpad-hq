@@ -29,55 +29,49 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "No permanent free AI tier: Acrobat Reader is free for viewing and commenting, and the paid plans offer free trials (length not stated)."
+      summary: "No free tier is described on the Individuals plans page, and no free-trial wording appears. The only Reader mention is the FAQ line that an Acrobat desktop subscription includes the Acrobat Reader mobile app."
     },
-    sourceUrl: "https://www.adobe.com/acrobat/pricing.html",
+    sourceUrl: "https://www.adobe.com/acrobat/plans.html",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
     value: [
       {
-        name: "Acrobat Express",
-        price: "$9.99",
-        period: "month",
-        limits: "Annual plan billed monthly; $10.99 month to month; $109.99 a year prepaid; marketed as AI-powered document insights, information sharing and content creation"
-      },
-      {
-        name: "Acrobat Studio",
-        price: "$24.99",
-        period: "month",
-        limits: "Annual plan billed monthly; $34.99 month to month; $299.88 a year prepaid; includes everything in Acrobat Pro, plus AI Assistant"
-      },
-      {
         name: "Acrobat Standard",
-        price: "$14.99",
+        price: "US$14.99",
         period: "month",
-        limits: "Annual plan billed monthly; $24.99 month to month; AI Assistant not included"
+        limits: "Annual billed monthly. Annual prepaid US$179.88/yr. Monthly US$24.99/mo, cancel anytime, no fee. AI Assistant is listed under Studio."
       },
       {
         name: "Acrobat Pro",
-        price: "$19.99",
+        price: "US$19.99",
         period: "month",
-        limits: "Annual plan billed monthly; $29.99 month to month; AI Assistant not included"
+        limits: "Annual billed monthly. Annual prepaid US$239.88/yr. Monthly US$29.99/mo, cancel anytime, no fee. AI Assistant is listed under Studio."
+      },
+      {
+        name: "Acrobat Studio",
+        price: "US$24.99",
+        period: "month",
+        limits: "Annual billed monthly. Annual prepaid US$299.88/yr. Monthly US$34.99/mo, cancel anytime, no fee. Includes everything in Acrobat Pro, plus AI Assistant."
       }
     ],
-    note: "USD, individuals, as of 2026-10-29. Express prices are from generative-ai-pdf.html; the two pages disagree on whether Express or Standard shows a trial. Team plans are priced per license. Cancelling an annual plan after 14 days carries a fee of up to half the remaining commitment.",
-    sourceUrl: "https://www.adobe.com/acrobat/pricing.html",
+    note: "US$, Individuals tab, read 2026-11-20. Annual billed monthly: a fee applies up to half the remaining annual commitment if you cancel after 14 days. No Express plan is on this page.",
+    sourceUrl: "https://www.adobe.com/acrobat/plans.html",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   features: {
     value: [
-      "AI Assistant is included in Acrobat Studio and not in Acrobat Standard or Pro; Acrobat Express is marketed as AI-powered document insights, and the page also mentions an AI Assistant add-on (price not confirmed)."
+      "AI Assistant is listed under Acrobat Studio."
     ],
     sourceUrl: "https://www.adobe.com/acrobat/generative-ai-pdf.html",
     checkedAt: "2026-10-29",

@@ -21,13 +21,13 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "No free plan: a 14-day free trial with no card. Trial sites get 10 trial credits for select AI tools.",
+      summary: "No permanent free plan: a 14-day free trial, no credit card required, cancel anytime. Plan AI credits are Basic 10 (one-time), Core 20 a month, Plus 40 a month, and Advanced 120 a month. A banner says 30% off all plans and ends Nov 23.",
     },
     sourceUrl: "https://www.squarespace.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
@@ -59,10 +59,10 @@ export default {
     ],
     note: "USD, as of 2026-10-29. Annual-billed and monthly-billed prices confirmed in a browser the same day. Extra AI credit packs can be bought.",
     sourceUrl: "https://www.squarespace.com/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

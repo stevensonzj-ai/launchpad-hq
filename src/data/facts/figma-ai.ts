@@ -23,13 +23,13 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Starter is free: unlimited drafts, one team with one folder and 3 files, and 150 AI credits a day, up to 500 a month.",
+      summary: "Starter is free and includes unlimited drafts and 150 AI credits/day, up to 500 AI credits/mo. A one-team, one-folder, or 3-file limit is not stated on this page.",
     },
     sourceUrl: "https://www.figma.com/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
@@ -61,10 +61,10 @@ export default {
     ],
     note: "USD per seat, as of 2026-10-29. One credit pool covers all Figma AI features; extra credits can be bought. Annual-billing prices read twice; the monthly view (Professional only) was browser-verified on 2026-10-29.",
     sourceUrl: "https://www.figma.com/pricing/",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {

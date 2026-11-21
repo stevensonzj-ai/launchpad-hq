@@ -48,64 +48,43 @@ export default {
     },
     sourceUrl: "https://www.topazlabs.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
     value: [
       {
-        name: "Topaz Photo",
-        price: "$199",
-        period: "year",
-        limits: "$39 a month, or $25 a month on a 12-month commitment"
-      },
-      {
-        name: "Topaz Gigapixel",
-        price: "$149",
-        period: "year",
-        limits: "$29 a month, or $19 a month on a 12-month commitment"
-      },
-      {
-        name: "Topaz Video",
-        price: "$299",
-        period: "year",
-        limits: "$59 a month, or $39 a month on a 12-month commitment"
-      },
-      {
         name: "Topaz Studio",
-        price: "$399",
+        price: "$499",
         period: "year",
-        limits: "$69 a month, or $45 a month on a 12-month commitment; the all-apps bundle; 300 monthly video cloud credits"
+        limits: "$49/month billed annually, or $79/month month to month"
       },
       {
         name: "Topaz Studio Pro",
         price: "$799",
         period: "year",
-        limits: "600 monthly video cloud credits; full commercial use; seat management; the page shows two conflicting monthly prices, so none is given"
+        limits: "$79/month billed annually"
       },
-      {
-        name: "Pro versions",
-        price: "$499 to $699",
-        period: "year",
-        limits: "Photo Pro $599, Gigapixel Pro $499, Video Pro $699 a year; full commercial use"
-      },
-      {
-        name: "Enterprise",
-        price: "Custom",
-        period: "",
-        limits: "Contact sales"
-      }
+      { name: "Topaz Photo", price: "$199", period: "year", limits: "" },
+      { name: "Topaz Gigapixel", price: "$149", period: "year", limits: "" },
+      { name: "Topaz Video", price: "$299", period: "year", limits: "" },
+      { name: "Topaz for Web - Image", price: "$199", period: "year", limits: "" },
+      { name: "Topaz for Web - Video", price: "$299", period: "year", limits: "" },
+      { name: "Topaz for Web Pro", price: "$599", period: "year", limits: "" },
+      { name: "Topaz Photo Pro", price: "$599", period: "year", limits: "" },
+      { name: "Topaz Gigapixel Pro", price: "$499", period: "year", limits: "" },
+      { name: "Topaz Video Pro", price: "$699", period: "year", limits: "" }
     ],
-    note: "USD list prices, as of 2026-10-29. Sale and struck-through prices appear on the page, so figures may be promotional. Standard plans list limited commercial use for organizations under $1M USD annual revenue; Pro plans list full commercial use.",
+    note: "USD list prices are the struck was-prices, read 2026-11-20. A Black Friday sale is running and the page states no end date, so sale prices are not recorded. The Monthly view says Studio includes all 7 apps; the other views say all 5 apps.",
     sourceUrl: "https://www.topazlabs.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   privacy: {
@@ -121,6 +100,11 @@ export default {
     status: "verified"
   },
   changelog: [
+    {
+      date: "2026-11-20",
+      field: "plans",
+      summary: "List prices are the struck was-prices. Studio is $499/yr. A Black Friday sale is running with no stated end date, so sale prices are not recorded."
+    },
     {
       date: "2026-10-29",
       field: "plans",

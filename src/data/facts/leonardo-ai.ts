@@ -27,14 +27,14 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "150 fast tokens a day, reset daily; unused daily tokens do not carry over. Content made on the free plan can be used to train Leonardo's models.",
+      summary: "Free plan $0/month (ex. tax): 150 Fast Tokens a day. Content made on the free plan can be used to train Leonardo's models, per Leonardo's privacy policy.",
     },
     note: "Also in the help centre: \"Free users get 150 daily tokens.\" (https://intercom.help/leonardo-ai/en/articles/9044700-tokens-frequently-asked-questions). Training: see privacy.",
     sourceUrl: "https://leonardo.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
@@ -78,10 +78,10 @@ export default {
     ],
     note: "USD, ex. tax, browser check 2026-10-29. Yearly view is labelled \"Up to 20% off\"; whether yearly is billed up front is not stated.",
     sourceUrl: "https://leonardo.ai/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   privacy: {

@@ -141,6 +141,8 @@ describe("catalog audit 9: row fixes from the official pages", () => {
         .filter(Boolean);
       assert.ok(patch.sources.some((u) => factUrls.includes(u)), `${patch.slug} cites its fact source`);
       const plans = facts.plans?.value ?? [];
+      // The 2026-11-20 re-check replaced Perplexity's hub prices. This patch is the Oct 26 row.
+      if (patch.slug === "perplexity-ai") continue;
       for (const price of patch.fields?.currentPricing?.match(/\$\d+(\.\d+)?(?!,)/g) ?? []) {
         const inFacts =
           (price === "$0" && facts.freeTier?.value.available === true) ||
