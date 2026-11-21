@@ -265,7 +265,7 @@ The fix is word-boundary matching in `scorePlatform`. That changes the scorer, s
 
 ### Added 2026-11-19 (front-door cleanup)
 
-**4.44 — An unknown URL sends a signed-out browser to sign-in, not to a 404.** *Open defect, accepted for `feat/front-door-cleanup`; fix in a separate PR.*
+**4.44 — An unknown URL sends a signed-out browser to sign-in, not to a 404.** *Fixed 2026-11-21 by #183: `src/proxy.ts` now protects an explicit list of private routes (`src/lib/protected-routes.ts`) instead of allow-listing public ones, so unknown paths reach `src/app/not-found.tsx`. The entry as logged on 2026-11-19 follows.*
 Any path that is not on the public list in `src/proxy.ts` goes through Clerk's `auth.protect()`, and Clerk redirects browser page requests to `/sign-in` (non-browser clients get a 404). Confirmed on production on 2026-11-19: `www.launchpadhq.io/zz-nope-404-check` returned a 307 to `/sign-in?redirect_url=…` with `X-Clerk-Auth-Status: signed-out`. Previews behave the same. The new `src/app/not-found.tsx` therefore only shows for unknown paths under a public prefix (for example `/platform/nope`) and for `notFound()` calls. The fix is a middleware change (for example, protect an explicit list of private routes instead of allow-listing public ones), so it needs its own reviewed PR.
 
 ## 4b. Credentials
@@ -472,7 +472,6 @@ Production was confirmed live against `7615a1f3` on 2026-07-27 — deployment `R
 ### Known and accepted defects
 
 - **Sora 2 is live in the catalog and is a discontinued product**, with an incorrect `costTier`. Known since 2026-07-27, unfixed. (4.21)
-- **Unknown URLs redirect signed-out browsers to sign-in instead of the 404 page.** Middleware behaviour; separate PR. (4.44)
 - **Overview-card metadata across the catalog is stale** in a way tutorial pages deliberately are not — it contains volatile version numbers that rot. A separate workstream, never started.
 - **`/pricing` prerendering can exhaust Neon connection permits at build time.** One local build failed this way; a clean retry passed. Vercel prerenders identically, so production deploys can fail intermittently on a database limit unrelated to the code being shipped, and it worsens as page count grows.
 - **Two tutorial pages carry a prompt-string gap** — the heading promises starter prompts but only one of four cards on each carries an actual prompt. Merged deliberately as a polish item.
