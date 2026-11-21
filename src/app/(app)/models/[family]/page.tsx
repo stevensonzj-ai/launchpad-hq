@@ -7,8 +7,9 @@ import { NOT_FOUND_METADATA, publicPageMetadata, withFeedAlternate } from "@/lib
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { platformCatalogLinks } from "@/lib/catalog-names";
 
-// Unknown families are unmatched routes, so the root not-found page renders
-// on the server (a notFound() call here only rendered it in the browser).
+// Unknown families are unmatched routes, so the root not-found page renders on the
+// server. A notFound() call in the page sends an empty HTML body that only
+// fills in once the browser runs the scripts (Next's error-recovery shell).
 export const dynamicParams = false;
 
 export function generateStaticParams() {
