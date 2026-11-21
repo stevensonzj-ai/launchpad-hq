@@ -87,7 +87,9 @@ describe("middleware matcher", () => {
     );
     assert.equal(runsMiddleware("/discover"), true);
     const body = readFileSync(`public${path}`);
-    assert.deepEqual(body, Buffer.from("REPLACE_WITH_OPENAI_TOKEN"));
+    assert.equal(body.length, 43);
+    assert.equal(body.includes(0x0a), false);
+    assert.deepEqual(body, Buffer.from("pq3qGj1KJHmSIIOFiiHVTJRqugISf_NpFdFWx5C06-Y"));
     const config = readFileSync("next.config.ts", "utf8");
     assert.match(
       config,
