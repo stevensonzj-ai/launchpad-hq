@@ -18,10 +18,10 @@ export default {
     note: "USD. First-month offers on the page are not recorded. As of 2026-10-30.",
     sourceUrl: "https://www.synthesia.io/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

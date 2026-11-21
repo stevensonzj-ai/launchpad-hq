@@ -4,13 +4,9 @@ const CANVA_AI_PASS_URL = "https://www.canva.com/help/ai-pass/";
 const CANVA_PRICING_URL = "https://www.canva.com/pricing/";
 
 /**
- * Plans and free limits: canva.com/pricing (US, USD), read by the RA from the
- * page's embedded plan data on 2026-10-26 (mcp-stress-factcheck-2026-10-26.md,
- * item 2 and follow-up 2). Plan prices owner verified manually in browser
- * 2026-10-26 (Monthly and Yearly toggles): Pro $18/month or $144/year,
- * Business $25/month or $250/year per person. This settles the earlier
- * $144-vs-$180 conflict for Pro's yearly price. Re-checked 2026-10-29 (RA
- * and the page's embedded plan data): still $144, not $180.
+ * Plans and free limits: canva.com/pricing, re-read 2026-11-20.
+ * Pro is US$18/month or US$144/year. Business is US$25 per person/month or
+ * US$250/year per person. Free is limited access to Standard and Premium AI.
  */
 export default {
   slug: "canva-ai-magic-studio",
@@ -19,31 +15,28 @@ export default {
     value: {
       available: true,
       summary:
-        "Canva Free includes up to 20 AI uses a month, shared across Canva's AI tools, plus 1 Brand Kit and 5 GB of storage; paid plans raise the AI allowance.",
+        "Canva Free is US$0. Limited access to Standard and Premium AI. No numeric monthly AI cap is stated on this page.",
     },
     sourceUrl: CANVA_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "ra",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
     value: [
-      { name: "Free", price: "$0", period: "", limits: "Up to 20 Standard or Premium AI uses a month; 5 GB storage" },
-      { name: "Pro", price: "$18", period: "month", limits: "Billed monthly, or $144/year billed yearly; 1 person; 10x Free's AI; optional AI Pass add-on; 100 GB storage" },
-      { name: "Business", price: "$25", period: "person/month", limits: "Billed monthly, or $250/year per person billed yearly; for individuals and teams; 20x Free's AI; AI Pass and AI top-ups available; 500 GB storage" },
-      { name: "Enterprise", price: "Contact sales", period: "", limits: "1 TB storage" },
+      { name: "Free", price: "$0", period: "", limits: "Limited access to Standard and Premium AI. No numeric monthly cap is stated." },
+      { name: "Pro", price: "$18", period: "month", limits: "US$18/month, or US$144/year billed yearly. 10x more AI than Canva Free." },
+      { name: "Business", price: "$25", period: "person/month", limits: "US$25 per person/month, or US$250/year per person. 20x more AI than Canva Free." },
+      { name: "Enterprise", price: "Let's talk", period: "", limits: "20x more AI than Canva Free." },
     ],
-    note: "USD, US page, as of 2026-10-29. Prices exclude applicable tax. All AI tools draw on one shared monthly allowance, at different rates for Standard, Premium and Ultra AI. Canva Teams is no longer available for new sign-ups or upgrades (Business covers individuals and teams); existing Teams subscribers keep it.",
+    note: "US$, read 2026-11-20. Prices exclude applicable tax. A first-3-months discount is on the page and has no stated end date, so it is not the list price.",
     sourceUrl: CANVA_PRICING_URL,
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "ra",
-    // Re-read from the page's embedded plan data 2026-10-29: Pro 14400 / 1800
-    // cents (year / month), Business 25000 / 2500. Owner verified the same
-    // prices in browser 2026-10-26.
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {
@@ -52,16 +45,23 @@ export default {
       "AI Pass gives Canva Pro, Teams and Nonprofits subscribers 40x more AI, and Canva Business subscribers 20x more AI.",
       "The pricing page lists AI top-ups as available on Business, not on Pro.",
       "AI Pass is not available on Canva Free, Education or Enterprise, on free trials or prepaid plans, or on subscriptions managed through the Apple App Store or Google Play.",
+      "Canva Craft (model id craft_v1_2k) is Canva's image-generation model, available through the preview Image generation API. The preview can change without notice, and apps that use it cannot pass public-app review. Each generation uses the user's AI credit allowance. Noted on this row, not a new row. https://www.canva.dev/blog/developers/image-gen-with-craft/",
     ],
-    note: "AI Pass price and availability from the Canva Help Center (2026-10-29); top-ups from the pricing page.",
+    note: "AI Pass price and availability from the Canva Help Center (2026-10-29); top-ups from the pricing page. The Craft line is from the Canva Developers post, checked 2026-11-12.",
     sourceUrl: CANVA_AI_PASS_URL,
-    checkedAt: "2026-10-29",
-    gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    checkedAt: "2026-11-12",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-12",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-12",
+      field: "features",
+      summary:
+        "X-watch: Canva Craft (craft_v1_2k) is in the preview Image generation API. Noted on this row instead of a new row. No separate API price on the post.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

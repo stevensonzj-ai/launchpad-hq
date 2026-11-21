@@ -217,6 +217,57 @@ Clerk *_AFTER_SIGN_IN/UP_URL names are ignored by @clerk/nextjs 7. Production re
 *Where:* the old comment in `src/app/sitemap.ts`, and the "same catalog visibility" assumption in § 9.
 *Truth (2026-10-20, catalog accuracy cleanup PR):* fact files can now set `visibility: "hidden"`, and `src/lib/catalog-redirects.ts` lists duplicate rows that 301 elsewhere. `hiddenPlatformSlugs()` (`src/lib/catalog-visibility.ts`) drops both from the sitemap, Discover, search, recommendations, `/api/platforms` and same-category related links; hidden pages stay reachable by URL but are noindexed. Fact files also gained `status` (a sourced "what happened" notice), `officialUrl` (overrides `website`) and the lifecycle values `acquired` / `renamed`. A `discontinued` product with a status gets a "What Happened to X?" title and drops its pricing, apps and guide link. `scripts/update-catalog-audit-3.ts` (operator-only, dry-run by default) syncs the renamed rows' `name` / `website` / `company` into the database; until it runs, the overlay already shows the corrected values on platform and guide pages, but Discover cards and search still use the old database names.
 
+### Added 2026-11-12 (quiz default picks, #169)
+
+**4.35 — "The quiz ranks results purely by keyword score, and each card shows a '% match'."**
+*Where:* § 8 "What is shipped and live" (quiz bullet, corrected in place below), and any handoff before 2026-11-12.
+*Truth:* Since #169 (`10713146`, live 2026-11-12):
+- Hand-set **default picks** per goal and experience level lead the results whenever they pass the budget and visibility filters. They live in `src/data/quiz-defaults.ts`, each with one sourced "why" sentence, and no affiliate slug can be a default.
+- Below them, a tool must match a goal keyword **and** sit in a category that goal allows. The allow-list is `GOAL_CATEGORIES`. `ai-apis-developer-services` is allowed for coding at intermediate/advanced only, and four specialist categories are never allowed.
+- With `runtime=local`, a goal that has local picks shows only `local-open-source-ai` tools. Video, audio and automation show a one-line notice, then their normal cloud defaults.
+- The "% match" badge is gone: the score is a raw sum, not a percentage.
+- `/quiz/results` now lives in the `(app)` route group. The URL is unchanged.
+- `scorePlatform` and `rankScoredPlatforms` are unchanged, and MCP does not use `src/lib/quiz-ranking.ts`.
+
+**4.36 — The catalog's free-tier flag is wrong for four platforms.**
+*Not superseded — an open data gap, logged 2026-11-12, not acted on.* `invideo-ai`, `julius-ai`, `notion-ai` and `khan-academy-khanmigo` are all FREEMIUM in the catalog, so they pass a "Free only" quiz budget. On 2026-11-12 the vendor pages showed something narrower:
+- invideo.io/pricing listed no free plan.
+- Julius's pricing page (seen as a search snippet; the site returned 403) put analysis under paid tiers.
+- Notion's free plan includes only a trial of Notion AI.
+- Khanmigo is free for teachers only; learners pay.
+
+#169 removed all four from the quiz default picks, but they can still appear as ordinary results. They need a catalog recheck through the numbered catalog-audit process.
+
+**4.37 — `src/lib/mcp/catalog-snapshot.json` is behind production.**
+*Not superseded — an open gap, logged 2026-11-12, not acted on.* The snapshot is an offline reconstruction used only by tests, and it has drifted from production in more than one place. Example: it has `opus-clip` in `gaming-creative-ai`, while the live `/data/v1` feed has it in `video-creation-editing`. Tests built on the snapshot (the quiz goldens, MCP goldens) can pass against a catalog that production no longer has. Regenerate it from a real `/data/v1` pull, as its own `note` field says.
+
+**4.38 — Several API platforms are marked `BEGINNER` in the catalog.**
+*Not superseded — an open data gap, logged 2026-11-12, not acted on.* In the catalog snapshot, 12 of the 19 rows in `ai-apis-developer-services` carry `difficultyLevel: BEGINNER`, among them `openai-api`, `anthropic-api`, `amazon-bedrock`, `azure-openai-service` and `pinecone`. That isn't true for a first-time user of a cloud API console. #169 works around it: `EXPERIENCED_ONLY_CATEGORIES` keeps that category out of beginner coding results. The data itself is unchanged and still feeds Discover's difficulty filter.
+
+**4.39 — The local Windows production build crashes in "Collecting page data".**
+*Not superseded — an open environment defect, logged 2026-11-12, not acted on.* On the owner's machine, `npm run build` compiled and passed TypeScript, then a page-data worker died with exit code `3221226505` (`0xC0000409`, `STATUS_STACK_BUFFER_OVERRUN`). It logged no "heap out of memory" message, and it ran with 11 workers. It was not retried. The Vercel build of the same commit passed. Until this is diagnosed, the Vercel preview build is the build gate for changes made on Windows. Do not read a local crash as a code fault without checking Vercel.
+
+**4.40 — Below the default picks, quiz results are still ordered by keyword count.**
+*Fixed in part 2026-11-19 (branch `fix/quiz-scorer-word-match`): `scorePlatform` now adds 10 per chosen goal with at least one keyword match, not 10 per keyword, so keyword-dense copy no longer outranks terse copy. Equal scores now break by primary category (`PRIMARY_GOAL_CATEGORIES` in `src/data/quiz-defaults.ts`, specialists first), then position in `src/data/discover-popular.ts`, then name. Structured-signal ordering (outbound-click data) is still not built; the difficulty penalty and the priority points still decide most score gaps. The entry as logged on 2026-11-12 follows.* The category guard decides *which* tools may appear. Their *order* still comes from `scorePlatform`, which rewards matching more goal keywords. A tool with keyword-dense copy outranks a better fit with terse copy. Structured signals (outbound-click data was the plan) are the intended replacement. See also 4.41, and the rejected idea of enriching descriptions in § 11.
+
+**4.41 — Quiz keyword matching is substring matching: "ide" fires inside "guide" and "video".**
+*Fixed 2026-11-19 (branch `fix/quiz-scorer-word-match`): `keywordMatches` in `src/lib/recommendations-score.ts` matches a keyword of three characters or fewer as a whole word and a longer keyword at the start of a word, case-insensitive. `ides` was added to the coding keywords so "JetBrains IDEs" still matches. Both examples below no longer match coding, and the coding + video / local golden was re-baselined. The entry as logged on 2026-11-12 follows. It extends the "keyword substring false-positives" entries in § 8 and § 11.* Two live examples from #169:
+- The coding keyword `ide` matched `gemini-notebook` through "Study gu**ide** creation". That let a notebook tool into a coding result on the preview.
+- The same keyword matched `comfyui` through "image and v**ide**o generation". As of 2026-11-12, production's coding / beginner / free / local result lists ComfyUI fourth.
+
+The fix is word-boundary matching in `scorePlatform`. That changes the scorer, so it needs its own PR and re-baselined quiz goldens. `text-conversational-ai` stays allowed for coding (owner decision, 2026-11-12).
+
+**4.42 — Any page without its own dark wrapper renders white for light-mode visitors.**
+*Fixed 2026-11-14 (branch `fix/quiz-local-category-and-body-bg`): the `body` rule now sits in `@layer base`, so the `bg-gray-950 text-white` classes on `<body>` win. The error pages followed on 2026-11-19 (branch `feat/front-door-cleanup`): `src/app/global-error.tsx` now imports `globals.css` and carries inline dark styles as a fallback, and `src/app/not-found.tsx` exists, rendering the header and a fixed-dark body. Both are unit-tested; neither was checked in a browser before the Vercel preview. The entry as logged on 2026-11-12 follows.* `src/app/globals.css` has an unlayered `body { background: var(--background); color: var(--foreground) }`, with `--background: #ffffff` outside `prefers-color-scheme: dark`. Unlayered CSS beats Tailwind's layered utilities, so the `bg-gray-950 text-white` classes on `<body>` in `src/app/layout.tsx` lose. Pages inside `(app)` are hidden from this by `<main className="bg-gray-950">`. `/quiz/results` sat outside the group and rendered white, with an invisible heading, until #169 moved it. Fix at the root (remove the rule or put it in a layer), then check the pages outside `(app)`: sign-in, sign-up, the error pages.
+
+**4.43 — With `runtime=local`, video/audio/automation results can include a local tool under a notice that says "these results are cloud tools".**
+*Fixed 2026-11-14 (branch `fix/quiz-local-category-and-body-bg`), on both sides. Rule: `allowedCategories` now adds `local-open-source-ai` only when at least one chosen goal has local picks, so video, audio and automation on their own return cloud tools only. Wording: when the answer mixes goals with and without local picks (coding + video), local picks lead the list, so the notice ends "…so the {names} picks below are cloud tools." (owner-approved 2026-11-14); with no local-pick goal the 2026-11-12 sentence is unchanged. The entry as logged on 2026-11-12 follows.* Goals without local picks keep `local-open-source-ai` in their allowed categories. On production on 2026-11-12, video / beginner / free / local listed ComfyUI twelfth. The owner-approved notice ("…so these results are cloud tools") is then slightly untrue. Fix either side: drop the local category for those goals, or reword the notice.
+
+### Added 2026-11-19 (front-door cleanup)
+
+**4.44 — An unknown URL sends a signed-out browser to sign-in, not to a 404.** *Fixed 2026-11-21 by #183: `src/proxy.ts` now protects an explicit list of private routes (`src/lib/protected-routes.ts`) instead of allow-listing public ones, so unknown paths reach `src/app/not-found.tsx`. The entry as logged on 2026-11-19 follows.*
+Any path that is not on the public list in `src/proxy.ts` goes through Clerk's `auth.protect()`, and Clerk redirects browser page requests to `/sign-in` (non-browser clients get a 404). Confirmed on production on 2026-11-19: `www.launchpadhq.io/zz-nope-404-check` returned a 307 to `/sign-in?redirect_url=…` with `X-Clerk-Auth-Status: signed-out`. Previews behave the same. The new `src/app/not-found.tsx` therefore only shows for unknown paths under a public prefix (for example `/platform/nope`) and for `notFound()` calls. The fix is a middleware change (for example, protect an explicit list of private routes instead of allow-listing public ones), so it needs its own reviewed PR.
+
 ## 4b. Credentials
 
 **A full scan of every file added by this handoff, and of every file tracked in git, found no live credentials.** Specifically checked for: Stripe live and test keys, Stripe webhook secrets, Resend API keys, Postgres connection strings containing a password, AWS access key IDs, GitHub personal access tokens, and PEM private key blocks.
@@ -396,7 +447,7 @@ The working tree carries no untracked items beyond the handoff documents themsel
 - 170-platform catalog (operator-confirmed; not verifiable from this repository — the database is not here and `data/ai_platforms_enhanced_metadata.xlsx` is import history, not a current export) across a 20-category taxonomy, with a Discover page whose filters are a compact native-`<select>` bar with removable pills and a reactive count.
 - Platform detail pages with Overview, Tutorials, Prompts and Discussions tabs.
 - **183 tutorial pages** (as of 2026-10-20), static TypeScript in `src/data/tutorials/`, across three archetypes, each at `/platform/{slug}/guide`, indexed from `/tutorials`.
-- A four-question matching quiz with a public results page for signed-out users, a soft difficulty penalty with an "Advanced" badge, and a goal-relevance floor.
+- A four-question matching quiz with a public results page for signed-out users. Hand-set default picks lead, a goal-to-category guard filters the rest, and tools above the chosen level sit under "Above your selected level". *(Corrected in place 2026-11-12; see 4.35.)*
 - Workflows, favourites, a For You page, account and pricing pages.
 - Authentication via Clerk (development instance), payments plumbing via raw Stripe, both fully wired.
 - A moderation pipeline: submissions default to `PENDING`, an email fires with HMAC-signed magic links, the link renders a confirmation page, and a button POST commits the decision. Replays are idempotent.
@@ -470,7 +521,7 @@ src/
 | `src/proxy.ts` | **Middleware.** Clerk auth gating, plus the one-to-many category redirects that cannot live in `next.config.ts`. |
 | `src/app/(app)/` | The authenticated app surface: `discover`, `platform/[slug]` (+ `prompts`, `discussions`), `workflows`, `quiz`, `for-you`, `account`, `pricing`, `onboarding`, `tutorials`. |
 | `src/app/(app)/tutorials/page.tsx` | The public tutorial index: every guide, grouped by its platform's category. Each tutorial renders at `src/app/(app)/platform/[slug]/guide/page.tsx`; `?tab=tutorials` 308s there. |
-| `src/app/quiz/results/` | The **public** quiz results page for signed-out users. Outside the `(app)` group deliberately. Historically where bugs hide, because it is the anonymous path. |
+| `src/app/(app)/quiz/results/` | The **public** quiz results page for signed-out users. Inside the `(app)` group since #169 (the URL is unchanged). Historically where bugs hide, because it is the anonymous path. |
 | `src/app/api/` | Route handlers: platforms, categories, search, recommendations, user/quiz, prompts (rate/report), discussions (replies/vote/report), moderation, and the three Stripe routes. |
 | `src/components/tutorials/platform-tutorials.tsx` | **The shared tutorial renderer.** One change here benefits every tutorial page — which is the only justification for touching it. Per-page visual divergence is the trap. |
 | `src/components/platforms/`, `prompts/`, `discussions/`, `workflows/`, `layout/`, `ui/` | Feature-grouped components. `ui/` contains exactly one hand-rolled tooltip. |

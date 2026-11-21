@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import robots from "@/app/robots";
+import { classifyMarkdownPath, markdownRewriteTarget } from "@/lib/markdown/negotiate";
+import { PROTECTED_ROUTE_PATTERNS } from "@/lib/protected-routes";
 import { SITEMAP_STATIC_PUBLIC_PATHS } from "@/lib/sitemap-coverage";
 
 /**
@@ -18,6 +20,9 @@ function matcherPatterns(): RegExp[] {
 }
 
 const runsMiddleware = (path: string) => matcherPatterns().some((re) => re.test(path));
+
+const isProtected = (path: string) =>
+  PROTECTED_ROUTE_PATTERNS.some((pattern) => new RegExp(`^${pattern}$`).test(path));
 
 describe("middleware matcher", () => {
   it("never runs Clerk on the JSON feed", () => {
@@ -41,51 +46,18 @@ describe("middleware matcher", () => {
     }
   });
 
-  it("never runs Clerk on llms.txt or llms-full.txt, and lists both as public", () => {
+  it("never runs Clerk on llms.txt or llms-full.txt, and never asks for sign-in there", () => {
     for (const path of ["/llms.txt", "/llms-full.txt"]) {
       assert.equal(runsMiddleware(path), false, path);
-      assert.ok(proxySource.includes(`"${path}",`), path);
+      assert.equal(isProtected(path), false, path);
     }
   });
 
-  it("makes nothing else public: the public list is exactly the expected routes", () => {
-    const block = /createRouteMatcher\(\[([\s\S]*?)\]\)/.exec(proxySource)?.[1] ?? "";
-    const routes = [...block.matchAll(/^\s*"([^"]+)",/gm)].map((m) => m[1]);
-    assert.deepEqual(routes, [
-      "/",
-      "/discover(.*)",
-      "/platform(.*)",
-      "/tutorials(.*)",
-      "/workflows(.*)",
-      "/models(.*)",
-      "/compare(.*)",
-      "/alternatives(.*)",
-      "/quiz(.*)",
-      "/for-you(.*)",
-      "/pricing(.*)",
-      "/privacy(.*)",
-      "/terms(.*)",
-      "/how-we-make-money(.*)",
-      "/sponsor-guidelines(.*)",
-      "/advertise(.*)",
-      "/ai-of-the-week(.*)",
-      "/connector(.*)",
-      "/about(.*)",
-      "/contact(.*)",
-      "/support(.*)",
-      "/developers(.*)",
-      "/sign-in(.*)",
-      "/sign-up(.*)",
-      "/api(.*)",
-      "/sitemap.xml",
-      "/robots.txt",
-      "/llms.txt",
-      "/llms-full.txt",
-      "/.well-known/openai-apps-challenge",
-      "/mcp",
-      "/data(.*)",
-      "/md(.*)",
-    ]);
+  it("asks for sign-in only on the protected list, not on public paths", () => {
+    // Which pages need sign-in now lives in src/lib/protected-routes.ts and is
+    // covered by protected-routes.test.ts; the proxy only applies that list.
+    assert.match(proxySource, /createRouteMatcher\(PROTECTED_ROUTE_PATTERNS\)/);
+    assert.doesNotMatch(proxySource, /isPublicRoute/);
   });
 
   it("still runs on pages and API routes", () => {
@@ -94,14 +66,25 @@ describe("middleware matcher", () => {
     }
   });
 
-  it("lists /data as a public route", () => {
-    assert.match(proxySource, /"\/data\(\.\*\)"/);
+  it("never asks for sign-in on /data", () => {
+    assert.equal(isProtected("/data"), false);
   });
 
-  it("lets the OpenAI apps challenge through unauthenticated", () => {
+  it("serves the OpenAI apps challenge outside Clerk, unrewritten, as text/plain", () => {
     const path = "/.well-known/openai-apps-challenge";
     assert.equal(runsMiddleware(path), false, path);
-    assert.ok(proxySource.includes(`"${path}",`), path);
+    assert.equal(runsMiddleware(`${path}/`), false, path);
+    assert.equal(isProtected(path), false, path);
+    assert.equal(classifyMarkdownPath(path), "passthrough");
+    assert.equal(
+      markdownRewriteTarget({
+        method: "GET",
+        pathname: path,
+        accept: "text/markdown",
+        isRscRequest: false,
+      }),
+      null,
+    );
     assert.equal(runsMiddleware("/discover"), true);
     const body = readFileSync(`public${path}`);
     assert.deepEqual(body, Buffer.from("REPLACE_WITH_OPENAI_TOKEN"));
@@ -110,10 +93,7 @@ describe("middleware matcher", () => {
       config,
       /source:\s*"\/\.well-known\/openai-apps-challenge",\s*headers:\s*\[\{\s*key:\s*"Content-Type",\s*value:\s*"text\/plain"\s*\}\]/,
     );
-    assert.equal(
-      (SITEMAP_STATIC_PUBLIC_PATHS as readonly string[]).includes(path),
-      false,
-    );
+    assert.equal((SITEMAP_STATIC_PUBLIC_PATHS as readonly string[]).includes(path), false);
     const rules = [robots().rules].flat();
     for (const rule of rules) {
       const disallow = [rule.disallow ?? []].flat();

@@ -8,6 +8,7 @@ import {
   SPONSOR_SLOT_KEYS,
 } from "@/data/sponsors/calendar";
 import { SITE_IS_PUBLIC } from "@/lib/site";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 import { publicPageMetadata } from "@/lib/seo-metadata";
 
 export const metadata: Metadata = publicPageMetadata({
@@ -20,7 +21,7 @@ export const metadata: Metadata = publicPageMetadata({
 
 export const revalidate = 3600;
 
-const MAIL = "launchpadhq.admin@gmail.com";
+const MAIL = CONTACT_EMAIL;
 
 export default function AdvertisePage() {
   if (!SITE_IS_PUBLIC) {

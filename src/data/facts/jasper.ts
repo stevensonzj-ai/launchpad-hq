@@ -30,13 +30,18 @@ export default {
     ],
     note: 'USD per seat per month. "Start Free 7-Day Trial" is a trial, not a free plan, so no free tier is recorded.',
     sourceUrl: "https://www.jasper.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "plans",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

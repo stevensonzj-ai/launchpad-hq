@@ -18,6 +18,12 @@ describe("redactSecrets", () => {
     assert.ok(!out.includes("hunter22"));
     assert.ok(!out.includes("napi_abc123XYZ"));
   });
+  it("removes JWTs", () => {
+    const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWNoIn0.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk";
+    const out = redactSecrets(`bearer ${jwt}`);
+    assert.ok(!out.includes(jwt));
+    assert.ok(!out.includes("eyJhbGci"));
+  });
   it("secretsFromConnectionString yields user, password and the string", () => {
     const s = secretsFromConnectionString("postgresql://alice:p%40ss@ep-x.neon.tech/db");
     for (const v of ["alice", "p%40ss", "p@ss"]) assert.ok(s.includes(v), v);

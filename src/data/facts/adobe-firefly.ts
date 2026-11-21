@@ -31,56 +31,50 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Free daily generations across image, video and audio, with no plan needed; limits refresh every day and the daily count is not stated."
+      summary: "You don't need a plan to get free daily generations for images, video, and audio. The page also says free daily generations and limited free daily generations for images and video, and the comparison table gives Free limited credits. No numeric daily limit is stated."
     },
     sourceUrl: "https://www.adobe.com/products/firefly/plans.html",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
     value: [
       {
-        name: "Free",
-        price: "$0",
-        period: "",
-        limits: "Limited free daily generations; count not stated"
-      },
-      {
         name: "Firefly Standard",
         price: "$9.99",
         period: "month",
-        limits: "2,000 generative credits a month"
+        limits: "2,000 credits, up to 400 images and 20 five-second videos"
       },
       {
         name: "Firefly Pro",
         price: "$19.99",
         period: "month",
-        limits: "4,000 generative credits a month"
+        limits: "Regularly US$19.99/mo. 4,000 credits."
       },
       {
         name: "Firefly Pro Plus",
         price: "$49.99",
         period: "month",
-        limits: "10,000 generative credits a month"
+        limits: "Regularly US$49.99/mo. 10,000 credits."
       },
       {
         name: "Firefly Premium",
         price: "$199.99",
         period: "month",
-        limits: "50,000 generative credits a month"
+        limits: "50,000 generative credits plus unlimited Adobe Firefly Video Model access"
       }
     ],
-    note: "USD, billed monthly, from the plans page in a logged-out US browser check (2026-10-29). Credit add-ons are available. Free trials are linked for Standard, Pro and Pro Plus; trial length is not stated. The batch-4 readers saw the credit amounts but not the USD prices (the plans page rendered in Egyptian pounds), and one saw $199.99 only as a teams price.",
+    note: "US$, read 2026-11-20. Sale, not list: save up to 60% on select plans for the first 6 months, ends Dec 6. Pro is US$9.99/mo for the first 6 months; Pro Plus is US$19.99/mo for 6 months.",
     sourceUrl: "https://www.adobe.com/products/firefly/plans.html",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   usageLimits: {

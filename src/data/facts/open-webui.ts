@@ -25,10 +25,10 @@ export default {
     },
     sourceUrl: "https://docs.openwebui.com/license",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   plans: {
@@ -43,10 +43,10 @@ export default {
     note: "As of 2026-10-29. No Enterprise price is published.",
     sourceUrl: "https://docs.openwebui.com/enterprise",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   company: {

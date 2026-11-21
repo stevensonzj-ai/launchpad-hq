@@ -198,7 +198,7 @@ test("privacy page states the first-touch practices", () => {
     "We honor Do Not Track and Global Privacy Control by capturing nothing",
     "We don’t capture this in the EU, EEA, UK or Switzerland",
     "No IP address, device information or referrer is stored with it",
-    "launchpadhq.admin@gmail.com",
+    "<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>",
     'lastUpdated="November 3, 2026"',
   ]) {
     assert.ok(page.includes(phrase), phrase);

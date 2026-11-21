@@ -1,0 +1,244 @@
+/**
+ * Quiz result ordering, layered on top of the keyword scorer.
+ *
+ * 1. Hand-set default picks (src/data/quiz-defaults.ts) lead the list, in
+ *    list order, when they survive the same candidate filters as every other
+ *    tool (budget cost tiers, not hidden, not discontinued). With two goals
+ *    the picks alternate: goal 1's first, goal 2's first, then the rest.
+ * 2. Every other tool must match a goal keyword (goalScore > 0, as before)
+ *    AND sit in a category the chosen goals allow (the category guard). The
+ *    guard runs on the full scored list, before the cut.
+ * 3. Non-default tools follow in score order. Equal scores break by: a
+ *    primary category of any chosen goal first (PRIMARY_GOAL_CATEGORIES;
+ *    specialists ahead of general assistants), then position in Discover's
+ *    Popular list (listed ahead of unlisted), then name, then slug, so the
+ *    order never depends on database row order.
+ *
+ * scorePlatform matches goal keywords as words and counts each chosen goal
+ * once (START-HERE 4.40, 4.41, 2026-11-19). rankScoredPlatforms keeps its
+ * plain score sort: it has no production caller and the sponsor ordering
+ * test pins it. MCP does not use this module.
+ * Pure: no Prisma, no React.
+ */
+import { DISCOVER_POPULAR_SLUGS } from "@/data/discover-popular";
+import {
+  GOAL_CATEGORIES,
+  EXPERIENCED_ONLY_CATEGORIES,
+  LOCAL_CATEGORY,
+  LOCAL_CHAT,
+  LOCAL_CHAT_GOALS,
+  LOCAL_CODING,
+  LOCAL_CODING_GOALS,
+  LOCAL_IMAGE,
+  LOCAL_IMAGE_GOALS,
+  NEVER_ALLOWED_CATEGORIES,
+  PRIMARY_GOAL_CATEGORIES,
+  QUIZ_DEFAULTS,
+  type DefaultPick,
+} from "@/data/quiz-defaults";
+import { QUIZ_GOAL_OPTIONS } from "./quiz-options";
+import {
+  scorePlatform,
+  type MatchReason,
+  type RecommendationInput,
+  type ScoreablePlatform,
+} from "./recommendations-score";
+
+export const QUIZ_RESULT_LIMIT = 12;
+
+export type RankableCandidate = ScoreablePlatform & {
+  slug: string;
+  name: string;
+  category: { slug: string };
+};
+
+export type RankedRecommendation<T> = T & {
+  matchScore: number;
+  aboveDifficulty: boolean;
+  matchReasons: MatchReason[];
+  /** True for a hand-set default pick. */
+  defaultPick: boolean;
+  /** One plain sentence for default picks; null otherwise. */
+  why: string | null;
+};
+
+/** Intermediate and advanced use the "experienced" default lists. */
+export function isExperienced(experienceLevel?: string): boolean {
+  return experienceLevel === "intermediate" || experienceLevel === "advanced";
+}
+
+/** A missing runtime behaves exactly like cloud: no local defaults, no local category. */
+export function isLocalRuntime(input: RecommendationInput): boolean {
+  return input.runtime === "local";
+}
+
+/** runtime=local default picks for one goal; empty for video, audio and automation. */
+export function localPicksForGoal(goal: string): readonly DefaultPick[] {
+  if ((LOCAL_CHAT_GOALS as readonly string[]).includes(goal)) return LOCAL_CHAT;
+  if ((LOCAL_CODING_GOALS as readonly string[]).includes(goal)) return LOCAL_CODING;
+  if ((LOCAL_IMAGE_GOALS as readonly string[]).includes(goal)) return LOCAL_IMAGE;
+  return [];
+}
+
+const GOAL_LABELS: Record<string, string> = Object.fromEntries(QUIZ_GOAL_OPTIONS.map((o) => [o.id, o.label]));
+
+/**
+ * runtime=local only: a one-line notice when a chosen goal has no local
+ * picks, so its results are cloud tools. Null otherwise. When the answer
+ * mixes goals with and without local picks, the sentence names only the
+ * cloud goals' picks, because local tools lead the same list. Wording
+ * approved by Zach, 2026-11-12 (all-cloud) and 2026-11-14 (mixed).
+ */
+export function localRuntimeNotice(input: RecommendationInput): string | null {
+  if (!isLocalRuntime(input)) return null;
+  const goals = input.goals ?? [];
+  const missing = goals.filter((g) => localPicksForGoal(g).length === 0);
+  if (missing.length === 0) return null;
+  const names = missing.map((g) => GOAL_LABELS[g] ?? g).join(" or ");
+  if (missing.length < goals.length) {
+    return `We don't list any beginner-friendly tools for ${names} that run on your own computer, so the ${names} picks below are cloud tools.`;
+  }
+  return `We don't list any beginner-friendly tools for ${names} that run on your own computer, so these results are cloud tools.`;
+}
+
+/** The ordered default picks for one goal, before any eligibility check. */
+export function defaultPicksForGoal(goal: string, input: RecommendationInput): readonly DefaultPick[] {
+  if (isLocalRuntime(input)) {
+    const local = localPicksForGoal(goal);
+    // Goals with no local picks (video, audio, automation) get the cloud
+    // defaults a cloud visitor would get, under the runtime notice.
+    if (local.length > 0) return local;
+  }
+  const entry = QUIZ_DEFAULTS[goal as keyof typeof QUIZ_DEFAULTS];
+  if (!entry) return [];
+  return isExperienced(input.experienceLevel) ? entry.experienced : entry.beginner;
+}
+
+/**
+ * Default picks for all goals, filtered to `eligible` slugs, then merged:
+ * one goal keeps its order; two goals alternate (first of goal 1, first of
+ * goal 2, second of goal 1, ...). Duplicates keep their first position.
+ */
+export function orderedDefaultPicks(
+  input: RecommendationInput,
+  eligible: ReadonlySet<string>,
+): DefaultPick[] {
+  const lists = (input.goals ?? []).map((goal) =>
+    defaultPicksForGoal(goal, input).filter((p) => eligible.has(p.slug)),
+  );
+  const out: DefaultPick[] = [];
+  const seen = new Set<string>();
+  const longest = Math.max(0, ...lists.map((l) => l.length));
+  for (let i = 0; i < longest; i++) {
+    for (const list of lists) {
+      const pick = list[i];
+      if (pick && !seen.has(pick.slug)) {
+        seen.add(pick.slug);
+        out.push(pick);
+      }
+    }
+  }
+  return out;
+}
+
+/** Categories a non-default tool may come from, for these answers. */
+export function allowedCategories(input: RecommendationInput): Set<string> {
+  const allowed = new Set<string>();
+  const local = isLocalRuntime(input);
+  let anyLocalPicks = false;
+  for (const goal of input.goals ?? []) {
+    // A visitor who chose local sees no cloud tools for a goal that has local picks.
+    if (local && localPicksForGoal(goal).length > 0) {
+      anyLocalPicks = true;
+      continue;
+    }
+    const key = goal as keyof typeof GOAL_CATEGORIES;
+    for (const c of GOAL_CATEGORIES[key] ?? []) allowed.add(c);
+    if (isExperienced(input.experienceLevel)) {
+      for (const c of EXPERIENCED_ONLY_CATEGORIES[key] ?? []) allowed.add(c);
+    }
+  }
+  // The only way local-open-source-ai is ever allowed: runtime=local AND at
+  // least one chosen goal has local picks. Video, audio and automation alone
+  // get cloud tools only, which keeps the runtime notice true.
+  if (anyLocalPicks) allowed.add(LOCAL_CATEGORY);
+  for (const c of NEVER_ALLOWED_CATEGORIES) allowed.delete(c);
+  return allowed;
+}
+
+/** Primary (specialist) categories for these answers; ordering only, never admission. */
+export function primaryCategories(input: RecommendationInput): Set<string> {
+  const primary = new Set<string>();
+  for (const goal of input.goals ?? []) {
+    for (const c of PRIMARY_GOAL_CATEGORIES[goal as keyof typeof PRIMARY_GOAL_CATEGORIES] ?? []) primary.add(c);
+  }
+  if (isLocalRuntime(input)) primary.add(LOCAL_CATEGORY);
+  return primary;
+}
+
+/** Stable, explainable tie-break: name, then slug. */
+export function compareByName(a: { name: string; slug: string }, b: { name: string; slug: string }): number {
+  return a.name.localeCompare(b.name, "en", { sensitivity: "base" }) || (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0);
+}
+
+const POPULAR_POSITION = new Map(DISCOVER_POPULAR_SLUGS.map((slug, i) => [slug, i]));
+
+/** Discover Popular position; unlisted tools sort after every listed one. */
+function popularPosition(slug: string): number {
+  return POPULAR_POSITION.get(slug) ?? Number.MAX_SAFE_INTEGER;
+}
+
+/**
+ * Tie-break for non-default tools with equal scores: primary category
+ * first, then Discover Popular position, then name and slug.
+ */
+export function compareTied(
+  a: { name: string; slug: string; category: { slug: string } },
+  b: { name: string; slug: string; category: { slug: string } },
+  primary: ReadonlySet<string>,
+): number {
+  const rank = (c: { category: { slug: string } }) => (primary.has(c.category.slug) ? 0 : 1);
+  return rank(a) - rank(b) || popularPosition(a.slug) - popularPosition(b.slug) || compareByName(a, b);
+}
+
+export function rankQuizRecommendations<T extends RankableCandidate>(
+  candidates: readonly T[],
+  input: RecommendationInput,
+  limit = QUIZ_RESULT_LIMIT,
+): RankedRecommendation<T>[] {
+  const bySlug = new Map(candidates.map((c) => [c.slug, c]));
+  const picks = orderedDefaultPicks(input, new Set(bySlug.keys()));
+  const pickSlugs = new Set(picks.map((p) => p.slug));
+
+  const leading: RankedRecommendation<T>[] = picks.map((pick) => {
+    const platform = bySlug.get(pick.slug)!;
+    const parts = scorePlatform(platform, input);
+    return {
+      ...platform,
+      matchScore: parts.score,
+      // Hand-picked for this experience level, so never shown as above it.
+      aboveDifficulty: false,
+      matchReasons: parts.matchReasons,
+      defaultPick: true,
+      why: pick.why,
+    };
+  });
+
+  const allowed = allowedCategories(input);
+  const primary = primaryCategories(input);
+  const rest = candidates
+    .filter((c) => !pickSlugs.has(c.slug) && allowed.has(c.category.slug))
+    .map((platform) => ({ platform, ...scorePlatform(platform, input) }))
+    .filter((s) => s.goalScore > 0)
+    .sort((a, b) => b.score - a.score || compareTied(a.platform, b.platform, primary))
+    .map((s) => ({
+      ...s.platform,
+      matchScore: s.score,
+      aboveDifficulty: s.aboveDifficulty,
+      matchReasons: s.matchReasons,
+      defaultPick: false,
+      why: null,
+    }));
+
+  return [...leading, ...rest].slice(0, limit);
+}

@@ -9,7 +9,7 @@ export const goalKeywords: Record<string, string[]> = {
     "marketing",
     "social",
   ],
-  coding: ["code", "development", "programming", "debug", "ide", "developer"],
+  coding: ["code", "development", "programming", "debug", "ide", "ides", "developer"],
   research: [
     "research",
     "academic",
@@ -47,11 +47,39 @@ export const goalKeywords: Record<string, string[]> = {
   ],
 };
 
+const keywordPatterns = new Map<string, RegExp>();
+
+/**
+ * Word matching for goal keywords (START-HERE 4.41), case-insensitive.
+ * A keyword of three characters or fewer must be a whole word ("ide" does
+ * not fire inside "guide" or "video"); a longer keyword must start a word
+ * ("learn" matches "learning", "voice" does not match "invoice"). Any
+ * character other than a letter or digit, hyphens included, ends a word.
+ */
+export function keywordMatches(text: string, keyword: string): boolean {
+  let pattern = keywordPatterns.get(keyword);
+  if (!pattern) {
+    const kw = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    pattern = new RegExp(
+      keyword.length <= 3 ? `(?<![a-z0-9])${kw}(?![a-z0-9])` : `(?<![a-z0-9])${kw}`,
+      "i",
+    );
+    keywordPatterns.set(keyword, pattern);
+  }
+  return pattern.test(text);
+}
+
 export type RecommendationInput = {
   goals: string[];
   budget?: string;
   experienceLevel?: string;
   priorities?: string[];
+  /**
+   * Quiz runtime answer (cloud | browser | mobile | local). Optional: when it
+   * is missing the quiz ordering behaves as cloud. scorePlatform ignores it;
+   * scoring still reads the `offline` / `mobile` / `browser` priorities.
+   */
+  runtime?: string;
 };
 
 export type MatchReason =
@@ -134,15 +162,15 @@ export function scorePlatform(
   const aboveDifficulty =
     DIFFICULTY_RANK[platform.difficultyLevel] > maxComfortableRank;
 
-  const useCases = (platform.primaryUseCases || "").toLowerCase();
-  const useDesc = (platform.primaryUse || "").toLowerCase();
+  const useCases = platform.primaryUseCases || "";
+  const useDesc = platform.primaryUse || "";
+  // 10 per chosen goal with at least one keyword match, not per keyword
+  // (START-HERE 4.40): keyword-dense copy no longer outranks terse copy.
   for (const goal of goals || []) {
     const keywords = goalKeywords[goal] || [];
-    for (const kw of keywords) {
-      if (useCases.includes(kw) || useDesc.includes(kw)) {
-        score += 10;
-        goalScore += 10;
-      }
+    if (keywords.some((kw) => keywordMatches(useCases, kw) || keywordMatches(useDesc, kw))) {
+      score += 10;
+      goalScore += 10;
     }
   }
   if (goalScore > 0) matchReasons.push("Matches goal");

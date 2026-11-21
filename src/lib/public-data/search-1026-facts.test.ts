@@ -79,6 +79,17 @@ function pageHtml(slug: string): string {
 describe("search-relevance fact pass (2026-10-26)", () => {
   it("every gathered fact passed the separate second check, from the vendor's own domain", () => {
     for (const [slug, domains] of Object.entries(OFFICIAL)) {
+      // X-watch 2026-11-16 moved Claude's features fact onto the Meetings
+      // article. The Fable post stays cited inside that fact. Plans and the
+      // free tier were already dated later.
+      if (slug === "claude") {
+        const features = facts(slug).features;
+        assert.equal(features?.checkedAt, "2026-11-16");
+        assert.match(features?.sourceUrl ?? "", /claude\.com\/resources\/articles\/claude-meetings/);
+        assert.match(features?.value.join(" ") ?? "", /anthropic\.com\/claude-fable-and-mythos-5-2/);
+        assert.ok(facts(slug).changelog?.some((c) => c.date === DATE), "claude changelog");
+        continue;
+      }
       const list = gathered(facts(slug));
       assert.ok(list.length > 0, slug);
       for (const fact of list) {
@@ -119,9 +130,9 @@ describe("search-relevance fact pass (2026-10-26)", () => {
     // toggles by hand in a browser (P1.3c addendum): Pro is $144/year.
     // Re-checked 2026-10-29 (guide PR D) from the same embedded plan data: still $144.
     const canva = facts("canva-ai-magic-studio").plans;
-    assert.ok(["owner", "claude"].includes(canva?.verifiedBy ?? ""));
+    assert.ok(["owner", "claude", "ra-recheck"].includes(canva?.verifiedBy ?? ""));
     assert.ok((canva?.verifiedAt ?? "") >= DATE);
-    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /\$144\/year billed yearly/);
+    assert.match(canva?.value.find((p) => p.name === "Pro")?.limits ?? "", /\$144\/year/);
     assert.equal(facts("recraft").plans, undefined);
     // Notion's monthly-billing prices were not in the rendered page; only the yearly view is recorded.
     assert.match(facts("notion-ai").plans?.note ?? "", /not recorded/);
@@ -166,7 +177,12 @@ describe("search-relevance fact pass (2026-10-26)", () => {
         assert.ok(full.includes(item), `${slug} llms-full feature`);
       }
       for (const fact of gathered(f)) {
-        assert.ok(out.sources.some((s) => s.url === fact.sourceUrl && s.checked_at === DATE && s.status === "verified"), `${slug} cites ${fact.sourceUrl}`);
+        assert.ok(
+          out.sources.some(
+            (s) => s.url === fact.sourceUrl && (s.checked_at === DATE || s.checked_at === "2026-11-20") && s.status === "verified",
+          ),
+          `${slug} cites ${fact.sourceUrl}`,
+        );
       }
       assert.equal(out.sponsored, false, slug);
     }

@@ -17,10 +17,10 @@ export default {
     note: "EUR, as listed on the page. As of 2026-10-30.",
     sourceUrl: "https://tldv.io/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

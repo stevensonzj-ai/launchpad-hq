@@ -5,6 +5,14 @@ import { getToolFacts } from "@/data/facts/registry";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
 import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_IS_PUBLIC } from "@/lib/site";
 
+/**
+ * Metadata for every 404: the not-found pages and the generateMetadata
+ * fallback of each page that calls notFound(). A page's generateMetadata
+ * result is streamed in after the not-found UI, so a different fallback
+ * title would replace this one in the tab once the page hydrates.
+ */
+export const NOT_FOUND_METADATA: Metadata = { title: "Page not found | Launchpad HQ" };
+
 export const META_DESCRIPTION_MAX = 160;
 export const META_DESCRIPTION_TARGET_MIN = 150;
 

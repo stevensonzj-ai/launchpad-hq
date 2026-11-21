@@ -61,6 +61,33 @@ const AUDIT_22_MOVES = new Map(AUDIT_22_RENAMES.filter((r) => r.from !== r.to).m
 const AUDIT_22_RENAMED = new Set(AUDIT_22_RENAMES.map((r) => r.to));
 const AUDIT_22_FIELDS = new Set(["slug", "name"]);
 const AUDIT_32_AS_OF_MOVED = new Set(["claude"]);
+/** Copy fix 2026-11-12 (#168): claude's difficultyLevel INTERMEDIATE -> BEGINNER after the stress run. */
+const COPYFIX_20261112_DIFFICULTY = new Set(["claude"]);
+/**
+ * Audit 35 (2026-11-14) rechecked price facts. as_of is that fact's checkedAt.
+ * deepl and gamma are unverified because a pricing page could not be read.
+ * fathom's starting price and jenni-ai's billing period changed with the page.
+ */
+/** Price re-verification 2026-11-20 moved free-tier checkedAt, which is the card as_of. */
+const PRICE_REVERIFY_20261120_AS_OF = new Set(["chatgpt", "grammarly", "ideogram", "kickresume", "notion-ai", "recraft", "rezi", "teal"]);
+const AUDIT_35_AS_OF = new Set([
+  "capcut",
+  "captions",
+  "deepl",
+  "fathom",
+  "fireflies-ai",
+  "granola",
+  "grok",
+  "jenni-ai",
+  "krea",
+  "meta-ai",
+  "napkin-ai",
+  "speechify",
+  "vapi",
+  "warp",
+]);
+const AUDIT_35_VERIFICATION = new Set(["deepl", "gamma"]);
+const AUDIT_35_STARTING_PRICE = new Set(["fathom", "jenni-ai"]);
 const AUDIT_15_PATCHED =AUDIT_15_PATCHES.map((p) => p.slug);
 const AUDIT_15_FIELDS = new Set(["slug", "name", "verification", "as_of", "source_url", "stale", "freshness_note"]);
 /**
@@ -110,6 +137,13 @@ describe("catalog snapshot", () => {
         // Audit 32 (2026-11-02): claude's free-tier fact was re-dated to the audit 31 pricing check, so its
         // as_of moved from 2026-10-26 to 2026-11-02. Only that one field, only for claude.
         if (AUDIT_32_AS_OF_MOVED.has(row.slug) && key === "as_of") continue;
+        // Copy fix 2026-11-12 (#168, run on production that day): claude is BEGINNER now; the
+        // 2026-10-26 stress run recorded INTERMEDIATE. Only that one field, only for claude.
+        if (COPYFIX_20261112_DIFFICULTY.has(row.slug) && key === "difficulty") continue;
+        if (AUDIT_35_AS_OF.has(row.slug) && key === "as_of") continue;
+        if (PRICE_REVERIFY_20261120_AS_OF.has(row.slug) && key === "as_of") continue;
+        if (AUDIT_35_VERIFICATION.has(row.slug) && key === "verification") continue;
+        if (AUDIT_35_STARTING_PRICE.has(row.slug) && key === "starting_price") continue;
         if (moved && AUDIT_15_FIELDS.has(key)) continue;
         if (AUDIT_22_RENAMED.has(row.slug) && AUDIT_22_FIELDS.has(key)) continue;
         if (JSON.stringify(ref[key]) !== JSON.stringify(o[key])) diffs.push(`${o.slug}.${key}: ${JSON.stringify(ref[key])} != ${JSON.stringify(o[key])}`);

@@ -15,28 +15,22 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "$5 free credits, 1 included phone number, 4 concurrent calls, 14-day data retention",
+      summary: "$5 free credits, 1 included phone number, 4 concurrent calls, 14-day data retention. Vapi hosting on the no-success-package path is $0.05/min prepaid.",
     },
     sourceUrl: "https://vapi.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
     value: [
       {
-        name: "Free",
+        name: "No Success Package",
         price: "$0",
-        period: "month",
-        limits: "$5 free credits; 1 included phone number; 4 concurrent calls; 14-day data retention",
-      },
-      {
-        name: "Usage",
-        price: "Pay per minute",
         period: "",
-        limits: "Provider costs passed through with no markup",
+        limits: "$5 free credits; 1 phone number; 4 concurrent calls; 14-day retention; Vapi hosting $0.05/min prepaid; model costs passed through",
       },
       {
         name: "Core",
@@ -46,9 +40,9 @@ export default {
       },
       {
         name: "Pro",
-        price: "$999/mo minimum; 10% of Vapi hosting fee",
+        price: "10% of Vapi hosting fee",
         period: "",
-        limits: "",
+        limits: "$999/mo minimum",
       },
       {
         name: "Premier",
@@ -59,10 +53,10 @@ export default {
     ],
     note: "Add-ons: HIPAA $2,000/mo; extra concurrency $10/line/mo.",
     sourceUrl: "https://vapi.ai/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -76,6 +70,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "plans",
+      summary: "No Success Package includes prepaid Vapi hosting at $0.05/min. Core is $29/month.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

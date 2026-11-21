@@ -64,19 +64,19 @@ export default {
     note: "USD, monthly prices as of 2026-10-29; annual billing was not shown. No per-plan Veo quotas are stated. The Free plan lists limited Google Flow access and no video generation. Google AI Plus ($4.99, 200 Flow credits) lists \"more features like video generation\" without naming a model, so it is not shown as a Veo plan.",
     sourceUrl: "https://gemini.google/subscriptions/",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   apiPricing: {
-    value: "The Gemini API pricing page no longer lists Veo; its video model is Gemini Omni Flash, about $0.10 per second of 720p video (about $17.50 per 1M video output tokens), paid tier only. Google Cloud pricing for the generally available Veo models was not read.",
+    value: "The Gemini API pricing page does not list Veo. The video model is Gemini Omni 1.2 Flash (gemini-omni-1.2-flash), paid tier only (free tier not available). Per 1M tokens in USD: input $1.50 (text, image, or video); output $9.00 (text) and $12.00 (video). Billing uses 5,792 tokens per second of 720p video, which the page states is an effective price of approximately $0.07 per second at the $12.00 per 1M token Standard rate (about $0.70 for a 10s clip and about $1.04 for a 15s clip; $0.023/s for 360p at 1,931 tokens/s; $0.104/s for 1080p with upsampling at 8,688 tokens/s).",
     sourceUrl: "https://ai.google.dev/gemini-api/docs/pricing",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified"
   },
   changelog: [

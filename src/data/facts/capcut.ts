@@ -9,10 +9,10 @@ export default {
       summary: "Free templates; basic editing tools",
     },
     sourceUrl: "https://www.capcut.com/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
@@ -44,10 +44,10 @@ export default {
     ],
     note: "Displayed pricing is for reference only. Sign in to see final pricing.",
     sourceUrl: "https://www.capcut.com/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -70,6 +70,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

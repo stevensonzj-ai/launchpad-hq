@@ -9,7 +9,7 @@ import type { ToolFacts } from "./types";
  * 3-yearly figures were caught mid-animation and the lifetime prices were
  * not read. So the plans fact records the USD figures as unverified, and the
  * row's pricing text names the plans without prices (audit 18). Whether the
- * free plan's 100 tasks reset monthly is not stated.
+ * free plan is 100 tasks a month. Paid USD prices are still unverified.
  */
 export default {
   slug: "pabbly-connect",
@@ -17,45 +17,52 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "Free plan with 100 tasks, no card; limited to 2 workflows of up to 2 steps each. Whether the tasks reset monthly is not stated.",
+      summary: "Free plan: $0 a month, 100 tasks, unlimited workflows, unlimited team members, no credit card, and 2-step workflows.",
     },
-    note: "\"Start for free and get 100 tasks - no credit card required.\" Browser check, 2026-10-29: the Free card reads \"Get 100 Tasks … $0 /mo … No credit card needed\"; paid plans say \"Every Month\", the Free card does not.",
-    sourceUrl: "https://www.pabbly.com/connect/pricing/",
-    checkedAt: "2026-10-29",
+    note: "Browser read 2026-11-20 of https://www.pabbly.com/connect/ #pricing. The free card is unlimited workflows limited to 2 steps, not 2 workflows.",
+    sourceUrl: "https://www.pabbly.com/connect/",
+    sourceKind: "plans-page",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   plans: {
     value: [
-      { name: "Free", price: "$0", period: "", limits: "100 tasks; 2 workflows of up to 2 steps" },
+      { name: "Free", price: "$0", period: "month", limits: "100 tasks. Unlimited workflows. Unlimited team members. No credit card. 2-step workflows." },
       {
         name: "Standard",
-        price: "$14",
+        price: "$19",
         period: "month",
-        limits: "Billed monthly, shown as \"normally $19/mo\"; 10,000 tasks every month; $15/mo billed yearly, $16/mo billed 2-yearly",
+        limits: "10,000 tasks a month. Yearly $16/mo (save 15%). 2-yearly $15/mo (save 20%). 3-yearly $14/mo (save 25%).",
       },
       {
         name: "Unlimited",
-        price: "$59",
+        price: "$79",
         period: "month",
-        limits: "Billed monthly, shown as \"normally $79/mo\"; unlimited tasks; $62/mo billed yearly, $68/mo billed 2-yearly",
+        limits: "Yearly $69/mo. 2-yearly $65/mo. 3-yearly $59/mo.",
       },
-      {
-        name: "Lifetime plans",
-        price: "One-time",
-        period: "",
-        limits: "3,000, 10,000 or 20,000 tasks a month; USD prices not read",
-      },
+      { name: "Standard Lifetime", price: "$684", period: "one-time", limits: "List price shown as normally $684. 3,000 tasks a month." },
+      { name: "Ultimate Lifetime", price: "$2,280", period: "one-time", limits: "List price shown as normally $2,280. 10,000 tasks a month." },
+      { name: "Ultimate Plus Lifetime", price: "$4,560", period: "one-time", limits: "List price shown as normally $4,560. 20,000 tasks a month." },
     ],
-    note: "USD, as of 2026-10-29, from the Research Analyst's browser check (marked PARTIAL: 3-yearly prices unreliable, lifetime prices not read). Billing terms: monthly, yearly (save 15%), 2-yearly (save 20%), 3-yearly (save 25%), lifetime. Batch-1 readers were served INR only.",
-    sourceUrl: "https://www.pabbly.com/connect/pricing/",
-    checkedAt: "2026-10-29",
+    note: "Read 2026-11-20 at https://www.pabbly.com/connect/ #pricing. Monthly prices are the list price. Longer terms are the price of that commitment. Lifetime discounts have no stated end date, so the normally price is the list price.",
+    sourceUrl: "https://www.pabbly.com/connect/",
+    sourceKind: "plans-page",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    status: "unverified",
+    verifiedBy: "ra-recheck",
+    verifiedAt: "2026-11-20",
+    status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-20",
+      field: "freeTier",
+      summary:
+        "Pricing page re-read: the free card is 100 tasks a month, with no credit card, and still limits you to 2 workflows of up to 2 steps. Paid prices on this fetch were in rupees, so the plans fact stays unverified.",
+    },
     {
       date: "2026-10-29",
       field: "freeTier",

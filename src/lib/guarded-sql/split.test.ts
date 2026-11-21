@@ -22,6 +22,9 @@ describe("splitSql", () => {
     const sql = "-- lead; comment\nselect 1 /* a; /* nested; */ b; */; select 2 -- tail; x\n";
     assert.deepEqual(splitSql(sql), ["select 1 /* a; /* nested; */ b; */", "select 2 -- tail; x"]);
   });
+  it("ends a line comment at a carriage return", () => {
+    assert.deepEqual(splitSql("select 1; -- c\rselect 2;"), ["select 1", "select 2"]);
+  });
   it("drops comment-only chunks", () => {
     assert.deepEqual(splitSql("-- nothing\n/* still nothing */;"), []);
   });

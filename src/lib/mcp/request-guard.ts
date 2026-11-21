@@ -4,7 +4,8 @@
  * - Origin: an absent Origin is allowed. AI platforms (Claude, ChatGPT, Grok
  *   and others) call remote MCP servers from their own servers, which send
  *   no Origin. A browser Origin must be in MCP_ALLOWED_ORIGINS, otherwise
- *   the reply is 403 and only the rejected origin's host is logged
+ *   the reply is 403. The rejection is logged as evt "mcp_origin_rejected"
+ *   with no origin, host, or other header-derived fields
  *   (DNS-rebinding guidance in the MCP Streamable HTTP spec).
  * - Size: a body over MCP_MAX_BODY_BYTES is refused with 413. A declared
  *   Content-Length is checked first; a body without one (chunked) is
@@ -48,14 +49,6 @@ export function isAllowedOrigin(origin: string | null, env?: Record<string, stri
   if (origin === null || origin === "") return true;
   const o = origin.toLowerCase().replace(/\/$/, "");
   return MCP_ALLOWED_ORIGINS.includes(o) || deploymentOrigins(env).includes(o);
-}
-
-function originHost(origin: string): string {
-  try {
-    return new URL(origin).host.slice(0, 100);
-  } catch {
-    return "invalid";
-  }
 }
 
 const CONNECTOR_URL = absoluteUrl("/connector");
@@ -111,7 +104,7 @@ export async function guardMcpRequest(
   const log = opts.log ?? ((line: string) => console.warn(line));
   const origin = request.headers.get("origin");
   if (!isAllowedOrigin(origin, opts.env)) {
-    log(JSON.stringify({ evt: "mcp_origin_rejected", origin_host: originHost(origin!) }));
+    log(JSON.stringify({ evt: "mcp_origin_rejected" }));
     return {
       response: rpcError(403, -32000, "Forbidden: Origin not allowed", "forbidden", `Browser origins must be allow-listed. Setup: ${CONNECTOR_URL}.`),
     };

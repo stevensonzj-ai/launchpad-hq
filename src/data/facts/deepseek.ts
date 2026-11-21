@@ -18,10 +18,10 @@ export default {
       "Per 1M tokens at peak rate (off-peak is half). Flash: input $0.30 (cache miss) / $0.006 (cache hit); output $1.20. V4-Pro: input $1.32 (cache miss) / $0.044 (cache hit); output $3.96. Context window 1M. Search and Fetch tool APIs (added 2026-10-17): $0.75 per 1,000 successful requests each.",
     note: "Search API guide: https://api-docs.deepseek.com/guides/search/",
     sourceUrl: "https://api-docs.deepseek.com/quick_start/pricing",
-    checkedAt: "2026-10-24",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-subagent",
-    verifiedBy: "claude",
-    verifiedAt: "2026-10-24",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   platforms: {
@@ -43,7 +43,26 @@ export default {
     verifiedAt: "2026-10-17",
     status: "verified",
   },
+  features: {
+    value: [
+      "The 2026-11-13 API news says deepseek-flash supports built-in web search, file input, URL reading, and safety checks across Messages, Responses, and Chat Completions. Search, Fetch, OCR, ASR, and TTS are also standalone APIs. Public-facing apps must enable safety checks. The post says these capabilities add tool usage fees and does not restate the dollar amounts.",
+    ],
+    note: "DeepSeek API news, checked 2026-11-16. Token prices above were not re-read.",
+    sourceUrl: "https://api-docs.deepseek.com/news/news261113/",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-16",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-16",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-11-16",
+      field: "features",
+      summary:
+        "X-watch: deepseek-flash gains built-in web search, file input, URL reading, and safety checks, plus standalone Search, Fetch, OCR, ASR, and TTS APIs. Prices were not restated.",
+    },
     {
       date: "2026-10-17",
       field: "models",

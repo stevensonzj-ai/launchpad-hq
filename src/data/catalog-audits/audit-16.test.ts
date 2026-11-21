@@ -70,9 +70,13 @@ describe("catalog audit 16: Hermes Agent row (create only)", () => {
     const facts = getToolFacts(HERMES_SLUG)!;
     for (const key of ["plans", "freeTier"] as const) {
       assert.equal(facts[key]!.status, "verified", key);
-      assert.equal(facts[key]!.verifiedBy, "owner", key);
       assert.equal(facts[key]!.sourceUrl, "https://portal.nousresearch.com/", key);
     }
+    // Plans were re-read on 2026-11-20. The free tier was confirmed the same day.
+    assert.equal(facts.plans!.verifiedBy, "cursor-recheck");
+    assert.equal(facts.plans!.verifiedAt, "2026-11-20");
+    assert.equal(facts.freeTier!.verifiedBy, "ra-recheck");
+    assert.equal(facts.freeTier!.verifiedAt, "2026-11-20");
     assert.deepEqual(
       facts.plans!.value.map((p) => `${p.name} ${p.price}`),
       ["Free $0", "Plus $20", "Super $100", "Ultra $200"],

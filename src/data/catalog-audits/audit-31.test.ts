@@ -94,7 +94,7 @@ describe("catalog audit 31", () => {
     assert.match(dg, /acquiring Daily/);
     assert.match(dg, /announced, not completed/);
     assert.match(dg, /Pipecat will remain fully open source/);
-    assert.match(getToolFacts("pika")!.apiPricing!.value, /480p \$0\.02.*\$0\.01.*768p \$0\.04, 1080p \$0\.07, 2K \$0\.08, 4K \$0\.16/);
+    assert.match(getToolFacts("pika")!.apiPricing!.value, /480p \$0\.02, 768p \$0\.04, 1080p \$0\.07, 2K \$0\.08, 4K \$0\.16/);
     assert.match(getToolFacts("google-antigravity")!.features!.value.join(" "), /Plugin Marketplace/);
     assert.match(getToolFacts("antigravity-cli")!.features!.value.join(" "), /agy plugin install/);
     assert.match(getToolFacts("kimi")!.features!.value.join(" "), /Kimi 3D Make.*K3\.1 Pro.*does not control printers/);

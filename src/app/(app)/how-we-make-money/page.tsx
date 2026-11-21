@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 
 export const metadata: Metadata = publicPageMetadata({
   title: "How we make money | Launchpad HQ",
@@ -33,10 +34,10 @@ export default function HowWeMakeMoneyPage() {
             rankings, and would use double opt-in and a one-click unsubscribe in every email.
             Contact is email only (
             <a
-              href="mailto:launchpadhq.admin@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="text-orange-400 hover:underline"
             >
-              launchpadhq.admin@gmail.com
+              {CONTACT_EMAIL}
             </a>
             ). No newsletter provider is live yet.
           </p>
@@ -88,10 +89,10 @@ export default function HowWeMakeMoneyPage() {
           <p className="mt-2 text-sm text-gray-400">
             Contact email:{" "}
             <a
-              href="mailto:launchpadhq.admin@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="text-orange-400 hover:underline"
             >
-              launchpadhq.admin@gmail.com
+              {CONTACT_EMAIL}
             </a>
             . We do not publish a postal address; email is the way to reach us.
           </p>

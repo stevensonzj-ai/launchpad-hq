@@ -19,10 +19,10 @@ export default {
       summary: "100 data credits and 500 actions/mo, 200 rows per table.",
     },
     sourceUrl: "https://www.clay.com/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   plans: {
@@ -42,10 +42,10 @@ export default {
     ],
     note: "USD per month, per workspace; per-seat unpublished. Launch $167/mo billed annually, $185/mo monthly. Growth $446/mo billed annually, $495/mo monthly (FAQ “starting at”). The page does not label each number as annual vs monthly; that mapping follows the Save 10% toggle. Dropped the Launch/Growth “Starts at $54/$60/$185/$205” action-tier figures from the headline rows. Enterprise unpublished.",
     sourceUrl: "https://www.clay.com/pricing",
-    checkedAt: "2026-10-14",
+    checkedAt: "2026-11-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-14",
     status: "verified",
   },
   platforms: {
@@ -58,6 +58,11 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-14",
+      field: "freeTier",
+      summary: "Rechecked the official pricing page on 2026-11-14. The recorded prices still match.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

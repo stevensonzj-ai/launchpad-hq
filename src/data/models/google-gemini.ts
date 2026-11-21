@@ -3,6 +3,8 @@ import type { PlatformModelFamily } from "./types";
 const MODELS = "https://ai.google.dev/gemini-api/docs/models";
 const PRICING = "https://ai.google.dev/gemini-api/docs/pricing";
 const PLANS = "https://ai.google.dev/gemini-api/docs/google-ai-plans";
+const CARBON = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/";
+const HYDROGEN = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/";
 const ARGON = "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon";
 const FLASH = "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash";
 
@@ -11,18 +13,109 @@ export const googleGemini: PlatformModelFamily = {
   displayName: "Gemini",
   vendor: "Google",
   platformSlugs: ["gemini"],
-  lastVerifiedAt: "2026-10-24",
+  lastVerifiedAt: "2026-11-16",
   whichToUse: [
+    "Gemini 4 Hydrogen, checked 2026-11-16, is the everyday model. Its Standard paid price is flat across a 1 million-token context. Batch and Flex are half the Standard rate. The Standard free tier lists it as free of charge.",
+    "Argon's Standard introductory price on the Gemini API pricing page, re-read 2026-11-16, still ends 2026-11-30, then the higher list price. That was already on the Argon row, so the numbers were not changed.",
     "Exact Gemini-app picker for 3.8 Flash is unverified on Google's plan pages.",
-    "For the Gemini API, use 3.8 Flash for most production work (it is on the API free tier). Use 4 Argon only when you need the flagship and can pay (not on the API free tier).",
+    "Google's 2026-11-10 post says Argon remains the usual choice for most software engineering and knowledge work, and Carbon is for tasks that test the limits of the model.",
+    "Carbon is available via the Gemini API to all paying developers and enterprises, and is rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search.",
+    "For the Gemini API, use 3.8 Flash for most production work (it is on the API free tier). Argon and Flash prices below were not re-read on 2026-11-12.",
     "3.6 Flash is the previous Flash generation at the same listed paid price as 3.8 Flash through 2026 — Google still documents it as previous-generation.",
   ],
   sources: [
+    { label: "Gemini 4 Hydrogen", url: HYDROGEN },
+    { label: "Gemini 4 Carbon availability", url: CARBON },
     { label: "Gemini models", url: MODELS },
     { label: "API pricing", url: PRICING },
     { label: "Google AI plans", url: PLANS },
   ],
   versions: [
+    {
+      id: "gemini-4-hydrogen",
+      name: "Gemini 4 Hydrogen",
+      apiId: "gemini-4-hydrogen",
+      releaseDate: "2026-11-12",
+      releaseDateVerified: true,
+      status: "current",
+      role: "balanced",
+      contextWindow: {
+        tokens: 1_000_000,
+        verified: true,
+        note: "The launch post says the Standard price is flat across the entire 1 million-token context window. The pricing page says a unified 1M-token context window.",
+      },
+      maxOutput: {
+        tokens: 1_000_000,
+        verified: true,
+        note: "The pricing page says long-decode generation up to 1M tokens. A separate default synchronous max output was not stated.",
+      },
+      apiPriceInput: {
+        usdPerMillion: 1.5,
+        verified: true,
+        note: "Standard paid tier. Batch and Flex are $0.75. Context caching is $0.075 per 1M tokens, implicit only. The Standard free tier lists input as free of charge.",
+      },
+      apiPriceOutput: {
+        usdPerMillion: 7.5,
+        verified: true,
+        note: "Standard paid tier, including thinking tokens. Batch and Flex are $3.75. The Standard free tier lists output as free of charge.",
+      },
+      consumerAccess: {
+        summary:
+          "The launch post says Hydrogen is in all tiers of Google AI Studio, the Gemini API, Gemini for business, the Gemini app, and Google Search, and for paid Google AI Pro and Ultra subscribers in Google Antigravity. In the Gemini app, free users get it through auto model selection when it is the appropriate model. GitHub's supported-models page lists it as GA in GitHub Copilot on Copilot Pro, Pro+, Max, Business, and Enterprise.",
+        verified: true,
+      },
+      strengths: [
+        "Priced flat across the whole 1 million-token context window.",
+        "On the Gemini API Standard free tier as well as the paid tier.",
+      ],
+      bestFor: "Everyday coding and agent work when Carbon or Argon is more than the task needs.",
+      caveats: [
+        "The launch post does not state the cache, Batch, or Flex prices. Those are from the API pricing page.",
+        "Explicit caching is not supported.",
+      ],
+      sourceUrls: [
+        { label: "Gemini 4 Hydrogen", url: HYDROGEN },
+        { label: "API pricing", url: PRICING },
+      ],
+      verified: { specs: true, apiPricing: true, consumerAccess: true },
+    },
+    {
+      id: "gemini-4-carbon",
+      name: "Gemini 4 Carbon",
+      releaseDate: "2026-11-10",
+      releaseDateVerified: true,
+      status: "current",
+      role: "flagship",
+      contextWindow: { tokens: null, verified: false, note: "The 2026-11-10 availability post does not state a context window." },
+      maxOutput: { tokens: null, verified: false, note: "The 2026-11-10 availability post does not state a max output." },
+      apiPriceInput: {
+        usdPerMillion: 2,
+        verified: true,
+        note: "$4 per 1M input tokens regular from 2026-12-01; introductory $2 per 1M through 2026-11-30. The post says the later price applies to the Carbon model intended for public access only.",
+      },
+      apiPriceOutput: {
+        usdPerMillion: 10,
+        verified: true,
+        note: "$20 per 1M output tokens regular from 2026-12-01; introductory $10 per 1M through 2026-11-30. The post says the later price applies to the Carbon model intended for public access only.",
+      },
+      consumerAccess: {
+        summary:
+          "Available via the Gemini API in Google AI Studio and Gemini for business to all paying developers and enterprises. Rolling out to Google AI Ultra subscribers in the Gemini app, Google Antigravity, and AI Mode in Search.",
+        verified: true,
+      },
+      strengths: [
+        "Google's 2026-11-10 wider release of Carbon, after an earlier Fairwind release to some cybersecurity defenders.",
+        "The post positions it for the hardest multi-step coding, research, and long-horizon agent work.",
+      ],
+      bestFor: "Paid API work and Google AI Ultra subscribers who need the strongest Gemini the post describes.",
+      caveats: [
+        "Introductory API price ends 2026-11-30.",
+        "The post does not state a context window, and it does not use the words generally available.",
+        "The later list price is limited, on the post, to the Carbon model intended for public access.",
+      ],
+      sourceUrls: [{ label: "Gemini 4 Carbon availability", url: CARBON }],
+      verified: { specs: false, apiPricing: true, consumerAccess: true },
+    },
     {
       id: "gemini-4-argon",
       name: "Gemini 4 Argon",

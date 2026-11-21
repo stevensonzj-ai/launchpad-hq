@@ -125,6 +125,7 @@ describe("markdownRewriteTarget", () => {
     assert.equal(get("/platform/chatgpt", CHROME), null);
     assert.equal(get("/platform/chatgpt", null), null);
     assert.equal(get("/pricing", "text/markdown"), null);
+    assert.equal(get("/.well-known/openai-apps-challenge", "text/markdown"), null);
   });
 
   it("never touches RSC/prefetch requests, writes, or the /md route itself", () => {
@@ -162,7 +163,7 @@ describe("route coverage", () => {
     assert.ok(body.indexOf("markdownRewriteTarget") < body.indexOf("return clerk(request, event)"));
     assert.ok(
       proxy.includes(
-        String.raw`"/((?!_next|data/|\\.well-known/openai-apps-challenge|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",`,
+        String.raw`"/((?!_next|data/|\\.well-known/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",`,
       ),
     );
     assert.ok(proxy.includes(`"/(api|trpc)(.*)",`));

@@ -187,6 +187,26 @@ export function buildTutorialIndexStructuredData(
 }
 
 /**
+ * ItemList for the tools on one Discover page, in on-page order. Positions
+ * continue across pages (page 2 starts at `firstPosition` 25).
+ */
+export function buildDiscoverItemListStructuredData(
+  items: Array<{ name: string; slug: string }>,
+  firstPosition = 1,
+): JsonLdNode {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: firstPosition + index,
+      name: item.name,
+      url: absoluteUrl(`/platform/${item.slug}`),
+    })),
+  };
+}
+
+/**
  * Homepage identity: Organization + WebSite. contactPoint is email only and
  * there is deliberately no address of any kind. No sameAs: the site links
  * no official social profiles. The SearchAction targets Discover's real `q`

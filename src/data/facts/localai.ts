@@ -26,10 +26,10 @@ export default {
     note: "localai.io: \"Open source · MIT\"; \"Every feature ships a CPU path first\"; \"A GPU makes it faster but is not required.\" Sponsorship links only.",
     sourceUrl: "https://localai.io/",
     sourceKind: "product-page",
-    checkedAt: "2026-10-29",
+    checkedAt: "2026-11-20",
     gatheredBy: "research-analyst",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-29",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   features: {

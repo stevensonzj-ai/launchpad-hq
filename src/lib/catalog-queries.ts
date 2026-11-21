@@ -64,6 +64,8 @@ export const getSameCategoryPlatforms = cachedCatalogRead(
 /**
  * Discover's filtered list. `where` and `orderBy` are built from the URL's
  * filters (never from the visitor), so each filter combination is one entry.
+ * Uncapped on purpose: Discover pages and applies the popular order in
+ * memory, so a cap would hide tools and cut the list before that sort runs.
  */
 export const getDiscoverPlatforms = cachedCatalogRead(
   "discover-platforms",
@@ -72,7 +74,6 @@ export const getDiscoverPlatforms = cachedCatalogRead(
       where,
       include: { category: true },
       orderBy,
-      take: 200,
     }),
 );
 

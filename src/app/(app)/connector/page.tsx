@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { TOOL_SPECS } from "@/lib/mcp/server";
 import { SCHEMA_VERSION } from "@/lib/public-data/schema";
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = publicPageMetadata({
@@ -323,10 +324,10 @@ export default function ConnectorPage() {
           <p className="mt-2 text-sm text-gray-400">
             Questions or a wrong fact? Email{" "}
             <a
-              href="mailto:launchpadhq.admin@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="text-orange-400 hover:underline"
             >
-              launchpadhq.admin@gmail.com
+              {CONTACT_EMAIL}
             </a>
             .
           </p>

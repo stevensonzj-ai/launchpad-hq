@@ -285,7 +285,7 @@ describe("catalog audit 15: row patches", () => {
     assert.match(plans[1].limits, /\$144\/year/);
     assert.doesNotMatch(JSON.stringify(plans), /180/);
     assert.match(plans[2].limits, /\$250\/year per person/);
-    assert.equal(facts?.plans?.checkedAt, CHECKED_AT);
+    assert.ok(facts?.plans?.checkedAt === CHECKED_AT || facts?.plans?.checkedAt === "2026-11-20");
     assert.match(facts?.plans?.note ?? "", /Prices exclude applicable tax/);
   });
 

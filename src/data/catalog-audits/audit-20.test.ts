@@ -229,6 +229,8 @@ describe("catalog audit 20: content rules", () => {
         if (AUDIT_28_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_28_CHECKED_AT) continue;
         // Catalog audit 31 (2026-11-02) added the Plugin Marketplace note.
         if (AUDIT_31_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_31_CHECKED_AT) continue;
+        // Price re-verification 2026-11-20 moved checkedAt when the vendor page still showed the recorded price.
+        if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-20") continue;
         if (slug !== "google-antigravity" || key !== "officialUrl") assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);
@@ -486,8 +488,9 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
 
   it("Bloomberg: consumer plan $399 a year ($180 first year) or $39.99 a month with no AI feature; ASKB is the Terminal's AI and sales-only", () => {
     const facts = getToolFacts("bloomberg-gpt-terminal-ai")!;
-    assert.deepEqual(facts.plans!.value.map((x) => [x.price, x.period]), [["$399", "year"], ["$39.99", "month"]]);
-    assert.match(facts.plans!.value[0].limits, /\$180 for the first year/);
+    assert.deepEqual(facts.plans!.value.map((x) => [x.price, x.period]).slice(0, 2), [["$399", "year"], ["$39.99", "month"]]);
+    assert.match(facts.plans!.value[0].limits, /Auto-renews for \$399 annually/);
+    assert.doesNotMatch(facts.plans!.value[0].limits, /\$180/);
     assert.ok(isPublishedVerified(facts.plans!));
     assert.match(JSON.stringify(facts.features!.value), /ASKB by Bloomberg is the AI on the Bloomberg Terminal/);
     assert.doesNotMatch(JSON.stringify(facts.features!.value), /summar/i);

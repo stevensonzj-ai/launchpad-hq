@@ -21,10 +21,10 @@ export default {
     note: "USD, monthly. Usage refreshes weekly; third-party models are billed separately by usage; sold through X Subscription Corp. As of 2026-10-30.",
     sourceUrl: "https://cursor.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

@@ -42,7 +42,6 @@
  * row. Kept free of Prisma and dotenv so it typechecks with the app and can
  * be unit-tested (audit-19.test.ts).
  */
-import antigravityCliFacts from "../facts/antigravity-cli";
 import { ANTIGRAVITY_DESCRIPTION_NEW } from "./audit-21";
 
 export const CHECKED_AT = "2026-10-29";
@@ -523,20 +522,18 @@ export const ANTIGRAVITY_SOURCES = [
 /** Catalog names of alternatives that have rows (snapshot, 2026-10-29). */
 export const ANTIGRAVITY_ALTERNATIVES = ["Gemini CLI", "Claude Code", "OpenAI Codex CLI", "Aider"];
 
-const planPrice = (name: string): string => {
-  const plan = antigravityCliFacts.plans.value.find((p) => p.name === name);
-  if (!plan) throw new Error(`antigravity-cli plans: no ${name}`);
-  return plan.price;
-};
-
-/** Row currentPricing, built from the fact file's plans. */
+/**
+ * Oct 29 audit-row text. Frozen so re-running audit 19/20 stays a no-op on
+ * the snapshot. The 2026-11-20 re-check is in the fact file and in
+ * scripts/sql/catalog-price-ra-recheck-20261120.sql.
+ */
 export function antigravityCurrentPricing(): string {
-  return `$0 for individuals (quota refreshed weekly); Google AI Pro ${planPrice("Google AI Pro")}/mo and Google AI Ultra from ${planPrice("Google AI Ultra")}/mo raise the limits; organisations: Gemini Enterprise from $30 per seat a month, or pay-as-you-go ${AS_OF}`;
+  return `$0 for individuals (quota refreshed weekly); Google AI Pro $19.99/mo and Google AI Ultra from $99.99/mo raise the limits; organisations: Gemini Enterprise from $30 per seat a month, or pay-as-you-go ${AS_OF}`;
 }
 
-/** Row freeTierFeatures, from the fact file's free-tier summary. */
+/** Oct 29 free-tier sentence. See antigravityCurrentPricing. */
 export function antigravityFreeTierFeatures(): string {
-  return `${antigravityCliFacts.freeTier.value.summary} ${AS_OF}`;
+  return `$0 for individuals with a personal Google account (18+, supported countries): a variety of agent models, unlimited Tab completions and Command requests, and a quota refreshed weekly. Numeric limits are not stated. ${AS_OF}`;
 }
 
 /** Every field the new row sets besides categoryId. Shape matches existing rows. */

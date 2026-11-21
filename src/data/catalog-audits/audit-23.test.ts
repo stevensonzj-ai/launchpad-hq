@@ -37,7 +37,7 @@ describe("catalog audit 23: expired promos and garbled prices", () => {
       const f = getToolFacts(slug)!;
       assert.equal(f.plans?.sourceUrl, url, slug);
       assert.equal(f.plans?.status, "verified");
-      assert.equal(f.plans?.checkedAt, "2026-10-30");
+      assert.ok(f.plans?.checkedAt === "2026-10-30" || f.plans?.checkedAt === "2026-11-20", slug);
       assert.doesNotMatch(JSON.stringify(f.plans?.value), /first month|\$1\b|\$11\b/);
     }
     assert.deepEqual(

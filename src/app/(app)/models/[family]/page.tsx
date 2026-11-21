@@ -3,9 +3,14 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getModelFamilyBySlug, listModelFamilySlugs } from "@/data/models";
 import { PlatformModelsSection } from "@/components/models/platform-models-section";
-import { publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
+import { NOT_FOUND_METADATA, publicPageMetadata, withFeedAlternate } from "@/lib/seo-metadata";
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { platformCatalogLinks } from "@/lib/catalog-names";
+
+// Unknown families are unmatched routes, so the root not-found page renders on the
+// server. A notFound() call in the page sends an empty HTML body that only
+// fills in once the browser runs the scripts (Next's error-recovery shell).
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return listModelFamilySlugs().map((family) => ({ family }));
@@ -14,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ family: string }> }) {
   const { family: familySlug } = await params;
   const family = getModelFamilyBySlug(familySlug);
-  if (!family) return { title: "Models | Launchpad HQ" };
+  if (!family) return NOT_FOUND_METADATA;
   return withFeedAlternate(
     publicPageMetadata({
       title: `${family.displayName} models | Launchpad HQ`,

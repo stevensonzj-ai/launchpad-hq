@@ -16,10 +16,10 @@ export default {
     note: "USD. $50 free credit on signup, no card. As of 2026-10-30.",
     sourceUrl: "https://www.assemblyai.com/pricing",
     sourceKind: "plans-page",
-    checkedAt: "2026-10-30",
+    checkedAt: "2026-11-20",
     gatheredBy: "claude-sonnet",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-10-30",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-20",
     status: "verified",
   },
   changelog: [

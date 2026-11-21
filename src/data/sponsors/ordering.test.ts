@@ -79,19 +79,18 @@ describe("sponsor placements stay off ranking surfaces", () => {
   });
 
   it("Discover orderBy contract has no sponsor fields", () => {
-    assert.deepEqual(discoverOrderBy("popular"), [
-      { featured: "desc" },
-      { name: "asc" },
-    ]);
+    assert.deepEqual(discoverOrderBy("popular"), [{ name: "asc" }]);
     assert.deepEqual(discoverOrderBy("alpha"), [{ name: "asc" }]);
     assert.deepEqual(discoverOrderBy("recent"), [{ createdAt: "desc" }]);
   });
 
   it("Discover sort is identical with and without an active live placement", () => {
     const catalog: DiscoverSortable[] = [
-      { name: "Zed Tool", featured: true, createdAt: new Date("2026-01-01") },
-      { name: "Alpha Tool", featured: false, createdAt: new Date("2026-06-01") },
+      // "chatgpt" is on the editorial popular list, so "popular" moves it first.
+      { slug: "chatgpt", name: "Zed Tool", featured: true, createdAt: new Date("2026-01-01") },
+      { slug: "alpha-tool", name: "Alpha Tool", featured: false, createdAt: new Date("2026-06-01") },
       {
+        slug: "test-sponsor-tool",
         name: TEST_ONLY_EXAMPLE_PLACEMENT.sponsorName,
         featured: false,
         createdAt: new Date("2026-03-01"),

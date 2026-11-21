@@ -115,6 +115,9 @@ import pipecatFacts from "./pipecat";
 // X-watch 2026-11-05: Tencent Hy4 and LongCat 2.5 (new rows).
 import tencentHy4Facts from "./tencent-hy4";
 import longcat25Facts from "./longcat-2-5";
+// X-watch 2026-11-12: Muse Ember and Gemini Decisions API (new rows).
+import museEmberFacts from "./muse-ember";
+import geminiDecisionsApiFacts from "./gemini-decisions-api";
 // Stale facts batch 1, 2026-10-29 (catalog audit 17).
 import ai21LabsJambaFacts from "./ai21-labs-jamba";
 import connectedPapersFacts from "./connected-papers";
@@ -357,6 +360,9 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   // X-watch 2026-11-05: Tencent Hy4 and LongCat 2.5 (new rows).
   [tencentHy4Facts.slug]: tencentHy4Facts,
   [longcat25Facts.slug]: longcat25Facts,
+  // X-watch 2026-11-12: Muse Ember and Gemini Decisions API (new rows).
+  [museEmberFacts.slug]: museEmberFacts,
+  [geminiDecisionsApiFacts.slug]: geminiDecisionsApiFacts,
   // Stale facts batch 1, 2026-10-29 (catalog audit 17).
   [ai21LabsJambaFacts.slug]: ai21LabsJambaFacts,
   [connectedPapersFacts.slug]: connectedPapersFacts,

@@ -18,12 +18,11 @@ export default {
       available: true,
       summary: "Limited use",
     },
+    note: "Recheck 2026-11-14: higgsfield.ai/pricing HTML had no plan prices, so this line was not reconfirmed.",
     sourceUrl: "https://higgsfield.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   plans: {
     value: [
@@ -52,13 +51,11 @@ export default {
         limits: "",
       },
     ],
-    note: "/pricing is empty to WebFetch and curl, so all plan prices are browser-verified 2026-10-14: Starter $19, Plus $47/$59, Ultra $99/$129, Teams from $65.",
+    note: "/pricing is empty to WebFetch and curl, so all plan prices are browser-verified 2026-10-14: Starter $19, Plus $47/$59, Ultra $99/$129, Teams from $65. Recheck 2026-11-14: higgsfield.ai/pricing HTML had no dollar amounts, so these prices were not reconfirmed.",
     sourceUrl: "https://higgsfield.ai/pricing",
     checkedAt: "2026-10-14",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
-    status: "verified",
+    status: "unverified",
   },
   models: {
     value: [

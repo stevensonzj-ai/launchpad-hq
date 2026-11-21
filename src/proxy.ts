@@ -1,52 +1,17 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import { markdownRewriteTarget, RSC_REQUEST_HEADERS } from "@/lib/markdown/negotiate";
+import { PROTECTED_ROUTE_PATTERNS } from "@/lib/protected-routes";
 
-/** Browse-first: most routes stay public; only gated areas require auth. */
-const isPublicRoute = createRouteMatcher([
-  "/",
-  "/discover(.*)",
-  "/platform(.*)",
-  "/tutorials(.*)",
-  "/workflows(.*)",
-  "/models(.*)",
-  "/compare(.*)",
-  "/alternatives(.*)",
-  "/quiz(.*)",
-  "/for-you(.*)",
-  "/pricing(.*)",
-  "/privacy(.*)",
-  "/terms(.*)",
-  "/how-we-make-money(.*)",
-  "/sponsor-guidelines(.*)",
-  "/advertise(.*)",
-  "/ai-of-the-week(.*)",
-  "/connector(.*)",
-  "/about(.*)",
-  "/contact(.*)",
-  "/support(.*)",
-  "/developers(.*)",
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api(.*)",
-  "/sitemap.xml",
-  "/robots.txt",
-  "/llms.txt",
-  "/llms-full.txt",
-  // OpenAI apps domain check. Also excluded from the matcher below, so Clerk
-  // never redirects it or attaches auth headers. Body is the public file.
-  "/.well-known/openai-apps-challenge",
-  // Read-only MCP connector: anonymous by design (no auth in v0.1).
-  // Without this, auth.protect() would block signed-out MCP clients.
-  "/mcp",
-  // Public JSON feed. Also excluded from the matcher below, so Clerk never
-  // adds cookies or private cache headers to it.
-  "/data(.*)",
-  // Markdown versions of public pages (src/app/md). Normally reached by the
-  // Accept: text/markdown rewrite below, which skips Clerk; listed so a
-  // direct request is not sent to sign-in.
-  "/md(.*)",
-]);
+/**
+ * Browse-first: everything is public except the few pages that need a
+ * signed-in user (see src/lib/protected-routes.ts). Unknown addresses fall
+ * through to the 404 page instead of sign-in.
+ *
+ * /.well-known is not listed here. It is excluded from the matcher below, so
+ * this function never runs for the OpenAI apps domain file.
+ */
+const isProtectedRoute = createRouteMatcher(PROTECTED_ROUTE_PATTERNS);
 
 /**
  * Category slugs from the 2026-05 restructure whose platforms fanned out
@@ -73,7 +38,7 @@ const clerk = clerkMiddleware(async (auth, request) => {
     }
   }
 
-  if (!isPublicRoute(request)) {
+  if (isProtectedRoute(request)) {
     await auth.protect();
   }
 });
@@ -103,9 +68,10 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
 
 export const config = {
   matcher: [
-    // `\\.well-known/openai-apps-challenge` is the extensionless domain file.
-    // It has no skipped extension, so without this it would hit Clerk.
-    "/((?!_next|data/|\\.well-known/openai-apps-challenge|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
+    // `\\.well-known/` is the OpenAI apps domain file. It has no skipped
+    // extension, so without this the proxy would run on it and Clerk could
+    // attach auth headers. Same treatment as the public JSON feed under data/.
+    "/((?!_next|data/|\\.well-known/|[^?]*\\.(?:html?|css|js(?!on)|ico|png|jpg|jpeg|gif|svg|webp|avif|ttf|woff2?|csv|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };

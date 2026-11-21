@@ -1,0 +1,469 @@
+/**
+ * Catalog statement guard for automated production Guarded SQL runs.
+ *
+ * splitSql, then strip comments and string literals. Every statement must
+ * start with UPDATE or INSERT INTO. Unquoted forbidden words are refused
+ * anywhere outside comments and strings. A call outside the INSERT column
+ * list must be on the function allowlist, and a schema-qualified call is
+ * refused. Quoted identifiers keep their case, so "PLATFORMS" is not platforms.
+ */
+import { splitSql } from "./split";
+
+export const CATALOG_SQL_TABLES = ["categories", "platforms"] as const;
+const ALLOWED = new Set<string>(CATALOG_SQL_TABLES);
+
+const FORBIDDEN = new Set([
+  "alter",
+  "authorization",
+  "call",
+  "copy",
+  "create",
+  "declare",
+  "delete",
+  "do",
+  "drop",
+  "execute",
+  "grant",
+  "import",
+  "listen",
+  "load",
+  "lock",
+  "merge",
+  "notify",
+  "perform",
+  "prepare",
+  "refresh",
+  "reset",
+  "revoke",
+  "role",
+  "truncate",
+  "vacuum",
+]);
+
+/** Calls allowed outside an INSERT column list. Compared case-insensitively for unquoted names. */
+export const ALLOWED_FUNCTIONS = new Set([
+  "array_append",
+  "array_cat",
+  "array_remove",
+  "btrim",
+  "coalesce",
+  "concat",
+  "concat_ws",
+  "greatest",
+  "jsonb_build_array",
+  "jsonb_build_object",
+  "jsonb_set",
+  "least",
+  "length",
+  "lower",
+  "now",
+  "nullif",
+  "replace",
+  "to_jsonb",
+  "trim",
+  "upper",
+]);
+
+/** Words that may be followed by "(" without being a function call. */
+const CALL_KEYWORDS = new Set(["all", "and", "any", "array", "cast", "exists", "in", "not", "or", "values"]);
+
+/** Words that start a clause, so they are not table aliases. */
+const CLAUSE = new Set([
+  "all", "alter", "and", "any", "as", "asc", "begin", "between", "by", "case", "cast", "check",
+  "collate", "commit", "conflict", "constraint", "copy", "create", "cross", "current_date",
+  "current_time", "current_timestamp", "current_user", "default", "delete", "desc", "distinct",
+  "do", "drop", "else", "end", "except", "exists", "false", "fetch", "for", "foreign", "from",
+  "full", "grant", "group", "having", "if", "in", "index", "inner", "insert", "intersect", "into",
+  "is", "join", "key", "lateral", "left", "like", "limit", "local", "natural", "not", "null",
+  "offset", "on", "only", "or", "order", "outer", "over", "primary", "recursive",
+  "references", "replace", "returning", "revoke", "right", "rollback", "select", "session",
+  "session_user", "set", "table", "temp", "temporary", "then", "to", "true", "truncate", "union",
+  "update", "using", "values", "when", "where", "window", "with",
+]);
+
+const INTRODUCERS = new Set(["copy", "from", "into", "join", "table", "update"]);
+
+export type CatalogGuardResult =
+  | { ok: true; tables: string[] }
+  | { ok: false; reason: string };
+
+class GuardParseError extends Error {}
+
+interface Tok {
+  kind: "word" | "quoted" | "sym";
+  value: string;
+}
+
+/**
+ * One left-to-right state machine. A state never looks for a different
+ * construct, so a quote, comment, or dollar tag inside another construct
+ * cannot hide the code that follows. States: normal, line comment, nested
+ * block comment, single-quoted string (including E'' escapes), dollar quote,
+ * and double-quoted identifier (including U&"..."). "" inside an identifier
+ * is one escaped quote. The identifier is copied through verbatim.
+ */
+export function stripCommentsAndStrings(sql: string): string {
+  type State =
+    | { kind: "normal" }
+    | { kind: "line" }
+    | { kind: "block"; depth: number }
+    | { kind: "single"; escape: boolean }
+    | { kind: "dollar"; tag: string }
+    | { kind: "quoted" };
+
+  let out = "";
+  const n = sql.length;
+  let i = 0;
+  let state: State = { kind: "normal" };
+  const identBoundary = (idx: number) => idx <= 0 || !/[A-Za-z0-9_$]/.test(sql[idx - 1]!);
+
+  while (i < n) {
+    const c = sql[i]!;
+    const next = sql[i + 1];
+
+    switch (state.kind) {
+      case "quoted": {
+        if (c === '"') {
+          if (next === '"') {
+            out += '""';
+            i += 2;
+            break;
+          }
+          out += '"';
+          i++;
+          state = { kind: "normal" };
+          break;
+        }
+        out += c;
+        i++;
+        break;
+      }
+      case "line": {
+        if (c === "\n" || c === "\r") {
+          out += c;
+          i++;
+          state = { kind: "normal" };
+          break;
+        }
+        i++;
+        break;
+      }
+      case "block": {
+        if (c === "/" && next === "*") {
+          state = { kind: "block", depth: state.depth + 1 };
+          i += 2;
+          break;
+        }
+        if (c === "*" && next === "/") {
+          i += 2;
+          if (state.depth === 1) {
+            out += " ";
+            state = { kind: "normal" };
+          } else {
+            state = { kind: "block", depth: state.depth - 1 };
+          }
+          break;
+        }
+        i++;
+        break;
+      }
+      case "single": {
+        if (state.escape && c === "\\") {
+          i += 2;
+          break;
+        }
+        if (c === "'") {
+          if (next === "'") {
+            i += 2;
+            break;
+          }
+          i++;
+          out += " ";
+          state = { kind: "normal" };
+          break;
+        }
+        i++;
+        break;
+      }
+      case "dollar": {
+        if (sql.startsWith(state.tag, i)) {
+          i += state.tag.length;
+          out += " ";
+          state = { kind: "normal" };
+          break;
+        }
+        i++;
+        break;
+      }
+      case "normal": {
+        const unicodeIdent = (c === "U" || c === "u") && next === "&" && sql[i + 2] === '"' && identBoundary(i);
+        if (c === '"' || unicodeIdent) {
+          if (unicodeIdent) {
+            out += `${c}&`;
+            i += 2;
+          }
+          out += '"';
+          i++;
+          state = { kind: "quoted" };
+          break;
+        }
+        if (c === "-" && next === "-") {
+          i += 2;
+          out += " ";
+          state = { kind: "line" };
+          break;
+        }
+        if (c === "/" && next === "*") {
+          i += 2;
+          state = { kind: "block", depth: 1 };
+          break;
+        }
+        if (c === "'") {
+          const prev = i > 0 ? sql[i - 1] : "";
+          const escape = (prev === "E" || prev === "e") && identBoundary(i - 1);
+          i++;
+          state = { kind: "single", escape };
+          break;
+        }
+        if (c === "$" && identBoundary(i)) {
+          const m = /^\$([A-Za-z_][A-Za-z0-9_]*)?\$/.exec(sql.slice(i, i + 130));
+          if (m) {
+            i += m[0].length;
+            state = { kind: "dollar", tag: m[0] };
+            break;
+          }
+        }
+        if (c.charCodeAt(0) > 0x7f) {
+          throw new GuardParseError("non-ASCII character outside a string, comment, or quoted identifier");
+        }
+        out += c;
+        i++;
+        break;
+      }
+    }
+  }
+
+  if (state.kind === "quoted") throw new GuardParseError("Unterminated double-quoted identifier");
+  if (state.kind === "block") throw new GuardParseError("Unterminated block comment");
+  if (state.kind === "single") throw new GuardParseError("Unterminated single-quoted string");
+  if (state.kind === "dollar") throw new GuardParseError(`Unterminated dollar-quoted body ${state.tag}`);
+  return out;
+}
+
+function tokenize(code: string): Tok[] {
+  const out: Tok[] = [];
+  let i = 0;
+  while (i < code.length) {
+    const c = code[i]!;
+    if (/\s/.test(c)) {
+      i++;
+      continue;
+    }
+    if (c === '"') {
+      let j = i + 1;
+      let value = "";
+      let closed = false;
+      while (j < code.length) {
+        if (code[j] === '"') {
+          if (code[j + 1] === '"') {
+            value += '"';
+            j += 2;
+            continue;
+          }
+          j++;
+          closed = true;
+          break;
+        }
+        value += code[j];
+        j++;
+      }
+      if (!closed) throw new GuardParseError("Unterminated double-quoted identifier");
+      out.push({ kind: "quoted", value });
+      i = j;
+      continue;
+    }
+    if (/[A-Za-z_]/.test(c)) {
+      let j = i + 1;
+      while (j < code.length && /[A-Za-z0-9_$]/.test(code[j]!)) j++;
+      out.push({ kind: "word", value: code.slice(i, j) });
+      i = j;
+      continue;
+    }
+    out.push({ kind: "sym", value: c });
+    i++;
+  }
+  return out;
+}
+
+function isIdent(t: Tok | undefined): t is Tok {
+  return !!t && (t.kind === "word" || t.kind === "quoted");
+}
+
+function skipAlias(tokens: Tok[], i: number): number {
+  const t = tokens[i];
+  if (t?.kind === "word" && t.value.toLowerCase() === "as") {
+    const alias = tokens[i + 1];
+    return isIdent(alias) ? i + 2 : i + 1;
+  }
+  if (t?.kind === "quoted") return i + 1;
+  if (t?.kind === "word" && !CLAUSE.has(t.value.toLowerCase())) return i + 1;
+  return i;
+}
+
+/** One relation, or a comma-separated list (`FROM a, b`). `(subquery)` is not a relation. */
+function readRelations(tokens: Tok[], start: number): { names: string[]; next: number } | null {
+  let i = start;
+  const names: string[] = [];
+  const readOne = (): boolean => {
+    while (
+      tokens[i]?.kind === "word" &&
+      (tokens[i]!.value.toLowerCase() === "only" || tokens[i]!.value.toLowerCase() === "lateral")
+    ) {
+      i++;
+    }
+    const first = tokens[i];
+    if (!isIdent(first)) return false;
+    if (first.kind === "word" && CLAUSE.has(first.value.toLowerCase())) return false;
+    i++;
+    let schemaTok: Tok | null = null;
+    let nameTok = first;
+    if (tokens[i]?.kind === "sym" && tokens[i]?.value === "." && isIdent(tokens[i + 1])) {
+      schemaTok = first;
+      nameTok = tokens[i + 1]!;
+      i += 2;
+    }
+    const table = nameTok.kind === "quoted" ? nameTok.value : nameTok.value.toLowerCase();
+    if (!schemaTok) names.push(table);
+    else {
+      const pub = schemaTok.kind === "quoted" ? schemaTok.value === "public" : schemaTok.value.toLowerCase() === "public";
+      const schema = schemaTok.kind === "quoted" ? schemaTok.value : schemaTok.value.toLowerCase();
+      names.push(pub ? table : `${schema}.${table}`);
+    }
+    i = skipAlias(tokens, i);
+    return true;
+  };
+  if (!readOne()) return null;
+  while (tokens[i]?.kind === "sym" && tokens[i]?.value === ",") {
+    i++;
+    if (!readOne()) break;
+  }
+  return { names, next: i };
+}
+
+export function tablesTouched(sql: string): string[] {
+  const tokens = tokenize(stripCommentsAndStrings(sql));
+  const found: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i]!;
+    if (t.kind !== "word" || !INTRODUCERS.has(t.value.toLowerCase())) continue;
+    const rel = readRelations(tokens, i + 1);
+    if (!rel) continue;
+    found.push(...rel.names);
+    i = rel.next - 1;
+  }
+  return [...new Set(found)];
+}
+
+function wordIs(t: Tok | undefined, word: string): boolean {
+  return t?.kind === "word" && t.value.toLowerCase() === word;
+}
+
+function matchParen(tokens: Tok[], open: number): number {
+  let depth = 0;
+  for (let i = open; i < tokens.length; i++) {
+    if (tokens[i]?.kind === "sym" && tokens[i]?.value === "(") depth++;
+    else if (tokens[i]?.kind === "sym" && tokens[i]?.value === ")") {
+      depth--;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+}
+
+function statementHead(tokens: Tok[]): { ok: true; columnList: { open: number; close: number } | null } | { ok: false; reason: string } {
+  const refuse = "Catalog statement guard: refusing a statement that does not start with UPDATE or INSERT INTO.";
+  if (wordIs(tokens[0], "update")) return { ok: true, columnList: null };
+  if (!(wordIs(tokens[0], "insert") && wordIs(tokens[1], "into"))) return { ok: false, reason: refuse };
+  let i = 2;
+  while (wordIs(tokens[i], "only") || wordIs(tokens[i], "lateral")) i++;
+  if (!isIdent(tokens[i])) return { ok: false, reason: refuse };
+  i++;
+  if (tokens[i]?.kind === "sym" && tokens[i]?.value === "." && isIdent(tokens[i + 1])) i += 2;
+  if (wordIs(tokens[i], "as")) {
+    i++;
+    if (isIdent(tokens[i])) i++;
+  } else if (isIdent(tokens[i]) && !(tokens[i]!.kind === "word" && CLAUSE.has(tokens[i]!.value.toLowerCase()))) {
+    i++;
+  }
+  if (tokens[i]?.kind === "sym" && tokens[i]?.value === "(") {
+    const close = matchParen(tokens, i);
+    if (close < 0) return { ok: false, reason: "Catalog statement guard: Unterminated column list" };
+    return { ok: true, columnList: { open: i, close } };
+  }
+  return { ok: true, columnList: null };
+}
+
+function checkCalls(tokens: Tok[], columnList: { open: number; close: number } | null): string | null {
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i]?.kind !== "sym" || tokens[i]?.value !== "(") continue;
+    if (columnList && i >= columnList.open && i <= columnList.close) continue;
+    const name = tokens[i - 1];
+    if (!isIdent(name)) continue;
+    if (name.kind === "word" && CALL_KEYWORDS.has(name.value.toLowerCase())) continue;
+    const dot = tokens[i - 2];
+    if (dot?.kind === "sym" && dot.value === ".") {
+      return "Catalog statement guard: refusing schema-qualified call.";
+    }
+    const key = name.kind === "quoted" ? name.value : name.value.toLowerCase();
+    if (!ALLOWED_FUNCTIONS.has(key)) {
+      return `Catalog statement guard: refusing function ${key}.`;
+    }
+  }
+  return null;
+}
+
+export function guardCatalogSql(sql: string): CatalogGuardResult {
+  let statements: string[];
+  try {
+    statements = splitSql(sql);
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : "could not parse SQL";
+    return { ok: false, reason: `Catalog statement guard: ${reason}` };
+  }
+  const tables: string[] = [];
+  for (const statement of statements) {
+    let tokens: Tok[];
+    try {
+      tokens = tokenize(stripCommentsAndStrings(statement));
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : "could not parse SQL";
+      return { ok: false, reason: `Catalog statement guard: ${reason}` };
+    }
+    const head = statementHead(tokens);
+    if (!head.ok) return head;
+    for (const t of tokens) {
+      if (t.kind === "word" && FORBIDDEN.has(t.value.toLowerCase())) {
+        return { ok: false, reason: `Catalog statement guard: refusing forbidden SQL keyword ${t.value.toUpperCase()}.` };
+      }
+    }
+    for (let i = 0; i < tokens.length; i++) {
+      const t = tokens[i]!;
+      if (t.kind !== "word" || !INTRODUCERS.has(t.value.toLowerCase())) continue;
+      const rel = readRelations(tokens, i + 1);
+      if (!rel) continue;
+      tables.push(...rel.names);
+      i = rel.next - 1;
+    }
+    const call = checkCalls(tokens, head.columnList);
+    if (call) return { ok: false, reason: call };
+  }
+  const unique = [...new Set(tables)];
+  const bad = unique.filter((name) => !ALLOWED.has(name));
+  if (bad.length > 0) {
+    return {
+      ok: false,
+      reason: `Catalog statement guard: refusing table ${bad.join(", ")}. Allowed tables: ${CATALOG_SQL_TABLES.join(", ")}.`,
+    };
+  }
+  return { ok: true, tables: unique };
+}

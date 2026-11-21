@@ -1,3 +1,6 @@
+import "./branch-name.test.ts";
+import "./self-snapshot.test.ts";
+import "./statement-guard.test.ts";
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { verifySnapshot, type FetchLike, type SnapshotCheckInput } from "./snapshot";

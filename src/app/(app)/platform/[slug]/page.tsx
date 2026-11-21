@@ -13,7 +13,7 @@ import { getModelFamilyForPlatform } from "@/data/models";
 import { getToolFacts, overlayPlatformWithFacts } from "@/data/facts";
 import { getStaticTutorialForPlatform, tutorialGuidePath } from "@/data/tutorials";
 import { staticTutorialCount } from "@/lib/platform-display";
-import { buildPlatformMetadata } from "@/lib/seo-metadata";
+import { buildPlatformMetadata, NOT_FOUND_METADATA } from "@/lib/seo-metadata";
 import { getAffiliateLink } from "@/data/affiliates";
 import { buildPlatformStructuredData, officialSiteHref } from "@/lib/seo-jsonld";
 import { dataAsOf, listedRelatedRows, publicToolCore } from "@/lib/public-data/serialize";
@@ -35,7 +35,7 @@ import {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const platform = await getPlatformPageRow(slug);
-  if (!platform) return { title: "Not Found" };
+  if (!platform) return NOT_FOUND_METADATA;
   return buildPlatformMetadata({
     slug,
     name: platform.name,
