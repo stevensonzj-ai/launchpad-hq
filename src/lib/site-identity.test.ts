@@ -78,7 +78,8 @@ describe("trust pages", () => {
   it("about and contact have 500+ characters of copy and are in the sitemap and footer", () => {
     assert.ok(text(ABOUT_SECTIONS).length > 500);
     assert.ok(text(CONTACT_SECTIONS).length > 500);
-    const footer = readFileSync("src/components/layout/footer.tsx", "utf8");
+    // Footer links live in nav-links.ts (single source for header and footer).
+    const footer = readFileSync("src/components/layout/nav-links.ts", "utf8");
     for (const path of ["/about", "/contact", "/developers"]) {
       assert.ok((SITEMAP_STATIC_PUBLIC_PATHS as readonly string[]).includes(path), path);
       assert.ok(footer.includes(`href: "${path}"`), path);

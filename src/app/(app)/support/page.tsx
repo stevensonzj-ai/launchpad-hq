@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { publicPageMetadata } from "@/lib/seo-metadata";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 
 export const metadata: Metadata = publicPageMetadata({
   title: "Support | Launchpad HQ",
@@ -10,7 +11,7 @@ export const metadata: Metadata = publicPageMetadata({
   path: "/support",
 });
 
-const SUPPORT_EMAIL = "launchpadhq.admin@gmail.com";
+const SUPPORT_EMAIL = CONTACT_EMAIL;
 
 export default function SupportPage() {
   return (

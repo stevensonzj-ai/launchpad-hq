@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { CONTACT_EMAIL } from "@/lib/site-copy";
 
-const MAIL = "launchpadhq.admin@gmail.com";
+const MAIL = CONTACT_EMAIL;
 
 /**
  * Sponsor guidelines copy from sponsor-guidelines-copy-ship-v2.md, used only
