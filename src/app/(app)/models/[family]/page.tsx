@@ -7,6 +7,10 @@ import { NOT_FOUND_METADATA, publicPageMetadata, withFeedAlternate } from "@/lib
 import { CatalogLinkList } from "@/components/seo/catalog-link-list";
 import { platformCatalogLinks } from "@/lib/catalog-names";
 
+// Unknown families are unmatched routes, so the root not-found page renders
+// on the server (a notFound() call here only rendered it in the browser).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return listModelFamilySlugs().map((family) => ({ family }));
 }
