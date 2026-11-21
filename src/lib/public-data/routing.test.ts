@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import robots from "@/app/robots";
+import { PROTECTED_ROUTE_PATTERNS } from "@/lib/protected-routes";
 
 /**
  * proxy.ts must keep literal matcher strings (Next analyzes `config`
@@ -40,50 +41,18 @@ describe("middleware matcher", () => {
     }
   });
 
-  it("never runs Clerk on llms.txt or llms-full.txt, and lists both as public", () => {
+  it("never runs Clerk on llms.txt or llms-full.txt, and never asks for sign-in there", () => {
     for (const path of ["/llms.txt", "/llms-full.txt"]) {
       assert.equal(runsMiddleware(path), false, path);
-      assert.ok(proxySource.includes(`"${path}",`), path);
+      assert.ok(!PROTECTED_ROUTE_PATTERNS.some((p) => p.startsWith(path)), path);
     }
   });
 
-  it("makes nothing else public: the public list is exactly the expected routes", () => {
-    const block = /createRouteMatcher\(\[([\s\S]*?)\]\)/.exec(proxySource)?.[1] ?? "";
-    const routes = [...block.matchAll(/^\s*"([^"]+)",/gm)].map((m) => m[1]);
-    assert.deepEqual(routes, [
-      "/",
-      "/discover(.*)",
-      "/platform(.*)",
-      "/tutorials(.*)",
-      "/workflows(.*)",
-      "/models(.*)",
-      "/compare(.*)",
-      "/alternatives(.*)",
-      "/quiz(.*)",
-      "/for-you(.*)",
-      "/pricing(.*)",
-      "/privacy(.*)",
-      "/terms(.*)",
-      "/how-we-make-money(.*)",
-      "/sponsor-guidelines(.*)",
-      "/advertise(.*)",
-      "/ai-of-the-week(.*)",
-      "/connector(.*)",
-      "/about(.*)",
-      "/contact(.*)",
-      "/support(.*)",
-      "/developers(.*)",
-      "/sign-in(.*)",
-      "/sign-up(.*)",
-      "/api(.*)",
-      "/sitemap.xml",
-      "/robots.txt",
-      "/llms.txt",
-      "/llms-full.txt",
-      "/mcp",
-      "/data(.*)",
-      "/md(.*)",
-    ]);
+  it("asks for sign-in only on the protected list, not on public paths", () => {
+    // Which pages need sign-in now lives in src/lib/protected-routes.ts and is
+    // covered by protected-routes.test.ts; the proxy only applies that list.
+    assert.match(proxySource, /createRouteMatcher\(PROTECTED_ROUTE_PATTERNS\)/);
+    assert.doesNotMatch(proxySource, /isPublicRoute/);
   });
 
   it("still runs on pages and API routes", () => {
@@ -92,8 +61,8 @@ describe("middleware matcher", () => {
     }
   });
 
-  it("lists /data as a public route", () => {
-    assert.match(proxySource, /"\/data\(\.\*\)"/);
+  it("never asks for sign-in on /data", () => {
+    assert.ok(!PROTECTED_ROUTE_PATTERNS.some((p) => p.startsWith("/data")));
   });
 });
 
