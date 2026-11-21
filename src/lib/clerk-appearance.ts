@@ -23,7 +23,9 @@ export const clerkAppearance = {
     colorInput: "var(--color-gray-950)",
     colorInputForeground: "var(--color-white)",
     colorNeutral: "var(--color-white)",
-    colorBorder: "var(--color-gray-700)",
+    // Clerk draws borders and dividers at roughly 7–11% opacity of this
+    // colour, so a light base is what gives visible lines on a dark card.
+    colorBorder: "var(--color-white)",
     colorRing: "var(--color-orange-500)",
   },
 };
