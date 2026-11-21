@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { getAllWorkflows, getWorkflowBySlug } from "@/data/workflows";
+import { getWorkflowBySlug } from "@/data/workflows";
 import { WorkflowTierComparison } from "@/components/workflows/workflow-tier-comparison";
 import { getPlatformSlugSet } from "@/lib/platform-slugs";
 import { listRegisteredTutorials } from "@/data/tutorials";
@@ -16,15 +16,6 @@ import { loadFeed } from "@/lib/public-data/load";
 // (no prerender, so a build can't fail on Neon or bake in stale prices).
 // Catalog reads come from the shared catalog cache (loadCatalog, getPlatformSlugSet).
 export const dynamic = "force-dynamic";
-
-// Unknown slugs are unmatched routes, so the root not-found page renders on the
-// server. A notFound() call in the page sends an empty HTML body that only
-// fills in once the browser runs the scripts (Next's error-recovery shell).
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return getAllWorkflows().map((w) => ({ slug: w.slug }));
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
