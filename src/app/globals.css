@@ -1,3 +1,6 @@
+/* Clerk's styles go in the `clerk` layer (see src/lib/clerk-appearance.ts),
+   ahead of Tailwind's utilities, so utility classes passed to Clerk win. */
+@layer theme, base, clerk, components, utilities;
 @import "tailwindcss";
 
 :root {

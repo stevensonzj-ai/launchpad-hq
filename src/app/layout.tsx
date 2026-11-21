@@ -7,6 +7,7 @@ import "./globals.css"
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms"
 import { DEFAULT_OG_IMAGE, SITE_IS_PUBLIC, SITE_URL } from "@/lib/site"
 import { BackToTop } from "@/components/layout/back-to-top"
+import { clerkAppearance } from "@/lib/clerk-appearance"
 import { Footer } from "@/components/layout/footer"
 import { FirstTouchCapture } from "@/components/analytics/first-touch-capture"
 
@@ -41,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider publishableKey={clerkPublishableKey}>
+    <ClerkProvider publishableKey={clerkPublishableKey} appearance={clerkAppearance}>
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <body className="min-h-full flex flex-col bg-gray-950 text-white">
           {children}

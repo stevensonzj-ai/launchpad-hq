@@ -1,49 +1,14 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import { markdownRewriteTarget, RSC_REQUEST_HEADERS } from "@/lib/markdown/negotiate";
+import { PROTECTED_ROUTE_PATTERNS } from "@/lib/protected-routes";
 
-/** Browse-first: most routes stay public; only gated areas require auth. */
-const isPublicRoute = createRouteMatcher([
-  "/",
-  "/discover(.*)",
-  "/platform(.*)",
-  "/tutorials(.*)",
-  "/workflows(.*)",
-  "/models(.*)",
-  "/compare(.*)",
-  "/alternatives(.*)",
-  "/quiz(.*)",
-  "/for-you(.*)",
-  "/pricing(.*)",
-  "/privacy(.*)",
-  "/terms(.*)",
-  "/how-we-make-money(.*)",
-  "/sponsor-guidelines(.*)",
-  "/advertise(.*)",
-  "/ai-of-the-week(.*)",
-  "/connector(.*)",
-  "/about(.*)",
-  "/contact(.*)",
-  "/support(.*)",
-  "/developers(.*)",
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api(.*)",
-  "/sitemap.xml",
-  "/robots.txt",
-  "/llms.txt",
-  "/llms-full.txt",
-  // Read-only MCP connector: anonymous by design (no auth in v0.1).
-  // Without this, auth.protect() would block signed-out MCP clients.
-  "/mcp",
-  // Public JSON feed. Also excluded from the matcher below, so Clerk never
-  // adds cookies or private cache headers to it.
-  "/data(.*)",
-  // Markdown versions of public pages (src/app/md). Normally reached by the
-  // Accept: text/markdown rewrite below, which skips Clerk; listed so a
-  // direct request is not sent to sign-in.
-  "/md(.*)",
-]);
+/**
+ * Browse-first: everything is public except the few pages that need a
+ * signed-in user (see src/lib/protected-routes.ts). Unknown addresses fall
+ * through to the 404 page instead of sign-in.
+ */
+const isProtectedRoute = createRouteMatcher(PROTECTED_ROUTE_PATTERNS);
 
 /**
  * Category slugs from the 2026-05 restructure whose platforms fanned out
@@ -70,7 +35,7 @@ const clerk = clerkMiddleware(async (auth, request) => {
     }
   }
 
-  if (!isPublicRoute(request)) {
+  if (isProtectedRoute(request)) {
     await auth.protect();
   }
 });
