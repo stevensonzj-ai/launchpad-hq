@@ -23,9 +23,10 @@
   {
     "slug": "adobe-sensei-firefly-in-cc",
     "name": "Adobe Sensei / Firefly in CC",
-    "file": "adobe-sensei-firefly-in-cc.ico",
+    "file": "adobe-firefly.png",
     "website": "https://adobe.com/sensei",
-    "source": "https://adobe.com/favicon.ico"
+    "source": "https://firefly.adobe.com/releases/9b9be71fb59601063602b08decb89bc0e2d69fad/assets/fi_touch_icon_80-CYMZMllL.png",
+    "note": "Reuses the official Adobe Firefly touch icon (adobe-firefly.png), larger than the previous favicon."
   },
   {
     "slug": "aiva",
@@ -106,9 +107,10 @@
   {
     "slug": "bloomberg-gpt-terminal-ai",
     "name": "Bloomberg GPT / Terminal AI",
-    "file": "bloomberg-gpt-terminal-ai.ico",
+    "file": "bloomberg-gpt-terminal-ai-hq.png",
     "website": "https://bloomberg.com/professional/",
-    "source": "https://bloomberg.com/favicon.ico"
+    "source": "https://professional.bloomberg.com/globalassets/apple-touch-bloomberg.png",
+    "note": "Official WebP touch icon converted to PNG; colors unchanged."
   },
   {
     "slug": "bolt-new",
@@ -145,9 +147,9 @@
   {
     "slug": "capcut",
     "name": "CapCut",
-    "file": "capcut.ico",
+    "file": "capcut-hq.png",
     "website": "https://www.capcut.com",
-    "source": "https://sf16-web-tos-buz.capcutcdn-us.com/obj/capcut-web-buz-tx2/common/images/lv_web-2.ico"
+    "source": "https://sf16-web-tos-buz.capcutcdn-us.com/obj/capcut-web-buz-tx/pwa/512.png"
   },
   {
     "slug": "captions",
@@ -259,9 +261,9 @@
   {
     "slug": "deepgram",
     "name": "Deepgram",
-    "file": "deepgram.ico",
+    "file": "deepgram-hq.png",
     "website": "https://deepgram.com",
-    "source": "https://deepgram.com/favicon.ico?93834efdfdd5438d"
+    "source": "https://deepgram.com/icon-512.png"
   },
   {
     "slug": "deepl",
@@ -349,9 +351,10 @@
   {
     "slug": "firecrawl",
     "name": "Firecrawl",
-    "file": "firecrawl.png",
+    "file": "firecrawl-hq.png",
     "website": "https://www.firecrawl.dev",
-    "source": "https://www.firecrawl.dev/favicon.png"
+    "source": "https://www.firecrawl.dev/apple-touch-icon.png",
+    "note": "Near-white edge matte touching the border cleared to transparency; mark pixels not recolored."
   },
   {
     "slug": "fireflies-ai",
@@ -746,9 +749,9 @@
   {
     "slug": "meta-ai",
     "name": "Meta AI",
-    "file": "meta-ai.ico",
+    "file": "meta-ai-hq.png",
     "website": "https://www.meta.ai",
-    "source": "https://www.meta.ai/favicon.ico"
+    "source": "https://www.meta.ai/images/pwa_icons/any/512.png"
   },
   {
     "slug": "microsoft-copilot",
@@ -967,9 +970,9 @@
   {
     "slug": "poe",
     "name": "Poe",
-    "file": "poe.ico",
+    "file": "poe.svg",
     "website": "https://poe.com",
-    "source": "https://poe.com/favicon.ico"
+    "source": "https://psc2.cf2.poecdn.net/assets/favicon.svg"
   },
   {
     "slug": "qwen",
@@ -1141,9 +1144,10 @@
   {
     "slug": "slack-ai",
     "name": "Slack AI",
-    "file": "slack-ai.png",
+    "file": "slack-ai-hq.png",
     "website": "https://slack.com/features/ai",
-    "source": "https://a.slack-edge.com/9cc0056/img/icons/favicon-32.png"
+    "source": "https://slack.com/favicon.ico",
+    "note": "256px frame of the official ICO saved as PNG."
   },
   {
     "slug": "soundraw",
@@ -1223,9 +1227,10 @@
   {
     "slug": "tl-dv",
     "name": "tl;dv",
-    "file": "tl-dv.png",
+    "file": "tl-dv-hq.png",
     "website": "https://tldv.io",
-    "source": "https://tldv.io/faviconV2.png"
+    "source": "https://tldv.io/apple-touch-icon.png",
+    "note": "Served as WebP; converted to PNG, colors unchanged."
   },
   {
     "slug": "together-ai",
@@ -1552,5 +1557,150 @@
     "website": "https://scite.ai",
     "source": "https://cdn.scite.ai/assets/images/favicon.ico",
     "note": "Official site icon added where the catalog previously had no local asset."
+  },
+  {
+    "slug": "quizlet-q-chat",
+    "name": "Ask Quizlet",
+    "file": "quizlet-q-chat.png",
+    "website": "https://quizlet.com",
+    "source": "https://assets.quizlet.com/static/brandmark/512.png"
+  },
+  {
+    "slug": "clio-manage",
+    "name": "Clio Manage",
+    "file": "clio-manage.png",
+    "website": "https://www.clio.com",
+    "source": "https://www.clio.com/favicons/production-apple-touch-icon.png"
+  },
+  {
+    "slug": "gamma",
+    "name": "Gamma",
+    "file": "gamma.png",
+    "website": "https://gamma.app",
+    "source": "https://gamma.app/icons/pwa-icon-512x512.png"
+  },
+  {
+    "slug": "glasp",
+    "name": "Glasp",
+    "file": "glasp.png",
+    "website": "https://glasp.co",
+    "source": "https://glasp.co/apple-icon.png"
+  },
+  {
+    "slug": "hermes-agent",
+    "name": "Hermes Agent",
+    "file": "hermes-agent.png",
+    "website": "https://hermes-agent.nousresearch.com",
+    "source": "https://hermes-agent.nousresearch.com/favicon.ico",
+    "note": "The favicon is a 48px PNG and is the only icon the site publishes; kept at its native size."
+  },
+  {
+    "slug": "kickresume",
+    "name": "Kickresume",
+    "file": "kickresume.png",
+    "website": "https://www.kickresume.com",
+    "source": "https://www.kickresume.com/static/img/favicon/apple-icon-180x180.png"
+  },
+  {
+    "slug": "leonardo-ai",
+    "name": "Leonardo AI",
+    "file": "leonardo-ai.png",
+    "website": "https://leonardo.ai",
+    "source": "https://app.leonardo.ai/apple-icon.png",
+    "note": "White line-art mark; shown on the dark tile."
+  },
+  {
+    "slug": "longcat-2-5",
+    "name": "LongCat 2.5",
+    "file": "longcat-2-5.png",
+    "website": "https://longcat.chat",
+    "source": "https://s3.meituan.net/static-prod01/com.keetapp.friday.longcat.home/assets/logo-DVz_huBL.png",
+    "note": "Near-white edge matte touching the border cleared to transparency; mark pixels not recolored."
+  },
+  {
+    "slug": "midjourney",
+    "name": "Midjourney",
+    "file": "midjourney.png",
+    "website": "https://www.midjourney.com",
+    "source": "https://www.midjourney.com/public/apple-touch-icon.png",
+    "note": "Near-white edge matte touching the border cleared to transparency; mark pixels not recolored."
+  },
+  {
+    "slug": "quillbot",
+    "name": "QuillBot",
+    "file": "quillbot.png",
+    "website": "https://quillbot.com",
+    "source": "https://quillbot.com/apple-touch-icon.png"
+  },
+  {
+    "slug": "rezi",
+    "name": "Rezi",
+    "file": "rezi.png",
+    "website": "https://www.rezi.ai",
+    "source": "https://www.rezi.ai/media/site/69dfa083c7c6bbcb206b2170_webclip.png",
+    "note": "Near-white edge matte touching the border cleared to transparency; mark pixels not recolored."
+  },
+  {
+    "slug": "teal",
+    "name": "Teal",
+    "file": "teal.png",
+    "website": "https://www.tealhq.com",
+    "source": "https://imagedelivery.net/EneR9MSHVX-rSdBwAY2uLA/astro-migrated/webflow/64b5bdf99a666bb0da0b1908-teal-webclip-575ba9e6/hero",
+    "note": "Official Teal webclip. Near-white edge matte touching the border cleared to transparency; mark pixels not recolored."
+  },
+  {
+    "slug": "github-copilot",
+    "name": "GitHub Copilot",
+    "file": "github-copilot.svg",
+    "website": "https://github.com/features/copilot",
+    "source": "https://github.com/features/copilot",
+    "note": "Primer octicon-copilot SVG inlined on the official Copilot page; fill set to white so the mark reads on the dark tile. Shape unchanged."
+  },
+  {
+    "slug": "klap",
+    "name": "Klap",
+    "file": "klap.svg",
+    "website": "https://klap.app",
+    "source": "https://klap.app/svg/Klap_logo.svg",
+    "note": "Square K mark (first path) extracted from the official wordmark SVG; viewBox cropped to the mark. Path data unchanged."
+  },
+  {
+    "slug": "llama-cpp",
+    "name": "llama.cpp",
+    "file": "llama-cpp.svg",
+    "website": "https://github.com/ggml-org/llama.cpp",
+    "source": "https://raw.githubusercontent.com/ggml-org/llama-brand/refs/heads/master/logo/svg/icon/icon-dark.svg",
+    "note": "Official ggml-org/llama-brand icon. Its BRAND-USAGE.md permits use to refer to llama.cpp; attribution: ggml-org/llama-brand."
+  },
+  {
+    "slug": "antigravity-cli",
+    "name": "Antigravity CLI",
+    "file": "antigravity-cli.svg",
+    "website": "https://antigravity.google",
+    "source": "https://antigravity.google/favicon.svg"
+  },
+  {
+    "slug": "gemini-cli",
+    "name": "Gemini CLI",
+    "file": "gemini.png",
+    "website": "https://github.com/google-gemini/gemini-cli",
+    "source": "https://www.gstatic.com/lamda/images/gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+    "note": "Reuses the official Gemini mark (gemini.png); Gemini CLI publishes no separate icon."
+  },
+  {
+    "slug": "gemini-decisions-api",
+    "name": "Gemini Decisions API",
+    "file": "gemini.png",
+    "website": "https://gemini.google.com",
+    "source": "https://www.gstatic.com/lamda/images/gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+    "note": "Reuses the official Gemini mark (gemini.png)."
+  },
+  {
+    "slug": "muse-ember",
+    "name": "Muse Ember",
+    "file": "meta-ai-hq.png",
+    "website": "https://www.meta.ai",
+    "source": "https://www.meta.ai/images/pwa_icons/any/512.png",
+    "note": "Reuses the official Meta AI mark (meta-ai-hq.png)."
   }
 ]
