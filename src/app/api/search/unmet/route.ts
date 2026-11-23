@@ -21,9 +21,11 @@ const store: UnmetSearchStore = {
 /**
  * Aggregate log of unmet website searches (see docs/unmet-searches.md). Takes a
  * tiny beacon {q, resultCount, clicked} and upserts one counter row. Always
- * 204, whatever happened, so the response reveals nothing. No IP, user agent,
- * account or session is stored; DNT / Sec-GPC / EU-EEA-UK-CH / unknown country
- * and bot user agents are skipped before anything is read.
+ * 204, whatever happened, so the response reveals nothing. recordUnmetSearch
+ * writes one JSON line (`evt` `unmet_search_beacon` plus the outcome) and does
+ * not put the query, IP, user agent, or country on that line. No IP, user agent,
+ * account or session is stored; DNT / Sec-GPC / EU-EEA-UK-CH / unknown country /
+ * Tor and bot user agents are skipped before anything is stored.
  */
 export async function POST(request: NextRequest) {
   const declared = Number(request.headers.get("content-length"));

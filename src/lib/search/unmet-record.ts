@@ -1,4 +1,5 @@
 import { decideForRequest } from "@/lib/attribution/eligibility";
+import { buildUnmetBeaconLog, logUnmetBeacon, type UnmetBeaconLog } from "./unmet-log";
 import { isUnmet, normalizeUnmetQuery } from "./unmet";
 
 /** A beacon body bigger than this (bytes) is refused before it is parsed. */
@@ -68,6 +69,21 @@ export const defaultWriteBudget = new WriteBudget();
 
 type HeaderReader = { get(name: string): string | null };
 
+/**
+ * Outcome of one beacon. Logged, never sent to the client (the route is always 204).
+ *
+ * - `stored` — one aggregate row was written.
+ * - `ineligible` — Do Not Track, Global Privacy Control, a blocked country
+ *   (EU, EEA, UK, Switzerland), an unknown country, or Tor (`T1`). Which gate
+ *   fired is header-derived and is not logged.
+ * - `bot` — missing or bot-like user agent.
+ * - `above_threshold` — result count is greater than `UNMET_RESULT_THRESHOLD`
+ *   (3 or more). The catalog answered the search, so nothing is stored.
+ * - `invalid` — body, JSON, types, or normalization failed (including email,
+ *   phone, or URL shaped text).
+ * - `rate_limited` — this instance's write budget was empty.
+ * - `store_error` — the upsert threw.
+ */
 export type UnmetOutcome =
   | "stored"
   | "ineligible"
@@ -79,10 +95,11 @@ export type UnmetOutcome =
 
 /**
  * Handle one beacon. Never throws and never reports back to the client: the
- * route answers 204 whatever this returns. At most one store write.
+ * route answers 204 whatever this returns. At most one store write, and
+ * exactly one structured log line (see `unmet-log.ts`).
  *
- * Order matters: privacy checks (DNT / Sec-GPC / country, unknown country
- * skips) come before anything is parsed, and nothing is stored but the
+ * Order matters: privacy checks (DNT / Sec-GPC / country, unknown country and
+ * Tor skip) come before anything is parsed, and nothing is stored but the
  * normalized query, a result count and a clicked flag.
  */
 export async function recordUnmetSearch(input: {
@@ -90,33 +107,58 @@ export async function recordUnmetSearch(input: {
   body: string | null;
   store: UnmetSearchStore;
   budget?: WriteBudget;
+  /** Defaults to one stdout or stderr JSON line. Tests pass a sink. */
+  log?: (entry: UnmetBeaconLog) => void;
+  /** Clock for `latency_ms` only. Not the write-budget clock. */
+  now?: () => number;
 }): Promise<UnmetOutcome> {
-  if (!decideForRequest(input.headers).allowed) return "ineligible";
-  if (isBotUserAgent(input.headers.get("user-agent"))) return "bot";
-  if (input.body === null) return "invalid";
+  const now = input.now ?? Date.now;
+  const started = now();
+  const emit = input.log ?? logUnmetBeacon;
+
+  const finish = (outcome: UnmetOutcome, extra?: { resultCount?: number; error?: unknown }): UnmetOutcome => {
+    try {
+      emit(
+        buildUnmetBeaconLog({
+          outcome,
+          latencyMs: now() - started,
+          resultCount: extra?.resultCount,
+          error: extra?.error,
+        }),
+      );
+    } catch {
+      // A logger failure must not change the 204 the route always returns.
+    }
+    return outcome;
+  };
+
+  if (!decideForRequest(input.headers).allowed) return finish("ineligible");
+  if (isBotUserAgent(input.headers.get("user-agent"))) return finish("bot");
+  if (input.body === null) return finish("invalid");
 
   let parsed: unknown;
   try {
     parsed = JSON.parse(input.body);
   } catch {
-    return "invalid";
+    return finish("invalid");
   }
-  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return "invalid";
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return finish("invalid");
   const { q, resultCount, clicked } = parsed as Record<string, unknown>;
-  if (typeof clicked !== "boolean") return "invalid";
+  if (typeof clicked !== "boolean") return finish("invalid");
   if (typeof resultCount !== "number" || !Number.isInteger(resultCount) || resultCount < 0 || resultCount > 1000) {
-    return "invalid";
+    return finish("invalid");
   }
-  if (!isUnmet(resultCount)) return "above_threshold";
+  if (!isUnmet(resultCount)) return finish("above_threshold", { resultCount });
   const normalizedQuery = normalizeUnmetQuery(q);
-  if (normalizedQuery === null) return "invalid";
+  if (normalizedQuery === null) return finish("invalid", { resultCount });
 
-  if (!(input.budget ?? defaultWriteBudget).take()) return "rate_limited";
+  if (!(input.budget ?? defaultWriteBudget).take()) return finish("rate_limited", { resultCount });
   try {
     await input.store.record({ normalizedQuery, noClick: !clicked, resultCount });
-    return "stored";
-  } catch {
-    return "store_error";
+    return finish("stored", { resultCount });
+  } catch (error) {
+    // Class and Prisma code only. The thrown text can echo the query.
+    return finish("store_error", { resultCount, error });
   }
 }
 
