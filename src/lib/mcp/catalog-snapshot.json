@@ -1681,7 +1681,7 @@
    "offlineCapable": false,
    "languageSupport": "Multilingual (strong English, French, Spanish, German, Japanese, Korean, Chinese)",
    "keyIntegrations": "Google Drive, GitHub, Zapier, MCP servers, Claude Code (terminal), VS Code, JetBrains, Slack",
-   "upgradeTriggers": "Daily message limits; needing Opus 4.6 for complex tasks; Claude Code; 1M context; MCP integrations",
+   "upgradeTriggers": "Daily message limits; needing a more capable model for complex tasks; Claude Code; 1M context; MCP integrations",
    "complementaryTools": [
     "Claude Code (terminal coding)",
     "GitHub Copilot (IDE)",
