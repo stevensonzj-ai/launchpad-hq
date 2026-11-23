@@ -14,11 +14,12 @@ export default {
       summary:
         "30 credits a week for accounts that signed up with Google or Apple (Microsoft and email-and-password accounts get no free credits, unless you later link a Google or Apple sign-in that uses the same verified email). Credits reset every Saturday at 00:00 UTC. Everything generated on the free plan is public.",
     },
+    note: "Plans doc re-read 2026-11-23. The same split is on https://docs.ideogram.ai/get-started/signup-and-registration and https://docs.ideogram.ai/help/frequently-asked-questions. The ideogram.ai/pricing FAQ still says weekly credits for Google, Apple, or Microsoft, and the amount may vary. The plans doc is the verified wording. The quick-start doc contradicts itself on Microsoft.",
     sourceUrl: IDEOGRAM_PLANS_URL,
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
-    verifiedBy: "ra-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   plans: {
@@ -66,6 +67,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "freeTier",
+      summary:
+        "Plans doc re-read. Free weekly credits stay limited to Google or Apple sign-up. Microsoft and email-and-password accounts get none unless a Google or Apple sign-in with the same verified email is linked later. The pricing FAQ still names Microsoft.",
+    },
     {
       date: "2026-10-26",
       field: "plans",
