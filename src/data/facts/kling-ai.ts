@@ -48,7 +48,37 @@ export default {
     verifiedAt: "2026-10-17",
     status: "verified",
   },
+  apiPricing: {
+    value:
+      "Kling Image 4.0, single image and image series: $0.063 per image at 2K, $0.094 at 4K, and $0.157 at 8K. Reference images and reference elements are $0.003 each, and one reference element counts as one reference image. The pricing page says earlier models do not charge for those inputs. Long-image webpage and e-commerce rates are listed separately on that page. The page does not state an end date for these rates.",
+    note: "Image pricing page, read 2026-11-23. Membership plan prices were not on this page.",
+    sourceUrl: "https://kling.ai/document-api/pricing/base/image",
+    checkedAt: "2026-11-23",
+    gatheredBy: "grok",
+    verifiedBy: "grok",
+    verifiedAt: "2026-11-23",
+    status: "verified",
+  },
+  features: {
+    value: [
+      "Kling's blog post dated 2026-11-18 says Kling Image 4.0 is live on Kling Creative Studio and available via the API. The API updates page dates that API to 2026-11-17.",
+    ],
+    note: "Blog and API updates page, both read 2026-11-23. Per-image rates are on apiPricing.",
+    sourceUrl: "https://kling.ai/blog/kling-image-4-stunningly-realistic-sharp-precise",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-23",
+    gatheredBy: "grok",
+    verifiedBy: "grok",
+    verifiedAt: "2026-11-23",
+    status: "verified",
+  },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "apiPricing",
+      summary:
+        "X-watch: Kling Image 4.0 is on Creative Studio and the API. Single-image and series rates are $0.063 / $0.094 / $0.157 at 2K / 4K / 8K, plus $0.003 per reference image or element. No end date on the pricing page.",
+    },
     {
       date: "2026-10-14",
       field: "models",

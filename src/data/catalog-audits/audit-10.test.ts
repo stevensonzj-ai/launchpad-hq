@@ -204,7 +204,8 @@ describe("catalog audit 10: \"official\" wording on catalog-only rows", () => {
     // Audit 11 later gave github-copilot owner-checked price facts and rewrote its text without "official".
     // Audit 23 (2026-10-30) gave elevenlabs, deepgram and mubert verified price facts; their text still has no "official".
     // Audit 25 (2026-10-30, source verification) gave more rows verified price facts, also without "official".
-    const audit23 = new Set<string>([...AUDIT_23_FACT_SLUGS, ...AUDIT_25_FACT_SLUGS]);
+    // Audit 37 (2026-11-23) gave kling-ai a verified Image 4.0 apiPricing fact. The snapshot wording stays free of "official".
+    const audit23 = new Set<string>([...AUDIT_23_FACT_SLUGS, ...AUDIT_25_FACT_SLUGS, "kling-ai"]);
     for (const { slug } of AUDIT_10_WORDING.filter((w) => (!audit11Slugs().includes(w.slug) || !getToolFacts(w.slug)?.plans) && !audit23.has(w.slug))) {
       const f = getToolFacts(slug);
       assert.ok(!f?.plans && !f?.freeTier && !f?.apiPricing, `${slug} has a price fact; fix the text through the fact file instead`);
