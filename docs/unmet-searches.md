@@ -38,7 +38,50 @@ It is deduped per query per page view. The browser first honours Do Not Track / 
 
 ## Server route
 
-`POST /api/search/unmet` (`src/app/api/search/unmet/route.ts`, logic in `src/lib/search/unmet-record.ts`) always answers `204`. In order: body capped at 1KB; DNT / `Sec-GPC` headers and country via `decideForRequest` (EU, EEA, UK, Switzerland and unknown country skip); user agent check in memory only (empty or bot-like agents skip); strict validation; threshold; normalization; an in-memory token bucket of 30 writes per minute per server instance (global, keyed on nothing, no IPs); then at most one `INSERT ... ON CONFLICT ("normalizedQuery") DO UPDATE` with bound parameters. The store is injected so tests need no database.
+`POST /api/search/unmet` (`src/app/api/search/unmet/route.ts`, logic in `src/lib/search/unmet-record.ts`) always answers `204`. In order: body capped at 1KB; DNT / `Sec-GPC` headers and country via `decideForRequest` (EU, EEA, UK, Switzerland, unknown country, and Tor `T1` skip); user agent check in memory only (empty or bot-like agents skip); strict validation; threshold; normalization; an in-memory token bucket of 30 writes per minute per server instance (global, keyed on nothing, no IPs); then at most one `INSERT ... ON CONFLICT ("normalizedQuery") DO UPDATE` with bound parameters. The store is injected so tests need no database. Each request also writes one runtime log line; see below. The response and the row are unchanged.
+
+## Runtime log
+
+One JSON line per beacon, from `src/lib/search/unmet-log.ts`. `store_error` goes to stderr (error level). Every other outcome goes to stdout. The line is for Vercel runtime logs. It is not a row in `unmet_searches`.
+
+Outcomes (`UnmetOutcome`):
+
+| outcome | when |
+| --- | --- |
+| `stored` | one aggregate row was written |
+| `ineligible` | Do Not Track, Global Privacy Control, a blocked country (EU, EEA, UK, Switzerland), an unknown country, or Tor (`T1`). Which of those fired is not logged |
+| `bot` | missing or bot-like user agent |
+| `above_threshold` | result count is greater than `UNMET_RESULT_THRESHOLD` (3 or more), so the search is not unmet and nothing is stored |
+| `invalid` | the body failed the size cap, JSON parse, type checks, or normalization (including email, phone, or URL shaped text) |
+| `rate_limited` | this server instance's write budget (30 per minute, keyed on nothing) was empty |
+| `store_error` | the upsert threw |
+
+`above_threshold` is the handler's name for a result count above the unmet cutoff (results greater than the threshold).
+
+Exact shape, field order fixed, omitted fields left out:
+
+```json
+{"evt":"unmet_search_beacon","outcome":"stored","result_count_bucket":"0","latency_ms":4}
+```
+
+```json
+{"evt":"unmet_search_beacon","outcome":"ineligible","latency_ms":0}
+```
+
+```json
+{"evt":"unmet_search_beacon","outcome":"store_error","result_count_bucket":"0","latency_ms":4,"error_class":"PrismaClientKnownRequestError","error_code":"P2021"}
+```
+
+| field | value |
+| --- | --- |
+| `evt` | always `unmet_search_beacon` |
+| `outcome` | one of the seven names above |
+| `result_count_bucket` | only after the result count passes validation: `0`, `1`, `2`, `3-9`, or `10+` |
+| `latency_ms` | milliseconds inside the handler, never negative |
+| `error_class` | `store_error` only. The error's `name` when it is a short identifier, otherwise `Error` |
+| `error_code` | `store_error` only, and only when the code matches `P` plus four digits |
+
+No other field is written. The query text (raw or normalized), IP, user agent, country, and every header value stay off the line. `store_error` does not include the thrown text, because a database error can repeat the query.
 
 ## Retention
 

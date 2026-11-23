@@ -8,6 +8,7 @@ import {
   isUnmet,
   normalizeUnmetQuery,
 } from "./unmet";
+import { buildUnmetBeaconLog, type UnmetBeaconLog } from "./unmet-log";
 import {
   MAX_UNMET_BODY_BYTES,
   UNMET_UPSERT_SQL,
@@ -15,6 +16,7 @@ import {
   isBotUserAgent,
   readBodyCapped,
   recordUnmetSearch,
+  type UnmetOutcome,
   type UnmetSearchStore,
 } from "./unmet-record";
 import { UnmetSearchTracker } from "./unmet-client";
@@ -35,9 +37,17 @@ function memoryStore() {
 
 const body = (q: unknown, resultCount: unknown = 0, clicked: unknown = false) => JSON.stringify({ q, resultCount, clicked });
 
+const silentLog = () => {};
+
 async function send(headers: Record<string, string>, payload: string | null, budget?: WriteBudget) {
   const m = memoryStore();
-  const outcome = await recordUnmetSearch({ headers: new Headers(headers), body: payload, store: m.store, budget });
+  const outcome = await recordUnmetSearch({
+    headers: new Headers(headers),
+    body: payload,
+    store: m.store,
+    budget,
+    log: silentLog,
+  });
   return { outcome, rows: m.rows };
 }
 
@@ -194,6 +204,7 @@ describe("validation", () => {
       headers: new Headers(US),
       body: body("lyrics tool"),
       store: { record: async () => { throw new Error("db down"); } },
+      log: silentLog,
     });
     assert.equal(outcome, "store_error");
   });
@@ -211,7 +222,8 @@ describe("burst cap", () => {
     let now = 1_000_000;
     const budget = new WriteBudget(30, () => now);
     const m = memoryStore();
-    const fire = () => recordUnmetSearch({ headers: new Headers(US), body: body("video upscaler"), store: m.store, budget });
+    const fire = () =>
+      recordUnmetSearch({ headers: new Headers(US), body: body("video upscaler"), store: m.store, budget, log: silentLog });
     const outcomes: string[] = [];
     for (let i = 0; i < 35; i++) outcomes.push(await fire());
     assert.equal(outcomes.filter((o) => o === "stored").length, 30);
@@ -427,6 +439,308 @@ describe("hooks live on the website layer only", () => {
     assert.ok(discover.includes("<UnmetSearchBeacon query={query} resultCount={platforms.length} />"));
     assert.ok(discover.includes("!params.category && !params.cost && !params.difficulty && !params.mobile"));
     assert.match(read("src/components/search/unmet-search-beacon.tsx"), /data-unmet-results/);
+  });
+});
+
+describe("beacon log (one line, outcome only)", () => {
+  const QUERY = "zzuniq-lyricforge77";
+  const NORMALIZED = "zzuniq lyricforge77";
+  const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 zzuniq-agent Chrome/130.0 Safari/537.36";
+  const BOT = "curl/8.4.0 zzuniq-bot";
+  const IP = "203.0.113.77";
+  const EMAIL = "zzuniq.person@example.com";
+
+  const COVERED: Record<UnmetOutcome, true> = {
+    stored: true,
+    ineligible: true,
+    bot: true,
+    above_threshold: true,
+    invalid: true,
+    rate_limited: true,
+    store_error: true,
+  };
+
+  function clock(start: number, end: number) {
+    const values = [start, end];
+    let i = 0;
+    return () => values[Math.min(i++, values.length - 1)]!;
+  }
+
+  function assertNoSecrets(text: string) {
+    for (const secret of [QUERY, NORMALIZED, "zzuniq", UA, BOT, IP, EMAIL, "example.com", "T1", "DE", "US", "zzuniq-agent", "user-agent", "x-vercel-ip-country", "x-forwarded-for", "sec-gpc"]) {
+      assert.equal(text.includes(secret), false, `log contains ${secret}`);
+    }
+  }
+
+  async function printedDuring(run: () => Promise<void>) {
+    const printed: { level: "log" | "error"; line: string }[] = [];
+    const origLog = console.log;
+    const origErr = console.error;
+    console.log = (...parts: unknown[]) => {
+      printed.push({ level: "log", line: parts.map(String).join(" ") });
+    };
+    console.error = (...parts: unknown[]) => {
+      printed.push({ level: "error", line: parts.map(String).join(" ") });
+    };
+    try {
+      await run();
+    } finally {
+      console.log = origLog;
+      console.error = origErr;
+    }
+    return printed;
+  }
+
+  type Scenario = {
+    outcome: UnmetOutcome;
+    headers: Record<string, string>;
+    payload: string | null;
+    budget?: WriteBudget;
+    store?: UnmetSearchStore;
+    keys: string[];
+    bucket?: UnmetBeaconLog["result_count_bucket"];
+    errorClass?: string;
+    errorCode?: string;
+  };
+
+  const prismaDown = () => {
+    const error = new Error(`relation "unmet_searches" does not exist (${QUERY} / ${NORMALIZED})`);
+    error.name = "PrismaClientKnownRequestError";
+    return Object.assign(error, { code: "P2021" });
+  };
+
+  const scenarios: Scenario[] = [
+    {
+      outcome: "stored",
+      headers: { "x-vercel-ip-country": "US", "user-agent": UA, "x-forwarded-for": IP },
+      payload: body(QUERY, 0, false),
+      budget: new WriteBudget(),
+      keys: ["evt", "outcome", "result_count_bucket", "latency_ms"],
+      bucket: "0",
+    },
+    {
+      outcome: "ineligible",
+      headers: { "x-vercel-ip-country": "DE", "user-agent": UA, dnt: "1", "sec-gpc": "1", "x-forwarded-for": IP },
+      payload: body(QUERY, 0),
+      keys: ["evt", "outcome", "latency_ms"],
+    },
+    {
+      outcome: "bot",
+      headers: { "x-vercel-ip-country": "US", "user-agent": BOT, "x-forwarded-for": IP },
+      payload: body(QUERY, 1),
+      keys: ["evt", "outcome", "latency_ms"],
+    },
+    {
+      outcome: "above_threshold",
+      headers: { "x-vercel-ip-country": "US", "user-agent": UA, "x-forwarded-for": IP },
+      payload: body(QUERY, 3),
+      keys: ["evt", "outcome", "result_count_bucket", "latency_ms"],
+      bucket: "3-9",
+    },
+    {
+      outcome: "invalid",
+      headers: { "x-vercel-ip-country": "US", "user-agent": UA, "x-forwarded-for": IP },
+      payload: body(EMAIL, 1),
+      keys: ["evt", "outcome", "result_count_bucket", "latency_ms"],
+      bucket: "1",
+    },
+    {
+      outcome: "rate_limited",
+      headers: { "x-vercel-ip-country": "US", "user-agent": UA, "x-forwarded-for": IP },
+      payload: body(QUERY, 2),
+      budget: new WriteBudget(0),
+      keys: ["evt", "outcome", "result_count_bucket", "latency_ms"],
+      bucket: "2",
+    },
+    {
+      outcome: "store_error",
+      headers: { "x-vercel-ip-country": "US", "user-agent": UA, "x-forwarded-for": IP },
+      payload: body(QUERY, 0, true),
+      budget: new WriteBudget(),
+      store: { record: async () => { throw prismaDown(); } },
+      keys: ["evt", "outcome", "result_count_bucket", "latency_ms", "error_class", "error_code"],
+      bucket: "0",
+      errorClass: "PrismaClientKnownRequestError",
+      errorCode: "P2021",
+    },
+  ];
+
+  async function run(scenario: Scenario, log?: (entry: UnmetBeaconLog) => void) {
+    const m = memoryStore();
+    const outcome = await recordUnmetSearch({
+      headers: new Headers(scenario.headers),
+      body: scenario.payload,
+      store: scenario.store ?? m.store,
+      budget: scenario.budget,
+      now: clock(1_000, 1_012),
+      log,
+    });
+    return { outcome, rows: m.rows };
+  }
+
+  it("covers every outcome with one line and none of the query", async () => {
+    const seen = new Set<UnmetOutcome>();
+    for (const scenario of scenarios) {
+      seen.add(scenario.outcome);
+      const lines: UnmetBeaconLog[] = [];
+      const stdout = await printedDuring(async () => {
+        const { outcome, rows } = await run(scenario, (entry) => lines.push(entry));
+        assert.equal(outcome, scenario.outcome);
+        if (scenario.outcome === "stored") {
+          assert.deepEqual(rows, [{ normalizedQuery: NORMALIZED, noClick: true, resultCount: 0 }]);
+        } else {
+          assert.equal(rows.length, 0);
+        }
+      });
+      assert.equal(stdout.length, 0, scenario.outcome);
+      assert.equal(lines.length, 1, scenario.outcome);
+      const entry = lines[0]!;
+      assert.equal(entry.evt, "unmet_search_beacon");
+      assert.equal(entry.outcome, scenario.outcome);
+      assert.equal(entry.latency_ms, 12);
+      assert.equal(entry.result_count_bucket, scenario.bucket);
+      assert.equal(entry.error_class, scenario.errorClass);
+      assert.equal(entry.error_code, scenario.errorCode);
+      assert.deepEqual(Object.keys(entry), scenario.keys);
+      const text = JSON.stringify(entry);
+      assertNoSecrets(text);
+      if (scenario.outcome === "store_error") {
+        assert.equal(text.includes("relation"), false);
+        assert.equal(text.includes("does not exist"), false);
+      }
+    }
+    assert.deepEqual([...seen].sort(), Object.keys(COVERED).sort());
+  });
+
+  it("the default logger writes that same line once, error level only for store_error", async () => {
+    for (const scenario of scenarios) {
+      const stdout = await printedDuring(async () => {
+        const { outcome } = await run(scenario);
+        assert.equal(outcome, scenario.outcome);
+      });
+      assert.equal(stdout.length, 1, scenario.outcome);
+      assert.equal(stdout[0]!.level, scenario.outcome === "store_error" ? "error" : "log");
+      const parsed = JSON.parse(stdout[0]!.line) as UnmetBeaconLog;
+      assert.equal(parsed.evt, "unmet_search_beacon");
+      assert.equal(parsed.outcome, scenario.outcome);
+      assert.deepEqual(Object.keys(parsed), scenario.keys);
+      assertNoSecrets(stdout[0]!.line);
+    }
+  });
+
+  it("privacy gates that share ineligible do not log which gate fired", async () => {
+    const gates: Record<string, string>[] = [
+      { "x-vercel-ip-country": "US", "user-agent": UA, dnt: "1" },
+      { "x-vercel-ip-country": "US", "user-agent": UA, "sec-gpc": "1" },
+      { "x-vercel-ip-country": "T1", "user-agent": UA },
+      { "user-agent": UA },
+      { "x-vercel-ip-country": "XX", "user-agent": UA },
+      { "x-vercel-ip-country": "GB", "user-agent": UA },
+    ];
+    for (const headers of gates) {
+      const lines: UnmetBeaconLog[] = [];
+      const { outcome } = await run(
+        { outcome: "ineligible", headers, payload: body(QUERY, 0), keys: ["evt", "outcome", "latency_ms"] },
+        (entry) => lines.push(entry),
+      );
+      assert.equal(outcome, "ineligible");
+      assert.equal(lines.length, 1);
+      assert.deepEqual(lines[0], { evt: "unmet_search_beacon", outcome: "ineligible", latency_ms: 12 });
+      assertNoSecrets(JSON.stringify(lines[0]));
+    }
+  });
+
+  it("a thrown string or a code that is the query itself stays off the line", async () => {
+    const leaking = new Error(QUERY);
+    leaking.name = `${QUERY}Error`;
+    const cases: unknown[] = [QUERY, Object.assign(leaking, { code: QUERY })];
+    for (const error of cases) {
+      const lines: UnmetBeaconLog[] = [];
+      const outcome = await recordUnmetSearch({
+        headers: new Headers({ "x-vercel-ip-country": "US", "user-agent": UA }),
+        body: body(QUERY, 1),
+        store: { record: async () => { throw error; } },
+        budget: new WriteBudget(),
+        now: clock(1_000, 1_012),
+        log: (entry) => lines.push(entry),
+      });
+      assert.equal(outcome, "store_error");
+      assert.deepEqual(lines, [
+        { evt: "unmet_search_beacon", outcome: "store_error", result_count_bucket: "1", latency_ms: 12, error_class: "Error" },
+      ]);
+      assertNoSecrets(JSON.stringify(lines[0]));
+    }
+  });
+
+  it("a logger failure still returns the outcome and does not write a second line", async () => {
+    let calls = 0;
+    const stdout = await printedDuring(async () => {
+      const outcome = await recordUnmetSearch({
+        headers: new Headers(US),
+        body: body(QUERY, 0),
+        store: memoryStore().store,
+        budget: new WriteBudget(),
+        log: () => {
+          calls += 1;
+          throw new Error(QUERY);
+        },
+      });
+      assert.equal(outcome, "stored");
+    });
+    assert.equal(calls, 1);
+    assert.equal(stdout.length, 0);
+  });
+
+  it("buckets a validated count and drops every other count", () => {
+    assert.equal(buildUnmetBeaconLog({ outcome: "stored", latencyMs: 1.4, resultCount: 0 }).result_count_bucket, "0");
+    assert.equal(buildUnmetBeaconLog({ outcome: "stored", latencyMs: 1, resultCount: 1 }).result_count_bucket, "1");
+    assert.equal(buildUnmetBeaconLog({ outcome: "stored", latencyMs: 1, resultCount: 2 }).result_count_bucket, "2");
+    assert.equal(buildUnmetBeaconLog({ outcome: "above_threshold", latencyMs: 1, resultCount: 9 }).result_count_bucket, "3-9");
+    assert.equal(buildUnmetBeaconLog({ outcome: "above_threshold", latencyMs: 1, resultCount: 10 }).result_count_bucket, "10+");
+    assert.equal(buildUnmetBeaconLog({ outcome: "above_threshold", latencyMs: 1, resultCount: 1000 }).result_count_bucket, "10+");
+    for (const resultCount of [-1, 1.5, 1001]) {
+      assert.equal(buildUnmetBeaconLog({ outcome: "invalid", latencyMs: 1, resultCount }).result_count_bucket, undefined);
+    }
+    const negative = buildUnmetBeaconLog({ outcome: "ineligible", latencyMs: -5 });
+    assert.equal(negative.latency_ms, 0);
+    assert.deepEqual(Object.keys(negative), ["evt", "outcome", "latency_ms"]);
+    const ignored = buildUnmetBeaconLog({
+      outcome: "invalid",
+      latencyMs: 2.2,
+      error: Object.assign(new Error(QUERY), { name: "PrismaClientKnownRequestError", code: "P2021" }),
+    });
+    assert.equal(ignored.latency_ms, 2);
+    assert.equal(ignored.error_class, undefined);
+    assert.equal(ignored.error_code, undefined);
+    assertNoSecrets(JSON.stringify(ignored));
+  });
+
+  it("malformed bodies log invalid once and carry no result bucket", async () => {
+    for (const payload of [null, "", "not json", "[]", body(QUERY, -1), body(QUERY, 1.5), body(QUERY, 1001)]) {
+      const lines: UnmetBeaconLog[] = [];
+      const outcome = await recordUnmetSearch({
+        headers: new Headers({ "x-vercel-ip-country": "US", "user-agent": UA, "x-forwarded-for": IP }),
+        body: payload,
+        store: memoryStore().store,
+        now: clock(5, 5),
+        log: (entry) => lines.push(entry),
+      });
+      assert.equal(outcome, "invalid", String(payload));
+      assert.deepEqual(lines, [{ evt: "unmet_search_beacon", outcome: "invalid", latency_ms: 0 }]);
+      assertNoSecrets(JSON.stringify(lines[0]));
+    }
+  });
+
+  it("the route stays 204 and does not log on its own", () => {
+    const route = read("src/app/api/search/unmet/route.ts");
+    assert.match(route, /status: 204/);
+    assert.match(route, /recordUnmetSearch\(\{ headers: request\.headers, body, store \}\)/);
+    assert.doesNotMatch(route, /console\.(log|error|warn|info)/);
+    const logSrc = read("src/lib/search/unmet-log.ts");
+    assert.match(logSrc, /unmet_search_beacon/);
+    assert.doesNotMatch(logSrc, /normalizedQuery|user-agent|x-vercel-ip|x-forwarded-for|\.message/);
+    assert.match(read("docs/unmet-searches.md"), /unmet_search_beacon/);
+    for (const name of Object.keys(COVERED)) assert.match(read("docs/unmet-searches.md"), new RegExp(`\`${name}\``));
   });
 });
 
