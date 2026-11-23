@@ -21,13 +21,15 @@ export default {
   freeTier: {
     value: {
       available: false,
-      summary: "No permanent free plan: a 14-day free trial, no credit card required, cancel anytime. Plan AI credits are Basic 10 (one-time), Core 20 a month, Plus 40 a month, and Advanced 120 a month. A banner says 30% off all plans and ends Nov 23.",
+      summary:
+        "No permanent free plan: a 14-day free trial, no credit card required, cancel anytime. Plan AI credits are Basic 10 (one-time), Core 20 a month, Plus 40 a month, and Advanced 120 a month. The pricing page no longer shows a 30% off all plans sale. The coupons page lists code GIMME10 for 10% off a first annual website purchase and does not state a calendar end date, so that code is not a list price.",
     },
+    note: "Pricing page and https://www.squarespace.com/coupons, read 2026-11-23. Basic shows 10 one-time AI credits. Core, Plus, and Advanced credit counts were on the pricing page on 2026-11-20 and were not in the truncated cards on this fetch. https://www.squarespace.com/assets/pricing.txt lists the same USD plan prices and stamps its own file 2026-10-05.",
     sourceUrl: "https://www.squarespace.com/pricing",
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-23",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   plans: {
@@ -57,12 +59,12 @@ export default {
         limits: "Billed annually ($139 paid monthly); 120 AI credits a month",
       },
     ],
-    note: "USD, as of 2026-10-29. Annual-billed and monthly-billed prices confirmed in a browser the same day. Extra AI credit packs can be bought.",
+    note: "USD list prices re-read 2026-11-23 on the pricing page (Basic $25 monthly and $19 annual) and on https://www.squarespace.com/assets/pricing.txt (USD rows: Basic $25/$19, Core $39/$29, Plus $65/$49, Advanced $139/$99). That file stamps itself 2026-10-05. The amounts are unchanged. Extra AI credit packs can be bought.",
     sourceUrl: "https://www.squarespace.com/pricing",
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-23",
     gatheredBy: "research-analyst",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   features: {
@@ -77,6 +79,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "freeTier",
+      summary:
+        "The 30% off all plans sale that ended Nov 23 is no longer on the pricing page. USD list prices are unchanged. GIMME10 is 10% off a first annual purchase and has no stated calendar end date, so it is not a list price.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

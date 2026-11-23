@@ -51,13 +51,13 @@ export default {
       "Qwen4-Max-Preview (model id qwen4-max-preview) ran from 10:00 on 2026-11-11 and ends at 24:00 on 2026-11-25 (UTC+8). It is Token Plan only. Pay-as-you-go is not supported. The preview page says the model is retired after that window. Context length is 1M tokens. Maximum output is 393,216 tokens, shared by thinking and the final answer. Recorded here, not as a new row, because the preview ends. Use production Qwen4-Max.",
       "Qwen-Image-2.1 weights were released on 2026-09-20, on Hugging Face and ModelScope, per the Qwen-Image-2.1 repository read on 2026-11-23. The Qwen Research License Agreement, release date 2026-09-20, says non-commercial means research or evaluation, grants those rights for non-commercial purposes, and says commercial use needs a separate license. This is not a 2026-11-23 release. Recorded on this row, not as a new row.",
     ],
-    note: "Qwen4-Max pages were re-read 2026-11-20 and were not re-read on 2026-11-23, so checkedAt stays 2026-11-20. Qwen-Image-2.1 was read that day at https://github.com/QwenLM/Qwen-Image-2.1 and https://github.com/QwenLM/Qwen-Image-2.1/blob/main/LICENSE. The preview end is 24:00 on 2026-11-25 (UTC+8). Prices are on apiPricing.",
-    sourceUrl: "https://www.alibabacloud.com/help/en/model-studio/qwen4-max",
+    note: "The preview page was re-read 2026-11-23 at https://www.alibabacloud.com/help/en/model-studio/qwen4-max-preview. It still says the preview ends at 24:00 on 2026-11-25 (UTC+8) and that the model is retired after that window. It does not publish a post-preview price. Production Qwen4-Max rates were not re-read, and they stay on apiPricing with checkedAt 2026-11-20. Qwen-Image-2.1 was read at https://github.com/QwenLM/Qwen-Image-2.1 and https://github.com/QwenLM/Qwen-Image-2.1/blob/main/LICENSE.",
+    sourceUrl: "https://www.alibabacloud.com/help/en/model-studio/qwen4-max-preview",
     sourceKind: "announcement",
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-23",
     gatheredBy: "cursor",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   changelog: [
@@ -65,7 +65,7 @@ export default {
       date: "2026-11-23",
       field: "features",
       summary:
-        "X-watch: Qwen-Image-2.1 weights were released on 2026-09-20 under the Qwen Research License. Commercial use needs a separate license. Not a new November release, and not a new row.",
+        "Preview page re-read: Qwen4-Max-Preview still ends at 24:00 on 2026-11-25 (UTC+8) and is retired after that window. No post-preview price is published. Qwen-Image-2.1 weights were released on 2026-09-20 under the Qwen Research License. Commercial use needs a separate license. Not a new row.",
     },
     {
       date: "2026-11-20",

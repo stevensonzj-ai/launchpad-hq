@@ -38,13 +38,13 @@ export default {
   },
   apiPricing: {
     value: "No monthly fee. Current Namazu rates per 1M tokens: input $0.95, output $4.00, cached input $0.15. From Dec 1, 2026, 10:00 JST: input $1.90, output $6.00, cached input $0.30. Web search $7.00 per 1,000 calls (page contents included). Code execution $0.12 per hour (session persisted). Fugu Ultra and Fugu Max rates are not on this page.",
-    note: "Namazu page, read 2026-11-20. Actual billing is USD. Yen figures are a US$1 = ¥160 reference.",
+    note: "Namazu page, read 2026-11-23. Current rates and the Dec 1, 2026, 10:00 JST rates are unchanged. Actual billing is USD. Yen figures are a US$1 = ¥160 reference.",
     sourceUrl: "https://sakana.ai/namazu/",
     sourceKind: "product-page",
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-23",
     gatheredBy: "research-analyst",
-    verifiedBy: "ra-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   features: {
@@ -71,6 +71,12 @@ export default {
     status: "unverified",
   },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "apiPricing",
+      summary:
+        "Namazu page re-read. Current rates stay input $0.95, output $4.00, cached input $0.15 per 1M tokens. From 2026-12-01 10:00 JST the page still lists input $1.90, output $6.00, cached input $0.30.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

@@ -39,24 +39,26 @@ export default {
   freeTier: {
     value: {
       available: true,
-      summary: "LongCat Chat has historically offered free access, but the API is pay-as-you-go with no free API tier stated. Whether chat offers 2.5 free today is unverified.",
+      summary:
+        "The LongCat 2.5 pricing page states no free API tier. The LongCat Chat homepage does not say whether 2.5 is free.",
     },
-    note: "Free chat access is historical, not checked against the longcat.ai chat page as of 2026-11-05. The pricing page states no free API tier.",
+    note: "Read 2026-11-23 at the pricing page and https://longcat.chat/. Older changelog lines say some earlier models can be used for free in LongCat Chat. Those lines are not about 2.5, so this fact stays unverified.",
     sourceUrl: PRICING_URL,
-    checkedAt: "2026-11-05",
+    sourceKind: "plans-page",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
     status: "unverified",
   },
   apiPricing: {
     value:
-      "Pay-as-you-go, per 1M tokens, limited-time discount: $0.30 input, $0.006 cached input, $1.20 output (also ¥2 / ¥0.04 / ¥8). The same USD rates apply on Vercel AI Gateway as meituan/longcat-2.5.",
-    note: "As of 2026-11-05. The discount is limited-time; the post-discount price is not stated here. Confirm on the provider page before buying.",
+      "Pay-as-you-go, per 1M tokens: $0.30 input, $0.006 cached input, $1.20 output (also ¥2 / ¥0.04 / ¥8). The pricing page labels these a limited-time discount and does not state an end date or a post-discount price.",
+    note: "LongCat pricing page, read 2026-11-23. Vercel AI Gateway was not re-read that day, so the earlier gateway sentence is not repeated.",
     sourceUrl: PRICING_URL,
     sourceKind: "plans-page",
-    checkedAt: "2026-11-05",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   platforms: {
@@ -84,6 +86,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "apiPricing",
+      summary:
+        "Rates re-read and unchanged at $0.30 / $0.006 / $1.20 per 1M. The page still labels them limited-time and still states no end date and no post-discount price. Chat access to 2.5 stays unverified.",
+    },
     {
       date: "2026-11-05",
       field: "apiPricing",

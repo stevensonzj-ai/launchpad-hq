@@ -1,6 +1,7 @@
 import type { ToolFacts } from "./types";
 
 const PRESS_URL = "https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models/";
+const TOKENHUB_URL = "https://cloud.tencent.com/document/product/1823/130055";
 const OPENROUTER_URL = "https://openrouter.ai/tencent/hy4";
 
 /**
@@ -35,29 +36,29 @@ export default {
   },
   freeTier: {
     value: {
-      available: true,
+      available: false,
       summary:
-        "No free API tier is stated. WorkBuddy and CodeBuddy, Tencent's apps that use Hy4, are free from 2026-11-04 through 2026-11-15; the API itself is paid per token.",
+        "No free API tier is on the TokenHub price page. Tencent's launch post said WorkBuddy and CodeBuddy would be free from 2026-11-04 through 2026-11-15. That window has ended, and the post does not state a later free period for Hy4.",
     },
-    note: "Tencent's launch post, as of 2026-11-05. The free window is a limited-time promotion and ends 2026-11-15.",
+    note: "Launch post and the TokenHub price page, read 2026-11-23. TokenHub: " + TOKENHUB_URL,
     sourceUrl: PRESS_URL,
     sourceKind: "announcement",
-    checkedAt: "2026-11-05",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   apiPricing: {
     value:
-      "Per 1M tokens, Tencent Cloud TokenHub list: about $0.90 input, $2.70 output, $0.045 cached input; TokenHub shows 50% off through 2026-12-31. OpenRouter (tencent/hy4) showed the discounted Tencent Cloud rates of $0.417 input, $1.251 output, $0.021 cached input.",
-    note: "As of 2026-11-05. Promotional pricing ends 2026-12-31 on TokenHub. Rates change; confirm on the provider page before buying.",
-    sourceUrl: OPENROUTER_URL,
-    sourceKind: "product-page",
-    checkedAt: "2026-11-05",
+      "Tencent Cloud TokenHub list, per 1M tokens: ¥6 input, ¥18 output, ¥0.3 cache hit. Calls are 50% of that list price through 2026-12-31 23:59:59 Beijing time, then the list price. Tencent's English launch post also says approximately US$0.90 input, US$2.70 output, and US$0.045 cached input per 1M tokens.",
+    note: "TokenHub price page, updated 2026-11-23 14:04, and the English launch post. The yuan figures are the TokenHub list. The US dollar figures are the launch post's approximation, not a second TokenHub rate card. OpenRouter rates were not re-read.",
+    sourceUrl: TOKENHUB_URL,
+    sourceKind: "plans-page",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   platforms: {
@@ -74,19 +75,25 @@ export default {
     value: [
       "Multimodal model with vision input and computer-use ability.",
       "About 1M-token context (1,048,576 tokens on OpenRouter).",
-      "WorkBuddy and CodeBuddy are free from 2026-11-04 through 2026-11-15.",
+      "Tencent's launch post said WorkBuddy and CodeBuddy would be free from 2026-11-04 through 2026-11-15. That window has ended. The post does not state a later free period for Hy4.",
       "Tencent says model weights and system cards are coming. As of 2026-11-05 this is not confirmed released.",
     ],
-    note: "Tencent's launch post and OpenRouter, as of 2026-11-05. The weights and system-card release is a stated plan only.",
+    note: "The free-window sentence was re-read on the launch post on 2026-11-23. The weights and system-card sentence was not re-read, and it still says as of 2026-11-05.",
     sourceUrl: PRESS_URL,
     sourceKind: "announcement",
-    checkedAt: "2026-11-05",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "apiPricing",
+      summary:
+        "TokenHub list re-read as ¥6 / ¥18 / ¥0.3 per 1M, 50% of list through 2026-12-31 23:59:59 Beijing time. The English launch post still says about US$0.90 / US$2.70 / US$0.045. The WorkBuddy and CodeBuddy free window ended 2026-11-15.",
+    },
     {
       date: "2026-11-05",
       field: "apiPricing",

@@ -64,14 +64,15 @@ export default {
     status: "verified",
   },
   apiPricing: {
-    value: "Per 1M tokens, same for gpt-image-2.6 Flare and Sunburst: $5 text input, $1.25 cached text input, $8 image input, $2 cached image input, $30 image output. Batch is not supported on either model.",
-    note: "As of 2026-11-05, from OpenAI's Flare and Sunburst model pages. Sunburst: https://developers.openai.com/api/docs/models/gpt-image-2.6-sunburst",
+    value:
+      "Per 1M tokens, same for gpt-image-2.6 Flare and Sunburst: $5 text input, $1.25 cached text input, $8 image input, $2 cached image input, $30 image output. The Flare and Sunburst model pages say the Batch endpoint (v1/batch) is not supported. The API pricing page lists Batch rates for both models: image input $4, image output $15, cached image input $1, text input $2.50, and cached text input $0.625 per 1M tokens, and it does not say the Batch endpoint is unsupported.",
+    note: "Model pages and https://developers.openai.com/api/docs/pricing, read 2026-11-23. Standard rates match the model pages. Sunburst: https://developers.openai.com/api/docs/models/gpt-image-2.6-sunburst. The two official pages disagree about Batch, so both statements are recorded.",
     sourceUrl: "https://developers.openai.com/api/docs/models/gpt-image-2.6-flare",
     sourceKind: "plans-page",
-    checkedAt: "2026-11-05",
+    checkedAt: "2026-11-23",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-23",
     status: "verified",
   },
   features: {
@@ -89,6 +90,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-23",
+      field: "apiPricing",
+      summary:
+        "Standard Flare and Sunburst rates re-read and unchanged. The model pages still say the Batch endpoint is not supported. The API pricing page lists Batch rates for both models and does not say the endpoint is unsupported. Both statements are recorded.",
+    },
     {
       date: "2026-11-05",
       field: "displayName",

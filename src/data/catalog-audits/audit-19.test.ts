@@ -199,6 +199,8 @@ describe("catalog audit 19: content rules", () => {
         if (AUDIT_28_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_28_CHECKED_AT) continue;
         // Price re-verification 2026-11-20 moved checkedAt when the vendor page still showed the recorded price.
         if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-20") continue;
+        // Price re-verification 2026-11-23 moved these checkedAt dates.
+        if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-23") continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);

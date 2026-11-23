@@ -151,6 +151,8 @@ describe("catalog audit 18: stale facts batch 2", () => {
         if (slug === "gpt-image-1-5-dall-e-successor" && fact.checkedAt === "2026-11-05") continue;
         // Price re-verification 2026-11-20 moved checkedAt when the vendor page still showed the recorded price.
         if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-20") continue;
+        // Price re-verification 2026-11-23 moved these checkedAt dates.
+        if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-23") continue;
         assert.equal(fact.checkedAt, CHECKED_AT, `${slug}.${key}`);
         assert.match(fact.sourceUrl, /^https:\/\//, `${slug}.${key}`);
         assert.doesNotMatch(fact.sourceUrl, /via=|ref=|affiliate|utm_|\/\/(?:www\.)?x\.com|twitter\.com/i, `${slug}.${key}`);
