@@ -432,6 +432,34 @@ describe("facts-diff", () => {
   });
 });
 
+describe("klap yearly prices", () => {
+  it("records $14.50 / $39.50 / $94.50 a month billed yearly and leaves the month-to-month prices", () => {
+    const facts = REGISTERED_TOOL_FACTS.klap;
+    const plans = facts?.plans;
+    assert.ok(plans);
+    assert.equal(plans.sourceUrl, "https://klap.app/pricing");
+    assert.equal(plans.checkedAt, "2026-11-24");
+    assert.equal(plans.verifiedAt, "2026-11-24");
+    assert.equal(plans.status, "verified");
+    assert.deepEqual(
+      plans.value.map((plan) => [plan.name, plan.price, plan.period]),
+      [
+        ["Basic", "$29", "month"],
+        ["Pro", "$79", "month"],
+        ["Pro+", "$189", "month"],
+      ],
+    );
+    assert.match(plans.value[0]?.limits ?? "", /\$14\.50\/month billed yearly \(\$174 a year\)/);
+    assert.match(plans.value[1]?.limits ?? "", /\$39\.50\/month billed yearly \(\$474 a year\)/);
+    assert.match(plans.value[2]?.limits ?? "", /\$94\.50\/month billed yearly \(\$1,134 a year\)/);
+    const limits = plans.value.map((plan) => plan.limits).join(" ");
+    assert.doesNotMatch(limits, /\$14\/month billed yearly|\$39\/month billed yearly|\$94\/month billed yearly/);
+    assert.match(plans.note ?? "", /last updated Nov 4, 2026/);
+    assert.equal(facts?.changelog?.[0]?.date, "2026-11-24");
+    assert.equal(facts?.changelog?.[0]?.field, "plans");
+  });
+});
+
 describe("anthropic-api prices agree with the model registry", () => {
   it("each plan's input/output price equals the /models registry value", () => {
     const claude = getModelFamilyBySlug("claude");

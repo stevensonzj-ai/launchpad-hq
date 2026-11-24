@@ -6,10 +6,10 @@ const KLAP_PRIVACY_URL = "https://klap.app/privacy-policy";
 const KLAP_API_URL = "https://klap.app/api";
 
 /**
- * Klap (new catalog row, catalog audit 13; rechecked in catalog audit 34 on
- * 2026-11-02 against klap.app only). The pricing page shows the
- * yearly-billed monthly prices ($14 / $39 / $94, "Save 50%"); the homepage
- * FAQ states both those and the month-to-month prices ($29 / $79 / $189).
+ * Klap (new catalog row, catalog audit 13). Yearly prices rechecked
+ * 2026-11-24 against https://klap.app/pricing, which says prices were last
+ * updated Nov 4, 2026. Yearly billing is $14.50 / $39.50 / $94.50 a month
+ * ($174 / $474 / $1,134 a year). Month-to-month stays $29 / $79 / $189.
  * Plans are capped by clips a month, not minutes.
  */
 export default {
@@ -42,16 +42,16 @@ export default {
   },
   plans: {
     value: [
-      { name: "Basic", price: "$29", period: "month", limits: "100 clips a month; billed monthly, or $14/month billed yearly" },
-      { name: "Pro", price: "$79", period: "month", limits: "300 clips a month; billed monthly, or $39/month billed yearly" },
-      { name: "Pro+", price: "$189", period: "month", limits: "1,000 clips a month; billed monthly, or $94/month billed yearly" },
+      { name: "Basic", price: "$29", period: "month", limits: "100 clips a month; billed monthly, or $14.50/month billed yearly ($174 a year)" },
+      { name: "Pro", price: "$79", period: "month", limits: "300 clips a month; billed monthly, or $39.50/month billed yearly ($474 a year)" },
+      { name: "Pro+", price: "$189", period: "month", limits: "1,000 clips a month; billed monthly, or $94.50/month billed yearly ($1,134 a year)" },
     ],
-    note: "USD, as of 2026-11-02. Pricing page: \"Only pay for clips you generate.\" With \"Yearly\" selected (\"Save 50%\") it shows Basic 100 clips /mo $14 /mo, Pro 300 clips /mo $39 /mo and Pro+ 1000 clips /mo $94 /mo, each \"Billed yearly\". The homepage FAQ gives the month-to-month prices: \"($29, $79 and $189 month to month)\". Plans are capped by clips a month, not minutes of video; neither page states a minute, upload-length or file-size cap. All plans include AI clipping, unlimited social accounts and analytics. Paid exports carry no Klap branding (homepage FAQ). Neither page states a customer discount.",
+    note: "USD. Pricing page checked 2026-11-24 (https://klap.app/pricing; the page says prices were last updated Nov 4, 2026). Yearly billing: Basic $14.50/month ($174/year, 100 clips a month), Pro $39.50/month ($474/year, 300 clips a month), Pro+ $94.50/month ($1,134/year, 1,000 clips a month). Month-to-month: $29, $79 and $189. Plans are capped by clips a month, not minutes of video. All plans include AI clipping, unlimited social accounts and analytics. Paid exports carry no Klap branding (homepage FAQ, as of 2026-11-02). Neither the pricing page nor the homepage FAQ stated a customer discount as of 2026-11-02.",
     sourceUrl: KLAP_PRICING_URL,
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-24",
     gatheredBy: "claude",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedAt: "2026-11-24",
     status: "verified",
   },
   platforms: {
@@ -90,6 +90,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-24",
+      field: "plans",
+      summary:
+        "Pricing page rechecked (https://klap.app/pricing; the page says prices were last updated Nov 4, 2026). Yearly-billed prices are $14.50 / $39.50 / $94.50 a month ($174 / $474 / $1,134 a year). Month-to-month stays $29 / $79 / $189.",
+    },
     {
       date: "2026-11-02",
       field: "plans",
