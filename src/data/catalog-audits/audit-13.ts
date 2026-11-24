@@ -154,6 +154,9 @@ export const KLAP_ROW = {
   costTier: "PAID",
   difficultyLevel: "BEGINNER",
   platformType: ["web", "api"],
+  // 2026-10-29 create text. Later yearly prices: src/data/facts/klap.ts and
+  // scripts/sql/catalog-klap-yearly-20261124.sql. This create does not update
+  // a row that already exists.
   currentPricing:
     "Basic $29/mo or $14/mo billed yearly (100 clips/mo); Pro $79/mo or $39/mo billed yearly (300 clips/mo); Pro+ $189/mo or $94/mo billed yearly (1,000 clips/mo) (as of 2026-10-29)",
   freeTierFeatures:
