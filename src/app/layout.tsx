@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import { getPlatformCount, getCategoryCount, roundDownToTen } from "@/lib/platforms"
+import { impactSiteVerificationMeta } from "@/lib/impact-site-verification"
 import { DEFAULT_OG_IMAGE, SITE_IS_PUBLIC, SITE_URL } from "@/lib/site"
 import { BackToTop } from "@/components/layout/back-to-top"
 import { clerkAppearance } from "@/lib/clerk-appearance"
@@ -44,6 +45,8 @@ export default function RootLayout({
   return (
     <ClerkProvider publishableKey={clerkPublishableKey} appearance={clerkAppearance}>
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+        {/* Spread keeps `value` (Impact's attribute) without a JSX prop TypeScript rejects. */}
+        <meta {...(impactSiteVerificationMeta as React.ComponentProps<"meta">)} />
         <body className="min-h-full flex flex-col bg-gray-950 text-white">
           {children}
           <Footer />
