@@ -233,6 +233,7 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
         answer: "Yes. HeyGen has a free plan and Synthesia has a free Basic plan, both with watermarked videos. The current allowances are in the rows above, with the date they were checked.",
       },
     ],
+    disclosure: [{ slug: "synthesia", kinds: ["affiliate"] }],
   },
   {
     kind: "head-to-head",

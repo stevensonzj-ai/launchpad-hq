@@ -101,4 +101,5 @@ export const synthesiaTutorial: PlatformTutorialData = {
     { label: "More AI video tools", categorySlug: "video-creation-editing" },
     { label: "AI voice and speech tools", categorySlug: "voice-speech" },
   ],
+  disclosure: [{ slug: "synthesia", kinds: ["affiliate"] }],
 };
