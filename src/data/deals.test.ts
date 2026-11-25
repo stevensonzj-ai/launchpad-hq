@@ -131,8 +131,8 @@ describe("deal records", () => {
     assert.equal(klap.offerType, "code");
     assert.equal(klap.code, undefined);
     assert.equal(klap.noEndDateStated, true);
-    assert.equal(klap.lastChecked, "2026-10-29");
-    assert.equal(klap.note, "code confirmed by owner from affiliate dashboard 2026-10-29");
+    assert.equal(klap.lastChecked, "2026-11-25");
+    assert.equal(klap.note, "code reconfirmed by the owner from the Klap dashboard on 2026-11-25");
     assert.equal(klap.details, "30% off the first payment, plus a free one-video try with no card.");
     assert.match(klap.sourceUrl, /^https:\/\/(www\.)?notion\.so\/ziggapp\/Klap-Affiliate-Program/);
     assert.equal(JSON.stringify(klap).includes(AFFILIATE_LINKS.klap.promoCode!.code), false);

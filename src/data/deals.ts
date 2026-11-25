@@ -352,9 +352,9 @@ export const DEALS: readonly DealOffer[] = [
     url: "https://klap.app",
     sourceUrl:
       "https://www.notion.so/ziggapp/Klap-Affiliate-Program-Terms-and-Conditions-56bd7c6ae25744b4aaa9ea92171e8042",
-    lastChecked: "2026-10-29",
+    lastChecked: "2026-11-25",
     noEndDateStated: true,
     verified: true,
-    note: "code confirmed by owner from affiliate dashboard 2026-10-29",
+    note: "code reconfirmed by the owner from the Klap dashboard on 2026-11-25",
   },
 ];
