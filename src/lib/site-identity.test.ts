@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { IMPACT_SITE_VERIFICATION, impactSiteVerificationMeta } from "@/lib/impact-site-verification";
 import { buildSiteStructuredData } from "@/lib/seo-jsonld";
 import { buildTutorialMetadata, publicPageMetadata } from "@/lib/seo-metadata";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/site";
@@ -71,6 +74,21 @@ describe("site-wide Open Graph defaults", () => {
 
   it("the root layout sets the same defaults", () => {
     assert.match(readFileSync("src/app/layout.tsx", "utf8"), /openGraph: \{ type: "website", siteName: "Launchpad HQ", images: \[DEFAULT_OG_IMAGE\] \}/);
+  });
+});
+
+describe("Impact site verification", () => {
+  it("renders a meta tag with Impact's value attribute", () => {
+    const html = renderToStaticMarkup(createElement("meta", impactSiteVerificationMeta));
+    assert.equal(IMPACT_SITE_VERIFICATION, "115060bd-015a-45ec-b593-eee412d07430");
+    assert.match(html, /<meta\b[^>]*\bname="impact-site-verification"/);
+    assert.match(html, /<meta\b[^>]*\bvalue="115060bd-015a-45ec-b593-eee412d07430"/);
+    assert.match(html, /<meta\b[^>]*\bcontent="115060bd-015a-45ec-b593-eee412d07430"/);
+  });
+
+  it("is included from the root layout on every page", () => {
+    const layout = readFileSync("src/app/layout.tsx", "utf8");
+    assert.match(layout, /<meta \{\.\.\.\(impactSiteVerificationMeta as React\.ComponentProps<"meta">\)\} \/>/);
   });
 });
 
