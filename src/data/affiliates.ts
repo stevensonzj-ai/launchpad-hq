@@ -94,6 +94,7 @@ export function entryDisclosureText(name: string, entry: AffiliateEntry): string
 
 /** The only modules allowed to import this file (affiliates.test.ts). Tests are exempt. */
 export const AFFILIATE_LINK_CONSUMERS = [
+  "src/app/(app)/deals/model.ts",
   "src/app/(app)/platform/[slug]/page.tsx",
   "src/app/(app)/platform/[slug]/guide/page.tsx",
   "src/components/platforms/platform-detail-header.tsx",

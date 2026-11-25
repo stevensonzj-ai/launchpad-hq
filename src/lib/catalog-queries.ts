@@ -93,6 +93,15 @@ export const getPlatformCategories = cachedCatalogRead("platform-categories", (s
   }),
 );
 
+/** Listed platforms' slug, name and official website (the deals page). */
+export const getListedPlatformNames = cachedCatalogRead("listed-platform-names", () =>
+  prisma.platform.findMany({
+    where: listedPlatformWhere(),
+    select: { slug: true, name: true, website: true },
+    orderBy: { name: "asc" },
+  }),
+);
+
 /** Listed platforms' slug and updatedAt (sitemap). */
 export const getSitemapPlatforms = cachedCatalogRead("sitemap-platforms", () =>
   prisma.platform.findMany({

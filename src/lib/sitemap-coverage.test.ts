@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
+import { dealsPageIndexable } from "@/app/(app)/deals/model";
 import { SITE_URL } from "@/lib/site";
 import { getActivePlacement } from "@/data/sponsors";
 import { TEST_ONLY_EXAMPLE_PLACEMENT } from "@/data/sponsors/test-fixture";
@@ -54,6 +55,20 @@ describe("sitemap coverage", () => {
       sitemapStaticPublicPaths({ proPlanEnabled: true }).includes("/pricing"),
       true,
     );
+  });
+
+  it("includes /deals only when the launch gate says the page is indexable", () => {
+    assert.equal(sitemapStaticPublicPaths({ includeDeals: false }).includes("/deals"), false);
+    assert.equal(sitemapStaticPublicPaths({ includeDeals: true }).includes("/deals"), true);
+    assert.equal((SITEMAP_STATIC_PUBLIC_PATHS as readonly string[]).includes("/deals"), false);
+
+    const launch = new Date("2026-11-25T12:00:00Z");
+    assert.equal(dealsPageIndexable(launch), true);
+    assert.equal(sitemapStaticPublicPathsForNow(launch).includes("/deals"), true);
+
+    const afterCuratedOffersGoStale = new Date("2027-06-01T12:00:00Z");
+    assert.equal(dealsPageIndexable(afterCuratedOffersGoStale), false);
+    assert.equal(sitemapStaticPublicPathsForNow(afterCuratedOffersGoStale).includes("/deals"), false);
   });
 
   it("includes /ai-of-the-week only when a sponsor is booked", () => {

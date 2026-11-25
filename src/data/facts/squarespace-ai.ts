@@ -22,7 +22,7 @@ export default {
     value: {
       available: false,
       summary:
-        "No permanent free plan: a 14-day free trial, no credit card required, cancel anytime. Plan AI credits are Basic 10 (one-time), Core 20 a month, Plus 40 a month, and Advanced 120 a month. The pricing page no longer shows a 30% off all plans sale. The coupons page lists code GIMME10 for 10% off a first annual website purchase and does not state a calendar end date, so that code is not a list price.",
+        "No permanent free plan: a 14-day free trial, no credit card required, cancel anytime. Plan AI credits are Basic 10 (one-time), Core 20 a month, Plus 40 a month, and Advanced 120 a month.",
     },
     note: "Pricing page and https://www.squarespace.com/coupons, read 2026-11-23. Basic shows 10 one-time AI credits. Core, Plus, and Advanced credit counts were on the pricing page on 2026-11-20 and were not in the truncated cards on this fetch. https://www.squarespace.com/assets/pricing.txt lists the same USD plan prices and stamps its own file 2026-10-05.",
     sourceUrl: "https://www.squarespace.com/pricing",
@@ -83,7 +83,7 @@ export default {
       date: "2026-11-23",
       field: "freeTier",
       summary:
-        "The 30% off all plans sale that ended Nov 23 is no longer on the pricing page. USD list prices are unchanged. GIMME10 is 10% off a first annual purchase and has no stated calendar end date, so it is not a list price.",
+        "The 30% off all plans sale that ended Nov 23 is no longer on the pricing page. USD list prices are unchanged. A first-annual-purchase coupon with no stated calendar end date is not a list price; it is recorded on the deals page.",
     },
     {
       date: "2026-10-29",
