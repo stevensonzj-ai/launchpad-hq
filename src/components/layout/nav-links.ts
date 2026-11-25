@@ -13,6 +13,7 @@ export type NavLink = { readonly href: string; readonly label: string };
 export const HEADER_LINKS: readonly NavLink[] = [
   { href: "/discover", label: "Discover" },
   { href: "/tutorials", label: "Guides" },
+  { href: "/deals", label: "Deals" },
   { href: "/compare", label: "Compare" },
   { href: "/quiz", label: "Get matched" },
 ];
@@ -29,6 +30,7 @@ export function headerLinks(signedIn: boolean): readonly NavLink[] {
 export function footerExploreLinks(proPlanEnabled: boolean = PRO_PLAN_ENABLED): readonly NavLink[] {
   return [
     { href: "/workflows", label: "Workflows" },
+    { href: "/deals", label: "Deals" },
     { href: "/models", label: "Models" },
     ...(proPlanEnabled ? [{ href: "/pricing", label: "Pricing" }] : []),
   ];

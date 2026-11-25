@@ -1,5 +1,6 @@
 import { getActivePlacement } from "@/data/sponsors";
 import type { SponsorPlacement } from "@/data/sponsors";
+import { dealsPageIndexable } from "@/app/(app)/deals/model";
 import { PRO_PLAN_ENABLED } from "@/lib/site";
 
 /** Static public paths that always belong in sitemap.xml. */
@@ -39,10 +40,12 @@ export function sitemapUrl(origin: string, path: string): string {
 export function sitemapStaticPublicPaths(options?: {
   proPlanEnabled?: boolean;
   includeAiOfTheWeek?: boolean;
+  includeDeals?: boolean;
 }): string[] {
   const paths: string[] = [...SITEMAP_STATIC_PUBLIC_PATHS];
   if (options?.proPlanEnabled) paths.push("/pricing");
   if (options?.includeAiOfTheWeek) paths.push("/ai-of-the-week");
+  if (options?.includeDeals) paths.push("/deals");
   return paths;
 }
 
@@ -56,5 +59,6 @@ export function sitemapStaticPublicPathsForNow(
   return sitemapStaticPublicPaths({
     proPlanEnabled,
     includeAiOfTheWeek: booked,
+    includeDeals: dealsPageIndexable(date),
   });
 }

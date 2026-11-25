@@ -27,6 +27,7 @@ const PUBLIC_TOP_LEVEL = new Set([
   "connector",
   "contact",
   "data",
+  "deals",
   "developers",
   "discover",
   "for-you",

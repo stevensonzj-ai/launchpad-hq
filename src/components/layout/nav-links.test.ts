@@ -6,12 +6,13 @@ import { FOOTER_LINKS, footerExploreLinks, HEADER_LINKS, headerLinks } from "./n
 const hrefs = (links: readonly { href: string }[]) => links.map((l) => l.href);
 
 describe("header links", () => {
-  it("signed out: Discover, Guides, Compare, Get matched", () => {
+  it("signed out: Discover, Guides, Deals, Compare, Get matched", () => {
     assert.deepEqual(
       headerLinks(false).map((l) => [l.label, l.href]),
       [
         ["Discover", "/discover"],
         ["Guides", "/tutorials"],
+        ["Deals", "/deals"],
         ["Compare", "/compare"],
         ["Get matched", "/quiz"],
       ],
@@ -19,8 +20,8 @@ describe("header links", () => {
     assert.deepEqual(headerLinks(false), HEADER_LINKS);
   });
 
-  it("signed in: the same four, then For you", () => {
-    assert.deepEqual(hrefs(headerLinks(true)), ["/discover", "/tutorials", "/compare", "/quiz", "/for-you"]);
+  it("signed in: the same five, then For you", () => {
+    assert.deepEqual(hrefs(headerLinks(true)), ["/discover", "/tutorials", "/deals", "/compare", "/quiz", "/for-you"]);
   });
 
   it("desktop and mobile menus both render from headerLinks (no hard-coded nav hrefs)", () => {
@@ -39,8 +40,8 @@ describe("footer links", () => {
   });
 
   it("Explore group: Workflows, Models, and Pricing only when the pro plan flag is on", () => {
-    assert.deepEqual(hrefs(footerExploreLinks(true)), ["/workflows", "/models", "/pricing"]);
-    assert.deepEqual(hrefs(footerExploreLinks(false)), ["/workflows", "/models"]);
+    assert.deepEqual(hrefs(footerExploreLinks(true)), ["/workflows", "/deals", "/models", "/pricing"]);
+    assert.deepEqual(hrefs(footerExploreLinks(false)), ["/workflows", "/deals", "/models"]);
   });
 
   it("footer renders both groups from nav-links", () => {
