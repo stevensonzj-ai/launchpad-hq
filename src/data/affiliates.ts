@@ -64,6 +64,18 @@ export const AFFILIATE_LINKS: Record<string, AffiliateEntry> = {
     },
     disclosure: ["affiliate"],
   },
+  // Synthesia affiliate program (Rewardful), approved 2026-11-25.
+  // Commission: 25% for the first 12 months, Starter and Creator plans only.
+  // No promo/reader code. That commission note is internal only and is not shown to readers.
+  synthesia: {
+    slug: "synthesia",
+    href: "https://www.synthesia.io?via=zachary-stevenson",
+    freeAccess: {
+      granted: false,
+      source: "Synthesia affiliate program approval, 2026-11-25: no free access documented",
+    },
+    disclosure: ["affiliate"],
+  },
 };
 
 export function getAffiliateLink(slug: string): AffiliateEntry | undefined {

@@ -17,6 +17,9 @@ import { listRegisteredTutorials } from "./tutorials";
 import { getAllWorkflows } from "./workflows";
 import { buildContentItems, disclosureGaps } from "@/lib/content-tracker";
 import { KLAP_ROW } from "./catalog-audits/audit-13";
+import { getToolFacts } from "./facts";
+import { snapshotRows } from "@/lib/mcp/snapshot";
+import { compare, findFreeAlternatives, getPricingFacts, searchTools } from "@/lib/mcp/tools";
 
 const ROOT = process.cwd();
 
@@ -68,6 +71,36 @@ describe("affiliate links stay display-only", () => {
   it("the Klap catalog row uses the vendor's own website", () => {
     assert.equal(KLAP_ROW.website, "https://klap.app");
     assert.notEqual(KLAP_ROW.website, AFFILIATE_LINKS.klap.href);
+  });
+
+  it("MCP never imports affiliates, and connector output cannot carry a tracked link", () => {
+    const mcpFiles = FILES.filter((f) => f.startsWith("src/lib/mcp/"));
+    assert.ok(mcpFiles.length > 0);
+    for (const file of mcpFiles) assert.equal(IMPORTS_AFFILIATES.test(read(file)), false, file);
+
+    const rows = snapshotRows();
+    const synthesia = rows.find((row) => row.slug === "synthesia");
+    assert.ok(synthesia, "catalog snapshot has no synthesia row");
+    assert.equal(synthesia.website, "https://synthesia.io");
+    assert.notEqual(synthesia.website, AFFILIATE_LINKS.synthesia.href);
+
+    const facts = getToolFacts;
+    const outputs = [
+      searchTools({ task: "avatar training video", limit: 10 }, rows, facts),
+      compare({ platforms: ["heygen", "synthesia"] }, rows, facts),
+      getPricingFacts({ platform: "synthesia" }, rows, facts),
+      findFreeAlternatives({ platform: "synthesia", limit: 10 }, rows, facts),
+    ];
+    const blob = JSON.stringify(outputs);
+    for (const entry of Object.values(AFFILIATE_LINKS)) {
+      assert.equal(blob.includes(entry.href), false, entry.slug);
+      const query = new URL(entry.href).search;
+      if (query) assert.equal(blob.includes(query), false, `${entry.slug} query`);
+    }
+    const priced = outputs[2] as ReturnType<typeof getPricingFacts>;
+    assert.equal(priced.platform.slug, "synthesia");
+    assert.equal(priced.platform.website, synthesia.website);
+    assert.equal(priced.platform.sponsored, false);
   });
 
   it("comparison pages never carry the affiliate link", () => {
@@ -171,6 +204,34 @@ describe("disclosure wording", () => {
     assert.equal(AFFILIATE_LINKS.klap.freeAccess.granted, false);
     const view = read("src/components/sponsors/affiliate-disclosure.tsx");
     assert.match(view, /\{affiliate\.promoCode\.offer\} with code <code[^>]*>\{affiliate\.promoCode\.code\}<\/code>\./);
+  });
+
+  it("the Synthesia entry is the Rewardful link, with no reader code and no free access", () => {
+    const entry = AFFILIATE_LINKS.synthesia;
+    assert.equal(entry.href, "https://www.synthesia.io?via=zachary-stevenson");
+    assert.equal(entry.promoCode, undefined);
+    assert.equal(entry.freeAccess.granted, false);
+    assert.equal(
+      entry.freeAccess.source,
+      "Synthesia affiliate program approval, 2026-11-25: no free access documented",
+    );
+    assert.deepEqual(entry.disclosure, ["affiliate"]);
+    const text = entryDisclosureText("Synthesia", entry);
+    assert.equal(text, affiliateDisclosureText("Synthesia"));
+    assert.match(text, /commission/);
+    assert.doesNotMatch(text, /25%|Starter|Creator|Rewardful|via=/);
+  });
+
+  it("the HeyGen vs Synthesia page shows a text-only disclosure that says the link isn't used", () => {
+    const page = findHeadToHead("heygen-vs-synthesia")!;
+    const lines = compareDisclosureLines(page, [
+      { slug: "heygen", name: "HeyGen" },
+      { slug: "synthesia", name: "Synthesia" },
+    ]);
+    assert.deepEqual(lines, [comparisonDisclosureText("Synthesia", ["affiliate"])]);
+    assert.match(lines[0], /doesn't use that link/);
+    assert.match(lines[0], /no say in what this page says, the picks or the order/);
+    assert.doesNotMatch(lines[0], /https?:|via=/);
   });
 
   it("the Klap vs OpusClip page shows a text-only disclosure that says the link isn't used", () => {
