@@ -344,6 +344,20 @@ export const DEALS: readonly DealOffer[] = [
     verified: true,
   },
   {
+    platformSlug: "manus",
+    offerType: "discount",
+    title: "Black Friday 2026, first billing period",
+    details:
+      "Time-limited Black Friday 2026 offer, not the regular price. Ends 30 November 2026 at 23:59:59 Eastern Time (UTC-5). The discount applies to the first billing period only. On the web, the Pro $100 tier is $90 for the first month or $900 for the first year, and the Max $200 tier is $160 for the first month or $1,600 for the first year. Pro tiers at $20, $40, $60, and $80 are not included. After that period the plan renews at the regular price.",
+    eligibility:
+      "Pro $100 tier and Max tiers from $200 up, monthly or annual, for the first billing period only. Team plans and lower Pro tiers are not included.",
+    url: "https://help.manus.im/en/articles/18542127-how-does-the-manus-black-friday-2026-offer-work",
+    sourceUrl: "https://help.manus.im/en/articles/18542127-how-does-the-manus-black-friday-2026-offer-work",
+    lastChecked: "2026-11-26",
+    expiresAt: "2026-11-30",
+    verified: true,
+  },
+  {
     platformSlug: "klap",
     offerType: "code",
     title: "30% off your first payment",

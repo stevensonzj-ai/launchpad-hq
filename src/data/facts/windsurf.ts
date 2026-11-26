@@ -71,17 +71,24 @@ export default {
       "SWE-2 Flash is Cognition's fast coding model, available in Devin Desktop and Devin CLI only (as of 2026-11-05). There is no public API and no public weights; Cognition says it is building a secure weight-share program.",
       "Cognition says SWE-2 Flash costs about one fifth as much as SWE-2 and runs about 3x faster (Cognition's own claim). Promotional pricing may apply; check the in-app model selector. Any end date for a Flash promotion is unverified.",
       "Devin Apps, announced 2026-11-13, are private web apps hosted on Devin's cloud computer. Everyone who opens one signs in to Devin, and the apps are never public. Sharing can be limited to people you add, your organization, or your enterprise. The post says billing is based on how long the machine is awake and does not publish a dollar price.",
+      "SWE-2.1, posted 2026-11-24, is a coding model trained with pure reinforcement learning on Kimi K3, and Cognition describes it as an upgrade over SWE-2. SWE-2.1 Ultrafast is that same model, served through a Cerebras partnership at 10 times the speed. The post does not list a price. The post also says SWE-2.1 Cyber, a version with more permissive safeguards, is rolling out to Devin Security.",
     ],
-    note: "Devin Apps was checked 2026-11-16. The SWE-2 Flash items were checked 2026-11-05 and were not re-read. A \"free through November 30\" claim for Flash came from X and secondary sources and is not confirmed by Cognition's pages, so it is not recorded.",
-    sourceUrl: "https://devin.ai/blog/devin-apps",
+    note: "SWE-2.1 was read 2026-11-26 at https://cognition.com/blog/swe-2-1. Devin Apps was checked 2026-11-16 and the SWE-2 Flash items were checked 2026-11-05; those bullets were not re-read. A \"free through November 30\" claim for Flash came from X and secondary sources and is not confirmed by Cognition's pages, so it is not recorded.",
+    sourceUrl: "https://cognition.com/blog/swe-2-1",
     sourceKind: "announcement",
-    checkedAt: "2026-11-16",
+    checkedAt: "2026-11-26",
     gatheredBy: "cursor",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-16",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "features",
+      summary:
+        "X-watch: SWE-2.1 is trained with reinforcement learning on Kimi K3. Ultrafast is the same model through a Cerebras partnership at 10 times the speed. The post does not list a price.",
+    },
     {
       date: "2026-11-16",
       field: "features",
