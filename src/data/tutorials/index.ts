@@ -203,6 +203,9 @@ import { hermesAgentTutorial } from "./hermes-agent-getting-started";
 // Catalog audit 32, 2026-11-02
 import { pipecatTutorial } from "./pipecat-getting-started";
 import { antigravityCliTutorial } from "./antigravity-cli-getting-started";
+// New guides, 2026-11-26
+import { magi2Tutorial } from "./magi-2-getting-started";
+import { minimaxTutorial } from "./minimax-getting-started";
 
 const byPlatformSlug: Record<string, PlatformTutorialData> = {
   [openrouterTutorial.platformSlug]: openrouterTutorial,
@@ -405,6 +408,8 @@ const byPlatformSlug: Record<string, PlatformTutorialData> = {
   // Catalog audit 32, 2026-11-02
   [pipecatTutorial.platformSlug]: pipecatTutorial,
   [antigravityCliTutorial.platformSlug]: antigravityCliTutorial,
+  [magi2Tutorial.platformSlug]: magi2Tutorial,
+  [minimaxTutorial.platformSlug]: minimaxTutorial,
 };
 
 export function getStaticTutorialForPlatform(platformSlug: string): PlatformTutorialData | undefined {
