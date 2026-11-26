@@ -15,8 +15,8 @@ export const alephAlphaLuminousTutorial: PlatformTutorialData = {
     "Kolibri is a language model (the AI \"brain\") you download and run yourself. Aleph Alpha's installed product, PhariaAI, is the other door: staff at a buying organisation open an internal chat and type a question there.",
 
   whatItIs: [
-    "Aleph Alpha is a Heidelberg company. Its current open-weight model is Kolibri 1.1, released 23 November 2026, seven weeks after Kolibri 1.0. The announcement says the weights are on Hugging Face under the Apache 2.0 licence, with 75 billion parameters in total and 3 billion active, a context window it describes as 1 million tokens, and that the model can run on a GPU with 24 GB of memory.",
-    "The model card is more specific than the announcement. It says the native context is 262,144 tokens, that you can extend it to 1,048,576, and that complex tasks should stay at or under 262,144. It counts 3.44 billion active parameters. It also says the Apache 2.0 grant covers the weights and configuration files in that repository, not Aleph Alpha's training code or the model architecture.",
+    "Aleph Alpha is a Heidelberg company. Its current open-weight model is Kolibri 1.1, released 23 November 2026, seven weeks after Kolibri 1.0. The announcement says the weights are on Hugging Face under the Apache 2.0 licence, with 75 billion parameters in total and 3 billion active, and a context window it describes as 1 million tokens. The same post says the model can run on a GPU with 24 GB of memory. That is the announcement's claim, not the hardware requirement on the model card.",
+    "The model card is the requirement to follow. It says the memory footprint is about 77.6 GB, and the minimum hardware is two H100s, two H200s, one B200, or one B300. It counts 3.44 billion active parameters. The native context is 262,144 tokens, extendable to 1,048,576, and it recommends staying at or under 262,144 for complex tasks. The Apache 2.0 grant covers the weights and configuration files in that repository, not Aleph Alpha's training code or the model architecture.",
     "PhariaAI is the installed stack for organisations. The company's developer docs describe a chat that lives at the customer's own address, not on a public website anyone can sign up to. Luminous is the older model line this listing was first written about. The 23 November 2026 announcement is about Kolibri, not a new Luminous release.",
     "On 16 September 2026 Cohere announced a definitive agreement to combine with Aleph Alpha. That announcement says the deal still needs regulatory approvals and was expected to close later in 2026. The page does not say the deal has closed, and it does not say what happens to PhariaAI afterwards.",
   ],
@@ -32,7 +32,7 @@ export const alephAlphaLuminousTutorial: PlatformTutorialData = {
     body: [
       "Download only from the Aleph-Alpha organisation. The card names Aleph-Alpha/Kolibri-1.1. A re-upload under another account is not the publisher, and a model file is code your computer will run.",
       "Read the licence section on that card before you build anything on the weights. It is Apache 2.0 for the files in the repository, and the card says that grant stops there.",
-      "Follow Aleph Alpha's own getting-started notes on the card. The announcement's 24 GB figure is a hardware claim on the news post, not a step-by-step install guide.",
+      "Follow Aleph Alpha's own getting-started notes on the card. Plan for the card's hardware line: about 77.6 GB of memory, and at least two H100s, two H200s, one B200, or one B300. The news post's 24 GB sentence is a separate claim.",
     ],
     vendorDocsUrl: "https://huggingface.co/Aleph-Alpha/Kolibri-1.1",
   },
@@ -56,7 +56,7 @@ export const alephAlphaLuminousTutorial: PlatformTutorialData = {
   triad: {
     bestAt: [
       "German and English work. The model card says those are the languages it focuses on.",
-      "Running an open-weight model on hardware you control. The announcement says Kolibri 1.1 can operate on a GPU with 24 GB of memory.",
+      "A team that can host the weights. The model card, not the news post, is the hardware list: about 77.6 GB of memory, minimum two H100s, two H200s, one B200, or one B300.",
       "An organisation that wants a vendor installing software inside its own systems, which is the PhariaAI pitch rather than the download.",
     ],
     okayAt: [

@@ -23,9 +23,9 @@ export default {
   features: {
     value: [
       "Aleph Alpha's news post dated 23 November 2026 says Kolibri 1.1 is an open-weight language model, available on Hugging Face under the Apache 2.0 license, with 75 billion total parameters and 3 billion active parameters. The same post says this was seven weeks after Kolibri 1.0, that the model supports a 1-million-token context window, and that it can run on GPUs with 24 GB of VRAM.",
-      "The Kolibri 1.1 model card (read 2026-11-26) says the native context is 262,144 tokens, extendable to 1,048,576, and recommends at most 262,144 tokens for complex tasks. It counts 3.44 billion active parameters. It says the Apache 2.0 licence covers the weights and configuration files in that repository, not the architecture or training method.",
+      "The Kolibri 1.1 model card (https://huggingface.co/Aleph-Alpha/Kolibri-1.1, read 2026-11-26) says the memory footprint is about 77.6 GB. Minimum hardware is 2× H100 SXM5, 2× H200, 1× B200 or 1× B300. It counts 3.44 billion active parameters. Native context is 262,144 tokens, extendable to 1,048,576, and it recommends at most 262,144 tokens for complex tasks. The Apache 2.0 licence covers the weights and configuration files in that repository, not the architecture or training method. The news post's 24 GB VRAM sentence is the announcement's claim, not this hardware line.",
     ],
-    note: "News post and https://huggingface.co/Aleph-Alpha/Kolibri-1.1, both read 2026-11-26. The post says 1 million tokens and 3 billion active. The card says 262,144 native, up to 1,048,576, and 3.44 billion active.",
+    note: "News post and https://huggingface.co/Aleph-Alpha/Kolibri-1.1, both read 2026-11-26. The post says 1 million tokens, 3 billion active, and 24 GB of VRAM. The card says about 77.6 GB, minimum 2× H100 SXM5, 2× H200, 1× B200 or 1× B300, 3.44 billion active, and 262,144 native context up to 1,048,576.",
     sourceUrl: "https://aleph-alpha.com/en/news/kolibri-1-1-release/",
     sourceKind: "announcement",
     checkedAt: "2026-11-26",
@@ -39,7 +39,7 @@ export default {
       date: "2026-11-26",
       field: "features",
       summary:
-        "Guide refresh: model card adds the 262,144 native context, the 1,048,576 extension, the 3.44 billion active count, and the Apache 2.0 scope. The news post's 24 GB VRAM line and the seven-weeks-after-1.0 line are recorded. Cohere announcement re-read; it still says approvals are outstanding.",
+        "Hardware correction: the model card's requirement is about 77.6 GB, minimum 2× H100 SXM5, 2× H200, 1× B200 or 1× B300. The news post's 24 GB line stays labeled as the announcement's claim. Card also states 3.44 billion active and 262,144 native context, up to 1,048,576.",
     },
     {
       date: "2026-11-26",
