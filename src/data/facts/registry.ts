@@ -118,6 +118,8 @@ import longcat25Facts from "./longcat-2-5";
 // X-watch 2026-11-12: Muse Ember and Gemini Decisions API (new rows).
 import museEmberFacts from "./muse-ember";
 import geminiDecisionsApiFacts from "./gemini-decisions-api";
+// MAGI-2 catalog row, 2026-11-26.
+import magi2Facts from "./magi-2";
 // Stale facts batch 1, 2026-10-29 (catalog audit 17).
 import ai21LabsJambaFacts from "./ai21-labs-jamba";
 import connectedPapersFacts from "./connected-papers";
@@ -363,6 +365,7 @@ export const REGISTERED_TOOL_FACTS: Record<string, ToolFacts> = {
   // X-watch 2026-11-12: Muse Ember and Gemini Decisions API (new rows).
   [museEmberFacts.slug]: museEmberFacts,
   [geminiDecisionsApiFacts.slug]: geminiDecisionsApiFacts,
+  [magi2Facts.slug]: magi2Facts,
   // Stale facts batch 1, 2026-10-29 (catalog audit 17).
   [ai21LabsJambaFacts.slug]: ai21LabsJambaFacts,
   [connectedPapersFacts.slug]: connectedPapersFacts,
