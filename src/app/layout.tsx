@@ -31,6 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: `Your AI mission control center. ${count}+ vetted tools across ${categoryCount} categories.`,
     // Defaults for pages without their own openGraph (publicPageMetadata sets the same).
     openGraph: { type: "website", siteName: "Launchpad HQ", images: [DEFAULT_OG_IMAGE] },
+    twitter: { card: "summary_large_image", images: [DEFAULT_OG_IMAGE.url] },
     ...(!SITE_IS_PUBLIC ? { robots: { index: false, follow: false } } : {}),
   }
 }

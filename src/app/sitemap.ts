@@ -2,20 +2,19 @@ import type { MetadataRoute } from "next";
 import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import { listModelFamilies } from "@/data/models";
 import { WORKFLOWS } from "@/data/workflows";
-import { COMPARE_HUB_PATH } from "@/data/compare/pages";
+import { COMPARE_HUB_PATH, comparePagePath, comparePageToolSlugs } from "@/data/compare/pages";
 import { compareSitemapPaths, listedComparePages } from "@/data/compare/view";
 import { getSitemapPlatforms } from "@/lib/catalog-queries";
 import { SITE_URL } from "@/lib/site";
 import { sitemapStaticPublicPathsForNow, sitemapUrl } from "@/lib/sitemap-coverage";
+import {
+  compareSitemapLastModified,
+  guideSitemapLastModified,
+  parseContentDate,
+  platformSitemapLastModified,
+} from "@/lib/sitemap-lastmod";
 
 export const dynamic = "force-dynamic";
-
-function parseRealDate(value: string | Date | null | undefined): Date | undefined {
-  if (!value) return undefined;
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return undefined;
-  return date;
-}
 
 function withLastModified(
   url: string,
@@ -36,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const modelFamilyEntries: MetadataRoute.Sitemap = listModelFamilies().map((family) =>
     withLastModified(
       sitemapUrl(SITE_URL, `/models/${family.familySlug}`),
-      parseRealDate(family.lastVerifiedAt),
+      parseContentDate(family.lastVerifiedAt),
     ),
   );
 
@@ -54,12 +53,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Shared catalog cache: crawlers re-fetch this often, Postgres need not wake.
     const platforms = await getSitemapPlatforms();
 
-    // Tutorial content now lives at /guide, so the overview's lastmod is
-    // the row's own updatedAt — a tutorial review no longer changes it.
+    // Overview lastmod is the later of the row's updatedAt, the fact
+    // file's checkedAt dates, and a hand-written snippet revision.
+    // A guide review does not move it unless one of those dates does.
     platformEntries = platforms.map((platform) =>
       withLastModified(
         sitemapUrl(SITE_URL, `/platform/${platform.slug}`),
-        parseRealDate(platform.updatedAt),
+        platformSitemapLastModified(platform),
       ),
     );
 
@@ -72,14 +72,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .map((tutorial) =>
         withLastModified(
           sitemapUrl(SITE_URL, tutorialGuidePath(tutorial.platformSlug)),
-          parseRealDate(tutorial.lastReviewedAt),
+          guideSitemapLastModified(tutorial),
         ),
       );
 
     // Comparison pages whose required tools are listed, live and have rows.
-    compareEntries = compareSitemapPaths(listedComparePages(undefined, platformSlugs)).map(
-      (path) => ({ url: sitemapUrl(SITE_URL, path) }),
-    );
+    // lastmod is the latest fact-file check on the tools the page renders.
+    const comparePages = listedComparePages(undefined, platformSlugs);
+    compareEntries = compareSitemapPaths(comparePages).map((path) => {
+      const page = comparePages.find((candidate) => comparePagePath(candidate) === path);
+      return withLastModified(
+        sitemapUrl(SITE_URL, path),
+        page ? compareSitemapLastModified(comparePageToolSlugs(page)) : undefined,
+      );
+    });
   } catch {
     // DB unavailable (local build without DATABASE_URL, Neon blip): keep
     // only the static, workflow and model URLs. Platform and guide URLs

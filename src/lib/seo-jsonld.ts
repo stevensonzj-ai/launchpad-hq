@@ -13,6 +13,81 @@ export function serializeJsonLd(data: JsonLdNode): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
+const ABSOLUTE_URL = /^https?:\/\//;
+
+export type BreadcrumbCrumb = { name: string; item: string };
+
+/**
+ * One BreadcrumbList ListItem. `name` is required and must be non-empty:
+ * Google reports a crumb with no name as "Unnamed item". `item` is an
+ * absolute URL. Pass `includeItem: false` for the current page. On a guide,
+ * that URL is also Article.url, and Google then names the crumb from the
+ * Article, which only has `headline`.
+ */
+export function breadcrumbListItem(
+  position: number,
+  name: string,
+  item: string | undefined,
+): JsonLdNode {
+  const trimmed = name.trim();
+  if (!trimmed) {
+    throw new Error(`Breadcrumb ListItem ${position} is missing a name`);
+  }
+  const node: JsonLdNode = { "@type": "ListItem", position, name: trimmed };
+  if (item !== undefined) {
+    const url = item.trim();
+    if (!ABSOLUTE_URL.test(url)) {
+      throw new Error(`Breadcrumb ListItem ${position} item must be an absolute URL`);
+    }
+    node.item = url;
+  }
+  return node;
+}
+
+export function breadcrumbList(crumbs: BreadcrumbCrumb[]): JsonLdNode {
+  const last = crumbs.length - 1;
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, index) =>
+      breadcrumbListItem(index + 1, crumb.name, index === last ? undefined : crumb.item),
+    ),
+  };
+}
+
+function breadcrumbLists(data: JsonLdNode): JsonLdNode[] {
+  const graph = data["@graph"];
+  const nodes = Array.isArray(graph) ? graph : [data];
+  return nodes.filter(
+    (node): node is JsonLdNode =>
+      Boolean(node) && typeof node === "object" && (node as JsonLdNode)["@type"] === "BreadcrumbList",
+  );
+}
+
+/** Throws when any breadcrumb name is missing or blank, or a non-final item URL is not absolute. */
+export function assertBreadcrumbNames(data: JsonLdNode): void {
+  const lists = breadcrumbLists(data);
+  if (lists.length === 0) throw new Error("JSON-LD has no BreadcrumbList");
+  for (const list of lists) {
+    const items = list.itemListElement;
+    if (!Array.isArray(items) || items.length === 0) throw new Error("BreadcrumbList has no items");
+    items.forEach((entry, index) => {
+      const item = entry as JsonLdNode;
+      const name = item.name;
+      if (typeof name !== "string" || name.trim() === "") {
+        throw new Error(`Breadcrumb ListItem ${index + 1} is missing a name`);
+      }
+      const isLast = index === items.length - 1;
+      const url = item.item;
+      if (!isLast && (typeof url !== "string" || !ABSOLUTE_URL.test(url))) {
+        throw new Error(`Breadcrumb ListItem ${index + 1} is missing an absolute item URL`);
+      }
+      if (isLast && url !== undefined && (typeof url !== "string" || !ABSOLUTE_URL.test(url))) {
+        throw new Error(`Breadcrumb ListItem ${index + 1} item is not an absolute URL`);
+      }
+    });
+  }
+}
+
 const BILLING_DURATION: Partial<Record<NonNullable<NormalizedPlan["period"]>, string>> = {
   month: "P1M",
   year: "P1Y",
@@ -84,29 +159,11 @@ export function buildPlatformStructuredData(input: {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Discover",
-            item: absoluteUrl("/discover"),
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: input.categoryName,
-            item: absoluteUrl(`/discover?category=${input.categorySlug}`),
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: input.name,
-            item: pageUrl,
-          },
-        ],
-      },
+      breadcrumbList([
+        { name: "Discover", item: absoluteUrl("/discover") },
+        { name: input.categoryName, item: absoluteUrl(`/discover?category=${input.categorySlug}`) },
+        { name: input.name, item: pageUrl },
+      ]),
       software,
     ],
   };
@@ -136,31 +193,25 @@ export function buildTutorialStructuredData(input: {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Discover", item: absoluteUrl("/discover") },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: input.categoryName,
-            item: absoluteUrl(`/discover?category=${input.categorySlug}`),
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: input.platformName,
-            item: absoluteUrl(`/platform/${input.platformSlug}`),
-          },
-          { "@type": "ListItem", position: 4, name: "Getting started", item: guideUrl },
-        ],
-      },
+      breadcrumbList([
+        { name: "Discover", item: absoluteUrl("/discover") },
+        { name: input.categoryName, item: absoluteUrl(`/discover?category=${input.categorySlug}`) },
+        { name: input.platformName, item: absoluteUrl(`/platform/${input.platformSlug}`) },
+        { name: "Getting started", item: guideUrl },
+      ]),
       {
         "@type": "Article",
+        "@id": `${guideUrl}#article`,
         headline: input.title,
+        name: input.title,
         description: input.description,
         url: guideUrl,
-        mainEntityOfPage: guideUrl,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": guideUrl,
+          url: guideUrl,
+          name: "Getting started",
+        },
         dateModified: input.lastReviewedAt,
         inLanguage: "en",
         about,
