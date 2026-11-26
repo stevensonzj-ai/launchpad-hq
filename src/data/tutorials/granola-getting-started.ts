@@ -7,7 +7,7 @@ export const granolaTutorial: PlatformTutorialData = {
   tagline:
     "An AI notepad for meetings: it listens through your computer instead of sending a bot to the call, then turns your rough notes into a clean write-up.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-23",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://www.granola.ai/updates",
   accessTier: "FREE",
 
@@ -18,15 +18,26 @@ export const granolaTutorial: PlatformTutorialData = {
     "Granola is a notes app for people who spend their day in meetings. You open a note for a meeting, type whatever short reminders you like while people talk, and Granola listens in the background. Afterwards it writes **enhanced notes** — a structured summary built from the transcript, your own notes and the calendar event. Your own words stay in black, and Granola's help centre says a magnifying glass next to each point shows whether it came from the transcript or from you.",
     "The difference from most AI note-takers is that nothing visible joins the call. Granola captures your computer's audio directly, so it works with Zoom, Google Meet, Microsoft Teams, Slack huddles and in-person conversations. Its help centre says it does not record or save audio or video; audio is held only long enough to transcribe and then deleted.",
     "Once you have a few meetings in it, the **chat** becomes the main event. Ask from the home screen and it searches across all your meetings; ask inside one meeting and it answers about just that one. Granola's own example question is \"What did I promise to do in my meetings this week?\" Prompts you use often can be saved as **recipes** and reused with a `/`.",
-    "It runs on Mac (macOS 14 or newer), Windows, iPhone and Android. The phone apps are aimed at in-person meetings and conversations away from your desk.",
+    "It runs on Mac, Windows, iPhone and Android. Granola's setup guide names the minimum system versions, and the phone apps are aimed at in-person meetings and conversations away from your desk. If your company uses single sign-on, connect that on the desktop app before you expect the phone apps to use it.",
   ],
 
   beforeYouStart: [
     "**Free gets you started; history is the limit.** Granola's free Basic plan lets you see only your last 30 days of notes, and chat and AI connections only look at those 30 days too. Older notes are kept, not deleted — they reappear if you upgrade.",
     "**The paid step is a team plan.** Granola's pricing page lists Business at {{price:granola:Business}} per user per month, which removes the history limit and adds integrations with tools like Notion and HubSpot, and Enterprise at {{price:granola:Enterprise}} per user per month. Its help centre says Business is billed monthly; annual billing is offered only on Enterprise contracts.",
-    "**You sign in with Google or Microsoft.** Those are the only two sign-in options, and Granola works best with the account that holds your work calendar, because it reads your calendar to know which meeting you are in. Microsoft works with cloud Microsoft 365 calendars, not on-premises Exchange.",
+    "**You sign in with Google, Microsoft, or your company's single sign-on.** Granola works best with the account that holds your work calendar, because it reads your calendar to know which meeting you are in. Microsoft works with cloud Microsoft 365 calendars, not on-premises Exchange.",
     "**On a Mac, allow both audio permissions.** Setup asks for the microphone and for system audio. If you skip system audio, Granola's troubleshooting guide says it will hear you but not the other people on the call.",
   ],
+
+  gettingSetUpSafely: {
+    officialSource: "Granola's setup guide, read 26 November 2026.",
+    body: [
+      "Download Granola from granola.ai. On a Mac, open the disk image and run the installer. On Windows, open the downloaded installer and follow it. Launch Granola from Applications or the Start menu if it does not open itself.",
+      "Sign in with Google, Microsoft, or SSO. Use the work account if you can. When it asks for the calendar, allow it, so upcoming meetings show up. Microsoft sign-in only works with a cloud Microsoft 365 calendar.",
+      "On a Mac, turn on the microphone and system audio and click Allow on the system prompts. If you skip system audio, Granola hears you and not the other people. On Windows the microphone permission is granted with the install.",
+      "The first time you sign in, Granola has a short demo meeting ready. Watch it, then take a real meeting: open its note, jot a few words while people talk, and read the summary after you hang up. Your own words stay distinct from Granola's.",
+    ],
+    vendorDocsUrl: "https://docs.granola.ai/help-center/getting-started/setting-up-granola-for-the-first-time",
+  },
 
   security: [
     {

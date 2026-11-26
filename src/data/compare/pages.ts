@@ -336,6 +336,42 @@ export const COMPARE_PAGES: readonly ComparePage[] = [
     ],
     disclosure: [{ slug: "klap", kinds: ["affiliate"] }],
   },
+  {
+    kind: "head-to-head",
+    slug: "longcat-2-5-vs-tencent-hy4",
+    title: "LongCat 2.5 vs Tencent HY4, compared",
+    description:
+      "LongCat and Tencent Hy side by side for people calling a model API: what each one is for, how you reach it, and current pricing pulled from our catalog and dated.",
+    a: "longcat-2-5",
+    b: "tencent-hy4",
+    intro: [
+      "LongCat and Tencent Hy are both large models you call through an API. Neither is a chat subscription you sign into and forget.",
+      "They overlap less than the versus query suggests. One is Meituan's multimodal model on its own API platform. The other is Tencent's model, with visual understanding and computer-use, sold through Tencent Cloud and other API hosts.",
+    ],
+    picks: [
+      { slug: "longcat-2-5", text: "Pick this if you want Meituan's model and you are ready to pay per token on LongCat's own API platform." },
+      { slug: "tencent-hy4", text: "Pick this if you want Tencent's model for visual tasks and computer-use, and you can use Tencent Cloud or another listed API host." },
+    ],
+    hitFirst: [
+      "Both charge by the token, and both vendors label the lower rate as limited. Read whether the pricing page states an end date before you budget a month of calls.",
+      "You need an API account. There is no consumer chat plan to click through on either page.",
+      "Tencent's launch post described a free window for two of its apps. That window had an end date. Do not assume those apps are still free.",
+    ],
+    faq: [
+      {
+        question: "Which one should a beginner try",
+        answer: "If you want a chat box, neither of these is that. Both are API models. Start with the one whose official docs you can follow, and use the prices in the rows above.",
+      },
+      {
+        question: "Are the discounted rates permanent",
+        answer: "No. Each vendor labels the lower rate as limited. Tencent states an end date on its launch post. LongCat's pricing page does not state one. The rows above come from the catalog, which records the date each price was checked.",
+      },
+    ],
+    related: [
+      { href: "/platform/longcat-2-5", label: "LongCat on Launchpad" },
+      { href: "/platform/tencent-hy4", label: "Tencent Hy on Launchpad" },
+    ],
+  },
 ];
 
 export function comparePagePath(page: ComparePage): string {
