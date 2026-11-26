@@ -1,12 +1,15 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  assertBreadcrumbNames,
+  breadcrumbListItem,
   buildPlatformStructuredData,
   buildTutorialIndexStructuredData,
   buildDiscoverItemListStructuredData,
   buildTutorialStructuredData,
   officialSiteHref,
   serializeJsonLd,
+  type JsonLdNode,
 } from "@/lib/seo-jsonld";
 
 describe("platform JSON-LD", () => {
@@ -93,8 +96,84 @@ describe("tutorial guide JSON-LD", () => {
     assert.equal("datePublished" in article, false);
     assert.equal(article.url, "https://www.launchpadhq.io/platform/activepieces/guide");
     const items = crumbs?.itemListElement as Array<Record<string, unknown>>;
+    assert.equal(items[2]?.name, "Activepieces");
     assert.equal(items[2]?.item, "https://www.launchpadhq.io/platform/activepieces");
-    assert.equal(items[3]?.item, "https://www.launchpadhq.io/platform/activepieces/guide");
+    assert.equal(items[3]?.name, "Getting started");
+    assert.equal(items[3]?.item, undefined);
+    assert.equal(article.name, "Getting Started with Activepieces");
+    const page = article.mainEntityOfPage as Record<string, unknown>;
+    assert.equal(page.name, "Getting started");
+    assert.equal(page["@id"], "https://www.launchpadhq.io/platform/activepieces/guide");
+    assertBreadcrumbNames(data);
+  });
+
+  it("fails when a breadcrumb name is missing or empty", () => {
+    assert.throws(() => breadcrumbListItem(1, "", "https://www.launchpadhq.io/discover"));
+    assert.throws(() => breadcrumbListItem(1, "   ", "https://www.launchpadhq.io/discover"));
+    assert.throws(() =>
+      buildTutorialStructuredData({
+        title: "Getting Started with Activepieces",
+        description: "Automation built from public code.",
+        platformName: "Activepieces",
+        platformSlug: "activepieces",
+        categoryName: " ",
+        categorySlug: "automation-agents",
+        lastReviewedAt: "2026-10-14",
+      }),
+    );
+
+    const missingName: JsonLdNode = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Discover",
+              item: "https://www.launchpadhq.io/discover",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              item: "https://www.launchpadhq.io/platform/cursor/guide",
+            },
+          ],
+        },
+      ],
+    };
+    assert.throws(() => assertBreadcrumbNames(missingName), /missing a name/);
+
+    const emptyName: JsonLdNode = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [{ "@type": "ListItem", position: 1, name: "  ", item: "https://www.launchpadhq.io/discover" }],
+        },
+      ],
+    };
+    assert.throws(() => assertBreadcrumbNames(emptyName), /missing a name/);
+  });
+
+  it("requires an absolute item URL on every breadcrumb except the current page", () => {
+    const data = buildPlatformStructuredData({
+      name: "Grok",
+      slug: "grok",
+      categoryName: "Text & conversational AI",
+      categorySlug: "text-conversational-ai",
+    });
+    assertBreadcrumbNames(data);
+    const crumbs = (data["@graph"] as Array<Record<string, unknown>>).find(
+      (node) => node["@type"] === "BreadcrumbList",
+    );
+    const items = crumbs?.itemListElement as Array<Record<string, unknown>>;
+    assert.equal(items[0]?.name, "Discover");
+    assert.equal(items[0]?.item, "https://www.launchpadhq.io/discover");
+    assert.equal(items[2]?.name, "Grok");
+    assert.equal(items[2]?.item, undefined);
+    assert.throws(() => breadcrumbListItem(2, "Category", "/discover"));
   });
 
   it("lists index items in order with guide URLs", () => {

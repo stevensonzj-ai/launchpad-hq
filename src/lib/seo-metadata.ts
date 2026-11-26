@@ -59,8 +59,10 @@ export function publicPageMetadata(input: {
       images: [DEFAULT_OG_IMAGE],
     },
     twitter: {
+      card: "summary_large_image",
       title: input.title,
       description,
+      images: [DEFAULT_OG_IMAGE.url],
     },
     ...(index && follow ? {} : { robots: { index, follow } }),
   };

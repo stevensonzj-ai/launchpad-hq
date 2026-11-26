@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { getToolFacts } from "@/data/facts";
+import { PLATFORM_REDIRECTS, RETIRED_GUIDE_SLUGS } from "@/lib/catalog-redirects";
 import { SITE_URL } from "@/lib/site";
-import { listRegisteredTutorials } from "@/data/tutorials";
+import { listRegisteredTutorials, tutorialGuidePath } from "@/data/tutorials";
 import {
   buildPlatformMetadata,
   buildTutorialMetadata,
@@ -35,6 +36,8 @@ describe("seo metadata", () => {
     assert.equal(String(meta.openGraph?.description), String(meta.description));
     assert.equal(String(meta.twitter?.title), String(meta.title));
     assert.equal(String(meta.twitter?.description), String(meta.description));
+    assert.equal((meta.twitter as { card?: string } | null)?.card, "summary_large_image");
+    assert.ok(meta.openGraph?.images);
   });
 
   it("builds unique titles and descriptions for sample public slugs", () => {
@@ -180,5 +183,80 @@ describe("tutorial guide metadata", () => {
       const description = String(meta.description);
       assert.ok(description.length > 0 && description.length <= 160, tutorial.platformSlug);
     }
+  });
+});
+
+describe("Research Rabbit URLs", () => {
+  it("keeps the overview and the guide as two self-canonical pages", () => {
+    const overview = buildPlatformMetadata({
+      slug: "research-rabbit",
+      name: "Research Rabbit",
+      categoryName: "Research & academic tools",
+      primaryUse: "Paper recommendations",
+      facts: getToolFacts("research-rabbit"),
+    });
+    const guide = buildTutorialMetadata({
+      platformSlug: "research-rabbit",
+      name: "Research Rabbit",
+      tagline: "Start from one paper you trust and let the citation trail lead you to the rest.",
+      lastReviewedAt: "2026-09-15",
+    });
+    assert.equal(overview.alternates?.canonical, `${SITE_URL}/platform/research-rabbit`);
+    assert.equal(guide.alternates?.canonical, `${SITE_URL}/platform/research-rabbit/guide`);
+    assert.notEqual(overview.alternates?.canonical, guide.alternates?.canonical);
+    assert.equal(overview.openGraph?.url, `${SITE_URL}/platform/research-rabbit`);
+    assert.equal(guide.openGraph?.url, `${SITE_URL}/platform/research-rabbit/guide`);
+    assert.equal(PLATFORM_REDIRECTS["research-rabbit"], undefined);
+    assert.equal(RETIRED_GUIDE_SLUGS.includes("research-rabbit"), false);
+    assert.equal(tutorialGuidePath("research-rabbit"), "/platform/research-rabbit/guide");
+    const registered = listRegisteredTutorials().filter((tutorial) => tutorial.platformSlug === "research-rabbit");
+    assert.equal(registered.length, 1);
+  });
+});
+
+describe("high-impression page metadata", () => {
+  const guideSlugs = [
+    "khan-academy-khanmigo",
+    "granola",
+    "gong",
+    "bloomberg-gpt-terminal-ai",
+    "spellbook",
+    "harvey-ai",
+    "openevidence",
+    "magicschool",
+    "mistral-vibe",
+    "connected-papers",
+    "tactiq",
+    "quizlet-q-chat",
+    "fathom",
+    "groq",
+    "speechify",
+    "otter-ai",
+    "openai-codex-cli",
+    "adobe-firefly",
+    "research-rabbit",
+    "cursor",
+  ];
+
+  it("gives each guide a self-canonical, a description, and Open Graph tags", () => {
+    const titles: string[] = [];
+    for (const slug of guideSlugs) {
+      const tutorial = listRegisteredTutorials().find((item) => item.platformSlug === slug);
+      assert.ok(tutorial, slug);
+      const meta = buildTutorialMetadata({
+        platformSlug: slug,
+        name: slug,
+        tagline: tutorial.tagline,
+        lastReviewedAt: tutorial.lastReviewedAt,
+      });
+      assert.equal(meta.alternates?.canonical, `${SITE_URL}/platform/${slug}/guide`, slug);
+      assert.equal(meta.openGraph?.url, meta.alternates?.canonical, slug);
+      assert.equal(String(meta.openGraph?.title), String(meta.title), slug);
+      assert.equal(String(meta.openGraph?.description), String(meta.description), slug);
+      assert.ok(String(meta.description).length > 0, slug);
+      assert.equal((meta.twitter as { card?: string } | null)?.card, "summary_large_image", slug);
+      titles.push(String(meta.title));
+    }
+    assert.equal(new Set(titles).size, titles.length);
   });
 });
