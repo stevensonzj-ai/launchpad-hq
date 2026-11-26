@@ -51,7 +51,7 @@ export default {
         limits: "",
       },
     ],
-    note: "Models are passed through at cost. Extra concurrency and organizations are add-ons; the pricing page does not list a HIPAA dollar amount. Re-read 2026-11-26.",
+    note: "Models are passed through at cost. Add-ons on https://vapi.ai/pricing, re-read 2026-11-26: Standard Data Processing Agreement and Business Associate Agreement $2,000 / month; additional concurrency $10 / line / month; additional organizations $20 / organization / month.",
     sourceUrl: "https://vapi.ai/pricing",
     checkedAt: "2026-11-26",
     gatheredBy: "cursor",
@@ -73,7 +73,7 @@ export default {
     {
       date: "2026-11-26",
       field: "plans",
-      summary: "Pricing page re-read. Core limits filled in (5 numbers, 10 concurrent calls, 30-day retention). Pro limits filled in. The earlier HIPAA $2,000 and $10-per-line add-on figures were not on the page, so they were removed.",
+      summary: "Pricing page re-read. Core and Pro limits filled in. Add-ons are on the page: Standard Data Processing Agreement and Business Associate Agreement $2,000 / month, additional concurrency $10 / line / month, additional organizations $20 / organization / month.",
     },
     {
       date: "2026-11-14",
