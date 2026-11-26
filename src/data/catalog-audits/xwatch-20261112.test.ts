@@ -1,5 +1,6 @@
 import "./audit-36.test.ts";
 import "./audit-37.test.ts";
+import "./audit-38.test.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";

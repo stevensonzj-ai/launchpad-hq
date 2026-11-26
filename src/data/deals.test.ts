@@ -143,6 +143,26 @@ describe("deal records", () => {
     assert.equal(DEALS.some((offer) => offer.platformSlug === "synthesia"), false);
   });
 
+  it("records the Manus Black Friday discount with its end date, and leaves the regular plan prices alone", () => {
+    const offer = DEALS.find((row) => row.platformSlug === "manus" && row.offerType === "discount");
+    assert.ok(offer);
+    assert.equal(offer.expiresAt, "2026-11-30");
+    assert.equal(offer.lastChecked, "2026-11-26");
+    assert.equal(offer.noEndDateStated, undefined);
+    assert.match(offer.details, /not the regular price/);
+    assert.match(offer.details, /30 November 2026 at 23:59:59 Eastern Time \(UTC-5\)/);
+    assert.equal(
+      offer.sourceUrl,
+      "https://help.manus.im/en/articles/18542127-how-does-the-manus-black-friday-2026-offer-work",
+    );
+    const plans = getToolFacts("manus")?.plans?.value ?? [];
+    assert.equal(plans.find((plan) => plan.name === "Pro")?.price, "From $20");
+    assert.equal(plans.some((plan) => plan.price === "$90" || plan.price === "$160"), false);
+    const trial = DEALS.find((row) => row.platformSlug === "manus" && row.offerType === "trial");
+    assert.ok(trial);
+    assert.equal(trial.details, "8,000 credits a month; 7-day free trial");
+  });
+
   it("quotes the fact file for every other offer", () => {
     const texts = (value: unknown): string => {
       if (typeof value === "string") return value;
@@ -191,11 +211,11 @@ describe("what stays on the page", () => {
     const counts = Object.fromEntries(page.sections.map((section) => [section.id, section.offers.length]));
     assert.equal(counts.trial, 17);
     assert.equal(counts.student, 5);
-    assert.equal(counts.codes, 4);
+    assert.equal(counts.codes, 5);
     assert.equal(counts.free, 111);
     assert.equal(page.indexable, true);
     assert.equal(dealsPageIndexable(LAUNCH), true);
-    assert.equal(page.curatedCount, 26);
+    assert.equal(page.curatedCount, 27);
     assert.equal(page.affiliateCuratedCount, 1);
     const affiliateCards = page.sections.reduce(
       (sum, section) => sum + section.offers.filter((offer) => offer.affiliate).length,

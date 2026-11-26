@@ -1,0 +1,11 @@
+# 2026-11-26 cursor: X-watch catalog SQL
+
+**Decided:** Description notes on rows that already exist. No new slugs. No Hedra. SWE-2.1 goes on `windsurf` (Devin Desktop). Kolibri 1.1 goes on `aleph-alpha-luminous`. Healthcare configurations go on `openai-api`. The Manus Black Friday offer is a deals discount with an end date, and it is not written into the regular plan prices. Sand AI MAGI-2 and Decart stay off the SQL because those products have no catalog row. The Kolibri news post does not mention a Cohere transaction, so the new copy does not either. The older Aleph Alpha status fact, sourced from Cohere's own post, was left as it was.
+
+**Changed:** `scripts/sql/catalog-xwatch-20261126.sql`. Four idempotent `UPDATE`s. Slugs: `windsurf`, `aleph-alpha-luminous`, `openai-api`, `manus`. Fact overlays on those four files. Deals page entry for Manus, with the launch-date counts moved from 4 codes / 26 curated offers to 5 / 27. Audit 38 records the two skips. SQL was not run. Production was not connected.
+
+**Left out:** MAGI-2 (confirmed on the Sand AI post and the pricing page: 480B total, about 28B active, up to 30 seconds at 1080p with native audio, API 0.08 USD per second at 1080p, top-up not supported yet, open-sourcing promised later). Decart (Amazon's November 23, 2026 post is a signed agreement to buy the Optimization Stack technology and hire the co-founders and team; closing still needs regulatory clearance; the post does not say a product is discontinued).
+
+**Checks:** `npm test` 1698 pass, 0 fail. `npm run typecheck` passed. `npm run build` compiled, finished TypeScript, and generated static pages, using the launchpad-test Neon host only. The first build attempt stopped on Next.js's security-upgrade reminder; the retry completed.
+
+**Open:** Zach runs Guarded SQL on the Neon test target (`dry_run` first), then production if the notes look right. The deals date field is 2026-11-30, while the offer clock is 23:59:59 Eastern Time that day, so the page drops the card a few hours before the clock time. The help article does not say healthcare configurations are available to all API organizations, and it does not name gpt-6.2-sol-healthcare; that ID is on the pricing page.
