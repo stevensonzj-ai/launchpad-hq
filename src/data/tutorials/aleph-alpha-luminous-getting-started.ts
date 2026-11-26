@@ -3,114 +3,99 @@ import type { PlatformTutorialData } from "./types";
 export const alephAlphaLuminousTutorial: PlatformTutorialData = {
   slug: "aleph-alpha-luminous-getting-started",
   platformSlug: "aleph-alpha-luminous",
-  title: "Getting Started with Aleph Alpha",
+  title: "Getting Started with Aleph Alpha (Kolibri)",
   tagline:
-    "The German company behind Luminous — now sold to governments and large businesses through a salesperson, not a website you can sign up to.",
+    "A German company's open-weight language model you can download, plus an installed product sold to governments and large businesses.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-29",
-  changelogUrl:
-    "https://docs.aleph-alpha.com/phariaai-home/latest/release-notes/index.html",
+  lastReviewedAt: "2026-11-26",
+  changelogUrl: "https://aleph-alpha.com/en/news/kolibri-1-1-release/",
   accessTier: "PREMIUM",
 
   howItWorks:
-    "Aleph Alpha's software is installed inside an organisation's own systems rather than opened on a public website. Staff there sign in to an internal address, type a question into a chat box, and read the answer back.",
+    "Kolibri is a language model (the AI \"brain\") you download and run yourself. Aleph Alpha's installed product, PhariaAI, is the other door: staff at a buying organisation open an internal chat and type a question there.",
 
   whatItIs: [
-    "Aleph Alpha is a Heidelberg company that builds language models (a **model** is the AI \"brain\" that does the actual thinking) for European governments and large regulated businesses, and sells them as an installed stack called PhariaAI.",
-    "Luminous — the model line that made its name, and what this listing was originally about — is no longer part of what it sells. The company stopped building general-purpose models in September 2024 and now co-builds domain-specific ones with individual customers.",
-    "Its documentation describes a chat app and a prompt-and-settings workspace inside each installation, but both live at an address belonging to the customer. Treat that as what the docs describe rather than something anyone can confirm without an account.",
-    "In April 2026 the Canadian AI company Cohere announced a partnership with Aleph Alpha, and on 16 September 2026 the two signed a definitive merger agreement. It still needs regulatory approvals and had not closed when this page was last checked, and nothing public says what happens to the PhariaAI product line afterwards.",
+    "Aleph Alpha is a Heidelberg company. Its current open-weight model is Kolibri 1.1, released 23 November 2026, seven weeks after Kolibri 1.0. The announcement says the weights are on Hugging Face under the Apache 2.0 licence, with 75 billion parameters in total and 3 billion active, a context window it describes as 1 million tokens, and that the model can run on a GPU with 24 GB of memory.",
+    "The model card is more specific than the announcement. It says the native context is 262,144 tokens, that you can extend it to 1,048,576, and that complex tasks should stay at or under 262,144. It counts 3.44 billion active parameters. It also says the Apache 2.0 grant covers the weights and configuration files in that repository, not Aleph Alpha's training code or the model architecture.",
+    "PhariaAI is the installed stack for organisations. The company's developer docs describe a chat that lives at the customer's own address, not on a public website anyone can sign up to. Luminous is the older model line this listing was first written about. The 23 November 2026 announcement is about Kolibri, not a new Luminous release.",
+    "On 16 September 2026 Cohere announced a definitive agreement to combine with Aleph Alpha. That announcement says the deal still needs regulatory approvals and was expected to close later in 2026. The page does not say the deal has closed, and it does not say what happens to PhariaAI afterwards.",
   ],
 
   beforeYouStart: [
-    "There is no sign-up. The site has one call to action — contact sales — and its pricing page no longer exists, so the honest answer to whether you will need to pay is yes, through a negotiated contract rather than a card.",
-    "The one exception is a Research Playground, and it is narrow: the request form asks for an academic or research institute email address and says access is granted at Aleph Alpha's discretion. It does not say how long a decision takes or how many applications are accepted, so treat approval as possible rather than likely.",
-    "One Aleph Alpha model is free to download — Pharia-1-LLM-7B, published on Hugging Face. Getting an answer out of it means installing the company's own Scaling library and writing a few lines of Python; there is no click-to-install version.",
-    "If what you actually wanted was an AI assistant you can open and type into today, the chat and text category on this site lists ones that are open to anyone.",
+    "The Kolibri download is the part you can start without a salesperson. The weights are published by Aleph Alpha at huggingface.co/Aleph-Alpha/Kolibri-1.1. The card's instructions use vLLM, so this is a setup for someone who can follow a developer guide, not a chat box you open in a browser.",
+    "The installed product is the other way in, and it is not self-serve. The announcement describes Kolibri as built for enterprises and public institutions. Nothing on that page is a sign-up form.",
+    "If what you wanted was an assistant you can open and type into today, the chat category on this site lists ones that are open to anyone.",
   ],
 
   gettingSetUpSafely: {
-    officialSource:
-      "The Aleph-Alpha organisation page on Hugging Face (huggingface.co/Aleph-Alpha)",
+    officialSource: "The Kolibri 1.1 model card on Hugging Face (huggingface.co/Aleph-Alpha/Kolibri-1.1)",
     body: [
-      "Download only from the Aleph-Alpha organisation itself. Re-uploads of these files exist under other accounts; those accounts are not the publisher, and a model file is code your computer will run.",
-      "Check the size before you start. The published files come to around 14 GB, and they are the full-size originals rather than a shrunk-down version, so loading them needs roughly their own size again in memory. That is a rule of thumb worked out from the published file sizes rather than a hardware requirement Aleph Alpha states, so treat it as an estimate.",
-      "The instructions for loading them are Aleph Alpha's own. Follow the vendor's developer guide rather than a blog post.",
+      "Download only from the Aleph-Alpha organisation. The card names Aleph-Alpha/Kolibri-1.1. A re-upload under another account is not the publisher, and a model file is code your computer will run.",
+      "Read the licence section on that card before you build anything on the weights. It is Apache 2.0 for the files in the repository, and the card says that grant stops there.",
+      "Follow Aleph Alpha's own getting-started notes on the card. The announcement's 24 GB figure is a hardware claim on the news post, not a step-by-step install guide.",
     ],
-    vendorDocsUrl:
-      "https://docs.aleph-alpha.com/phariaai-dev-guide/latest/pharia-llm/using-the-models.html",
+    vendorDocsUrl: "https://huggingface.co/Aleph-Alpha/Kolibri-1.1",
   },
 
   security: [
     {
       kind: "text",
-      text: "Aleph Alpha's whole pitch is that its software runs inside the buying organisation's own systems on European servers rather than on Aleph Alpha's, so the question of whether a vendor keeps and trains on what you type is settled by where the software sits rather than by a setting. That is a genuine structural difference from a chatbot you open in a browser tab.",
-    },
-    {
-      kind: "text",
-      text: "Two things temper it. The privacy notice on aleph-alpha.com is dated 4 September 2024 and covers the website, not the product. And the developer guide's promise that prompt data is not stored and user inputs are not logged points to Terms and Conditions that we could not find published anywhere on the public site — so the binding version is presumably the one inside a customer's contract. If you are the person evaluating this for an organisation, read the contract, not the website.",
+      text: "Two different products sit under this name, and they handle your text differently. Kolibri's weights run on a machine you control, so a prompt stays there unless you send it on. PhariaAI, as Aleph Alpha describes it, is installed inside the buying organisation. The privacy notice on aleph-alpha.com is about the website. The binding rules for an installation are the customer's contract.",
     },
     {
       kind: "list",
-      label: "If you download the free model instead",
+      label: "Before you treat the download as 'open source, do anything'",
       items: [
-        "It runs on your own machine, so what you type never leaves it.",
+        "The model card says Apache 2.0 applies to the weights and configuration files in the repository.",
+        "The same paragraph says the licence does not extend to underlying code, the architecture, parameter settings, or the training method.",
+        "Read that paragraph on the card. A blog summary is not the licence.",
       ],
     },
   ],
 
   triad: {
     bestAt: [
-      "German-language work — the models were trained on a multilingual corpus and the vendor states they are culturally and linguistically optimised for German, French and Spanish",
-      "Organisations that must keep data inside Europe and be able to prove where it runs",
-      "Deep, document-heavy work inside one organisation — the published customer results are government administration, contract compliance, technical document search and engineering requirements",
+      "German and English work. The model card says those are the languages it focuses on.",
+      "Running an open-weight model on hardware you control. The announcement says Kolibri 1.1 can operate on a GPU with 24 GB of memory.",
+      "An organisation that wants a vendor installing software inside its own systems, which is the PhariaAI pitch rather than the download.",
     ],
     okayAt: [
-      "Looking good on benchmark tables — Aleph Alpha states outright that its models were not tailored to the standard leaderboards and would be expected to underperform on them",
-      "Serving one person. Every part of the buying process assumes an organisation behind you",
+      "Very long documents. The announcement says a 1-million-token window. The model card says quality on complex tasks may fall off past the native 262,144 tokens, and it recommends staying under that.",
     ],
     avoid: [
-      "Anything commercial done with the free download. The Open Aleph License 1.0 permits use only for non-commercial and non-administrative purposes — and \"non-administrative\" rules out public-sector use, which is precisely what the company sells to its paying customers",
-      "Committing to a long roadmap on the strength of what is available today — this company has already retired an entire model line once",
+      "Planning around Luminous pages that are still online. The current announcement is Kolibri 1.1.",
+      "Assuming the Cohere combination has already changed what you can download. The 16 September 2026 announcement still describes the deal as waiting on approvals.",
     ],
   },
 
   starterActions: [
     {
-      title: "Read the licence before you read anything else",
+      title: "Read the licence on the model card",
       whatItDoes:
-        "Open the LICENSE file on the Pharia-1-LLM-7B page on Hugging Face and read the short paragraph beginning \"Subject to the terms and conditions.\" It is a few lines long.",
+        "Open huggingface.co/Aleph-Alpha/Kolibri-1.1 and read the Licence and terms section before you download anything.",
       whyHere:
-        "Downloadable models normally arrive under one of a handful of standard permissive licences, where reading it is a formality; Aleph Alpha wrote its own, and its \"non-administrative\" restriction has no equivalent in those standard licences — so skimming this one the way you would skim a familiar licence gives you the wrong answer. Mistral's downloadable models carry no comparable clause.",
+        "The announcement says Apache 2.0. The card then limits what that grant covers. Reading the card is the difference between 'I may use the weights' and 'I may copy the whole training setup'.",
     },
     {
-      title: "Find out whether the door is open to you",
+      title: "Match the context you need to the card, not the headline",
       whatItDoes:
-        "Go to the Research Playground request form and read the eligibility line before filling anything in. Two minutes there saves you waiting on a reply that may never come.",
+        "If your document is long, check the model card's context row before you assume a 1-million-token window will hold the quality.",
       whyHere:
-        "Elsewhere a playground is gated by a card, which at least tells you the price of entry; Aleph Alpha gates this one behind who your employer is plus a discretionary decision, so there is no amount you can pay to get in by this route — and the form is the only place that says so. OpenAI's playground is card-gated, not employer-gated.",
+        "The news post and the model card do not use the same number. The post says 1 million tokens. The card says 262,144 native, up to 1,048,576, and recommends the shorter length for complex tasks.",
     },
     {
-      title: "Read the customer results as the spec sheet",
+      title: "Check the Cohere announcement before you bet on a roadmap",
       whatItDoes:
-        "Open the customers section of aleph-alpha.com and read the three deployments it publishes: an assistant rolled out to 80,000 users in a government agency, document retrieval at a global chip manufacturer, and requirements processing at an automotive supplier.",
+        "Open Cohere's 16 September 2026 post and read the sentence about regulatory approvals.",
       whyHere:
-        "Because the company sells models co-built per customer rather than a fixed product, there is no feature list, tier table or price sheet to compare against anyone — those three customer results are the only public description of what you would actually be buying. Anthropic publishes plans, prices and model specs, so its case studies are illustration rather than specification.",
-    },
-    {
-      title: "Check whether it is still shipping",
-      whatItDoes:
-        "Open the release notes index in Aleph Alpha's documentation and look at the top entry. When this page was last checked the most recent was PhariaAI v1.260900.0.",
-      whyHere:
-        "Aleph Alpha's version numbers are date-encoded — 1.260900.0 is the September 2026 release — so the number alone tells you how current the stack is without opening anything, which is the only outside-visible sign of life for a product no member of the public can log into. Cohere's changelog does not encode the release date in the version string, and its products are publicly reachable anyway.",
+        "That post is still the public status of the combination. It says approvals are outstanding. It does not describe a finished merger or a new product line.",
     },
   ],
 
   pitfalls: [
-    "Searching for \"Luminous\" and landing on pages that look live. The old Luminous blog posts and benchmark write-ups are still at their original addresses with no notice on them, and third-party review sites still quote Luminous pricing. None of it is current.",
-    "Expecting the free model to know recent things. Those published files were last updated in January 2025 and have not been refreshed since.",
-    "Reading the developer documentation as if you could follow along. It gives the workspace's address as `pharia-studio` followed by your own organisation's domain.",
-    "Assuming published weights means open source. The model files are public, but the licence is the company's own and does not grant the freedom to use it for anything you like, which an **open-source** licence (the code is public and anyone can inspect it) normally would.",
+    "Searching for Luminous and landing on old posts that look current. This listing started as a Luminous page. The model Aleph Alpha announced on 23 November 2026 is Kolibri 1.1.",
+    "Quoting '1 million tokens' as if the model card agreed without a caveat. It documents a shorter native length and a recommendation to stay there for complex work.",
+    "Treating the download as the installed product. The weights are public. PhariaAI is still described as software an organisation installs, not a site you sign up to.",
   ],
 
   whereToNext: [

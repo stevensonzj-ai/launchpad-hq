@@ -39,12 +39,12 @@ export default {
       { name: "Max", price: "$79", period: "month, billed annually", limits: "Monthly-billing price not shown" },
       { name: "Ultra", price: "$159", period: "month, billed annually", limits: "Monthly-billing price not shown" },
     ],
-    note: 'Kimi membership (kimi.ai). The page lists these as "Annual billing: effective monthly" prices; it does not show monthly-billing prices or the yearly totals.',
+    note: 'Kimi membership (kimi.ai). The page lists these as "Annual billing: effective monthly" prices; it does not show monthly-billing prices or the yearly totals. Re-read 2026-11-26: the page, updated 2026-11-18, still lists Free, Plus, Pro, Max and Ultra, and it does not say new subscriptions are paused.',
     sourceUrl: KIMI_PLANS_URL,
-    checkedAt: "2026-11-20",
+    checkedAt: "2026-11-26",
     gatheredBy: "claude",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-20",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   apiPricing: {
@@ -93,6 +93,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "plans",
+      summary:
+        "Guide refresh: pricing page (updated 2026-11-18) re-read. Free, Plus, Pro, Max and Ultra are still listed. No subscription-pause notice on that page.",
+    },
     {
       date: "2026-11-05",
       field: "features",

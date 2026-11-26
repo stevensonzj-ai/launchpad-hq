@@ -51,13 +51,18 @@ export default {
     status: "verified",
   },
   models: {
-    value: ["Magnific One", "Nano Banana 2 (third-party)", "Kling 2.5 (third-party)"],
-    note: "Only Magnific One is in-house. Nano Banana 2 and Kling 2.5 are third-party models.",
-    sourceUrl: "https://www.magnific.com/pricing",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    value: [
+      "Magnific One",
+      "Nano Banana 2 (third-party)",
+      "Kling 4.0 (third-party, marked Latest)",
+      "Kling 2.5 (third-party, still listed)",
+    ],
+    note: "Magnific's Kling index, read 2026-11-26, marks Kling 4.0 as Latest and still lists Kling 2.5. Nano Banana 2 was not on that page and was not re-checked on 2026-11-26. Only Magnific One is in-house.",
+    sourceUrl: "https://www.magnific.com/ai/kling",
+    checkedAt: "2026-11-26",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   usageLimits: {
@@ -76,6 +81,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "models",
+      summary:
+        "Guide refresh: Magnific's Kling page marks Kling 4.0 as Latest and still lists Kling 2.5. Nano Banana 2 was not on that page and was not re-checked.",
+    },
     {
       date: "2026-10-29",
       field: "plans",

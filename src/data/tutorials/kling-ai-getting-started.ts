@@ -6,7 +6,7 @@ export const klingAiTutorial: PlatformTutorialData = {
   title: "Getting Started with Kling AI",
   tagline: "Type a description, get a short video clip back — paid for in credits, under terms that change depending on whether you are a paying member.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-15",
+  lastReviewedAt: "2026-11-26",
   accessTier: "FREE",
 
   howItWorks:
@@ -14,7 +14,7 @@ export const klingAiTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Kling AI is a video and image generator from Kuaishou, a Chinese technology company; the service you sign up to is run by its Singapore company, Kling AI Pte. Ltd. You describe a scene in words, or upload a picture to start from, and it produces a short clip or an image. It runs in a web browser, and Kling also offers developer access so other software can use it.",
-    "Its current headline video model is Kling 4.0, and its image model is Kling Image 3.0. Kling's own blog, dated 30 September 2026, describes Kling 4.0 as rolling out in limited early access, with the full model \"coming in October 2026\" and availability that \"may vary during the initial rollout\" — so whether it appears in your account yet is something you will see once you are signed in.",
+    "Its current headline video model is Kling 4.0, and its image model is Kling Image 4.0. Kling's blog post dated 18 November 2026 says Image 4.0 is live on Kling Creative Studio and available through the API, and that it is available to all users.",
     "Its distinguishing tools are about directing rather than just describing. Kling's video guide documents a Multi-Shot switch that plans cuts between several shots inside one clip, a mode that animates between a start picture and an end picture you supply, and audio generated with the video, including spoken lines you write into the prompt.",
   ],
 

@@ -98,4 +98,12 @@ export const PRICE_GUARD_ALLOWLIST: AllowEntry[] = [
     kind: "not-a-limit",
     reason: "Quoted product rule for hotel rebooking (a hotel price change), not a Ramp price.",
   },
+  {
+    source: "tutorial:ideogram",
+    contains: "30 credits each week",
+    kind: "verified",
+    reason: "Which sign-up receives Ideogram's weekly free credits is the fact that decides whether a new account can generate at all. The count is on the plans page and has no plan-token home.",
+    sourceUrl: "https://docs.ideogram.ai/plans-and-billing/available-plans",
+    checkedAt: "2026-11-26",
+  },
 ];

@@ -6,7 +6,7 @@ export const higgsfieldTutorial: PlatformTutorialData = {
   title: "Getting Started with Higgsfield",
   tagline: "One subscription, many video models, and a camera you direct from a menu — with billing terms worth reading before you pay.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-15",
+  lastReviewedAt: "2026-11-26",
   accessTier: "FREE",
 
   howItWorks:
@@ -14,7 +14,7 @@ export const higgsfieldTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Higgsfield, made by Higgsfield, Inc., is a studio for making short AI videos and images. It became known for letting you choose how the \"camera\" moves — a slow push-in, a drone-style sweep — from a menu instead of describing it in words, and that is still the part that sets it apart.",
-    "Much of what runs underneath is not Higgsfield's own. Alongside in-house tools such as the Soul image family, Cinema Studio 4.0, Canvas, Genjutsu, Katana and Popcorn, one subscription gives you access to models from other companies, including Kling, Veo 3.1, Sora 2, Seedance, Wan and Nano Banana. Higgsfield's job is the controls, presets and single bill wrapped around them — so two clips from the same description can look very different depending on which model you picked.",
+    "Much of what runs underneath is not Higgsfield's own. Alongside in-house tools such as the Soul image family, Cinema Studio 4.0, Canvas, Genjutsu, Katana and Popcorn, one subscription gives you access to models from other companies, including Kling, Veo, Seedance, Wan and Nano Banana. Higgsfield's job is the controls, presets and single bill wrapped around them — so two clips from the same description can look very different depending on which model you picked. Higgsfield's getting-started article, last modified 14 September 2026, still names Sora 2 in that external list. A later Higgsfield article says Sora 2 is retired because OpenAI ended the Sora API on 24 September 2026, so do not plan a clip around finding it in the menu.",
     "Cinema Studio 4.0 is where the camera control lives. Higgsfield's help centre describes a Director's Panel where you set the film look, the camera move (it names options such as POV, Robot Arm and Helicopter Shot), the colour palette and the lighting, then generate.",
     "It also includes an AI assistant, Supercomputer, which Higgsfield says plans and generates whole projects from a plain-language request; it runs on GPT-6 Astra, a third-party model. You do not need it to make a first clip.",
   ],

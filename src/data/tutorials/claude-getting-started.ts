@@ -6,7 +6,7 @@ export const claudeTutorial: PlatformTutorialData = {
   title: "Getting Started with Claude",
   tagline: `A chat assistant with a genuinely capable free tier — and a training default worth knowing about before you start.`,
   archetype: "prompts",
-  lastReviewedAt: "2026-07-27",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://claude.com/blog",
   accessTier: "FREE",
 
@@ -23,14 +23,14 @@ export const claudeTutorial: PlatformTutorialData = {
   beforeYouStart: [
     `The free plan covers web, iOS, Android, and desktop, and includes web search, file uploads, memory across conversations, and the ability to create files and run code. It is not a stripped demo.`,
     `Paid plans can be billed monthly or, for less per month, a year up front. The higher tiers buy usage headroom, not new capabilities.`,
-    `Usage resets on a rolling five-hour window, and paid plans add a weekly ceiling on top. There is no published message count — how far you get depends on conversation length, model, and which features you use.`,
+    `On Free, Pro and Max, usage resets on a rolling five-hour window, and the paid plans add a weekly ceiling. Ultra, for a verified account, has no five-hour limit and a higher weekly ceiling. Claude's pricing page lists all four as personal plans. There is no published message count — how far you get depends on conversation length, model, and which features you use.`,
     `**Set your training preference before your first real conversation.** On free and paid personal plans, training is on by default. See the security section.`,
   ],
 
   security: [
     {
       kind: "text",
-      text: `The thing worth understanding here is not a setting, it's a contract. Anthropic sells access to the same models under two different agreements, and they have **opposite privacy defaults**. Personal chat plans — Free, Pro, and Max alike — are opt-out for model training: unless you turn it off, new and resumed conversations are used to improve Anthropic's models. Team, Enterprise, and direct API access run under commercial terms, where no training happens by default at all.`,
+      text: `The thing worth understanding here is not a setting, it's a contract. Anthropic sells access to the same models under two different agreements, and they have **opposite privacy defaults**. Personal chat plans — Free, Pro, Max, and Ultra — are opt-out for model training: unless you turn it off, new and resumed conversations are used to improve Anthropic's models. Claude's pricing comparison marks model training as opt-out on all four, and as none by default on Team and Enterprise. Direct API access runs under commercial terms, where no training happens by default at all.`,
     },
     {
       kind: "list",

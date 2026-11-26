@@ -6,7 +6,7 @@ export const captionsTutorial: PlatformTutorialData = {
   title: "Getting Started with Captions",
   tagline: "Turn a phone video of yourself talking into a captioned, edited clip ready to post.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-15",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://captions.ai/help/whats-new",
   accessTier: "FREE",
 
@@ -22,7 +22,7 @@ export const captionsTutorial: PlatformTutorialData = {
 
   beforeYouStart: [
     "You need to be 18 or over: Captions' terms bar anyone younger from using it beyond viewing the website. Sign up at captions.ai or in the iPhone app with Google, Apple, an email address or a phone number, and always sign back in the same way — the help centre warns that using a different sign-in method creates a separate, empty account.",
-    "There is a free plan, but it is narrow: one caption template and no AI credits (the platform's unit of spend — each thing you make costs some). That is enough to caption a clip. Anything the AI generates or edits for you — the chat editor, AI Edit, avatars, an AI twin, generated music or images — draws on credits, so in practice it means paying. The first paid plan, Max, is {{price:captions:Max}}; Frontier is {{price:captions:Frontier}}, and larger tiers cost more for bigger credit allowances. Captions says its listed prices reflect its iPhone plans.",
+    "There is a free plan, but it is narrow: one caption template and no AI credits (the platform's unit of spend — each thing you make costs some). That is enough to caption a clip. Anything the AI generates or edits for you — the chat editor, AI Edit, avatars, an AI twin, generated music or images — draws on credits, so in practice it means paying. The pricing page lists Free, then Max at {{price:captions:Max}}, then Frontier at {{price:captions:Frontier}}. Captions says its listed prices reflect its iPhone plans.",
     "Credits are used up when the AI generates something, not when you export, so a draft you throw away still costs what it cost. You can check what you have left under Account Settings, and on iPhone a credits history shows where each one went.",
     "Some features — the built-in camera with a scrolling script to read from, for example — are documented as iPhone-only, and Captions' help centre says the web version is in English only.",
   ],

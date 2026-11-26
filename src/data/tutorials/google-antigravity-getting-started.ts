@@ -7,7 +7,7 @@ export const googleAntigravityTutorial: PlatformTutorialData = {
   tagline:
     "Google's free AI coding app: hand it a whole task and it plans, edits your files, and clicks through a browser to check its own work.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-29",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://antigravity.google/changelog/",
   accessTier: "FREE",
 
@@ -102,7 +102,7 @@ export const googleAntigravityTutorial: PlatformTutorialData = {
       whatItDoes:
         "Opens your usage after a normal afternoon of tasks and notes how much of the weekly allowance is gone.",
       whyHere:
-        "Work an ordinary afternoon, then check your usage. Running dry on Windsurf costs you until tomorrow; here the free allowance is weekly, and the five-hourly top-up that rescues a bad afternoon is a paid-plan feature.",
+        "Work an ordinary afternoon, then check your usage. Running dry on Devin Desktop (formerly Windsurf) costs you until tomorrow; here the free allowance is weekly, and the five-hourly top-up that rescues a bad afternoon is a paid-plan feature.",
     },
   ],
 

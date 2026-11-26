@@ -7,7 +7,7 @@ export const gptImage15DallESuccessorTutorial: PlatformTutorialData = {
   tagline:
     "Describe a picture in the same box you'd ask a question, and keep talking until it's right.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-11-26",
   accessTier: "FREE",
 
   howItWorks:
@@ -15,12 +15,12 @@ export const gptImage15DallESuccessorTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "This is OpenAI's image generator, the one that replaced DALL·E. It doesn't have a separate app or website: it lives inside ChatGPT.",
-    "The **model** (the AI \"brain\" that does the actual thinking) behind it has been swapped out three times in nine months — GPT Image 1.5 in December, GPT Image 2 in April, and ChatGPT Images 2.5 on 8 September 2026. You never choose between them; ChatGPT serves whichever is current.",
+    "The **model** (the AI \"brain\" that does the actual thinking) behind the pictures in ChatGPT is Images 2.6. OpenAI's post dated 4 November 2026 says Images 2.6 is in ChatGPT, Codex, and the API, on every subscription tier. In ChatGPT you do not pick a model name. On the API, the same post says developers choose GPT Image 2.6 Flare or GPT Image 2.6 Sunburst.",
     "It's a good first image generator because there is nothing to learn before you start — no settings, no codes appended to your request, no separate account. The trade is that you get less precise control than tools built only for image work.",
   ],
 
   beforeYouStart: [
-    "Ignore the model names. You can't pick \"GPT Image 1.5\" or ask for \"DALL·E\" — DALL·E was switched off on 12 May 2026 and GPT Image 1.5 is being retired from OpenAI's developer service on 1 December 2026. Any guide telling you to select one is out of date.",
+    "Ignore older model names in ChatGPT. You can't pick \"GPT Image 1.5\" or ask for \"DALL·E\". OpenAI's release notes, dated 31 July 2026, say the official DALL·E GPT was retired on 30 August 2026. OpenAI's API deprecations page, as of 26 November 2026, lists 1 December 2026 as the shutdown date for the API model gpt-image-1.5. That date is about the developer API, not a switch you will see inside ChatGPT. Any guide telling you to select DALL·E or GPT Image 1.5 in the app is out of date.",
     "Go to chatgpt.com and sign up free with an email, Google or Apple account. Image generation is included on the free plan, so you can make pictures on day one without a card. ChatGPT isn't offered in every country, and OpenAI warns that getting around that can cost you the account.",
     "You probably won't need to pay to try this, but you'll notice the ceiling quickly: OpenAI describes free image generation as limited and slower, and the cap on images is counted separately from the cap on chat messages — you can run out of pictures while text still works. The paid options are Plus and a cheaper Go plan beneath it, with prices varying by country.",
     "One capability is genuinely behind the paywall rather than just rationed: OpenAI's help pages state that \"Images with thinking\" — where the model works through a complicated instruction before drawing — is available on Plus, Pro and Business. On the free plan, a request with several fussy requirements in it will come back partly wrong, and rephrasing won't fix it.",
@@ -71,7 +71,7 @@ export const gptImage15DallESuccessorTutorial: PlatformTutorialData = {
       prompt:
         "Make a poster for a neighbourhood plant swap. The poster must read exactly: \"PLANT SWAP — Saturday 10am — Corner of 4th and Pine — bring a cutting, take a cutting\". Warm hand-drawn style, portrait orientation, plenty of empty space at the bottom.",
       whyHere:
-        "Legible text inside the picture was the specific thing OpenAI rebuilt for the April 2026 model and kept improving in September's — which is why quoting the exact wording in your request is worth doing here rather than adding the words afterwards in another program.",
+        "Legible text inside the picture is a reason to quote the exact wording in your request, rather than adding the words afterwards in another program. OpenAI's 4 November 2026 post says Images 2.6 is the model ChatGPT uses for this.",
     },
     {
       title: "Ask for a cut-out, not a picture of one",
@@ -85,7 +85,7 @@ export const gptImage15DallESuccessorTutorial: PlatformTutorialData = {
       prompt:
         "Same character, exactly as-is — same face, same hair, same jacket, same art style. Now show them sitting on a bus at night, looking out of the window. Wide shot.",
       whyHere:
-        "Holding a subject steady across a back-and-forth is what the 8 September 2026 update was released for, so the instruction that works here is a plain follow-up in the running thread rather than anything appended to a fresh request.",
+        "OpenAI's 4 November 2026 post says Images 2.6 is built to keep a character, product or brand consistent across edits, so the instruction that works here is a plain follow-up in the running thread rather than anything appended to a fresh request.",
       tweak:
         "Send this as a reply inside the same conversation, after you've already made a character you like.",
     },
@@ -106,7 +106,7 @@ export const gptImage15DallESuccessorTutorial: PlatformTutorialData = {
   ],
 
   pitfalls: [
-    "Following any guide that tells you to choose DALL·E or GPT Image 1.5 — its advice about how to phrase things is aimed at a generator that has since been replaced twice.",
+    "Following any guide that tells you to choose DALL·E or GPT Image 1.5 inside ChatGPT. OpenAI's current name for the pictures in the app is Images 2.6.",
     "Re-describing an edit instead of pointing at it. OpenAI's help pages describe an editor you open by clicking the image, with a Select tool that highlights only the area you mean and a slider to size the selection; find that first, then describe the change.",
     "Resending because nothing's happening. OpenAI says a picture can take a few minutes. A second attempt doesn't speed anything up; it spends another image from your cap.",
     "Hunting for the sketch tool on a laptop. Drawing a rough layout and having ChatGPT render it is a mobile-app feature — you type \"@\" in the message box, choose Sketch, draw, then tap the checkmark and describe what it should become. It isn't in the desktop browser, and people conclude it doesn't exist.",

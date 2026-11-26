@@ -7,7 +7,7 @@ export const openaiApiTutorial: PlatformTutorialData = {
   tagline:
     "The developer doorway to OpenAI's models — build your own apps on the same AI behind ChatGPT, billed by usage.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-29",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://developers.openai.com/api/docs/changelog",
   accessTier: "PREMIUM",
 
@@ -41,6 +41,10 @@ export const openaiApiTutorial: PlatformTutorialData = {
     {
       kind: "text",
       text: "You are responsible for what your app produces and for the data you send. Don't send other people's personal or confidential information through the API without the right to do so, and add your own checks on model output before showing it to users.",
+    },
+    {
+      kind: "text",
+      text: "A healthcare model configuration does not by itself let you send patient data. OpenAI's help article says these configurations are available to API organisations, that you do not need a ChatGPT for Healthcare workspace to call one, and that processing protected health information requires an applicable Business Associate Agreement.",
     },
   ],
 

@@ -263,7 +263,10 @@ describe("catalog audit 21: the corrections", () => {
       assert.match(g, /Enable Telemetry/);
       assert.match(g, /Google still uses your data to provide the service|Google still uses your data to provide the service, process any feedback/);
       assert.match(g, /Business accounts \(Google Workspace, Gemini Enterprise\)|Business accounts \(Workspace, Gemini Enterprise\)/);
-      assert.equal(getStaticTutorialForPlatform(slug)?.lastReviewedAt, CHECKED_AT);
+      assert.equal(
+        getStaticTutorialForPlatform(slug)?.lastReviewedAt,
+        slug === "google-antigravity" ? "2026-11-26" : CHECKED_AT,
+      );
       // The old "could not confirm" wording is gone.
       assert.doesNotMatch(g, /could not confirm that switching it off|do not treat it as a training opt-out/);
     }

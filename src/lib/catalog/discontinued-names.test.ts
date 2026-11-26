@@ -45,8 +45,10 @@ const ALLOWED_MENTIONS: readonly { file: string; phrase: string; reason: string 
   },
   {
     file: "src/data/tutorials/higgsfield-getting-started.ts",
-    phrase: "Sora 2",
-    reason: "Re-check pending: Higgsfield's model list named Sora 2 when the guide was written; the Sora API was discontinued 2026-09-24. Catalog lane to re-verify and edit the guide.",
+    phrase:
+      "still names Sora 2 in that external list. A later Higgsfield article says Sora 2 is retired because OpenAI ended the Sora API on 24 September 2026",
+    reason:
+      "The 14 September 2026 help article still names Sora 2. A later Higgsfield article says it is retired after the Sora API ended on 2026-09-24. The guide records that disagreement and does not tell readers to pick it.",
   },
 ];
 

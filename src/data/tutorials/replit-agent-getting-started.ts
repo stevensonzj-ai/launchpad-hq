@@ -7,7 +7,7 @@ export const replitAgentTutorial: PlatformTutorialData = {
   tagline:
     "Describe an app in ordinary sentences, get a working one you can click — and learn where the money goes.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-08",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://docs.replit.com/updates",
   accessTier: "FREE",
 
@@ -18,6 +18,7 @@ export const replitAgentTutorial: PlatformTutorialData = {
     "Replit Agent builds working software from a description you type, inside Replit's workspace in your browser. Nothing is installed and you are never asked to open a terminal. The current version is Agent 4, released March 2026.",
     "As it works it saves **checkpoints** — snapshots of the whole project at each finished piece of work.",
     "It is genuinely aimed at people who don't code. But what comes out is a real app holding real data, and putting that in front of other people is a bigger step than making it.",
+    "Two newer doors sit beside the chat box. Replit Missions, launched 17 November 2026, has a team set a goal while a swarm of agents plans, builds and tests toward it, inside a spending limit and approval rules you set in the Missions agreement. You can also mention @Replit in Slack, once a workspace bot is installed and each person links their own Replit account. Replit's Slack docs say a channel reply is visible to everyone in that channel.",
   ],
 
   beforeYouStart: [
