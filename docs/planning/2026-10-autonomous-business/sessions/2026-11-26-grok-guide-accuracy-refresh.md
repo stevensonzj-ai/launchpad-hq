@@ -6,6 +6,6 @@
 
 **Checks:** PR A: `npm test` 1703 pass, `npx tsc --noEmit` passed, `npm run audit:tutorials` passed. PR B: `npm test` 1705 pass, `npx tsc --noEmit` passed, `npm run audit:tutorials` passed.
 
-**Open:** Zach reviews both drafts. Do not merge from this session. Ideogram's plans page and sign-in page still disagree about linking a login later. Kling's pricing page and Sand AI's billing page disagree about MAGI-2 top-up. MiniMax's privacy policy did not return text on 26 November. The Kimi in-app picker for existing users was not on the pages read. The MAGI-2 playground returned only a loading shell.
+**Open:** Zach reviews both drafts. Do not merge from this session. Ideogram's plans page and sign-in page still disagree about linking a login later. Sand AI's pricing page and Sand AI's billing page disagree about MAGI-2 top-up. MiniMax's privacy policy did not return text on 26 November. The Kimi in-app picker for existing users was not on the pages read. The MAGI-2 playground returned only a loading shell.
 
 **Zach:** Nothing else to decide before review. Affiliate wording was not changed.

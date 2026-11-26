@@ -5,7 +5,7 @@ export const magi2Tutorial: PlatformTutorialData = {
   platformSlug: "magi-2",
   title: "Getting Started with MAGI-2",
   tagline:
-    "Sand AI's video model for a clip with sound, up to 30 seconds at 1080p — and a billing page that does not match the pricing page.",
+    "Sand AI's video model for a short clip with the sound included, up to 30 seconds at 1080p.",
   archetype: "prompts",
   lastReviewedAt: "2026-11-26",
   changelogUrl: "https://sand.ai/blog/magi-2/",
