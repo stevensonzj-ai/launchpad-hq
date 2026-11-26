@@ -24,12 +24,14 @@ export default {
     status: "verified",
   },
   models: {
-    value: ["Kling 4.0 (in-house, video)", "Kling Image 3.0 (in-house)"],
-    sourceUrl: "https://kling.ai/",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    value: ["Kling 4.0 (in-house, video)", "Kling Image 4.0 (in-house)"],
+    note: "Image 4.0 blog, read 2026-11-26: live on Kling Creative Studio and the API, and available to all users. The 30 September 2026 'coming in October 2026' wording is not the current image-model status.",
+    sourceUrl: "https://kling.ai/blog/kling-image-4-stunningly-realistic-sharp-precise",
+    sourceKind: "announcement",
+    checkedAt: "2026-11-26",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   usageLimits: {
@@ -73,6 +75,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "models",
+      summary:
+        "Guide refresh: models list is Kling 4.0 and Kling Image 4.0. The Image 4.0 blog (2026-11-18) says it is live on Creative Studio and the API. Image 3.0 is no longer the listed image model.",
+    },
     {
       date: "2026-11-23",
       field: "apiPricing",

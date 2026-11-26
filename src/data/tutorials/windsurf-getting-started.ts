@@ -6,7 +6,7 @@ export const windsurfTutorial: PlatformTutorialData = {
   title: "Getting Started with Devin Desktop",
   tagline: "The code editor that used to be called Windsurf, with an AI agent built in.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://docs.devin.ai/desktop/changelog",
   accessTier: "FREE",
 
@@ -16,6 +16,7 @@ export const windsurfTutorial: PlatformTutorialData = {
   whatItIs: [
     "**Windsurf, and before that Codeium.** Cognition bought it in July 2025 and renamed it in June 2026 — same editor, same account, same plans, `windsurf.com` now redirecting to `devin.ai`. A tutorial saying Windsurf is still the right one.",
     "It is honestly a developer tool, assuming files and folders. Cursor is the closest comparison; Claude Code runs in a text window with no editor around it. Its own bet is fleet management — one subscription covering the agent on your laptop, agents in the cloud, and a command-line version.",
+    "Cognition's model list now includes SWE-2.1, posted 24 November 2026, which it describes as an upgrade over SWE-2, and SWE-2.1 Ultrafast, the same model served faster through a Cerebras partnership. Devin Apps, announced 13 November 2026, are private web apps Devin hosts on its own computer. Everyone who opens one signs in to Devin, and the apps are not public.",
   ],
 
   beforeYouStart: [

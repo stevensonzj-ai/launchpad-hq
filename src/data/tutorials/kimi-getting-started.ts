@@ -6,7 +6,7 @@ export const kimiTutorial: PlatformTutorialData = {
   title: "Getting Started with Kimi",
   tagline: "Moonshot AI's assistant for reading long documents and handing off whole tasks — and, outside China, you sign in at kimi.ai, not kimi.com.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-15",
+  lastReviewedAt: "2026-11-26",
   accessTier: "FREE",
 
   howItWorks:
@@ -15,14 +15,13 @@ export const kimiTutorial: PlatformTutorialData = {
   whatItIs: [
     "Kimi is the AI assistant made by Moonshot AI, a company founded in Beijing. Its pitch is that one box does two jobs: ordinary chat, and agent work — an agent is AI that takes actions on its own rather than only answering — where Kimi plans a task and delivers a finished file, such as a slide deck, a document, a spreadsheet or a research report.",
     "Its home turf is volume. Moonshot's help centre says you can attach PDFs, Word, Excel and PowerPoint files, images, text and video, many at once in one conversation, and it has a mode called Agent Swarm that splits a big search or batch job across many helpers at once.",
-    "Above the box you choose a model (the AI \"brain\" that does the actual thinking). Moonshot's help centre describes K2.6 as the fast one for quick questions, which answers in text only, and K3 as the most capable, the one that can produce editable .pptx, .docx, .xlsx and .pdf files from start to finish. Since then Moonshot has added a newer model, K3.1 Pro, to Kimi on the web, and free accounts get limited use of it. You also set how hard it thinks: higher settings reason more thoroughly and take longer.",
-    "Moonshot publishes the K3 model files themselves on Hugging Face under its own \"Kimi K3 License\", so other companies can run the same model. At 2.8 trillion parameters it is built for data-centre hardware, not a home computer. Programmers can also reach Kimi's models through a separate pay-as-you-go service at platform.kimi.ai, which has no subscription — current rates are on the Quick facts panel beside this page.",
+    "Above the box you choose a model (the AI \"brain\" that does the actual thinking). K3.1 Pro is the current one: Kimi's pricing page, updated 18 November 2026, says it is on Kimi on the web, with limited use on the Free plan. Moonshot's API docs say the K2 series, including K2.6, closed to newly registered users on 31 October 2026 and that Moonshot plans to retire all K2 models by the end of December 2026. Whether an existing kimi.ai account still shows K2.6 in the picker was not on the pages read for this update. You also set how hard it thinks: higher settings reason more thoroughly and take longer.",
+    "Moonshot publishes the K3.1 Pro weights on Hugging Face (moonshotai/Kimi-K3.1-Pro) under its own \"Kimi K3.1 Pro License\", which is not a standard open-source licence. The model card says about 2.8 trillion parameters in total, so it is built for data-centre hardware, not a home computer. Programmers can also reach Kimi's models through a separate pay-as-you-go service at platform.kimi.ai, which has no subscription — current rates are on the Quick facts panel beside this page.",
   ],
 
   beforeYouStart: [
     "**Outside mainland China, go to kimi.ai — not kimi.com.** Moonshot split Kimi in 2026: kimi.com is now the mainland China service, with phone-number and WeChat sign-in and a Beijing company behind the account, while kimi.ai is the international one. Kimi's own sign-in screen tells people outside mainland China to log in at Kimi.ai with a Google account or a non-+86 phone number; workplace accounts can use the \"Sign in with SSO\" option with a work email. Moonshot's help centre still says \"Visit Kimi.com\" in places, so expect older guides — including some of Moonshot's own — to send you to the wrong door. You must be 18, or the adult age where you live if that is higher, unless a parent or guardian agrees to the terms for you.",
-    "Kimi's pricing page lists a Free plan with limited use of its newest model and basic agent credits, but no exact message counts, so you find out the boundary by using it. Check the Quick facts panel beside this page for the prices this site has verified before you plan around paying.",
-    "Buying a membership may not be possible the day you want one. Moonshot paused new subscriptions on 20 July 2026, saying demand for K3 had pushed its servers close to their limit and that it would reopen spots in batches. In September 2026 a reply on Moonshot's own forum said the pause still applied to both kimi.com and kimi.ai. Whether it has lifted since is not something Moonshot has announced, so treat a membership as something to check for rather than count on.",
+    "Kimi's pricing page, updated 18 November 2026, lists Free, Plus, Pro, Max and Ultra. It does not say new subscriptions are paused. It does not publish exact message counts, so you find the boundary by using the Free plan. Check the Quick facts panel beside this page for the prices this site has verified before you plan around paying.",
     "Expect to be told to wait occasionally. Moonshot's help centre describes two separate brakes: a cap on how many messages you can send within a time window (a red circle by your message, which it says clears in two to three hours), and a peak-hour message, \"Kimi is a bit tired\", which it says usually clears in a minute or two.",
   ],
 
@@ -39,16 +38,16 @@ export const kimiTutorial: PlatformTutorialData = {
   triad: {
     bestAt: [
       "Reading a stack of documents at once.",
-      "Turning a request into a finished, editable file — slides, a Word document or a spreadsheet — when you pick K3.",
+      "Turning a request into a finished, editable file — slides, a Word document or a spreadsheet — on K3.1 Pro.",
       "Big, repetitive research jobs, where Agent Swarm spreads the searching across many helpers instead of working through it one source at a time.",
     ],
     okayAt: [
-      "Quick everyday questions on K2.6 — fast, but text only.",
+      "Quick everyday questions. K2.6 was the fast, text-only pick, and Moonshot's API docs say that series is retiring by the end of December 2026.",
       "Making pictures, video or audio. It can, but only after you install the matching plugin from its plugin marketplace; it is not built into the chat.",
       "Busy hours, when the \"Kimi is a bit tired\" message can make you wait.",
     ],
     avoid: [
-      "Expecting a Word or Excel file from the plain chat window. Moonshot's help centre says the chat itself does not generate downloadable Office files; you need Kimi Slides, or an agent task on K3.",
+      "Expecting a Word or Excel file from the plain chat window. Moonshot's help centre says the chat itself does not generate downloadable Office files; you need Kimi Slides, or an agent task on K3.1 Pro.",
       "Keeping the only copy of anything in Kimi. Moonshot's help centre says deleted conversations and deleted accounts cannot be recovered, and deleting an account also erases any paid benefits on it.",
       "Signing up with a Google account you might want to swap out later. The help centre says a linked Google account cannot be unlinked or replaced, and changing a linked email needs a support request.",
     ],
@@ -67,11 +66,11 @@ export const kimiTutorial: PlatformTutorialData = {
     },
     {
       title:
-        "The finished file (switch to K3 first)",
+        "The finished file (use K3.1 Pro)",
       prompt:
         "Turn the attached report into a 6-slide presentation for [audience]. One idea per slide, a short title on each, no more than four bullet points, and a final slide listing three decisions we need to make. Give me an editable .pptx file.",
       whyHere:
-        "Run this prompt on K3 and then on K2.6 and you see the file-versus-text split described above for yourself — a difference set by Kimi's own model switcher, which a ChatGPT version of this exercise does not have.",
+        "Run this on K3.1 Pro. Moonshot's help centre says the plain chat does not hand you an Office file, and the API docs say K2.6 is leaving, so a new account should not plan this exercise around the old K2 switch.",
       tweak:
         "Swap .pptx for .xlsx and ask for a spreadsheet of the report's figures instead.",
     },

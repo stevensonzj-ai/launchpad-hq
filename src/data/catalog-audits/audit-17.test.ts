@@ -74,7 +74,7 @@ describe("catalog audit 17: stale facts batch 1", () => {
         // Catalog audit 27 (2026-10-30) re-read these price facts.
         if (AUDIT_27_FACT_UPDATES[slug]?.includes(key) && fact.checkedAt === AUDIT_27_CHECKED_AT) continue;
         // X-watch 2026-11-05 superseded this slug's GPT Image facts (2.5 -> 2.6).
-        if (slug === "gpt-image-1-5-dall-e-successor" && fact.checkedAt === "2026-11-05") continue;
+        if (slug === "gpt-image-1-5-dall-e-successor" && (fact.checkedAt === "2026-11-05" || fact.checkedAt === "2026-11-26")) continue;
         // Price re-verification 2026-11-20 moved checkedAt when the vendor page still showed the recorded price.
         if ((key === "freeTier" || key === "plans" || key === "apiPricing") && fact.checkedAt === "2026-11-20") continue;
         // Price re-verification 2026-11-23 moved these checkedAt dates.

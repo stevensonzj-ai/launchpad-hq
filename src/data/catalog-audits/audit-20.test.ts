@@ -533,7 +533,7 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
     assert.match(r.upgradeTriggers ?? "", /Video Call with Lily/);
     assert.equal(r.name, "Duolingo Max");
     for (const text of [JSON.stringify(r), JSON.stringify(facts), guide("duolingo-max")]) assert.doesNotMatch(text, /Explain My Answer/i);
-    assert.equal(getStaticTutorialForPlatform("duolingo-max")?.lastReviewedAt, CHECKED_AT);
+    assert.equal(getStaticTutorialForPlatform("duolingo-max")?.lastReviewedAt, "2026-11-26");
     // Nothing else in the catalog lists it either.
     for (const x of snapshotRows()) assert.doesNotMatch(JSON.stringify(x), /Explain My Answer/i, x.slug);
   });
@@ -579,7 +579,7 @@ describe("catalog audit 20: Research Analyst batch-3 browser check (2026-10-29)"
     assert.match(JSON.stringify(ideGuide), /Enable Telemetry/);
     assert.match(JSON.stringify(ideGuide), /does not stop everything/);
     assert.equal(cliGuide.lastReviewedAt, CHECKED_AT);
-    assert.equal(ideGuide.lastReviewedAt, CHECKED_AT);
+    assert.equal(ideGuide.lastReviewedAt, "2026-11-26");
   });
 
   it("the Leonardo guide, which already agrees with the decision, is left alone (the Restb.ai guide changed in audit 21)", () => {

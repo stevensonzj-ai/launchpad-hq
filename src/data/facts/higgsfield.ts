@@ -70,15 +70,14 @@ export default {
       "Kling (third-party)",
       "Nano Banana (third-party)",
       "Wan (third-party)",
-      "Sora 2 (third-party)",
       "Veo 3.1 (third-party)",
     ],
-    note: "Homepage fetch confirms Genjutsu, Katana, Cinema Studio 4.0, Supercomputer, GPT-6 Astra, Seedance, Nano Banana, Wan. Soul, Popcorn, Canvas, Kling, Sora 2 and Veo 3.1 weren't on the homepage: browser-verified 2026-10-14 (cited source is /pricing).",
-    sourceUrl: "https://higgsfield.ai/pricing",
-    checkedAt: "2026-10-14",
-    gatheredBy: "research-analyst",
-    verifiedBy: "ra",
-    verifiedAt: "2026-10-14",
+    note: "Re-read 2026-11-26. The getting-started help article (dateModified 2026-09-14) still names Sora 2. https://higgsfield.ai/blog/5-Best-AI-Video-Models-2026-Tested-Compared says Sora 2 is retired after OpenAI ended the API on 2026-09-24, so Sora 2 is omitted here. The other names were not each re-confirmed on 2026-11-26.",
+    sourceUrl: "https://higgsfield.ai/creator-hub/help-center/getting-started/what-is-higgsfield",
+    checkedAt: "2026-11-26",
+    gatheredBy: "cursor",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   usageLimits: {
@@ -96,6 +95,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "models",
+      summary:
+        "Guide refresh: Sora 2 removed from the models list. The 14 September 2026 help article still names it. A later Higgsfield article says it is retired after the Sora API ended on 2026-09-24.",
+    },
     {
       date: "2026-10-14",
       field: "plans",

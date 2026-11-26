@@ -7,7 +7,7 @@ export const ideogramTutorial: PlatformTutorialData = {
   tagline:
     "The AI image generator that can actually spell — built for posters, logos, and anything with words in it.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-07",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://docs.ideogram.ai/about-ideogram/blog-posts",
   accessTier: "FREE",
 
@@ -16,11 +16,11 @@ export const ideogramTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "A text-to-image generator: you describe a picture in plain words and it draws one, in your browser, with nothing to install. It's built for things that have words on them — posters, flyers, logo concepts, book covers, social posts, product mockups.",
-    "The reason to pick this over Midjourney, DALL·E or Firefly is **legible text**. Most image generators turn lettering into convincing-looking gibberish; Ideogram is built around spelling words correctly and setting them as real-looking type. If your image needs to **say** something, start here.",
+    "The reason to pick this over Midjourney, ChatGPT Images or Firefly is **legible text**. Most image generators turn lettering into convincing-looking gibberish; Ideogram is built around spelling words correctly and setting them as real-looking type. If your image needs to **say** something, start here. OpenAI has retired the official DALL·E GPT in ChatGPT (its release notes dated that retirement 30 August 2026), so a guide that still names DALL·E as the alternative is out of date.",
   ],
 
   beforeYouStart: [
-    "**Sign in with Google, Apple or Microsoft — not with a plain email address.** Ideogram's pricing page states that free weekly credits go to accounts using one of those three; an email-only signup gets none. Both your login method and your username are permanent, so decide before you click. It's otherwise free to start, no card, at ideogram.ai.",
+    "**Sign up with Google or Apple if you want the weekly free credits.** Ideogram's plans page, as of 2026-11-26, says those sign-ups get 30 credits each week, and that an account created with Microsoft or with an email and password does not, unless you later link a Google or Apple sign-in that uses the same verified email. The sign-in page says the opposite about linking: each method makes its own account, and you cannot link methods or change the method later. The two pages disagree, so start with Google or Apple rather than counting on a fix. Your username cannot be changed later either. It's otherwise free to start, no card, at ideogram.ai.",
     "You get a pool of **credits** — the unit of spend, each image costing some — refilling weekly. Free credits are \"slow\" credits: your job runs in the lower-priority queue, one generation at a time. Ideogram doesn't publish the exact number and says it may vary.",
     "To try it and make the odd graphic, you won't pay. You'd want a paid plan if you generate regularly, or if you need images kept private — private generation is a paid feature. Paid plans run from personal tiers up to larger ones for heavier use; current prices are on its Launchpad page.",
   ],

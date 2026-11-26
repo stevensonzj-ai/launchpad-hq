@@ -6,7 +6,7 @@ export const freepikAiTutorial: PlatformTutorialData = {
   title: "Getting Started with Magnific (formerly Freepik)",
   tagline: "Freepik's library of ready-made stock pictures and its AI tools for making and enlarging images and video, now under a new name — with one licence for downloaded stock and a different one for what the AI makes.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-29",
+  lastReviewedAt: "2026-11-26",
   accessTier: "FREE",
 
   howItWorks:
@@ -15,7 +15,7 @@ export const freepikAiTutorial: PlatformTutorialData = {
   whatItIs: [
     "Magnific is the new name for Freepik, the Spanish company that started as a library of ready-made stock images — photos, illustrations, icons and templates you can download and use. It announced the rename in April 2026. freepik.com now forwards you to magnific.com, an old Freepik login still works, and many guides online still use the old name, so if you see \"Freepik\" in a tutorial it means this site.",
     "Alongside the stock library sits a suite of AI tools: an image generator, a video generator, an upscaler (which enlarges a picture and sharpens its detail), a background remover, an image editor, plus sound-effect and music generators. The upscaler is where the name comes from — Magnific was an upscaling startup Freepik bought in 2024.",
-    "The thing that sets it apart is choice of model (the AI \"brain\" that does the actual thinking). Rather than one house engine, Magnific puts several behind one account: its own Magnific One, plus third-party models such as Google's Nano Banana 2 for images and Kling 2.5 for video. You pick per job, and all of them draw on the same account.",
+    "The thing that sets it apart is choice of model (the AI \"brain\" that does the actual thinking). Rather than one house engine, Magnific puts several behind one account: its own Magnific One, plus third-party models such as Google's Nano Banana 2 for images and Kling's video models. Magnific's Kling page, read 26 November 2026, marks Kling 4.0 as the latest and still lists older versions, including Kling 2.5. You pick per job, and all of them draw on the same account.",
     "It runs in the web browser, and Magnific also lists a desktop app and a mobile app.",
   ],
 
@@ -77,7 +77,7 @@ export const freepikAiTutorial: PlatformTutorialData = {
       prompt:
         "Slow push-in toward the mug, steam rising gently, morning light shifting across the table. Calm, no camera shake.",
       whyHere:
-        "Take the image you kept from the first exercise into the video generator with Kling 2.5 selected. Going to Kling directly gets you Kling only; here the still and the clip come from one account and one credit balance, so you can see how far a single image goes before you pay for many video attempts.",
+        "Take the image you kept from the first exercise into the video generator and pick a Kling model. Magnific's Kling page marks 4.0 as the latest and still offers 2.5. Going to Kling directly gets you Kling only; here the still and the clip come from one account and one credit balance, so you can see how far a single image goes before you pay for many video attempts.",
       tweak:
         "Keep the movement to one simple action. Asking for several things to happen at once is where clips fall apart.",
     },

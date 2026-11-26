@@ -81,15 +81,22 @@ export default {
       "Current API models are GPT Image 2.6 Flare (faster iteration) and GPT Image 2.6 Sunburst (more detailed output).",
       "Image generation and image edit endpoints only; Batch is not supported on either model.",
       "ChatGPT plan image limits are unverified.",
+      "OpenAI's post dated 4 November 2026 says Images 2.6 is available in ChatGPT, Codex, and the API, on every subscription tier. In the API that post names GPT Image 2.6 Flare and Sunburst. Source for this item: https://openai.com/index/introducing-images-2-6/",
     ],
     sourceUrl: "https://developers.openai.com/api/docs/models/gpt-image-2.6-flare",
-    checkedAt: "2026-11-05",
+    checkedAt: "2026-11-26",
     gatheredBy: "claude",
-    verifiedBy: "claude-recheck",
-    verifiedAt: "2026-11-05",
+    verifiedBy: "cursor-recheck",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "features",
+      summary:
+        "Guide refresh: OpenAI's 4 November 2026 post says Images 2.6 is in ChatGPT, Codex, and the API. API model names on that post are GPT Image 2.6 Flare and Sunburst. ChatGPT plan image limits were not re-read.",
+    },
     {
       date: "2026-11-23",
       field: "apiPricing",

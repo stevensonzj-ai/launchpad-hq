@@ -7,7 +7,7 @@ export const clineTutorial: PlatformTutorialData = {
   tagline:
     "A free AI coding agent that works inside your code editor — it plans, edits files and runs commands, asking your permission at each step.",
   archetype: "pick-and-setup",
-  lastReviewedAt: "2026-10-24",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://github.com/cline/cline/blob/main/CHANGELOG.md",
   accessTier: "FREE",
 
@@ -15,7 +15,7 @@ export const clineTutorial: PlatformTutorialData = {
     "You install Cline in your editor and connect it to an AI model. You describe a change in plain language; Cline reads your project, proposes a plan, then edits files and runs terminal commands — showing each change and waiting for your approval. You pay the model provider for the AI it uses, not Cline for the tool.",
 
   whatItIs: [
-    "Cline is an **AI coding agent** — it doesn't just suggest code, it carries out a task across your project. Its docs describe an agent that reads and writes files, runs commands and uses a browser, with every action requiring your explicit approval. It runs as an extension in VS Code and VS Code-based editors such as Cursor and Windsurf, as a JetBrains plugin, and as a command-line tool.",
+    "Cline is an **AI coding agent** — it doesn't just suggest code, it carries out a task across your project. Its docs describe an agent that reads and writes files, runs commands and uses a browser, with every action requiring your explicit approval. It runs as an extension in VS Code and VS Code-based editors such as Cursor and Devin Desktop (formerly Windsurf), as a JetBrains plugin, and as a command-line tool.",
     "It has two modes. In **Plan** mode it can read your code and talk the task through, but its docs say it cannot modify files or run commands. In **Act** mode it makes the changes. A good habit is to agree a plan first, then switch to Act. Cline also saves **checkpoints** — snapshots after each step, kept separately from your own Git history — so you can roll files back if a change goes wrong.",
     "You can teach it your project's habits with **rules** files (a `.clinerules` folder, or an existing `AGENTS.md`), and extend it with **MCP** servers, a standard way to plug extra tools into AI apps. The VS Code extension and CLI are open source under the Apache 2.0 licence; Cline's README says its JetBrains plugins are not open source.",
   ],
