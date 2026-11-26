@@ -19,10 +19,10 @@ export type BreadcrumbCrumb = { name: string; item: string };
 
 /**
  * One BreadcrumbList ListItem. `name` is required and must be non-empty:
- * Google reports a crumb with no name as "Unnamed item". `item` is an
- * absolute URL. Pass `includeItem: false` for the current page. On a guide,
- * that URL is also Article.url, and Google then names the crumb from the
- * Article, which only has `headline`.
+ * Google reports a crumb with no name as "Unnamed item". When `item` is
+ * passed it must be an absolute URL. The last crumb omits `item`: on a
+ * guide that URL is also Article.url, and Google then names the crumb from
+ * the Article, which only has `headline`.
  */
 export function breadcrumbListItem(
   position: number,

@@ -42,22 +42,31 @@ describe("sitemap lastmod", () => {
   });
 
   it("moves a guide's lastmod when the guide or its fact file is newer", () => {
-    const tutorial = listRegisteredTutorials().find((item) => item.platformSlug === "research-rabbit");
+    const tutorial = listRegisteredTutorials().find((item) => item.platformSlug === "otter-ai");
     assert.ok(tutorial);
-    const facts = getToolFacts("research-rabbit");
-    const checked = factCheckedAts(facts).sort();
+    const checked = factCheckedAts(getToolFacts("otter-ai"));
     const lastmod = guideSitemapLastModified(tutorial);
-    assert.equal(isoDay(lastmod), checked[checked.length - 1]);
+    assert.equal(isoDay(lastmod), isoDay(latestContentDate([tutorial.lastReviewedAt, ...checked])));
     assert.ok(isoDay(lastmod)! > tutorial.lastReviewedAt);
     assert.equal(tutorialGuidePath("research-rabbit"), "/platform/research-rabbit/guide");
   });
 
-  it("moves a platform lastmod when the fact file is newer than the row", () => {
+  it("uses a snippet revision date when it is newer than the guide and the facts", () => {
+    const tutorial = listRegisteredTutorials().find((item) => item.platformSlug === "research-rabbit");
+    assert.ok(tutorial);
+    const lastmod = guideSitemapLastModified(tutorial);
+    assert.equal(isoDay(lastmod), "2026-11-26");
+    assert.ok(isoDay(lastmod)! > tutorial.lastReviewedAt);
+  });
+
+  it("moves a platform lastmod when the fact file or snippet is newer than the row", () => {
     const rowUpdated = new Date("2026-01-01T00:00:00.000Z");
-    const lastmod = platformSitemapLastModified({ slug: "research-rabbit", updatedAt: rowUpdated });
-    const checked = factCheckedAts(getToolFacts("research-rabbit")).sort();
-    assert.equal(isoDay(lastmod), checked[checked.length - 1]);
-    assert.ok(lastmod && lastmod.getTime() > rowUpdated.getTime());
+    const overridden = platformSitemapLastModified({ slug: "research-rabbit", updatedAt: rowUpdated });
+    assert.equal(isoDay(overridden), "2026-11-26");
+    const plain = platformSitemapLastModified({ slug: "otter-ai", updatedAt: rowUpdated });
+    const checked = factCheckedAts(getToolFacts("otter-ai"));
+    assert.equal(isoDay(plain), isoDay(latestContentDate([rowUpdated, ...checked])));
+    assert.ok(plain && plain.getTime() > rowUpdated.getTime());
   });
 
   it("dates a comparison from the tools it renders, not from build time", () => {

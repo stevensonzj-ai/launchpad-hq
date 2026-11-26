@@ -3,6 +3,7 @@ import { isPublishedVerified } from "@/data/facts/walk";
 import type { ToolFacts } from "@/data/facts/types";
 import { getToolFacts } from "@/data/facts/registry";
 import { isHiddenPlatform } from "@/lib/catalog-visibility";
+import { snippetOverride } from "@/data/seo/snippet-overrides";
 import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_IS_PUBLIC } from "@/lib/site";
 
 /**
@@ -188,10 +189,12 @@ export function buildTutorialMetadata(input: {
   /** false for hidden platforms; defaults to the site-wide setting. */
   index?: boolean;
 }): Metadata {
+  const path = `/platform/${input.platformSlug}/guide`;
+  const override = snippetOverride(path);
   const base = publicPageMetadata({
-    title: composeTutorialTitle(input.name),
-    description: stripInlineMarkup(input.tagline),
-    path: `/platform/${input.platformSlug}/guide`,
+    title: override?.title ?? composeTutorialTitle(input.name),
+    description: override?.description ?? stripInlineMarkup(input.tagline),
+    path,
     index: input.index,
   });
   const metadata: Metadata = {
@@ -222,12 +225,14 @@ export function buildPlatformMetadata(input: {
   // kept out of search results.
   const index = facts?.visibility === "hidden" ? false : undefined;
   const status = facts?.status && isPublishedVerified(facts.status) ? facts.status.value : undefined;
+  const path = `/platform/${input.slug}`;
+  const override = facts?.lifecycle === "discontinued" ? undefined : snippetOverride(path);
   if (facts?.lifecycle === "discontinued" && status) {
     return withToolFeedAlternate(
       publicPageMetadata({
         title: composeDiscontinuedTitle(name),
         description: status.headline,
-        path: `/platform/${input.slug}`,
+        path,
         index,
       }),
       input.slug,
@@ -235,15 +240,17 @@ export function buildPlatformMetadata(input: {
   }
   return withToolFeedAlternate(
     publicPageMetadata({
-      title: composePlatformTitle(name, input.categoryName),
-      description: composePlatformDescription({
-        name,
-        categoryName: input.categoryName,
-        primaryUse: input.primaryUse,
-        description: input.description,
-        verdict: verifiedVerdict(input.facts),
-      }),
-      path: `/platform/${input.slug}`,
+      title: override?.title ?? composePlatformTitle(name, input.categoryName),
+      description:
+        override?.description ??
+        composePlatformDescription({
+          name,
+          categoryName: input.categoryName,
+          primaryUse: input.primaryUse,
+          description: input.description,
+          verdict: verifiedVerdict(input.facts),
+        }),
+      path,
       index,
     }),
     input.slug,
