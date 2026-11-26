@@ -42,12 +42,28 @@ describe("sitemap lastmod", () => {
   });
 
   it("moves a guide's lastmod when the guide or its fact file is newer", () => {
-    const tutorial = listRegisteredTutorials().find((item) => item.platformSlug === "otter-ai");
-    assert.ok(tutorial);
-    const checked = factCheckedAts(getToolFacts("otter-ai"));
-    const lastmod = guideSitemapLastModified(tutorial);
-    assert.equal(isoDay(lastmod), isoDay(latestContentDate([tutorial.lastReviewedAt, ...checked])));
-    assert.ok(isoDay(lastmod)! > tutorial.lastReviewedAt);
+    // Fixed dates. A live guide whose review day is the newest input makes
+    // lastmod equal lastReviewedAt, so a strict greater-than check fails.
+    const olderReview = "2026-07-13";
+    const newerCheck = "2026-11-20";
+    const factWins = latestContentDate([olderReview, newerCheck]);
+    assert.equal(isoDay(factWins), newerCheck);
+    assert.ok(isoDay(factWins)! > olderReview);
+
+    const newerReview = "2026-11-26";
+    const olderCheck = "2026-11-20";
+    const guideWins = latestContentDate([newerReview, olderCheck]);
+    assert.equal(isoDay(guideWins), newerReview);
+    assert.equal(isoDay(guideWins)! > newerReview, false);
+
+    const sameDay = latestContentDate(["2026-11-26", "2026-11-26"]);
+    assert.equal(isoDay(sameDay), "2026-11-26");
+
+    const onlyReview = guideSitemapLastModified({
+      platformSlug: "not-a-real-slug",
+      lastReviewedAt: olderReview,
+    });
+    assert.equal(isoDay(onlyReview), olderReview);
     assert.equal(tutorialGuidePath("research-rabbit"), "/platform/research-rabbit/guide");
   });
 
