@@ -7,7 +7,7 @@ export const otterTutorial: PlatformTutorialData = {
   tagline:
     "An AI notetaker that joins your meetings, transcribes them live, and hands you a searchable summary afterward.",
   archetype: "recipes",
-  lastReviewedAt: "2026-07-13",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://otter.ai/blog",
   accessTier: "FREE",
 
@@ -16,6 +16,7 @@ export const otterTutorial: PlatformTutorialData = {
 
   whatItIs: [
     "Otter is a **meeting assistant**. You connect it to your calendar, and its bot joins your Zoom, Microsoft Teams, or Google Meet calls, transcribes everyone in real time, and produces a summary with action items you can search later. It's aimed at people who sit in a lot of meetings — students in lectures, salespeople on calls, anyone who'd rather pay attention than scramble to take notes.",
+    "If you searched for what Otter is, or how it works: it is a transcription and notes tool, not a chatbot you paste a question into. You connect it once. From then on it joins the call, writes the transcript while people talk, and leaves you a summary you can search. Otter's pricing page lists Zoom, Microsoft Teams, and Google Meet as the meetings it joins.",
   ],
 
   beforeYouStart: [
@@ -23,6 +24,17 @@ export const otterTutorial: PlatformTutorialData = {
     "The single most important thing: **an AI bot joining a call to record it affects everyone on the call, not just you.** Handle consent before you turn it on (more below).",
     "Set up the calendar and meeting-tool connection first — that's the \"recipe\" that makes Otter run on its own.",
   ],
+
+  gettingSetUpSafely: {
+    officialSource: "Otter's pricing page, which is also the list of what each plan includes.",
+    body: [
+      "Create an account at otter.ai. The Basic plan is the free way in, and Otter's pricing page does not ask for a card to start there.",
+      "Connect the calendar and the meeting app you actually use. The notetaker joins Zoom, Microsoft Teams, and Google Meet, then writes a live transcript with speaker names.",
+      "Run one low-stakes meeting. When it ends, open the transcript, search a phrase you remember, and read the summary before you trust it on a call that matters.",
+      "The free plan caps how many minutes you get and how long one conversation can be, and it caps file imports for the life of the account rather than each month. Current prices, and the shape of those caps, are on the Otter page on Launchpad ({{from:otter-ai}}).",
+    ],
+    vendorDocsUrl: "https://otter.ai/pricing",
+  },
 
   security: [
     {
@@ -97,6 +109,7 @@ export const otterTutorial: PlatformTutorialData = {
   ],
 
   whereToNext: [
+    { label: "Free Otter alternatives", href: "/alternatives/free-otter-ai-alternatives" },
     { label: "Meetings & Notes", categorySlug: "meetings-notes" },
     { label: "Workflow & Automation", categorySlug: "workflow-automation" },
   ],

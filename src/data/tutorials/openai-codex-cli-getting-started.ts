@@ -7,7 +7,7 @@ export const openaiCodexCliTutorial: PlatformTutorialData = {
   tagline:
     "OpenAI's coding assistant for the command line: your machine, one project folder, paid for by your ChatGPT sign-in.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-29",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://github.com/openai/codex/releases",
   accessTier: "FREE",
 
@@ -27,13 +27,14 @@ export const openaiCodexCliTutorial: PlatformTutorialData = {
   ],
 
   gettingSetUpSafely: {
-    officialSource: "OpenAI's official Codex CLI documentation",
+    officialSource: "OpenAI's Codex CLI documentation, read 26 November 2026.",
     body: [
-      "It installs in one command: use OpenAI's installer, the official Homebrew cask or npm package, or the GitHub releases page — lookalikes exist. On Windows the fence that keeps Codex inside your folder behaves most predictably under WSL2.",
-      "Open it in a project that is saved and tracked, with nothing uncommitted — that tracking is how you read back and undo every line it changed.",
-      "`/permissions` sets what it may do: read-only, a workspace default that edits inside the folder you opened and asks first about anything else, or full access, which removes both the fence and the questions — one keystroke, and it stays granted.",
+      "Install from that page, not from a copied command on a blog. On macOS and Linux the command OpenAI publishes is `curl -fsSL https://chatgpt.com/codex/install.sh | sh`. The same page also offers a Windows installer, an npm package, and a Homebrew cask.",
+      "Open a project folder in the terminal and run `codex`. The first time, sign in with ChatGPT. That sign-in is what a ChatGPT plan pays for; current plan prices are on the ChatGPT page on Launchpad ({{from:chatgpt}}).",
+      "Ask it something that does not change files yet, such as \"Tell me about this project.\" Make a git checkpoint before you let it edit, so you can undo the result.",
+      "`/permissions` chooses what this run may change. `/init` writes an AGENTS.md file Codex reads before later work. `/review` looks at changes without editing them.",
     ],
-    vendorDocsUrl: "https://learn.chatgpt.com/docs/cli",
+    vendorDocsUrl: "https://developers.openai.com/codex/cli",
   },
 
   security: [

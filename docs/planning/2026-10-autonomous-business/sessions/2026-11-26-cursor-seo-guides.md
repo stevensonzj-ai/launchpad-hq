@@ -1,0 +1,11 @@
+# 2026-11-26 cursor: SEO guide content
+
+**Decided:** Otter, Codex CLI, and Firefly get a setup section aimed at the queries they already rank for. Granola gets the vendor's install steps. Spellbook's guide answers the IT-approval question with Spellbook's own security page and does not say a company will approve it. Vapi's pricing table fills in the Core and Pro limits that were blank. LongCat 2.5 vs Tencent HY4 is a normal compare page; prices stay in the fact files. No new SQL. Hedra was not touched.
+
+**Changed:** Guides `otter-getting-started.ts`, `openai-codex-cli-getting-started.ts`, `adobe-firefly-getting-started.ts`, `granola-getting-started.ts`, `spellbook-getting-started.ts`. Facts `vapi.ts`, `longcat-2-5.ts`, `tencent-hy4.ts` (`checkedAt` 2026-11-26 on the prices re-read). Compare page `longcat-2-5-vs-tencent-hy4`. No SQL file.
+
+**Sources re-read 2026-11-26:** https://otter.ai/pricing, https://developers.openai.com/codex/cli, https://www.adobe.com/products/firefly.html, https://docs.granola.ai/help-center/getting-started/setting-up-granola-for-the-first-time, https://spellbook.com/security, https://vapi.ai/pricing, https://longcat.ai/platform/docs/pricing/longcat-2.5, https://cloud.tencent.com/document/product/1823/130055, https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models/
+
+**Left out:** Otter's stored annual prices ($8.33 and $19.99). The pricing page showed $8.49 and $24 next to a first-time-subscriber note, and did not label a current annual list, so those figures were not rewritten. Firefly's dollar plan prices: the plans page rendered as empty fragments, so the guide does not restate them. Vapi's old HIPAA $2,000 and $10-per-line add-ons were not on the page and were removed. The compare URL is omitted from the sitemap until both platform rows exist. Those rows were inserted by `scripts/sql/catalog-xwatch-20261105.sql`, which this PR does not re-run.
+
+**Open:** Zach confirms the Nov 5 catalog SQL already ran. If it did not, `/compare/longcat-2-5-vs-tencent-hy4` 404s until that SQL and a redeploy.

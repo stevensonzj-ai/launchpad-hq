@@ -52,13 +52,13 @@ export default {
   apiPricing: {
     value:
       "Tencent Cloud TokenHub list, per 1M tokens: ¥6 input, ¥18 output, ¥0.3 cache hit. Calls are 50% of that list price through 2026-12-31 23:59:59 Beijing time, then the list price. Tencent's English launch post also says approximately US$0.90 input, US$2.70 output, and US$0.045 cached input per 1M tokens.",
-    note: "TokenHub price page, updated 2026-11-23 14:04, and the English launch post. The yuan figures are the TokenHub list. The US dollar figures are the launch post's approximation, not a second TokenHub rate card. OpenRouter rates were not re-read.",
+    note: "TokenHub price page and the English launch post, re-read 2026-11-26. The yuan figures are the TokenHub list. The US dollar figures are the launch post's approximation, not a second TokenHub rate card. OpenRouter rates were not re-read.",
     sourceUrl: TOKENHUB_URL,
     sourceKind: "plans-page",
-    checkedAt: "2026-11-23",
+    checkedAt: "2026-11-26",
     gatheredBy: "claude",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-23",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   platforms: {
@@ -88,6 +88,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "apiPricing",
+      summary:
+        "TokenHub price page and the English launch post re-read. List still ¥6 / ¥18 / ¥0.3 per 1M. Calls still 50% of list through 2026-12-31 23:59:59 Beijing time. The launch post still says about US$0.90 / US$2.70 / US$0.045.",
+    },
     {
       date: "2026-11-23",
       field: "apiPricing",

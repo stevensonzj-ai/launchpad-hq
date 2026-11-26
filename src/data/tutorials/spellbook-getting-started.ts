@@ -6,7 +6,7 @@ export const spellbookTutorial: PlatformTutorialData = {
   title: "Getting Started with Spellbook",
   tagline: "AI that marks up contracts inside the Microsoft Word document you already have open.",
   archetype: "prompts",
-  lastReviewedAt: "2026-09-13",
+  lastReviewedAt: "2026-11-26",
   accessTier: "PREMIUM",
 
   howItWorks:
@@ -39,6 +39,10 @@ export const spellbookTutorial: PlatformTutorialData = {
   },
 
   security: [
+    {
+      kind: "text",
+      text: "Will my IT department approve Spellbook? Spellbook's own security page does not say that any particular company will. Beyond where a document goes, which is set out below, that page says Spellbook is SOC 2 Type II, HIPAA, GDPR, and EU AI Act compliant on Spellbook's description of those programs; that sign-in uses a Microsoft account, so a company can require multi-factor authentication in Microsoft Entra; and that a firm handling health information can ask Spellbook to sign a business-associate agreement. Whether that is enough is the firm's own checklist. The security page was re-read on 26 November 2026.",
+    },
     {
       kind: "text",
       text: "The thing worth being clear-eyed about is what the panel is doing while you work: the Microsoft Marketplace listing states, in Microsoft's own words for this add-in, that it \"can read and make changes to your document\" and \"can send data over the Internet.\" A review is your client's draft contract leaving your machine.",

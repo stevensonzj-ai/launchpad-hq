@@ -7,7 +7,7 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
   tagline:
     "Adobe's image generator, built around commercial safety — though the safety story covers Adobe's own models, not every model now in the app.",
   archetype: "prompts",
-  lastReviewedAt: "2026-10-29",
+  lastReviewedAt: "2026-11-26",
   changelogUrl: "https://helpx.adobe.com/firefly/using/whats-new.html",
   accessTier: "FREE",
 
@@ -24,6 +24,17 @@ export const adobeFireflyTutorial: PlatformTutorialData = {
     "**Paid plans add more generations and access to more models**, and if you already pay for Creative Cloud, check your plan before buying — Firefly use may already be included. Check what a generation costs on the model you pick before you run a big batch.",
     "The headline reason to choose Firefly over a flashier generator is the commercial-safety story below — understand exactly what it does and doesn't cover before you rely on it.",
   ],
+
+  gettingSetUpSafely: {
+    officialSource: "Adobe's Firefly product page, including its FAQ, read 26 November 2026.",
+    body: [
+      "Open the Firefly web app, or the iOS or Android app, and sign in with a free Adobe ID. Adobe says the free plan includes daily generations for images, video, and audio, and the product page does not state how many.",
+      "Describe the picture you want. Then use the editing tools to remove something, expand the frame, or upscale. The same studio can generate a video clip or sound from a prompt.",
+      "Before you use the result in a real campaign, look at which model made it. Adobe says its own Firefly models are trained on licensed content and public-domain material and are safe for commercial use. Models from other companies sit in the same app, and that training description is about Adobe's models.",
+      "A paid plan adds a monthly credit allowance that resets each billing cycle and does not roll over. Current prices are on the Firefly page on Launchpad ({{from:adobe-firefly}}). The plans page did not render its dollar amounts on the day this section was checked, so this page does not restate them.",
+    ],
+    vendorDocsUrl: "https://www.adobe.com/products/firefly.html",
+  },
 
   security: [
     {

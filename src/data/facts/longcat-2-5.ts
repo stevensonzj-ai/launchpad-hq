@@ -52,13 +52,13 @@ export default {
   apiPricing: {
     value:
       "Pay-as-you-go, per 1M tokens: $0.30 input, $0.006 cached input, $1.20 output (also ¥2 / ¥0.04 / ¥8). The pricing page labels these a limited-time discount and does not state an end date or a post-discount price.",
-    note: "LongCat pricing page, read 2026-11-23. Vercel AI Gateway was not re-read that day, so the earlier gateway sentence is not repeated.",
+    note: "LongCat pricing page, re-read 2026-11-26. Vercel AI Gateway was not re-read, so the earlier gateway sentence is not repeated.",
     sourceUrl: PRICING_URL,
     sourceKind: "plans-page",
-    checkedAt: "2026-11-23",
+    checkedAt: "2026-11-26",
     gatheredBy: "claude",
     verifiedBy: "cursor-recheck",
-    verifiedAt: "2026-11-23",
+    verifiedAt: "2026-11-26",
     status: "verified",
   },
   platforms: {
@@ -86,6 +86,12 @@ export default {
     status: "verified",
   },
   changelog: [
+    {
+      date: "2026-11-26",
+      field: "apiPricing",
+      summary:
+        "Pricing page re-read. Rates unchanged at $0.30 / $0.006 / $1.20 and ¥2 / ¥0.04 / ¥8 per 1M, still labeled limited-time, still with no end date.",
+    },
     {
       date: "2026-11-23",
       field: "apiPricing",
